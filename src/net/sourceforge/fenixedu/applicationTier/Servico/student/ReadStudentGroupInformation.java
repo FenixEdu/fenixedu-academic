@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAndGroupingAndShift;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,12 +37,12 @@ public class ReadStudentGroupInformation implements IService {
             ExcepcaoPersistencia {
 
         InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
-        IStudentGroup studentGroup = null;
-        IGrouping grouping = null;
+        StudentGroup studentGroup = null;
+        Grouping grouping = null;
         List groupAttendsList = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
+        studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
                 studentGroupCode);
 
         if (studentGroup == null) {
@@ -55,12 +55,12 @@ public class ReadStudentGroupInformation implements IService {
 
         Iterator iter = groupAttendsList.iterator();
         InfoSiteStudentInformation infoSiteStudentInformation = null;
-        IAttends attend = null;
+        Attends attend = null;
 
         while (iter.hasNext()) {
             infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-            attend = (IAttends) iter.next();
+            attend = (Attends) iter.next();
 
             infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
 

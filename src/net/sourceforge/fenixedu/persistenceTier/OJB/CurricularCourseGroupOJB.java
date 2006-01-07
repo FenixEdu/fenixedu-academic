@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -34,24 +34,24 @@ public class CurricularCourseGroupOJB extends PersistentObjectOJB implements
         return queryList(AreaCurricularCourseGroup.class, criteria);
     }
 
-    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(Integer branchId,
+    public CurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(Integer branchId,
             Integer curricularCourseId, AreaType areaType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("branch.idInternal", branchId);
         criteria.addEqualTo("curricularCourses.idInternal", curricularCourseId);
         criteria.addEqualTo("areaType", areaType);
         criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
-        return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
+        return (CurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
     }
 
-    public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(Integer branchId,
+    public CurricularCourseGroup readByBranchAndScientificAreaAndAreaType(Integer branchId,
             Integer scientificAreaId, AreaType areaType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("branch.idInternal", branchId);
         criteria.addEqualTo("scientificAreas.idInternal", scientificAreaId);
         criteria.addEqualTo("areaType", areaType);
         criteria.addEqualTo("ojbConcreteClass", AreaCurricularCourseGroup.class.getName());
-        return (ICurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
+        return (CurricularCourseGroup) queryObject(AreaCurricularCourseGroup.class, criteria);
     }
 
     public List readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(

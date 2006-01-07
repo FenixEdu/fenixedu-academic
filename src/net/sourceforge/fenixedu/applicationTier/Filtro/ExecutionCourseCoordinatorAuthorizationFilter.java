@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -63,7 +63,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
     private boolean hasExecutionCourseInCurricularCourseList(IUserView id, Object[] argumentos) {
         boolean result = false;
         InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
+        ExecutionCourse executionCourse = null;
         ISuportePersistente sp;
 
         if (argumentos == null) {
@@ -75,16 +75,16 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
             IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             if (teacher != null && executionCourse != null) {
                 List executionDegrees = persistentCoordinator.readExecutionDegreesByTeacher(teacher
@@ -92,7 +92,7 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
                 if (executionDegrees != null && !executionDegrees.isEmpty()) {
                     Iterator iter = executionDegrees.iterator();
                     while (iter.hasNext() && !result) {
-                        IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
+                        ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
                         if (executionDegree.getExecutionYear().equals(
                                 executionCourse.getExecutionPeriod().getExecutionYear())) {
                             if (CollectionUtils.containsAny(executionDegree.getDegreeCurricularPlan()

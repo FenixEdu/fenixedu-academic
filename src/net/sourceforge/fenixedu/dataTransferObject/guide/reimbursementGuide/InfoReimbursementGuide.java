@@ -10,9 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -137,7 +137,7 @@ public class InfoReimbursementGuide extends InfoObject {
         this.infoReimbursementGuideEntries = infoReimbursementGuideEntries;
     }
 
-    public void copyFromDomain(IReimbursementGuide reimbursementGuide) {
+    public void copyFromDomain(ReimbursementGuide reimbursementGuide) {
         super.copyFromDomain(reimbursementGuide);
         if (reimbursementGuide != null) {
             setCreationDate(reimbursementGuide.getCreationDate());
@@ -149,7 +149,7 @@ public class InfoReimbursementGuide extends InfoObject {
                     .getReimbursementGuideEntries(), new Transformer() {
 
                 public Object transform(Object arg0) {
-                    IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) arg0;
+                    ReimbursementGuideEntry reimbursementGuideEntry = (ReimbursementGuideEntry) arg0;
                     return InfoReimbursementGuideEntry.newInfoFromDomain(reimbursementGuideEntry);
                 }
             });
@@ -160,7 +160,7 @@ public class InfoReimbursementGuide extends InfoObject {
                     .getReimbursementGuideSituations(), new Transformer() {
 
                 public Object transform(Object arg0) {
-                    IReimbursementGuideSituation reimbursementGuideSituation = (IReimbursementGuideSituation) arg0;
+                    ReimbursementGuideSituation reimbursementGuideSituation = (ReimbursementGuideSituation) arg0;
                     return InfoReimbursementGuideSituation
                             .newInfoFromDomain(reimbursementGuideSituation);
                 }
@@ -171,7 +171,7 @@ public class InfoReimbursementGuide extends InfoObject {
         }
     }
 
-    public static InfoReimbursementGuide newInfoFromDomain(IReimbursementGuide reimbursementGuide) {
+    public static InfoReimbursementGuide newInfoFromDomain(ReimbursementGuide reimbursementGuide) {
         InfoReimbursementGuide infoReimbursementGuide = null;
         if (reimbursementGuide != null) {
             infoReimbursementGuide = new InfoReimbursementGuide();

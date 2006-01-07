@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.EditDomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
+import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,14 +37,14 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthor
             IPersistentCareer persistentCareer = sp.getIPersistentCareer();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             boolean isNew = (infoCareer.getIdInternal() == null)
                     || (infoCareer.getIdInternal().equals(new Integer(0)));
             if (isNew)
                 return true;
 
-            ICareer career = (ICareer) persistentCareer.readByOID(Career.class, infoCareer
+            Career career = (Career) persistentCareer.readByOID(Career.class, infoCareer
                     .getIdInternal());
 
             return career.getTeacher().equals(teacher);

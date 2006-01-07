@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,7 +30,7 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
         Integer supportLessonId = (Integer) arguments[0];
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
-        ISupportLesson supportLesson = (ISupportLesson) supportLessonDAO.readByOID(SupportLesson.class,
+        SupportLesson supportLesson = (SupportLesson) supportLessonDAO.readByOID(SupportLesson.class,
                 supportLessonId, false);
         return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal()
                 : null;

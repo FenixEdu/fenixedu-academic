@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -54,14 +54,14 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         final IUserView userView = SessionUtils.getUserView(request);
         final Integer executionPeriodID = ((InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD)).getIdInternal();
         final Object[] args1 = { ExecutionPeriod.class, executionPeriodID };
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args1);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args1);
 
         final Object[] args2 = { Degree.class, degreeOID };
-        final IDegree degree = (IDegree) ServiceUtils.executeService(userView, "ReadDomainObject", args2);
+        final Degree degree = (Degree) ServiceUtils.executeService(userView, "ReadDomainObject", args2);
 
         if (executionPeriod != null) {
-        	final IExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
-        	final IExecutionPeriod otherExecutionPeriodToShow =
+        	final ExecutionPeriod nextExecutionPeriod = executionPeriod.getNextExecutionPeriod();
+        	final ExecutionPeriod otherExecutionPeriodToShow =
         		(nextExecutionPeriod != null && nextExecutionPeriod .getState() != PeriodState.NOT_OPEN) ?
         				nextExecutionPeriod : executionPeriod.getPreviousExecutionPeriod();
         	organizeClassViewsNext(request, degree, executionPeriod, otherExecutionPeriodToShow);
@@ -71,36 +71,36 @@ public class ShowClassesDispatchAction extends FenixContextDispatchAction {
         return mapping.findForward("show-classes-list");
     }
 
-    private void organizeClassViewsNext(final HttpServletRequest request, final IDegree degree,
-    		final IExecutionPeriod executionPeriod, final IExecutionPeriod otherExecutionPeriodToShow) {
+    private void organizeClassViewsNext(final HttpServletRequest request, final Degree degree,
+    		final ExecutionPeriod executionPeriod, final ExecutionPeriod otherExecutionPeriodToShow) {
         request.setAttribute("classViewsTableCurrent", organizeClassViews(degree, executionPeriod));
         request.setAttribute("classViewsTableNext", organizeClassViews(degree, otherExecutionPeriodToShow));
     }
 
-    private Table organizeClassViews(final IDegree degree, final IExecutionPeriod executionPeriod) {
+    private Table organizeClassViews(final Degree degree, final ExecutionPeriod executionPeriod) {
         final Table classViewsTable = new Table(5);
 
-        final SortedSet<ISchoolClass> schoolClasses = new TreeSet<ISchoolClass>(new BeanComparator("nome"));
-        for (final ISchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
-        	final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-        	final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final SortedSet<SchoolClass> schoolClasses = new TreeSet<SchoolClass>(new BeanComparator("nome"));
+        for (final SchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
+        	final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+        	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         	if (degreeCurricularPlan.getDegree() == degree) {
         		schoolClasses.add(schoolClass);
         	}
         }
 
-        for (final ISchoolClass schoolClass : schoolClasses) {
+        for (final SchoolClass schoolClass : schoolClasses) {
         	classViewsTable.appendToColumn(schoolClass.getAnoCurricular().intValue() - 1, newClassView(schoolClass));
         }
 
         return classViewsTable;
     }
 
-    private ClassView newClassView(final ISchoolClass schoolClass) {
-    	final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-    	final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-    	final IDegree degree = degreeCurricularPlan.getDegree();
+    private ClassView newClassView(final SchoolClass schoolClass) {
+    	final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+    	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+    	final Degree degree = degreeCurricularPlan.getDegree();
 
     	final ClassView classView = new ClassView();
     	classView.setClassName(schoolClass.getNome());

@@ -9,11 +9,11 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -27,9 +27,9 @@ import org.apache.commons.collections.Predicate;
 public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 {
 
-	public IPerson lerPessoaPorUsername(final String username) throws ExcepcaoPersistencia
+	public Person lerPessoaPorUsername(final String username) throws ExcepcaoPersistencia
 	{
-		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		for (final Person person : (List<Person>) readAll(Person.class))
 		{
 			if (person.getUsername().equalsIgnoreCase(username))
 			{
@@ -45,7 +45,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		final String nameToMatch = name.replaceAll("%", ".*");
 		final List persons = new ArrayList();
 
-		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		for (final Person person : (List<Person>) readAll(Person.class))
 		{
 			if (person.getNome().toLowerCase().matches(nameToMatch.toLowerCase()))
 			{
@@ -73,11 +73,11 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 
 	}
 
-	public IPerson lerPessoaPorNumDocIdETipoDocId(final String numeroDocumentoIdentificacao,
+	public Person lerPessoaPorNumDocIdETipoDocId(final String numeroDocumentoIdentificacao,
 			final IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia
 	{
 
-		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		for (final Person person : (List<Person>) readAll(Person.class))
 		{
 			if (person.getNumeroDocumentoIdentificacao().equals(numeroDocumentoIdentificacao)
 					&& person.getIdDocumentType().equals(tipoDocumentoIdentificacao))
@@ -92,10 +92,10 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 	/*
 	 * This method return a list with elements returned by the limited search.
 	 */
-	public List<IPerson> readActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
+	public List<Person> readActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
 			final String email, final String username, final String documentIdNumber,
-			final Integer startIndex, final Integer numberOfElementsInSpan, IRole role, IDegree degree,
-			DegreeType degreeType, IDepartment department) throws ExcepcaoPersistencia
+			final Integer startIndex, final Integer numberOfElementsInSpan, Role role, Degree degree,
+			DegreeType degreeType, Department department) throws ExcepcaoPersistencia
 	{
 
 		final String nameToMatch = name.replaceAll("%", ".*");
@@ -103,9 +103,9 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		final String usernameToMatch = email.replaceAll("%", ".*");
 		final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
 
-		List<IPerson> filteredPersons = new ArrayList<IPerson>();
+		List<Person> filteredPersons = new ArrayList<Person>();
 
-		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		for (final Person person : (List<Person>) readAll(Person.class))
 		{
 			if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch))
 			{
@@ -139,7 +139,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 			filteredPersons.add(person);
 		}
 
-		List<IPerson> result = new ArrayList<IPerson>();
+		List<Person> result = new ArrayList<Person>();
 		if (startIndex == null && numberOfElementsInSpan == null)
 		{
 			Collections.sort(filteredPersons, new BeanComparator("nome"));
@@ -155,8 +155,8 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 
 	public Integer countActivePersonByNameAndEmailAndUsernameAndDocumentId(final String name,
 			final String email, final String username, final String documentIdNumber,
-			final Integer startIndex, IRole role, IDegree degree, DegreeType degreeType,
-			IDepartment department) throws ExcepcaoPersistencia
+			final Integer startIndex, Role role, Degree degree, DegreeType degreeType,
+			Department department) throws ExcepcaoPersistencia
 	{
 
 		final String nameToMatch = name.replaceAll("%", ".*");
@@ -165,7 +165,7 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		final String documentIdNumberToMatch = documentIdNumber.replaceAll("%", ".*");
 
 		int count = 0;
-		for (final IPerson person : (List<IPerson>) readAll(Person.class))
+		for (final Person person : (List<Person>) readAll(Person.class))
 		{
 			if (name != null && name.length() > 0 && !person.getNome().matches(nameToMatch))
 			{
@@ -200,19 +200,19 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		return new Integer(count);
 	}
 
-	public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia
+	public List<Person> readPersonsBySubName(String subName) throws ExcepcaoPersistencia
 	{
 
-		final List<IPerson> persons = (List<IPerson>) readAll(Person.class);
+		final List<Person> persons = (List<Person>) readAll(Person.class);
 
 		final String stringToMatch = subName.replace("%", ".*").replace(" ", ".*");
 
-		return (List<IPerson>) CollectionUtils.select(persons, new Predicate()
+		return (List<Person>) CollectionUtils.select(persons, new Predicate()
 		{
 
 			public boolean evaluate(Object object)
 			{
-				IPerson person = (IPerson) object;
+				Person person = (Person) object;
 				if (person.getNome().toLowerCase().matches(stringToMatch.toLowerCase()))
 				{
 					return true;
@@ -223,18 +223,18 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 		});
 	}
 
-	public Collection<IPerson> readByIdentificationDocumentNumber(
+	public Collection<Person> readByIdentificationDocumentNumber(
 			final String identificationDocumentNumber) throws ExcepcaoPersistencia
 	{
 
-		Collection<IPerson> persons = readAll(Person.class);
+		Collection<Person> persons = readAll(Person.class);
 
 		return CollectionUtils.select(persons, new Predicate()
 		{
 
 			public boolean evaluate(Object arg0)
 			{
-				IPerson person = (IPerson) arg0;
+				Person person = (Person) arg0;
 				return person.getNumeroDocumentoIdentificacao().equalsIgnoreCase(identificationDocumentNumber);
 			}
 
@@ -242,13 +242,13 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 
 	}
 
-	public Integer CountPersonByDepartment(String name, List<ITeacher> teacher, Integer startIndex,
+	public Integer CountPersonByDepartment(String name, List<Teacher> teacher, Integer startIndex,
 			Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
 	{
 		return new Integer(0);
 	}
 
-	public List<IPerson> PersonByDepartment(String name, List<ITeacher> teacher, Integer startIndex,
+	public List<Person> PersonByDepartment(String name, List<Teacher> teacher, Integer startIndex,
 			Integer numberOfElementsInSpan) throws ExcepcaoPersistencia
 	{
 		return null;
@@ -257,10 +257,10 @@ public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 	public boolean emailOwnedByFenixPerson(Collection<String> emails)
 	{
 		boolean result = false;
-		Collection<IPerson> persons = readAll(Person.class);
+		Collection<Person> persons = readAll(Person.class);
 		for (String email : emails)
 		{
-			for (IPerson person : persons)
+			for (Person person : persons)
 			{
 				if (email.equalsIgnoreCase(person.getEmail()))
 				{

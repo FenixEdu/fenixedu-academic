@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,11 +23,11 @@ public class ReadPersonsByName implements IService {
             authorName.append(names[i]);
             authorName.append("%");
         }
-        List<IPerson> persons = persistentPerson.readPersonsBySubName(authorName.toString());
+        List<Person> persons = persistentPerson.readPersonsBySubName(authorName.toString());
 
        List<InfoPerson> infoPersons = new ArrayList<InfoPerson>(persons.size());
 
-        for (IPerson individualPerson : persons) {
+        for (Person individualPerson : persons) {
             infoPersons.add(InfoPerson.newInfoFromDomain(individualPerson));
         }
         

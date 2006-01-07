@@ -3,11 +3,11 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
-import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
+import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.domain.precedences.PrecedenceContext;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -20,8 +20,8 @@ import org.apache.commons.collections.Predicate;
 public class PrecedencesEnrollmentRule implements IEnrollmentRule {
     protected PrecedenceContext precedenceContext;
 
-    public PrecedencesEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public PrecedencesEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         this.precedenceContext = new PrecedenceContext();
         this.precedenceContext.setStudentCurricularPlan(studentCurricularPlan);
         this.precedenceContext.setExecutionPeriod(executionPeriod);
@@ -46,11 +46,11 @@ public class PrecedencesEnrollmentRule implements IEnrollmentRule {
                 }
             } else {
                 int size = precedenceList.size();
-                CurricularCourseEnrollmentType evaluate = ((IPrecedence) precedenceList.get(0))
+                CurricularCourseEnrollmentType evaluate = ((Precedence) precedenceList.get(0))
                         .evaluate(precedenceContext);
 
                 for (int j = 1; j < size; j++) {
-                    IPrecedence precedence = (IPrecedence) precedenceList.get(j);
+                    Precedence precedence = (Precedence) precedenceList.get(j);
                     evaluate = evaluate.or(precedence.evaluate(precedenceContext));
                 }
 

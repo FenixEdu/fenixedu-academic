@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -44,14 +44,14 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private Integer executionPeriodID;
     protected Integer evaluationType;
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
     private List<SelectItem> executionPeriodsLabels;
     private List<SelectItem> evaluationTypes;
-    private IStudent student;
-    private List<IEvaluation> notEnroledEvaluations;
-    private List<IEvaluation> enroledEvaluations;
-    private List<IEvaluation> evaluationsWithoutEnrolmentPeriod;
-    private Map<Integer, List<IExecutionCourse>> executionCourses;
+    private Student student;
+    private List<Evaluation> notEnroledEvaluations;
+    private List<Evaluation> enroledEvaluations;
+    private List<Evaluation> evaluationsWithoutEnrolmentPeriod;
+    private Map<Integer, List<ExecutionCourse>> executionCourses;
 
     public List<SelectItem> getExecutionPeriodsLabels() {
         if (this.executionPeriodsLabels == null) {
@@ -87,7 +87,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return this.evaluationTypes;
     }
 
-    public List<IEvaluation> getNotEnroledEvaluations() {
+    public List<Evaluation> getNotEnroledEvaluations() {
         if (this.notEnroledEvaluations == null) {
             this.notEnroledEvaluations = new ArrayList();
 
@@ -96,11 +96,11 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return this.notEnroledEvaluations;
     }
 
-    public void setNotEnroledEvaluations(List<IEvaluation> notEnroledEvaluations) {
+    public void setNotEnroledEvaluations(List<Evaluation> notEnroledEvaluations) {
         this.notEnroledEvaluations = notEnroledEvaluations;
     }
 
-    public List<IEvaluation> getEnroledEvaluations() {
+    public List<Evaluation> getEnroledEvaluations() {
         if (this.enroledEvaluations == null) {
             this.enroledEvaluations = new ArrayList();
             processEnroledEvaluations();
@@ -108,24 +108,24 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return this.enroledEvaluations;
     }
 
-    public void setEnroledEvaluations(List<IEvaluation> enroledEvaluations) {
+    public void setEnroledEvaluations(List<Evaluation> enroledEvaluations) {
         this.enroledEvaluations = enroledEvaluations;
     }
 
-    public List<IEvaluation> getEvaluationsWithoutEnrolmentPeriod() {
+    public List<Evaluation> getEvaluationsWithoutEnrolmentPeriod() {
         if (this.evaluationsWithoutEnrolmentPeriod == null) {
             this.evaluationsWithoutEnrolmentPeriod = new ArrayList();
         }
         return this.evaluationsWithoutEnrolmentPeriod;
     }
 
-    public void setEvaluationsWithoutEnrolmentPeriod(List<IEvaluation> evaluationsWithoutEnrolmentPeriod) {
+    public void setEvaluationsWithoutEnrolmentPeriod(List<Evaluation> evaluationsWithoutEnrolmentPeriod) {
         this.evaluationsWithoutEnrolmentPeriod = evaluationsWithoutEnrolmentPeriod;
     }
 
     private void processEnroledEvaluations() {
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
-            for (final IExam exam : getStudent().getEnroledExams(getExecutionPeriod())) {
+            for (final Exam exam : getStudent().getEnroledExams(getExecutionPeriod())) {
                 try {
                     exam.isInEnrolmentPeriod();
                     this.enroledEvaluations.add(exam);
@@ -138,7 +138,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             }
         }
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
-            for (final IWrittenTest writtenTest : getStudent().getEnroledWrittenTests(
+            for (final WrittenTest writtenTest : getStudent().getEnroledWrittenTests(
                     getExecutionPeriod())) {
                 try {
                     writtenTest.isInEnrolmentPeriod();
@@ -156,7 +156,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
     private void processNotEnroledEvaluations() {
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(EXAMS)) {
-            for (final IExam exam : getStudent().getUnenroledExams(getExecutionPeriod())) {
+            for (final Exam exam : getStudent().getUnenroledExams(getExecutionPeriod())) {
                 try {
                     exam.isInEnrolmentPeriod();
                     this.notEnroledEvaluations.add(exam);
@@ -169,7 +169,7 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
             }
         }
         if (getEvaluationType().equals(ALL) || getEvaluationType().equals(WRITTENTESTS)) {
-            for (final IWrittenTest writtenTest : getStudent().getUnenroledWrittenTests(
+            for (final WrittenTest writtenTest : getStudent().getUnenroledWrittenTests(
                     getExecutionPeriod())) {
                 try {
                     writtenTest.isInEnrolmentPeriod();
@@ -222,10 +222,10 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return null;
     }
 
-    protected IExecutionPeriod getExecutionPeriod() {
+    protected ExecutionPeriod getExecutionPeriod() {
         if (this.executionPeriod == null && this.getExecutionPeriodID() != null) {
             try {
-                return (IExecutionPeriod) readDomainObject(ExecutionPeriod.class, this
+                return (ExecutionPeriod) readDomainObject(ExecutionPeriod.class, this
                         .getExecutionPeriodID());
             } catch (FenixFilterException e) {
             } catch (FenixServiceException e) {
@@ -234,11 +234,11 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         return this.executionPeriod;
     }
 
-    protected IStudent getStudent() {
+    protected Student getStudent() {
         if (this.student == null) {
             try {
                 final Object args[] = { getUserView().getUtilizador() };
-                this.student = (IStudent) ServiceUtils.executeService(getUserView(),
+                this.student = (Student) ServiceUtils.executeService(getUserView(),
                         "ReadStudentByUsernameForEvaluationEnrolment", args);
             } catch (FenixFilterException e) {
             } catch (FenixServiceException e) {
@@ -279,14 +279,14 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
         this.evaluationType = evaluationType;
     }
 
-    public Map<Integer, List<IExecutionCourse>> getExecutionCourses() {
+    public Map<Integer, List<ExecutionCourse>> getExecutionCourses() {
         if (this.executionCourses == null) {
-            this.executionCourses = new HashMap<Integer, List<IExecutionCourse>>();
+            this.executionCourses = new HashMap<Integer, List<ExecutionCourse>>();
         }
         return this.executionCourses;
     }
 
-    public void setExecutionCourses(Map<Integer, List<IExecutionCourse>> executionCourses) {
+    public void setExecutionCourses(Map<Integer, List<ExecutionCourse>> executionCourses) {
         this.executionCourses = executionCourses;
     }
 }

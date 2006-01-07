@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.persistenceTier.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -17,16 +17,16 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentMetadata extends IPersistentObject {
 
-    public abstract List<IMetadata> readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia;
+    public abstract List<Metadata> readByExecutionCourse(ExecutionCourse executionCourse) throws ExcepcaoPersistencia;
 
-    public abstract List<IMetadata> readByExecutionCourseAndVisibility(Integer executionCourseId) throws ExcepcaoPersistencia;
+    public abstract List<Metadata> readByExecutionCourseAndVisibility(Integer executionCourseId) throws ExcepcaoPersistencia;
 
-    public abstract List<IMetadata> readByExecutionCourseAndNotTest(Integer executionCourseId, Integer testId) throws ExcepcaoPersistencia;
+    public abstract List<Metadata> readByExecutionCourseAndNotTest(Integer executionCourseId, Integer testId) throws ExcepcaoPersistencia;
 
-    public abstract List<IMetadata> readByExecutionCourseAndNotDistributedTest(Integer executionCourseId, Integer distributedTestId)
+    public abstract List<Metadata> readByExecutionCourseAndNotDistributedTest(Integer executionCourseId, Integer distributedTestId)
             throws ExcepcaoPersistencia;
 
-    public abstract int getNumberOfQuestions(IMetadata metadata) throws ExcepcaoPersistencia;
+    public abstract int getNumberOfQuestions(Metadata metadata) throws ExcepcaoPersistencia;
 
     public abstract int countByExecutionCourse(Integer executionCourseId) throws ExcepcaoPersistencia;
 

@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -35,8 +35,8 @@ public class TeacherResponsibleByExecutionCourse implements IService {
                 .getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = suportePersistente.getIPersistentTeacher();
 
-        ITeacher teacher = persistentTeacher.readTeacherByUsername(teacherUserName);
-        IProfessorship responsibleFor = teacher.responsibleFor(executionCourseCode);
+        Teacher teacher = persistentTeacher.readTeacherByUsername(teacherUserName);
+        Professorship responsibleFor = teacher.responsibleFor(executionCourseCode);
         if (responsibleFor == null) {
             result = false;
         } else {
@@ -47,11 +47,11 @@ public class TeacherResponsibleByExecutionCourse implements IService {
 
     private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws ExcepcaoPersistencia {
         boolean result = false;
-        ICurricularCourse curricularCourse = null;
+        CurricularCourse curricularCourse = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-        curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         result = curricularCourse.getBasic().equals(Boolean.FALSE);
 

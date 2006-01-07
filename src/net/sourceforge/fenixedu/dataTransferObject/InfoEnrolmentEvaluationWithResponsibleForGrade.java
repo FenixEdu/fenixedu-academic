@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
 /**
  * @author Fernanda Quitério Created on 13/Jul/2004
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
  */
 public class InfoEnrolmentEvaluationWithResponsibleForGrade extends InfoEnrolmentEvaluation {
 
-    public void copyFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+    public void copyFromDomain(EnrolmentEvaluation enrolmentEvaluation) {
         super.copyFromDomain(enrolmentEvaluation);
         if (enrolmentEvaluation != null) {
             setInfoPersonResponsibleForGrade(InfoPerson.newInfoFromDomain(enrolmentEvaluation
@@ -16,7 +16,7 @@ public class InfoEnrolmentEvaluationWithResponsibleForGrade extends InfoEnrolmen
         }
     }
 
-    public static InfoEnrolmentEvaluation newInfoFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+    public static InfoEnrolmentEvaluation newInfoFromDomain(EnrolmentEvaluation enrolmentEvaluation) {
         InfoEnrolmentEvaluationWithResponsibleForGrade infoEnrolmentEvaluationWithInfoPerson = null;
         if (enrolmentEvaluation != null) {
             infoEnrolmentEvaluationWithInfoPerson = new InfoEnrolmentEvaluationWithResponsibleForGrade();

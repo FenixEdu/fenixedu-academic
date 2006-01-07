@@ -12,8 +12,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,13 +28,13 @@ public class DeleteClasses implements IService {
 
         for (int i = 0; i < classOIDs.size(); i++) {
             Integer classId = (Integer) classOIDs.get(i);
-            final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(
+            final SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(
                     SchoolClass.class, classId);
 
             // Shift
             Iterator iter = schoolClass.getAssociatedShiftsIterator();
             while(iter.hasNext()){
-                IShift shift = (IShift) iter.next();
+                Shift shift = (Shift) iter.next();
                 iter.remove();
                 shift.getAssociatedClasses().remove(schoolClass);
             }

@@ -59,7 +59,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     public Calendar getEndDateOfComposite() {
         Calendar end = this.getEndDate();
-        IOccupationPeriod period = this.getNextPeriod();
+        OccupationPeriod period = this.getNextPeriod();
         while (period != null) {
             end = period.getEndDate();
             period = period.getNextPeriod();
@@ -71,7 +71,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         return CalendarUtil.intersectDates(start, end, getStartDate(), getEndDate());
     }
 
-    public boolean intersectPeriods(IOccupationPeriod period) {
+    public boolean intersectPeriods(OccupationPeriod period) {
         return intersectPeriods(period.getStartDate(), period.getEndDate());
     }
 
@@ -94,8 +94,8 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     private void delete() {
-        final IOccupationPeriod previous = getPreviousPeriod();
-        final IOccupationPeriod next = getNextPeriod();
+        final OccupationPeriod previous = getPreviousPeriod();
+        final OccupationPeriod next = getNextPeriod();
         if (previous != null && next != null) { 
             previous.setNextPeriod(next);
         } else {

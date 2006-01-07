@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -19,15 +19,15 @@ import org.apache.commons.collections.Predicate;
 
 public class StudentVO extends VersionedObjectsBase implements IPersistentStudent {
 
-    public IStudent readStudentByNumberAndDegreeType(final Integer number, final DegreeType degreeType)
+    public Student readStudentByNumberAndDegreeType(final Integer number, final DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
         List students = (List) readAll(Student.class);
 
-        return (IStudent) CollectionUtils.find(students, new Predicate() {
+        return (Student) CollectionUtils.find(students, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
                 return student.getNumber().equals(number) && student.getDegreeType().equals(degreeType);
             }
         });
@@ -37,32 +37,32 @@ public class StudentVO extends VersionedObjectsBase implements IPersistentStuden
         return (List) readAll(Student.class);
     }
 
-    public IStudent readByUsername(final String username) throws ExcepcaoPersistencia {
+    public Student readByUsername(final String username) throws ExcepcaoPersistencia {
 
         List students = (List) readAll(Student.class);
 
-        return (IStudent) CollectionUtils.find(students, new Predicate() {
+        return (Student) CollectionUtils.find(students, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
                 return student.getPerson().getUsername().equals(username);
             }
         });
     }
 
-    public IStudent readByPersonAndDegreeType(Integer personId, final DegreeType degreeType)
+    public Student readByPersonAndDegreeType(Integer personId, final DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
-        IPerson person = (IPerson) readByOID(Person.class, personId);
+        Person person = (Person) readByOID(Person.class, personId);
 
         if (person != null) {
 
             List students = person.getStudents();
 
-            return (IStudent) CollectionUtils.find(students, new Predicate() {
+            return (Student) CollectionUtils.find(students, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
-                    IStudent student = (IStudent) arg0;
+                    Student student = (Student) arg0;
                     return student.getDegreeType().equals(degreeType);
                 }
             });
@@ -75,13 +75,13 @@ public class StudentVO extends VersionedObjectsBase implements IPersistentStuden
         Integer number = new Integer(0);
 
         List students = (List) readAll(Student.class);
-        List<IStudent> result = (List) CollectionUtils.select(students, new Predicate() {
+        List<Student> result = (List) CollectionUtils.select(students, new Predicate() {
             public boolean evaluate(Object arg0) {
-                return ((IStudent) arg0).getDegreeType().equals(degreeType);
+                return ((Student) arg0).getDegreeType().equals(degreeType);
             }
         });
 
-        for (IStudent student : result) {
+        for (Student student : result) {
             number = Math.max(number, student.getNumber());
         }
 
@@ -96,7 +96,7 @@ public class StudentVO extends VersionedObjectsBase implements IPersistentStuden
         return (List) CollectionUtils.select(students, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
 
                 boolean cond = (studentName == null || studentName.contains(student.getPerson()
                         .getNome()));// preventing the %string% behaviour
@@ -123,7 +123,7 @@ public class StudentVO extends VersionedObjectsBase implements IPersistentStuden
         return (List) CollectionUtils.select(students, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
                 return student.getPerson().getPersonRoles().contains(roleType);
             }
         });
@@ -136,7 +136,7 @@ public class StudentVO extends VersionedObjectsBase implements IPersistentStuden
         return (List) CollectionUtils.select(students, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
                 return student.getNumber().intValue() < toNumber.intValue()
                         && student.getNumber().intValue() > fromNumber.intValue();
             }
@@ -149,20 +149,20 @@ public class StudentVO extends VersionedObjectsBase implements IPersistentStuden
         return (List) CollectionUtils.select(students, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
                 return student.getPayedTuition();
             }
         });
     }
 
-    public Collection<IStudent> readStudentsByDegreeType(final DegreeType degreeType)
+    public Collection<Student> readStudentsByDegreeType(final DegreeType degreeType)
             throws ExcepcaoPersistencia {
-        Collection<IStudent> students = readAll(Student.class);
+        Collection<Student> students = readAll(Student.class);
 
         return CollectionUtils.select(students, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
                 return student.getDegreeType().equals(degreeType);
             }
         });

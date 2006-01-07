@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
-import net.sourceforge.fenixedu.domain.support.IFAQSection;
+import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,7 +31,7 @@ public class ReadFAQSections implements IService {
         List faqSections = dao.readAll();
         return CollectionUtils.collect(faqSections, new Transformer() {
             public Object transform(Object arg0) {
-                IFAQSection faqSection = (IFAQSection) arg0;
+                FAQSection faqSection = (FAQSection) arg0;
                 return InfoFAQSection.newInfoFromDomain(faqSection);
             }
         });

@@ -24,11 +24,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,13 +43,13 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) sp.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
-        ICurricularYear curricularYear = (ICurricularYear) sp.getIPersistentCurricularYear().readByOID(
+        CurricularYear curricularYear = (CurricularYear) sp.getIPersistentCurricularYear().readByOID(
                 CurricularYear.class, infoCurricularYear.getIdInternal());
 
         List shifts = sp.getITurnoPersistente()
@@ -59,7 +59,7 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
         infoShifts = new ArrayList();
         for (int i = 0; i < shifts.size(); i++) {
-            IShift shift = (IShift) shifts.get(i);
+            Shift shift = (Shift) shifts.get(i);
 
             InfoShift infoShift = new InfoShift();
             infoShift.setAvailabilityFinal(shift.getAvailabilityFinal());
@@ -70,10 +70,10 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear impl
 
             infoShift.setInfoLessons(new ArrayList());
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-                    .newInfoFromDomain(((IShift) shifts.get(i)).getDisciplinaExecucao());
+                    .newInfoFromDomain(((Shift) shifts.get(i)).getDisciplinaExecucao());
             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
-            for (int j = 0; j < ((IShift) shifts.get(i)).getAssociatedLessons().size(); j++) {
-                ILesson lesson = ((IShift) shifts.get(i)).getAssociatedLessons().get(j);
+            for (int j = 0; j < ((Shift) shifts.get(i)).getAssociatedLessons().size(); j++) {
+                Lesson lesson = ((Shift) shifts.get(i)).getAssociatedLessons().get(j);
                 InfoLesson infoLesson = new InfoLesson();
                 InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
                 InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(lesson

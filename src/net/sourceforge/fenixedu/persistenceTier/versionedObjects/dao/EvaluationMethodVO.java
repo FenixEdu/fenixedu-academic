@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class EvaluationMethodVO extends VersionedObjectsBase implements IPersistentEvaluationMethod {
 
-    public IEvaluationMethod readByIdExecutionCourse(Integer executionCourseOID)
+    public EvaluationMethod readByIdExecutionCourse(Integer executionCourseOID)
             throws ExcepcaoPersistencia {
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        final ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseOID);
 
         return (executionCourse != null) ? executionCourse.getEvaluationMethod() : null;

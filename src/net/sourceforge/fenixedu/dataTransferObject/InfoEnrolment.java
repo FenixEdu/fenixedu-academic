@@ -1,17 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.lang.reflect.Proxy;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolmentInOptionalCurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
+import net.sourceforge.fenixedu.domain.EnrolmentInOptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
-
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author dcs-rjao
@@ -228,14 +225,9 @@ public class InfoEnrolment extends InfoObject {
         this.creationDate = creationDate;
     }
 
-    public void copyFromDomain(IEnrolment enrollment) {
+    public void copyFromDomain(Enrolment enrollment) {
         super.copyFromDomain(enrollment);
         if (enrollment != null) {
-
-            if (enrollment instanceof Proxy) {
-                enrollment = (IEnrolment) ProxyHelper.getRealObject(enrollment);
-            }
-
             setCreationDate(enrollment.getCreationDate());
             setEnrolmentEvaluationType(enrollment.getEnrolmentEvaluationType());
             setEnrollmentState(enrollment.getEnrollmentState());
@@ -248,9 +240,9 @@ public class InfoEnrolment extends InfoObject {
             setInfoStudentCurricularPlan(InfoStudentCurricularPlan.newInfoFromDomain(enrollment
                     .getStudentCurricularPlan()));
 
-            if (enrollment instanceof IEnrolmentInExtraCurricularCourse) {
+            if (enrollment instanceof EnrolmentInExtraCurricularCourse) {
                 setEnrollmentTypeResourceKey("option.curricularCourse.extra");
-            } else if (enrollment instanceof IEnrolmentInOptionalCurricularCourse) {
+            } else if (enrollment instanceof EnrolmentInOptionalCurricularCourse) {
                 setEnrollmentTypeResourceKey("option.curricularCourse.optional");
             } else {
                 setEnrollmentTypeResourceKey(enrollment.getCurricularCourse().getType().getKeyName());
@@ -259,7 +251,7 @@ public class InfoEnrolment extends InfoObject {
         }
     }
 
-    public static InfoEnrolment newInfoFromDomain(IEnrolment enrollment) {
+    public static InfoEnrolment newInfoFromDomain(Enrolment enrollment) {
         InfoEnrolment infoEnrolment = null;
         if (enrollment != null) {
             infoEnrolment = new InfoEnrolment();

@@ -9,9 +9,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -66,8 +66,8 @@ public class ResponsibleForValidator {
     private ResponsibleForValidator() {
     }
 
-    public void validateResponsibleForList(ITeacher teacher, IExecutionCourse executionCourse,
-            IProfessorship responsibleForAdded)
+    public void validateResponsibleForList(Teacher teacher, ExecutionCourse executionCourse,
+            Professorship responsibleForAdded)
             throws MaxResponsibleForExceed, InvalidCategory  {
        
         if (!teacher.getCategory().getCanBeExecutionCourseResponsible().booleanValue()) {
@@ -82,7 +82,7 @@ public class ResponsibleForValidator {
                     new Transformer() {
 
                         public Object transform(Object input) {
-                            IProfessorship responsibleFor = (IProfessorship) input;
+                            Professorship responsibleFor = (Professorship) input;
                             InfoProfessorship infoResponsibleFor = InfoProfessorship.newInfoFromDomain(responsibleFor);
                             return infoResponsibleFor;
                         }

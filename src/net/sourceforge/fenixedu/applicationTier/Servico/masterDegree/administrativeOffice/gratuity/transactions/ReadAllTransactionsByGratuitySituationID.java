@@ -10,17 +10,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
+import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -49,7 +49,7 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGratuitySituation gratuitySituation = (IGratuitySituation) sp.getIPersistentGratuitySituation()
+        GratuitySituation gratuitySituation = (GratuitySituation) sp.getIPersistentGratuitySituation()
                 .readByOID(GratuitySituation.class, gratuitySituationID);
 
         List insuranceTransactionList = sp.getIPersistentInsuranceTransaction()
@@ -59,7 +59,7 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
 
         // read insurance transactions
         for (Iterator iter = insuranceTransactionList.iterator(); iter.hasNext();) {
-            IInsuranceTransaction insuranceTransaction = (IInsuranceTransaction) iter.next();
+            InsuranceTransaction insuranceTransaction = (InsuranceTransaction) iter.next();
             paymentTransactionList.add(insuranceTransaction);
 
         }
@@ -70,7 +70,7 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
         // read gratuity transactions
         for (Iterator iter = gratuityTransactionList.iterator(); iter.hasNext();) {
 
-            IGratuityTransaction gratuityTransaction = (IGratuityTransaction) iter.next();
+            GratuityTransaction gratuityTransaction = (GratuityTransaction) iter.next();
             paymentTransactionList.add(gratuityTransaction);
         }
 
@@ -80,9 +80,9 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
         // read reimbursement transactions
         for (Iterator iter = paymentTransactionList.iterator(); iter.hasNext();) {
 
-            IPaymentTransaction paymentTransaction = (IPaymentTransaction) iter.next();
+            PaymentTransaction paymentTransaction = (PaymentTransaction) iter.next();
 
-            IGuideEntry guideEntry = paymentTransaction.getGuideEntry();
+            GuideEntry guideEntry = paymentTransaction.getGuideEntry();
 
             if ((guideEntry != null)
                     && ((guideEntry.getDocumentType().equals(DocumentType.INSURANCE) || (guideEntry
@@ -95,16 +95,16 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
                 }
 
                 for (Iterator iterator = reimbursementGuideEntryList.iterator(); iterator.hasNext();) {
-                    IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) iterator
+                    ReimbursementGuideEntry reimbursementGuideEntry = (ReimbursementGuideEntry) iterator
                             .next();
 
                     // we have to read again because of OJB bug
-                    IReimbursementGuideEntry newReimbursementGuideEntry = (IReimbursementGuideEntry) sp
+                    ReimbursementGuideEntry newReimbursementGuideEntry = (ReimbursementGuideEntry) sp
                             .getIPersistentReimbursementGuideEntry().readByOID(
                                     ReimbursementGuideEntry.class,
                                     reimbursementGuideEntry.getIdInternal());
 
-                    IReimbursementGuide reimbursementGuide = (IReimbursementGuide) sp
+                    ReimbursementGuide reimbursementGuide = (ReimbursementGuide) sp
                             .getIPersistentReimbursementGuide().readByOID(
                                     ReimbursementGuide.class,
                                     reimbursementGuideEntry.getKeyReimbursementGuide());
@@ -116,7 +116,7 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
                         continue;
 
                     }
-                    IReimbursementTransaction reimbursementTransaction = reimbursementTransactionDAO
+                    ReimbursementTransaction reimbursementTransaction = reimbursementTransactionDAO
                             .readByReimbursementGuideEntry(newReimbursementGuideEntry.getIdInternal());
 
                     if (reimbursementTransaction == null) {
@@ -131,17 +131,17 @@ public class ReadAllTransactionsByGratuitySituationID implements IService {
         }
 
         for (Iterator iter = insuranceTransactionList.iterator(); iter.hasNext();) {
-            IInsuranceTransaction insuranceTransaction = (IInsuranceTransaction) iter.next();
+            InsuranceTransaction insuranceTransaction = (InsuranceTransaction) iter.next();
             infoTransactionList.add(InfoTransaction.newInfoFromDomain(insuranceTransaction));
         }
 
         for (Iterator iter = gratuityTransactionList.iterator(); iter.hasNext();) {
-            IGratuityTransaction gratuityTransaction = (IGratuityTransaction) iter.next();
+            GratuityTransaction gratuityTransaction = (GratuityTransaction) iter.next();
             infoTransactionList.add(InfoTransaction.newInfoFromDomain(gratuityTransaction));
         }
 
         for (Iterator iter = reimbursementTransactionList.iterator(); iter.hasNext();) {
-            IReimbursementTransaction reimbursementTransaction = (IReimbursementTransaction) iter.next();
+            ReimbursementTransaction reimbursementTransaction = (ReimbursementTransaction) iter.next();
             infoTransactionList.add(InfoTransaction.newInfoFromDomain(reimbursementTransaction));
         }
 

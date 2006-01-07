@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,7 +25,7 @@ public class EditTeacherExpectationDefinitionPeriod implements IService {
         IPersistentTeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriodDAO = persistenceSupport
                 .getIPersistentTeacherExpectationDefinitionPeriod();
 
-        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (ITeacherExpectationDefinitionPeriod) teacherExpectationDefinitionPeriodDAO
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (TeacherExpectationDefinitionPeriod) teacherExpectationDefinitionPeriodDAO
                 .readByOID(TeacherExpectationDefinitionPeriod.class,
                         teacherExpectationDefinitionPeriodID);
 

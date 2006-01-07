@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -31,7 +31,7 @@ public class GetThemeById implements IService {
 			ISuportePersistente persistenceSupport = PersistenceSupportFactory
 					.getDefaultPersistenceSupport();
 			IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
-			ITheme theme = (ITheme) persistentObject.readByOID(Theme.class, themeID);
+			Theme theme = (Theme) persistentObject.readByOID(Theme.class, themeID);
 
 			infoTheme = InfoTheme.newInfoFromDomain(theme);
 

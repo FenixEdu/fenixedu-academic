@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,25 +37,25 @@ public class PrepareCreateStudentGroup implements IService {
 
         final ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IGrouping grouping = (IGrouping) ps.getIPersistentGrouping().readByOID(Grouping.class,
+        final Grouping grouping = (Grouping) ps.getIPersistentGrouping().readByOID(Grouping.class,
                 groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final List<IStudentGroup> allStudentsGroups = grouping.getStudentGroups();
-        final List<IAttends> attendsGrouping = new ArrayList(grouping.getAttends());
-        for (final IStudentGroup studentGroup : allStudentsGroups) {
-            for (IAttends attend : studentGroup.getAttends()) {
+        final List<StudentGroup> allStudentsGroups = grouping.getStudentGroups();
+        final List<Attends> attendsGrouping = new ArrayList(grouping.getAttends());
+        for (final StudentGroup studentGroup : allStudentsGroups) {
+            for (Attends attend : studentGroup.getAttends()) {
                 attendsGrouping.remove(attend);
             }
         }
 
         final List<InfoSiteStudentInformation> infoStudentInformationList = new ArrayList<InfoSiteStudentInformation>(attendsGrouping.size());
-        for (IAttends attend : attendsGrouping) {
-            final IStudent student = attend.getAluno();
-            final IPerson person = student.getPerson();
+        for (Attends attend : attendsGrouping) {
+            final Student student = attend.getAluno();
+            final Person person = student.getPerson();
             InfoSiteStudentInformation infoSiteStudentInformation = new InfoSiteStudentInformation();
             infoSiteStudentInformation.setEmail(person.getEmail());
             infoSiteStudentInformation.setName(person.getNome());

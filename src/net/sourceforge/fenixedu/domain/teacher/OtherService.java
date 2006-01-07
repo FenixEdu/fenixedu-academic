@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class OtherService extends OtherService_Base {
     
-    public OtherService(ITeacherService teacherService, Double credits, String reason) {
+    public OtherService(TeacherService teacherService, Double credits, String reason) {
         super();
         if(teacherService == null || credits == null || reason == null){
             throw new DomainException("arguments can't be null");

@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -50,21 +50,21 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         IPersistentObject persistentObject = sp.getIPersistentObject();
 
         //Execution Year
-        IExecutionYear executionYear = null;
+        ExecutionYear executionYear = null;
         if (executionYearId != null) {
 
-            executionYear = (IExecutionYear) persistentObject.readByOID(ExecutionYear.class,
+            executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
                     executionYearId);
         }
 
         //Execution period
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
+        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                 semester, executionYear.getYear());
 
         //Departement
 
-        IDepartment department = (IDepartment) persistentObject
+        Department department = (Department) persistentObject
                 .readByOID(Department.class, departmentId);
         
         List teachers = department.getCurrentTeachers();
@@ -75,7 +75,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         List professorships = new ArrayList();
         List responsibleFors = new ArrayList();
         while (iter.hasNext()) {
-            ITeacher teacher = (ITeacher) iter.next();
+            Teacher teacher = (Teacher) iter.next();
             List teacherProfessorships = null;
             if (executionYear == null) {
                 teacherProfessorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
@@ -94,14 +94,14 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             }
 
             List teacherResponsibleFors;
-            List<IProfessorship> teacherResponsibleForsAux = null;
+            List<Professorship> teacherResponsibleForsAux = null;
             
             if (executionYear == null) {
                 teacherResponsibleFors = teacher.responsibleFors();
             } else {
                 teacherResponsibleForsAux = teacher.responsibleFors();
-				teacherResponsibleFors = new ArrayList<IProfessorship>();
-                for(IProfessorship professorship : teacherResponsibleForsAux){
+				teacherResponsibleFors = new ArrayList<Professorship>();
+                for(Professorship professorship : teacherResponsibleForsAux){
                     if(professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().equals(executionYear))
                         teacherResponsibleFors.add(professorship);
                 }         
@@ -180,7 +180,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
 
                     public Object transform(Object input) {
 
-                        IProfessorship professorship = (IProfessorship) input;
+                        Professorship professorship = (Professorship) input;
 
                         InfoProfessorship infoProfessorShip = InfoProfessorshipWithAll
                                 .newInfoFromDomain(professorship);
@@ -205,14 +205,14 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
                         return detailedProfessorship;
                     }
 
-                    private List getInfoCurricularCourses(IExecutionCourse executionCourse) {
+                    private List getInfoCurricularCourses(ExecutionCourse executionCourse) {
 
                         List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
                                 .getAssociatedCurricularCourses(), new Transformer() {
 
                             public Object transform(Object input) {
 
-                                ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                                CurricularCourse curricularCourse = (CurricularCourse) input;
 
                                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);

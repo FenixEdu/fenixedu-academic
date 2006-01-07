@@ -13,12 +13,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.fileSuport.INode;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.ProposalState;
@@ -27,7 +26,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-public class ExecutionCourse extends ExecutionCourse_Base
+public class ExecutionCourse extends ExecutionCourse_Base implements INode
 {	
 	public String toString()
 	{
@@ -52,14 +51,14 @@ public class ExecutionCourse extends ExecutionCourse_Base
 
 	public INode getParentNode()
 	{
-		IExecutionPeriod executionPeriod = getExecutionPeriod();
+		ExecutionPeriod executionPeriod = getExecutionPeriod();
 		return executionPeriod;
 	}
 
-	public List<IGrouping> getGroupings()
+	public List<Grouping> getGroupings()
 	{
-		List<IGrouping> result = new ArrayList();
-		for (final IExportGrouping exportGrouping : this.getExportGroupings())
+		List<Grouping> result = new ArrayList();
+		for (final ExportGrouping exportGrouping : this.getExportGroupings())
 		{
 			if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
 					|| exportGrouping.getProposalState().getState() == ProposalState.CRIADOR)
@@ -70,9 +69,9 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return result;
 	}
 
-	public IGrouping getGroupingByName(String groupingName)
+	public Grouping getGroupingByName(String groupingName)
 	{
-		for (final IGrouping grouping : this.getGroupings())
+		for (final Grouping grouping : this.getGroupings())
 		{
 			if (grouping.getName().equals(groupingName))
 			{
@@ -82,7 +81,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return null;
 	}
 
-	public boolean existsGroupingExecutionCourse(IExportGrouping groupPropertiesExecutionCourse)
+	public boolean existsGroupingExecutionCourse(ExportGrouping groupPropertiesExecutionCourse)
 	{
 		return getExportGroupings().contains(groupPropertiesExecutionCourse);
 	}
@@ -101,7 +100,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		while (iter.hasNext() && !found)
 		{
 
-			IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iter.next();
+			ExportGrouping groupPropertiesExecutionCourseAux = (ExportGrouping) iter.next();
 			if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 3)
 			{
 				result = true;
@@ -114,7 +113,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 
 	public boolean isMasterDegreeOnly()
 	{
-		for (final ICurricularCourse curricularCourse : getAssociatedCurricularCourses())
+		for (final CurricularCourse curricularCourse : getAssociatedCurricularCourses())
 		{
 			if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso() != DegreeType.MASTER_DEGREE)
 			{
@@ -142,7 +141,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 
 	public void createSite()
 	{
-		final ISite site = new Site();
+		final Site site = new Site();
 		site.setExecutionCourse(this);
 	}
 
@@ -151,7 +150,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 	{
 		if (evaluationElements == null || evaluationElementsEng == null) throw new NullPointerException();
 
-		final IEvaluationMethod evaluationMethod = new EvaluationMethod();
+		final EvaluationMethod evaluationMethod = new EvaluationMethod();
 		evaluationMethod.setEvaluationElements(evaluationElements);
 		evaluationMethod.setEvaluationElementsEn(evaluationElementsEng);
 		evaluationMethod.setExecutionCourse(this);
@@ -162,7 +161,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 	{
 		if (title == null || authors == null || reference == null || year == null || optional == null) throw new NullPointerException();
 
-		final IBibliographicReference bibliographicReference = new BibliographicReference();
+		final BibliographicReference bibliographicReference = new BibliographicReference();
 		bibliographicReference.setTitle(title);
 		bibliographicReference.setAuthors(authors);
 		bibliographicReference.setReference(reference);
@@ -171,11 +170,11 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		bibliographicReference.setExecutionCourse(this);
 	}
 
-	public ICourseReport createCourseReport(String report)
+	public CourseReport createCourseReport(String report)
 	{
 		if (report == null) throw new NullPointerException();
 
-		final ICourseReport courseReport = new CourseReport();
+		final CourseReport courseReport = new CourseReport();
 		courseReport.setReport(report);
 		courseReport.setLastModificationDate(Calendar.getInstance().getTime());
 		courseReport.setExecutionCourse(this);
@@ -183,13 +182,13 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return courseReport;
 	}
 
-	private ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+	private Summary createSummary(String title, String summaryText, Integer studentsNumber,
 			Boolean isExtraLesson)
 	{
 
 		if (title == null || summaryText == null || isExtraLesson == null) throw new NullPointerException();
 
-		final ISummary summary = new Summary();
+		final Summary summary = new Summary();
 		summary.setTitle(title);
 		summary.setSummaryText(summaryText);
 		summary.setStudentsNumber(studentsNumber);
@@ -200,13 +199,13 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return summary;
 	}
 
-	public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
-			Boolean isExtraLesson, IProfessorship professorship)
+	public Summary createSummary(String title, String summaryText, Integer studentsNumber,
+			Boolean isExtraLesson, Professorship professorship)
 	{
 
 		if (professorship == null) throw new NullPointerException();
 
-		final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+		final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
 		summary.setProfessorship(professorship);
 		summary.setTeacher(null);
 		summary.setTeacherName(null);
@@ -214,13 +213,13 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return summary;
 	}
 
-	public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
-			Boolean isExtraLesson, ITeacher teacher)
+	public Summary createSummary(String title, String summaryText, Integer studentsNumber,
+			Boolean isExtraLesson, Teacher teacher)
 	{
 
 		if (teacher == null) throw new NullPointerException();
 
-		final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+		final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
 		summary.setTeacher(teacher);
 		summary.setProfessorship(null);
 		summary.setTeacherName(null);
@@ -228,13 +227,13 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return summary;
 	}
 
-	public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
+	public Summary createSummary(String title, String summaryText, Integer studentsNumber,
 			Boolean isExtraLesson, String teacherName)
 	{
 
 		if (teacherName == null) throw new NullPointerException();
 
-		final ISummary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
+		final Summary summary = createSummary(title, summaryText, studentsNumber, isExtraLesson);
 		summary.setTeacherName(teacherName);
 		summary.setTeacher(null);
 		summary.setProfessorship(null);
@@ -242,70 +241,70 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return summary;
 	}
 
-	public List<IProfessorship> responsibleFors()
+	public List<Professorship> responsibleFors()
 	{
-		final List<IProfessorship> res = new ArrayList<IProfessorship>();
-		for (final IProfessorship professorship : this.getProfessorships())
+		final List<Professorship> res = new ArrayList<Professorship>();
+		for (final Professorship professorship : this.getProfessorships())
 		{
 			if (professorship.getResponsibleFor()) res.add(professorship);
 		}
 		return res;
 	}
 
-	public IAttends getAttendsByStudent(final IStudent student)
+	public Attends getAttendsByStudent(final Student student)
 	{
 
-		return (IAttends) CollectionUtils.find(getAttends(), new Predicate()
+		return (Attends) CollectionUtils.find(getAttends(), new Predicate()
 		{
 
 			public boolean evaluate(Object o)
 			{
-				IAttends attends = (IAttends) o;
+				Attends attends = (Attends) o;
 				return attends.getAluno().equals(student);
 			}
 
 		});
 	}
 
-	public List<IExam> getAssociatedExams()
+	public List<Exam> getAssociatedExams()
 	{
-		List<IExam> associatedExams = new ArrayList<IExam>();
+		List<Exam> associatedExams = new ArrayList<Exam>();
 
-		for (IEvaluation evaluation : this.getAssociatedEvaluations())
+		for (Evaluation evaluation : this.getAssociatedEvaluations())
 		{
-			if (evaluation instanceof IExam)
+			if (evaluation instanceof Exam)
 			{
-				associatedExams.add((IExam) evaluation);
+				associatedExams.add((Exam) evaluation);
 			}
 		}
 
 		return associatedExams;
 	}
 
-	public List<IWrittenTest> getAssociatedWrittenTests()
+	public List<WrittenTest> getAssociatedWrittenTests()
 	{
-		List<IWrittenTest> associatedWrittenTests = new ArrayList<IWrittenTest>();
+		List<WrittenTest> associatedWrittenTests = new ArrayList<WrittenTest>();
 
-		for (IEvaluation evaluation : this.getAssociatedEvaluations())
+		for (Evaluation evaluation : this.getAssociatedEvaluations())
 		{
-			if (evaluation instanceof IWrittenTest)
+			if (evaluation instanceof WrittenTest)
 			{
-				associatedWrittenTests.add((IWrittenTest) evaluation);
+				associatedWrittenTests.add((WrittenTest) evaluation);
 			}
 		}
 
 		return associatedWrittenTests;
 	}
 
-	public List<IOnlineTest> getAssociatedOnlineTests()
+	public List<OnlineTest> getAssociatedOnlineTests()
 	{
-		List<IOnlineTest> associatedOnlineTests = new ArrayList<IOnlineTest>();
+		List<OnlineTest> associatedOnlineTests = new ArrayList<OnlineTest>();
 
-		for (IEvaluation evaluation : this.getAssociatedEvaluations())
+		for (Evaluation evaluation : this.getAssociatedEvaluations())
 		{
-			if (evaluation instanceof IOnlineTest)
+			if (evaluation instanceof OnlineTest)
 			{
-				associatedOnlineTests.add((IOnlineTest) evaluation);
+				associatedOnlineTests.add((OnlineTest) evaluation);
 			}
 		}
 
@@ -335,7 +334,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 
 			getNonAffiliatedTeachers().clear();
 
-			for (IUserGroup userGroup : this.getHookedGroups())
+			for (UserGroup userGroup : this.getHookedGroups())
 			{
 				userGroup.delete();
 			}
@@ -379,7 +378,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		{
 			return false;
 		}
-		final ISite site = getSite();
+		final Site site = getSite();
 		if (site != null)
 		{
 			if (site.hasAnyAssociatedAnnouncements())
@@ -392,7 +391,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
 			}
 		}
 
-		for (final IProfessorship professorship : getProfessorships())
+		for (final Professorship professorship : getProfessorships())
 		{
 			if (professorship.hasAnyAssociatedShiftProfessorship())
 			{
@@ -411,8 +410,8 @@ public class ExecutionCourse extends ExecutionCourse_Base
 		return true;
 	}
     
-    public boolean teacherLecturesExecutionCourse(ITeacher teacher){
-        for (IProfessorship professorship : this.getProfessorships()) {
+    public boolean teacherLecturesExecutionCourse(Teacher teacher){
+        for (Professorship professorship : this.getProfessorships()) {
             if(teacher.getProfessorships().contains(professorship)){
                 return true;
             }
@@ -420,12 +419,12 @@ public class ExecutionCourse extends ExecutionCourse_Base
         return false;
     } 
     
-    public List<net.sourceforge.fenixedu.domain.IProject> getAssociatedProjects() {
-        final List<net.sourceforge.fenixedu.domain.IProject> result = new ArrayList<net.sourceforge.fenixedu.domain.IProject>();
+    public List<net.sourceforge.fenixedu.domain.Project> getAssociatedProjects() {
+        final List<net.sourceforge.fenixedu.domain.Project> result = new ArrayList<net.sourceforge.fenixedu.domain.Project>();
         
-        for (IEvaluation evaluation : this.getAssociatedEvaluations()) {
-            if (evaluation instanceof net.sourceforge.fenixedu.domain.IProject) {
-                result.add((net.sourceforge.fenixedu.domain.IProject) evaluation);
+        for (Evaluation evaluation : this.getAssociatedEvaluations()) {
+            if (evaluation instanceof net.sourceforge.fenixedu.domain.Project) {
+                result.add((net.sourceforge.fenixedu.domain.Project) evaluation);
             }
         }
         return result;
@@ -435,14 +434,14 @@ public class ExecutionCourse extends ExecutionCourse_Base
     private int countAssociatedStudentsByEnrolmentNumber(int enrolmentNumber){
     	int executionCourseAssociatedStudents = 0;
 		
-		for(ICurricularCourse curricularCourseFromExecutionCourseEntry: getAssociatedCurricularCourses()) {
-			for(IEnrolment enrolmentsEntry: curricularCourseFromExecutionCourseEntry.getEnrolments()) {
+		for(CurricularCourse curricularCourseFromExecutionCourseEntry: getAssociatedCurricularCourses()) {
+			for(Enrolment enrolmentsEntry: curricularCourseFromExecutionCourseEntry.getEnrolments()) {
 				if(enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
 					
-					IStudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry.getStudentCurricularPlan();
+					StudentCurricularPlan studentCurricularPlanEntry = enrolmentsEntry.getStudentCurricularPlan();
 					int numberOfEnrolmentsForThatExecutionCourse = 0;
 					
-					for(IEnrolment enrolmentsFromStudentCPEntry: studentCurricularPlanEntry.getEnrolments()) {
+					for(Enrolment enrolmentsFromStudentCPEntry: studentCurricularPlanEntry.getEnrolments()) {
 						if(enrolmentsFromStudentCPEntry.getCurricularCourse() == curricularCourseFromExecutionCourseEntry) {
 							++numberOfEnrolmentsForThatExecutionCourse;
 						}
@@ -462,8 +461,8 @@ public class ExecutionCourse extends ExecutionCourse_Base
     public Integer getTotalEnrolmentStudentNumber() {  
 		int executionCourseStudentNumber = 0;
 		
-		for(ICurricularCourse curricularCourseFromExecutionCourseEntry: getAssociatedCurricularCourses()) {
-			for(IEnrolment enrolmentsEntry: curricularCourseFromExecutionCourseEntry.getEnrolments()) {
+		for(CurricularCourse curricularCourseFromExecutionCourseEntry: getAssociatedCurricularCourses()) {
+			for(Enrolment enrolmentsEntry: curricularCourseFromExecutionCourseEntry.getEnrolments()) {
 				if(enrolmentsEntry.getExecutionPeriod() == getExecutionPeriod()) {
 					executionCourseStudentNumber++;
 				}
@@ -488,7 +487,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
     public Double getTotalHours(ShiftType shiftType) {
     	double totalTime = 0;
 				
-    	for(IShift shiftEntry : this.getAssociatedShifts()){
+    	for(Shift shiftEntry : this.getAssociatedShifts()){
 			if(shiftEntry.getTipo() == shiftType){
 				totalTime += shiftEntry.hours();
 			}
@@ -502,7 +501,7 @@ public class ExecutionCourse extends ExecutionCourse_Base
     	int numShifts = 0;
 		int executionCourseStudentNumber = getTotalEnrolmentStudentNumber();
     	
-    	for(IShift shiftEntry : this.getAssociatedShifts()){
+    	for(Shift shiftEntry : this.getAssociatedShifts()){
 			if(shiftEntry.getTipo() == shiftType){
 				numShifts++;
 			}
@@ -514,11 +513,11 @@ public class ExecutionCourse extends ExecutionCourse_Base
     		return (double) executionCourseStudentNumber / numShifts;
     }
 
-    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations() {
-        List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
+    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations() {
+        List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
 
-        for (ICurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            List<IEnrolmentEvaluation> evaluations = curricularCourse
+        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+            List<EnrolmentEvaluation> evaluations = curricularCourse
                     .getActiveEnrollmentEvaluations(this.getExecutionPeriod());
 
             results.addAll(evaluations);
@@ -527,33 +526,33 @@ public class ExecutionCourse extends ExecutionCourse_Base
         return results;
     }
 
-    private static final Comparator<IEvaluation> EVALUATION_COMPARATOR = new Comparator<IEvaluation>() {
+    private static final Comparator<Evaluation> EVALUATION_COMPARATOR = new Comparator<Evaluation>() {
 
-        public int compare(IEvaluation evaluation1, IEvaluation evaluation2) {
+        public int compare(Evaluation evaluation1, Evaluation evaluation2) {
             final String evaluation1ComparisonString = evaluationComparisonString(evaluation1);
             final String evaluation2ComparisonString = evaluationComparisonString(evaluation2);
             return evaluation1ComparisonString.compareTo(evaluation2ComparisonString);
         }
 
-        private String evaluationComparisonString(final IEvaluation evaluation) {
+        private String evaluationComparisonString(final Evaluation evaluation) {
             final Date evaluationComparisonDate;
             final String evaluationTypeDistinguisher;
 
-            if (evaluation instanceof IOnlineTest) {
+            if (evaluation instanceof OnlineTest) {
                 evaluationTypeDistinguisher = "1";
-                final IOnlineTest onlineTest = (IOnlineTest) evaluation;
+                final OnlineTest onlineTest = (OnlineTest) evaluation;
                 evaluationComparisonDate = onlineTest.getDistributedTest().getBeginDateDate();
-            } else if (evaluation instanceof IProject) {
+            } else if (evaluation instanceof Project) {
                 evaluationTypeDistinguisher = "2";
-                final IProject project = (IProject) evaluation;
+                final Project project = (Project) evaluation;
                 evaluationComparisonDate = project.getBegin();
-            } else if (evaluation instanceof IWrittenEvaluation) {
+            } else if (evaluation instanceof WrittenEvaluation) {
                 evaluationTypeDistinguisher = "3";
-                final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) evaluation;
+                final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                 evaluationComparisonDate = writtenEvaluation.getDayDate();
-            } else if (evaluation instanceof IFinalEvaluation) {
+            } else if (evaluation instanceof FinalEvaluation) {
                 evaluationTypeDistinguisher = "4";
-                final IExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().get(0);
+                final ExecutionCourse executionCourse = evaluation.getAssociatedExecutionCourses().get(0);
                 evaluationComparisonDate = executionCourse.getExecutionPeriod().getEndDate();                
             } else {
                 throw new DomainException("unknown.evaluation.type", evaluation.getClass().getName());
@@ -562,15 +561,15 @@ public class ExecutionCourse extends ExecutionCourse_Base
             return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate);
         }
     };
-    public List<IEvaluation> getOrderedAssociatedEvaluations() {
-        final List<IEvaluation> orderedEvaluations = new ArrayList<IEvaluation>(getAssociatedEvaluations());
+    public List<Evaluation> getOrderedAssociatedEvaluations() {
+        final List<Evaluation> orderedEvaluations = new ArrayList<Evaluation>(getAssociatedEvaluations());
         Collections.sort(orderedEvaluations, EVALUATION_COMPARATOR);
         return orderedEvaluations;
     }
 
-    private static final Comparator<IAttends> ATTENDS_COMPARATOR = new BeanComparator("aluno.number");
-    public Set<IAttends> getOrderedAttends() {
-        final Set<IAttends> orderedAttends = new TreeSet<IAttends>(ATTENDS_COMPARATOR);
+    private static final Comparator<Attends> ATTENDS_COMPARATOR = new BeanComparator("aluno.number");
+    public Set<Attends> getOrderedAttends() {
+        final Set<Attends> orderedAttends = new TreeSet<Attends>(ATTENDS_COMPARATOR);
         orderedAttends.addAll(getAttends());
         return orderedAttends;
     }

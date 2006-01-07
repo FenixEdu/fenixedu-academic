@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 /**
  * @author Nuno Correia
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 public class MinimumNumberOfCurricularCoursesEnrollmentRule implements IEnrollmentRule {
     private int minCoursesToBeEnrolled;
 
-    public MinimumNumberOfCurricularCoursesEnrollmentRule(IStudentCurricularPlan studentCurricularPlan) {
+    public MinimumNumberOfCurricularCoursesEnrollmentRule(StudentCurricularPlan studentCurricularPlan) {
         minCoursesToBeEnrolled = studentCurricularPlan.getMinimumNumberOfCoursesToEnroll().intValue();
     }
 

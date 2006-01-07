@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherWithCreditsDTO;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -46,31 +46,31 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer executionPeriodID = Integer.valueOf(request.getParameter("executionPeriodId"));
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView,
                 "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });
-        List<ICategory> categories = (List<ICategory>) ServiceUtils.executeService(userView,
+        List<Category> categories = (List<Category>) ServiceUtils.executeService(userView,
                 "ReadAllDomainObjects", new Object[] { Category.class });
-        List<ICategory> monitorCategories = (List<ICategory>) CollectionUtils.select(categories, new Predicate(){
+        List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){
             public boolean evaluate(Object object) {
-                ICategory category = (ICategory) object;
+                Category category = (Category) object;
                 return category.getCode().equals("MNL") || category.getCode().equals("MNT");
             }});
         
         List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
-        for (IDepartment department : userView.getPerson().getManageableDepartmentCredits()) {
-            List<ITeacher> teachers = department.getTeachers(executionPeriod.getBeginDate(),
+        for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
+            List<Teacher> teachers = department.getTeachers(executionPeriod.getBeginDate(),
                     executionPeriod.getEndDate());
-            for (ITeacher teacher : teachers) {
+            for (Teacher teacher : teachers) {
                 double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
                 double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionPeriod);
                 int mandatoryLessonHours = 0;
-                ICategory category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
+                Category category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
                         executionPeriod.getEndDate());
                 if(!monitorCategories.contains(category)){
                     mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
                             executionPeriod.getEndDate());
                 }
-                ITeacherService teacherService = teacher
+                TeacherService teacherService = teacher
                         .getTeacherServiceByExecutionPeriod(executionPeriod);
                 CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
                         managementCredits, serviceExemptionsCredits, mandatoryLessonHours);

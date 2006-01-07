@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 
 /**
  * @author João Mota
@@ -15,7 +15,7 @@ public class InfoOptionalCurricularCourseGroupWithBranch extends InfoOptionalCur
     public InfoOptionalCurricularCourseGroupWithBranch() {
     }
 
-    public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
+    public void copyFromDomain(CurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
         if (curricularCourseGroup != null) {
             setInfoBranch(InfoBranch.newInfoFromDomain(curricularCourseGroup.getBranch()));
@@ -23,7 +23,7 @@ public class InfoOptionalCurricularCourseGroupWithBranch extends InfoOptionalCur
     }
 
     public static InfoCurricularCourseGroup newInfoFromDomain(
-            ICurricularCourseGroup curricularCourseGroup) {
+            CurricularCourseGroup curricularCourseGroup) {
         InfoCurricularCourseGroup infoCurricularCourseGroup = null;
         if (curricularCourseGroup != null) {
             infoCurricularCourseGroup = new InfoOptionalCurricularCourseGroupWithBranch();

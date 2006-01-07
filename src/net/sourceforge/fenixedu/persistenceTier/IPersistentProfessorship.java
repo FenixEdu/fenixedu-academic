@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
  * @author João Mota
@@ -16,7 +16,7 @@ public interface IPersistentProfessorship extends IPersistentObject {
     
     public List readByTeacher(Integer teacherID) throws ExcepcaoPersistencia;
 
-    public IProfessorship readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
+    public Professorship readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
             throws ExcepcaoPersistencia;
 
     public List readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia;

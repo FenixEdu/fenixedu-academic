@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -48,7 +48,7 @@ public class ReadStudentsWithoutGroup implements IService {
 				.getIPersistentGrouping();
 
 		final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-		final IGrouping grouping = (IGrouping) persistentGroupProperties
+		final Grouping grouping = (Grouping) persistentGroupProperties
 				.readByOID(Grouping.class, groupPropertiesCode);
 
 		if (grouping == null) {
@@ -64,11 +64,11 @@ public class ReadStudentsWithoutGroup implements IService {
 
 		final List attends = grouping.getAttends();
 
-		IStudent userStudent = null;
+		Student userStudent = null;
 		for (final Iterator iterator = attends.iterator(); iterator.hasNext(); ) {
-			final IAttends attend = (IAttends) iterator.next();
-			final IStudent student = attend.getAluno();
-			final IPerson person = student.getPerson();
+			final Attends attend = (Attends) iterator.next();
+			final Student student = attend.getAluno();
+			final Person person = student.getPerson();
 			if (person.getUsername().equalsIgnoreCase(username)) {
 				userStudent = student;
 				break;
@@ -85,20 +85,20 @@ public class ReadStudentsWithoutGroup implements IService {
 
 		final Set attendsWithOutGroupsSet = new HashSet(attends);
 		for (final Iterator iterator = allStudentsGroups.iterator(); iterator.hasNext(); ) {
-			final IStudentGroup studentGroup = (IStudentGroup) iterator.next();
+			final StudentGroup studentGroup = (StudentGroup) iterator.next();
 			
             final List allStudentGroupsAttends = studentGroup.getAttends();
 			
             for (final Iterator iterator2 = allStudentGroupsAttends.iterator(); iterator2.hasNext(); ) {
-				final IAttends studentGroupAttend = (IAttends) iterator2.next();
+				final Attends studentGroupAttend = (Attends) iterator2.next();
 				attendsWithOutGroupsSet.remove(studentGroupAttend);
 			}
 		}
 
 		final List infoStudentList = new ArrayList(attendsWithOutGroupsSet.size());
 		for (final Iterator iterator = attendsWithOutGroupsSet.iterator(); iterator.hasNext(); ) {
-			final IAttends attend = (IAttends) iterator.next();
-			final IStudent student = attend.getAluno();
+			final Attends attend = (Attends) iterator.next();
+			final Student student = attend.getAluno();
 
 			if (!student.equals(userStudent)) {
 				final InfoStudent infoStudent2 = getInfoStudentFromStudent(student);
@@ -111,7 +111,7 @@ public class ReadStudentsWithoutGroup implements IService {
 		return infoSiteStudentsWithoutGroup;
 	}
 
-	protected InfoStudent getInfoStudentFromStudent(IStudent userStudent) {
+	protected InfoStudent getInfoStudentFromStudent(Student userStudent) {
 		final InfoStudent infoStudent = InfoStudent
 				.newInfoFromDomain(userStudent);
 		final InfoPerson infoPerson = InfoPerson.newInfoFromDomain(userStudent

@@ -10,12 +10,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,9 +29,9 @@ import org.apache.commons.collections.Predicate;
  */
 public abstract class SpecificEnrolmentRule {
     
-    protected IStudentCurricularPlan studentCurricularPlan;
+    protected StudentCurricularPlan studentCurricularPlan;
 
-    protected IExecutionPeriod executionPeriod;
+    protected ExecutionPeriod executionPeriod;
 
     protected Integer creditsInSecundaryArea;
 
@@ -98,33 +98,33 @@ public abstract class SpecificEnrolmentRule {
         });
         return result;
     }
-    protected abstract List specificAlgorithm(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia ;
+    protected abstract List specificAlgorithm(StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia ;
     
-    protected abstract List filter(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod,
+    protected abstract List filter(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod,
             List curricularCoursesToBeEnrolledIn,
             final List selectedCurricularCoursesFromSpecializationAndSecundaryAreas);
     
-    protected List getSpecializationAreaCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
+    protected List getSpecializationAreaCurricularCourses(StudentCurricularPlan studentCurricularPlan) {
 
         return studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
                 studentCurricularPlan.getBranch(), AreaType.SPECIALIZATION);
     }
     
-    protected List getSecundaryAreaCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
+    protected List getSecundaryAreaCurricularCourses(StudentCurricularPlan studentCurricularPlan) {
 
         return studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(
                 studentCurricularPlan.getSecundaryBranch(), AreaType.SECONDARY);
     }
     
-    protected List getCommonAreasCurricularCourses(IStudentCurricularPlan studentCurricularPlan) {
+    protected List getCommonAreasCurricularCourses(StudentCurricularPlan studentCurricularPlan) {
 
-        IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
         List curricularCoursesFromCommonAreas = new ArrayList();
         List commonAreas = degreeCurricularPlan.getCommonAreas();
         int commonAreasSize = commonAreas.size();
         for (int i = 0; i < commonAreasSize; i++) {
-            IBranch area = (IBranch) commonAreas.get(i);
+            Branch area = (Branch) commonAreas.get(i);
             curricularCoursesFromCommonAreas.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(
                     area, AreaType.BASE));
         }
@@ -132,8 +132,8 @@ public abstract class SpecificEnrolmentRule {
         return curricularCoursesFromCommonAreas;
     }
         
-    protected boolean thereIsAnyTemporaryCurricularCourse(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod, final List areaCurricularCourses) {
+    protected boolean thereIsAnyTemporaryCurricularCourse(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod, final List areaCurricularCourses) {
 
         List enrolledEnrollments = studentCurricularPlan
                 .getAllStudentEnrolledEnrollmentsInExecutionPeriod(executionPeriod
@@ -141,7 +141,7 @@ public abstract class SpecificEnrolmentRule {
 
         List result = (List) CollectionUtils.select(enrolledEnrollments, new Predicate() {
             public boolean evaluate(Object obj) {
-                IEnrolment enrollment = (IEnrolment) obj;
+                Enrolment enrollment = (Enrolment) obj;
                 return areaCurricularCourses.contains(enrollment.getCurricularCourse());
             }
         });
@@ -163,7 +163,7 @@ public abstract class SpecificEnrolmentRule {
     }
     
     protected Collection getSpecializationAndSecundaryAreaCurricularCourses(
-            IStudentCurricularPlan studentCurricularPlan) {
+            StudentCurricularPlan studentCurricularPlan) {
 
         List specializationAreaCurricularCourses = getSpecializationAreaCurricularCourses(studentCurricularPlan);
         List secundaryAreaCurricularCourses = getSecundaryAreaCurricularCourses(studentCurricularPlan);
@@ -180,7 +180,7 @@ public abstract class SpecificEnrolmentRule {
 
         return (List) CollectionUtils.select(allCurricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) obj;
+                CurricularCourse curricularCourse = (CurricularCourse) obj;
                 return (studentCurricularPlan.isCurricularCourseApproved(curricularCourse) || studentCurricularPlan
                         .isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod));
             }

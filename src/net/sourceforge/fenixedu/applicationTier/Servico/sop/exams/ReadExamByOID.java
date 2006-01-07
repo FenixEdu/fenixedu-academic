@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -15,7 +15,7 @@ public class ReadExamByOID implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IExam exam = (IExam) persistentSupport.getIPersistentExam().readByOID(Exam.class, examID);
+        final Exam exam = (Exam) persistentSupport.getIPersistentExam().readByOID(Exam.class, examID);
         if (exam == null) {
             throw new FenixServiceException("error.noExam");
         }

@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -100,13 +100,13 @@ public class SummaryOJB extends PersistentObjectOJB implements IPersistentSummar
     }
 
    
-    public ISummary readSummaryByUnique(Integer shiftID, Date summaryDate, Date summaryHour)
+    public Summary readSummaryByUnique(Integer shiftID, Date summaryDate, Date summaryHour)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("shift.idInternal", shiftID);
         criteria.addEqualTo("summaryDate", summaryDate);
         criteria.addEqualTo("summaryHour", summaryHour);
 
-        return (ISummary) queryObject(Summary.class, criteria);
+        return (Summary) queryObject(Summary.class, criteria);
     }
 }

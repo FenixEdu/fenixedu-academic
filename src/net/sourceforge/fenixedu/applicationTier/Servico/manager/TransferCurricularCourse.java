@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,15 +29,15 @@ public class TransferCurricularCourse implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IExecutionCourse sourceExecutionCourse = (IExecutionCourse) persistentSuport
+        final ExecutionCourse sourceExecutionCourse = (ExecutionCourse) persistentSuport
                 .getIPersistentObject().readByOID(ExecutionCourse.class, sourceExecutionCourseId);
-        final IExecutionCourse destinationExecutionCourse = (IExecutionCourse) persistentSuport
+        final ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentSuport
                 .getIPersistentObject().readByOID(ExecutionCourse.class, destinationExecutionCourseId);
 
-        final ICurricularCourse curricularCourse = (ICurricularCourse) CollectionUtils.find(
+        final CurricularCourse curricularCourse = (CurricularCourse) CollectionUtils.find(
                 sourceExecutionCourse.getAssociatedCurricularCourses(), new Predicate() {
                     public boolean evaluate(Object arg0) {
-                        ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                        CurricularCourse curricularCourse = (CurricularCourse) arg0;
                         return (curricularCourseId == curricularCourse.getIdInternal());
                     }
                 });
@@ -60,20 +60,20 @@ public class TransferCurricularCourse implements IService {
      * @throws ExcepcaoPersistencia
      */
     private void transferAttends(Integer destinationExecutionCourseId,
-            IExecutionCourse sourceExecutionCourse, IExecutionCourse destinationExecutionCourse,
-            ICurricularCourse curricularCourse, Set<Integer> transferedStudents)
+            ExecutionCourse sourceExecutionCourse, ExecutionCourse destinationExecutionCourse,
+            CurricularCourse curricularCourse, Set<Integer> transferedStudents)
             throws ExcepcaoPersistencia {
-        for (IAttends attend : sourceExecutionCourse.getAttends()) {
-            IEnrolment enrollment = attend.getEnrolment();
-            final IStudent student = attend.getAluno();
+        for (Attends attend : sourceExecutionCourse.getAttends()) {
+            Enrolment enrollment = attend.getEnrolment();
+            final Student student = attend.getAluno();
             if (enrollment != null) {
-                ICurricularCourse associatedCurricularCourse = attend.getEnrolment()
+                CurricularCourse associatedCurricularCourse = attend.getEnrolment()
                         .getCurricularCourse();
                 if (curricularCourse == associatedCurricularCourse) {
-                    IAttends existingAttend = (IAttends) CollectionUtils.find(destinationExecutionCourse
+                    Attends existingAttend = (Attends) CollectionUtils.find(destinationExecutionCourse
                             .getAttends(), new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            IAttends attendFromDestination = (IAttends) arg0;
+                            Attends attendFromDestination = (Attends) arg0;
                             return (attendFromDestination.getAluno() == student);
                         }
                     });
@@ -95,14 +95,14 @@ public class TransferCurricularCourse implements IService {
      * @param transferedStudents
      * @throws ExcepcaoPersistencia
      */
-    private void deleteShiftStudents(IExecutionCourse sourceExecutionCourse, Set transferedStudents)
+    private void deleteShiftStudents(ExecutionCourse sourceExecutionCourse, Set transferedStudents)
             throws ExcepcaoPersistencia {
-        List<IShift> shifts = sourceExecutionCourse.getAssociatedShifts();
+        List<Shift> shifts = sourceExecutionCourse.getAssociatedShifts();
 
-        for (IShift shift : shifts) {
-            Iterator<IStudent> iter = shift.getStudentsIterator();
+        for (Shift shift : shifts) {
+            Iterator<Student> iter = shift.getStudentsIterator();
             while (iter.hasNext()) {
-                IStudent student = iter.next();
+                Student student = iter.next();
                 if (transferedStudents.contains(student.getIdInternal())) {
                     iter.remove();
                 }

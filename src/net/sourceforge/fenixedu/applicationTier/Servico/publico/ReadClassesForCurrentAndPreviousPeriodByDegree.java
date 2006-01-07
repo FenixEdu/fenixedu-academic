@@ -6,9 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -30,22 +30,22 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree implements IService 
         ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
         ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
 
-        IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
+        ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
                 .readActualExecutionPeriod();
-        IExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod
+        ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod
                 .getPreviousExecutionPeriod();
 
-        IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeOID);
+        Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeOID);
 
         List classes = persistentClass.readAll();
 
         return constructViews(classes, degree, currentExecutionPeriod, previouseExecutionPeriod);
     }
 
-    private Object constructViews(List classes, final IDegree degree, final IExecutionPeriod currentExecutionPeriod, final IExecutionPeriod previouseExecutionPeriod) {
+    private Object constructViews(List classes, final Degree degree, final ExecutionPeriod currentExecutionPeriod, final ExecutionPeriod previouseExecutionPeriod) {
         List classViews = new ArrayList();
         for (Iterator iterator = classes.iterator(); iterator.hasNext();) {
-            ISchoolClass klass = (ISchoolClass) iterator.next();
+            SchoolClass klass = (SchoolClass) iterator.next();
             if (isInPeriodsAndForDegree(klass, degree, currentExecutionPeriod,
                     previouseExecutionPeriod)) {
                 ClassView classView = new ClassView();
@@ -63,8 +63,8 @@ public class ReadClassesForCurrentAndPreviousPeriodByDegree implements IService 
         return classViews;
     }
 
-    private boolean isInPeriodsAndForDegree(ISchoolClass klass, IDegree degree,
-            IExecutionPeriod currentExecutionPeriod, IExecutionPeriod previouseExecutionPeriod) {
+    private boolean isInPeriodsAndForDegree(SchoolClass klass, Degree degree,
+            ExecutionPeriod currentExecutionPeriod, ExecutionPeriod previouseExecutionPeriod) {
         return (klass.getExecutionPeriod().getIdInternal()
                 .equals(currentExecutionPeriod.getIdInternal()) || klass.getExecutionPeriod()
                 .getIdInternal().equals(previouseExecutionPeriod.getIdInternal()))

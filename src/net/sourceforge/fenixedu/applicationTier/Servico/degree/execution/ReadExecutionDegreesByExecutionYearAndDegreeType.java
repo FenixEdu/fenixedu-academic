@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -58,7 +58,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IServic
                 new Transformer() {
 
                     public Object transform(Object input) {
-                        IExecutionDegree executionDegree = (IExecutionDegree) input;
+                        ExecutionDegree executionDegree = (ExecutionDegree) input;
                         InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                                 .newInfoFromDomain(executionDegree);
 

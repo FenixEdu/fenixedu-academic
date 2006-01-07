@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;
@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class SibsPaymentFileVO extends VersionedObjectsBase implements IPersistentSibsPaymentFile {
 
-	public ISibsPaymentFile readByFilename(final String filename) throws ExcepcaoPersistencia {
+	public SibsPaymentFile readByFilename(final String filename) throws ExcepcaoPersistencia {
 
-		List<ISibsPaymentFile> sibsPaymentFiles = (List<ISibsPaymentFile>) readAll(SibsPaymentFile.class);
+		List<SibsPaymentFile> sibsPaymentFiles = (List<SibsPaymentFile>) readAll(SibsPaymentFile.class);
 
-		for (ISibsPaymentFile sibsPaymentFile : sibsPaymentFiles) {
+		for (SibsPaymentFile sibsPaymentFile : sibsPaymentFiles) {
 			if (sibsPaymentFile.getFilename().equals(filename)) {
 				return sibsPaymentFile;
 			}

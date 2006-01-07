@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -21,25 +21,25 @@ public class PersonTest extends DomainTestBase {
 	InfoPerson infoPerson2;
 	InfoPerson infoPerson3;
 
-	IRole personRole;
-	IRole teacherRole;
-	IRole coordinatorRole;
-	IRole grantOwnerRole;
-	IRole studentRole;
-	IRole employeeRole;
+	Role personRole;
+	Role teacherRole;
+	Role coordinatorRole;
+	Role grantOwnerRole;
+	Role studentRole;
+	Role employeeRole;
 
-	IStudent degreeStudent;
-	IStudent masterDegreeStudent;
+	Student degreeStudent;
+	Student masterDegreeStudent;
     
-    ITeacher teacher;
+    Teacher teacher;
     
-    IGrantOwner grantOwner;
+    GrantOwner grantOwner;
     
-    IEmployee employee;
+    Employee employee;
 
 	IDDocumentType documentType;
 
-	ICountry country;
+	Country country;
 
 	MaritalStatus maritalStatus = MaritalStatus.WIDOWER;
 
@@ -233,13 +233,13 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testCreatePerson1() {
-		IPerson person = new Person(infoPerson1, country);        
+		Person person = new Person(infoPerson1, country);        
 
 		assertPersonContent(person, country);
 	}
 
 	public void testCreatePerson2() {
-		IPerson person = new Person(nome, numDocumentoIdentificacao,
+		Person person = new Person(nome, numDocumentoIdentificacao,
 				documentType, sexo);
 
 		assertEquals(person.getNome(), nome);
@@ -250,7 +250,7 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testCreatePerson3() {
-		IPerson person = new Person(username, nome, Gender.MALE, address,
+		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 
@@ -271,21 +271,21 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testEditPerson() {
-		IPerson person = new Person(infoPerson2, country);
+		Person person = new Person(infoPerson2, country);
 
 		person.edit(infoPerson1, country);
 		assertPersonContent(person, country);
 	}
 
 	public void testEditPersonalContactInformation() {
-		IPerson person = new Person(infoPerson3, country);
+		Person person = new Person(infoPerson3, country);
 
 		person.editPersonalContactInformation(infoPerson1);
 		assertPersonContent(person, country);
 	}
 
 	public void testEdit() {
-		IPerson person = new Person(username, nome, Gender.MALE, address,
+		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 		person.edit("new" + nome, "new" + address, "new" + telefone, "new"
@@ -300,14 +300,14 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testChangeUsername() {
-		IPerson person = new Person(infoPerson1, country);
+		Person person = new Person(infoPerson1, country);
 		person.setUsername("user1");
-		IPerson person2 = new Person(infoPerson2, country);
+		Person person2 = new Person(infoPerson2, country);
 		person2.setUsername("user2");
-		IPerson person3 = new Person(infoPerson3, country);
+		Person person3 = new Person(infoPerson3, country);
 		person3.setUsername("user3");
 
-		List<IPerson> persons = new ArrayList<IPerson>();
+		List<Person> persons = new ArrayList<Person>();
 		persons.add(person);
 		persons.add(person2);
 		persons.add(person3);
@@ -346,7 +346,7 @@ public class PersonTest extends DomainTestBase {
 		String someOldPassword = "someOldPassword";
 		String newPassword = "newPassword";
 
-		IPerson person = new Person(infoPerson1, country);
+		Person person = new Person(infoPerson1, country);
 		person.setPassword(PasswordEncryptor.encryptPassword(someOldPassword));
 
 		try {
@@ -410,7 +410,7 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testAddRoleNormal() {
-		IPerson person = new Person(username, nome, Gender.MALE, address,
+		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 		assertEquals(person.getPersonRolesCount(), 0);
@@ -429,7 +429,7 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testAddRoleDependencies() {
-		IPerson person = new Person(username, nome, Gender.MALE, address,
+		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
         person.setTeacher(teacher);
@@ -452,7 +452,7 @@ public class PersonTest extends DomainTestBase {
     
     public void testAddRoleWhenTheConnectionDoesntExist()
     {
-        IPerson person = new Person(username, nome, Gender.MALE, address,
+        Person person = new Person(username, nome, Gender.MALE, address,
                 telefone, telemovel, enderecoWeb, email,
                 numDocumentoIdentificacao, IDDocumentType.EXTERNAL);   
         try {
@@ -463,7 +463,7 @@ public class PersonTest extends DomainTestBase {
     }
 
 	public void testAddRoleTwice() {
-		IPerson person = new Person(username, nome, Gender.MALE, address,
+		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 		assertEquals(person.getPersonRolesCount(), 0);
@@ -477,7 +477,7 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testRemoveRole1() {
-		IPerson person = new Person(username, nome, Gender.MALE, address,
+		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
 		assertEquals(person.getPersonRolesCount(), 0);
@@ -488,13 +488,13 @@ public class PersonTest extends DomainTestBase {
 	}
 
 	public void testRemoveRole2() {
-		IPerson person = new Person(username, nome, Gender.MALE, address,
+		Person person = new Person(username, nome, Gender.MALE, address,
 				telefone, telemovel, enderecoWeb, email,
 				numDocumentoIdentificacao, IDDocumentType.EXTERNAL);
-        ITeacher teacher = new Teacher();
+        Teacher teacher = new Teacher();
         teacher.setTeacherNumber(Integer.valueOf(1));
         teacher.setPerson(person);
-        ICoordinator coordinator = new Coordinator();
+        Coordinator coordinator = new Coordinator();
         coordinator.setTeacher(teacher);
 		person.getPersonRoles().add(personRole);
 		person.getPersonRoles().add(teacherRole);
@@ -592,7 +592,7 @@ public class PersonTest extends DomainTestBase {
 		assertEquals(person.getUsername(), "L"+degreeStudentNumber);
 	}
 
-	private void assertPersonContent(IPerson person, ICountry country) {
+	private void assertPersonContent(Person person, Country country) {
 
 		assertEquals(person.getPais(), country);
 		assertEquals(person.getAvailableEmail(), availableEmail);

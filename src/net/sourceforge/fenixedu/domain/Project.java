@@ -15,7 +15,7 @@ public class Project extends Project_Base {
         this.setOjbConcreteClass(Project.class.getName());
     }
 
-    public Project(String name, Date begin, Date end, String description, IExecutionCourse executionCourse) {        
+    public Project(String name, Date begin, Date end, String description, ExecutionCourse executionCourse) {        
         this();
         if (name == null || begin == null || end == null || executionCourse == null) {
             throw new NullPointerException();

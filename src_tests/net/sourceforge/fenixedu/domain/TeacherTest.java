@@ -11,32 +11,32 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class TeacherTest extends DomainTestBase {
 
-    private ITeacher teacher, teacher2, teacher3;
-    private IPerson person1, person2;
-    private IExecutionCourse executionCourse, executionCourse2, executionCourse3;
-    private IProfessorship professorship, professorship2, professorship3, professorship4, professorship5, professorship6;
-    private IExecutionYear  executionYear;
-    private IExecutionPeriod executionPeriod;
-    private ICategory category;   
-    private IPublication publication;
-    private IPublication publication2;
-    private IPublication publication3;
-    private IPublication publication4;
-    private IPublication publication5;
-    private IPublication publication6;
-    private IPublication publication7;
-    private IPublication publication8;
-    private IPublication publication9;
+    private Teacher teacher, teacher2, teacher3;
+    private Person person1, person2;
+    private ExecutionCourse executionCourse, executionCourse2, executionCourse3;
+    private Professorship professorship, professorship2, professorship3, professorship4, professorship5, professorship6;
+    private ExecutionYear  executionYear;
+    private ExecutionPeriod executionPeriod;
+    private Category category;   
+    private Publication publication;
+    private Publication publication2;
+    private Publication publication3;
+    private Publication publication4;
+    private Publication publication5;
+    private Publication publication6;
+    private Publication publication7;
+    private Publication publication8;
+    private Publication publication9;
         
     
     protected void setUp() throws Exception {
@@ -156,7 +156,7 @@ public class TeacherTest extends DomainTestBase {
     } 
 
     public void testAddPublicationToTeacherInformationSheet() {
-        List<IPublication> publications;
+        List<Publication> publications;
         
         assertEquals(teacher.getTeacherPublicationsCount(), 0);
 
@@ -167,8 +167,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Should have inserted the publication cleanly, but threw a DomainException");
         }
         assertEquals(teacher.getTeacherPublicationsCount(), 1);
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertTrue(publications.contains(publication));
@@ -180,7 +180,7 @@ public class TeacherTest extends DomainTestBase {
     
     
     public void testAddPublicationToTeacherInformationSheetWhenFull() {
-        List<IPublication> publications;
+        List<Publication> publications;
         
         assertEquals(teacher.getTeacherPublicationsCount(), 0);
 
@@ -191,8 +191,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Should have inserted the publication cleanly, but threw a DomainException");
         }
         assertEquals(teacher.getTeacherPublicationsCount(), 1);
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertTrue(publications.contains(publication));
@@ -206,8 +206,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Should have inserted the publication cleanly, but threw a DomainException");
         }
         assertEquals(teacher.getTeacherPublicationsCount(), 2);
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertTrue(publications.contains(publication));
@@ -223,8 +223,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Should have inserted the publication cleanly, but threw a DomainException");
         }
         assertEquals(teacher.getTeacherPublicationsCount(), 3);
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertTrue(publications.contains(publication));
@@ -242,8 +242,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Should have inserted the publication cleanly, but threw a DomainException");
         }
         assertEquals(teacher.getTeacherPublicationsCount(), 4);
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertTrue(publications.contains(publication));
@@ -263,8 +263,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Should have inserted the publication cleanly, but threw a DomainException");
         }
         assertEquals(teacher.getTeacherPublicationsCount(), 5);
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertTrue(publications.contains(publication));
@@ -286,8 +286,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Should have inserted the publication cleanly, but threw a DomainException");
         }
         assertEquals(teacher.getTeacherPublicationsCount(), 6);
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertTrue(publications.contains(publication));
@@ -316,7 +316,7 @@ public class TeacherTest extends DomainTestBase {
     
     public void testRemovePublicationFromTeacherInformationSheet() {
         
-        List<IPublication> publications;
+        List<Publication> publications;
         
         assertEquals(teacher2.getTeacherPublicationsCount(), 2);
         assertEquals(publication8.getPublicationTeachersCount(), 1);
@@ -328,8 +328,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Could not remove an associated publication");
         }
         
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher2.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher2.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertEquals(teacher2.getTeacherPublicationsCount(), 1);
@@ -343,8 +343,8 @@ public class TeacherTest extends DomainTestBase {
             fail("Could not remove an associated publication");
         }
         
-        publications = new ArrayList<IPublication>();
-        for(IPublicationTeacher publicationTeacher : teacher2.getTeacherPublications()) {
+        publications = new ArrayList<Publication>();
+        for(PublicationTeacher publicationTeacher : teacher2.getTeacherPublications()) {
             publications.add(publicationTeacher.getPublication());
         }
         assertEquals(teacher2.getTeacherPublicationsCount(), 0);

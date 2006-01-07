@@ -1,7 +1,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
-import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -15,7 +15,7 @@ public class DeletePublication implements IService {
 		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
 
-        final IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class, publicationId);
+        final Publication publication = (Publication) persistentPublication.readByOID(Publication.class, publicationId);
         publication.delete();
         
 	}

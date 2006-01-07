@@ -9,8 +9,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
-import net.sourceforge.fenixedu.domain.support.IFAQEntry;
-import net.sourceforge.fenixedu.domain.support.IFAQSection;
+import net.sourceforge.fenixedu.domain.support.FAQEntry;
+import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQEntries;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
@@ -32,13 +32,13 @@ public class DeleteFAQSection implements IService {
 
         List entriesToDelete = persistentFAQEntries.readEntriesInSection(sectionId);
         for (int i = 0; i < entriesToDelete.size(); i++) {
-            IFAQEntry faqEntry = (IFAQEntry) entriesToDelete.get(i);
+            FAQEntry faqEntry = (FAQEntry) entriesToDelete.get(i);
             dao.deleteByOID(FAQEntry.class, faqEntry.getIdInternal());
         }
 
         List subSectionsToDelete = persistentFAQSection.readSubSectionsInSection(sectionId);
         for (int i = 0; i < subSectionsToDelete.size(); i++) {
-            IFAQSection subSction = (IFAQSection) subSectionsToDelete.get(i);
+            FAQSection subSction = (FAQSection) subSectionsToDelete.get(i);
             run(subSction.getIdInternal());
         }
 

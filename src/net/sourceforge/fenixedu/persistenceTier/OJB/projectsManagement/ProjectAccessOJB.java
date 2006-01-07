@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -25,22 +25,22 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
     public ProjectAccessOJB() {
     }
 
-    public IProjectAccess readByPersonIdAndProjectAndDate(Integer personId, Integer keyProject) throws ExcepcaoPersistencia {
+    public ProjectAccess readByPersonIdAndProjectAndDate(Integer personId, Integer keyProject) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", personId);
         criteria.addEqualTo("keyProject", keyProject);
         criteria.addGreaterOrEqualThan("end", Calendar.getInstance().getTime());
-        return (IProjectAccess) queryObject(ProjectAccess.class, criteria);
+        return (ProjectAccess) queryObject(ProjectAccess.class, criteria);
     }
 
-    public List<IProjectAccess> readByCoordinator(Integer coordinatorCode) throws ExcepcaoPersistencia {
+    public List<ProjectAccess> readByCoordinator(Integer coordinatorCode) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyProjectCoordinator", coordinatorCode);
         criteria.addGreaterOrEqualThan("end", Calendar.getInstance().getTime());
         return queryList(ProjectAccess.class, criteria);
     }
 
-    public List<IProjectAccess> readByPersonUsernameAndCoordinatorAndDate(String username, Integer coordinatorCode) throws ExcepcaoPersistencia {
+    public List<ProjectAccess> readByPersonUsernameAndCoordinatorAndDate(String username, Integer coordinatorCode) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.username", username);
         criteria.addEqualTo("keyProjectCoordinator", coordinatorCode);
@@ -58,9 +58,9 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
             criteria.addEqualTo("costCenter", true);
         } else
             criteria.addEqualTo("costCenter", false);
-        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<ProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
         List<Integer> result = new ArrayList<Integer>();
-        for (IProjectAccess projectAccess : allPersonProjects)
+        for (ProjectAccess projectAccess : allPersonProjects)
             result.add(projectAccess.getKeyProject());
         return result;
     }
@@ -71,9 +71,9 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         criteria.addLessOrEqualThan("begin", Calendar.getInstance().getTime());
         criteria.addGreaterOrEqualThan("end", Calendar.getInstance().getTime());
         criteria.addEqualTo("costCenter", true);
-        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<ProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
         List<Integer> result = new ArrayList<Integer>();
-        for (IProjectAccess projectAccess : allPersonProjects)
+        for (ProjectAccess projectAccess : allPersonProjects)
             if (!result.contains(projectAccess.getKeyProjectCoordinator()))
                 result.add(projectAccess.getKeyProjectCoordinator());
         return result;
@@ -87,9 +87,9 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         if (!all)
             criteria.addLessOrEqualThan("begin", Calendar.getInstance().getTime());
         criteria.addGreaterOrEqualThan("end", Calendar.getInstance().getTime());
-        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<ProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
         List<Integer> result = new ArrayList<Integer>();
-        for (IProjectAccess projectAccess : allPersonProjects)
+        for (ProjectAccess projectAccess : allPersonProjects)
             result.add(projectAccess.getKeyProject());
         return result;
     }
@@ -104,9 +104,9 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
             criteria.addEqualTo("costCenter", true);
         } else
             criteria.addEqualTo("costCenter", false);
-        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        List<ProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
         List<Integer> result = new ArrayList<Integer>();
-        for (IProjectAccess projectAccess : allPersonProjects)
+        for (ProjectAccess projectAccess : allPersonProjects)
             if (!result.contains(projectAccess.getKeyProjectCoordinator()))
                 result.add(projectAccess.getKeyProjectCoordinator());
         return result;
@@ -124,7 +124,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
 
     }
 
-    public int countByPersonAndProject(IPerson person, Integer keyProject) {
+    public int countByPersonAndProject(Person person, Integer keyProject) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addEqualTo("keyProject", keyProject);
@@ -133,7 +133,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return count(ProjectAccess.class, criteria);
     }
 
-    public int countByPersonAndCC(IPerson person, Boolean cc) {
+    public int countByPersonAndCC(Person person, Boolean cc) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addLessOrEqualThan("begin", Calendar.getInstance().getTime());
@@ -142,27 +142,27 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         return count(ProjectAccess.class, criteria);
     }
 
-    public void deleteByPersonAndCC(IPerson person, Boolean cc) throws ExcepcaoPersistencia {
+    public void deleteByPersonAndCC(Person person, Boolean cc) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addEqualTo("costCenter", cc);
-        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
-        for (IProjectAccess projectAccess : allPersonProjects) {
+        List<ProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        for (ProjectAccess projectAccess : allPersonProjects) {
             delete(projectAccess);
         }
     }
 
-    public void deleteByPersonAndDate(IPerson person) throws ExcepcaoPersistencia {
+    public void deleteByPersonAndDate(Person person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", person.getIdInternal());
         criteria.addLessOrEqualThan("end", Calendar.getInstance().getTime());
-        List<IProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
-        for (IProjectAccess projectAccess : allPersonProjects) {
+        List<ProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
+        for (ProjectAccess projectAccess : allPersonProjects) {
             delete(projectAccess);
         }
     }
 
-    public void delete(IProjectAccess projectAccess) throws ExcepcaoPersistencia {
+    public void delete(ProjectAccess projectAccess) throws ExcepcaoPersistencia {
         super.delete(projectAccess);
     }
 }

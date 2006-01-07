@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,7 +29,7 @@ public class ReadBranchesByDegreeCurricularPlan implements IService {
 		List allBranches = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
 				.getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
 						idDegreeCurricularPlan);
 		if (degreeCurricularPlan == null) {
@@ -46,7 +46,7 @@ public class ReadBranchesByDegreeCurricularPlan implements IService {
 		List result = new ArrayList(allBranches.size());
 
 		while (iterator.hasNext()) {
-			result.add(InfoBranch.newInfoFromDomain((IBranch) iterator.next()));
+			result.add(InfoBranch.newInfoFromDomain((Branch) iterator.next()));
 		}
 		return result;
 	}

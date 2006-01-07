@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateEnrolment;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateEnrolment;
@@ -39,7 +39,7 @@ public class WriteCandidateEnrolments implements IService {
         IPersistentCandidateEnrolment persistentCandidateEnrolment = sp
                 .getIPersistentCandidateEnrolment();
 
-        IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         candidateID, true);
 
@@ -53,11 +53,11 @@ public class WriteCandidateEnrolments implements IService {
             masterDegreeCandidate.setGivenCreditsRemarks(givenCreditsRemarks);
         }
 
-        List<ICandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
         List<Integer> candidateEnrolmentsCurricularCoursesIDs = (List<Integer>) CollectionUtils.collect(
                 candidateEnrolments, new Transformer() {
                     public Object transform(Object arg0) {
-                        ICandidateEnrolment candidateEnrolment = (ICandidateEnrolment) arg0;
+                        CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
                         return candidateEnrolment.getCurricularCourse().getIdInternal();
                     }
                 });
@@ -68,10 +68,10 @@ public class WriteCandidateEnrolments implements IService {
         final Collection<Integer> curricularCoursesToDelete = CollectionUtils.subtract(
                 candidateEnrolmentsCurricularCoursesIDs, selectedCurricularCoursesIDs);
 
-        Collection<ICandidateEnrolment> candidateEnrollmentsToDelete = CollectionUtils
+        Collection<CandidateEnrolment> candidateEnrollmentsToDelete = CollectionUtils
                 .select(candidateEnrolments, new Predicate() {
                     public boolean evaluate(Object arg0) {
-                        ICandidateEnrolment candidateEnrolment = (ICandidateEnrolment) arg0;
+                        CandidateEnrolment candidateEnrolment = (CandidateEnrolment) arg0;
                         return (curricularCoursesToDelete.contains(candidateEnrolment
                                 .getCurricularCourse().getIdInternal()));
                     }
@@ -89,10 +89,10 @@ public class WriteCandidateEnrolments implements IService {
      * @throws ExcepcaoPersistencia
      */
     private void deleteRemainingEnrollments(IPersistentCandidateEnrolment persistentCandidateEnrolment,
-            Collection<ICandidateEnrolment> candidateEnrollmentsToDelete) throws ExcepcaoPersistencia {
+            Collection<CandidateEnrolment> candidateEnrollmentsToDelete) throws ExcepcaoPersistencia {
         Iterator iterCandidateEnrollmentsToDelete = candidateEnrollmentsToDelete.iterator();
         while (iterCandidateEnrollmentsToDelete.hasNext()) {
-            ICandidateEnrolment candidateEnrolmentToDelete = (ICandidateEnrolment) iterCandidateEnrollmentsToDelete
+            CandidateEnrolment candidateEnrolmentToDelete = (CandidateEnrolment) iterCandidateEnrollmentsToDelete
                     .next();
             candidateEnrolmentToDelete.getCurricularCourse().getCandidateEnrolments().remove(
                     candidateEnrolmentToDelete);
@@ -113,19 +113,19 @@ public class WriteCandidateEnrolments implements IService {
      * @throws ExcepcaoPersistencia
      */
     private void writeFilteredEnrollments(ISuportePersistente sp,
-            IMasterDegreeCandidate masterDegreeCandidate, Collection<Integer> curricularCoursesToEnroll)
+            MasterDegreeCandidate masterDegreeCandidate, Collection<Integer> curricularCoursesToEnroll)
             throws NonExistingServiceException, ExcepcaoPersistencia {
         Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 
-            ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+            CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
                     .readByOID(CurricularCourse.class, (Integer) iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {
                 throw new NonExistingServiceException();
             }
 
-            ICandidateEnrolment candidateEnrolment = DomainFactory.makeCandidateEnrolment();
+            CandidateEnrolment candidateEnrolment = DomainFactory.makeCandidateEnrolment();
 
             masterDegreeCandidate.addCandidateEnrolments(candidateEnrolment);
             candidateEnrolment.setCurricularCourse(curricularCourse);

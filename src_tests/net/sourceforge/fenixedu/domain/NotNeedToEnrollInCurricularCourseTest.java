@@ -1,19 +1,19 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 public class NotNeedToEnrollInCurricularCourseTest extends DomainTestBase {
 
-	private INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourseToDelete = null;
+	private NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourseToDelete = null;
 
 	private void setUpDelete() {
 		notNeedToEnrollInCurricularCourseToDelete = new NotNeedToEnrollInCurricularCourse();
 
-		ICurricularCourse curricularCourse = new CurricularCourse();
+		CurricularCourse curricularCourse = new CurricularCourse();
 
 		curricularCourse.addNotNeedToEnrollInCurricularCourses(notNeedToEnrollInCurricularCourseToDelete);
-		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+		StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 
 		studentCurricularPlan.addNotNeedToEnrollCurricularCourses(notNeedToEnrollInCurricularCourseToDelete);
 	}

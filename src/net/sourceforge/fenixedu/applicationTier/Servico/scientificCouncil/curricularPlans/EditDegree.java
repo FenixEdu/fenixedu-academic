@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,7 +26,7 @@ public class EditDegree implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IDegree degreeToEdit = (IDegree) persistentSupport.getIPersistentObject().readByOID(
+        final Degree degreeToEdit = (Degree) persistentSupport.getIPersistentObject().readByOID(
                 Degree.class, idInternal);
 
         if (degreeToEdit == null) {
@@ -35,11 +35,11 @@ public class EditDegree implements IService {
                 || !degreeToEdit.getNome().equalsIgnoreCase(name)
                 || !degreeToEdit.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
 
-            final List<IDegree> degrees = (List<IDegree>) persistentSupport.getICursoPersistente()
+            final List<Degree> degrees = (List<Degree>) persistentSupport.getICursoPersistente()
                     .readAllFromNewDegreeStructure();
 
             // assert unique degree code and unique pair name/type
-            for (IDegree degree : degrees) {
+            for (Degree degree : degrees) {
                 if (degree.getAcronym().equalsIgnoreCase(acronym)) {
                     throw new FenixServiceException("error.existing.degree.acronym");
                 }

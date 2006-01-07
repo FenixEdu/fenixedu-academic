@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 
@@ -19,7 +19,7 @@ public class Metadata extends Metadata_Base {
 
     
 
-    public Metadata(final IExecutionCourse executionCourse, final FormFile metadataFile, final String path) {
+    public Metadata(final ExecutionCourse executionCourse, final FormFile metadataFile, final String path) {
         super();
         setVisibility(Boolean.TRUE);
         setExecutionCourse(executionCourse);
@@ -52,9 +52,9 @@ public class Metadata extends Metadata_Base {
         setLearningTimeDate(date);
     }
 
-    public List<IQuestion> getVisibleQuestions() {
-        final List<IQuestion> visibleQuestions = new ArrayList<IQuestion>();
-        for (final IQuestion question : getQuestions()) {
+    public List<Question> getVisibleQuestions() {
+        final List<Question> visibleQuestions = new ArrayList<Question>();
+        for (final Question question : getQuestions()) {
             if (question.getVisibility()) {
                 visibleQuestions.add(question);
             }

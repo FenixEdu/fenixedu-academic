@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,7 +39,7 @@ public class ReadCoordinatedDegrees implements IService {
 
 		// Read the Teacher
 
-		ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+		Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
 		if (teacher == null) {
 			throw new ExcepcaoInexistente("No Teachers Found !!");
 		}
@@ -51,7 +51,7 @@ public class ReadCoordinatedDegrees implements IService {
 		Iterator iterator = plans.iterator();
 		List result = new ArrayList();
 		while (iterator.hasNext()) {
-			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator.next();
+			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iterator.next();
 
 			if (!degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE)) {
 				continue;

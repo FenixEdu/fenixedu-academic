@@ -10,12 +10,12 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GuideEntry;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,21 +33,21 @@ public class CreateGratuityTransaction implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuideEntry guideEntry = (IGuideEntry) sp.getIPersistentGuideEntry().readByOID(GuideEntry.class,
+        GuideEntry guideEntry = (GuideEntry) sp.getIPersistentGuideEntry().readByOID(GuideEntry.class,
                 guideEntryID);
 
-        IGuide guide = guideEntry.getGuide();
-        IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
+        Guide guide = guideEntry.getGuide();
+        Student student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
                 DegreeType.MASTER_DEGREE);
-        IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
+        GratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
                 .readGratuitySituationByExecutionDegreeAndStudent(guide.getExecutionDegree().getIdInternal(), student.getIdInternal());
-        IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
+        PersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
         
         if(personAccount == null){
             personAccount = DomainFactory.makePersonAccount(guide.getPerson());
         }
         
-        IPerson responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
         Double value = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());

@@ -104,7 +104,7 @@ valueType net.sourceforge.fenixedu.util.WeekDay															as WeekDay;
 *
 */
 
-class net.sourceforge.fenixedu.domain.DomainObject implements java.io.Serializable {
+class net.sourceforge.fenixedu.domain.DomainObject {
 	Integer ackOptLock;
 	Integer idInternal;
 }
@@ -115,14 +115,6 @@ class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fen
 	Integer keyStudent;
 	Integer keyTeacher;
 	AdviseType adviseType;
-	
-	interface "
-	 public void delete();
-	 public ITeacherAdviseService getTeacherAdviseServiceByExecutionPeriod(final net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod);
-	 public void checkPercentageCoherenceWithOtherAdvises(net.sourceforge.fenixedu.domain.IExecutionPeriod executionPeriod, double percentage);
-	 public void updateEndExecutionPeriod();
-	 public void updateStartExecutionPeriod();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Advisory extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -140,24 +132,12 @@ class net.sourceforge.fenixedu.domain.Announcement extends net.sourceforge.fenix
 	String title;
     Date creationDate;
     Date lastModifiedDate;
-    
-    interface "
-    public void edit(String newAnnouncementTitle, String newAnnouncementInformation);
-	public void delete();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.Attends extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer chaveDisciplinaExecucao;
 	Integer chaveAluno;
 	Integer keyEnrolment;
-	
-	interface "
-	public IFinalMark getFinalMark()	;
-	public IMark getMarkByEvaluation(IEvaluation evaluation);	
-	public void delete();
-	public java.util.List<IMark> getAssociatedMarksOrderedByEvaluationDate();
-	"	
 }
 
 class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -167,12 +147,6 @@ class net.sourceforge.fenixedu.domain.BibliographicReference extends net.sourcef
 	String authors;
 	String title;
 	String reference;
-	
-	interface "
-	public void edit(String title, String authors, String reference, String year, Boolean optional);
-    
-    public void delete();	
-	"
 }
 
 
@@ -185,14 +159,6 @@ class net.sourceforge.fenixedu.domain.Branch extends net.sourceforge.fenixedu.do
     String nameEn;
     String acronym;
     BranchType branchType;
-    
-    interface "
-    public java.util.List getAreaCurricularCourseGroups(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
-	public void delete();
-	public Boolean canBeDeleted();
-	public Boolean representsCommonBranch();
-	public void edit(String name, String nameEn, String code);
-    "
 }
 
 
@@ -208,12 +174,6 @@ class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.
 	Integer keyWorkingUnit;
 	Date beginDate;
 	Date endDate;
-				
-	interface"
-	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
-	public boolean isActive(java.util.Date currentDate);
-	public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.CostCenter extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -255,29 +215,17 @@ class net.sourceforge.fenixedu.domain.teacher.Career extends net.sourceforge.fen
     Integer endYear;
     Integer keyTeacher;
     Date lastModificationDate;
-    
-    interface "
-    public void delete();
-    "
 }
 
 
     class net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
         String entity;
         String function;
-	    interface "
-	    public void delete();
-	    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer infoProfessionalCareer);
-	    "
     }
 
     class net.sourceforge.fenixedu.domain.teacher.TeachingCareer extends net.sourceforge.fenixedu.domain.teacher.Career {
         String courseOrPosition;
         Integer keyCategory;
-        
-        interface "
-        public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer infoTeachingCareer, net.sourceforge.fenixedu.domain.teacher.ICategory category);
-        "
     }
 
 
@@ -307,10 +255,6 @@ class net.sourceforge.fenixedu.domain.cms.Cms extends net.sourceforge.fenixedu.d
 {
 	Integer keyConfiguration;
 	String name;
-	
-	interface "
-	public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixedu.domain.DomainObject
@@ -322,10 +266,6 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 	Integer keyCms;
 	Date creationDate;
 	Integer keyCreator;
-
-	interface "
-	public void delete();
-    "
 }
     class net.sourceforge.fenixedu.domain.cms.Bin extends net.sourceforge.fenixedu.domain.cms.Content {
        }
@@ -335,47 +275,14 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
        Boolean closed;
        Boolean membersOnly;
        Boolean replyToList;
-            
-       interface "
-		public java.util.Iterator<IMailConversation> getMailConversationsIterator();
-		public java.util.Iterator<IMailMessage> getMailMessagesIterator();		
-		public java.util.Iterator<IMailConversation> getConversationsOnSubjectIterator(String subject);
-		public IMailConversation getMostRecentMailConversationOnSubject(String subject);
-		public int getMailConversationsCount();
-		public int getMailMessagesCount();
-		public int getSize() throws javax.mail.MessagingException;
-   	    public void delete();
-       "
        }
        
        class net.sourceforge.fenixedu.domain.cms.messaging.MailConversation extends net.sourceforge.fenixedu.domain.cms.Bin {
        String subject;
-       interface "
-       	public boolean isAboutSubject(String string);
-		public java.util.Iterator<IMailingList> getMailingListsIterator();
-		public int getMailingListsCount();
-	   	public IMailMessage getLastReply();
-	   	public IMailMessage getFirstMessage();
-	   	public java.util.Iterator<IMailMessage> getMailMessagesIterator();
-		public int getMailMessagesCount();	   	
-		public int getSize() throws javax.mail.MessagingException;
-       "
        }
        
     class net.sourceforge.fenixedu.domain.cms.messaging.MailMessage extends net.sourceforge.fenixedu.domain.cms.Content {
        String body;
-       interface "
-		public String getSubject() throws javax.mail.MessagingException;
-		public java.util.Date getReceivedDate() throws javax.mail.MessagingException;		
-		public java.util.Iterator<IMailConversation> getMailConversationsIterator();
-		public java.util.Collection<javax.mail.internet.InternetAddress> getFrom() throws javax.mail.MessagingException;
-		public java.lang.String getFirstPlainTextContent() throws javax.mail.MessagingException;
-		public java.util.Collection<java.lang.String> getAllPlainTextContents() throws javax.mail.MessagingException;
-		public java.util.Collection<java.lang.String> getAllAttachmentsNames() throws javax.mail.MessagingException;
-		public int getSize() throws javax.mail.MessagingException;
-		public int getMailConversationsCount();	 
-		public javax.mail.Part getAttachment(String attachmentName) throws javax.mail.MessagingException;
-       "
     }
     
     class net.sourceforge.fenixedu.domain.cms.website.Website extends net.sourceforge.fenixedu.domain.cms.Bin {
@@ -401,18 +308,8 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 	String name;
 	Date creationDate;
 	String description;   
-	interface "
-	public abstract java.util.Iterator<net.sourceforge.fenixedu.domain.IPerson> getElementsIterator();    
-	public abstract int getElementsCount();
-	public abstract boolean isMember(net.sourceforge.fenixedu.domain.IPerson person);
-	public void delete();
-	public boolean allows(net.sourceforge.fenixedu.applicationTier.IUserView userView);
-   "
 	}
 	class net.sourceforge.fenixedu.domain.accessControl.NodeGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup{	
-		interface"
-		public void removePart(net.sourceforge.fenixedu.domain.accessControl.IUserGroup group);
-		"
     	}
     	class net.sourceforge.fenixedu.domain.accessControl.GroupDifference extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
 	    }			
@@ -448,10 +345,6 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 class net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue extends net.sourceforge.fenixedu.domain.DomainObject
 {
     	   Integer keyMailingList;
-    	       	   
-    	   interface "
-    	   public void delete();
-    	   "
 }
 
 class net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration extends net.sourceforge.fenixedu.domain.DomainObject
@@ -463,25 +356,11 @@ class net.sourceforge.fenixedu.domain.cms.infrastructure.CmsConfiguration extend
 	String conversationReplyMarkers;
 	Integer maxAttachmentSize; /* in bytes */
 	Integer maxMessageSize; /* in bytes */
-   
-    interface "    
- 	public String getSmtpServerAddressToUse();
-	public boolean getFilterNonTextualAttachmentsToUse();
-	public String getMailingListsHostToUse();
-	public String[] getConversationReplyMarkersToUse();	
-	public Integer getMaxAttachmentSizeToUse();
-	public Integer getMaxMessageSizeToUse();
-	public void delete();
-    "	
 }
 
 class net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias extends net.sourceforge.fenixedu.domain.DomainObject
 {
 	String address;
-	
-	interface "
-	public void delete();
-	"
 }
 
 
@@ -491,11 +370,6 @@ class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.source
 	Integer courseGroupKey;
 	Integer beginExecutionPeriodKey;
 	Integer endExecutionPeriodKey;
-	
-	interface "
-	    public void edit(ICourseGroup courseGroup, IDegreeModule degreeModule, net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester);
-		public void delete();
-	"
 }
 
 
@@ -537,16 +411,10 @@ class net.sourceforge.fenixedu.domain.gesdis.CourseReport extends net.sourceforg
 	String report;
 	Date lastModificationDate;
 	Integer keyExecutionCourse;
-	
-	interface "
-	public void edit(String newReport);
-    
-    public void delete();
-	"
 }
 
 
-class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator {
+class net.sourceforge.fenixedu.domain.credits.CreditLine extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
 }
 
@@ -572,10 +440,6 @@ class net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea extends net.sour
     Integer givenCredits;
     Integer studentCurricularPlanKey;
     Integer enrolmentKey;
-
-	interface "
-	public void delete();
-	"
 }
     
     
@@ -584,10 +448,6 @@ class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.source
 	Integer studentCurricularPlanKey;
 	Integer enrolmentKey;
 	Integer scientificAreaKey;
-	
-	interface "
-	public void delete();
-	"
 }
 
 
@@ -596,10 +456,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.so
 	Integer oldCurricularCourseKey;
 	Integer equivalentCurricularCourseKey;
 	Integer degreeCurricularPlanKey;
-
-	interface "
-	public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -608,26 +464,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourseGroup extends net.sourcefo
     String name;
     Integer minimumValue;
     Integer maximumValue;
-
-    interface "
-    public Integer getMaximumCredits();
-    public Integer getMinimumCredits();
-    public Integer getMinimumNumberOfOptionalCourses();
-    public Integer getMaximumNumberOfOptionalCourses();
-
-    public void setMaximumCredits(Integer maximumCredits);
-    public void setMinimumCredits(Integer minimumCredits);
-    public void setMinimumNumberOfOptionalCourses(Integer minimumNumberOfOptionalCourses);
-    public void setMaximumNumberOfOptionalCourses(Integer maximumNumberOfOptionalCourses);
-    
-    public net.sourceforge.fenixedu.tools.enrollment.AreaType getAreaType();
-    public void setAreaType(net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
-	
-	public void delete();
-	
-	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue);
-	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
-    "
 }
 
     class net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup extends net.sourceforge.fenixedu.domain.CurricularCourseGroup {
@@ -644,28 +480,6 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     String anotation;
     Date begin;
     Date end;
-
-    interface "
-    public java.util.Calendar getBeginDate();
-
-    public java.util.Calendar getEndDate();
-
-    public void setBeginDate(java.util.Calendar beginDate);
-    
-    public void setEndDate(java.util.Calendar endDate);
-    
-    public Boolean isActive();
-    
-    public Boolean isActive(java.util.Date date);
-
-	public void edit(IBranch branch, ICurricularSemester curricularSemester, java.util.Calendar beginDate, java.util.Calendar endDate, String Annotation);
-	
-	public void end(java.util.Calendar endDate);
-	
-	public void delete();
-	
-	public Boolean canBeDeleted();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.CurricularSemester extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -687,12 +501,6 @@ class net.sourceforge.fenixedu.domain.Curriculum extends net.sourceforge.fenixed
 	String programEn;
 	String generalObjectivesEn;
 	String program;
-	
-	interface"	
-	
-	public void edit(String generalObjectives, String operacionalObjectives, String program, String generalObjectivesEn, String operacionalObjectivesEn, String programEn, String language, IPerson person);	
-	
-	"
 }
 
 
@@ -707,14 +515,6 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
     Integer keyUnit;
     GradeScale gradeScale;
     Double ectsCredits;
-	
-	interface "
-
-	public void edit(String name, String nameEn, String code, net.sourceforge.fenixedu.domain.degree.DegreeType degreeType, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
-	public void edit(String name, String nameEn, String acronym, net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
-	public void delete();
-	public net.sourceforge.fenixedu.domain.GradeScale getGradeScaleChain();
-	"
 }
 
 
@@ -739,54 +539,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     Integer degreeModuleKey;
    	Integer keyDegreeCurricularPlanMembersGroup;
     Double ectsCredits;    
-    
-    interface "
-    public IStudentCurricularPlan getNewStudentCurricularPlan();
-
-    public java.util.List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod);
-    
-    public java.util.List getCurricularCoursesFromArea(IBranch area, net.sourceforge.fenixedu.tools.enrollment.AreaType areaType);
-    
-    public java.util.List getCurricularCoursesFromAnyArea();
-    
-    public ICurricularCourse getCurricularCourseByCode(String code);
-    
-    public java.util.List getCommonAreas();
-    
-    public java.util.List<IBranch> getSpecializationAreas();
-    
-    public java.util.List<IBranch> getSecundaryAreas();
-    
-    public java.util.List getTFCs();
-    
-    public java.util.List getAllOptionalCurricularCourseGroups();
-    
-    public java.util.List getActiveCurricularCoursesByYearAndSemester(int year, Integer semester);
-    
-    public java.util.List getSpecialListOfCurricularCourses();
-	
-	public void edit(String name, net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState state, 
-			java.util.Date inicialDate, java.util.Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, 
-			Double neededCredits, net.sourceforge.fenixedu.util.MarkType markType, Integer numerusClausus, String annotation, net.sourceforge.fenixedu.domain.GradeScale gradeScale);
-
-	public void edit(String name, Double ectsCredits, 
-		net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage, 
-		net.sourceforge.fenixedu.domain.GradeScale gradeScale);
-
-	public void delete();
-	
-	public boolean isGradeValid(String grade);
-	
-	public IEnrolmentPeriodInCurricularCoursesSpecialSeason getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(IExecutionPeriod executionPeriod);
-	
-	public String print();
-	public net.sourceforge.fenixedu.domain.GradeScale getGradeScaleChain();
-
-	public ICurricularCourse createCurricularCourse(String name, String code, String acronym, Boolean enrolmentAllowed,
-	            net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
-
-    public java.util.List<ICurricularCourse> getDcpCurricularCourses();
-    "
 }
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
@@ -840,12 +592,6 @@ class net.sourceforge.fenixedu.domain.DegreeInfo extends net.sourceforge.fenixed
     String qualificationLevelEn;
     String recognitions;
     String recognitionsEn;    
-	
-	interface "
-
-	public void delete();
-	
-	"
 }
 
 
@@ -856,21 +602,6 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	String nameEn;
 	String acronym;
 	String code;
-	
-	interface "
-		public Boolean getCanBeDeleted();
-		public void delete();
-		public boolean isLeaf();
-		public void print(java.lang.StringBuffer stringBuffer, String tabs, IContext previousContext);
-		public Double computeEctsCredits();
-		public net.sourceforge.fenixedu.domain.degreeStructure.IContext addContext(net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
-           net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester, net.sourceforge.fenixedu.domain.IExecutionPeriod beginExecutionPeriod, net.sourceforge.fenixedu.domain.IExecutionPeriod endExecutionPeriod);       
-        public void editContext(net.sourceforge.fenixedu.domain.degreeStructure.IContext context, net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup courseGroup,
-           net.sourceforge.fenixedu.domain.ICurricularSemester curricularSemester);
-		public void deleteContext(IContext context);
-		public boolean isRoot();
-		public net.sourceforge.fenixedu.domain.IDegreeCurricularPlan getParentDegreeCurricularPlan();
-	"
 }
 
 	class net.sourceforge.fenixedu.domain.CurricularCourse extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
@@ -903,59 +634,9 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		Integer degreeCurricularPlanKey;
 	
 	    GradeScale gradeScale;
-		
-		interface "
-		 public void edit(Double weight, String prerequisites, String prerequisitesEn,
-            net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage, ICompetenceCourse competenceCourse);
-            
-	    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch,final Integer semester);
-	
-	    public ICurricularYear getCurricularYearByBranchAndSemester(final IBranch branch, final Integer semester, final java.util.Date date);
-	
-	    public String getCurricularCourseUniqueKeyForEnrollment();
-	
-	    public boolean hasActiveScopeInGivenSemester(final Integer semester);
-	
-	    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final Integer semester, final IBranch branch);
-	
-	    public boolean hasActiveScopeInGivenSemesterForGivenBranch(final ICurricularSemester curricularSemester, final IBranch branch);
-	
-	    public boolean hasActiveScopeInGivenSemesterForCommonAndGivenBranch(final Integer semester, final IBranch branch);
-	
-	    public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriod(final IExecutionPeriod executionPeriod);
-	    
-	    public java.util.List<ICurricularCourseScope> getActiveScopesInExecutionPeriodAndSemester(final IExecutionPeriod executionPeriod);
-	    
-	     public ICurriculum insertCurriculum(String program, String programEn, String operacionalObjectives, 
-	    	String operacionalObjectivesEn, String generalObjectives, String generalObjectivesEn);
-		 
-		 public java.util.List getExecutionCoursesByExecutionPeriod (final IExecutionPeriod executionPeriod);
-	
-		 public ICurriculum findLatestCurriculum();
-		 
-		public net.sourceforge.fenixedu.domain.GradeScale getGradeScaleChain();
-		
-		public ICurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, java.util.Date date);		
-
-		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations();
-
-		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(
-        	IExecutionPeriod executionPeriod);
-
-		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(
-        	IExecutionYear executionYear);
-
-		public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(
-        	IStudent student);
-		"
 	}
 
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
-		interface "
-		    public void edit(String name);
-			public java.util.List<IContext> getContextsWithCurricularCourses();			
-			public java.util.List<IContext> getContextsWithCourseGroups();
-		"
 	}
 
 
@@ -965,12 +646,6 @@ class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.f
 	Boolean type;
 	Integer keyStudent;
     DelegateYearType yearType;
-	
-	interface "
-
-	public void delete();
-	
-	"
 }
 	
 	
@@ -980,18 +655,6 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String name;
 	Integer keyUnit;
 	Integer keyCompetenceCourseMembersGroup;	
-	
-	interface"
-	public java.util.List<IEmployee> getCurrentActiveWorkingEmployees();
-	public java.util.List<ITeacher> getCurrentTeachers();
-	public java.util.List<ITeacher> getTeachersHistoric();
-	public java.util.List<ITeacher> getTeachers(java.util.Date begin, java.util.Date end);
-	public ITeacher getTeacherByPeriod(Integer teacherNumber, java.util.Date begin, java.util.Date end);
-	public java.util.List<IEmployee> getWorkingEmployees(java.util.Date begin, java.util.Date end);
- 	public void createTeacherExpectationDefinitionPeriod(IExecutionYear executionYear, java.util.Date startDate, java.util.Date endDate);
- 	public ITeacherExpectationDefinitionPeriod readTeacherExpectationDefinitionPeriodByExecutionYear(IExecutionYear executionYear);
-	public java.util.List<ICompetenceCourse> getCompetenceCoursesByExecutionYear(IExecutionYear executionYear);
-	"
 }
 
 
@@ -1001,33 +664,6 @@ class net.sourceforge.fenixedu.domain.CompetenceCourse extends net.sourceforge.f
 	Integer keyUnit;
 	CurricularStage curricularStage;
 	Date creationDate;
-	
-	interface "
-	public void delete();
-	public void addCurricularCourses(java.util.Collection<ICurricularCourse> curricularCourses);
-	public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours,
-	        Double fieldWorkHours, Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits, Integer order);
-	public void edit(String code, String name, java.util.Collection<IDepartment> departments);
-	public void edit(String name, String nameEn, String acronym, Boolean basic, net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage curricularStage);
-    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn);
-    public String getNameEn();
-    public String getAcronym();
-    public boolean isBasic();
-    public net.sourceforge.fenixedu.domain.degreeStructure.RegimeType getRegime();
-    public void setRegime(net.sourceforge.fenixedu.domain.degreeStructure.RegimeType regimeType);
-    public java.util.List<net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad> getCompetenceCourseLoads();
-    public String getObjectives();
-    public String getProgram();
-    public String getEvaluationMethod();
-    public String getObjectivesEn();
-    public String getProgramEn();
-    public String getEvaluationMethodEn();
-    public void addDepartments(java.util.Collection<IDepartment> departments);
-	public java.util.Map<IDegree, java.util.List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree();
-	public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear);
-	public Boolean hasActiveScopesInExecutionYear(IExecutionYear executionYear);
-	public net.sourceforge.fenixedu.domain.organizationalStructure.IUnit getDepartmentUnit();
-	"
 }
 
 
@@ -1045,12 +681,6 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformatio
     String evaluationMethod;
     String evaluationMethodEn;
     Date endDate;
-	
-	interface "
-    public void edit(String name, String nameEn, String acronym, Boolean basic);
-    public void edit(String objectives, String program, String evaluationMethod, String objectivesEn, String programEn, String evaluationMethodEn);
-	public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1065,13 +695,6 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad exten
 	Double autonomousWorkHours;
 	Double ectsCredits;
 	Integer order;
-
-	interface "
-	public void edit(Double theoreticalHours, Double problemsHours, Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
-	        Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours, Double ectsCredits, Integer order);
-	public void delete();
-	public double getTotalContactLessonHours();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.DislocatedStudent extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1094,36 +717,12 @@ class net.sourceforge.fenixedu.domain.onlineTests.DistributedTest extends net.so
     CorrectionAvailability correctionAvailability;
     TestType testType;
     Integer keyOnlineTest;
-    
-    interface "
-    public abstract java.util.Calendar getBeginDate();
-
-    public abstract void setBeginDate(java.util.Calendar beginDate);
-
-    public abstract java.util.Calendar getBeginHour();
-
-    public abstract void setBeginHour(java.util.Calendar beginHour);
-
-    public abstract java.util.Calendar getEndDate();
-
-    public abstract void setEndDate(java.util.Calendar endDate);
-
-    public abstract java.util.Calendar getEndHour();
-
-    public abstract void setEndHour(java.util.Calendar endHour);
-
-    public abstract boolean equals(Object obj);
-    "
 }
 
 
 class net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyAdvisory;
     Integer keyDistributedTest;
-    
-    interface "
-    public abstract boolean equals(Object obj);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.District extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1137,13 +736,6 @@ class net.sourceforge.fenixedu.domain.Employee extends net.sourceforge.fenixedu.
 	Date antiquity;
 	Integer keyPerson;
 	Integer workingHours;
-
-    interface "
-	public IDepartment getCurrentDepartmentWorkingPlace();
-    public IDepartment getLastDepartmentWorkingPlace();
-	public IContract getCurrentContract();
-    public IContract getLastContract();
-	"
 }
 
 
@@ -1171,26 +763,6 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
     EnrollmentState enrollmentState;
     EnrollmentCondition condition;
     EnrolmentEvaluationType enrolmentEvaluationType;
-	
-	interface "
-	public void delete();
-	public void initializeAsNew(IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
-	public void initializeAsNewWithoutEnrolmentEvaluation (IStudentCurricularPlan studentCurricularPlan, ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod, net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition enrolmentCondition, String createdBy);
-	public void unEnroll();
-	public void unEnrollImprovement(IExecutionPeriod executionPeriod);
-	public IEnrolmentEvaluation getImprovementEvaluation();
-	public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade (final net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, final String grade);
-	
-	public void createEnrolmentEvaluationForImprovement(IEmployee employee, IExecutionPeriod currentExecutionPeriod, IStudent student);
-	public IEnrolmentEvaluation submitEnrolmentEvaluation (net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType enrolmentEvaluationType, IMark publishedMark, IEmployee employee, IPerson personResponsibleForGrade, java.util.Date evaluationDate, String observation);
-	public boolean isImprovementForExecutionCourse (IExecutionCourse executionCourse);
-	public Integer getAccumulatedWeight();
-	public void setAccumulatedWeight(Integer accumulatedWeight);
-	public java.util.List<IEnrolmentEvaluation> getAllFinalEnrolmentEvaluations();
-	public boolean hasSpecialSeason();
-	public Integer getFinalGrade();
-	public Boolean isFirstTime();
-	"
 }
 
     class net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse extends net.sourceforge.fenixedu.domain.Enrolment {
@@ -1201,15 +773,10 @@ class net.sourceforge.fenixedu.domain.Enrolment extends net.sourceforge.fenixedu
 
 class net.sourceforge.fenixedu.domain.EnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer enrolmentKey;
-
-	interface "
-	public void delete();
-	"
 }
 
 
-class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject 
-    implements Comparable {
+class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforge.fenixedu.domain.DomainObject {
     String checkSum;
     Date when;
     Integer personResponsibleForGradeKey;
@@ -1221,20 +788,6 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
     String grade;
     EnrolmentEvaluationType enrolmentEvaluationType;
     EnrolmentEvaluationState enrolmentEvaluationState;
-    
-    interface "
-    public boolean isNormal();
-    public boolean isImprovment();
-	public void edit(IPerson responsibleFor, String grade, java.util.Date availableDate, java.util.Date examDate, String checksum);
-	public void confirmSubmission(IEmployee employee, String observation);
-	public void delete();
-	public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, IEmployee employee, IPerson responsibleFor,
-			net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType evaluationType, java.util.Date evaluationAvailableDate, 
-			java.util.Date examDate, String observation);
-	public void insertStudentFinalEvaluationForMasterDegree(String grade, IPerson responsibleFor, java.util.Date examDate);
-	public net.sourceforge.fenixedu.domain.curriculum.IGrade getGradeWrapper();
-    public net.sourceforge.fenixedu.domain.curriculum.EnrollmentState getEnrollmentStateByGrade();
-    "
 }
 
 
@@ -1266,35 +819,14 @@ class net.sourceforge.fenixedu.domain.EnrolmentPeriod extends net.sourceforge.fe
 class net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer enrolmentEquivalenceKey;
     Integer equivalentEnrolmentKey;
-
-	interface "
-	public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
 	String publishmentMessage;
-	
-	interface "
-	public java.util.List<IExecutionCourse> getAttendingExecutionCoursesFor(IStudent student);
-	
-	public void delete();    
-	
-	public IMark addNewMark(IAttends attends, String markValue);
-	
-	public net.sourceforge.fenixedu.util.EvaluationType getEvaluationType();	
-	"
 }
 
-
 	class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {		
-		interface "
-		public boolean deleteFrom(IExecutionCourse executionCourse);
-		public java.util.List<IFinalMark> getAlreadySubmitedMarks(IExecutionCourse executionCourse);	
-	    public Integer getGradesListVersion();
-		public java.util.List<IAttends> getNotSubmitedMarkAttends(IExecutionCourse executionCourse);
-		"
 	}
 	
 	class net.sourceforge.fenixedu.domain.onlineTests.OnlineTest extends net.sourceforge.fenixedu.domain.Evaluation {
@@ -1306,10 +838,6 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	    Date begin;
         Date end;
         String description;     
-
-        interface "
-        public void edit(String name, java.util.Date begin, java.util.Date end, String description);
-        "           
 	}
 
 
@@ -1321,80 +849,14 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
         Date enrollmentBeginTimeDate;
         Date enrollmentEndDayDate;
         Date enrollmentEndTimeDate;
-        
-        interface"
-		public java.util.Calendar getDay();
-		
-		public void setDay(java.util.Calendar calendar);
-		
-		public java.util.Calendar getBeginning();
-		
-		public void setBeginning(java.util.Calendar calendar);
-		
-		public java.util.Calendar getEnd();
-		
-		public void setEnd(java.util.Calendar calendar);
-		
-		public java.util.Calendar getEnrollmentBeginDay();
-		
-		public void setEnrollmentBeginDay(java.util.Calendar calendar);
-	
-	    public java.util.Calendar getEnrollmentBeginTime();
-	    
-	    public void setEnrollmentBeginTime(java.util.Calendar calendar);
-	
-	    public java.util.Calendar getEnrollmentEndDay();
-	    
-	    public void setEnrollmentEndDay(java.util.Calendar calendar);
-	    
-		public java.util.Calendar getEnrollmentEndTime();
-	    
-	    public void setEnrollmentEndTime(java.util.Calendar calendar);
-
-		public java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> getAssociatedRooms();
-		
-		public void delete();
-
-		public void editEnrolmentPeriod(java.util.Date enrolmentBeginDay, java.util.Date enrolmentEndDay,
-                                       java.util.Date enrolmentBeginTime, java.util.Date enrolmentEndTime);
-
-		public void enrolStudent(IStudent student);
-
-		public void unEnrolStudent(IStudent student);
-		
-		public void checkIfCanDistributeStudentsByRooms();
-		
-		public void distributeStudentsByRooms(java.util.List<IStudent> studentsToDistribute, 
-                                              java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> selectedRooms);
-                                              
-		public IWrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(IStudent student);                                              
-                                              
-		public boolean isInEnrolmentPeriod();
-		
-		public boolean getIsInEnrolmentPeriod();
-		"
 	}
 
 		class net.sourceforge.fenixedu.domain.Exam extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
             Season season;
-            
-			interface "
-			public void edit(java.util.Date examDay, java.util.Date examStartTime, java.util.Date examEndTime,
-							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
-							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IOccupationPeriod period, net.sourceforge.fenixedu.util.Season season);
-    		public boolean isExamsMapPublished();
-	        public boolean getIsExamsMapPublished();
-			"	
 		}
 
 		class net.sourceforge.fenixedu.domain.WrittenTest extends net.sourceforge.fenixedu.domain.WrittenEvaluation {
 			String description;
-
-			interface "
-			public void edit(java.util.Date testDay, java.util.Date testStartTime, java.util.Date testEndTime,
-							 java.util.List<IExecutionCourse> executionCourses, java.util.List<ICurricularCourseScope> curricularCourseScopes, 
-							 java.util.List<net.sourceforge.fenixedu.domain.space.IRoom> rooms, IOccupationPeriod period, String description);			
-			"	
 		}
 
 
@@ -1402,31 +864,17 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	String evaluationElements;
 	String evaluationElementsEn;
 	Integer keyExecutionCourse;
-	
-	interface "
-	public void edit(String evaluationElements, String evaluationElementsEng);
-	
-	public void delete();
-	"
 }
 
-
-	
 
 class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRoom;
 	Integer keyStudent;
 	Integer keyWrittenEvaluation;
-	
-	interface "
-	public void delete();	
-	
-	public boolean isForExecutionPeriod(IExecutionPeriod executionPeriod);
-	"
 }
 
 
-class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fenixedu.domain.DomainObject {
 	String nome;
 	Double theoreticalHours;
 	String sigla;
@@ -1439,76 +887,6 @@ class net.sourceforge.fenixedu.domain.ExecutionCourse extends net.sourceforge.fe
 	Double praticalHours;
 	String comment;
 	Double theoPratHours;
-	
-	interface "
-	public String getSlideName();
-	
-	public net.sourceforge.fenixedu.fileSuport.INode getParentNode();
-
-	public java.util.List<IGrouping> getGroupings();
-	
-	public IGrouping getGroupingByName(String groupingName);
-	
-	public boolean existsGroupingExecutionCourse(IExportGrouping groupingExecutionCourse);
-		
-	public boolean existsGroupingExecutionCourse();
-	
-	public boolean hasProposals();
-	
-    public boolean isMasterDegreeOnly();
-    
-    public void edit(String name, String acronym, double theoreticalHours,
-            double theoreticalPraticalHours, double praticalHours, double laboratoryHours, String comment);
-    
-    public void createSite();
-        
-    public void createEvaluationMethod(String evaluationElements, String evaluationElementsEng);
-    
-    public void createBibliographicReference(String title, String authors, String reference, String year, Boolean optional);
-    
-    public net.sourceforge.fenixedu.domain.gesdis.ICourseReport createCourseReport(String report);
-    
-    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
-            Boolean isExtraLesson, IProfessorship professorship);
-            
-    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
-            Boolean isExtraLesson, ITeacher teacher);
-            
-    public ISummary createSummary(String title, String summaryText, Integer studentsNumber,
-            Boolean isExtraLesson, String teacherName);
-
-	public java.util.List<IProfessorship> responsibleFors();
-
-	public IAttends getAttendsByStudent (final IStudent student);
-	
-	public java.util.List<IExam> getAssociatedExams();
-	
-	public java.util.List<IWrittenTest> getAssociatedWrittenTests();
-	
-	public java.util.List<net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest> getAssociatedOnlineTests();
-	
-	public void delete();
-
-	public java.util.List<IProject> getAssociatedProjects();
-	
-	public boolean teacherLecturesExecutionCourse(ITeacher teacher); 
-		
-	public Integer getFirstTimeEnrolmentStudentNumber();
-	
-	public Integer getSecondOrMoreTimeEnrolmentStudentNumber();
-	
-	public Integer getTotalEnrolmentStudentNumber();
-	
-	public Double getTotalHours(ShiftType shiftType);
-	
- 	public Double getStudentsNumberByShift(ShiftType shiftType);
-	
-	public java.util.List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations();
-
-	public java.util.List<IEvaluation> getOrderedAssociatedEvaluations();
-
-	public java.util.Set<IAttends> getOrderedAttends();
-    "
 }
 
 
@@ -1523,17 +901,10 @@ class net.sourceforge.fenixedu.domain.ExecutionDegree extends net.sourceforge.fe
 	Integer keyCampus;
 	Integer keyGratuityValues;
 	Integer keyFinalDegreeWorkScheduling;
-	
-	interface "
-	
-	public boolean isFirstYear();
-	
-	"
-	
 }
 
 
-class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode, java.lang.Comparable{
+class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
 	Date beginDate;
 	Integer keyPreviousExecutionPeriod;
@@ -1547,19 +918,12 @@ class net.sourceforge.fenixedu.domain.ExecutionPeriod extends net.sourceforge.fe
 }
 
 
-class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode, java.lang.Comparable {
+class net.sourceforge.fenixedu.domain.ExecutionYear extends net.sourceforge.fenixedu.domain.DomainObject {
 	Date beginDate;
 	Date endDate;
 	String year;
 	Integer keyInsuranceValue;
     PeriodState state;
-    
-    interface "
-    
-	public java.util.Collection<IExecutionDegree> getExecutionDegreesByType(final net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-	public IExecutionYear getPreviousExecutionYear();
-	public IExecutionPeriod getExecutionPeriodForSemester(Integer semester);
-    "
 }
 
 
@@ -1567,13 +931,6 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
     Integer keyTeacher;
     Date lastModificationDate;
     String activity;
-
-	interface "
-
-	public void delete();
-	public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity infoExternalActivity);
-	
-	"
 }
 
 
@@ -1581,9 +938,6 @@ class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fen
 	Integer keyInstitution;
 	Integer keyWorkLocation;
 	Integer keyPerson;
-	interface "
-	public void edit (String name, String address, String phone, String mobile, String homepage, String email, IInstitution institution, java.util.List<IExternalPerson> allExternalPersons);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1714,24 +1068,11 @@ class net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty exten
     String ojbConcreteClass;
     String nameString;
     String valueString;
-    
-    interface "
-    public net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName getName();
-
-    public void setName(net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyName name);
-
-    public net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue getValue();
-
-    public void setValue(net.sourceforge.fenixedu.util.classProperties.GeneralClassPropertyValue value);
-    "
 }
 
 
     class net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty extends net.sourceforge.fenixedu.domain.classProperties.GeneralClassProperty {
         Integer keyExecutionCourse;
-        interface "
-            public void delete();
-        "
     }
 
 
@@ -1770,10 +1111,6 @@ class net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime extends
 	Date dateDispatchCD;
 	Date dateSendDispatchCD;
 	Date dateEndContract;
-	
-	interface "
-	public Boolean getContractRegimeActive();
-	"
 }
 
 
@@ -1857,12 +1194,6 @@ class net.sourceforge.fenixedu.domain.GratuitySituation extends net.sourceforge.
 	Integer keyGratuityValues;
 	Double remainingValue;
     ExemptionGratuityType exemptionType;
-    
-    interface "
-    
-    public void updateValues();
-    
-    "
 }
 
 
@@ -1878,14 +1209,6 @@ class net.sourceforge.fenixedu.domain.GratuityValues extends net.sourceforge.fen
 	Double finalProofValue;
 	Integer keyExecutionDegree;
 	Integer keyEmployee;
-	
-	interface "
-	
-	public Double calculateTotalValueForMasterDegree();
-	
-	public Double calculateTotalValueForSpecialization(net.sourceforge.fenixedu.domain.IStudentCurricularPlan studentCurricularPlan);
-	
-	"
 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1895,17 +1218,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Function extends n
 	FunctionType type;
 	Integer keyUnit;
 	Integer keyInherentParentFunction;
-	
-	interface"
-	public boolean isInherentFunction();
-	public void edit(String functionName, java.util.Date beginDate, java.util.Date endDate, 
-	  	net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType type,
-		net.sourceforge.fenixedu.domain.organizationalStructure.IUnit unit, 
-		net.sourceforge.fenixedu.domain.organizationalStructure.IFunction parentInherentFunction);
-	public boolean isActive(java.util.Date currentDate);
-	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
-	public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.finalDegreeWork.Group extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1938,47 +1250,6 @@ class net.sourceforge.fenixedu.domain.Grouping extends net.sourceforge.fenixedu.
     ShiftType shiftType;
     Date enrolmentBeginDayDate;
     Date enrolmentEndDayDate;
-
-    interface "
-      public java.util.Calendar getEnrolmentBeginDay();
-    
-	public void setEnrolmentBeginDay(java.util.Calendar enrolmentBeginDay);
-	
-	public java.util.Calendar getEnrolmentEndDay();
-
-	public void setEnrolmentEndDay(java.util.Calendar enrolmentEndDay);
-    
-    public java.util.List<IExecutionCourse> getExecutionCourses();
-    
-    public java.util.List getStudentGroupsWithoutShift();
-    
-    public java.util.List getStudentGroupsWithShift();   
-    
-    public Integer getNumberOfStudentsNotInGrouping();
-    
-    public Integer getNumberOfStudentsInGrouping();
-    
-    public IAttends getStudentAttend(IStudent student);
-    
-    public IAttends getStudentAttend(String studentUsername);
-    
-    public IStudentGroup readStudentGroupBy(Integer studentGroupNumber);
-    
-    public java.util.List<IStudentGroup> readAllStudentGroupsBy(IShift shift);
-    
-    public void checkShiftCapacity(IShift shift);
-    
-    public void edit(String groupingName, java.util.Date enrolmentBeginDay, java.util.Date enrolmentEndDay,
-            net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber,
-            Integer idealCapacity, Integer maximumCapacity, Integer minimumCapacity,
-            String projectDescription, ShiftType shiftType);
-
-    public void createStudentGroup(IShift shift, Integer groupNumber, java.util.List<IStudent> students);
-    
-    public void delete();
-
-	public int findMaxGroupNumber();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1988,10 +1259,6 @@ class net.sourceforge.fenixedu.domain.ExportGrouping extends net.sourceforge.fen
         Integer keyReceiverPerson;
         Integer keyGrouping;
     ProposalState proposalState;
-    
-    interface"
-    public void delete();
-    "
 }
         
         
@@ -2008,11 +1275,6 @@ class net.sourceforge.fenixedu.domain.Guide extends net.sourceforge.fenixedu.dom
     Date paymentDate;
     PaymentType paymentType;
     GuideRequester guideRequester;
-	
-	interface "
-	public IGuideSituation getActiveSituation();
-	public void updateTotalValue();	
-	"
 }
 
 class net.sourceforge.fenixedu.domain.GuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2038,11 +1300,6 @@ class net.sourceforge.fenixedu.domain.FileEntry extends net.sourceforge.fenixedu
 	Integer keyPerson;
     ByteArray content;
     ContentType contentType;
-    
-    interface "
-    public byte[] getContents();
-    public void delete();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2063,14 +1320,6 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse extends net.sour
     Character entryGradeClassification;
     Character approvationRatioClassification;
     Character arithmeticMeanClassification;        
-    
-    interface "
-	public void createInquiriesRoom(net.sourceforge.fenixedu.domain.space.IRoom room, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom infoInquiriesRoom);
-
-	public void createInquiriesTeacher(net.sourceforge.fenixedu.domain.INonAffiliatedTeacher nonAffiliatedTeacher, net.sourceforge.fenixedu.domain.ShiftType shiftType, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher infoInquiriesTeacher);
-
-	public void createInquiriesTeacher(net.sourceforge.fenixedu.domain.ITeacher teacher, net.sourceforge.fenixedu.domain.ShiftType shiftType, net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher infoInquiriesTeacher);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2115,17 +1364,12 @@ class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fen
     Date endDate;
 }
 
-class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+class net.sourceforge.fenixedu.domain.Item extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySection;
 	Boolean urgent;
 	Integer itemOrder;
 	String information;
 	String name;
-	
-	interface "
-		public void delete();
-		public void edit(String itemName, String itemInformation, Boolean itemUrgent, Integer insertItemOrder);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2137,18 +1381,6 @@ class net.sourceforge.fenixedu.domain.Lesson extends net.sourceforge.fenixedu.do
     ShiftType tipo;
     Date begin;
     Date end;
-
-	interface "
-	public java.util.Calendar getInicio();
-	
-	public void setInicio(java.util.Calendar inicio);
-
-	public java.util.Calendar getFim();
-	
-	public void setFim(java.util.Calendar fim);
-
-	public double hours();
-	"
 }
 
 
@@ -2158,10 +1390,6 @@ class net.sourceforge.fenixedu.domain.Mark extends net.sourceforge.fenixedu.doma
     Integer keyEvaluation;
     Integer keyAttend;
     String ojbConcreteClass;    
-    
-	interface "    
-    public void delete();
-    "
 }
 
 	class net.sourceforge.fenixedu.domain.FinalMark extends net.sourceforge.fenixedu.domain.Mark {
@@ -2190,10 +1418,6 @@ class net.sourceforge.fenixedu.domain.MasterDegreeCandidate extends net.sourcefo
 	String coursesToAssist;
 	Integer guiderKey;
 	Boolean hasGuider;
-	
-	interface "
-	public ICandidateSituation getActiveCandidateSituation();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2209,12 +1433,6 @@ class net.sourceforge.fenixedu.domain.MasterDegreeProofVersion extends net.sourc
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesis extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyStudentCurricularPlan;
-	
-	interface "
-
-	public IMasterDegreeProofVersion getActiveMasterDegreeProofVersion();
-	
-	"
 }
 
 class net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2236,14 +1454,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.Metadata extends net.sourcefor
     String author;
     String secondarySubject;
     Date learningTimeDate;
-
-    interface "
-        public abstract java.util.Calendar getLearningTime();
-
-	    public abstract void setLearningTime(java.util.Calendar calendar);
-
-		public java.util.List<IQuestion> getVisibleQuestions();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.Seminaries.Modality extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2269,12 +1479,6 @@ class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourcefor
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer studentCurricularPlanKey;
     Integer curricularCourseKey;
-	
-	interface "
-
-	public void delete();
-	
-	"
 }
 
 
@@ -2321,12 +1525,6 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes extends n
 	Integer numAnswers2_5_text;
 	Integer numberAnswers;
 	Integer inquiryId;
-	
-	interface "
-
-	public void delete();
-	
-	"
 }
 
 
@@ -2372,12 +1570,6 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary extends net.
 	Double average3_8;
 	Integer numberAnswers;
 	Integer inquiryId;
-	
-	interface "
-
-	public void delete();
-	
-	"
 }
 
 
@@ -2437,12 +1629,6 @@ class net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes extends 
 	Double tolerance3_9;
 	Integer departmentCode;
 	Double deviation3_9;
-	
-	interface "
-
-	public void delete();
-	
-	"
 }
 
 
@@ -2451,13 +1637,6 @@ class net.sourceforge.fenixedu.domain.teacher.OldPublication extends net.sourcef
 	Date lastModificationDate;
 	String publication;
     OldPublicationType oldPublicationType;
-
-	interface "
-
-	public void delete();
-	public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication infoOldPublication, net.sourceforge.fenixedu.domain.ITeacher teacher);
-	
-	"
 }
 
 
@@ -2467,10 +1646,6 @@ class net.sourceforge.fenixedu.domain.teacher.Orientation extends net.sourceforg
     Integer numberOfStudents;
     Date lastModificationDate;
     OrientationType orientationType;
-
-    interface "
-    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation infoOrientation);
-    "
 }
 
 
@@ -2487,26 +1662,6 @@ class net.sourceforge.fenixedu.domain.OccupationPeriod extends net.sourceforge.f
     Date start;
     Date end;
     Integer keyPreviousPeriod;
-	
-	interface "
-    public java.util.Calendar getStartDate();
-    
-    public void setStartDate(java.util.Calendar calendar);
-    
-    public java.util.Calendar getEndDate();
-	
-	public void setEndDate(java.util.Calendar calendar);
-
-	public java.util.Calendar getEndDateOfComposite();
-	
-	public boolean intersectPeriods(final java.util.Calendar start, final java.util.Calendar end);
-
-	public boolean intersectPeriods(IOccupationPeriod period);
-	
-	public boolean containsDay(java.util.Calendar day);
-	
-	public void deleteIfEmpty();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2515,13 +1670,6 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction ext
 	Integer keyFunction;
 	Date beginDate;
 	Date endDate;
-	
-	interface"
-	public void edit(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function, java.util.Date beginDate, java.util.Date endDate, Double credits);	
-	public void delete();
-    public boolean isActive(java.util.Date currentDate);
-	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2568,66 +1716,11 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     IDDocumentType idDocumentType; 
 	Boolean isPassInKerberos;
 	String istUsername;
-	
-	interface "
-    public String getSlideName();
-    
-    public String getSlideNameForCandidateDocuments();
-    
-    public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
-    
-    public void changePassword(String oldPassword, String newPassword);
-    
-    public void editPersonalContactInformation(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit);
-    
-    public void changeUsername(String newUsername, java.util.List<IPerson> persons);
-    
-    public void edit(String name, String address, String phone, String mobile, String homepage, String email);
-        
-    public void update(net.sourceforge.fenixedu.dataTransferObject.InfoPerson personToEdit, net.sourceforge.fenixedu.domain.ICountry country);
-    
-    public void updateUsername();
-    
-    public void updateIstUsername();
-    
-    public net.sourceforge.fenixedu.domain.IRole getPersonRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
-    
-    public Boolean hasRole(net.sourceforge.fenixedu.domain.person.RoleType roleType);
-    
-    public net.sourceforge.fenixedu.domain.IStudent getStudentByType(net.sourceforge.fenixedu.domain.degree.DegreeType degreeType);
-
-	public void removeRoleByType(net.sourceforge.fenixedu.domain.person.RoleType roleType);
-
-	public void indicatePrivledges(java.util.List<IRole> roles);
-	
-	public String getNacionalidade();
-		
-	public java.util.Iterator<net.sourceforge.fenixedu.domain.accessControl.IUserGroup> getUserGroupsIterator();
-	public int getUserGroupsCount();
-
-
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getActiveFunctions();
-	
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getInactiveFunctions();
-	
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IFunction> getActiveInherentFunctions();
-	
-	public boolean containsActiveFunction(net.sourceforge.fenixedu.domain.organizationalStructure.IFunction function);
-	
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getPersonFuntions(java.util.Date beginDate, java.util.Date endDate);
-	
-	
-    "
 }
 
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
 	Double balance;
 	Integer keyPerson;
-	
-	interface "
-    public java.util.List getPaymentTransactions();    
-    public java.util.List getInsuranceTransactions();        
-    "
 }
 
 
@@ -2640,10 +1733,6 @@ class net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers exte
     Integer keyStudent;
     Boolean answer4;
     Boolean answer2;
-    
-    interface "
-    public void setAnswer(Integer id, Boolean answer);
-    "
 }
 
 
@@ -2655,12 +1744,6 @@ class net.sourceforge.fenixedu.domain.PersonRole extends net.sourceforge.fenixed
 
 class net.sourceforge.fenixedu.domain.precedences.Precedence extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCurricularCourse;
-	
-	interface " 
-	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
-	public void delete();
-	public void mergePrecedences(IPrecedence sourcePrecedence);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.Price extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2676,12 +1759,6 @@ class net.sourceforge.fenixedu.domain.Professorship extends net.sourceforge.feni
 	Integer keyExecutionCourse;
 	Double hours;
 	Boolean responsibleFor;
-
-    interface "
-	public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod);
-	
-	public void delete();
-	"
 }
 
 
@@ -2721,16 +1798,6 @@ class net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess extends n
     Date begin;
     Date end;
     Boolean costCenter;
-
-	interface " 
-    public abstract java.util.Calendar getBeginDate();
-
-    public abstract void setBeginDate(java.util.Calendar beginDate);
-
-    public abstract java.util.Calendar getEndDate();
-
-    public abstract void setEndDate(java.util.Calendar endDate);
-    "
 }
 
 
@@ -2751,11 +1818,6 @@ class net.sourceforge.fenixedu.domain.Qualification extends net.sourceforge.feni
     
     String year;	
     QualificationType type;
-	
-    interface "
-    public void delete();
-    public void edit(net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification infoQualification, ICountry country);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.Question extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2763,24 +1825,12 @@ class net.sourceforge.fenixedu.domain.onlineTests.Question extends net.sourcefor
     String xmlFile;
     Boolean visibility;
     String xmlFileName;
-    
-    interface "
-    public void delete();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyGuide;
 	Integer number;
     Date creation;
-
-	interface "
-	public java.util.Calendar getCreationDate();
-	
-	public void setCreationDate(java.util.Calendar creationDate);
-	
-	public IReimbursementGuideSituation getActiveReimbursementGuideSituation();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2798,16 +1848,6 @@ class net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSitua
     ReimbursementGuideState reimbursementGuideState;
     Date modification;
     Date official;
-	
-	interface "
-    public java.util.Calendar getModificationDate();
-    
-    public void setModificationDate(java.util.Calendar modificationDate);
-    
-    public java.util.Calendar getOfficialDate();
-    
-	public void setOfficialDate(java.util.Calendar officialDate);
-	"	
 }
 
 
@@ -2821,12 +1861,7 @@ class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.s
 
 class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-	Integer keyPrecedence;	
-	
-	interface " 	
-	public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType evaluate(net.sourceforge.fenixedu.domain.precedences.PrecedenceContext precedenceContext);
-	public void delete();
-	"
+	Integer keyPrecedence;
 }
 
 
@@ -2884,28 +1919,6 @@ class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourcefor
     Date endTimeDate;
     Integer keyWrittenEvaluation;
     Integer keyLesson;
-
-	interface "
-    public java.util.Calendar getStartTime();
-
-    public void setStartTime(java.util.Calendar calendar);
-    
-    public java.util.Calendar getEndTime();
-	
-	public void setEndTime(java.util.Calendar calendar);
-
-	public boolean roomOccupationForDateAndTime(IRoomOccupation roomOccupation);
-	
-	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IOccupationPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.space.IRoom room);
-	
-	public boolean roomOccupationForDateAndTime(net.sourceforge.fenixedu.domain.IOccupationPeriod period, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
-	
-    public boolean roomOccupationForDateAndTime(java.util.Calendar startDate, java.util.Calendar endDate, java.util.Calendar startTime, java.util.Calendar endTime, net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week);
-
-	public boolean containedIn(java.util.Calendar day, java.util.Calendar beginning, java.util.Calendar end);
-
-	public void delete();
-	"
 }
 
 
@@ -2919,24 +1932,6 @@ class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforg
     Date enrollmentTimeBegin;
     Date enrollmentEnd;
     Date enrollmentTimeEnd;
-
-    interface "
-    public java.util.Calendar getEnrollmentBeginDate();
-
-    public java.util.Calendar getEnrollmentBeginTime();
-
-    public java.util.Calendar getEnrollmentEndDate();
-
-    public java.util.Calendar getEnrollmentEndTime();
-
-    public void setEnrollmentBeginDate(java.util.Calendar calendar);
-
-    public void setEnrollmentBeginTime(java.util.Calendar calendar);
-
-    public void setEnrollmentEndDate(java.util.Calendar calendar);
-
-    public void setEnrollmentEndTime(java.util.Calendar calendar);
-    "
 }
 
 
@@ -2978,24 +1973,6 @@ class net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing extends net.so
 	Date startOfProposalPeriodTime;
 	Date startOfProposalPeriodDate;
 	Date startOfCandidacyPeriodTime;
-	
-	interface "
-	public java.util.Date getEndOfProposalPeriod();
-
-    public void setEndOfProposalPeriod(java.util.Date endOfProposalPeriod);
-
-    public java.util.Date getStartOfProposalPeriod();
-
-    public void setStartOfProposalPeriod(java.util.Date startOfProposalPeriod);
-
-    public java.util.Date getStartOfCandidacyPeriod();
-
-    public void setStartOfCandidacyPeriod(java.util.Date startOfCandidacyPeriod);
-
-    public java.util.Date getEndOfCandidacyPeriod();
-
-    public void setEndOfCandidacyPeriod(java.util.Date endOfCandidacyPeriod);
-	"
 }
 
 
@@ -3004,10 +1981,6 @@ class net.sourceforge.fenixedu.domain.SchoolClass extends net.sourceforge.fenixe
 	String nome;
 	Integer keyExecutionPeriod;
 	Integer anoCurricular;
-	
-	interface "
-	public void associateShift(net.sourceforge.fenixedu.domain.IShift shift);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3021,21 +1994,12 @@ class net.sourceforge.fenixedu.domain.ScientificArea extends net.sourceforge.fen
 	String name;
 }
 
-class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject implements net.sourceforge.fenixedu.fileSuport.INode {
+class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keySuperiorSection;
 	Integer sectionOrder;
 	Integer keySite;
 	String name;
 	Date lastModifiedDate;
-	
-	interface "
-		
-		public void insertItem(String itemName, String itemInformation, Boolean itemUrgency, Integer insertItemOrder);
-		
-		public void edit(String newSectionName, Integer newOrder);
-		
-		public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3061,41 +2025,11 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		Integer capacidadeExame;
 		Integer piso;
 	    TipoSala tipo;
-
-		interface "
-		public void createRoomOccupation(net.sourceforge.fenixedu.domain.IOccupationPeriod period, java.util.Calendar startTime, java.util.Calendar endTime,
-	            net.sourceforge.fenixedu.util.DiaSemana dayOfWeek, Integer frequency, Integer week, net.sourceforge.fenixedu.domain.IWrittenEvaluation writtenEvaluation);
-		public void delete();
-		"
 	}
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
 	Integer keyExecutionPeriod;
-
-	interface "
-		public void delete();
-		public Double getCredits();
-		public Double getTeachingDegreeCredits();		
-		public Double getSupportLessonHours();
-		public Double getMasterDegreeServiceCredits();
-		public Double getPastServiceCredits();
-		public Double getOtherServiceCredits();
-		public Double getInstitutionWorkingHours();
-		public Double getTeacherAdviseServiceCredits();
-		public void verifyOverlappingWithInstitutionWorkingTime(java.util.Date startTime, java.util.Date endTime, net.sourceforge.fenixedu.util.WeekDay weekDay);
-		public void verifyOverlappingWithSupportLesson(java.util.Date startTime, java.util.Date endTime, net.sourceforge.fenixedu.util.WeekDay weekDay);
-		public void verifyOverlappingWithTeachingService(java.util.Date startTime, java.util.Date endTime, net.sourceforge.fenixedu.util.WeekDay weekDay);
-		public IDegreeTeachingService getDegreeTeachingServiceByShiftAndExecutionCourse(final net.sourceforge.fenixedu.domain.IShift shift,
-																																						final net.sourceforge.fenixedu.domain.IExecutionCourse executionCourse);
-		public java.util.List<IDegreeTeachingService> getDegreeTeachingServices() ;
-     	public java.util.List<ITeacherMasterDegreeService> getMasterDegreeServices();
-	    public ITeacherPastService getPastService();
-	    public java.util.List<IOtherService> getOtherServices();
-	    public java.util.List<IInstitutionWorkTime> getInstitutionWorkTimes();
-	    public java.util.List<net.sourceforge.fenixedu.domain.ISupportLesson> getSupportLessons();
-	    public java.util.List<ITeacherAdviseService> getTeacherAdviseServices();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3115,54 +2049,30 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	
 	class net.sourceforge.fenixedu.domain.teacher.OtherService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
 		Double credits;
-		String reason; 
-		
-		interface "
-			public void delete();
-		"
+		String reason;
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
 		Date startTime;
 		Date endTime;		
 		WeekDay weekDay;
-		
-		interface "
-			public double getHours();			
-			public void update(net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO institutionWorkTimeDTO);
-			public void delete();
-		"
 	}	
 	
 	class net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
 		Double percentage;
 		Integer keyShift;
 		Integer keyProfessorship;
-		
-		interface "
-			public void updatePercentage(Double percentage);
-			public void delete();
-		"
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
 		Double percentage;
 		Integer keyAdvise;
-		
-		interface "
-			public void delete();
-			public void updatePercentage(Double percentage);
-		"
 	}
 	
 class net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyTeacher;
     Date lastModificationDate;
     ProviderRegimeType providerRegimeType;
-    
-    interface "
-    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime infoServiceProviderRegime);
-    "
 }
 
 
@@ -3172,16 +2082,6 @@ class net.sourceforge.fenixedu.domain.Shift extends net.sourceforge.fenixedu.dom
 	String nome;
 	Integer lotacao;
     ShiftType tipo;
-		
-	interface "
-    public double hours();
-    
-    public void associateSchoolClass(net.sourceforge.fenixedu.domain.ISchoolClass schoolClass);
-    
-    public void transferSummary(ISummary summary, java.util.Date summaryDate, java.util.Date summaryHour, net.sourceforge.fenixedu.domain.space.IRoom room, boolean newSummary);
-    
-    public Double getAvailableShiftPercentageForTeacher(ITeacher teacher);
-	"
 }
 
 
@@ -3189,10 +2089,6 @@ class net.sourceforge.fenixedu.domain.ShiftProfessorship extends net.sourceforge
     Integer keyShift;
     Integer keyProfessorship;
     Double percentage;
-
-	interface "    
-	    public void delete();
-    "
 }
 
 
@@ -3217,20 +2113,6 @@ class net.sourceforge.fenixedu.domain.Site extends net.sourceforge.fenixedu.doma
 	Integer keyExecutionCourse;
 	String introduction;
 	String alternativeSite;
-	
-	interface "
-	public void edit(String initialStatement, String introduction, String mail, String alternativeSite);
-	
-	public void createAnnouncement(String announcementTitle, String announcementInformation);			
-	
-	public net.sourceforge.fenixedu.domain.ISection createSection(String sectionName, ISection parentSection, Integer sectionOrder);
-
-	public net.sourceforge.fenixedu.domain.IAnnouncement getLastAnnouncement();
-
-	public java.util.Set<net.sourceforge.fenixedu.domain.IAnnouncement> getSortedAnnouncements();
-	
-	public void delete();
-	"
 }
 
 
@@ -3269,26 +2151,6 @@ class net.sourceforge.fenixedu.domain.Student extends net.sourceforge.fenixedu.d
     Character approvationRatioClassification;
     Character arithmeticMeanClassification;        
     Integer keySenior;
-
-	interface "
-    public IStudentCurricularPlan getActiveStudentCurricularPlan();
-    public boolean attends(IExecutionCourse executionCourse);
-    
-    public java.util.List<IWrittenEvaluation> getWrittenEvaluations(IExecutionPeriod executionPeriod);
-    public java.util.List<IExam> getEnroledExams(IExecutionPeriod executionPeriod);
-    public java.util.List<IExam> getUnenroledExams(IExecutionPeriod executionPeriod);    
-    public java.util.List<IWrittenTest> getEnroledWrittenTests(IExecutionPeriod executionPeriod);
-    public java.util.List<IWrittenTest> getUnenroledWrittenTests(IExecutionPeriod executionPeriod);
-    public java.util.List<IProject> getProjects(IExecutionPeriod executionPeriod);
-    public boolean isEnroledIn(IEvaluation evaluation);
-    public net.sourceforge.fenixedu.domain.space.IRoom getRoomFor(IWrittenEvaluation writtenEvaluation);    
-    public void calculateApprovationRatioAndArithmeticMeanIfActive(IExecutionYear currentExecutionYear);    
-    public Double getApprovationRatio();
-    public Double getArithmeticMean();
-    public Integer getApprovedEnrollmentsNumber();
-    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByTeacher(final ITeacher teacher) ;    
-    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByType(final net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType);    
-	"
 }
 
 
@@ -3316,81 +2178,6 @@ class net.sourceforge.fenixedu.domain.StudentCurricularPlan extends net.sourcefo
     Date when;
     StudentCurricularPlanState currentState;
     Specialization specialization;
-    
-    interface "
-    public IBranch getSecundaryBranch();
-
-    public void setSecundaryBranch(IBranch secundaryBranch);
-    
-    public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
-        throws net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-
-    public java.util.List getAllEnrollments();
-    
-    public java.util.List getAllStudentEnrolledEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod);
-
-    public java.util.List getAllStudentEnrollmentsInExecutionPeriod(IExecutionPeriod executionPeriod);
-    
-    public java.util.List getAprovedEnrolmentsInExecutionPeriod(final IExecutionPeriod executionPeriod);
-    
-    public boolean getCanChangeSpecializationArea();
-    
-    public Integer getCreditsInSecundaryArea();
-    
-    public Integer getCreditsInSpecializationArea();
-    
-    public Integer getCurricularCourseAcumulatedEnrollments(ICurricularCourse curricularCourse);
-    
-    public net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod);
-    
-    public java.util.List getCurricularCoursesToEnroll(IExecutionPeriod executionPeriod) 
-        throws net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
-    
-    public Integer getMaximumNumberOfAcumulatedEnrollments();
-    
-    public Integer getMaximumNumberOfCoursesToEnroll();
-    
-    public Integer getMinimumNumberOfCoursesToEnroll();
-    
-    public int getNumberOfApprovedCurricularCourses();
-    
-    public int getNumberOfEnrolledCurricularCourses();
-    
-    public boolean isCurricularCourseApproved(ICurricularCourse curricularCourse);
-    
-    public boolean isCurricularCourseEnrolled(ICurricularCourse curricularCourse);
-    
-    public boolean isCurricularCourseEnrolledInExecutionPeriod(ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod);
-    
-    public boolean isCurricularCourseApprovedInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
-	
-    public boolean isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(ICurricularCourse course, IExecutionPeriod executionPeriod);
-    
-    public void setCreditsInSecundaryArea(Integer creditsInSecundaryArea);
-    
-    public void setCreditsInSpecializationArea(Integer creditsInSpecializationArea);
-	
-	public void changeState(net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState studentCurricularPlanState);
-	
-	public void delete();
-	
-	public IEnrolment getEnrolmentByCurricularCourseAndExecutionPeriod(final ICurricularCourse curricularCourse, final IExecutionPeriod executionPeriod);
-	
-	public void setStudentAreasWithoutRestrictions(IBranch specializationArea, IBranch secundaryArea);
-	
-	public void setStudentAreas(IBranch specializationArea, IBranch secundaryArea) throws 
-				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedBranchChangeException, 
-				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreTheSameServiceException, 
-				net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-    
-    public java.util.List initAcumulatedEnrollments(java.util.List elements);
-    
-    public IGratuitySituation getGratuitySituationByGratuityValues(final IGratuityValues gratuityValues);
-    
-    public boolean isEnroledInSpecialSeason(IExecutionPeriod executionPeriod);
-    
-    public java.util.List<IEnrolment> getEnrolments(final ICurricularCourse curricularCourse);
-    "
 }
 
 
@@ -3412,14 +2199,6 @@ class net.sourceforge.fenixedu.domain.StudentGroup extends net.sourceforge.fenix
     Integer keyShift;
     Integer keyGrouping;
     Integer groupNumber;
-    
-    interface "
-    public void delete();
-    
-    public void editShift(IShift shift);
-    
-    public boolean checkStudentUsernames(java.util.List<String> studentUsernames);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.StudentKind extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3452,10 +2231,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion extends ne
     String response;
     Double testQuestionMark;
     CorrectionFormula correctionFormula;
-    
-    interface "
-    public void delete();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3473,21 +2248,6 @@ class net.sourceforge.fenixedu.domain.Summary extends net.sourceforge.fenixedu.d
     Date summaryDate;
     Date summaryHour;
     ShiftType summaryType;
-    
-    interface "
-    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            IProfessorship professorship);
-            
-    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            ITeacher teacher);
-            
-    public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            String teacherName);
-            
-	public void modifyShift(IShift shift, java.util.Date summaryDate, java.util.Date summaryHour, net.sourceforge.fenixedu.domain.space.IRoom room);            
-	
-	public void delete();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3496,16 +2256,6 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 	String place;
 	Date endTime;
 	DiaSemana weekDay;
-    
-	interface "
-	public void delete();
-	
-	public double hours();
-	
-	public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod);
-	
-	public void verifyOverlappings() ;
-	"
 }
 
 
@@ -3515,64 +2265,6 @@ class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.d
 	Integer keyCategory;
 	Integer keyServiceProviderRegime;
 	Integer keyPublicationsNumber;
-	
-	interface "
-	public net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod);
-	
-	public void addToTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication, net.sourceforge.fenixedu.util.PublicationArea publicationArea);
-	
-	public void removeFromTeacherInformationSheet(net.sourceforge.fenixedu.domain.publication.IPublication publication);
-	
-	public Boolean canAddPublicationToTeacherInformationSheet(net.sourceforge.fenixedu.util.PublicationArea area);
-
-	public java.util.List responsibleFors();
-	
-	public IProfessorship responsibleFor(Integer executionCourseId);
-	
-	public void updateResponsabilitiesFor(Integer executionYearId, java.util.List<Integer> executionCourses) 
-		throws net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed, 
-		net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
-		
-   	public net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(IExecutionYear executionYear);
-	
-	public IDepartment getCurrentWorkingDepartment();
-	
-   	public IDepartment getLastWorkingDepartment();
-   	
-	
-	public java.util.List<net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear);
-	
-	public java.util.List<IExecutionCourse> getLecturedExecutionCoursesByExecutionYear(IExecutionYear executionYear);
-	
-	public java.util.List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(final IExecutionPeriod executionPeriod);
-	
-	public java.util.List<IExecutionCourse> getAllLecturedExecutionCourses();
-	
-	public java.util.List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(IExecutionYear executionYear);
-
-	public java.util.List<net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption> getServiceExemptionSituations(java.util.Date beginDate, java.util.Date endDate);	
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction> getPersonFuntions(java.util.Date beginDate, java.util.Date endDate);
-	public java.util.List<IMasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis();
-	
-	public void createTeacherPersonalExpectation(
-             net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation, IExecutionYear executionYear);
-	
-	public double getManagementFunctionsCredits(IExecutionPeriod executionPeriod);
-    public int getServiceExemptionCredits(IExecutionPeriod executionPeriod);
-    public int getHoursByCategory(java.util.Date begin, java.util.Date end);    
-    public net.sourceforge.fenixedu.domain.teacher.ICategory getCategoryByPeriod(java.util.Date begin, java.util.Date end);
-    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse);
-	public net.sourceforge.fenixedu.domain.teacher.ITeacherService getTeacherServiceByExecutionPeriod(final IExecutionPeriod executionPeriod);
-	
-	public IProfessorship getProfessorshipByExecutionCourse(final IExecutionCourse executionCourse);
-	
-	public java.util.List<IProfessorship> getDegreeProfessorshipsByExecutionPeriod(final IExecutionPeriod executionPeriod);
-	
-    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseTypeAndExecutionYear(net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType,IExecutionYear executionYear);
-    
-    public java.util.List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseType(net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType);
-	
-	"
 }
 class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyCategory;
@@ -3584,10 +2276,6 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen extends net.so
 	RegimenType regimenType;
 	Date beginDate;
 	Date endDate;
-
-	interface "
-	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3596,12 +2284,6 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption extends ne
 	String institution;
 	Date start;
 	Date end;
-	
-	interface "
-	public void delete();
-	public void edit(ServiceExemptionType type, java.util.Date beginDate, java.util.Date endDate);
-	public boolean belongsToPeriod(java.util.Date beginDate, java.util.Date endDate);
-	"
 }
 
 class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3609,10 +2291,6 @@ class net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProj
     Integer keyStudent;
     Integer keyExecutionPeriod;
     Double percentage;
-    
-    interface "
-    public void delete();
-    "
 }
 
 
@@ -3622,10 +2300,6 @@ class net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTim
     Integer keyExecutionPeriod;
     Date endTime;
     DiaSemana weekDay;
-    
-    interface "
-    public double hours();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.Test extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3634,12 +2308,6 @@ class net.sourceforge.fenixedu.domain.onlineTests.Test extends net.sourceforge.f
     String title;
     Date lastModifiedDate;
     Integer keyTestScope;
-    
-    interface "
-    public void insertTestQuestion(IQuestion question, Integer testQuestionOrder, Double testQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula formula);
-    
-    public void deleteTestQuestion(ITestQuestion testQuestion);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3648,23 +2316,11 @@ class net.sourceforge.fenixedu.domain.onlineTests.TestQuestion extends net.sourc
     Integer testQuestionOrder;
     Double testQuestionValue;
     CorrectionFormula correctionFormula;
-    
-    interface "
-    public void editTestQuestion(Integer newTestQuestionOrder, Double newTestQuestionValue, net.sourceforge.fenixedu.util.tests.CorrectionFormula newFormula);
-    
-  	public void delete();
-    "
 }
 
 class net.sourceforge.fenixedu.domain.onlineTests.TestScope extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyClass;
     String className;
-    
-    interface "
-    public void setDomainObject(net.sourceforge.fenixedu.domain.IDomainObject domainObject);
-    public net.sourceforge.fenixedu.domain.IDomainObject getDomainObject();
-    "
-    
 }
 
 class net.sourceforge.fenixedu.domain.Seminaries.Theme extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3679,23 +2335,8 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
 	Date endDate;
 	UnitType type;
 	Integer costCenterCode;
-	Integer keyDepartment;	
+	Integer keyDepartment;
 	Integer keyDegree;
-	
-	interface "
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getTopUnits();
-	public void edit(String unitName, Integer unitCostCenter, java.util.Date beginDate, java.util.Date endDate,
-            net.sourceforge.fenixedu.domain.organizationalStructure.UnitType type, 
-            net.sourceforge.fenixedu.domain.organizationalStructure.IUnit parentUnit);
-    public boolean isActive(java.util.Date currentDate);
-    public void delete();
-    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getInactiveSubUnits(java.util.Date currentDate);
-    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getActiveSubUnits(java.util.Date currentDate);
-    public java.util.List<net.sourceforge.fenixedu.domain.IContract> getWorkingContracts(java.util.Date begin, java.util.Date end);
-    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getScientificAreaUnits();
-    public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getCompetenceCourseGroupUnits();
-	public java.util.List<net.sourceforge.fenixedu.domain.organizationalStructure.IUnit> getDegreeUnits();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.University extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3712,20 +2353,10 @@ class net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation extends net.source
     Integer management;
     Integer research;
     Integer support;
-    
-    interface "
-    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation infoWeeklyOcupation);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationType extends net.sourceforge.fenixedu.domain.DomainObject {
 	String publicationType;
-		
-	interface "
-	public java.util.List<IAttribute> getRequiredAttributes();
-
-    public java.util.List<IAttribute> getNonRequiredAttributes();
-	"
 }
 
 
@@ -3733,9 +2364,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationTeacher extends net
 	Integer keyTeacher;
 	Integer keyPublication;
     PublicationArea publicationArea;
-    interface "
-    public void delete();
-    "
 }
 
 
@@ -3743,9 +2371,6 @@ class net.sourceforge.fenixedu.domain.publication.Authorship extends net.sourcef
 	Integer keyAuthor;
 	Integer keyPublication;
 	Integer order;
-	interface "
-	public void delete();
-	"
 }
 
 
@@ -3785,11 +2410,6 @@ class net.sourceforge.fenixedu.domain.publication.Publication extends net.source
 	String format;
 	Integer keyPublicationType;
 	String publicationString;
-	
-	interface "
-	public void edit(net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO publicationDTO, net.sourceforge.fenixedu.domain.publication.IPublicationType publicationType, java.util.List<net.sourceforge.fenixedu.domain.IPerson> authors);
-	public void delete();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3798,10 +2418,6 @@ class net.sourceforge.fenixedu.domain.teacher.PublicationsNumber extends net.sou
 	Date lastModificationDate;
 	Integer international;
     PublicationType publicationType;
-    
-    interface "
-    public void edit(net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber infoPublicationsNumber);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationFormat extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3810,10 +2426,6 @@ class net.sourceforge.fenixedu.domain.publication.PublicationFormat extends net.
 
 class net.sourceforge.fenixedu.domain.publication.Attribute extends net.sourceforge.fenixedu.domain.DomainObject {
 	String attributeType;
-		
-	interface "
-	public java.util.List<IPublicationType> getPublicationTypes();
-	"
 }
 
 class net.sourceforge.fenixedu.domain.publication.PublicationSubtype extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -3943,10 +2555,6 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation extends
            
     Integer keyTeacher;
     Integer keyExecutionYear;
-    
-    interface "
-    public void edit(net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation);
-    "
 }
 
 class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends net.sourceforge.fenixedu.domain.DomainObject {         
@@ -3954,11 +2562,6 @@ class net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod extends
     Date endDate;
     Integer keyDepartment;
     Integer keyExecutionYear;
-    
-    interface "
-    public void edit(java.util.Date startDate,java.util.Date endDate);
-    public Boolean  isPeriodOpen();
-    "
 }
 
 

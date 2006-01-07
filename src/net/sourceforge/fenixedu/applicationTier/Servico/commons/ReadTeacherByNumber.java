@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -14,7 +14,7 @@ public class ReadTeacherByNumber implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-        final ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
+        final Teacher teacher = teacherDAO.readByNumber(teacherNumber);
         return (teacher != null) ? InfoTeacher.newInfoFromDomain(teacher) : null;
     }
 

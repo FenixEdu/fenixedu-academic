@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -615,7 +615,7 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
         return 0;
     }
     
-    public static InfoOldInquiriesCoursesRes newInfoFromDomain(IOldInquiriesCoursesRes oldInquiriesCoursesRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoOldInquiriesCoursesRes newInfoFromDomain(OldInquiriesCoursesRes oldInquiriesCoursesRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         InfoOldInquiriesCoursesRes newInfo = null;
         if(oldInquiriesCoursesRes != null) {
             newInfo = new InfoOldInquiriesCoursesRes();
@@ -624,7 +624,7 @@ public class InfoOldInquiriesCoursesRes extends InfoObject implements
         return newInfo;
     }
        
-    public void copyFromDomain(IOldInquiriesCoursesRes oldInquiriesCoursesRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void copyFromDomain(OldInquiriesCoursesRes oldInquiriesCoursesRes) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (oldInquiriesCoursesRes != null) {
             super.copyFromDomain(oldInquiriesCoursesRes);
         }

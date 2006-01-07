@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
+import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -26,7 +26,7 @@ public class ReadUserProjects implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
-        List<IProject> projectList = p.getIPersistentProject().readByUserLogin(userNumber);
+        List<Project> projectList = p.getIPersistentProject().readByUserLogin(userNumber);
         if (all)
             projectList.addAll(p.getIPersistentProject().readByProjectsCodes(
                     persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndDateAndCC(username, costCenter)));

@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -16,12 +16,12 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class GrantContractVO extends VersionedObjectsBase implements IPersistentGrantContract {
 
-    public IGrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,
+    public GrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,
             Integer grantOwnerId) throws ExcepcaoPersistencia {
 
-        List<IGrantContract> grantContracts = (List<IGrantContract>) readAll(GrantContract.class);
+        List<GrantContract> grantContracts = (List<GrantContract>) readAll(GrantContract.class);
 
-        for (IGrantContract contract : grantContracts) {
+        for (GrantContract contract : grantContracts) {
             if (contract.getContractNumber().equals(grantContractNumber)
                     && contract.getKeyGrantOwner().equals(grantOwnerId)) {
                 return contract;
@@ -32,10 +32,10 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readAllContractsByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia {
-        List<IGrantContract> grantContracts = (List<IGrantContract>) readAll(GrantContract.class);
-        List<IGrantContract> result = null;
+        List<GrantContract> grantContracts = (List<GrantContract>) readAll(GrantContract.class);
+        List<GrantContract> result = null;
 
-        for (IGrantContract contract : grantContracts) {
+        for (GrantContract contract : grantContracts) {
             if (contract.getKeyGrantOwner().equals(grantOwnerId)) {
                 result.add(contract);
             }
@@ -47,10 +47,10 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
     public Integer readMaxGrantContractNumberByGrantOwner(Integer grantOwnerId)
             throws ExcepcaoPersistencia {
 
-        List<IGrantContract> grantContracts = (List<IGrantContract>) readAll(GrantContract.class);
+        List<GrantContract> grantContracts = (List<GrantContract>) readAll(GrantContract.class);
         Integer maxGrantContractNumber = 0;
 
-        for (IGrantContract contract : grantContracts) {
+        for (GrantContract contract : grantContracts) {
             if (contract.getKeyGrantOwner().equals(grantOwnerId)
                     && contract.getContractNumber() > maxGrantContractNumber) {
                 maxGrantContractNumber = contract.getContractNumber();
@@ -68,18 +68,18 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
             Boolean justDesactiveContracts, Date dateBeginContract, Date dateEndContract,
             Integer spanNumber, Integer numberOfElementsInSpan, Integer grantTypeId) {
 
-        List<IGrantContract> grantContracts = (List<IGrantContract>) readAll(GrantContract.class);
+        List<GrantContract> grantContracts = (List<GrantContract>) readAll(GrantContract.class);
         ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator(orderBy), true);
         Collections.sort(grantContracts, comparatorChain);
 
-        List<IGrantContract> result = null;
+        List<GrantContract> result = null;
         Integer desiredContractRegimeState = new Integer(1);
         long now = System.currentTimeMillis();
 
-        for (IGrantContract grantContract : grantContracts) {
+        for (GrantContract grantContract : grantContracts) {
 
             boolean verifiesConditions = true;
-            for (IGrantContractRegime grantContractRegime : grantContract
+            for (GrantContractRegime grantContractRegime : grantContract
                     .getContractRegimes()) {
 
                 if (!grantContractRegime.getState().equals(desiredContractRegimeState)) {
@@ -142,15 +142,15 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
     public Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts,
             Date dateBeginContract, Date dateEndContract, Integer grantTypeId) {
 
-        List<IGrantContract> grantContracts = (List<IGrantContract>) readAll(GrantContract.class);
+        List<GrantContract> grantContracts = (List<GrantContract>) readAll(GrantContract.class);
 
         int result = 0;
         long now = System.currentTimeMillis();
 
-        for (IGrantContract grantContract : grantContracts) {
+        for (GrantContract grantContract : grantContracts) {
 
             boolean verifiesConditions = true;
-            for (IGrantContractRegime grantContractRegime : grantContract
+            for (GrantContractRegime grantContractRegime : grantContract
                     .getContractRegimes()) {
 
                 if (justActiveContracts != null

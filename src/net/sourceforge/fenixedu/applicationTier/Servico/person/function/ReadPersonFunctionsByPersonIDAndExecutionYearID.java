@@ -4,10 +4,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadPersonFunctionsByPersonIDAndExecutionYearID implements IService {
 
-    public List<IPersonFunction> run(Integer personID, Integer executionYearID)
+    public List<PersonFunction> run(Integer personID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente persistenceSupport = PersistenceSupportFactory
@@ -30,12 +30,12 @@ public class ReadPersonFunctionsByPersonIDAndExecutionYearID implements IService
         IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
         IPersistentExecutionYear persistentExecutionYear = persistenceSupport
                 .getIPersistentExecutionYear();
-        IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personID);
+        Person person = (Person) persistentPerson.readByOID(Person.class, personID);
 
-        List<IPersonFunction> personFunctions = null;
+        List<PersonFunction> personFunctions = null;
 
         if (executionYearID != null) {
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+            ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                     ExecutionYear.class, executionYearID);
             personFunctions = person.getPersonFuntions(executionYear.getBeginDate(), executionYear
                     .getEndDate());

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -38,7 +38,7 @@ public class UpdateProfessorshipsHours implements IService {
                 if (value != null) {
                     try {
                         Double ecHours = Double.valueOf(value);
-                        IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId, executionCourseId);
+                        Professorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId, executionCourseId);
                         professorshipDAO.simpleLockWrite(professorship);
                         professorship.setHours(ecHours);
                     } catch (NumberFormatException e1) {

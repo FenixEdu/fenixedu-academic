@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonRole;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -41,11 +41,11 @@ public class ChangeStudentInfoAuthorization extends AuthorizationByRoleFilter {
         InfoPerson infoPerson = (InfoPerson) request.getServiceParameters().parametersArray()[0];
         
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPerson person = (IPerson) persistentSupport.getIPessoaPersistente().readByOID(Person.class, infoPerson.getIdInternal());
-        IRole teacherRole = (IRole) persistentSupport.getIPersistentRole().readByRoleType(RoleType.TEACHER);
-        IRole employeeRole = (IRole) persistentSupport.getIPersistentRole().readByRoleType(RoleType.EMPLOYEE);
+        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class, infoPerson.getIdInternal());
+        Role teacherRole = (Role) persistentSupport.getIPersistentRole().readByRoleType(RoleType.TEACHER);
+        Role employeeRole = (Role) persistentSupport.getIPersistentRole().readByRoleType(RoleType.EMPLOYEE);
         
-        for (IPersonRole personRole : person.getAssociatedPersonRoles()) {
+        for (PersonRole personRole : person.getAssociatedPersonRoles()) {
             if (personRole.getRole().equals(teacherRole) || personRole.getRole().equals(employeeRole)) {
                 throw new NotAuthorizedFilterException();
             }

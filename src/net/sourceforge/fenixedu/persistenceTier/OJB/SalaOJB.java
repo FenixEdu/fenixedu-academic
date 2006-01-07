@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -26,10 +26,10 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 
-    public IRoom readByName(String nome) throws ExcepcaoPersistencia {
+    public Room readByName(String nome) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
-        return (IRoom) queryObject(Room.class, crit);
+        return (Room) queryObject(Room.class, crit);
     }
 
     public List readAll() throws ExcepcaoPersistencia {
@@ -49,9 +49,9 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     public List readSalas(String nome, String edificio, Integer piso, Integer tipo,
             Integer capacidadeNormal, Integer capacidadeExame) throws ExcepcaoPersistencia {
         
-        List<IRoom> rooms = (List<IRoom>) readAll(Room.class);
-        List<IRoom> result = new ArrayList();
-        for (IRoom room : rooms) {
+        List<Room> rooms = (List<Room>) readAll(Room.class);
+        List<Room> result = new ArrayList();
+        for (Room room : rooms) {
             boolean isAcceptable = true;
             if (nome != null && !room.getNome().equalsIgnoreCase(nome)) {
                 continue;
@@ -83,7 +83,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     public List readAvailableRooms(Integer examOID) throws ExcepcaoPersistencia {
         List availableRooms = null;
 
-        IExam examFromDB = (IExam) readByOID(Exam.class, examOID);
+        Exam examFromDB = (Exam) readByOID(Exam.class, examOID);
         if (examFromDB != null) {
             Criteria crit = new Criteria();
             crit.addNotEqualTo("idInternal", examFromDB.getIdInternal());
@@ -99,7 +99,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 
             List occupiedRooms = new ArrayList();
             for (int i = 0; i < otherExams.size(); i++) {
-                IExam someOtherExam = (IExam) otherExams.get(i);
+                Exam someOtherExam = (Exam) otherExams.get(i);
                 occupiedRooms.addAll(someOtherExam.getAssociatedRooms());
             }
             Criteria crit2 = new Criteria();

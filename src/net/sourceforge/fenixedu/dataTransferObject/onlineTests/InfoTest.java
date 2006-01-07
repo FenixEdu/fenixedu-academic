@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
 
 /**
  * @author Susana Fernandes
@@ -140,7 +140,7 @@ public class InfoTest extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(ITest test) {
+    public void copyFromDomain(Test test) {
         super.copyFromDomain(test);
         if (test != null) {
             setTitle(test.getTitle());
@@ -151,7 +151,7 @@ public class InfoTest extends InfoObject {
         }
     }
 
-    public static InfoTest newInfoFromDomain(ITest test) {
+    public static InfoTest newInfoFromDomain(Test test) {
         InfoTest infoTest = null;
         if (test != null) {
             infoTest = new InfoTest();

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -19,7 +19,7 @@ public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse ex
         super();
     }
 	
-	public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+	public RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
 		super();
 		
 		setPrecedence(precedence);
@@ -28,7 +28,7 @@ public class RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse ex
 	
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
+        CurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
         CurricularCourseEnrollmentType result1 = null;
         CurricularCourseEnrollmentType result2 = null;
 

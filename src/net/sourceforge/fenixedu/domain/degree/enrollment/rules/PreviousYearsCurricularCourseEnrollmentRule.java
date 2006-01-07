@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll
 
 public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentRule {
 
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
 
-    private IBranch studentBranch;
+    private Branch studentBranch;
 
     private int degreeDuration;
 
-    public PreviousYearsCurricularCourseEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public PreviousYearsCurricularCourseEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
         this.studentBranch = studentCurricularPlan.getBranch();
         this.degreeDuration = studentCurricularPlan.getDegreeCurricularPlan().getDegreeDuration()
@@ -105,7 +105,7 @@ public class PreviousYearsCurricularCourseEnrollmentRule implements IEnrollmentR
         return map;
     }
 
-    private boolean isCurricularCourseFromYear(int i, ICurricularCourse curricularCourse) {
+    private boolean isCurricularCourseFromYear(int i, CurricularCourse curricularCourse) {
         return (curricularCourse.getCurricularYearByBranchAndSemester(this.studentBranch,
                 this.executionPeriod.getSemester()).getYear().intValue() == i);
     }

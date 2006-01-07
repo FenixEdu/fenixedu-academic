@@ -10,8 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 
 /**
  * @author Ricardo Rodrigues
@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
 
 public class InfoExecutionCourseWithNonAffiliatedTeachers extends InfoExecutionCourse {
 
-    public void copyFromDomain(IExecutionCourse executionCourse) {
+    public void copyFromDomain(ExecutionCourse executionCourse) {
         super.copyFromDomain(executionCourse);
         if (executionCourse != null) {
             List nonAffiliatedTeachers = executionCourse.getNonAffiliatedTeachers();
             List infoNonAffiliatedTeachers = new ArrayList();
             for (Iterator iter = nonAffiliatedTeachers.iterator(); iter.hasNext();) {
-                INonAffiliatedTeacher nonAffiliatedTeacher = (INonAffiliatedTeacher) iter.next();
+                NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) iter.next();
                 InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = new InfoNonAffiliatedTeacher();
                 infoNonAffiliatedTeacher.copyFromDomain(nonAffiliatedTeacher);
                 infoNonAffiliatedTeachers.add(infoNonAffiliatedTeacher);
@@ -35,7 +35,7 @@ public class InfoExecutionCourseWithNonAffiliatedTeachers extends InfoExecutionC
         }
     }
 
-    public static InfoExecutionCourse newInfoFromDomain(IExecutionCourse executionCourse) {
+    public static InfoExecutionCourse newInfoFromDomain(ExecutionCourse executionCourse) {
         InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourseWithNonAffiliatedTeachers();

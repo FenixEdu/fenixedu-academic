@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 
 public class InfoPublicationType extends InfoObject {
 
@@ -17,14 +17,14 @@ public class InfoPublicationType extends InfoObject {
         super();
     }
 
-    public void copyFromDomain(IPublicationType pubType) {
+    public void copyFromDomain(PublicationType pubType) {
         super.copyFromDomain(pubType);
         if (pubType != null) {
 	        publicationType = pubType.getPublicationType();
         }
     }
     
-    public static InfoPublicationType newInfoFromDomain(IPublicationType pubtype) {
+    public static InfoPublicationType newInfoFromDomain(PublicationType pubtype) {
         InfoPublicationType iptype = new InfoPublicationType();
         iptype.copyFromDomain(pubtype);
         return iptype;

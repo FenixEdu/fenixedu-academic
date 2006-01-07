@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
@@ -123,9 +123,9 @@ public class FenixBackingBean {
                 .executeService(getUserView(), "ReadAllDomainObjects", new Object[] { clazz });
     }
 
-    public IDomainObject readDomainObject(final Class clazz, final Integer idInternal)
+    public DomainObject readDomainObject(final Class clazz, final Integer idInternal)
             throws FenixFilterException, FenixServiceException {
-        return (IDomainObject) ServiceUtils.executeService(getUserView(), "ReadDomainObject",
+        return (DomainObject) ServiceUtils.executeService(getUserView(), "ReadDomainObject",
                 new Object[] { clazz, idInternal });
     }
 

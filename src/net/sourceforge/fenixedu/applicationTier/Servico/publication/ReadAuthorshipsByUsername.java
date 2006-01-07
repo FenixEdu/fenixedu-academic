@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.IAuthorship;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -25,14 +25,14 @@ public class ReadAuthorshipsByUsername implements IService {
 		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-		IPerson person = persistentPerson.lerPessoaPorUsername(user);
-		ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+		Person person = persistentPerson.lerPessoaPorUsername(user);
+		Teacher teacher = persistentTeacher.readTeacherByUsername(user);
 
 		InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 		List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(person
 				.getPersonAuthorshipsCount());
 
-		for (IAuthorship authorship : person.getPersonAuthorships()) {
+		for (Authorship authorship : person.getPersonAuthorships()) {
 			infoPublications.add(InfoPublication.newInfoFromDomain(authorship.getPublication()));
 		}
 

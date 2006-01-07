@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
@@ -43,12 +43,12 @@ public class ReadStudentsByTutor implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
+        Teacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
         if (teacherDB == null) {
             throw new FenixServiceException("error.noTutor");
         }
         
-        IDepartment department = teacherDB.getCurrentWorkingDepartment();
+        Department department = teacherDB.getCurrentWorkingDepartment();
 
         // Now only LEEC's teachers can be tutor
         if (!department.getCode().equals(new String("21"))) {
@@ -59,13 +59,13 @@ public class ReadStudentsByTutor implements IService {
         teacherAndStudentsList.add(InfoTeacherWithPerson.newInfoFromDomain(teacherDB));
 
         IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-        List<ITutor> tutorStudents = persistentTutor.readStudentsByTeacher(null, tutorNumber);
+        List<Tutor> tutorStudents = persistentTutor.readStudentsByTeacher(null, tutorNumber);
         if (tutorStudents == null || tutorStudents.size() <= 0) {
             return teacherAndStudentsList;
         }
 
         List<InfoTutor> infoTutorStudents = new ArrayList();
-        for (ITutor tutor : tutorStudents) {
+        for (Tutor tutor : tutorStudents) {
             infoTutorStudents.add(InfoTutorWithInfoStudent.newInfoFromDomain(tutor));
         }
         teacherAndStudentsList.add(infoTutorStudents);

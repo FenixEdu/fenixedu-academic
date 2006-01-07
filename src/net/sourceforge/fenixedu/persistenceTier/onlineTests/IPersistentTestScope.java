@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.onlineTests;
 
-import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -14,5 +14,5 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  * 
  */
 public interface IPersistentTestScope extends IPersistentObject {
-    public ITestScope readByDomainObject(String className, Integer idInternal) throws ExcepcaoPersistencia;
+    public TestScope readByDomainObject(String className, Integer idInternal) throws ExcepcaoPersistencia;
 }

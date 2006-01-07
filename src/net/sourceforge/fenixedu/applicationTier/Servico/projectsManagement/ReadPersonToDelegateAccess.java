@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -21,7 +21,7 @@ public class ReadPersonToDelegateAccess implements IService {
 
     public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null) {
             throw new ExcepcaoInexistente();
         } else if (!isTeacherOrEmployee(sp, person)) {
@@ -30,7 +30,7 @@ public class ReadPersonToDelegateAccess implements IService {
         return InfoPerson.newInfoFromDomain(person);
     }
 
-    private boolean isTeacherOrEmployee(ISuportePersistente sp, IPerson person) throws ExcepcaoPersistencia {
+    private boolean isTeacherOrEmployee(ISuportePersistente sp, Person person) throws ExcepcaoPersistencia {
         if (sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername()) == null) {
             if (sp.getIPersistentEmployee().readByPerson(person.getIdInternal()) == null) {
                 return false;

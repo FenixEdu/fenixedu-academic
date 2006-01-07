@@ -3,21 +3,21 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 
 /**
  * @author Susana Fernandes
  */
 public class InfoTestQuestionWithInfoQuestion extends InfoTestQuestion {
 
-    public void copyFromDomain(ITestQuestion testQuestion) {
+    public void copyFromDomain(TestQuestion testQuestion) {
         super.copyFromDomain(testQuestion);
         if (testQuestion != null) {
             setQuestion(InfoQuestion.newInfoFromDomain(testQuestion.getQuestion()));
         }
     }
 
-    public static InfoTestQuestion newInfoFromDomain(ITestQuestion testQuestion) {
+    public static InfoTestQuestion newInfoFromDomain(TestQuestion testQuestion) {
         InfoTestQuestionWithInfoQuestion infoTestQuestion = null;
         if (testQuestion != null) {
             infoTestQuestion = new InfoTestQuestionWithInfoQuestion();

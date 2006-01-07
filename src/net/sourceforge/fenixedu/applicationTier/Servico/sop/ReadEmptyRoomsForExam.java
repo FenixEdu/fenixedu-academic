@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,7 +27,7 @@ public class ReadEmptyRoomsForExam implements IService {
 
         Transformer TRANSFORM_TO_INFOROOM = new Transformer() {
             public Object transform(Object input) {
-                return InfoRoom.newInfoFromDomain((IRoom) input);
+                return InfoRoom.newInfoFromDomain((Room) input);
             }
         };
 

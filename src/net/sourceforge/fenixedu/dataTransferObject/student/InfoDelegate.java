@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.util.DelegateYearType;
 
 /**
@@ -116,7 +116,7 @@ public class InfoDelegate extends InfoObject {
         this.type = type;
     }
 
-    public void copyFromDomain(final IDelegate delegate) {
+    public void copyFromDomain(final Delegate delegate) {
         super.copyFromDomain(delegate);
         if (delegate != null) {
             setType(delegate.getType());
@@ -124,7 +124,7 @@ public class InfoDelegate extends InfoObject {
         }
     }
 
-    public static InfoDelegate newInfoFromDomain(final IDelegate delegate) {
+    public static InfoDelegate newInfoFromDomain(final Delegate delegate) {
         if (delegate != null) {
             final InfoDelegate infoDelegate = new InfoDelegate();
             infoDelegate.copyFromDomain(delegate);

@@ -7,19 +7,19 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 
 /**
  * @author João Fialho & Rita Ferreira
  *
  */
 public class WeeklyOcupationTest extends DomainTestBase {
-	private ITeacher teacher;
+	private Teacher teacher;
 	
 	private InfoWeeklyOcupation infoWeeklyOcupationToCreate;
 	private InfoWeeklyOcupation infoWeeklyOcupationToEdit;
 	
-	private IWeeklyOcupation weeklyOcupationToEdit;
+	private WeeklyOcupation weeklyOcupationToEdit;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -54,7 +54,7 @@ public class WeeklyOcupationTest extends DomainTestBase {
 			
 		}
 		
-		IWeeklyOcupation newWeeklyOcupation = DomainFactory.makeWeeklyOcupation(teacher, infoWeeklyOcupationToCreate);
+		WeeklyOcupation newWeeklyOcupation = DomainFactory.makeWeeklyOcupation(teacher, infoWeeklyOcupationToCreate);
 		assertTrue("Failed to reference teacher!", newWeeklyOcupation.hasTeacher());
 		assertEquals("Different teacher!", newWeeklyOcupation.getTeacher(), teacher);
 		verifyWeeklyOcupationAttributes(newWeeklyOcupation, infoWeeklyOcupationToCreate);
@@ -66,7 +66,7 @@ public class WeeklyOcupationTest extends DomainTestBase {
 		verifyWeeklyOcupationAttributes(weeklyOcupationToEdit, infoWeeklyOcupationToEdit);
 	}
 
-	private void verifyWeeklyOcupationAttributes(IWeeklyOcupation weeklyOcupation, InfoWeeklyOcupation infoWeeklyOcupation) {
+	private void verifyWeeklyOcupationAttributes(WeeklyOcupation weeklyOcupation, InfoWeeklyOcupation infoWeeklyOcupation) {
 		assertEquals("Different research!", weeklyOcupation.getResearch(), infoWeeklyOcupation.getResearch());
 		assertEquals("Different other!", weeklyOcupation.getOther(), infoWeeklyOcupation.getOther());
 		assertEquals("Different management!", weeklyOcupation.getManagement(), infoWeeklyOcupation.getManagement());

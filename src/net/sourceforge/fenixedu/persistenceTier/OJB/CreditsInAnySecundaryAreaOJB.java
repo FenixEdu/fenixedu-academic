@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
-import net.sourceforge.fenixedu.domain.ICreditsInAnySecundaryArea;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CreditsInAnySecundaryArea;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInAnySecundaryArea;
 
@@ -16,20 +16,20 @@ public class CreditsInAnySecundaryAreaOJB extends PersistentObjectOJB implements
     public CreditsInAnySecundaryAreaOJB() {
     }
 
-    public List readAllByStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan)
+    public List readAllByStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
         return queryList(CreditsInAnySecundaryArea.class, criteria);
     }
 
-    public ICreditsInAnySecundaryArea readByStudentCurricularPlanAndEnrollment(
-            IStudentCurricularPlan studentCurricularPlan, IEnrolment enrolment)
+    public CreditsInAnySecundaryArea readByStudentCurricularPlanAndEnrollment(
+            StudentCurricularPlan studentCurricularPlan, Enrolment enrolment)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlan.getIdInternal());
         criteria.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-        return (ICreditsInAnySecundaryArea) queryObject(CreditsInAnySecundaryArea.class, criteria);
+        return (CreditsInAnySecundaryArea) queryObject(CreditsInAnySecundaryArea.class, criteria);
     }
 
 }

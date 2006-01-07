@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.student.IPersonalDataUseInquiryAnswers;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
 
 /**
@@ -16,7 +16,7 @@ public interface IPersistentPersonalDataUseInquiryAnswers extends IPersistentObj
 
     public void delete(PersonalDataUseInquiryAnswers inquiryAnswer) throws ExcepcaoPersistencia;
 
-    public IPersonalDataUseInquiryAnswers readAnswersByStudent(IStudent student)
+    public PersonalDataUseInquiryAnswers readAnswersByStudent(Student student)
             throws ExcepcaoPersistencia;
 
 }

@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.student;
 
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.student.ISenior;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -20,12 +20,12 @@ import org.apache.ojb.broker.query.Criteria;
 public class SeniorOJB extends PersistentObjectOJB implements IPersistentSenior {
 
     /* (non-Javadoc)
-     * @see ServidorPersistente.student.IPersistentSenior#readByStudent(Dominio.IStudent)
+     * @see ServidorPersistente.student.IPersistentSenior#readByStudent(Dominio.Student)
      */
-    public ISenior readByStudent(IStudent student) throws ExcepcaoPersistencia {
+    public Senior readByStudent(Student student) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.idInternal", student.getIdInternal());
-        return (ISenior) queryObject(Senior.class, criteria);
+        return (Senior) queryObject(Senior.class, criteria);
     }
 
 }

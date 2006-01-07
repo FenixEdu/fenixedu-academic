@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 
 /**
  * @author Ricardo Rodrigues
@@ -24,7 +24,7 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
     public InfoNonAffiliatedTeacher() {
     }
 
-    public void copyFromDomain(INonAffiliatedTeacher nonAffiliatedTeacher) {
+    public void copyFromDomain(NonAffiliatedTeacher nonAffiliatedTeacher) {
         super.copyFromDomain(nonAffiliatedTeacher);
         if (nonAffiliatedTeacher != null) {
             if (nonAffiliatedTeacher.getInstitution() != null) {
@@ -36,7 +36,7 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
         }
     }
 
-    public static InfoNonAffiliatedTeacher newInfoFromDomain(INonAffiliatedTeacher naTeacher) {
+    public static InfoNonAffiliatedTeacher newInfoFromDomain(NonAffiliatedTeacher naTeacher) {
         InfoNonAffiliatedTeacher infoNaTeacher = null;
         if (naTeacher != null) {
             infoNaTeacher = new InfoNonAffiliatedTeacher();

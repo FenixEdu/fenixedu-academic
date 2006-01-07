@@ -9,9 +9,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -35,14 +35,14 @@ public class ReadCourseInformationAuthorizationFilter extends DomainObjectAuthor
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseID);
 
-            List<IProfessorship> responsiblesFor = executionCourse.responsibleFors();
+            List<Professorship> responsiblesFor = executionCourse.responsibleFors();
 
-            for (IProfessorship responsibleFor : responsiblesFor) {
+            for (Professorship responsibleFor : responsiblesFor) {
                 if (responsibleFor.getTeacher().equals(teacher))
                     return true;
             }

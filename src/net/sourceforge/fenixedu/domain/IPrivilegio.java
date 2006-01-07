@@ -8,11 +8,11 @@ package net.sourceforge.fenixedu.domain;
  * comments go to Window>Preferences>Java>Code Generation.
  */
 public interface IPrivilegio {
-    public IPerson getPessoa();
+    public Person getPessoa();
 
     public String getServico();
 
-    public void setPessoa(IPerson pessoa);
+    public void setPessoa(Person pessoa);
 
     public void setServico(String servico);
 }

@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -33,7 +33,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID implements 
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
@@ -57,7 +57,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID implements 
     }
 
     private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(
-            IDegreeCurricularPlan degreeCurricularPlan, List allCurricularCourses) {
+            DegreeCurricularPlan degreeCurricularPlan, List allCurricularCourses) {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
                 .newInfoFromDomain(degreeCurricularPlan);
@@ -66,11 +66,11 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID implements 
 
         CollectionUtils.collect(allCurricularCourses, new Transformer() {
             public Object transform(Object arg0) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                CurricularCourse curricularCourse = (CurricularCourse) arg0;
                 List allInfoCurricularCourseScopes = new ArrayList();
                 CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
                     public Object transform(Object arg0) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
 
                         return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);

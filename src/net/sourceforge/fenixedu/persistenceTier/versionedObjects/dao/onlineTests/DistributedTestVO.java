@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
@@ -22,11 +22,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class DistributedTestVO extends VersionedObjectsBase implements IPersistentDistributedTest {
 
-    public List<IDistributedTest> readByTestScope(String className, Integer idInternal) throws ExcepcaoPersistencia {
-        List<IDistributedTest> distributedTestList = (List<IDistributedTest>) readAll(DistributedTest.class);
-        List<IDistributedTest> result = new ArrayList<IDistributedTest>();
-        for (IDistributedTest distributedTest : distributedTestList) {
-            final ITestScope testScope = distributedTest.getTestScope();
+    public List<DistributedTest> readByTestScope(String className, Integer idInternal) throws ExcepcaoPersistencia {
+        List<DistributedTest> distributedTestList = (List<DistributedTest>) readAll(DistributedTest.class);
+        List<DistributedTest> result = new ArrayList<DistributedTest>();
+        for (DistributedTest distributedTest : distributedTestList) {
+            final TestScope testScope = distributedTest.getTestScope();
             if (testScope != null && testScope.getClassName().equals(className) && testScope.getKeyClass().equals(idInternal)) {
                 result.add(distributedTest);
             }
@@ -34,10 +34,10 @@ public class DistributedTestVO extends VersionedObjectsBase implements IPersiste
         return result;
     }
 
-    public List<IDistributedTest> readByStudent(Integer studentId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IDistributedTest> result = new ArrayList<IDistributedTest>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<DistributedTest> readByStudent(Integer studentId) throws ExcepcaoPersistencia {
+        List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<DistributedTest> result = new ArrayList<DistributedTest>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyStudent().equals(studentId) && !result.contains(studentTestQuestion.getDistributedTest())) {
                 result.add(studentTestQuestion.getDistributedTest());
             }
@@ -45,10 +45,10 @@ public class DistributedTestVO extends VersionedObjectsBase implements IPersiste
         return result;
     }
 
-    public List<IDistributedTest> readByStudentAndExecutionCourse(Integer studentId, Integer executionCourseId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IDistributedTest> result = new ArrayList<IDistributedTest>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<DistributedTest> readByStudentAndExecutionCourse(Integer studentId, Integer executionCourseId) throws ExcepcaoPersistencia {
+        List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<DistributedTest> result = new ArrayList<DistributedTest>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyStudent().equals(studentId)
                     && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(executionCourseId)
                     && studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(ExecutionCourse.class.getName())
@@ -59,7 +59,7 @@ public class DistributedTestVO extends VersionedObjectsBase implements IPersiste
         return result;
     }
 
-    public List<IDistributedTest> readAll() throws ExcepcaoPersistencia {
-        return (List<IDistributedTest>) readAll(DistributedTest.class);
+    public List<DistributedTest> readAll() throws ExcepcaoPersistencia {
+        return (List<DistributedTest>) readAll(DistributedTest.class);
     }
 }

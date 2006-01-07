@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Context extends Context_Base {
@@ -10,9 +10,9 @@ public class Context extends Context_Base {
         super();
     }
 
-    public Context(ICourseGroup courseGroup, IDegreeModule degreeModule,
-            ICurricularSemester curricularSemester, IExecutionPeriod beginExecutionPeriod,
-            IExecutionPeriod endExecutionPeriod) {
+    public Context(CourseGroup courseGroup, DegreeModule degreeModule,
+            CurricularSemester curricularSemester, ExecutionPeriod beginExecutionPeriod,
+            ExecutionPeriod endExecutionPeriod) {
         super();
         if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
             throw new DomainException("error.incorrectContextValues");
@@ -24,7 +24,7 @@ public class Context extends Context_Base {
         setEndExecutionPeriod(endExecutionPeriod);
     }
     
-    public void edit(ICourseGroup courseGroup, IDegreeModule degreeModule, ICurricularSemester curricularSemester) {
+    public void edit(CourseGroup courseGroup, DegreeModule degreeModule, CurricularSemester curricularSemester) {
         setCourseGroup(courseGroup);
         setDegreeModule(degreeModule);
         setCurricularSemester(curricularSemester);

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.onlineTests;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 /**
  * 
@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.domain.IDomainObject;
  */
 public class TestScope extends TestScope_Base {
 
-    private IDomainObject domainObject;
+    private DomainObject domainObject;
 
     public TestScope() {
     }
 
-    public TestScope(IDomainObject object) {
+    public TestScope(DomainObject object) {
         super();
         setDomainObject(object);
         setClassName(object.getClass().getName());
@@ -31,12 +31,12 @@ public class TestScope extends TestScope_Base {
         setKeyClass(classId);
     }
 
-    public void setDomainObject(IDomainObject domainObject) {
+    public void setDomainObject(DomainObject domainObject) {
         this.domainObject = domainObject;
 
     }
 
-    public IDomainObject getDomainObject() {
+    public DomainObject getDomainObject() {
         return domainObject;
     }
 }

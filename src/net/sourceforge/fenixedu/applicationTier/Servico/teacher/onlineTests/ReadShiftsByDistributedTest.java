@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,24 +28,24 @@ public class ReadShiftsByDistributedTest implements IService {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		List<IStudent> studentsList = new ArrayList<IStudent>();
+		List<Student> studentsList = new ArrayList<Student>();
 
 		if (distributedTestId != null) // lista de alunos que tem teste
 			studentsList = persistentSuport.getIPersistentStudentTestQuestion()
 					.readStudentsByDistributedTest(distributedTestId);
 
-		IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport
 				.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
 		if (executionCourse == null) {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		List<IShift> shiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(
+		List<Shift> shiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(
 				executionCourse.getIdInternal());
 
 		List<InfoShift> result = new ArrayList<InfoShift>();
-		for (IShift shift : shiftList) {
-			List<IStudent> shiftStudents = shift.getStudents();
+		for (Shift shift : shiftList) {
+			List<Student> shiftStudents = shift.getStudents();
 			if (!studentsList.containsAll(shiftStudents)) {
 				result.add(InfoShift.newInfoFromDomain(shift));
 			}

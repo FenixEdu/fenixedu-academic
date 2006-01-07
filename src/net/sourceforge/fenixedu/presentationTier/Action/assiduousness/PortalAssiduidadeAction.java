@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAut
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroPortalAssiduidade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteException;
 import net.sourceforge.fenixedu.constants.assiduousness.Constants;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionError;
@@ -30,7 +30,7 @@ public final class PortalAssiduidadeAction extends Action {
         HttpSession session = request.getSession();
         ActionErrors errors = new ActionErrors();
 
-        IPerson pessoa = (IPerson) session.getAttribute(Constants.USER_KEY);
+        Person pessoa = (Person) session.getAttribute(Constants.USER_KEY);
 
         ServicoAutorizacaoPortalAssiduidade servicoAutorizacaoPortalAssiduidade = new ServicoAutorizacaoPortalAssiduidade(
                 pessoa);

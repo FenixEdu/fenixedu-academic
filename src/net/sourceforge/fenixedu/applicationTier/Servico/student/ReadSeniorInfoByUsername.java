@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.student.ISenior;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -28,13 +28,13 @@ public class ReadSeniorInfoByUsername implements IService {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
 		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-		IStudent student = persistentStudent.readByUsername(userView.getUtilizador());
+		Student student = persistentStudent.readByUsername(userView.getUtilizador());
 
 		IPersistentSenior persistentSenior = persistentSupport.getIPersistentSenior();
-		ISenior senior = persistentSenior.readByStudent(student);
+		Senior senior = persistentSenior.readByStudent(student);
 
 		InfoSenior readInfoSenior = null;
 		if (senior == null)

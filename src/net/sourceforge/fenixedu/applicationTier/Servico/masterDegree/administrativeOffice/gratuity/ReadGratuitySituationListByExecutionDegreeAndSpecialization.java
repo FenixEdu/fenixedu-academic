@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -75,7 +75,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
 
             if (executionDegreeId != null) {
 
-                IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO.readByOID(
+                ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO.readByOID(
                         ExecutionDegree.class, executionDegreeId);
                 executionDegreeList.add(executionDegree);
 
@@ -84,7 +84,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                 // we have to show all execution degrees from the choosen year
                 if (executionYearName != null) {
                     IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-                    IExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
+                    ExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
                         executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(
                                 executionYear.getYear(), DegreeType.MASTER_DEGREE);
@@ -108,8 +108,8 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
             double totalRemaingValue = 0;
 
             for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
-                IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
-                IGratuityValues gratuityValues = executionDegree.getGratuityValues();
+                ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
+                GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
                 if (gratuityValues == null) {
                     continue;
@@ -119,15 +119,15 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                 List filteredStudentCurricularPlans = (List) CollectionUtils.select(allStudentCurricularPlans,new Predicate(){
 
                     public boolean evaluate(Object arg0) {
-                        IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                        StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
                         return scp.getSpecialization() != null;
                     }});
 
                 for (Iterator iterator = filteredStudentCurricularPlans.iterator(); iterator.hasNext();) {
-                    IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
+                    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
                             .next();
 
-                    IGratuitySituation gratuitySituation = gratuitySituationDAO
+                    GratuitySituation gratuitySituation = gratuitySituationDAO
                             .readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
                                     studentCurricularPlan.getIdInternal(), gratuityValues
                                             .getIdInternal(), gratuitySituationType);
@@ -150,7 +150,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization impleme
                                     .getExecutionYear().getIdInternal(), studentCurricularPlan.getStudent().getIdInternal());
 
                     /*
-                     * IInsuranceTransaction insuranceTransaction =
+                     * InsuranceTransaction insuranceTransaction =
                      * insuranceTransactionDAO
                      * .readByExecutionYearAndStudent(executionDegree
                      * .getExecutionYear(), studentCurricularPlan

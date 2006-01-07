@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -93,7 +93,7 @@ public class InfoContributor extends InfoObject {
         this.contributorNumber = contributorNumber;
     }
 
-    public void copyFromDomain(IContributor contributor) {
+    public void copyFromDomain(Contributor contributor) {
         super.copyFromDomain(contributor);
         if (contributor != null) {
             setContributorAddress(contributor.getContributorAddress());
@@ -102,7 +102,7 @@ public class InfoContributor extends InfoObject {
         }
     }
 
-    public static InfoContributor newInfoFromDomain(IContributor contributor) {
+    public static InfoContributor newInfoFromDomain(Contributor contributor) {
         InfoContributor infoContributor = null;
         if (contributor != null) {
             infoContributor = new InfoContributor();
@@ -111,7 +111,7 @@ public class InfoContributor extends InfoObject {
         return infoContributor;
     }
 
-    public void copyToDomain(InfoContributor infoContributor, IContributor contributor) {
+    public void copyToDomain(InfoContributor infoContributor, Contributor contributor) {
         super.copyToDomain(infoContributor, contributor);
 
         contributor.setContributorAddress(infoContributor.getContributorAddress());

@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.domain;
 
 public class CreditsInAnySecundaryAreaTest extends DomainTestBase {
 
-	private ICreditsInAnySecundaryArea credits;
+	private CreditsInAnySecundaryArea credits;
 	
 	private void setUpDelete() {
 		credits = new CreditsInAnySecundaryArea();
 		
-		IEnrolment enrolment = new Enrolment();
+		Enrolment enrolment = new Enrolment();
 		
-		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+		StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 		
 		credits.setEnrolment(enrolment);
 		credits.setStudentCurricularPlan(studentCurricularPlan);

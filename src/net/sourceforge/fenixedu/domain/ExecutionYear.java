@@ -14,7 +14,7 @@ import org.apache.commons.collections.Predicate;
  * @author João Mota ciapl Dominio
  * 
  */
-public class ExecutionYear extends ExecutionYear_Base {
+public class ExecutionYear extends ExecutionYear_Base implements INode, Comparable {
 
     public String toString() {
         String result = "[EXECUTION_YEAR";
@@ -35,11 +35,11 @@ public class ExecutionYear extends ExecutionYear_Base {
         return null;
     }
 
-    public Collection<IExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
+    public Collection<ExecutionDegree> getExecutionDegreesByType(final DegreeType degreeType) {
 
         return CollectionUtils.select(getExecutionDegrees(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                IExecutionDegree executionDegree = (IExecutionDegree) arg0;
+                ExecutionDegree executionDegree = (ExecutionDegree) arg0;
                 return executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                         degreeType);
             }
@@ -47,9 +47,9 @@ public class ExecutionYear extends ExecutionYear_Base {
 
     }
 
-    public IExecutionYear getPreviousExecutionYear() {
-        IExecutionYear previousExecutionYear = null;
-        IExecutionPeriod currentExecutionPeriod = this.getExecutionPeriods().get(0);
+    public ExecutionYear getPreviousExecutionYear() {
+        ExecutionYear previousExecutionYear = null;
+        ExecutionPeriod currentExecutionPeriod = this.getExecutionPeriods().get(0);
 
         while (currentExecutionPeriod.getPreviousExecutionPeriod() != null) {
             currentExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
@@ -64,12 +64,12 @@ public class ExecutionYear extends ExecutionYear_Base {
     }
 
     public int compareTo(Object object) {
-        final IExecutionYear executionYear = (IExecutionYear) object;
+        final ExecutionYear executionYear = (ExecutionYear) object;
         return getYear().compareTo(executionYear.getYear());
     }
     
-    public IExecutionPeriod getExecutionPeriodForSemester(Integer semester) {
-        for (final IExecutionPeriod executionPeriod : this.getExecutionPeriods()) {
+    public ExecutionPeriod getExecutionPeriodForSemester(Integer semester) {
+        for (final ExecutionPeriod executionPeriod : this.getExecutionPeriods()) {
             if (executionPeriod.getSemester().equals(semester)) {
                 return executionPeriod;
             }

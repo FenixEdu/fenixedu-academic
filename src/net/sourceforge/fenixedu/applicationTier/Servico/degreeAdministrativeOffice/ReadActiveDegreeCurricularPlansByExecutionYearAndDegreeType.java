@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,13 +29,13 @@ public class ReadActiveDegreeCurricularPlansByExecutionYearAndDegreeType impleme
 
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        List<IDegreeCurricularPlan> degreeCurricularPlans = ps.getIPersistentDegreeCurricularPlan()
+        List<DegreeCurricularPlan> degreeCurricularPlans = ps.getIPersistentDegreeCurricularPlan()
                 .readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
 
         return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {
 
             public Object transform(Object arg0) {
-                IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) arg0;
+                DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
                 return InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(degreeCurricularPlan);
             }
 

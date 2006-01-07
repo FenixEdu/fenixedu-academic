@@ -11,8 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -86,13 +86,13 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
     }
 
     
-    public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriodId(String courseInitials,
+    public ExecutionCourse readByExecutionCourseInitialsAndExecutionPeriodId(String courseInitials,
             Integer executionPeriodId) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriodId);
         criteria.addEqualTo("sigla", courseInitials);
-        return (IExecutionCourse) queryObject(ExecutionCourse.class, criteria);
+        return (ExecutionCourse) queryObject(ExecutionCourse.class, criteria);
     }
 
     
@@ -213,7 +213,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
     
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegreeList(Integer curricularYear,
             Integer executionPeriodID, Integer executionPeriodSemestre,
-            List<IExecutionDegree> executionDegreeList) throws ExcepcaoPersistencia {
+            List<ExecutionDegree> executionDegreeList) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         Criteria criteriaExcutionDegreeName = new Criteria();
         Criteria criteriaExcutionDegreeSigla = new Criteria();
@@ -228,7 +228,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
             Iterator iterator = executionDegreeList.iterator();
             while (iterator.hasNext()) {
 
-                IExecutionDegree cursoExecucao = (IExecutionDegree) iterator.next();
+                ExecutionDegree cursoExecucao = (ExecutionDegree) iterator.next();
 
                 executionArrayName.add(cursoExecucao.getDegreeCurricularPlan().getName());
                 executionArraySigla.add(cursoExecucao.getDegreeCurricularPlan().getDegree().getSigla());

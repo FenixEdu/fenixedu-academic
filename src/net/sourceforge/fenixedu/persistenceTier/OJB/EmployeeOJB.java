@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 
@@ -17,27 +17,27 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class EmployeeOJB extends PersistentObjectOJB implements IPersistentEmployee {
 
-    public IEmployee readByNumber(Integer number) throws ExcepcaoPersistencia {
+    public Employee readByNumber(Integer number) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("employeeNumber", number);
-        return (IEmployee) queryObject(Employee.class, criteria);
+        return (Employee) queryObject(Employee.class, criteria);
     }
 
-    public IEmployee readByIdInternal(int idInternal) throws ExcepcaoPersistencia {
+    public Employee readByIdInternal(int idInternal) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", new Integer(String.valueOf(idInternal)));
-        return (IEmployee) queryObject(Employee.class, criteria);
+        return (Employee) queryObject(Employee.class, criteria);
     }
 
-    public IEmployee readByPerson(int keyPerson) throws ExcepcaoPersistencia {
+    public Employee readByPerson(int keyPerson) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", new Integer(String.valueOf(keyPerson)));
-        return (IEmployee) queryObject(Employee.class, criteria);
+        return (Employee) queryObject(Employee.class, criteria);
     }
 
-    public IEmployee readByPerson(IPerson person) throws ExcepcaoPersistencia {
+    public Employee readByPerson(Person person) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idInternal", person.getIdInternal());
-        return (IEmployee) queryObject(Employee.class, criteria);
+        return (Employee) queryObject(Employee.class, criteria);
     }
 }

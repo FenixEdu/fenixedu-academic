@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -51,7 +51,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
 
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
             InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
             
             //read execution degrees by execution year and degree type
@@ -68,7 +68,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
 
             
             IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IStudent student = persistentStudent.readStudentByNumberAndDegreeType(infoStudent
+            Student student = persistentStudent.readStudentByNumberAndDegreeType(infoStudent
                     .getNumber(), degreeType);
             if (student == null) {
                 throw new FenixServiceException("errors.impossible.operation");
@@ -89,7 +89,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
     }
 
     private InfoExecutionDegree selectExecutionDegree(ISuportePersistente sp,
-            List infoExecutionDegreeList, Integer executionDegreeIdChosen, IStudent student,
+            List infoExecutionDegreeList, Integer executionDegreeIdChosen, Student student,
             DegreeType degreeType) throws ExcepcaoPersistencia {
         InfoExecutionDegree infoExecutionDegree = null;
 
@@ -97,7 +97,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
         if (executionDegreeIdChosen != null) {
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                     ExecutionDegree.class, executionDegreeIdChosen);
             if (executionDegree != null) {
                 return InfoExecutionDegree.newInfoFromDomain(executionDegree);
@@ -107,7 +107,7 @@ public class PrepareDegreesListByStudentNumber implements IService {
         //read the execution degree belongs to student
         IPersistentStudentCurricularPlan persistentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
-        IStudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
         //execution degree isn't find, then it is chosen the list's first
         if (studentCurricularPlan == null || studentCurricularPlan.getDegreeCurricularPlan() == null

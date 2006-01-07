@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
-import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,7 +24,7 @@ public class EditContributor implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IContributor storedContributor = (IContributor) sp.getIPersistentContributor().readByOID(
+        final Contributor storedContributor = (Contributor) sp.getIPersistentContributor().readByOID(
                 Contributor.class, infoContributor.getIdInternal());
 
         if (storedContributor == null) {
@@ -32,7 +32,7 @@ public class EditContributor implements IService {
         }
 
         // Read if exists any contributor with the new number
-        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(
                 contributorNumber);
         if (contributor != null && !contributor.equals(storedContributor)) {
             throw new ExistingServiceException();

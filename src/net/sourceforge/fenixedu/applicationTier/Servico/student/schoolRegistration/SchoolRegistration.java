@@ -13,15 +13,15 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
+import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -44,10 +44,10 @@ public class SchoolRegistration implements IService {
         final IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
 
         final String username = userView.getUtilizador();
-        final IStudent student = persistentStudent.readByUsername(username);
+        final Student student = persistentStudent.readByUsername(username);
 
         
-        final IPerson person = student.getPerson();
+        final Person person = student.getPerson();
 
         if (isStudentRegistered(person)) {
             return Boolean.FALSE;
@@ -60,20 +60,20 @@ public class SchoolRegistration implements IService {
         return Boolean.TRUE;
     }
 
-    private boolean isStudentRegistered(IPerson pessoa) {
+    private boolean isStudentRegistered(Person pessoa) {
         return !pessoa.hasRole(RoleType.FIRST_TIME_STUDENT);
     }
 
-    private void updatePersonalInfo(final ISuportePersistente sp, final InfoPerson infoPerson, final IPerson person)
+    private void updatePersonalInfo(final ISuportePersistente sp, final InfoPerson infoPerson, final Person person)
             throws ExcepcaoPersistencia {
 
         final IPersistentCountry persistentCountry = sp.getIPersistentCountry();
         final IPersistentRole pRole = sp.getIPersistentRole();
 
-        ICountry country = null;
+        Country country = null;
 
         if (infoPerson.getInfoPais() != null && infoPerson.getInfoPais().getNationality() != null){
-            country = (ICountry) persistentCountry.readCountryByNationality(infoPerson.getInfoPais().getNationality());
+            country = (Country) persistentCountry.readCountryByNationality(infoPerson.getInfoPais().getNationality());
         } else {
             //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
             //In a not distance future this will not be needed since the coutry can never be null
@@ -83,15 +83,15 @@ public class SchoolRegistration implements IService {
         person.edit(infoPerson,country);
         person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
 
-        final IRole studentRole = findRole(pRole.readAll(), RoleType.STUDENT);
-        final IRole firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);
+        final Role studentRole = findRole(pRole.readAll(), RoleType.STUDENT);
+        final Role firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);
 
         person.addPersonRoles(studentRole);
         person.removePersonRoles(firstTimeStudentRole);
     }
 
-    private IRole findRole(final List<IRole> roles, final RoleType roleType) {
-        for (final IRole role : roles) {
+    private Role findRole(final List<Role> roles, final RoleType roleType) {
+        for (final Role role : roles) {
             if (role.getRoleType() == roleType) {
                 return role;
             }
@@ -99,11 +99,11 @@ public class SchoolRegistration implements IService {
         return null;
     }
 
-    private void writeResidenceCandidacy(final IStudent student, final InfoResidenceCandidacy infoResidenceCandidacy) 
+    private void writeResidenceCandidacy(final Student student, final InfoResidenceCandidacy infoResidenceCandidacy) 
             throws ExcepcaoPersistencia {
 
         if (infoResidenceCandidacy != null) {
-            final IResidenceCandidacies residenceCandidacy = DomainFactory.makeResidenceCandidacies();
+            final ResidenceCandidacies residenceCandidacy = DomainFactory.makeResidenceCandidacies();
 
             residenceCandidacy.setStudent(student);
             residenceCandidacy.setCreationDate(new Date());
@@ -112,22 +112,22 @@ public class SchoolRegistration implements IService {
         }
     }
 
-    private void updateStudentInfo(final ISuportePersistente sp, final IStudent student)
+    private void updateStudentInfo(final ISuportePersistente sp, final Student student)
             throws ExcepcaoPersistencia {
 
         final IPersistentExecutionYear pExecutionYear = sp.getIPersistentExecutionYear();
  
-        final IExecutionYear executionYear = pExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear executionYear = pExecutionYear.readCurrentExecutionYear();
         student.setRegistrationYear(executionYear);
 
-        final IStudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        final StudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
         final Date actualDate = Calendar.getInstance().getTime();
         //update the dates, since this objects were already created and only now the student is a registrated student in the campus
         scp.setStartDate(actualDate);
         scp.setWhen(actualDate);
 
-        final List<IEnrolment> enrollments = scp.getEnrolments();
-        for (final IEnrolment enrolment : enrollments) {
+        final List<Enrolment> enrollments = scp.getEnrolments();
+        for (final Enrolment enrolment : enrollments) {
             enrolment.setCreationDate(actualDate);
         }
     }

@@ -9,9 +9,9 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
@@ -25,17 +25,17 @@ import net.sourceforge.fenixedu.util.State;
 public class MasterDegreeProofVersionVO extends VersionedObjectsBase implements
         IPersistentMasterDegreeProofVersion {
 
-    public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(
-            IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+    public MasterDegreeProofVersion readActiveByStudentCurricularPlan(
+            StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
 
         if (studentCurricularPlan.getMasterDegreeThesis() != null) {
 
-            for (IMasterDegreeThesis masterDegreeThesis : (List<IMasterDegreeThesis>) studentCurricularPlan
+            for (MasterDegreeThesis masterDegreeThesis : (List<MasterDegreeThesis>) studentCurricularPlan
                     .getMasterDegreeThesis()) {
 
                 if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
 
-                    for (IMasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
+                    for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
                             .getMasterDegreeProofVersions()) {
                         if (masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
                             return masterDegreeProofVersion;
@@ -50,19 +50,19 @@ public class MasterDegreeProofVersionVO extends VersionedObjectsBase implements
     public List readNotActiveByStudentCurricularPlan(Integer studentCurricularPlanID)
             throws ExcepcaoPersistencia {
 
-        final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
+        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readByOID(
                 StudentCurricularPlan.class, studentCurricularPlanID);
 
-        List<IMasterDegreeProofVersion> result = new ArrayList();
+        List<MasterDegreeProofVersion> result = new ArrayList();
 
         if (studentCurricularPlan.getMasterDegreeThesis() != null) {
 
-            for (IMasterDegreeThesis masterDegreeThesis : (List<IMasterDegreeThesis>) studentCurricularPlan
+            for (MasterDegreeThesis masterDegreeThesis : (List<MasterDegreeThesis>) studentCurricularPlan
                     .getMasterDegreeThesis()) {
 
                 if (masterDegreeThesis.getMasterDegreeProofVersions() != null) {
 
-                    for (IMasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
+                    for (MasterDegreeProofVersion masterDegreeProofVersion : masterDegreeThesis
                             .getMasterDegreeProofVersions()) {
                         if (!masterDegreeProofVersion.getCurrentState().equals(State.ACTIVE)) {
                             result.add(masterDegreeProofVersion);

@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.cms;
 
 
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -18,7 +18,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public abstract class CmsService implements IService
 {
-	protected ICms readFenixCMS() throws ExcepcaoPersistencia
+	protected Cms readFenixCMS() throws ExcepcaoPersistencia
 	{
 		return PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readFenixCMS();
 	}	

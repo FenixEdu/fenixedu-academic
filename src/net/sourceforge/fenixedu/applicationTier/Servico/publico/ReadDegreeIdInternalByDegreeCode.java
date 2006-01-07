@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,7 +21,7 @@ public class ReadDegreeIdInternalByDegreeCode implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ICursoPersistente degreeDAO = sp.getICursoPersistente();
 
-        IDegree degree = degreeDAO.readBySigla(degreeCode);
+        Degree degree = degreeDAO.readBySigla(degreeCode);
 
         return degree != null ? degree.getIdInternal() : null;
 	}

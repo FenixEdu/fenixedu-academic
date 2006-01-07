@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.managementAssiduousness;
 
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkHistoric;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
@@ -11,5 +11,5 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *
  */
 public interface IPersistentExtraWorkHistoric extends IPersistentObject {
-    public IExtraWorkHistoric readEXtraWorkHistoricByYear(Integer year) throws Exception;
+    public ExtraWorkHistoric readEXtraWorkHistoricByYear(Integer year) throws Exception;
 }

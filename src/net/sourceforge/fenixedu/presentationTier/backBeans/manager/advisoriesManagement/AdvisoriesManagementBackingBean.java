@@ -18,9 +18,9 @@ import javax.faces.event.ActionEvent;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -28,9 +28,9 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class AdvisoriesManagementBackingBean extends FenixBackingBean {
 
-    List<IAdvisory> allAdvisories;
+    List<Advisory> allAdvisories;
 
-    IAdvisory advisory;
+    Advisory advisory;
 
     Integer advisoryID;
 
@@ -44,13 +44,13 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public List<IAdvisory> getAllAdvisories() throws FenixFilterException, FenixServiceException {
+    public List<Advisory> getAllAdvisories() throws FenixFilterException, FenixServiceException {
 
         if (allAdvisories == null) {
-            allAdvisories = new ArrayList<IAdvisory>();
+            allAdvisories = new ArrayList<Advisory>();
             Date currentDate = Calendar.getInstance().getTime();
-            List<IAdvisory> allAdvisories_ = readAllDomainObjects(Advisory.class);
-            for (IAdvisory advisory : allAdvisories_) {
+            List<Advisory> allAdvisories_ = readAllDomainObjects(Advisory.class);
+            for (Advisory advisory : allAdvisories_) {
                 if (advisory.getExpires() != null
                         && (DateFormatUtil.equalDates("yyyyMMddHHmm", advisory.getExpires(), currentDate) || advisory
                                 .getExpires().after(currentDate))) {
@@ -98,7 +98,7 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    public void setAllAdvisories(List<IAdvisory> allAdvisories) {
+    public void setAllAdvisories(List<Advisory> allAdvisories) {
         this.allAdvisories = allAdvisories;
     }
 
@@ -115,10 +115,10 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
         this.advisoryID = advisoryID;
     }
 
-    public IAdvisory getAdvisory() throws FenixFilterException, FenixServiceException {
+    public Advisory getAdvisory() throws FenixFilterException, FenixServiceException {
         if (advisory == null) {
             final Object[] argsToRead = { Advisory.class, this.getAdvisoryID() };
-            this.advisory = (IAdvisory) ServiceUtils
+            this.advisory = (Advisory) ServiceUtils
                     .executeService(null, "ReadDomainObject", argsToRead);
         }
         return advisory;
@@ -128,11 +128,11 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
 
         int teacherCount = 0, studentCount = 0, employeeCount = 0, max;
 
-        for (IPerson person : this.getAdvisory().getPeople()) {
+        for (Person person : this.getAdvisory().getPeople()) {
 
-            IRole roleTeacher = person.getPersonRole(RoleType.TEACHER);
-            IRole roleEmployee = person.getPersonRole(RoleType.EMPLOYEE);
-            IRole roleStudent = person.getPersonRole(RoleType.STUDENT);
+            Role roleTeacher = person.getPersonRole(RoleType.TEACHER);
+            Role roleEmployee = person.getPersonRole(RoleType.EMPLOYEE);
+            Role roleStudent = person.getPersonRole(RoleType.STUDENT);
 
             teacherCount = (roleTeacher != null) ? ++teacherCount : teacherCount;
             employeeCount = (roleEmployee != null) ? ++employeeCount : employeeCount;
@@ -151,7 +151,7 @@ public class AdvisoriesManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public void setAdvisory(IAdvisory advisory) {
+    public void setAdvisory(Advisory advisory) {
         this.advisory = advisory;
     }
 

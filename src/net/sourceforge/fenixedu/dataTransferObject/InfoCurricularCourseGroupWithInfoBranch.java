@@ -4,12 +4,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.lang.reflect.Proxy;
-
-import net.sourceforge.fenixedu.domain.IAreaCurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
+import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 
 /**
  * @author Nuno Correia
@@ -19,16 +15,10 @@ import org.apache.ojb.broker.core.proxy.ProxyHelper;
 public abstract class InfoCurricularCourseGroupWithInfoBranch extends InfoCurricularCourseGroup {
 
     public static InfoCurricularCourseGroup newInfoFromDomain(
-            ICurricularCourseGroup curricularCourseGroup) {
+            CurricularCourseGroup curricularCourseGroup) {
 
         if (curricularCourseGroup != null) {
-
-            if (curricularCourseGroup instanceof Proxy) {
-                curricularCourseGroup = (ICurricularCourseGroup) ProxyHelper
-                        .getRealObject(curricularCourseGroup);
-            }
-
-            if (curricularCourseGroup instanceof IAreaCurricularCourseGroup) {
+            if (curricularCourseGroup instanceof AreaCurricularCourseGroup) {
                 return InfoAreaCurricularCourseGroupWithBranch.newInfoFromDomain(curricularCourseGroup);
             }
             return InfoOptionalCurricularCourseGroupWithBranch.newInfoFromDomain(curricularCourseGroup);

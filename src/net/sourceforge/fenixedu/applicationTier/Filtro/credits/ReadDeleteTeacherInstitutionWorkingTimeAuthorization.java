@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization extends
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
                 .getIPersistentTeacherInstitutionWorkingTime();
 
-        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) teacherInstitutionWorkingTimeDAO
+        TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) teacherInstitutionWorkingTimeDAO
                 .readByOID(TeacherInstitutionWorkTime.class, teacherInstitutionWorkingTime, false);
         return teacherInstitutionWorkTime != null ? teacherInstitutionWorkTime.getTeacher()
                 .getIdInternal() : null;

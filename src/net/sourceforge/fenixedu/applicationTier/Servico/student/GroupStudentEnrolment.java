@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
@@ -39,18 +39,18 @@ public class GroupStudentEnrolment implements IService {
         final IPersistentStudentGroup persistentStudentGroup = persistentSupport
                 .getIPersistentStudentGroup();
 
-        final IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+        final StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
-        final IStudent student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        final Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
         if (student == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final IGrouping grouping = studentGroup.getGrouping();
-        final IAttends studentAttend = grouping.getStudentAttend(student);
+        final Grouping grouping = studentGroup.getGrouping();
+        final Attends studentAttend = grouping.getStudentAttend(student);
         if (studentAttend == null) {
             throw new NotAuthorizedException();
         }
@@ -76,11 +76,11 @@ public class GroupStudentEnrolment implements IService {
         return Boolean.TRUE;
     }
 
-    private void checkIfStudentIsNotEnrolledInOtherGroups(final List<IStudentGroup> studentGroups,
-            final IStudentGroup studentGroupEnrolled, final IAttends studentAttend)
+    private void checkIfStudentIsNotEnrolledInOtherGroups(final List<StudentGroup> studentGroups,
+            final StudentGroup studentGroupEnrolled, final Attends studentAttend)
             throws InvalidSituationServiceException {
         
-        for (final IStudentGroup studentGroup : studentGroups) {
+        for (final StudentGroup studentGroup : studentGroups) {
             if (studentGroup != studentGroupEnrolled
                     && studentGroup.getAttends().contains(studentAttend)) {
                 throw new InvalidSituationServiceException();

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.support;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.support.IGlossaryEntry;
+import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
 
 /**
  * @author Luis Cruz
@@ -39,7 +39,7 @@ public class InfoGlossaryEntry extends InfoObject implements Serializable {
         this.term = term;
     }
 
-    public void copyFromDomain(IGlossaryEntry glossaryEntry) {
+    public void copyFromDomain(GlossaryEntry glossaryEntry) {
         super.copyFromDomain(glossaryEntry);
         if (glossaryEntry != null) {
             setTerm(glossaryEntry.getTerm());
@@ -47,7 +47,7 @@ public class InfoGlossaryEntry extends InfoObject implements Serializable {
         }
     }
 
-    public static InfoGlossaryEntry newInfoFromDomain(IGlossaryEntry glossaryEntry) {
+    public static InfoGlossaryEntry newInfoFromDomain(GlossaryEntry glossaryEntry) {
         InfoGlossaryEntry infoGlossaryEntry = null;
         if (glossaryEntry != null) {
             infoGlossaryEntry = new InfoGlossaryEntry();
@@ -56,7 +56,7 @@ public class InfoGlossaryEntry extends InfoObject implements Serializable {
         return infoGlossaryEntry;
     }
 
-    public void copyToDomain(InfoGlossaryEntry infoGlossaryEntry, IGlossaryEntry glossaryEntry) {
+    public void copyToDomain(InfoGlossaryEntry infoGlossaryEntry, GlossaryEntry glossaryEntry) {
         if (infoGlossaryEntry != null && glossaryEntry != null) {
             super.copyToDomain(infoGlossaryEntry, glossaryEntry);
             glossaryEntry.setTerm(infoGlossaryEntry.getTerm());

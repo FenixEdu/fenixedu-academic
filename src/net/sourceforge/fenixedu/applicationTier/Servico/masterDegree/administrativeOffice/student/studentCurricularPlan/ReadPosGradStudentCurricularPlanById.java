@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -30,7 +30,7 @@ public class ReadPosGradStudentCurricularPlanById implements IService {
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
 
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
 
         if (studentCurricularPlan != null) {
@@ -43,7 +43,7 @@ public class ReadPosGradStudentCurricularPlanById implements IService {
 
             ListIterator iterator = studentCurricularPlan.getEnrolments().listIterator();
             while (iterator.hasNext()) {
-                IEnrolment enrolment = (IEnrolment) iterator.next();
+                Enrolment enrolment = (Enrolment) iterator.next();
                 InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                         .newInfoFromDomain(enrolment);
                 infoEnrolments.add(infoEnrolment);

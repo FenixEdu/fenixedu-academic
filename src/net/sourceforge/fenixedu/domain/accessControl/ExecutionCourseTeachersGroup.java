@@ -4,8 +4,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Date;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -18,7 +18,7 @@ public class ExecutionCourseTeachersGroup extends ExecutionCourseTeachersGroup_B
 
 		public Object transform(Object arg0)
 		{
-			IProfessorship professorship = (IProfessorship) arg0;
+			Professorship professorship = (Professorship) arg0;
 			
 			return professorship.getTeacher().getPerson();
 		}		
@@ -37,7 +37,7 @@ public class ExecutionCourseTeachersGroup extends ExecutionCourseTeachersGroup_B
 	}
 
 	@Override
-	public Iterator<IPerson> getElementsIterator()
+	public Iterator<Person> getElementsIterator()
 	{
 		return new TransformIterator(this.getExecutionCourse().getProfessorshipsIterator(),new ProfessorshipPersonTransformer());
 	}

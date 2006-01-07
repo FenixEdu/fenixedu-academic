@@ -16,18 +16,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -54,13 +54,13 @@ public class InsertDistributedTest implements IService {
         this.contextPath = contextPath.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        IDistributedTest distributedTest = DomainFactory.makeDistributedTest();
+        DistributedTest distributedTest = DomainFactory.makeDistributedTest();
 
-        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
@@ -75,7 +75,7 @@ public class InsertDistributedTest implements IService {
         distributedTest.setImsFeedback(imsFeedback);
         distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        ITestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
             testScope = DomainFactory.makeTestScope(persistentExecutionCourse.materialize(executionCourse));
@@ -84,15 +84,15 @@ public class InsertDistributedTest implements IService {
 
         IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
 
-        List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
+        List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
 
-        for (ITestQuestion testQuestion : testQuestionList) {
-            List<IQuestion> questionList = new ArrayList<IQuestion>();
+        for (TestQuestion testQuestion : testQuestionList) {
+            List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
 
             for (InfoStudent infoStudent : infoStudentList) {
-                IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, infoStudent.getIdInternal());
-                IStudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
+                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, infoStudent.getIdInternal());
+                StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                 studentTestQuestion.setStudent(student);
                 studentTestQuestion.setDistributedTest(distributedTest);
                 studentTestQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder());
@@ -103,7 +103,7 @@ public class InsertDistributedTest implements IService {
 
                 if (questionList.size() == 0)
                     questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
-                IQuestion question = getStudentQuestion(questionList);
+                Question question = getStudentQuestion(questionList);
                 if (question == null) {
                     throw new InvalidArgumentsServiceException();
                 }
@@ -113,16 +113,16 @@ public class InsertDistributedTest implements IService {
         }
         // Create Evaluation - OnlineTest and Marks
         if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-            IOnlineTest onlineTest = DomainFactory.makeOnlineTest();
+            OnlineTest onlineTest = DomainFactory.makeOnlineTest();
             onlineTest.addAssociatedExecutionCourses(executionCourse);
             onlineTest.setDistributedTest(distributedTest);
         }
 
         // Create Advisory
-        IAdvisory advisory = getAdvisory(distributedTest, executionCourse.getNome());
+        Advisory advisory = getAdvisory(distributedTest, executionCourse.getNome());
 
         // Create DistributedTestAdvisory
-        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
 
@@ -130,8 +130,8 @@ public class InsertDistributedTest implements IService {
 
     }
 
-    private IQuestion getStudentQuestion(List<IQuestion> questions) {
-        IQuestion question = null;
+    private Question getStudentQuestion(List<Question> questions) {
+        Question question = null;
         if (questions.size() != 0) {
             Random r = new Random();
             int questionIndex = r.nextInt(questions.size());
@@ -140,9 +140,9 @@ public class InsertDistributedTest implements IService {
         return question;
     }
 
-    private IAdvisory getAdvisory(IDistributedTest distributedTest, String sender) {
+    private Advisory getAdvisory(DistributedTest distributedTest, String sender) {
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
         advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { sender }));

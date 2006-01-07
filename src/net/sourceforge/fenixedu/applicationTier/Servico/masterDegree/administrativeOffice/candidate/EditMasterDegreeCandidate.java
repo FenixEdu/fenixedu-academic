@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,15 +29,15 @@ public class EditMasterDegreeCandidate implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                 .getIPersistentObject().readByOID(MasterDegreeCandidate.class, oldCandidateID, true);
         if (masterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Candidate !!");
         }
 
         // Change personal Information
-        IPerson person = masterDegreeCandidate.getPerson();
-        ICountry country = null;
+        Person person = masterDegreeCandidate.getPerson();
+        Country country = null;
         if ((newCandidate.getInfoPerson().getInfoPais() != null)) {
             country = sp.getIPersistentCountry().readCountryByNationality(
                     newCandidate.getInfoPerson().getInfoPais().getNationality());
@@ -52,13 +52,13 @@ public class EditMasterDegreeCandidate implements IService {
         masterDegreeCandidate.setSpecializationArea(newCandidate.getSpecializationArea());
 
         // Change Situation
-        ICandidateSituation oldCandidateSituation = masterDegreeCandidate.getActiveCandidateSituation();
+        CandidateSituation oldCandidateSituation = masterDegreeCandidate.getActiveCandidateSituation();
         if (!oldCandidateSituation.getSituation().equals(
                 newCandidate.getInfoCandidateSituation().getSituation())) {
 
             oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
-            ICandidateSituation newCandidateSituation = DomainFactory.makeCandidateSituation();
+            CandidateSituation newCandidateSituation = DomainFactory.makeCandidateSituation();
             newCandidateSituation.setDate(Calendar.getInstance().getTime());
             newCandidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
             newCandidateSituation.setRemarks(newCandidate.getInfoCandidateSituation().getRemarks());
@@ -79,8 +79,8 @@ public class EditMasterDegreeCandidate implements IService {
 
     }
 
-    private void sendEmailToCandidate(IMasterDegreeCandidate masterDegreeCandidate,
-            ICandidateSituation candidateSituation) {
+    private void sendEmailToCandidate(MasterDegreeCandidate masterDegreeCandidate,
+            CandidateSituation candidateSituation) {
         ResourceBundle rb = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         List<String> toList = new ArrayList<String>();
         List CCList, BCCList;

@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -19,7 +19,7 @@ public class DeleteDegree implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IDegree degreeToDelete = (IDegree) persistentSupport.getIPersistentObject().readByOID(
+        final Degree degreeToDelete = (Degree) persistentSupport.getIPersistentObject().readByOID(
                 Degree.class, idInternal);
 
         if (degreeToDelete == null) {

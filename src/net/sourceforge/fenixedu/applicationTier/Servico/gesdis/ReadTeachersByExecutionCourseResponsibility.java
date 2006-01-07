@@ -6,8 +6,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,11 +24,11 @@ public class ReadTeachersByExecutionCourseResponsibility implements IService {
         final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = suportePersistente.getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
 
         final List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-        for (final IProfessorship professorship : executionCourse.responsibleFors()) {
+        for (final Professorship professorship : executionCourse.responsibleFors()) {
             result.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
         }
         return result;

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 /**
  * @author jpvl
@@ -58,7 +58,7 @@ public class InfoWrittenEvaluationEnrolment extends InfoObject {
         this.infoStudent = infoStudent;
     }
 
-    public static InfoWrittenEvaluationEnrolment newInfoFromDomain(IDomainObject domainObject) {
+    public static InfoWrittenEvaluationEnrolment newInfoFromDomain(DomainObject domainObject) {
         InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = null;
         if (domainObject != null) {
             infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolment();

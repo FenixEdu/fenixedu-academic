@@ -29,7 +29,7 @@ public class PublicationTypeOJB extends PersistentObjectOJB implements IPersiste
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.teacher.IPersistentOldPublication#readAllByTeacherAndOldPublicationType(Dominio.ITeacher,
+     * @see ServidorPersistente.teacher.IPersistentOldPublication#readAllByTeacherAndOldPublicationType(Dominio.Teacher,
      *      Util.OldPublicationType)
      */
     public List readAll() throws ExcepcaoPersistencia {

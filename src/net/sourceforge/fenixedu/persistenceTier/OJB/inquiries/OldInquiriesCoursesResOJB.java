@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.inquiries;
 
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -18,7 +18,7 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class OldInquiriesCoursesResOJB extends PersistentObjectOJB implements IPersistentOldInquiriesCoursesRes {
 
-    public IOldInquiriesCoursesRes readByExecutionPeriodAndDegreeIdAndCourseCode(
+    public OldInquiriesCoursesRes readByExecutionPeriodAndDegreeIdAndCourseCode(
             Integer executionPeriodId, Integer degreeId, String courseCode)
     		throws ExcepcaoPersistencia {
         
@@ -27,7 +27,7 @@ public class OldInquiriesCoursesResOJB extends PersistentObjectOJB implements IP
     	criteria.addEqualTo("keyDegree", degreeId);
     	criteria.addEqualTo("courseCode", courseCode);
 
-    	return (IOldInquiriesCoursesRes) queryObject(OldInquiriesCoursesRes.class, criteria);
+    	return (OldInquiriesCoursesRes) queryObject(OldInquiriesCoursesRes.class, criteria);
     }
     
 }

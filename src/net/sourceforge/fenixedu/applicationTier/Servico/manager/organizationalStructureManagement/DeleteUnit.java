@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalStructureManagement;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -18,7 +18,7 @@ public class DeleteUnit implements IService {
         
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-        IUnit unit = (IUnit) suportePersistente.getIPersistentObject().readByOID(Unit.class, unitID);
+        Unit unit = (Unit) suportePersistente.getIPersistentObject().readByOID(Unit.class, unitID);
         if(unit == null){
             throw new FenixServiceException("error.noUnit");
         }

@@ -27,7 +27,7 @@
 			</tr>
 			<logic:iterate id="person" name="elements" type="net.sourceforge.fenixedu.domain.IPerson">
 			<%
-				IStudent student = (IStudent) person.getStudents().get(0);
+				Student student = (Student) person.getStudents().get(0);
 				request.setAttribute("student",student);
 			 %>
 				<tr>

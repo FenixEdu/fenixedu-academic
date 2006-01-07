@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IItem;
-import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class ItemVO extends VersionedObjectsBase implements IPersistentItem {
 
-    public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla,
+    public Item readBySectionAndName(Integer sectionID, String executionCourseSigla,
             String executionPeriodYear, String executionPeriodName, String itemName)
             throws ExcepcaoPersistencia {
-        Collection<ISection> sections = readAll(Section.class);
-        for (ISection section : sections) {
+        Collection<Section> sections = readAll(Section.class);
+        for (Section section : sections) {
             if ((section.getIdInternal().equals(sectionID))
                     && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
                     && (section.getSite().getExecutionCourse().getExecutionPeriod().getName()
@@ -31,9 +31,9 @@ public class ItemVO extends VersionedObjectsBase implements IPersistentItem {
                     && (section.getSite().getExecutionCourse().getExecutionPeriod().getExecutionYear()
                             .getYear().equals(executionPeriodYear))) {
 
-                List<IItem> items = section.getAssociatedItems();
+                List<Item> items = section.getAssociatedItems();
 
-                for (IItem item : items) {
+                for (Item item : items) {
                     if (item.getName().equals(itemName))
                         return item;
                 }
@@ -42,10 +42,10 @@ public class ItemVO extends VersionedObjectsBase implements IPersistentItem {
         return null;
     }
 
-    public List<IItem> readAllItemsBySection(Integer sectionID, String executionCourseSigla,
+    public List<Item> readAllItemsBySection(Integer sectionID, String executionCourseSigla,
             String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
-        Collection<ISection> sections = readAll(Section.class);
-        for (ISection section : sections) {
+        Collection<Section> sections = readAll(Section.class);
+        for (Section section : sections) {
             if ((section.getIdInternal().equals(sectionID))
                     && (section.getSite().getExecutionCourse().getSigla().equals(executionCourseSigla))
                     && (section.getSite().getExecutionCourse().getExecutionPeriod().getName()

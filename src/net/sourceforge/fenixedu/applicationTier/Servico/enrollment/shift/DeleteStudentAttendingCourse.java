@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -42,8 +42,8 @@ public class DeleteStudentAttendingCourse implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IStudent student = readStudent(persistentSupport, infoStudent);
-        final IExecutionCourse executionCourse = readExecutionCourse(persistentSupport,
+        final Student student = readStudent(persistentSupport, infoStudent);
+        final ExecutionCourse executionCourse = readExecutionCourse(persistentSupport,
                 executionCourseID);
 
         deleteAttend(persistentSupport, student, executionCourse);
@@ -51,12 +51,12 @@ public class DeleteStudentAttendingCourse implements IService {
         return Boolean.TRUE;
     }
 
-    private IExecutionCourse readExecutionCourse(final ISuportePersistente persistentSupport,
+    private ExecutionCourse readExecutionCourse(final ISuportePersistente persistentSupport,
             final Integer executionCourseID) throws ExcepcaoPersistencia, FenixServiceException {
 
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
@@ -64,11 +64,11 @@ public class DeleteStudentAttendingCourse implements IService {
         return executionCourse;
     }
 
-    private IStudent readStudent(final ISuportePersistente persistentSupport,
+    private Student readStudent(final ISuportePersistente persistentSupport,
             final InfoStudent infoStudent) throws FenixServiceException, ExcepcaoPersistencia {
 
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final IStudent student = (IStudent) persistentStudent.readByOID(Student.class, infoStudent
+        final Student student = (Student) persistentStudent.readByOID(Student.class, infoStudent
                 .getIdInternal());
         if (student == null) {
             throw new FenixServiceException("error.exception.noStudents");
@@ -76,11 +76,11 @@ public class DeleteStudentAttendingCourse implements IService {
         return student;
     }
 
-    private void deleteAttend(final ISuportePersistente persistentSupport, final IStudent student,
-            final IExecutionCourse executionCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    private void deleteAttend(final ISuportePersistente persistentSupport, final Student student,
+            final ExecutionCourse executionCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
         final IFrequentaPersistente persistentAttends = persistentSupport.getIFrequentaPersistente();
-        final IAttends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student
+        final Attends attend = persistentAttends.readByAlunoAndDisciplinaExecucao(student
                 .getIdInternal(), executionCourse.getIdInternal());
 
         if (attend != null) {
@@ -92,22 +92,22 @@ public class DeleteStudentAttendingCourse implements IService {
         }
     }
 
-    private void checkStudentShifts(final IStudent student, final IExecutionCourse executionCourse)
+    private void checkStudentShifts(final Student student, final ExecutionCourse executionCourse)
             throws AlreadyEnrolledInShiftServiceException {
-        for (final IShift shift : student.getShifts()) {
+        for (final Shift shift : student.getShifts()) {
             if (shift.getDisciplinaExecucao() == executionCourse) {
                 throw new AlreadyEnrolledInShiftServiceException();
             }
         }
     }
 
-    private void checkIfIsEnrolled(final IAttends attend) throws AlreadyEnrolledInGroupServiceException {
+    private void checkIfIsEnrolled(final Attends attend) throws AlreadyEnrolledInGroupServiceException {
         if (attend.getEnrolment() != null) {
             throw new AlreadyEnrolledInGroupServiceException();
         }
     }
 
-    private void checkIfHasStudentGroups(final IAttends attend)
+    private void checkIfHasStudentGroups(final Attends attend)
             throws AlreadyEnrolledInGroupServiceException {
         if (attend.getStudentGroupsCount() > 0) {
             throw new AlreadyEnrolledInGroupServiceException();

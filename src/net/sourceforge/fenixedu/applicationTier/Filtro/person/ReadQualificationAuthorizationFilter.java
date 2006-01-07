@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
@@ -100,12 +100,12 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentQualification persistentQualification = persistentSuport
                     .getIPersistentQualification();
-            IQualification qualification = (IQualification) persistentQualification.readByOID(
+            Qualification qualification = (Qualification) persistentQualification.readByOID(
                     Qualification.class, objectId);
 
             IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
             //Try to read the grant owner from the database
-            IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(qualification
+            GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(qualification
                     .getPerson().getIdInternal());
 
             return grantOwner != null;
@@ -127,10 +127,10 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-            IPerson person = persistentPerson.lerPessoaPorUsername(username);
+            Person person = persistentPerson.lerPessoaPorUsername(username);
 
             IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-            IQualification qualification = (IQualification) persistentQualification.readByOID(
+            Qualification qualification = (Qualification) persistentQualification.readByOID(
                     Qualification.class, objectId);
 
             return qualification.getPerson().equals(person);

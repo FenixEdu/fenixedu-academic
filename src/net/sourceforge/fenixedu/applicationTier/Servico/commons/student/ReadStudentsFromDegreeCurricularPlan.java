@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,7 +33,7 @@ public class ReadStudentsFromDegreeCurricularPlan implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // Read the Students
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
@@ -45,7 +45,7 @@ public class ReadStudentsFromDegreeCurricularPlan implements IService {
 
         return (List) CollectionUtils.collect(students, new Transformer() {
             public Object transform(Object arg0) {
-                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) arg0;
+                StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) arg0;
                 return InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                         .newInfoFromDomain(studentCurricularPlan);
             }

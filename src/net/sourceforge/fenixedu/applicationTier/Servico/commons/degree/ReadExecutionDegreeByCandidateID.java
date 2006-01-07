@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,15 +20,15 @@ public class ReadExecutionDegreeByCandidateID implements IService {
     public InfoExecutionDegree run(Integer candidateID) throws NonExistingServiceException,
             ExcepcaoPersistencia {
 
-        IExecutionDegree executionDegree = null;
+        ExecutionDegree executionDegree = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
-        executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+        executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
                 ExecutionDegree.class, masterDegreeCandidate.getExecutionDegree().getIdInternal());
 
         if (executionDegree == null) {

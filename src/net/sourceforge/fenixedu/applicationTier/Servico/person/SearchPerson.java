@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,11 +37,11 @@ public class SearchPerson implements IService {
 
         private String[] nameWords;
 
-        private IRole role;
+        private Role role;
 
-        private IDegree degree;
+        private Degree degree;
 
-        private IDepartment department;
+        private Department department;
 
         private DegreeType degreeType;
 
@@ -60,11 +60,11 @@ public class SearchPerson implements IService {
                     : null;
 
             if (roleType != null && roleType.length() > 0) {
-                role = (IRole) sp.getIPersistentRole().readByRoleType(RoleType.valueOf(roleType));
+                role = (Role) sp.getIPersistentRole().readByRoleType(RoleType.valueOf(roleType));
             }
 
             if (degreeId != null) {
-                degree = (IDegree) sp.getICursoPersistente().readByOID(Degree.class, degreeId);
+                degree = (Degree) sp.getICursoPersistente().readByOID(Degree.class, degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
@@ -72,7 +72,7 @@ public class SearchPerson implements IService {
             }
 
             if (departmentId != null) {
-                department = (IDepartment) sp.getIDepartamentoPersistente().readByOID(Department.class,
+                department = (Department) sp.getIDepartamentoPersistente().readByOID(Department.class,
                         departmentId);
             }
         }
@@ -93,7 +93,7 @@ public class SearchPerson implements IService {
                     .subList(start, end);
         }
 
-        public IDegree getDegree() {
+        public Degree getDegree() {
             return degree;
         }
 
@@ -101,7 +101,7 @@ public class SearchPerson implements IService {
             return degreeType;
         }
 
-        public IDepartment getDepartment() {
+        public Department getDepartment() {
             return department;
         }
 
@@ -117,7 +117,7 @@ public class SearchPerson implements IService {
             return nameWords;
         }
 
-        public IRole getRole() {
+        public Role getRole() {
             return role;
         }
 
@@ -130,25 +130,25 @@ public class SearchPerson implements IService {
             throws ExcepcaoPersistencia, FenixServiceException {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final List<IPerson> persons;
-        List<IPerson> allValidPersons = new ArrayList<IPerson>();
-        List<ITeacher> teachers = new ArrayList<ITeacher>();
+        final List<Person> persons;
+        List<Person> allValidPersons = new ArrayList<Person>();
+        List<Teacher> teachers = new ArrayList<Teacher>();
         int totalPersons;
 
-        IRole roleBd = searchParameters.getRole();
+        Role roleBd = searchParameters.getRole();
         if (roleBd == null) {
             roleBd = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
         }
 
         if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {
-            persons = new ArrayList<IPerson>();
+            persons = new ArrayList<Person>();
             teachers = searchParameters.getDepartment().getCurrentTeachers();
-            for (ITeacher teacher : teachers) {
+            for (Teacher teacher : teachers) {
                 persons.add(teacher.getPerson());
             }
         } else if (roleBd.getRoleType() == RoleType.EMPLOYEE) {
-            persons = new ArrayList<IPerson>();
-            for (IPerson person : roleBd.getAssociatedPersons()) {
+            persons = new ArrayList<Person>();
+            for (Person person : roleBd.getAssociatedPersons()) {
                 if (person.getTeacher() == null) {
                     persons.add(person);
                 }
@@ -157,7 +157,7 @@ public class SearchPerson implements IService {
             persons = roleBd.getAssociatedPersons();
         }
 
-        allValidPersons = (List<IPerson>) CollectionUtils.select(persons, predicate);
+        allValidPersons = (List<Person>) CollectionUtils.select(persons, predicate);
         totalPersons = allValidPersons.size();
 
         if (totalPersons > SessionConstants.LIMIT_FINDED_PERSONS_TOTAL) {
@@ -167,7 +167,7 @@ public class SearchPerson implements IService {
         Collections.sort(allValidPersons, new BeanComparator("nome"));
         List<InfoPerson> infoPersons = new ArrayList<InfoPerson>();
 
-        for (IPerson person : (List<IPerson>) allValidPersons) {
+        for (Person person : (List<Person>) allValidPersons) {
             infoPersons.add(InfoPerson.newInfoFromDomain(person));
         }
 
@@ -196,7 +196,7 @@ public class SearchPerson implements IService {
         }
 
         public boolean evaluate(Object arg0) {
-            IPerson person = (IPerson) arg0;
+            Person person = (Person) arg0;
 
             return verifyParameter(person.getEmail(), searchParameters.getEmail())
                     && verifyParameter(person.getUsername(), searchParameters.getUsername())
@@ -207,17 +207,17 @@ public class SearchPerson implements IService {
                             person);
         }
 
-        private boolean verifyDegreeType(final IDegree degree, final DegreeType degreeType,
-                final IPerson person) {
+        private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType,
+                final Person person) {
             return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
         }
 
-        private boolean verifyDegreeType(final IDegree degree, final IStudent studentByType) {
+        private boolean verifyDegreeType(final Degree degree, final Student studentByType) {
             return studentByType != null && (degree == null || verifyDegree(degree, studentByType));
         }
 
-        private boolean verifyDegree(final IDegree degree, final IStudent studentByType) {
-            final IStudentCurricularPlan studentCurricularPlan = studentByType
+        private boolean verifyDegree(final Degree degree, final Student studentByType) {
+            final StudentCurricularPlan studentCurricularPlan = studentByType
                     .getActiveStudentCurricularPlan();
             return (studentCurricularPlan != null && degree == studentCurricularPlan
                     .getDegreeCurricularPlan().getDegree());
@@ -233,7 +233,7 @@ public class SearchPerson implements IService {
             return (personParameter.indexOf(searchParameter) == -1) ? false : true;
         }
 
-        private static boolean verifyNameEquality(String[] nameWords, IPerson person) {
+        private static boolean verifyNameEquality(String[] nameWords, Person person) {
 
             if (nameWords == null) {
                 return true;

@@ -4,13 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
 
 /**
  * @author scpo and asnr
  *  
  */
 public interface IGroupEnrolmentStrategyFactory {
-    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGrouping grouping);
+    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping);
 
 }

@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  */
 public abstract class Evaluation extends Evaluation_Base {
 	
-    public List<IExecutionCourse> getAttendingExecutionCoursesFor(final IStudent student) {
-        final List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
-        for (final IExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
+    public List<ExecutionCourse> getAttendingExecutionCoursesFor(final Student student) {
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        for (final ExecutionCourse executionCourse : this.getAssociatedExecutionCourses()) {
             if (student.attends(executionCourse)) {
                 result.add(executionCourse);
             }
@@ -29,8 +29,8 @@ public abstract class Evaluation extends Evaluation_Base {
         super.deleteDomainObject();
     }
 
-	public IMark addNewMark(IAttends attends, String markValue) {
-		IMark mark =  new Mark();
+	public Mark addNewMark(Attends attends, String markValue) {
+		Mark mark =  new Mark();
 		mark.setAttend(attends);
 		mark.setEvaluation(this);
 		mark.setMark(markValue);

@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -20,7 +20,7 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
 		super();
 	}
 	
-	protected InquiriesTeacher(IInquiriesCourse inquiriesCourse, ITeacher teacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {
+	protected InquiriesTeacher(InquiriesCourse inquiriesCourse, Teacher teacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {
 		if((inquiriesCourse == null) || (teacher == null) || (shiftType == null))
 			throw new DomainException("The inquiriesCourse, teacher and shiftType should not be null!");
 				
@@ -29,7 +29,7 @@ public class InquiriesTeacher extends InquiriesTeacher_Base {
 		this.setBasicProperties(shiftType, infoInquiriesTeacher);
 	}
 	
-	protected InquiriesTeacher(IInquiriesCourse inquiriesCourse, INonAffiliatedTeacher nonAffiliatedTeacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {
+	protected InquiriesTeacher(InquiriesCourse inquiriesCourse, NonAffiliatedTeacher nonAffiliatedTeacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {
 		if((inquiriesCourse == null) || (nonAffiliatedTeacher == null) || (shiftType == null))
 			throw new DomainException("The inquiriesCourse, nonAffiliatedTeacher and shiftType should not be null!");
 

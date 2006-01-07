@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.IPrice;
+import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
@@ -21,10 +21,10 @@ public class PriceVO extends VersionedObjectsBase implements IPersistentPrice {
 	}
 
 	public List readByGraduationType(GraduationType graduationType) throws ExcepcaoPersistencia {
-		List<IPrice> priceList = (List<IPrice>) readAll(Price.class);
+		List<Price> priceList = (List<Price>) readAll(Price.class);
 		List result = new ArrayList();
 
-		for (IPrice price : priceList) {
+		for (Price price : priceList) {
 			if (price.getGraduationType().equals(graduationType)) {
 				result.add(price);
 			}
@@ -33,11 +33,11 @@ public class PriceVO extends VersionedObjectsBase implements IPersistentPrice {
 		return result;
 	}
 
-	public IPrice readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
+	public Price readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
 			DocumentType documentType, String description) throws ExcepcaoPersistencia {
 
-		List<IPrice> priceList = (List<IPrice>) readAll(Price.class);
-		for (IPrice price : priceList) {
+		List<Price> priceList = (List<Price>) readAll(Price.class);
+		for (Price price : priceList) {
 			if (price.getGraduationType().equals(graduationType)
 					&& price.getDocumentType().equals(documentType)
 					&& price.getDescription().equals(description)) {
@@ -50,10 +50,10 @@ public class PriceVO extends VersionedObjectsBase implements IPersistentPrice {
 
 	public List readByGraduationTypeAndDocumentType(GraduationType graduationType,
 			DocumentType documentType) throws ExcepcaoPersistencia {
-		List<IPrice> priceList = (List<IPrice>) readAll(Price.class);
+		List<Price> priceList = (List<Price>) readAll(Price.class);
 		List result = new ArrayList();
 
-		for (IPrice price : priceList) {
+		for (Price price : priceList) {
 			if (price.getGraduationType().equals(graduationType)
 					&& price.getDocumentType().equals(documentType)) {
 				result.add(price);
@@ -66,10 +66,10 @@ public class PriceVO extends VersionedObjectsBase implements IPersistentPrice {
 	public List readByGraduationTypeAndDocumentType(GraduationType graduationType, List types)
 			throws ExcepcaoPersistencia {
 
-		List<IPrice> priceList = (List<IPrice>) readAll(Price.class);
+		List<Price> priceList = (List<Price>) readAll(Price.class);
 		List result = new ArrayList();
 
-		for (IPrice price : priceList) {
+		for (Price price : priceList) {
 			if (price.getGraduationType().equals(graduationType)) {
 				for (GraduationType type : (List<GraduationType>) types) {
 					if (price.getGraduationType().equals(type)) {

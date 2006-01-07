@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.department;
 
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
 
 public class CompetenceCourseMembersGroup extends CompetenceCourseMembersGroup_Base {
     
@@ -9,7 +9,7 @@ public class CompetenceCourseMembersGroup extends CompetenceCourseMembersGroup_B
         super();
     }
     
-    public CompetenceCourseMembersGroup(IPerson creator, IDepartment department) {
+    public CompetenceCourseMembersGroup(Person creator, Department department) {
         super();
         setCreator(creator);
         setDepartment(department);

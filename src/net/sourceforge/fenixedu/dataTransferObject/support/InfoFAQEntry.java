@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.dataTransferObject.support;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.support.IFAQEntry;
-import net.sourceforge.fenixedu.domain.support.IFAQSection;
+import net.sourceforge.fenixedu.domain.support.FAQEntry;
+import net.sourceforge.fenixedu.domain.support.FAQSection;
 
 /**
  * @author Luis Cruz
@@ -50,12 +50,12 @@ public class InfoFAQEntry extends InfoObject implements Serializable {
         this.question = question;
     }
 
-    public void copyFromDomain(IFAQEntry faqEntry) {
+    public void copyFromDomain(FAQEntry faqEntry) {
         super.copyFromDomain(faqEntry);
         if (faqEntry != null) {
             setQuestion(faqEntry.getQuestion());
             setAnswer(faqEntry.getAnswer());
-            IFAQSection parentSection = faqEntry.getParentSection();
+            FAQSection parentSection = faqEntry.getParentSection();
             if (parentSection != null) {
                 setParentSection(new InfoFAQSection());
                 getParentSection().setIdInternal(parentSection.getIdInternal());
@@ -63,7 +63,7 @@ public class InfoFAQEntry extends InfoObject implements Serializable {
         }
     }
 
-    public static InfoFAQEntry newInfoFromDomain(IFAQEntry faqEntry) {
+    public static InfoFAQEntry newInfoFromDomain(FAQEntry faqEntry) {
         InfoFAQEntry infoFAQEntry = null;
         if (faqEntry != null) {
             infoFAQEntry = new InfoFAQEntry();

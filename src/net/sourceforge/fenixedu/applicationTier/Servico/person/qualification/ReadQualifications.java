@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualificationWithPersonAndCountry;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoSiteQualifications;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,13 +26,13 @@ public class ReadQualifications implements IService {
     public InfoSiteQualifications run(String user) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        final IPerson person = persistentPerson.lerPessoaPorUsername(user);
+        final Person person = persistentPerson.lerPessoaPorUsername(user);
 
-        List<IQualification> qualifications = person.getAssociatedQualifications();
+        List<Qualification> qualifications = person.getAssociatedQualifications();
 
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {
-                IQualification qualification = (IQualification) o;
+                Qualification qualification = (Qualification) o;
                 return InfoQualificationWithPersonAndCountry.newInfoFromDomain(qualification);
             }
         });

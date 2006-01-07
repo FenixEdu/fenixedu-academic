@@ -11,7 +11,7 @@ public class Qualification extends Qualification_Base {
         super();
     }
     
-    public Qualification(IPerson person, ICountry country, InfoQualification infoQualification) {
+    public Qualification(Person person, Country country, InfoQualification infoQualification) {
         if(person == null)
             throw new DomainException("The person should not be null!");
         this.setPerson(person);
@@ -26,7 +26,7 @@ public class Qualification extends Qualification_Base {
 		super.deleteDomainObject();
 	}
 	
-	public void edit(InfoQualification infoQualification, ICountry country) {
+	public void edit(InfoQualification infoQualification, Country country) {
 		//The country can be null
 		this.setBasicProperties(infoQualification);
 		if(country == null)

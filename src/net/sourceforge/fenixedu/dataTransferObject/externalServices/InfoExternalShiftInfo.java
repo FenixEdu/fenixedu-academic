@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Shift;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -34,7 +34,7 @@ public class InfoExternalShiftInfo
      * @param shift
      * @return
      */
-    public static InfoExternalShiftInfo newFromShift(IShift shift)
+    public static InfoExternalShiftInfo newFromShift(Shift shift)
     {
         InfoExternalShiftInfo info = new InfoExternalShiftInfo();
         info.setName(shift.getNome());

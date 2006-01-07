@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailConversation;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -50,12 +50,12 @@ public class MailingListThreadManagement extends FenixDispatchAction
 		Integer conversationId = (Integer) mailingListForm.get("threadId");
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
 		String messageIdString = request.getParameter("messageId");
-		IMailConversation mailConversationToView = null;
-		IMailingList mailingListToView = null; 
+		MailConversation mailConversationToView = null;
+		MailingList mailingListToView = null; 
 		try
 		{
-			mailConversationToView = (IMailConversation) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailConversation.class,conversationId});
-			mailingListToView = (IMailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
+			mailConversationToView = (MailConversation) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailConversation.class,conversationId});
+			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
 		}
 		catch (Exception e)
 		{
@@ -74,8 +74,8 @@ public class MailingListThreadManagement extends FenixDispatchAction
 			}
 			else
 			{
-				IMailMessage mailMessage = null;
-				Iterator<IMailMessage> messagesIterator = mailConversationToView.getMailMessagesIterator();
+				MailMessage mailMessage = null;
+				Iterator<MailMessage> messagesIterator = mailConversationToView.getMailMessagesIterator();
 				while (messagesIterator.hasNext())
 				{
 					mailMessage = messagesIterator.next();
@@ -105,12 +105,12 @@ public class MailingListThreadManagement extends FenixDispatchAction
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
 		Integer threadID = (Integer) mailingListForm.get("threadId");
-		IMailConversation mailConversationToView = null;
-		IMailingList mailingListToView = null; 
+		MailConversation mailConversationToView = null;
+		MailingList mailingListToView = null; 
 		try
 		{
-			mailConversationToView = (IMailConversation) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailConversation.class,threadID});
-			mailingListToView = (IMailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
+			mailConversationToView = (MailConversation) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailConversation.class,threadID});
+			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
 		}
 		catch (Exception e)
 		{
@@ -140,9 +140,9 @@ public class MailingListThreadManagement extends FenixDispatchAction
 			zos.setMethod(ZipOutputStream.DEFLATED);
 			zos.setLevel(9);
 			zos.putNextEntry(new ZipEntry(entryName));
-			for (Iterator<IMailMessage> messagesIterator = mailConversationToView.getMailMessagesIterator(); messagesIterator.hasNext();)
+			for (Iterator<MailMessage> messagesIterator = mailConversationToView.getMailMessagesIterator(); messagesIterator.hasNext();)
 			{
-				IMailMessage currentMessage = messagesIterator.next();
+				MailMessage currentMessage = messagesIterator.next();
 				zos.write(currentMessage.getBody().getBytes());
 			}
 

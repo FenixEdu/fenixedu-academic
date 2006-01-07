@@ -18,17 +18,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.IDegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -51,11 +51,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private String prerequisites;
     private String prerequisitesEn;
 
-    private ICompetenceCourse competenceCourse = null;
-    private IDegreeCurricularPlan degreeCurricularPlan = null;
-    private ICourseGroup courseGroup = null;
-    private ICurricularCourse curricularCourse = null;
-    private IContext context = null;
+    private CompetenceCourse competenceCourse = null;
+    private DegreeCurricularPlan degreeCurricularPlan = null;
+    private CourseGroup courseGroup = null;
+    private CurricularCourse curricularCourse = null;
+    private Context context = null;
 
     public List<SelectItem> departmentUnits = null;
     public List<SelectItem> courseGroups = null;
@@ -155,40 +155,40 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    public IDegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
+    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
             FenixServiceException {
-        return (degreeCurricularPlan == null) ? (degreeCurricularPlan = (IDegreeCurricularPlan) readDomainObject(
+        return (degreeCurricularPlan == null) ? (degreeCurricularPlan = (DegreeCurricularPlan) readDomainObject(
                 DegreeCurricularPlan.class, getDegreeCurricularPlanID()))
                 : degreeCurricularPlan;
     }
 
-    public ICourseGroup getCourseGroup() throws FenixFilterException, FenixServiceException {
-        return (courseGroup == null) ? (courseGroup = (ICourseGroup) readDomainObject(CourseGroup.class,
+    public CourseGroup getCourseGroup() throws FenixFilterException, FenixServiceException {
+        return (courseGroup == null) ? (courseGroup = (CourseGroup) readDomainObject(CourseGroup.class,
                 getCourseGroupID())) : courseGroup;
     }
 
-    public IUnit getDepartmentUnit() throws FenixFilterException, FenixServiceException {
+    public Unit getDepartmentUnit() throws FenixFilterException, FenixServiceException {
        if (getDepartmentUnitID() != null && !getDepartmentUnitID().equals(0)) {
-           return  (IUnit) readDomainObject(Unit.class, getDepartmentUnitID());
+           return  (Unit) readDomainObject(Unit.class, getDepartmentUnitID());
        }
        return null;
     }
     
-    public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
+    public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
         if (competenceCourse == null && getCompetenceCourseID() != null && !getCompetenceCourseID().equals(0)) {
-            competenceCourse = (ICompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
+            competenceCourse = (CompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
         }
         return competenceCourse;
     }
     
-    public ICurricularCourse getCurricularCourse() throws FenixFilterException, FenixServiceException {
-        return (curricularCourse == null && getCurricularCourseID() != null) ? (curricularCourse = (ICurricularCourse) readDomainObject(
+    public CurricularCourse getCurricularCourse() throws FenixFilterException, FenixServiceException {
+        return (curricularCourse == null && getCurricularCourseID() != null) ? (curricularCourse = (CurricularCourse) readDomainObject(
                 CurricularCourse.class, getCurricularCourseID()))
                 : curricularCourse;
     }
 
-    private IContext getContext(Integer contextID) throws FenixFilterException, FenixServiceException {
-        return (context == null && contextID != null) ? (context = (IContext) readDomainObject(
+    private Context getContext(Integer contextID) throws FenixFilterException, FenixServiceException {
+        return (context == null && contextID != null) ? (context = (Context) readDomainObject(
                 Context.class, contextID)) : context;
     }
 
@@ -361,7 +361,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         result.add(new SelectItem(Integer.valueOf(0), "[" + messages.getString("chooseOneType") + "]"));
         try {
             Date now = Calendar.getInstance().getTime();
-            for (final IUnit unit : (List<IUnit>) readAllDomainObjects(Unit.class)) {
+            for (final Unit unit : (List<Unit>) readAllDomainObjects(Unit.class)) {
                 if (unit.isActive(now) && unit.getType() != null
                         && unit.getType().equals(UnitType.DEPARTMENT)) {
                     result.add(new SelectItem(unit.getIdInternal(), unit.getName()));
@@ -376,11 +376,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readCompetenceCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(Integer.valueOf(0), "[" + messages.getString("chooseOneType") + "]"));
-        final IUnit departmentUnit = getDepartmentUnit();
+        final Unit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
-            for (final IUnit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
-                for (final IUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
-                    for (final ICompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+            for (final Unit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
+                for (final Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+                    for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
                         if (!competenceCourse.getCurricularStage().equals(CurricularStage.DRAFT)) {
                             result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName()));
                         }                        
@@ -394,14 +394,14 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(Integer.valueOf(0), "[" + messages.getString("chooseOneType") + "]"));
-        final IDegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
-        if (degreeModule instanceof ICourseGroup) {
-            collectChildCourseGroups(result, (ICourseGroup) degreeModule, "");
+        final DegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
+        if (degreeModule instanceof CourseGroup) {
+            collectChildCourseGroups(result, (CourseGroup) degreeModule, "");
         }
         return result;
     }
 
-    private void collectChildCourseGroups(final List<SelectItem> result, final ICourseGroup courseGroup,
+    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup,
             final String previousCourseGroupName) {
         String currentCourseGroupName = "";
         if (!courseGroup.isRoot()) {
@@ -409,15 +409,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     + courseGroup.getName();
             result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
         }
-        for (final IContext context : courseGroup.getContextsWithCourseGroups()) {
-            collectChildCourseGroups(result, (ICourseGroup) context.getDegreeModule(),
+        for (final Context context : courseGroup.getContextsWithCourseGroups()) {
+            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(),
                     currentCourseGroupName);
         }
     }
 
     private List<SelectItem> readCurricularCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final ICurricularCourse curricularCourse : getDegreeCurricularPlan()
+        for (final CurricularCourse curricularCourse : getDegreeCurricularPlan()
                 .getDcpCurricularCourses()) {
             result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));
         }

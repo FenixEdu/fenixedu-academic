@@ -12,7 +12,7 @@ import javax.mail.MessagingException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 
 import org.apache.struts.Globals;
 import org.apache.struts.taglib.TagUtils;
@@ -38,7 +38,7 @@ public class EmailBodyDigestTag extends TagSupport
 
 	protected Integer chars = new Integer(15);
 
-	protected IMailMessage message;
+	protected MailMessage message;
 
 	protected String allowedTags = "b i /b /i";
 
@@ -115,7 +115,7 @@ public class EmailBodyDigestTag extends TagSupport
 		}
 		else
 		{
-			this.message = (IMailMessage) value;
+			this.message = (MailMessage) value;
 		}
 		try
 		{

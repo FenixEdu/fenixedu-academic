@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IInstitution;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Institution;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -149,7 +149,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             // create institution
             Object[] args = { nonAffiliatedTeacherInstitutionName };
             try {
-                IInstitution institution = (IInstitution) ServiceUtils.executeService(userView,
+                Institution institution = (Institution) ServiceUtils.executeService(userView,
                         "InsertInstitution", args);
                 nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
             } catch (ExistingServiceException e) {
@@ -164,7 +164,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             // create non affiliated teacher
             Object[] args = { nonAffiliatedTeacherName, nonAffiliatedTeacherInstitutionID };
             try {
-                INonAffiliatedTeacher nonAffiliatedTeacher = (INonAffiliatedTeacher) ServiceUtils
+                NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) ServiceUtils
                         .executeService(userView, "InsertNonAffiliatedTeacher", args);
                 nonAffiliatedTeacherID = nonAffiliatedTeacher.getIdInternal();
             } catch (NotExistingServiceException e) {

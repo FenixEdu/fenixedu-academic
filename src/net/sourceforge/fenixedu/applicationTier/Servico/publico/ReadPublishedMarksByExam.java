@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMarkWithInfoAttendAndInfo
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -47,8 +47,8 @@ public class ReadPublishedMarksByExam implements IService {
         List marksList = null;
         List infoMarksList = null;
 
-        ISite site = null;
-        IEvaluation evaluation = null;
+        Site site = null;
+        Evaluation evaluation = null;
         InfoEvaluation infoEvaluation = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -56,15 +56,15 @@ public class ReadPublishedMarksByExam implements IService {
         //Site
 
         IPersistentSite siteDAO = sp.getIPersistentSite();
-        site = (ISite) siteDAO.readByOID(Site.class, siteCode);
+        site = (Site) siteDAO.readByOID(Site.class, siteCode);
 
         //Execution Course
-        IExecutionCourse executionCourse = site.getExecutionCourse();
+        ExecutionCourse executionCourse = site.getExecutionCourse();
 
         // Evaluation
 
         IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-        evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
@@ -78,7 +78,7 @@ public class ReadPublishedMarksByExam implements IService {
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
             public Object transform(Object input) {
-                IAttends attend = (IAttends) input;
+                Attends attend = (Attends) input;
 
                 InfoFrequenta infoAttend = InfoFrequentaWithInfoStudentAndPerson
                         .newInfoFromDomain(attend);
@@ -88,7 +88,7 @@ public class ReadPublishedMarksByExam implements IService {
 
         List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
             public Object transform(Object input) {
-                IMark mark = (IMark) input;
+                Mark mark = (Mark) input;
 
                 InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
                 return infoMark;

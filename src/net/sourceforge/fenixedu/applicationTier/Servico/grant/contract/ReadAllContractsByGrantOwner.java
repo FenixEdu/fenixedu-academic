@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -53,12 +53,12 @@ public class ReadAllContractsByGrantOwner implements IService {
 
 		// gather information related to each contract
 		while (contractIter.hasNext()) {
-			IGrantContract grantContract = (IGrantContract) contractIter.next();
+			GrantContract grantContract = (GrantContract) contractIter.next();
 			InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
 					.newInfoFromDomain(grantContract);
 
 			// get the GrantOrientationTeacher for each contract
-			IGrantOrientationTeacher orientationTeacher = pgot
+			GrantOrientationTeacher orientationTeacher = pgot
 					.readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(),
 							new Integer(0));
 			InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
@@ -89,7 +89,7 @@ public class ReadAllContractsByGrantOwner implements IService {
 					throw new FenixServiceException(
 							"Grant Contract has no Grant Contract Regime (actual) Associated");
 				}
-				IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeActual
+				GrantContractRegime grantContractRegime = (GrantContractRegime) grantContractRegimeActual
 						.get(0);
 				infoGrantContract.setActive(grantContractRegime.getContractRegimeActive());
 			}

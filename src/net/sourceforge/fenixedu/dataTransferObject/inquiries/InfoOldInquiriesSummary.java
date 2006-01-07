@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 
 /**
  * @author João Fialho & Rita Ferreira & Gonçalo Luiz
@@ -593,7 +593,7 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
     }
 
     
-    public static InfoOldInquiriesSummary newInfoFromDomain(IOldInquiriesSummary oldInquiriesSummary) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoOldInquiriesSummary newInfoFromDomain(OldInquiriesSummary oldInquiriesSummary) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         InfoOldInquiriesSummary newInfo = null;
         if(oldInquiriesSummary != null) {
             newInfo = new InfoOldInquiriesSummary();
@@ -602,7 +602,7 @@ public class InfoOldInquiriesSummary extends InfoObject implements Comparable{
         return newInfo;
     }
        
-    public void copyFromDomain(IOldInquiriesSummary oldInquiresSummary) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void copyFromDomain(OldInquiriesSummary oldInquiresSummary) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (oldInquiresSummary != null) {
             super.copyFromDomain(oldInquiresSummary);
         }

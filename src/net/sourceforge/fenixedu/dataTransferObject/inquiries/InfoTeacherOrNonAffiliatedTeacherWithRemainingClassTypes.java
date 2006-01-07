@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 /**
@@ -155,9 +155,9 @@ public class InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes extends
 
 
 	/* (non-Javadoc)
-	 * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(net.sourceforge.fenixedu.domain.IDomainObject)
+	 * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(net.sourceforge.fenixedu.domain.DomainObject)
 	 */
-	public void copyFromDomain(IDomainObject domainObject) {
+	public void copyFromDomain(DomainObject domainObject) {
 		// TODO Auto-generated method stub
 		super.copyFromDomain(domainObject);
 	}

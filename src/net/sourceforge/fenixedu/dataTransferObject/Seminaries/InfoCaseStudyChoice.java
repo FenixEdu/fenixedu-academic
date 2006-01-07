@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -36,7 +36,7 @@ public class InfoCaseStudyChoice extends InfoObject {
         order = integer;
     }
 
-    public void copyFromDomain(ICaseStudyChoice caseStudyChoice) {
+    public void copyFromDomain(CaseStudyChoice caseStudyChoice) {
         super.copyFromDomain(caseStudyChoice);
         if (caseStudyChoice != null) {
             // setCandidacyIdInternal(caseStudyChoice.getCandidacyIdInternal());
@@ -45,7 +45,7 @@ public class InfoCaseStudyChoice extends InfoObject {
         }
     }
 
-    public static InfoCaseStudyChoice newInfoFromDomain(ICaseStudyChoice caseStudyChoice) {
+    public static InfoCaseStudyChoice newInfoFromDomain(CaseStudyChoice caseStudyChoice) {
         InfoCaseStudyChoice infoCaseStudyChoice = null;
         if (caseStudyChoice != null) {
             infoCaseStudyChoice = new InfoCaseStudyChoice();

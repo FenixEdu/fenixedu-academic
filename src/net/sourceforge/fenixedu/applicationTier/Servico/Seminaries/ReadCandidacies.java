@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,9 +54,9 @@ public class ReadCandidacies implements IService {
 		List candidacies = persistentCandidacy.readByUserInput(modalityID, seminaryID, themeID, case1Id,
 				case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID, approved);
 		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
-			ICandidacy candidacy = (ICandidacy) iterator.next();
-			IStudent student = candidacy.getStudent();
-			IStudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+			Candidacy candidacy = (Candidacy) iterator.next();
+			Student student = candidacy.getStudent();
+			StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
 			List enrollments = studentCurricularPlan.getEnrolments();
 
 			InfoCandidacyDetails candidacyDTO = new InfoCandidacyDetails();
@@ -72,7 +72,7 @@ public class ReadCandidacies implements IService {
 			candidacyDTO.setTheme(InfoTheme.newInfoFromDomain(candidacy.getTheme()));
 			List<InfoCaseStudyChoice> infos = new ArrayList<InfoCaseStudyChoice>();
 			for (Iterator iter = candidacy.getCaseStudyChoices().iterator(); iter.hasNext();) {
-				ICaseStudyChoice element = (ICaseStudyChoice) iter.next();
+				CaseStudyChoice element = (CaseStudyChoice) iter.next();
 				infos.add(InfoCaseStudyChoice.newInfoFromDomain(element));
 
 			}
@@ -99,11 +99,11 @@ public class ReadCandidacies implements IService {
 		float acc = 0;
 		float grade = 0;
 		for (Iterator iter1 = enrollments.iterator(); iter1.hasNext();) {
-			IEnrolment enrollment = (IEnrolment) iter1.next();
+			Enrolment enrollment = (Enrolment) iter1.next();
 			List enrollmentEvaluations = enrollment.getEvaluations();
-			IEnrolmentEvaluation enrollmentEvaluation = null;
+			EnrolmentEvaluation enrollmentEvaluation = null;
 			if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {
-				enrollmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
+				enrollmentEvaluation = (EnrolmentEvaluation) Collections.max(enrollmentEvaluations);
 			}
 
 			String stringGrade;

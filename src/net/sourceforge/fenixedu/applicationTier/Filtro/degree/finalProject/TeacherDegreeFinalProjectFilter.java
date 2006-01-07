@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -50,20 +50,20 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-            ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
+            Teacher teacher = teacherDAO.readByNumber(teacherNumber);
             if (teacher == null) {
                 throw new NonExistingServiceException("Teacher doesn't exists");
             }
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
             if (requesterPerson == null) {
                 throw new NotAuthorizedException("No person with that userView");
             }
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
             
-            IDepartment department = teacher.getCurrentWorkingDepartment();
+            Department department = teacher.getCurrentWorkingDepartment();
 
             if (department == null) {
                 throw new NotAuthorizedException("Teacher number " + teacher.getTeacherNumber()

@@ -5,8 +5,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICampus;
-import net.sourceforge.fenixedu.domain.space.IBuilding;
+import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,17 +31,17 @@ public class CreateBuilding implements IService {
         }
 
         final IPersistentCampus persistentCampus = persistentSupport.getIPersistentCampus();
-        final ICampus campus = (ICampus) persistentCampus.readByOID(Campus.class, campusID);
+        final Campus campus = (Campus) persistentCampus.readByOID(Campus.class, campusID);
 
-        final IBuilding building = DomainFactory.makeBuilding();
+        final Building building = DomainFactory.makeBuilding();
         building.setName(buildingName);
         building.setCampus(campus);
     }
 
     protected boolean exists(final List buildings, final String buildingName) {
-        final IBuilding building = (IBuilding) CollectionUtils.find(buildings, new Predicate() {
+        final Building building = (Building) CollectionUtils.find(buildings, new Predicate() {
             public boolean evaluate(Object arg0) {
-                final IBuilding building = (IBuilding) arg0;
+                final Building building = (Building) arg0;
                 return building.getName().equalsIgnoreCase(buildingName);
             }});
 

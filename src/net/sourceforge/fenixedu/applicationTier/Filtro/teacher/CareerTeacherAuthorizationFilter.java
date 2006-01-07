@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
+import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -38,8 +38,8 @@ public class CareerTeacherAuthorizationFilter extends DomainObjectAuthorizationF
             IPersistentCareer persistentCareer = sp.getIPersistentCareer();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            ICareer career = (ICareer) persistentCareer.readByOID(Career.class, objectId);
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Career career = (Career) persistentCareer.readByOID(Career.class, objectId);
 
             return career.getTeacher().equals(teacher);
         } catch (ExcepcaoPersistencia e) {

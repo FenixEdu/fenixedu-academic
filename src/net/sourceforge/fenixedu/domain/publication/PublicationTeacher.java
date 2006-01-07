@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.publication;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
-public class PublicationTeacher extends PublicationTeacher_Base implements IPublicationTeacher {
+public class PublicationTeacher extends PublicationTeacher_Base {
 
     
     public PublicationTeacher()
@@ -17,7 +17,7 @@ public class PublicationTeacher extends PublicationTeacher_Base implements IPubl
      *                        BUSINESS SERVICES                         *
      ********************************************************************/
     
-    public PublicationTeacher(IPublication publication, ITeacher teacher, PublicationArea area) {
+    public PublicationTeacher(Publication publication, Teacher teacher, PublicationArea area) {
         verifyIfAuthor(teacher, publication);
     	setPublicationArea(area);
         setPublication(publication);
@@ -37,10 +37,10 @@ public class PublicationTeacher extends PublicationTeacher_Base implements IPubl
      *                         PRIVATE METHODS                          *
      ********************************************************************/
     
-    private void verifyIfAuthor(ITeacher teacher, IPublication publication) {
+    private void verifyIfAuthor(Teacher teacher, Publication publication) {
         boolean isAuthor = false;
-        IPerson author = teacher.getPerson();
-        for(IAuthorship authorship : publication.getPublicationAuthorships()) {
+        Person author = teacher.getPerson();
+        for(Authorship authorship : publication.getPublicationAuthorships()) {
             if (authorship.getAuthor().equals(author)) isAuthor = true;
         }
         if (!isAuthor) throw new DomainException("error.publication.teacherNotAuthor");

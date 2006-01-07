@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.IWebSite;
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSite;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
@@ -43,7 +43,7 @@ public class ReadWebSiteByObjectCode implements IService {
 
         final List infoWebSiteSections = new ArrayList();
 
-        final IWebSite webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, webSiteCode);
+        final WebSite webSite = (WebSite) persistentWebSite.readByOID(WebSite.class, webSiteCode);
 
         if (webSite == null) {
             throw new NonExistingServiceException("message.nonExistingWebSite", null);
@@ -52,14 +52,14 @@ public class ReadWebSiteByObjectCode implements IService {
         List webSiteSections = persistentWebSiteSection.readByWebSite(webSite);
         Iterator iterSections = webSiteSections.iterator();
         while (iterSections.hasNext()) {
-            IWebSiteSection section = (IWebSiteSection) iterSections.next();
+            WebSiteSection section = (WebSiteSection) iterSections.next();
 
             InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
             List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
             List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
-                    IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+                    WebSiteItem webSiteItem = (WebSiteItem) arg0;
                     InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
 
                     return infoWebSiteItem;

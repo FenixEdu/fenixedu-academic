@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,27 +23,27 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class QuestionOJB extends PersistentObjectOJB implements IPersistentQuestion {
 
-    public IQuestion readByFileNameAndMetadataId(String fileName, IMetadata metadata) throws ExcepcaoPersistencia {
+    public Question readByFileNameAndMetadataId(String fileName, Metadata metadata) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         criteria.addEqualTo("xmlFileName", fileName);
-        return (IQuestion) queryObject(Question.class, criteria);
+        return (Question) queryObject(Question.class, criteria);
     }
 
-    public List<IQuestion> readByMetadata(IMetadata metadata) throws ExcepcaoPersistencia {
+    public List<Question> readByMetadata(Metadata metadata) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         return queryList(Question.class, criteria);
     }
 
-    public List<IQuestion> readByMetadataAndVisibility(IMetadata metadata) throws ExcepcaoPersistencia {
+    public List<Question> readByMetadataAndVisibility(Metadata metadata) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         criteria.addEqualTo("visibility", new Boolean("true"));
         return queryList(Question.class, criteria);
     }
 
-    public int countByMetadata(IMetadata metadata) {
+    public int countByMetadata(Metadata metadata) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         return count(Question.class, criteria);
@@ -62,12 +62,12 @@ public class QuestionOJB extends PersistentObjectOJB implements IPersistentQuest
         }
     }
 
-    public void cleanQuestions(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public void cleanQuestions(DistributedTest distributedTest) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         criteria.addEqualTo("question.visibility", new Boolean(false));
-        List<IStudentTestQuestion> questions = queryList(StudentTestQuestion.class, criteria);
-        for (IStudentTestQuestion studentTestQuestion : questions) {
+        List<StudentTestQuestion> questions = queryList(StudentTestQuestion.class, criteria);
+        for (StudentTestQuestion studentTestQuestion : questions) {
             if (countReferences(distributedTest.getIdInternal(), studentTestQuestion.getKeyQuestion()) == 0)
                 delete(studentTestQuestion.getQuestion());
         }
@@ -80,11 +80,11 @@ public class QuestionOJB extends PersistentObjectOJB implements IPersistentQuest
         return count(StudentTestQuestion.class, criteria);
     }
 
-    public void deleteByMetadata(IMetadata metadata) throws ExcepcaoPersistencia {
+    public void deleteByMetadata(Metadata metadata) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
-        List<IQuestion> questions = queryList(Question.class, criteria);
-        for (IQuestion question : questions) {
+        List<Question> questions = queryList(Question.class, criteria);
+        for (Question question : questions) {
             delete(question);
         }
     }

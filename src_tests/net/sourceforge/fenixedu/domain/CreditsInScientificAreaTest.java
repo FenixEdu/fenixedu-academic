@@ -2,14 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 public class CreditsInScientificAreaTest extends DomainTestBase {
 
-	private ICreditsInScientificArea credits;
+	private CreditsInScientificArea credits;
 
 	private void setUpDelete() {
 		credits = new CreditsInScientificArea();
 		
-		IScientificArea scientificArea = new ScientificArea();
-		IEnrolment enrolment = new Enrolment();
-		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+		ScientificArea scientificArea = new ScientificArea();
+		Enrolment enrolment = new Enrolment();
+		StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
 		
 		credits.setScientificArea(scientificArea);
 		credits.setEnrolment(enrolment);

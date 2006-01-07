@@ -3,14 +3,14 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 
 /**
  * @author Pica
  * @author Barbosa
  */
 public class InfoGrantSubsidyWithContract extends InfoGrantSubsidy {
-    public void copyFromDomain(IGrantSubsidy grantSubsidy) {
+    public void copyFromDomain(GrantSubsidy grantSubsidy) {
         super.copyFromDomain(grantSubsidy);
         if (grantSubsidy != null) {
             setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
@@ -18,7 +18,7 @@ public class InfoGrantSubsidyWithContract extends InfoGrantSubsidy {
         }
     }
 
-    public static InfoGrantSubsidy newInfoFromDomain(IGrantSubsidy grantSubsidy) {
+    public static InfoGrantSubsidy newInfoFromDomain(GrantSubsidy grantSubsidy) {
         InfoGrantSubsidyWithContract infoGrantSubsidy = null;
         if (grantSubsidy != null) {
             infoGrantSubsidy = new InfoGrantSubsidyWithContract();

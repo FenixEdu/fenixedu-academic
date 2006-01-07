@@ -6,9 +6,9 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -89,8 +89,8 @@ public class SendMailBackingBean extends FenixBackingBean {
         final Boolean teachers = getTeachers();
         if (teachers.booleanValue()) {
             final Object[] args = { RoleType.TEACHER };
-            final IRole role = (IRole) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
-            for (final IPerson person : role.getAssociatedPersons()) {
+            final Role role = (Role) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
+            for (final Person person : role.getAssociatedPersons()) {
                 if (person.getEmail() != null && person.getEmail().length() > 0) {
                     emails.add(person.getEmail());
                 }
@@ -100,8 +100,8 @@ public class SendMailBackingBean extends FenixBackingBean {
         final Boolean employees = getEmployees();
         if (employees.booleanValue()) {
             final Object[] args = { RoleType.EMPLOYEE };
-            final IRole role = (IRole) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
-            for (final IPerson person : role.getAssociatedPersons()) {
+            final Role role = (Role) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
+            for (final Person person : role.getAssociatedPersons()) {
                 if (person.getTeacher() == null) {
                     if (person.getEmail() != null && person.getEmail().length() > 0) {
                         emails.add(person.getEmail());
@@ -114,9 +114,9 @@ public class SendMailBackingBean extends FenixBackingBean {
         final Boolean masterDegreeStudents = getMasterDegreeStudents();
         if (degreeStudents.booleanValue() || masterDegreeStudents.booleanValue()) {
             final Object[] args = { RoleType.STUDENT };
-            final IRole role = (IRole) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
-            for (final IPerson person : role.getAssociatedPersons()) {
-                IStudent student = null;
+            final Role role = (Role) ServiceUtils.executeService(getUserView(), "ReadRoleByRoleType", args);
+            for (final Person person : role.getAssociatedPersons()) {
+                Student student = null;
                 if (degreeStudents.booleanValue()) {
                     student = person.getStudentByType(DegreeType.DEGREE);
                 }

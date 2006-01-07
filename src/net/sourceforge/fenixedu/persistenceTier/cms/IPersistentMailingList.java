@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import javax.mail.Address;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -20,6 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public interface IPersistentMailingList
 {
-	public Collection<IMailingList> readAllMailingListsWithOutgoingMails() throws ExcepcaoPersistencia;
-	public Collection<IMailingList> readReceptorMailingListsForAddress(Collection<Address> addresses, String mailingListDomain) throws ExcepcaoPersistencia;	
+	public Collection<MailingList> readAllMailingListsWithOutgoingMails() throws ExcepcaoPersistencia;
+	public Collection<MailingList> readReceptorMailingListsForAddress(Collection<Address> addresses, String mailingListDomain) throws ExcepcaoPersistencia;	
 }

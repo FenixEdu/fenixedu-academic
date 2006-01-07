@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonRole;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonRole;
+import net.sourceforge.fenixedu.domain.Role;
 
 /**
  * 
@@ -17,6 +17,6 @@ public interface IPersistentPersonRole extends IPersistentObject {
      * @return IPersonRole
      * @throws ExcepcaoPersistencia
      */
-    public IPersonRole readByPersonAndRole(IPerson person, IRole role) throws ExcepcaoPersistencia;
+    public PersonRole readByPersonAndRole(Person person, Role role) throws ExcepcaoPersistencia;
 
 }

@@ -8,7 +8,7 @@ import java.io.ByteArrayInputStream;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.util.tests.Response;
 
@@ -142,7 +142,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
         return getTestQuestionOrder().compareTo(infoStudentTestQuestion.getTestQuestionOrder());
     }
 
-    public void copyFromDomain(IStudentTestQuestion studentTestQuestion) {
+    public void copyFromDomain(StudentTestQuestion studentTestQuestion) {
         super.copyFromDomain(studentTestQuestion);
         if (studentTestQuestion != null) {
             setTestQuestionMark(studentTestQuestion.getTestQuestionMark());
@@ -158,7 +158,7 @@ public class InfoStudentTestQuestion extends InfoObject implements Comparable {
         }
     }
 
-    public static InfoStudentTestQuestion newInfoFromDomain(IStudentTestQuestion studentTestQuestion) {
+    public static InfoStudentTestQuestion newInfoFromDomain(StudentTestQuestion studentTestQuestion) {
         InfoStudentTestQuestion infoStudentTestQuestion = null;
         if (studentTestQuestion != null) {
             infoStudentTestQuestion = new InfoStudentTestQuestion();

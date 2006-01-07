@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
@@ -134,7 +134,7 @@ public class InfoTeacherInstitutionWorkTime extends InfoObject {
         this.weekDay = weekDay;
     }
 
-    public static InfoTeacherInstitutionWorkTime newInfoFromDomain(ITeacherInstitutionWorkTime item) {
+    public static InfoTeacherInstitutionWorkTime newInfoFromDomain(TeacherInstitutionWorkTime item) {
         InfoTeacher infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(item.getTeacher());
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(item.getExecutionPeriod());
 

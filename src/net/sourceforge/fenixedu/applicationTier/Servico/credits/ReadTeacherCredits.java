@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCreditsWithTeacherAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -31,16 +31,16 @@ public class ReadTeacherCredits implements IService {
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherOID);
-        IExecutionPeriod startExecutionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(
+        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherOID);
+        ExecutionPeriod startExecutionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(
                 ExecutionPeriod.class, new Integer(2));
-        IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        ExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
         InfoTeacherWithPerson infoTeacher = new InfoTeacherWithPerson();
         infoTeacher.copyFromDomain(teacher);
 
         List list = new ArrayList();
-        IExecutionPeriod executionPeriod2 = null;
+        ExecutionPeriod executionPeriod2 = null;
         do {
             InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = new InfoExecutionPeriodWithInfoExecutionYear();
             infoExecutionPeriod.copyFromDomain(executionPeriod);

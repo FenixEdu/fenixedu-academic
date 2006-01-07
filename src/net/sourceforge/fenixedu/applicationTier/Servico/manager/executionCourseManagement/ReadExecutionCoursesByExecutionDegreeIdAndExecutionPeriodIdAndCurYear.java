@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -44,7 +44,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 			throw new FenixServiceException("nullExecutionPeriodId");
 		}
 
-		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
 				ExecutionPeriod.class, executionPeriodId);
 
 		if (executionDegreeId == null && curricularYear == null) {
@@ -52,7 +52,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 					.readByExecutionPeriodWithNoCurricularCourses(executionPeriod.getIdInternal());
 
 		} else {
-			IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+			ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
 					ExecutionDegree.class, executionDegreeId);
 
 			executionCourseList = executionCourseDAO
@@ -64,7 +64,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 
 		CollectionUtils.collect(executionCourseList, new Transformer() {
 			public Object transform(Object input) {
-				IExecutionCourse executionCourse = (IExecutionCourse) input;
+				ExecutionCourse executionCourse = (ExecutionCourse) input;
 				return InfoExecutionCourse.newInfoFromDomain(executionCourse);
 			}
 		}, infoExecutionCourseList);

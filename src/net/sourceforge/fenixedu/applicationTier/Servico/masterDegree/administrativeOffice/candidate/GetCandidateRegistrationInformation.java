@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndDegree;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,14 +33,14 @@ public class GetCandidateRegistrationInformation implements IService {
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
 				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
 						candidateID);
 
-		IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
+		Student student = sp.getIPersistentStudent().readByPersonAndDegreeType(
 				masterDegreeCandidate.getPerson().getIdInternal(), DegreeType.MASTER_DEGREE);
 
-		IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+		StudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
 				.readActiveStudentCurricularPlan(student.getNumber(), DegreeType.MASTER_DEGREE);
 
 		infoCandidateRegistration = new InfoCandidateRegistration();
@@ -57,7 +57,7 @@ public class GetCandidateRegistrationInformation implements IService {
 			infoCandidateRegistration.setEnrolments(new ArrayList());
 			Iterator iterator = studentCurricularPlan.getEnrolments().iterator();
 			while (iterator.hasNext()) {
-				IEnrolment enrolment = (IEnrolment) iterator.next();
+				Enrolment enrolment = (Enrolment) iterator.next();
 				InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
 						.newInfoFromDomain(enrolment);
 				infoCandidateRegistration.getEnrolments().add(infoEnrolment);

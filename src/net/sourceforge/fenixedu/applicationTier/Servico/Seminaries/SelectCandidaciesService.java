@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.CandidacyDTO;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoClassification;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.SelectCandidaciesDTO;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -56,9 +56,9 @@ public class SelectCandidaciesService implements IService {
 		Iterator iter = candidacies.iterator();
 		List infoCandidacies = new ArrayList();
 		while (iter.hasNext()) {
-			ICandidacy candidacy = (ICandidacy) iter.next();
-			IStudent student = candidacy.getStudent();
-			IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+			Candidacy candidacy = (Candidacy) iter.next();
+			Student student = candidacy.getStudent();
+			StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 			List enrollments = studentCurricularPlan.getEnrolments();
 
 			CandidacyDTO candidacyDTO = new CandidacyDTO();
@@ -91,11 +91,11 @@ public class SelectCandidaciesService implements IService {
 		float acc = 0;
 		float grade = 0;
 		for (Iterator iter1 = enrollments.iterator(); iter1.hasNext();) {
-			IEnrolment enrollment = (IEnrolment) iter1.next();
+			Enrolment enrollment = (Enrolment) iter1.next();
 			List enrollmentEvaluations = enrollment.getEvaluations();
-			IEnrolmentEvaluation enrollmentEvaluation = null;
+			EnrolmentEvaluation enrollmentEvaluation = null;
 			if (enrollmentEvaluations != null && !enrollmentEvaluations.isEmpty()) {
-				enrollmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
+				enrollmentEvaluation = (EnrolmentEvaluation) Collections.max(enrollmentEvaluations);
 			}
 
 			String stringGrade;
@@ -127,12 +127,12 @@ public class SelectCandidaciesService implements IService {
 	 * @param student
 	 * @return
 	 */
-	private IStudentCurricularPlan getStudentCurricularPlan(IStudent student) {
+	private StudentCurricularPlan getStudentCurricularPlan(Student student) {
 		List curricularPlans = student.getStudentCurricularPlans();
 		long startDate = Long.MAX_VALUE;
-		IStudentCurricularPlan selectedSCP = null;
+		StudentCurricularPlan selectedSCP = null;
 		for (Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
+			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 			if (studentCurricularPlan.getStartDate().getTime() < startDate) {
 				startDate = studentCurricularPlan.getStartDate().getTime();
 				selectedSCP = studentCurricularPlan;
@@ -149,10 +149,10 @@ public class SelectCandidaciesService implements IService {
 	 */
 	private List getCandidacies(final Integer seminaryID, List seminaries,
 			IPersistentObject persistentObject) {
-		ISeminary seminary = (ISeminary) CollectionUtils.find(seminaries, new Predicate() {
+		Seminary seminary = (Seminary) CollectionUtils.find(seminaries, new Predicate() {
 
 			public boolean evaluate(Object arg0) {
-				ISeminary seminary = (ISeminary) arg0;
+				Seminary seminary = (Seminary) arg0;
 				return seminary.getIdInternal().equals(seminaryID);
 			}
 		});
@@ -171,7 +171,7 @@ public class SelectCandidaciesService implements IService {
 
 		for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
 			InfoSeminaryWithEquivalencies infoSeminary = InfoSeminaryWithEquivalencies
-					.newInfoFromDomain((ISeminary) iterator.next());
+					.newInfoFromDomain((Seminary) iterator.next());
 
 			Calendar now = new GregorianCalendar();
 			Calendar endDate = new GregorianCalendar();

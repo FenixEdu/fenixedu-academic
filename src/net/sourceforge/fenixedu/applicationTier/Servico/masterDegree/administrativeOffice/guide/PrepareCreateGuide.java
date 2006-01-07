@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.IContributor;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPrice;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Price;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -50,8 +50,8 @@ public class PrepareCreateGuide implements IService {
 			String contributorAddress) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = null;
-		IContributor contributor = null;
-		IMasterDegreeCandidate masterDegreeCandidate = null;
+		Contributor contributor = null;
+		MasterDegreeCandidate masterDegreeCandidate = null;
 		InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
 
 		// Read the Contributor
@@ -79,9 +79,9 @@ public class PrepareCreateGuide implements IService {
 		Calendar calendar = Calendar.getInstance();
 		year = new Integer(calendar.get(Calendar.YEAR));
 
-		IExecutionDegree executionDegree = null;
+		ExecutionDegree executionDegree = null;
 
-		executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+		executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
 				ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
 		// Check if the Requester is a Candidate
@@ -96,7 +96,7 @@ public class PrepareCreateGuide implements IService {
 				throw new NonExistingServiceException("O Candidato", null);
 
 			// Get the price for the Candidate Application
-			IPrice price = null;
+			Price price = null;
 			// FIXME to be removed when the descriptions in the DB are
 			// changed to keys to resource bundles
 			String description = getDescription(graduationType);
@@ -135,7 +135,7 @@ public class PrepareCreateGuide implements IService {
 		}
 
 		if (requesterType.equals(GuideRequester.STUDENT.name())) {
-			IStudent student = null;
+			Student student = null;
 
 			student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
 					DegreeType.MASTER_DEGREE);
@@ -148,7 +148,7 @@ public class PrepareCreateGuide implements IService {
 					.getStudentCurricularPlans(), new Predicate() {
 
 				public boolean evaluate(Object arg0) {
-					IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+					StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
 					return scp.getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID);
 				}
 			});

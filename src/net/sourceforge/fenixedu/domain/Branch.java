@@ -22,7 +22,7 @@ public class Branch extends Branch_Base {
 		super();
 	}
 	
-	public Branch (String name, String nameEn, String code, IDegreeCurricularPlan degreeCurricularPlan) {
+	public Branch (String name, String nameEn, String code, DegreeCurricularPlan degreeCurricularPlan) {
 		super();
 		setName(name);
 		setNameEn(nameEn);
@@ -57,17 +57,17 @@ public class Branch extends Branch_Base {
         return (List) CollectionUtils.select(getCurricularCourseGroups(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) arg0;
+                CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) arg0;
                 return curricularCourseGroup.getAreaType().equals(areaType);
             }
         });
     }
 	
-	private Boolean canDeleteAllEligibleCurricularCourseScopes (final IBranch commonBranch) {
+	private Boolean canDeleteAllEligibleCurricularCourseScopes (final Branch commonBranch) {
 		Iterator branchCurricularCourseScopesIterator = getScopesIterator();
 		while (branchCurricularCourseScopesIterator.hasNext()) {
-			ICurricularCourseScope scope = (ICurricularCourseScope)branchCurricularCourseScopesIterator.next();
-			ICurricularCourse curricularCourse = scope.getCurricularCourse();
+			CurricularCourseScope scope = (CurricularCourseScope)branchCurricularCourseScopesIterator.next();
+			CurricularCourse curricularCourse = scope.getCurricularCourse();
 
 			// if CurricularCourse already has a common Branch
 			if (hasCurricularCourseCommonBranchInAnyCurricularCourseScope(curricularCourse,commonBranch)) {
@@ -88,7 +88,7 @@ public class Branch extends Branch_Base {
 				(this.hasAnyCurricularCourseGroups() || this.hasAnyScopes()))
 			return false;
 		
-		IBranch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
+		Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
 		if (commonBranch == null)
 			return false;
 		
@@ -103,7 +103,7 @@ public class Branch extends Branch_Base {
 		if (!this.canBeDeleted())
 			throw new DomainException("error.branch.cant.delete");
 		
-		IBranch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
+		Branch commonBranch = findCommonBranchForSameDegreeCurricularPlan();
 
 		this.getStudentCurricularPlans().clear();
 		this.getSecundaryStudentCurricularPlansLEIC().clear();
@@ -111,7 +111,7 @@ public class Branch extends Branch_Base {
 
 		Iterator curricularCourseGroupsIterator = getCurricularCourseGroupsIterator();
 		while (curricularCourseGroupsIterator.hasNext()) {
-			ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) curricularCourseGroupsIterator.next();
+			CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) curricularCourseGroupsIterator.next();
 			curricularCourseGroupsIterator.remove();
 			curricularCourseGroup.setBranch(commonBranch);
 		}
@@ -123,11 +123,11 @@ public class Branch extends Branch_Base {
 		deleteDomainObject();
 	}
 	
-	private void removeCurricularCourseScopes(final IBranch commonBranch) throws DomainException {
+	private void removeCurricularCourseScopes(final Branch commonBranch) throws DomainException {
 		Iterator branchCurricularCourseScopesIterator = getScopesIterator();
 		while (branchCurricularCourseScopesIterator.hasNext()) {
-			ICurricularCourseScope scope = (ICurricularCourseScope)branchCurricularCourseScopesIterator.next();
-			ICurricularCourse curricularCourse = scope.getCurricularCourse();
+			CurricularCourseScope scope = (CurricularCourseScope)branchCurricularCourseScopesIterator.next();
+			CurricularCourse curricularCourse = scope.getCurricularCourse();
 	
 			// if CurricularCourse already has a common Branch
 			if (hasCurricularCourseCommonBranchInAnyCurricularCourseScope(curricularCourse,commonBranch)) {
@@ -144,8 +144,8 @@ public class Branch extends Branch_Base {
 		}		
 	}
 
-	private IBranch findCommonBranchForSameDegreeCurricularPlan() {
-		for (IBranch branch : getDegreeCurricularPlan().getAreas()) {
+	private Branch findCommonBranchForSameDegreeCurricularPlan() {
+		for (Branch branch : getDegreeCurricularPlan().getAreas()) {
 			if (branch.representsCommonBranch() && branch.getName().equals("")) {
 				return branch;
 			}
@@ -153,10 +153,10 @@ public class Branch extends Branch_Base {
 		return null;
 	}
 	
-	private Boolean hasCurricularCourseCommonBranchInAnyCurricularCourseScope (ICurricularCourse curricularCourse, final IBranch commonBranch) {
-		return ((ICurricularCourseScope) CollectionUtils.find(curricularCourse.getScopes(),new Predicate() {
+	private Boolean hasCurricularCourseCommonBranchInAnyCurricularCourseScope (CurricularCourse curricularCourse, final Branch commonBranch) {
+		return ((CurricularCourseScope) CollectionUtils.find(curricularCourse.getScopes(),new Predicate() {
 			public boolean evaluate(Object o) {
-				ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+				CurricularCourseScope ccs = (CurricularCourseScope) o;
 				return ccs.getBranch().equals(commonBranch);
 			}}) != null);
 	}

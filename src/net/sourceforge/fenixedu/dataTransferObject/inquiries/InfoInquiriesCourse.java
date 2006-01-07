@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesCourse;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 /**
@@ -303,7 +303,7 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
         return 0;
     }
     
-    public static InfoInquiriesCourse newInfoFromDomain(IInquiriesCourse inquiriesCourse) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoInquiriesCourse newInfoFromDomain(InquiriesCourse inquiriesCourse) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         InfoInquiriesCourse newInfo = null;
         if(inquiriesCourse != null) {
             newInfo = new InfoInquiriesCourse();
@@ -312,7 +312,7 @@ public class InfoInquiriesCourse extends InfoObject implements Comparable {
         return newInfo;
     }
        
-    public void copyFromDomain(IInquiriesCourse inquiriesCourse) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void copyFromDomain(InquiriesCourse inquiriesCourse) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (inquiriesCourse != null) {
             super.copyFromDomain(inquiriesCourse);
 	        CopyUtils.copyPropertiesNullConvertion(this, inquiriesCourse);

@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWork;
 
@@ -22,10 +22,10 @@ public class ExtraWorkOJB extends PersistentObjectOJB implements IPersistentExtr
         super();
     }
 
-    public IExtraWork readExtraWorkByDay(Date day) throws Exception {
+    public ExtraWork readExtraWorkByDay(Date day) throws Exception {
         Criteria criteria = new Criteria(); 
         criteria.addEqualTo("day", day);
         
-        return (IExtraWork) queryObject(ExtraWork.class, criteria);
+        return (ExtraWork) queryObject(ExtraWork.class, criteria);
     }    
 }

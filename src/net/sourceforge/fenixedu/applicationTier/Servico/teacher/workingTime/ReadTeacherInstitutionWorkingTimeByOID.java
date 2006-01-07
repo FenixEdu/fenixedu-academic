@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,8 +26,8 @@ public class ReadTeacherInstitutionWorkingTimeByOID extends ReadDomainObjectServ
         return sp.getIPersistentTeacherInstitutionWorkingTime();
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoTeacherInstitutionWorkTime.newInfoFromDomain((ITeacherInstitutionWorkTime) domainObject);
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoTeacherInstitutionWorkTime.newInfoFromDomain((TeacherInstitutionWorkTime) domainObject);
     }
 
 }

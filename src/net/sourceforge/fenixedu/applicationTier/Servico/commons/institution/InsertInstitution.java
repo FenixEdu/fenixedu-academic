@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -14,10 +14,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class InsertInstitution implements IService {
 
-    public IInstitution run(String institutionName) throws ExcepcaoPersistencia,
+    public Institution run(String institutionName) throws ExcepcaoPersistencia,
             ExistingServiceException {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IInstitution storedInstitution = sp.getIPersistentInstitution().readByName(
+        final Institution storedInstitution = sp.getIPersistentInstitution().readByName(
                 institutionName);
 
         if (storedInstitution != null) {
@@ -25,7 +25,7 @@ public class InsertInstitution implements IService {
                     "error.exception.commons.institution.institutionAlreadyExists");
         }
 
-        IInstitution institution = DomainFactory.makeInstitution();
+        Institution institution = DomainFactory.makeInstitution();
         institution.setName(institutionName);
 
         return institution;

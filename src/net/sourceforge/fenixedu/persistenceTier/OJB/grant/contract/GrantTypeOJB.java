@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
@@ -20,12 +20,12 @@ public class GrantTypeOJB extends PersistentObjectOJB implements IPersistentGran
     public GrantTypeOJB() {
     }
 
-    public IGrantType readGrantTypeBySigla(String sigla) throws ExcepcaoPersistencia {
-        IGrantType grantType = null;
+    public GrantType readGrantTypeBySigla(String sigla) throws ExcepcaoPersistencia {
+        GrantType grantType = null;
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("sigla", sigla);
-        grantType = (IGrantType) queryObject(GrantType.class, criteria);
+        grantType = (GrantType) queryObject(GrantType.class, criteria);
         return grantType;
     }
 

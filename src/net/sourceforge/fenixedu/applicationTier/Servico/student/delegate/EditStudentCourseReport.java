@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -31,11 +31,11 @@ public class EditStudentCourseReport extends EditDomainObjectService {
 
     @Override
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            IDomainObject domainObject) throws ExcepcaoPersistencia {
+            DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
-        IStudentCourseReport studentCourseReport = (IStudentCourseReport) domainObject;
+        StudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
         if (infoStudentCourseReport.getInfoCurricularCourse() != null) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+            CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
                     .readByOID(Country.class,
                             infoStudentCourseReport.getInfoCurricularCourse().getIdInternal());
             studentCourseReport.setCurricularCourse(curricularCourse);
@@ -47,7 +47,7 @@ public class EditStudentCourseReport extends EditDomainObjectService {
     }
 
     @Override
-    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+    protected DomainObject createNewDomainObject(InfoObject infoObject) {
         return DomainFactory.makeStudentCourseReport();
     }
 

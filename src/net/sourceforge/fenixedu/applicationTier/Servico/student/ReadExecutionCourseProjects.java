@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGroupingWithExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,16 +37,16 @@ public class ReadExecutionCourseProjects implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentSupport
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
                 .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseID);
 
-        final List<IGrouping> executionCourseProjects = executionCourse.getGroupings();
+        final List<Grouping> executionCourseProjects = executionCourse.getGroupings();
 
         if (executionCourseProjects.size() != 0) {
             infoSiteProjects = new InfoSiteProjects();
             List infoGroupPropertiesList = new ArrayList();
 
-            for (final IGrouping grouping : executionCourseProjects) {
+            for (final Grouping grouping : executionCourseProjects) {
                 IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                         .getInstance();
                 IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory

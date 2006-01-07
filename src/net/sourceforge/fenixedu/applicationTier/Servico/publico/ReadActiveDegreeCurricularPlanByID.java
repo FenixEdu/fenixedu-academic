@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -50,7 +50,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, executionPeriodId);
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
             throw new FenixServiceException("null executionPeriod");
@@ -67,9 +67,9 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        final IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        final ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, infoExecutionDegree.getIdInternal());
-        final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("null degreeCurricularPlan");
         }
@@ -79,7 +79,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
                     .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), language);
         }
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
             throw new FenixServiceException("nullDegree");
@@ -152,7 +152,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
                 .getIPersistentDegreeCurricularPlan();
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();

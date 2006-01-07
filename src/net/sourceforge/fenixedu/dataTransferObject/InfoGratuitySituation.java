@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.gratuity.ExemptionGratuityType;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -276,9 +276,9 @@ public class InfoGratuitySituation extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IGratuitySituation gratuitySituation) {
+    public void copyFromDomain(GratuitySituation gratuitySituation) {
         super.copyFromDomain(gratuitySituation);
         if (gratuitySituation != null) {
             setExemptionPercentage(gratuitySituation.getExemptionPercentage());
@@ -300,7 +300,7 @@ public class InfoGratuitySituation extends InfoObject {
         }
     }
 
-    public static InfoGratuitySituation newInfoFromDomain(IGratuitySituation gratuitySituation) {
+    public static InfoGratuitySituation newInfoFromDomain(GratuitySituation gratuitySituation) {
         InfoGratuitySituation infoGratuitySituation = null;
         if (gratuitySituation != null) {
             infoGratuitySituation = new InfoGratuitySituation();

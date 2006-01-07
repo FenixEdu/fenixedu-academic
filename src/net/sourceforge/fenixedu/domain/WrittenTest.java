@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 /**
  * @author Ana e Ricardo
@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.space.IRoom;
 public class WrittenTest extends WrittenTest_Base {
 
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime,
-            List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IOccupationPeriod period, String description) {
+            List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            OccupationPeriod period, String description) {
 
         checkEvaluationDate(testDate, executionCoursesToAssociate);
         setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime,
@@ -30,9 +30,9 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     private void checkEvaluationDate(final Date writtenEvaluationDate,
-            final List<IExecutionCourse> executionCoursesToAssociate) {
+            final List<ExecutionCourse> executionCoursesToAssociate) {
 
-        for (final IExecutionCourse executionCourse : executionCoursesToAssociate) {
+        for (final ExecutionCourse executionCourse : executionCoursesToAssociate) {
             if (executionCourse.getExecutionPeriod().getBeginDate().after(writtenEvaluationDate)
                     || executionCourse.getExecutionPeriod().getEndDate().before(writtenEvaluationDate)) {
                 throw new DomainException("error.invalidWrittenTestDate");
@@ -47,9 +47,9 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime,
-            List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IOccupationPeriod period, String description) {
+            List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            OccupationPeriod period, String description) {
         
         checkEvaluationDate(testDate, executionCoursesToAssociate);
 

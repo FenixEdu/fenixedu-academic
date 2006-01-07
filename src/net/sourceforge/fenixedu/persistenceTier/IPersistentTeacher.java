@@ -9,14 +9,14 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 
 public interface IPersistentTeacher extends IPersistentObject {
 
-    public ITeacher readTeacherByUsername(String userName) throws ExcepcaoPersistencia;
+    public Teacher readTeacherByUsername(String userName) throws ExcepcaoPersistencia;
    
-    public ITeacher readByNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
+    public Teacher readByNumber(Integer teacherNumber) throws ExcepcaoPersistencia;
 
-    public Collection<ITeacher> readByNumbers(Collection<Integer> teacherNumbers)
+    public Collection<Teacher> readByNumbers(Collection<Integer> teacherNumbers)
             throws ExcepcaoPersistencia;
 }

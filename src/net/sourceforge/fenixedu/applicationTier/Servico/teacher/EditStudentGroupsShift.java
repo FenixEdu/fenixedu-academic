@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChange
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -47,14 +47,14 @@ public class EditStudentGroupsShift implements IService {
 		persistentGroupProperties = persistentSupport.getIPersistentGrouping();
 		persistentShift = persistentSupport.getITurnoPersistente();
 
-		IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentGroupProperties.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}
 
-		IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
+		Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
 
 		if (shift == null) {
 			throw new InvalidChangeServiceException();
@@ -66,16 +66,16 @@ public class EditStudentGroupsShift implements IService {
 			throw new NonValidChangeServiceException();
 		}
 
-		List<IStudentGroup> studentGroups = buildStudentGroupsList(studentGroupsCodes,
+		List<StudentGroup> studentGroups = buildStudentGroupsList(studentGroupsCodes,
 				persistentStudentGroup);
 
-		for (IStudentGroup studentGroup : studentGroups) {
+		for (StudentGroup studentGroup : studentGroups) {
 			if (!studentGroup.getGrouping().equals(grouping)) {
 				throw new InvalidArgumentsServiceException();
 			}
 		}
 
-		for (IStudentGroup studentGroup : studentGroups) {
+		for (StudentGroup studentGroup : studentGroups) {
 			studentGroup.editShift(shift);
 		}
 		return Boolean.TRUE;
@@ -90,7 +90,7 @@ public class EditStudentGroupsShift implements IService {
 
 		while (iterStudentGroupsCodes.hasNext()) {
 			Integer studentGroupCode = (Integer) iterStudentGroupsCodes.next();
-			IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+			StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
 					StudentGroup.class, studentGroupCode);
 
 			if (studentGroup == null)

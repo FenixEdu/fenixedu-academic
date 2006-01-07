@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWo
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -45,7 +45,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
 		if (finalDegreeWorkProposals != null) {
 			finalDegreeWorkProposalHeaders = new ArrayList();
 			for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-				IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
+				Proposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
 
 				if (proposal != null) {
 					FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
@@ -73,7 +73,7 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
 					finalDegreeWorkProposalHeader.setDegreeCode(proposal.getExecutionDegree()
 							.getDegreeCurricularPlan().getDegree().getSigla());
 
-					IScheduleing scheduleing = persistentFinalDegreeWork
+					Scheduleing scheduleing = persistentFinalDegreeWork
 							.readFinalDegreeWorkScheduleing(proposal.getExecutionDegree()
 									.getIdInternal());
 					if (scheduleing != null
@@ -91,20 +91,20 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
 					if (proposal.getGroupProposals() != null && !proposal.getGroupProposals().isEmpty()) {
 						finalDegreeWorkProposalHeader.setGroupProposals(new ArrayList());
 						for (int j = 0; j < proposal.getGroupProposals().size(); j++) {
-							IGroupProposal groupProposal = proposal.getGroupProposals().get(j);
+							GroupProposal groupProposal = proposal.getGroupProposals().get(j);
 							if (groupProposal != null) {
 								InfoGroupProposal infoGroupProposal = new InfoGroupProposal();
 								infoGroupProposal.setIdInternal(groupProposal.getIdInternal());
 								infoGroupProposal.setOrderOfPreference(groupProposal
 										.getOrderOfPreference());
-								IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+								Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
 								if (group != null) {
 									InfoGroup infoGroup = new InfoGroup();
 									infoGroup.setIdInternal(group.getIdInternal());
 									if (group.getGroupStudents() != null) {
 										infoGroup.setGroupStudents(new ArrayList());
 										for (int k = 0; k < group.getGroupStudents().size(); k++) {
-											IGroupStudent groupStudent = group.getGroupStudents().get(k);
+											GroupStudent groupStudent = group.getGroupStudents().get(k);
 
 											if (groupStudent != null) {
 												InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
@@ -113,12 +113,12 @@ public class ReadFinalDegreeWorkProposalHeadersByTeacher implements IService {
 												infoGroupStudent
 														.setFinalDegreeDegreeWorkGroup(infoGroup);
 
-												IStudent student = groupStudent.getStudent();
+												Student student = groupStudent.getStudent();
 												if (student != null) {
 													InfoStudent infoStudent = new InfoStudent();
 													infoStudent.setIdInternal(student.getIdInternal());
 													infoStudent.setNumber(student.getNumber());
-													IPerson person = student.getPerson();
+													Person person = student.getPerson();
 													if (person != null) {
 														InfoPerson infoPerson = new InfoPerson();
 														infoPerson.setIdInternal(person.getIdInternal());

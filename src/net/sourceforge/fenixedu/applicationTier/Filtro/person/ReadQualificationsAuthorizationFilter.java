@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -87,9 +87,9 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
             IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
             IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
 
-            IPerson person = persistentPerson.lerPessoaPorUsername(user);
+            Person person = persistentPerson.lerPessoaPorUsername(user);
             //Try to read the grant owner from de database
-            IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(person.getIdInternal());
+            GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(person.getIdInternal());
 
             return grantOwner != null;
         } catch (ExcepcaoPersistencia e) {

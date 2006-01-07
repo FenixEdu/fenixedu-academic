@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -36,13 +36,13 @@ public class ReadShiftLessons implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
+        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
         return CollectionUtils.collect(shift.getAssociatedLessons(), new Transformer() {
 
             public Object transform(Object arg0) {
-                final ILesson lesson = (ILesson) arg0;
-                final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
-                final IRoom room = roomOccupation.getRoom();
+                final Lesson lesson = (Lesson) arg0;
+                final RoomOccupation roomOccupation = lesson.getRoomOccupation();
+                final Room room = roomOccupation.getRoom();
 
                 final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                 infoLesson.setInfoShift(infoShift);

@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -87,12 +87,12 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
         InfoStudent infoStudent = (InfoStudent) arguments[0];
         //		Integer executionCourseIdToAttend = (Integer) arguments[1];
 
-        IStudentCurricularPlan studentCurricularPlan = null;
+        StudentCurricularPlan studentCurricularPlan = null;
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class,
+            Student student = (Student) sp.getIPersistentStudent().readByOID(Student.class,
                     infoStudent.getIdInternal());
 
             Integer studentNumber = student.getNumber();
@@ -139,13 +139,13 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
     }
 
     //	private boolean findEnrollmentForAttend(
-    //		IStudentCurricularPlan studentCurricularPlan,
+    //		StudentCurricularPlan studentCurricularPlan,
     //		Integer executionCourseIdToAttend)
     //		throws ExcepcaoPersistencia
     //	{
     //		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
     //		IPersistentEnrolment persistentEnrolment = sp.getIPersistentEnrolment();
-    //		IExecutionCourse executionCourse =
+    //		ExecutionCourse executionCourse =
     // findExecutionCourse(executionCourseIdToAttend, sp);
     //		
     //		if(executionCourse == null) {
@@ -156,10 +156,10 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
     // executionCourse.getAssociatedCurricularCourses().iterator();
     //		while (iterCurricularCourses.hasNext())
     //		{
-    //			ICurricularCourse curricularCourseElem = (ICurricularCourse)
+    //			CurricularCourse curricularCourseElem = (CurricularCourse)
     // iterCurricularCourses.next();
     //
-    //			IEnrolment enrollment =
+    //			Enrolment enrollment =
     //				persistentEnrolment.readByStudentCurricularPlanAndCurricularCourse(
     //					studentCurricularPlan,
     //					curricularCourseElem);
@@ -171,15 +171,15 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
     //		return false;
     //	}
 
-    //	private IExecutionCourse findExecutionCourse(Integer
+    //	private ExecutionCourse findExecutionCourse(Integer
     // executionCourseIdToAttend, ISuportePersistente sp) throws
     // ExcepcaoPersistencia
     //	{
     //		IPersistentExecutionCourse persistentExecutionCourse =
     // sp.getIPersistentExecutionCourse();
     //
-    //		IExecutionCourse executionCourse =
-    //			(IExecutionCourse) persistentExecutionCourse.readByOID(
+    //		ExecutionCourse executionCourse =
+    //			(ExecutionCourse) persistentExecutionCourse.readByOID(
     //				ExecutionCourse.class,
     //				executionCourseIdToAttend);
     //		return executionCourse;

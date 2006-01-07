@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 
 /**
  * @author Ana e Ricardo
@@ -66,7 +66,7 @@ public class InfoPeriod extends InfoObject {
         this.startDate = startDate;
     }
 
-    public void copyFromDomain(IOccupationPeriod period) {
+    public void copyFromDomain(OccupationPeriod period) {
         if (period != null) {
             setStartDate(period.getStartDate());
             setEndDate(period.getEndDate());
@@ -79,7 +79,7 @@ public class InfoPeriod extends InfoObject {
         }
     }
 
-    public static InfoPeriod newInfoFromDomain(IOccupationPeriod period) {
+    public static InfoPeriod newInfoFromDomain(OccupationPeriod period) {
         InfoPeriod infoPeriod = null;
         if (period != null) {
             infoPeriod = new InfoPeriod();

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
@@ -118,7 +118,7 @@ public class InfoExecutionYear extends InfoObject {
         this.endDate = endDate;
     }
 
-    public void copyFromDomain(IExecutionYear year) {
+    public void copyFromDomain(ExecutionYear year) {
         super.copyFromDomain(year);
         if (year != null) {
             setBeginDate(year.getBeginDate());
@@ -132,7 +132,7 @@ public class InfoExecutionYear extends InfoObject {
      * @param year
      * @return
      */
-    public static InfoExecutionYear newInfoFromDomain(IExecutionYear year) {
+    public static InfoExecutionYear newInfoFromDomain(ExecutionYear year) {
         InfoExecutionYear infoExecutionYear = null;
         if (year != null) {
             infoExecutionYear = new InfoExecutionYear();
@@ -141,7 +141,7 @@ public class InfoExecutionYear extends InfoObject {
         return infoExecutionYear;
     }
 
-    public void copyToDomain(InfoExecutionYear infoExecutionYear, IExecutionYear executionYear) {
+    public void copyToDomain(InfoExecutionYear infoExecutionYear, ExecutionYear executionYear) {
         super.copyToDomain(infoExecutionYear, executionYear);
         executionYear.setBeginDate(infoExecutionYear.getBeginDate());
         executionYear.setEndDate(infoExecutionYear.getEndDate());

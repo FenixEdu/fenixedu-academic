@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 /**
@@ -26,7 +26,7 @@ public interface IPersistentGuide extends IPersistentObject {
      * @return IGuide
      * @throws ExcepcaoPersistencia
      */
-    public IGuide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version)
+    public Guide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version)
             throws ExcepcaoPersistencia;
 
     /**
@@ -58,7 +58,7 @@ public interface IPersistentGuide extends IPersistentObject {
      * @return The Latest version for this Guide
      * @throws ExcepcaoPersistencia
      */
-    public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia;
+    public Guide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia;
 
     /**
      * @param guideYear

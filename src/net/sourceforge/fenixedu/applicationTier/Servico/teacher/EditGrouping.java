@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,7 +30,7 @@ public class EditGrouping implements IService {
                 .getDefaultPersistenceSupport();
         final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
 
-        final IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+        final Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class,
                 infoGroupProperties.getIdInternal());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
@@ -46,7 +46,7 @@ public class EditGrouping implements IService {
         return findEditionErrors(grouping);
     }
 
-    private List findEditionErrors(final IGrouping grouping) {
+    private List findEditionErrors(final Grouping grouping) {
 
         List<Integer> errors = new ArrayList<Integer>();
 
@@ -59,14 +59,14 @@ public class EditGrouping implements IService {
         return errors;
     }
 
-    private List<Integer> testMaximumAndMininumCapacity(final IGrouping grouping) {
+    private List<Integer> testMaximumAndMininumCapacity(final Grouping grouping) {
         Integer[] errors = { 0, 0 };
         List<Integer> result = new ArrayList();
 
         if (grouping.getMaximumCapacity() == null && grouping.getMinimumCapacity() == null) {
             return result;
         }
-        for (final IStudentGroup studentGroup : grouping.getStudentGroups()) {
+        for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
             if (grouping.getMaximumCapacity() != null
                     && studentGroup.getAttendsCount() > grouping.getMaximumCapacity()) {
                 errors[0] = -2;
@@ -88,9 +88,9 @@ public class EditGrouping implements IService {
         return result;
     }
 
-    private Integer testGroupMaximumNumber(final IGrouping grouping) {
+    private Integer testGroupMaximumNumber(final Grouping grouping) {
         if (grouping.getGroupMaximumNumber() != null) {
-            for (final IStudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
                 if (studentGroup.getShift() != null) {
                     if (studentGroup.getShift().getAssociatedStudentGroupsCount() > grouping
                             .getGroupMaximumNumber()) {

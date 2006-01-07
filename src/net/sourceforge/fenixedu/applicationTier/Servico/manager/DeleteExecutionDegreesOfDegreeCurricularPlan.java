@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuityValues;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,19 +39,19 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
 		List undeletedExecutionDegreesYears = new ArrayList();
 		List classes;
 		Integer executionDegreeId;
-		IExecutionDegree executionDegree;
+		ExecutionDegree executionDegree;
 
 		List masterDegreeCandidates;
 		List guides;
 		List proposals;
 		List groups;
-		IScheduleing scheduleing;
+		Scheduleing scheduleing;
 
 		while (iter.hasNext()) {
 
 			executionDegreeId = (Integer) iter.next();
 
-			executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+			executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
 					ExecutionDegree.class, executionDegreeId);
 			if (executionDegree != null) {
 				classes = persistentClass.readByExecutionDegree(executionDegree.getIdInternal());
@@ -133,8 +133,8 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
 							executionDegree);
 					executionDegree.setDegreeCurricularPlan(null);
 					// Coordinator
-					List<ICoordinator> coordinators = executionDegree.getCoordinatorsList();
-					for (ICoordinator coordinator : coordinators) {
+					List<Coordinator> coordinators = executionDegree.getCoordinatorsList();
+					for (Coordinator coordinator : coordinators) {
 						coordinator.setExecutionDegree(null);
 						sp.getIPersistentCoordinator().deleteByOID(Coordinator.class,
 								coordinator.getIdInternal());

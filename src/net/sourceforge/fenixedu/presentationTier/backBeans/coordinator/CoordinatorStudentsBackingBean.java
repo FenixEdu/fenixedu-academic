@@ -8,8 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -59,9 +59,9 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         this.sortBy = sortBy;
     }
 
-    public IDegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
+    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
         final Integer degreeCurricularPlanID = getDegreeCurricularPlanID();
-        return (IDegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        return (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, degreeCurricularPlanID);
     }
 
     public String getStudentCurricularPlanStateString() {
@@ -170,8 +170,8 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     public int getNumberResults() throws FenixFilterException, FenixServiceException {
         int matches = 0;
-        final IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        for (final IStudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+        final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+        for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
             if (matchesSelectCriteria(studentCurricularPlan)) {
                 matches++;
             }
@@ -180,10 +180,10 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         return matches;
     }
 
-    public Collection<IStudentCurricularPlan> getStudentCurricularPlans() throws FenixFilterException, FenixServiceException {
-        final IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        final List<IStudentCurricularPlan> studentCurricularPlans = new ArrayList<IStudentCurricularPlan>();
-        for (final IStudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+    public Collection<StudentCurricularPlan> getStudentCurricularPlans() throws FenixFilterException, FenixServiceException {
+        final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+        final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
+        for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
             if (matchesSelectCriteria(studentCurricularPlan)) {
                 studentCurricularPlans.add(studentCurricularPlan);
             }
@@ -195,7 +195,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
         return studentCurricularPlans.subList(getMinIndex() - 1, Math.min(getMaxIndex() - 1, studentCurricularPlans.size()));
     }
 
-    private boolean matchesSelectCriteria(final IStudentCurricularPlan studentCurricularPlan) {
+    private boolean matchesSelectCriteria(final StudentCurricularPlan studentCurricularPlan) {
         final StudentCurricularPlanState studentCurricularPlanState = getStudentCurricularPlanState();
         if (studentCurricularPlanState != null && studentCurricularPlanState != studentCurricularPlan.getCurrentState()) {
             return false;

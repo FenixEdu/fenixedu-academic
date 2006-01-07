@@ -9,7 +9,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,7 +38,7 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
 
         IPersistentDistributedTest distributedTestDAO = sp.getIPersistentDistributedTest();
 
-        IDistributedTest distributedTest = (IDistributedTest) distributedTestDAO.readByOID(
+        DistributedTest distributedTest = (DistributedTest) distributedTestDAO.readByOID(
                 DistributedTest.class, testId);
 
         if (distributedTest != null) {

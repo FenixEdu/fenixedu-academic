@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -35,11 +35,11 @@ public class InfoRoomWithInfoInquiriesRoom extends InfoRoom {
 	
 	
 	
-	public void copyFromDomain(IRoom room) {
+	public void copyFromDomain(Room room) {
 		super.copyFromDomain(room);
 	}
 	
-    public static InfoRoomWithInfoInquiriesRoom newInfoFromDomain(IRoom room) {
+    public static InfoRoomWithInfoInquiriesRoom newInfoFromDomain(Room room) {
 		InfoRoomWithInfoInquiriesRoom infoRoom = null;
         if (room != null) {
             infoRoom = new InfoRoomWithInfoInquiriesRoom();

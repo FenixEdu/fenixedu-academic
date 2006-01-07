@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -46,12 +46,12 @@ public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod implements
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentEnrollment pe = sp.getIPersistentEnrolment();
 		
-		List<IEnrolment> enrollments =
+		List<Enrolment> enrollments =
 			pe.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(studentCurricularPlanId, executionPeriodId);
 		
 		List<InfoCurricularCourse> enrolledCurricularCourses = new ArrayList<InfoCurricularCourse>();
 		
-		for(IEnrolment enrollment : enrollments) {
+		for(Enrolment enrollment : enrollments) {
 			enrolledCurricularCourses.add(InfoCurricularCourse.newInfoFromDomain(enrollment.getCurricularCourse()));
 		}
 		

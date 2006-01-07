@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -53,12 +53,12 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
 		// read curricularCourse by ID
-		ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+		CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
 				.readByOID(CurricularCourse.class, curricularCourseID, false);
 
-		final ICurricularCourse curricularCourseTemp = curricularCourse;
+		final CurricularCourse curricularCourseTemp = curricularCourse;
 
-		// IStudentCurricularPlan studentCurricularPlan =
+		// StudentCurricularPlan studentCurricularPlan =
 		// sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
 		// studentNumber,
 		// DegreeType.MESTRADO_OBJ);
@@ -76,10 +76,10 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 		List studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
 				.readByStudentNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
 
-		IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
 				studentCurricularPlans, new Predicate() {
 					public boolean evaluate(Object object) {
-						IStudentCurricularPlan studentCurricularPlanElem = (IStudentCurricularPlan) object;
+						StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
 						if (studentCurricularPlanElem.getDegreeCurricularPlan().equals(
 								curricularCourseTemp.getDegreeCurricularPlan())) {
 							return true;
@@ -89,10 +89,10 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 				});
 		if (studentCurricularPlan == null) {
 
-			studentCurricularPlan = (IStudentCurricularPlan) CollectionUtils.find(
+			studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
 					studentCurricularPlans, new Predicate() {
 						public boolean evaluate(Object object) {
-							IStudentCurricularPlan studentCurricularPlanElem = (IStudentCurricularPlan) object;
+							StudentCurricularPlan studentCurricularPlanElem = (StudentCurricularPlan) object;
 							if (studentCurricularPlanElem.getDegreeCurricularPlan().getDegree().equals(
 									curricularCourseTemp.getDegreeCurricularPlan().getDegree())) {
 								return true;
@@ -107,7 +107,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
 		}
 		// }
-		IEnrolment enrolment = null;
+		Enrolment enrolment = null;
 		if (executionYear != null) {
 			enrolment = sp.getIPersistentEnrolment().readEnrolmentByStudentNumberAndCurricularCourse(
 					studentCurricularPlan.getStudent().getNumber(), curricularCourse.getIdInternal(),
@@ -121,13 +121,13 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 			if (enrollments.isEmpty()) {
 				throw new ExistingServiceException();
 			}
-			enrolment = (IEnrolment) enrollments.get(0);
+			enrolment = (Enrolment) enrollments.get(0);
 		}
 
 		if (enrolment != null) {
 			// ListIterator iter1 = enrolments.listIterator();
 			// while (iter1.hasNext()) {
-			// enrolment = (IEnrolment) iter1.next();
+			// enrolment = (Enrolment) iter1.next();
 
 			EnrolmentEvaluationState enrolmentEvaluationState = new EnrolmentEvaluationState(
 					EnrolmentEvaluationState.FINAL);
@@ -138,9 +138,9 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
 			List infoTeachers = new ArrayList();
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
-				IPerson person = ((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
+				Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
 						.getPersonResponsibleForGrade();
-				ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
+				Teacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 				infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 				infoTeachers.add(infoTeacher);
 			}
@@ -149,7 +149,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 				ListIterator iter = enrolmentEvaluations.listIterator();
 				while (iter.hasNext()) {
-					IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iter.next();
+					EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iter.next();
 					InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
 							.newInfoFromDomain(enrolmentEvaluation);
 					InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
@@ -158,7 +158,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
 					if (enrolmentEvaluation != null) {
 						if (enrolmentEvaluation.getEmployee() != null) {
-							IPerson person2 = (IPerson) sp.getIPessoaPersistente()
+							Person person2 = (Person) sp.getIPessoaPersistente()
 									.readByOID(
 											Person.class,
 											enrolmentEvaluation.getEmployee().getPerson()

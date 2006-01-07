@@ -13,12 +13,12 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -28,10 +28,10 @@ public class AulaVO extends VersionedObjectsBase implements IAulaPersistente {
 
     public List readByRoomAndExecutionPeriod(final Integer roomOID, final Integer executionPeriodOID)
             throws ExcepcaoPersistencia {
-        final IRoom room = (IRoom) readByOID(Room.class, roomOID);
-        final List<ILesson> lessons = new ArrayList<ILesson>();
-        for (final IRoomOccupation roomOccupation : room.getRoomOccupations()) {
-            final ILesson lesson = roomOccupation.getLesson();
+        final Room room = (Room) readByOID(Room.class, roomOID);
+        final List<Lesson> lessons = new ArrayList<Lesson>();
+        for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
+            final Lesson lesson = roomOccupation.getLesson();
             if (lesson != null && lesson.getExecutionPeriod().getIdInternal().equals(executionPeriodOID)) {
                 lessons.add(lesson);
             }
@@ -42,11 +42,11 @@ public class AulaVO extends VersionedObjectsBase implements IAulaPersistente {
     public List readLessonsByStudent(final String username) throws ExcepcaoPersistencia {
         final List lessons = new ArrayList();
 
-        List<IStudent> students = (List<IStudent>) readAll(Student.class);
-        for(IStudent student : students){
+        List<Student> students = (List<Student>) readAll(Student.class);
+        for(Student student : students){
             if(student.getPerson().getUsername().equalsIgnoreCase(username)){
-                List<IShift> shifts = student.getShifts();
-                for(IShift shift : shifts){
+                List<Shift> shifts = student.getShifts();
+                for(Shift shift : shifts){
                     List auxLessons = shift.getAssociatedLessons();
                     if (auxLessons != null) {
                         lessons.addAll(auxLessons);

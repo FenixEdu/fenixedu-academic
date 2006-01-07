@@ -9,8 +9,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Announcement;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,14 +27,14 @@ public class ReadAnnouncements implements IService {
         final ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final ISite site = suportePersistente.getIPersistentSite().readByExecutionCourse(
+        final Site site = suportePersistente.getIPersistentSite().readByExecutionCourse(
                 infoSite.getInfoExecutionCourse().getIdInternal());
-        final List<IAnnouncement> announcementsList = site.getAssociatedAnnouncements();
+        final List<Announcement> announcementsList = site.getAssociatedAnnouncements();
 
         final List<InfoAnnouncement> infoAnnouncementsList = new ArrayList<InfoAnnouncement>();
 
         if (announcementsList != null) {
-            for (final IAnnouncement announcement : announcementsList) {
+            for (final Announcement announcement : announcementsList) {
                 infoAnnouncementsList.add(InfoAnnouncement.newInfoFromDomain(announcement));
             }
         }

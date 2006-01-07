@@ -4,21 +4,21 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.Guide;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 public class InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor extends InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegree {
 
-    public void copyFromDomain(IGuide guide) {
+    public void copyFromDomain(Guide guide) {
         super.copyFromDomain(guide);
         if (guide != null) {
             setInfoContributor(InfoContributor.newInfoFromDomain(guide.getContributor()));
         }
     }
 
-    public static InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor newInfoFromDomain(IGuide guide) {
+    public static InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor newInfoFromDomain(Guide guide) {
         InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor infoGuide = null;
         if (guide != null) {
             infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndDegreeCurricularPlanAndDegreeAndContributor();

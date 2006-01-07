@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -18,7 +18,7 @@ public class EditCompetenceCourse implements IService {
             String objectivesEn, String programEn, String evaluationMethodEn) throws ExcepcaoPersistencia, FenixServiceException {
         
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentSupport
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
                 .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
@@ -30,7 +30,7 @@ public class EditCompetenceCourse implements IService {
             Boolean basic, CurricularStage curricularStage) throws ExcepcaoPersistencia, FenixServiceException {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentSupport
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
                 .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");

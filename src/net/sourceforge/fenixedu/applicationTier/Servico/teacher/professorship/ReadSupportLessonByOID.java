@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,8 +26,8 @@ public class ReadSupportLessonByOID extends ReadDomainObjectService {
         return sp.getIPersistentSupportLesson();
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoSupportLesson.newInfoFromDomain((ISupportLesson) domainObject);
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoSupportLesson.newInfoFromDomain((SupportLesson) domainObject);
     }
 
 }

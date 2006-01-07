@@ -19,8 +19,8 @@ public class DegreeInfoOJB extends PersistentObjectOJB implements IPersistentDeg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.IDegree,
-     *      Dominio.IExecutionYear)
+     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.Degree,
+     *      Dominio.ExecutionYear)
      */
     public List readDegreeInfoByDegreeAndExecutionYear(Integer degreeId, Date beginDate, Date endDate)
             throws ExcepcaoPersistencia {

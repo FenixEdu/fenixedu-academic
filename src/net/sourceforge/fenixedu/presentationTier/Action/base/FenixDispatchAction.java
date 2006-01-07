@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -39,10 +39,10 @@ public abstract class FenixDispatchAction extends DispatchAction {
         return super.execute(mapping, actionForm, request, response);
     }
     
-    protected IPerson getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException
+    protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException
     {
     	IUserView userView = SessionUtils.getUserView(request);
-		IPerson person  = (IPerson) ServiceManagerServiceFactory.executeService(userView,"ReadDomainPersonByUsername",new Object[] {userView.getUtilizador()});
+		Person person  = (Person) ServiceManagerServiceFactory.executeService(userView,"ReadDomainPersonByUsername",new Object[] {userView.getUtilizador()});
 		return person;
     }
 

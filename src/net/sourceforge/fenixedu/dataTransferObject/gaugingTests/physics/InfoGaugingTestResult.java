@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
+import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 26/Nov/2003
@@ -593,7 +593,7 @@ public class InfoGaugingTestResult extends InfoObject {
         this.wrong = wrong;
     }
 
-    public static InfoGaugingTestResult newInfoFromDomain(IGaugingTestResult gaugingTestsResult) {
+    public static InfoGaugingTestResult newInfoFromDomain(GaugingTestResult gaugingTestsResult) {
         InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(gaugingTestsResult.getStudent());
         InfoGaugingTestResult infoGaugingTestResult = new InfoGaugingTestResult();
         infoGaugingTestResult.setCf(gaugingTestsResult.getCf());

@@ -13,21 +13,21 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public class CompetenceCourseTest extends DomainTestBase {
 
-    ICompetenceCourse competenceCourse = null;
+    CompetenceCourse competenceCourse = null;
     
-    IExecutionYear executionYear = null;
+    ExecutionYear executionYear = null;
     
-    ICurricularCourse curricularCourse1 = null;
-    ICurricularCourse curricularCourse2 = null;
-    ICurricularCourse curricularCourse3 = null;
+    CurricularCourse curricularCourse1 = null;
+    CurricularCourse curricularCourse2 = null;
+    CurricularCourse curricularCourse3 = null;
     
-    IDegree degree1 = null;
-    IDegree degree2 = null;
+    Degree degree1 = null;
+    Degree degree2 = null;
         
     protected void setUp() throws Exception {
         super.setUp();
         
-        List<IDepartment> departments = new ArrayList<IDepartment>();
+        List<Department> departments = new ArrayList<Department>();
         
         competenceCourse = new CompetenceCourse("AS", "Arquitecturas de Software", departments, CurricularStage.APPROVED);
         
@@ -38,62 +38,62 @@ public class CompetenceCourseTest extends DomainTestBase {
     private void setUpGetActiveEnrollmentEvaluations() {
         /* Setup execution years */
         executionYear = new ExecutionYear();
-        IExecutionYear otherExecutionYear = new ExecutionYear();
+        ExecutionYear otherExecutionYear = new ExecutionYear();
         
         /* Setup execution periods */
-        IExecutionPeriod executionPeriod1 = new ExecutionPeriod();
-        IExecutionPeriod executionPeriod2 = new ExecutionPeriod();
-        IExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
+        ExecutionPeriod executionPeriod1 = new ExecutionPeriod();
+        ExecutionPeriod executionPeriod2 = new ExecutionPeriod();
+        ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
         
         executionPeriod1.setExecutionYear(executionYear);
         executionPeriod2.setExecutionYear(executionYear);
         otherExecutionPeriod.setExecutionYear(otherExecutionYear);
 
         /* Setup enrollments */
-        IEnrolment annuledEnrollment = new Enrolment();
+        Enrolment annuledEnrollment = new Enrolment();
         annuledEnrollment.setEnrollmentState(EnrollmentState.ANNULED);
 
-        IEnrolment numericApprovedEnrollment = new Enrolment();
+        Enrolment numericApprovedEnrollment = new Enrolment();
         numericApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
         
-        IEnrolment apApprovedEnrollment = new Enrolment();
+        Enrolment apApprovedEnrollment = new Enrolment();
         apApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
 
-        IEnrolment reprovedEnrollment = new Enrolment();
+        Enrolment reprovedEnrollment = new Enrolment();
         reprovedEnrollment.setEnrollmentState(EnrollmentState.NOT_APROVED);
         
-        IEnrolment notEvaluatedEnrollment = new Enrolment();
+        Enrolment notEvaluatedEnrollment = new Enrolment();
         notEvaluatedEnrollment.setEnrollmentState(EnrollmentState.NOT_EVALUATED);
 
-        IEnrolment otherExecutionPeriodEnrollment = new Enrolment();
+        Enrolment otherExecutionPeriodEnrollment = new Enrolment();
         otherExecutionPeriodEnrollment.setEnrollmentState(EnrollmentState.APROVED);
         
         /* Setup enrollment evaluations */
-        IEnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
         numericFirstEnrolmentEvaluation.setGrade("10");
         
-        IEnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
         numericSecondEnrolmentEvaluation.setGrade("11");
         
         numericFirstEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         
-        IEnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
         apFirstEnrolmentEvaluation.setGrade("AP");
         
         apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
         
-        IEnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
         reprovedEnrollmentEvaluation.setGrade("RE");
         
         reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
         
-        IEnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
         notEvaluatedEnrollmentEvaluation.setGrade("NA");
         
         notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
         
-        IEnrolmentEvaluation otherExecutionPeriodEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation otherExecutionPeriodEnrollmentEvaluation = new EnrolmentEvaluation();
         otherExecutionPeriodEnrollmentEvaluation.setGrade("12");
         
         otherExecutionPeriodEnrollmentEvaluation.setEnrolment(otherExecutionPeriodEnrollment);
@@ -126,8 +126,8 @@ public class CompetenceCourseTest extends DomainTestBase {
         degree1 = new Degree();
         degree2 = new Degree();
         
-        IDegreeCurricularPlan degreeCurricularPlan1 = new DegreeCurricularPlan();
-        IDegreeCurricularPlan degreeCurricularPlan2 = new DegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan1 = new DegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan2 = new DegreeCurricularPlan();
         
         degreeCurricularPlan1.setDegree(degree1);
         degreeCurricularPlan2.setDegree(degree2);
@@ -149,7 +149,7 @@ public class CompetenceCourseTest extends DomainTestBase {
     }
 
     public void testGetAssociatedCurricularCoursesGroupedByDegree() {
-        Map<IDegree, List<ICurricularCourse>> results = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
+        Map<Degree, List<CurricularCourse>> results = competenceCourse.getAssociatedCurricularCoursesGroupedByDegree();
         
         assertEquals("Associated Curricular Courses Degree Count", 2, results.keySet().size());
         assertEquals("Associated Curricular Courses for degree 1", 2, results.get(degree1).size());

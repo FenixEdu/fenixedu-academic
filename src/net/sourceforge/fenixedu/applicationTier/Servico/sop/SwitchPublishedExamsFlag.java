@@ -12,9 +12,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -32,16 +32,16 @@ public class SwitchPublishedExamsFlag implements IService {
         final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
                 .getIPersistentExecutionDegree();
 
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, executionPeriodOID);
-        final IExecutionYear executionYear = executionPeriod.getExecutionYear();
-        final List<IExecutionDegree> executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYear.getIdInternal());
+        final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+        final List<ExecutionDegree> executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYear.getIdInternal());
 
         if (!executionDegrees.isEmpty()) {
             final Boolean examsPublicationState = new Boolean(!executionDegrees.get(0)
                     .getTemporaryExamMap().booleanValue());
 
-            for (final IExecutionDegree executionDegree : executionDegrees) {
+            for (final ExecutionDegree executionDegree : executionDegrees) {
                 persistentExecutionDegree.simpleLockWrite(executionDegree);
                 executionDegree.setTemporaryExamMap(examsPublicationState);
             }

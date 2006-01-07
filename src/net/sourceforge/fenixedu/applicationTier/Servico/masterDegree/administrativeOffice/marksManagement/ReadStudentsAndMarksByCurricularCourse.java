@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -60,7 +60,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 		IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, curricularCourseCode);
 
 		List enrolments = null;
@@ -73,11 +73,11 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 		List enrolmentEvaluations = new ArrayList();
 		Iterator iterEnrolment = enrolments.listIterator();
 		while (iterEnrolment.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
+			Enrolment enrolment = (Enrolment) iterEnrolment.next();
 			if (enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree()
 					.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
 				List allEnrolmentEvaluations = enrolment.getEvaluations();
-				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
+				EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) allEnrolmentEvaluations
 						.get(allEnrolmentEvaluations.size() - 1);
 				enrolmentEvaluations.add(enrolmentEvaluation);
 
@@ -90,7 +90,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 			List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations,
 					new Predicate() {
 						public boolean evaluate(Object arg0) {
-							IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+							EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
 							if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(
 									EnrolmentEvaluationState.TEMPORARY_OBJ))
 								return true;
@@ -102,7 +102,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 				throw new ExistingServiceException();
 			}
 
-			// if (((IEnrolmentEvaluation) enrolmentEvaluations.get(0))
+			// if (((EnrolmentEvaluation) enrolmentEvaluations.get(0))
 			// .getEnrolmentEvaluationState()
 			// .equals(EnrolmentEvaluationState.FINAL_OBJ)) {
 			// throw new ExistingServiceException();
@@ -114,7 +114,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 			List enrolmentEvaluationsWithResponsiblePerson = (List) CollectionUtils.select(
 					enrolmentEvaluations, new Predicate() {
 						public boolean evaluate(Object arg0) {
-							IEnrolmentEvaluation enrolEval = (IEnrolmentEvaluation) arg0;
+							EnrolmentEvaluation enrolEval = (EnrolmentEvaluation) arg0;
 							if (enrolEval.getPersonResponsibleForGrade() != null) {
 								return true;
 							}
@@ -122,16 +122,16 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 						}
 					});
 			if (enrolmentEvaluationsWithResponsiblePerson.size() > 0) {
-				IPerson person = ((IEnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson
+				Person person = ((EnrolmentEvaluation) enrolmentEvaluationsWithResponsiblePerson
 						.get(0)).getPersonResponsibleForGrade();
-				ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
+				Teacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 				infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 			}
 
 			// transform evaluations in databeans
 			ListIterator iter = temporaryEnrolmentEvaluations.listIterator();
 			while (iter.hasNext()) {
-				IEnrolmentEvaluation elem = (IEnrolmentEvaluation) iter.next();
+				EnrolmentEvaluation elem = (EnrolmentEvaluation) iter.next();
 				InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
 						.newInfoFromDomain(elem);
 				infoEnrolmentEvaluation.setIdInternal(elem.getIdInternal());
@@ -162,14 +162,14 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 		return infoSiteEnrolmentEvaluation;
 	}
 
-	private Date getLastEvaluationDate(String yearString, ICurricularCourse curricularCourse)
+	private Date getLastEvaluationDate(String yearString, CurricularCourse curricularCourse)
 	// throws ExcepcaoPersistencia, NonExistingServiceException
 	{
 
 		Date lastEvaluationDate = null;
 		Iterator iterator = curricularCourse.getAssociatedExecutionCourses().listIterator();
 		while (iterator.hasNext()) {
-			IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
+			ExecutionCourse executionCourse = (ExecutionCourse) iterator.next();
 			if (executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(yearString)) {
 
 				if (executionCourse.getAssociatedEvaluations() != null
@@ -178,7 +178,7 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 							.getAssociatedEvaluations(), new Predicate() {
 						public boolean evaluate(Object input) {
 							// for now returns only exams
-							if (input instanceof IExam)
+							if (input instanceof Exam)
 								return true;
 							return false;
 						}
@@ -189,8 +189,8 @@ public class ReadStudentsAndMarksByCurricularCourse implements IService {
 					comparatorChain.addComparator(new BeanComparator("beginning.time"));
 					Collections.sort(evaluationsWithoutFinal, comparatorChain);
 
-					if (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1) instanceof IExam) {
-						IExam lastEvaluation = (IExam) (evaluationsWithoutFinal
+					if (evaluationsWithoutFinal.get(evaluationsWithoutFinal.size() - 1) instanceof Exam) {
+						Exam lastEvaluation = (Exam) (evaluationsWithoutFinal
 								.get(evaluationsWithoutFinal.size() - 1));
 						if (lastEvaluationDate != null) {
 							if (lastEvaluationDate.before(lastEvaluation.getDay().getTime())) {

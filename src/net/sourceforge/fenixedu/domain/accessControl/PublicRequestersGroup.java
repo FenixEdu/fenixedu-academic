@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.iterators.ArrayListIterator;
 public class PublicRequestersGroup extends PublicRequestersGroup_Base {
@@ -13,7 +13,7 @@ public class PublicRequestersGroup extends PublicRequestersGroup_Base {
     }
 
 	@Override
-	public Iterator<IPerson> getElementsIterator()
+	public Iterator<Person> getElementsIterator()
 	{
 		return new ArrayListIterator();
 	}

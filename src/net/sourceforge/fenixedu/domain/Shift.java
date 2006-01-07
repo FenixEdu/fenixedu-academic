@@ -6,8 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.teacher.IDegreeTeachingService;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 public class Shift extends Shift_Base {
 
@@ -26,13 +26,13 @@ public class Shift extends Shift_Base {
         double hours = 0;
         List lessons = this.getAssociatedLessons();
         for (int i = 0; i < lessons.size(); i++) {
-            ILesson lesson = (ILesson) lessons.get(i);
+            Lesson lesson = (Lesson) lessons.get(i);
             hours += lesson.hours();
         }
         return hours;
     }
 
-    public void associateSchoolClass(ISchoolClass schoolClass) {
+    public void associateSchoolClass(SchoolClass schoolClass) {
         if (schoolClass == null) {
             throw new NullPointerException();
         }
@@ -44,7 +44,7 @@ public class Shift extends Shift_Base {
         }
     }
 
-    public void transferSummary(ISummary summary, Date summaryDate, Date summaryHour, IRoom room, boolean newSummary) {
+    public void transferSummary(Summary summary, Date summaryDate, Date summaryHour, Room room, boolean newSummary) {
         if(newSummary){
             checkIfSummaryExistFor(summaryDate, summaryHour);
         }
@@ -55,7 +55,7 @@ public class Shift extends Shift_Base {
         final Iterator associatedSummaries = getAssociatedSummariesIterator();
         Date summaryDateAux = prepareDate(summaryDate);               
         while (associatedSummaries.hasNext()) {
-            ISummary summary = (ISummary) associatedSummaries.next();
+            Summary summary = (Summary) associatedSummaries.next();
             Date iterSummaryDate = prepareDate(summary.getSummaryDate());
             if (iterSummaryDate.equals(summaryDateAux)
                     && summary.getSummaryHour().equals(summaryHour)) {
@@ -74,9 +74,9 @@ public class Shift extends Shift_Base {
         return calendar.getTime();
     }
     
-    public Double getAvailableShiftPercentageForTeacher(ITeacher teacher) {
+    public Double getAvailableShiftPercentageForTeacher(Teacher teacher) {
         Double availablePercentage = 100.0;
-        for (IDegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
+        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             /**
              * if shift's type is LABORATORIAL the shift professorship
              * percentage can exceed 100%

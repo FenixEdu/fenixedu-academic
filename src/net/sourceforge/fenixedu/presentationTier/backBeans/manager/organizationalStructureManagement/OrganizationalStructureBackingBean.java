@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -46,9 +46,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private Integer principalFunctionID;
 
-    private IUnit unit, chooseUnit;
+    private Unit unit, chooseUnit;
 
-    private IFunction function;
+    private Function function;
 
     private HtmlInputHidden unitIDHidden, chooseUnitIDHidden, functionIDHidden,
             listingTypeValueToFunctionsHidden, listingTypeValueToUnitsHidden;
@@ -75,10 +75,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
     }
 
-    public List<IUnit> getAllSubUnits() throws FenixFilterException, FenixServiceException {
-        List<IUnit> allSubUnits = new ArrayList<IUnit>();
+    public List<Unit> getAllSubUnits() throws FenixFilterException, FenixServiceException {
+        List<Unit> allSubUnits = new ArrayList<Unit>();
         Date currentDate = Calendar.getInstance().getTime();
-        for (IUnit unit : this.getUnit().getSubUnits()) {
+        for (Unit unit : this.getUnit().getSubUnits()) {
             if ((this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0") && unit
                     .isActive(currentDate))
                     || (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("1") && !unit
@@ -89,12 +89,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return allSubUnits;
     }
 
-    public List<IFunction> getAllNonInherentFunctions() throws FenixFilterException,
+    public List<Function> getAllNonInherentFunctions() throws FenixFilterException,
             FenixServiceException {
 
-        List<IFunction> allNonInherentFunctions = new ArrayList<IFunction>();
+        List<Function> allNonInherentFunctions = new ArrayList<Function>();
         Date currentDate = Calendar.getInstance().getTime();
-        for (IFunction function : this.getUnit().getFunctions()) {
+        for (Function function : this.getUnit().getFunctions()) {
             if (!function.isInherentFunction()
                     && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
                             .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden()
@@ -105,11 +105,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return allNonInherentFunctions;
     }
 
-    public List<IFunction> getAllInherentFunctions() throws FenixFilterException, FenixServiceException {
+    public List<Function> getAllInherentFunctions() throws FenixFilterException, FenixServiceException {
 
-        List<IFunction> allInherentFunctions = new ArrayList<IFunction>();
+        List<Function> allInherentFunctions = new ArrayList<Function>();
         Date currentDate = Calendar.getInstance().getTime();
-        for (IFunction function : this.getUnit().getFunctions()) {
+        for (Function function : this.getUnit().getFunctions()) {
             if (function.isInherentFunction()
                     && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
                             .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden()
@@ -120,9 +120,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return allInherentFunctions;
     }
 
-    public List<IUnit> getAllUnitsWithoutParent() throws FenixFilterException, FenixServiceException {
-        List<IUnit> allUnitsWithoutParent = new ArrayList<IUnit>();
-        for (IUnit unit : readAllUnits()) {
+    public List<Unit> getAllUnitsWithoutParent() throws FenixFilterException, FenixServiceException {
+        List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
+        for (Unit unit : readAllUnits()) {
             if (unit.getParentUnits().isEmpty()) {
                 allUnitsWithoutParent.add(unit);
             }
@@ -130,15 +130,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return allUnitsWithoutParent;
     }
 
-    private List<IUnit> readAllUnits() throws FenixServiceException, FenixFilterException {
+    private List<Unit> readAllUnits() throws FenixServiceException, FenixFilterException {
         return readAllDomainObjects(Unit.class);
     }
 
     public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException {
         StringBuffer buffer = new StringBuffer();
-        List<IUnit> allUnitsWithoutParent = getAllUnitsWithoutParent();
+        List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
-        for (IUnit unit : allUnitsWithoutParent) {
+        for (Unit unit : allUnitsWithoutParent) {
             if (!unit.equals(this.getUnit())
                     && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getParentUnits()
                             .contains(unit))) {
@@ -148,14 +148,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTreeToChooseParentUnit(StringBuffer buffer, IUnit parentUnit)
+    public void getUnitTreeToChooseParentUnit(StringBuffer buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
         buffer.append("<ul>");
         getUnitsListToChooseParentUnit(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsListToChooseParentUnit(IUnit parentUnit, StringBuffer buffer)
+    private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuffer buffer)
             throws FenixFilterException, FenixServiceException {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
@@ -164,7 +164,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 parentUnit.getIdInternal()).append("\">").append(parentUnit.getName()).append("</a>")
                 .append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getSubUnits()) {
+        for (Unit subUnit : parentUnit.getSubUnits()) {
             if (!subUnit.equals(this.getUnit())
                     && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getParentUnits()
                             .contains(subUnit))) {
@@ -178,11 +178,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getUnits() throws FenixFilterException, FenixServiceException {
 
         StringBuffer buffer = new StringBuffer();
-        List<IUnit> allUnitsWithoutParent = getAllUnitsWithoutParent();
+        List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         Date currentDate = Calendar.getInstance().getTime();
 
-        for (IUnit unit : allUnitsWithoutParent) {
+        for (Unit unit : allUnitsWithoutParent) {
             if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0")
                     && (unit.isActive(currentDate) || !unit.getActiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getActiveSubUnits(currentDate), currentDate, true);
@@ -195,14 +195,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuffer buffer, IUnit parentUnit, List<IUnit> subUnits,
+    public void getUnitTree(StringBuffer buffer, Unit parentUnit, List<Unit> subUnits,
             Date currentDate, boolean active) {
         buffer.append("<ul>");
         getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(IUnit parentUnit, List<IUnit> subUnits, StringBuffer buffer,
+    private void getUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuffer buffer,
             Date currentDate, boolean active) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
@@ -210,7 +210,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 "unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getName())
                 .append("</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : subUnits) {
+        for (Unit subUnit : subUnits) {
             if (active) {
                 getUnitsList(subUnit, subUnit.getActiveSubUnits(currentDate), buffer, currentDate,
                         active);
@@ -226,9 +226,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String getUnitsToChoosePrincipalFunction() throws FenixFilterException, FenixServiceException {
         StringBuffer buffer = new StringBuffer();
 
-        List<IUnit> allUnitsWithoutParent = getAllUnitsWithoutParent();
+        List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
-        for (IUnit unit : allUnitsWithoutParent) {
+        for (Unit unit : allUnitsWithoutParent) {
             if (!unit.equals(this.getUnit())) {
                 getUnitTreeToChoosePrincipalFunction(buffer, unit);
             }
@@ -237,14 +237,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTreeToChoosePrincipalFunction(StringBuffer buffer, IUnit parentUnit)
+    public void getUnitTreeToChoosePrincipalFunction(StringBuffer buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
         buffer.append("<ul>");
         getUnitsListToChoosePrincipalFunction(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsListToChoosePrincipalFunction(IUnit parentUnit, StringBuffer buffer)
+    private void getUnitsListToChoosePrincipalFunction(Unit parentUnit, StringBuffer buffer)
             throws FenixFilterException, FenixServiceException {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
@@ -254,7 +254,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 this.getFunction().getIdInternal()).append("\">").append(parentUnit.getName()).append(
                 "</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getSubUnits()) {
+        for (Unit subUnit : parentUnit.getSubUnits()) {
             getUnitsListToChoosePrincipalFunction(subUnit, buffer);
         }
 
@@ -283,9 +283,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        List<IDepartment> allDepartments = readAllDomainObjects(Department.class);
+        List<Department> allDepartments = readAllDomainObjects(Department.class);
 
-        for (IDepartment department : allDepartments) {
+        for (Department department : allDepartments) {
             selectItem = new SelectItem();
             selectItem.setLabel(department.getRealName());
             selectItem.setValue(department.getIdInternal().toString());
@@ -302,9 +302,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
 
-        List<IDegree> allDegrees = readAllDomainObjects(Degree.class);
+        List<Degree> allDegrees = readAllDomainObjects(Degree.class);
 
-        for (IDegree degree : allDegrees) {
+        for (Degree degree : allDegrees) {
             selectItem = new SelectItem();
             if (degree.getTipoCurso().equals(DegreeType.DEGREE)) {
                 selectItem.setLabel("(L) " + degree.getNome());
@@ -535,7 +535,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             return "";
         }
 
-        IFunction parentInherentFunction = this.getFunction().getParentInherentFunction();
+        Function parentInherentFunction = this.getFunction().getParentInherentFunction();
         Integer parentInherentFunctionID = null;
         if (parentInherentFunction != null) {
             parentInherentFunctionID = parentInherentFunction.getIdInternal();
@@ -553,7 +553,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public String prepareAssociateInherentParentFunction() throws FenixFilterException,
             FenixServiceException {
 
-        IFunction function = this.getFunction();
+        Function function = this.getFunction();
         if (!function.getPersonFunctions().isEmpty()) {
             setErrorMessage("error.becomeInherent");
             return "";
@@ -563,7 +563,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String associateInherentParentFunction() throws FenixFilterException, FenixServiceException {
 
-        IFunction function = this.getFunction();
+        Function function = this.getFunction();
 
         final Object[] argsToRead = { function.getIdInternal(), function.getUnit().getIdInternal(),
                 function.getName(), function.getBeginDate(), function.getEndDate(), function.getType(),
@@ -589,7 +589,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String disassociateInherentFunction() throws FenixFilterException, FenixServiceException {
 
-        IFunction function = this.getFunction();
+        Function function = this.getFunction();
 
         final Object[] argsToRead = { function.getIdInternal(), function.getUnit().getIdInternal(),
                 function.getName(), function.getBeginDate(), function.getEndDate(), function.getType(),
@@ -725,18 +725,18 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.unitTypeName = unitTypeName;
     }
 
-    public IUnit getUnit() throws FenixFilterException, FenixServiceException {
+    public Unit getUnit() throws FenixFilterException, FenixServiceException {
         if (this.unit == null && this.getUnitIDHidden() != null
                 && this.getUnitIDHidden().getValue() != null
                 && !this.getUnitIDHidden().getValue().equals("")) {
 
-            this.unit = (IUnit) readDomainObject(Unit.class, Integer.valueOf(this.getUnitIDHidden()
+            this.unit = (Unit) readDomainObject(Unit.class, Integer.valueOf(this.getUnitIDHidden()
                     .getValue().toString()));
         }
         return unit;
     }
 
-    public void setUnit(IUnit unit) {
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 
@@ -760,18 +760,18 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.unitIDHidden = unitIDHidden;
     }
 
-    public IFunction getFunction() throws FenixFilterException, FenixServiceException {
+    public Function getFunction() throws FenixFilterException, FenixServiceException {
         if (this.function == null && this.getFunctionIDHidden() != null
                 && this.getFunctionIDHidden().getValue() != null
                 && !this.getFunctionIDHidden().getValue().equals("")) {
 
-            this.function = (IFunction) readDomainObject(Function.class, Integer.valueOf(this
+            this.function = (Function) readDomainObject(Function.class, Integer.valueOf(this
                     .getFunctionIDHidden().getValue().toString()));
         }
         return function;
     }
 
-    public void setFunction(IFunction function) {
+    public void setFunction(Function function) {
         this.function = function;
     }
 
@@ -822,19 +822,19 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         this.functionTypeName = functionTypeName;
     }
 
-    public IUnit getChooseUnit() throws FenixFilterException, FenixServiceException {
+    public Unit getChooseUnit() throws FenixFilterException, FenixServiceException {
         if (this.chooseUnit == null && this.getChooseUnitIDHidden() != null
                 && this.getChooseUnitIDHidden().getValue() != null
                 && !this.getChooseUnitIDHidden().getValue().equals("")) {
 
-            this.chooseUnit = (IUnit) readDomainObject(Unit.class, Integer.valueOf(this
+            this.chooseUnit = (Unit) readDomainObject(Unit.class, Integer.valueOf(this
                     .getChooseUnitIDHidden().getValue().toString()));
         }
 
         return chooseUnit;
     }
 
-    public void setChooseUnit(IUnit chooseUnit) {
+    public void setChooseUnit(Unit chooseUnit) {
         this.chooseUnit = chooseUnit;
     }
 
@@ -850,8 +850,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private boolean verifyCostCenterCode() throws FenixFilterException, FenixServiceException {
-        List<IUnit> allUnits = readAllUnits();
-        for (IUnit unit : allUnits) {
+        List<Unit> allUnits = readAllUnits();
+        for (Unit unit : allUnits) {
             if (unit.getCostCenterCode() != null && !unit.equals(this.getChooseUnit())
                     && this.getUnitCostCenter().equals(String.valueOf(unit.getCostCenterCode()))
                     && unit.isActive(Calendar.getInstance().getTime())) {

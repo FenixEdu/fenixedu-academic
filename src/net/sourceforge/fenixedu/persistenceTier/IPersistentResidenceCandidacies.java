@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 
 /**
  * @author Nuno Correia
@@ -14,6 +14,6 @@ import net.sourceforge.fenixedu.domain.IStudent;
  */
 public interface IPersistentResidenceCandidacies extends IPersistentObject {
 
-    public List readResidenceCandidaciesByStudent(IStudent student) throws ExcepcaoPersistencia;
+    public List readResidenceCandidaciesByStudent(Student student) throws ExcepcaoPersistencia;
 
 }

@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.Season;
@@ -203,7 +203,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         this.infoExecutionCourses = infoExecutionCourses;
     }
 
-    public void copyFromDomain(IExam exam) {
+    public void copyFromDomain(Exam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {
             setSeason(exam.getSeason());
@@ -211,7 +211,7 @@ public class InfoExam extends InfoWrittenEvaluation implements ISiteComponent {
         }
     }
 
-    public static InfoExam newInfoFromDomain(IExam exam) {
+    public static InfoExam newInfoFromDomain(Exam exam) {
         InfoExam infoExam = null;
         if (exam != null) {
             infoExam = new InfoExam();

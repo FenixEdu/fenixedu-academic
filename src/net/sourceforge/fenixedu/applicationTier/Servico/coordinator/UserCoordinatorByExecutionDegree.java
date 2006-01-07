@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -17,10 +17,10 @@ public class UserCoordinatorByExecutionDegree implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final ITeacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
+        final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
                 teacherUserName);
 
-        final ICoordinator coordinator = persistentSupport.getIPersistentCoordinator()
+        final Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
                 .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
                         executionDegreeCode);
         if (coordinator == null) {

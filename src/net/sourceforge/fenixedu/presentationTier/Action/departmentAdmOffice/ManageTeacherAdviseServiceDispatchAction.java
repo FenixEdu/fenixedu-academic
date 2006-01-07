@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.teacher.IAdvise;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherAdviseService;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
+import net.sourceforge.fenixedu.domain.teacher.Advise;
+import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.Advise.AdvisePercentageException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -57,13 +57,13 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         IUserView userView = SessionUtils.getUserView(request);
 
         final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(
                 userView, "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });        
 
         Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
-        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-        ITeacher teacher = null;
-        for (IDepartment department : manageableDepartments) {
+        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Teacher teacher = null;
+        for (Department department : manageableDepartments) {
             teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
                     executionPeriod.getEndDate());
             if (teacher != null) {
@@ -77,7 +77,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
         dynaForm.set("executionPeriodId", executionPeriod.getIdInternal());
         dynaForm.set("teacherId", teacher.getIdInternal());
 
-        ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null && !teacherService.getTeacherAdviseServices().isEmpty()) {
             BeanComparator comparator = new BeanComparator("advise.student.number");
             Iterator orderedAdviseServicesIter = new OrderedIterator(teacherService
@@ -126,9 +126,9 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 
     private void addMessages(AdvisePercentageException ape, ActionMessages actionMessages,
             AdviseType adviseType) {
-        IExecutionPeriod executionPeriod = ape.getExecutionPeriod();
-        for (IAdvise advise : ape.getAdvises()) {
-            ITeacherAdviseService teacherAdviseService = advise
+        ExecutionPeriod executionPeriod = ape.getExecutionPeriod();
+        for (Advise advise : ape.getAdvises()) {
+            TeacherAdviseService teacherAdviseService = advise
                     .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
             if (adviseType.equals(ape.getAdviseType()) && teacherAdviseService != null) {
                 Integer teacherNumber = advise.getTeacher().getTeacherNumber();

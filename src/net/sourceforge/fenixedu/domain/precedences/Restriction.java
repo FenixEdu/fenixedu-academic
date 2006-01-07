@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
+
 
 
 /**
@@ -18,4 +20,5 @@ public abstract class Restriction extends Restriction_Base {
 		super.deleteDomainObject();
 	}
 
+	public abstract CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext);
 }

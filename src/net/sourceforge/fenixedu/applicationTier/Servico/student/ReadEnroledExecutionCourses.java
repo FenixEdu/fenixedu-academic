@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -24,15 +24,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadEnroledExecutionCourses implements IService {
 
-    private boolean checkPeriodEnrollment(final IGrouping grouping) {
+    private boolean checkPeriodEnrollment(final Grouping grouping) {
         final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory.getInstance();
         final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
         return strategy.checkEnrolmentDate(grouping, Calendar.getInstance());
         
     }
 
-    private boolean checkPeriodEnrollment(List<IGrouping> allGroupProperties) {
-        for (final IGrouping grouping : allGroupProperties) {
+    private boolean checkPeriodEnrollment(List<Grouping> allGroupProperties) {
+        for (final Grouping grouping : allGroupProperties) {
             if (checkPeriodEnrollment(grouping)) {
                 return true;
             }
@@ -40,12 +40,12 @@ public class ReadEnroledExecutionCourses implements IService {
         return false;
     }
 
-    private boolean checkStudentInAttendsSet(List allGroupProperties, IStudent student) {
+    private boolean checkStudentInAttendsSet(List allGroupProperties, Student student) {
         boolean result = false;
 
         Iterator iter = allGroupProperties.iterator();
         while (iter.hasNext()) {
-            IGrouping groupProperties = (IGrouping) iter.next();
+            Grouping groupProperties = (Grouping) iter.next();
             if (groupProperties.getStudentAttend(student) != null)
                 return true;
         }
@@ -60,7 +60,7 @@ public class ReadEnroledExecutionCourses implements IService {
         IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        IStudent student = persistentStudent.readByUsername(username);
+        Student student = persistentStudent.readByUsername(username);
         List allAttend = persistentAttend.readByStudentNumber(student.getNumber(), student
                 .getDegreeType());
 
@@ -68,14 +68,14 @@ public class ReadEnroledExecutionCourses implements IService {
         allInfoExecutionCourses = new ArrayList();
 
         while (iter.hasNext()) {
-            IExecutionCourse executionCourse = ((IAttends) iter.next()).getDisciplinaExecucao();
+            ExecutionCourse executionCourse = ((Attends) iter.next()).getDisciplinaExecucao();
             if (executionCourse.getExecutionPeriod().getState().equals(PeriodState.CURRENT)) {
                 List allGroupProperties = executionCourse.getGroupings();
                 boolean result = checkPeriodEnrollment(allGroupProperties);
                 if (result && checkStudentInAttendsSet(allGroupProperties, student)) {
                     final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
                     final List<InfoGrouping> infoGroupings = new ArrayList<InfoGrouping>();
-                    for (final IGrouping grouping : executionCourse.getGroupings()) {
+                    for (final Grouping grouping : executionCourse.getGroupings()) {
                         if (checkPeriodEnrollment(grouping)) {
                             infoGroupings.add(InfoGrouping.newInfoFromDomain(grouping));
                         }

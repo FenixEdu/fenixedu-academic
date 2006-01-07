@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.IPrice;
+import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
@@ -32,13 +32,13 @@ public class PriceOJB extends PersistentObjectOJB implements IPersistentPrice {
 
     }
 
-    public IPrice readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
+    public Price readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
             DocumentType documentType, String description) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("graduationType", graduationType.name());
         crit.addEqualTo("documentType", documentType.name());
         crit.addEqualTo("description", description);
-        return (IPrice) queryObject(Price.class, crit);
+        return (Price) queryObject(Price.class, crit);
 
     }
 

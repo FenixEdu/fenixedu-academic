@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.ISecretaryEnrolmentStudent;
+import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.domain.SecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 
 public class SecretaryEnrolmentStudentVO extends VersionedObjectsBase implements IPersistentSecretaryEnrolmentStudent {
 	
-    public ISecretaryEnrolmentStudent readByStudentNumber(Integer studentNumber)
+    public SecretaryEnrolmentStudent readByStudentNumber(Integer studentNumber)
 		throws ExcepcaoPersistencia {
 
-		Collection<ISecretaryEnrolmentStudent> secretaryEnrolmentStudents = readAll(SecretaryEnrolmentStudent.class);
+		Collection<SecretaryEnrolmentStudent> secretaryEnrolmentStudents = readAll(SecretaryEnrolmentStudent.class);
 		
-		for (ISecretaryEnrolmentStudent secretaryEnrolmentStudent : secretaryEnrolmentStudents) {
+		for (SecretaryEnrolmentStudent secretaryEnrolmentStudent : secretaryEnrolmentStudents) {
 			if (secretaryEnrolmentStudent.getStudent() == null)
 				System.out.println("Ay caramba!");
 			

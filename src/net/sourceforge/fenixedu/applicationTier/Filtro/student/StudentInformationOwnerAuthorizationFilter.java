@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -45,13 +45,13 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
      * @return
      */
     private boolean curriculumOwner(IUserView id, Object[] arguments) {
-        IStudentCurricularPlan studentCurricularPlan;
+        StudentCurricularPlan studentCurricularPlan;
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                     .getIStudentCurricularPlanPersistente();
 
-            studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
+            studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
                     StudentCurricularPlan.class, (Integer) arguments[1]);
             if (studentCurricularPlan == null) {
                 return false;

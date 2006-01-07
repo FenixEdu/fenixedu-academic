@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -43,7 +43,7 @@ public class ReadAdmitedCandidates implements IService {
                         || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)
                         || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
 
-                    IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                             .getIPersistentMasterDegreeCandidate().readByOID(
                                     MasterDegreeCandidate.class, new Integer(ids[i]));
                     if (!masterDegreeCandidate.getSpecialization().equals(

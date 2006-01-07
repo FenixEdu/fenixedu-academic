@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanListGrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,7 +54,7 @@ public class ListGrantOwners implements IService {
 
 			// For each Grant Owner construct the info list object.
 			for (int i = 0; i < grantOwnerBySpan.size(); i++) {
-				IGrantOwner grantOwner = (IGrantOwner) grantOwnerBySpan.get(i);
+				GrantOwner grantOwner = (GrantOwner) grantOwnerBySpan.get(i);
 				listGrantOwner.add(convertToInfoListGrantOwnerByOrder(grantOwner));
 			}
 		}
@@ -80,7 +80,7 @@ public class ListGrantOwners implements IService {
 		return result;
 	}
 
-	private InfoListGrantOwnerByOrder convertToInfoListGrantOwnerByOrder(IGrantOwner grantOwner) {
+	private InfoListGrantOwnerByOrder convertToInfoListGrantOwnerByOrder(GrantOwner grantOwner) {
 		InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder();
 
 		infoListGrantOwnerByOrder.setGrantOwnerId(grantOwner.getIdInternal());

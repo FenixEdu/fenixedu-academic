@@ -7,15 +7,15 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
 public class ExternalPersonVO extends VersionedObjectsBase implements IPersistentExternalPerson {
 
-    public IExternalPerson readByUsername(String username)  {
-        final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
-        for (final IExternalPerson externalPerson : allExternalPersons) {
+    public ExternalPerson readByUsername(String username)  {
+        final List<ExternalPerson> allExternalPersons = (List<ExternalPerson>)readAll(ExternalPerson.class);
+        for (final ExternalPerson externalPerson : allExternalPersons) {
             if (externalPerson.getPerson().getUsername().equals(username)){
                 return externalPerson;
             }
@@ -23,12 +23,12 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         return null;
     }
 
-    public List<IExternalPerson> readByName(String name) {
+    public List<ExternalPerson> readByName(String name) {
         final String nameToMatch = name.replaceAll("%",".*");
-        final List<IExternalPerson> matchedExternalPersons = new ArrayList<IExternalPerson>();
-        final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
+        final List<ExternalPerson> matchedExternalPersons = new ArrayList<ExternalPerson>();
+        final List<ExternalPerson> allExternalPersons = (List<ExternalPerson>)readAll(ExternalPerson.class);
         
-        for (final IExternalPerson externalPerson : allExternalPersons) {
+        for (final ExternalPerson externalPerson : allExternalPersons) {
             if (externalPerson.getPerson().getNome().matches(nameToMatch)){
                 matchedExternalPersons.add(externalPerson);
             }
@@ -37,11 +37,11 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         return matchedExternalPersons;
     }
 
-    public IExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
+    public ExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
             Integer institutionID) {
         
-        final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
-        for (final IExternalPerson externalPerson : allExternalPersons) {
+        final List<ExternalPerson> allExternalPersons = (List<ExternalPerson>)readAll(ExternalPerson.class);
+        for (final ExternalPerson externalPerson : allExternalPersons) {
             if (externalPerson.getPerson().getNome().equals(name)
                     && externalPerson.getPerson().getMorada().equals(address)
                     && externalPerson.getInstitution().getIdInternal().equals(institutionID)){
@@ -52,12 +52,12 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         
     }
 
-    public List<IExternalPerson> readByInstitution(Integer institutionID) {
+    public List<ExternalPerson> readByInstitution(Integer institutionID) {
         
-        final List<IExternalPerson> matchedExternalPersons = new ArrayList<IExternalPerson>();
-        final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
+        final List<ExternalPerson> matchedExternalPersons = new ArrayList<ExternalPerson>();
+        final List<ExternalPerson> allExternalPersons = (List<ExternalPerson>)readAll(ExternalPerson.class);
         
-        for (final IExternalPerson externalPerson : allExternalPersons) {
+        for (final ExternalPerson externalPerson : allExternalPersons) {
             if (externalPerson.getInstitution().getIdInternal().equals(institutionID)) {
                 matchedExternalPersons.add(externalPerson);
             }
@@ -69,13 +69,13 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
 
     public String readLastDocumentIdNumber() {
         
-        final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
+        final List<ExternalPerson> allExternalPersons = (List<ExternalPerson>)readAll(ExternalPerson.class);
         
-        IExternalPerson personWithMaxDocumentIdNumber = (IExternalPerson)
+        ExternalPerson personWithMaxDocumentIdNumber = (ExternalPerson)
             Collections.max(allExternalPersons, new Comparator() {
                 public int compare(Object o1, Object o2) {
-                    IExternalPerson person1 = (IExternalPerson) o1;
-                    IExternalPerson person2 = (IExternalPerson) o2;
+                    ExternalPerson person1 = (ExternalPerson) o1;
+                    ExternalPerson person2 = (ExternalPerson) o2;
                     Integer number1 = Integer.valueOf(person1.getPerson().getNumeroDocumentoIdentificacao());
                     Integer number2 = Integer.valueOf(person2.getPerson().getNumeroDocumentoIdentificacao());
                     
@@ -87,12 +87,12 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         
     }
 
-    public List<IExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) {
+    public List<ExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) {
         
-        final List<IExternalPerson> matchedExternalPersons = new ArrayList<IExternalPerson>();
-        final List<IExternalPerson> allExternalPersons = (List<IExternalPerson>)readAll(ExternalPerson.class);
+        final List<ExternalPerson> matchedExternalPersons = new ArrayList<ExternalPerson>();
+        final List<ExternalPerson> allExternalPersons = (List<ExternalPerson>)readAll(ExternalPerson.class);
         
-        for (final IExternalPerson externalPerson : allExternalPersons) {
+        for (final ExternalPerson externalPerson : allExternalPersons) {
             if (externalPersonsIDs.contains(externalPerson.getIdInternal())) {
                 matchedExternalPersons.add(externalPerson);
             }

@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -29,12 +29,12 @@ public class ChangePersonPassword implements IService {
 
 		ISuportePersistente sp = null;
 
-		IPerson person = null;
+		Person person = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPessoaPersistente personDAO = sp.getIPessoaPersistente();
 
-		person = (IPerson) personDAO.readByOID(Person.class, personID, true);
+		person = (Person) personDAO.readByOID(Person.class, personID, true);
 
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person!");

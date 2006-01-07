@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -25,7 +25,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
 
-    public Object run(IDegree curso, IExecutionYear year) throws FenixServiceException,
+    public Object run(Degree curso, ExecutionYear year) throws FenixServiceException,
 			ExcepcaoPersistencia {
         List infoExecutionDegrees = new ArrayList();
 
@@ -36,7 +36,7 @@ public class ReadExecutionDegreesByExecutionYearAndDegree implements IService {
                     .getIdInternal(), year.getYear(), CurricularStage.OLD);
             if (executionDegrees != null && !executionDegrees.isEmpty()) {
                 for (int i = 0; i < executionDegrees.size(); i++) {
-                    IExecutionDegree executionDegree = (IExecutionDegree) executionDegrees.get(i);
+                    ExecutionDegree executionDegree = (ExecutionDegree) executionDegrees.get(i);
                     InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                             .newInfoFromDomain(executionDegree);
                     infoExecutionDegrees.add(infoExecutionDegree);

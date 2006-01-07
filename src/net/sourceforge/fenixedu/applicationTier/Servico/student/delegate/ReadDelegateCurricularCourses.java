@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,14 +32,14 @@ import org.apache.commons.collections.Transformer;
 public class ReadDelegateCurricularCourses extends SearchService {
 
     @Override
-    protected InfoObject newInfoFromDomain(IDomainObject object) {
-        ICurricularCourse curricularCourse = (ICurricularCourse) object;
+    protected InfoObject newInfoFromDomain(DomainObject object) {
+        CurricularCourse curricularCourse = (CurricularCourse) object;
         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
 
         List infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
                 new Transformer() {
                     public Object transform(Object arg0) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
                         return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope);
                     }
 
@@ -54,8 +54,8 @@ public class ReadDelegateCurricularCourses extends SearchService {
             throws ExcepcaoPersistencia {
 
         final String user = (String) searchParameters.get("user");
-        final IStudent student = sp.getIPersistentStudent().readByUsername(user);
-        final IDelegate delegate = sp.getIPersistentDelegate().readByStudent(student);
+        final Student student = sp.getIPersistentStudent().readByUsername(user);
+        final Delegate delegate = sp.getIPersistentDelegate().readByStudent(student);
 
         // if he's a degree delegate then he can read all curricular courses
         // report

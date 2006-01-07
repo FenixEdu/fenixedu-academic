@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.BothAreasAreT
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
@@ -47,10 +47,10 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
     
     public int getNumberOfApprovedCurricularCourses() {
     	int counter = 0;
-        List<IEnrolment> aprovedEnrolments = getAprovedEnrolments();
-    	List<INotNeedToEnrollInCurricularCourse> notNeedToEnroll = getNotNeedToEnrollCurricularCourses();
+        List<Enrolment> aprovedEnrolments = getAprovedEnrolments();
+    	List<NotNeedToEnrollInCurricularCourse> notNeedToEnroll = getNotNeedToEnrollCurricularCourses();
     	
-    	for (INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : notNeedToEnroll) {
+    	for (NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse : notNeedToEnroll) {
 			if(notNeedToEnrollInCurricularCourse.getCurricularCourse().getDegreeCurricularPlan().equals(getDegreeCurricularPlan())) {
 				counter++;
 			}
@@ -60,7 +60,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         return counter;
     }
 
-    public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
+    public boolean areNewAreasCompatible(Branch specializationArea, Branch secundaryArea)
             throws BothAreasAreTheSameServiceException,
             InvalidArgumentsServiceException {
         if (specializationArea == null && secundaryArea == null) {
@@ -81,7 +81,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
         Iterator iterator = studentsAprovedEnrollments.iterator();
         while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+            Enrolment enrolment = (Enrolment) iterator.next();
             if (curricularCoursesBelongingToAnySpecializationAndSecundaryArea.contains(enrolment
                     .getCurricularCourse())
                     && !curricularCoursesFromGivenAreas.contains(enrolment.getCurricularCourse())) {
@@ -118,14 +118,14 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
             AreaType areaType) {
         Iterator iterator = areas.iterator();
         while (iterator.hasNext()) {
-            IBranch area = (IBranch) iterator.next();
+            Branch area = (Branch) iterator.next();
             List groups = area.getAreaCurricularCourseGroups(areaType);
             Iterator iterator2 = groups.iterator();
             while (iterator2.hasNext()) {
-                ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
+                CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) iterator2.next();
                 Iterator iterator3 = curricularCourseGroup.getCurricularCourses().iterator();
                 while (iterator3.hasNext()) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) iterator3.next();
+                    CurricularCourse curricularCourse = (CurricularCourse) iterator3.next();
                     if (!curricularCourses.contains(curricularCourse)) {
                         curricularCourses.add(curricularCourse);
                     }
@@ -140,7 +140,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
      * @param secundaryArea
      * @return CurricularCoursesFromGivenAreas
      */
-    protected List getCurricularCoursesFromGivenAreas(IBranch specializationArea, IBranch secundaryArea) {
+    protected List getCurricularCoursesFromGivenAreas(Branch specializationArea, Branch secundaryArea) {
         List curricularCoursesFromNewSpecializationArea = new ArrayList();
         List curricularCoursesFromNewSecundaryArea = new ArrayList();
 
@@ -148,7 +148,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
 
         Iterator iterator = groups.iterator();
         while (iterator.hasNext()) {
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator.next();
+            CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) iterator.next();
             curricularCoursesFromNewSpecializationArea.addAll(curricularCourseGroup
                     .getCurricularCourses());
         }
@@ -156,7 +156,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         groups = secundaryArea.getAreaCurricularCourseGroups(AreaType.SECONDARY);
         iterator = groups.iterator();
         while (iterator.hasNext()) {
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator.next();
+            CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) iterator.next();
             curricularCoursesFromNewSecundaryArea.addAll(curricularCourseGroup.getCurricularCourses());
         }
 
@@ -168,7 +168,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
     }
 
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
-            ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
+            CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
 
         if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
             return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -181,7 +181,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
         List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod);
 
         for (int i = 0; i < enrollmentsWithEnrolledStateInCurrentExecutionPeriod.size(); i++) {
-            IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
+            Enrolment enrollment = (Enrolment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
                     .get(i);
             if (curricularCourse.equals(enrollment.getCurricularCourse())) {
                 return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -192,7 +192,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
                 .getPreviousExecutionPeriod());
       
         for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
-            IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
+            Enrolment enrollment = (Enrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
                     .get(i);
             if (curricularCourse.equals(enrollment.getCurricularCourse())) {
                 return CurricularCourseEnrollmentType.TEMPORARY;
@@ -220,7 +220,7 @@ public class StudentCurricularPlanLEEC extends StudentCurricularPlanLEEC_Base {
     public List getStudentEnrollmentsWithApprovedState() {
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
-                IEnrolment enrollment = (IEnrolment) obj;
+                Enrolment enrollment = (Enrolment) obj;
                 return enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
                 && !enrollment.getStudentCurricularPlan().getDegreeCurricularPlan().getName().startsWith("PAST");
             }

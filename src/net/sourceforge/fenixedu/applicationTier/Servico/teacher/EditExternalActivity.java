@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,10 +28,10 @@ public class EditExternalActivity implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject po = sp.getIPersistentObject();
 		
-		IExternalActivity externalActivity = (IExternalActivity) po.readByOID(ExternalActivity.class, externalActivityId);
+		ExternalActivity externalActivity = (ExternalActivity) po.readByOID(ExternalActivity.class, externalActivityId);
 		//If it doesn't exist in the database, a new one has to be created
 		if(externalActivity == null) {
-			ITeacher teacher = (ITeacher) po.readByOID(Teacher.class, infoExternalActivity.getInfoTeacher().getIdInternal());
+			Teacher teacher = (Teacher) po.readByOID(Teacher.class, infoExternalActivity.getInfoTeacher().getIdInternal());
 			externalActivity = DomainFactory.makeExternalActivity(teacher, infoExternalActivity);
 
 		} else {

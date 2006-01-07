@@ -9,7 +9,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 
 /**
  * @author Leonor Almeida
@@ -83,9 +83,9 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IExternalActivity externalActivity) {
+    public void copyFromDomain(ExternalActivity externalActivity) {
         super.copyFromDomain(externalActivity);
         if (externalActivity != null) {
             setActivity(externalActivity.getActivity());
@@ -94,7 +94,7 @@ public class InfoExternalActivity extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoExternalActivity newInfoFromDomain(IExternalActivity externalActivity) {
+    public static InfoExternalActivity newInfoFromDomain(ExternalActivity externalActivity) {
         InfoExternalActivity infoExternalActivity = null;
         if (externalActivity != null) {
             infoExternalActivity = new InfoExternalActivity();

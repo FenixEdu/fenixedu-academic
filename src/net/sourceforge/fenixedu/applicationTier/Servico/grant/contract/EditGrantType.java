@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,7 +27,7 @@ public class EditGrantType extends EditDomainObjectService {
     }
 
     @Override
-    protected IDomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
+    protected DomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentGrantType pgs = sp.getIPersistentGrantType();
         InfoGrantType infoGrantType = (InfoGrantType) infoObject;
@@ -39,7 +39,7 @@ public class EditGrantType extends EditDomainObjectService {
     }
 
 	@Override
-	protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+	protected DomainObject createNewDomainObject(InfoObject infoObject) {
 		return DomainFactory.makeGrantType();
 	}
 
@@ -49,9 +49,9 @@ public class EditGrantType extends EditDomainObjectService {
 	}
 
 	@Override
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, IDomainObject domainObject) {
+	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, DomainObject domainObject) {
 		InfoGrantType infoGrantType = (InfoGrantType) infoObject;
-		IGrantType grantType = (IGrantType) domainObject;
+		GrantType grantType = (GrantType) domainObject;
 
 		grantType.setIndicativeValue(infoGrantType.getIndicativeValue());
 		grantType.setMaxPeriodDays(infoGrantType.getMaxPeriodDays());

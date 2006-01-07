@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IGuideSituation;
+import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -127,7 +127,7 @@ public class InfoGuideSituation extends InfoObject {
         this.state = state;
     }
 
-    public void copyFromDomain(IGuideSituation guideSituation) {
+    public void copyFromDomain(GuideSituation guideSituation) {
         super.copyFromDomain(guideSituation);
         if (guideSituation != null) {
             setDate(guideSituation.getDate());
@@ -137,7 +137,7 @@ public class InfoGuideSituation extends InfoObject {
         }
     }
 
-    public static InfoGuideSituation newInfoFromDomain(IGuideSituation guideSituation) {
+    public static InfoGuideSituation newInfoFromDomain(GuideSituation guideSituation) {
         InfoGuideSituation infoGuideSituation = null;
         if (guideSituation != null) {
             infoGuideSituation = new InfoGuideSituation();

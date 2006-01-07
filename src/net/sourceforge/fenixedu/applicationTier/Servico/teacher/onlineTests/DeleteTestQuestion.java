@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,13 +25,13 @@ public class DeleteTestQuestion implements IService {
     public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
-        ITestQuestion testQuestion = (ITestQuestion) CollectionUtils.find(test.getTestQuestions(), new Predicate() {
+        TestQuestion testQuestion = (TestQuestion) CollectionUtils.find(test.getTestQuestions(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                final ITestQuestion testQuestion = (ITestQuestion) arg0;
+                final TestQuestion testQuestion = (TestQuestion) arg0;
                 return testQuestion.getQuestion().getIdInternal().equals(questionId);
             }
 

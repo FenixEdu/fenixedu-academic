@@ -4,19 +4,19 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 
 /**
  * @author jpvl
  */
 public interface IPersistentEmployee extends IPersistentObject {
-    public IEmployee readByNumber(Integer number) throws ExcepcaoPersistencia;
+    public Employee readByNumber(Integer number) throws ExcepcaoPersistencia;
 
-    public IEmployee readByIdInternal(int idInternal) throws ExcepcaoPersistencia;
+    public Employee readByIdInternal(int idInternal) throws ExcepcaoPersistencia;
 
-    public IEmployee readByPerson(int keyPerson) throws ExcepcaoPersistencia;
+    public Employee readByPerson(int keyPerson) throws ExcepcaoPersistencia;
 
-    public IEmployee readByPerson(IPerson person) throws ExcepcaoPersistencia;
+    public Employee readByPerson(Person person) throws ExcepcaoPersistencia;
 
 }

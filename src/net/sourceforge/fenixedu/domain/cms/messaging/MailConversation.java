@@ -21,8 +21,8 @@ public class MailConversation extends MailConversation_Base
 	{
 		public int compare(Object arg0, Object arg1)
 		{
-			IMailMessage message1 = (IMailMessage) arg0;
-			IMailMessage message2 = (IMailMessage) arg1;
+			MailMessage message1 = (MailMessage) arg0;
+			MailMessage message2 = (MailMessage) arg1;
 			return -message1.getCreationDate().compareTo(message2.getCreationDate());
 		}
 	}
@@ -71,21 +71,21 @@ public class MailConversation extends MailConversation_Base
 	}
 
 	@SuppressWarnings("unchecked")
-	public Iterator<IMailMessage> getMailMessagesIterator()
+	public Iterator<MailMessage> getMailMessagesIterator()
 	{
-		return new OrderedIterator<IMailMessage>(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(IMailMessage.class)), new LastMessagesFirstComparator());
+		return new OrderedIterator<MailMessage>(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(MailMessage.class)), new LastMessagesFirstComparator());
 	}
 
 	@SuppressWarnings("unchecked")
-	public Iterator<IMailingList> getMailingListsIterator()
+	public Iterator<MailingList> getMailingListsIterator()
 	{
-		return new FilterIterator(this.getParentsIterator(), new ContentAssignableClassPredicate(IMailingList.class));
+		return new FilterIterator(this.getParentsIterator(), new ContentAssignableClassPredicate(MailingList.class));
 	}
 
 	public int getMailingListsCount()
 	{
 		int listsCount = 0;
-		Iterator<IMailingList> lists = this.getMailingListsIterator();
+		Iterator<MailingList> lists = this.getMailingListsIterator();
 		while (lists.hasNext())
 		{
 			lists.next();
@@ -94,14 +94,14 @@ public class MailConversation extends MailConversation_Base
 		return listsCount;
 	}
 
-	public IMailMessage getLastReply()
+	public MailMessage getLastReply()
 	{
-		Iterator<IMailMessage> messageIterator = this.getMailMessagesIterator();
-		IMailMessage mailMessage = null;
+		Iterator<MailMessage> messageIterator = this.getMailMessagesIterator();
+		MailMessage mailMessage = null;
 
 		while (messageIterator.hasNext())
 		{
-			IMailMessage currentMessage = messageIterator.next();
+			MailMessage currentMessage = messageIterator.next();
 			if (mailMessage == null
 					|| mailMessage.getCreationDate().before(currentMessage.getCreationDate()))
 			{
@@ -111,14 +111,14 @@ public class MailConversation extends MailConversation_Base
 		return mailMessage;
 	}
 
-	public IMailMessage getFirstMessage()
+	public MailMessage getFirstMessage()
 	{
-		Iterator<IMailMessage> messageIterator = this.getMailMessagesIterator();
-		IMailMessage mailMessage = null;
+		Iterator<MailMessage> messageIterator = this.getMailMessagesIterator();
+		MailMessage mailMessage = null;
 
 		while (messageIterator.hasNext())
 		{
-			IMailMessage currentMessage = messageIterator.next();
+			MailMessage currentMessage = messageIterator.next();
 			if (mailMessage == null
 					|| currentMessage.getCreationDate().before(mailMessage.getCreationDate()))
 			{
@@ -131,7 +131,7 @@ public class MailConversation extends MailConversation_Base
 	public int getMailMessagesCount()
 	{
 		int mailMessagesCount = 0;
-		Iterator<IMailMessage> messages = this.getMailMessagesIterator();
+		Iterator<MailMessage> messages = this.getMailMessagesIterator();
 		while (messages.hasNext())
 		{
 			messages.next();
@@ -143,10 +143,10 @@ public class MailConversation extends MailConversation_Base
 	public int getSize() throws MessagingException
 	{
 		int size = 0;
-		Iterator<IMailMessage> messagesIterator = this.getMailMessagesIterator();
+		Iterator<MailMessage> messagesIterator = this.getMailMessagesIterator();
 		while (messagesIterator.hasNext())
 		{
-			IMailMessage message = messagesIterator.next();
+			MailMessage message = messagesIterator.next();
 			size += message.getSize();
 		}
 		return size;
@@ -155,10 +155,10 @@ public class MailConversation extends MailConversation_Base
 	@Override
 	public void delete()
 	{
-		Iterator<IMailMessage> iterator = this.getMailMessagesIterator();
+		Iterator<MailMessage> iterator = this.getMailMessagesIterator();
 		while (iterator.hasNext())
 		{
-			IMailMessage message = iterator.next();
+			MailMessage message = iterator.next();
 			if (message.getMailConversationsCount() == 0) message.delete();
 		}
 

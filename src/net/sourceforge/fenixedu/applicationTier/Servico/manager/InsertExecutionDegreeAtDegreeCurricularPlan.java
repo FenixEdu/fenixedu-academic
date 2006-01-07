@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICampus;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
+import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -39,7 +39,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		IExecutionYear executionYear = null;
+		ExecutionYear executionYear = null;
 
 		try {
 			ISuportePersistente persistentSuport = PersistenceSupportFactory
@@ -49,13 +49,13 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
 					.getIPersistentDegreeCurricularPlan();
 
-			ICampus campus = (ICampus) campusDAO.readByOID(Campus.class, infoExecutionDegree
+			Campus campus = (Campus) campusDAO.readByOID(Campus.class, infoExecutionDegree
 					.getInfoCampus().getIdInternal());
 			if (campus == null) {
 				throw new NonExistingServiceException("message.nonExistingCampus", null);
 			}
 
-			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
 					.readByOID(DegreeCurricularPlan.class, infoExecutionDegree
 							.getInfoDegreeCurricularPlan().getIdInternal());
 
@@ -65,7 +65,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 			IPersistentExecutionYear persistentExecutionYear = persistentSuport
 					.getIPersistentExecutionYear();
 
-			executionYear = (IExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
+			executionYear = (ExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
 					infoExecutionDegree.getInfoExecutionYear().getIdInternal());
 
 			if (executionYear == null) {
@@ -73,7 +73,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 				throw new NonExistingServiceException("message.non.existing.execution.year", null);
 			}
 
-			IExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
+			ExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
 			executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);
 			executionDegree.setExecutionYear(executionYear);
 			executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
@@ -88,7 +88,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 		}
 	}
 
-	private void setPeriods(IExecutionDegree executionDegree, InfoExecutionDegree infoExecutionDegree)
+	private void setPeriods(ExecutionDegree executionDegree, InfoExecutionDegree infoExecutionDegree)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		InfoPeriod infoPeriodExamsFirstSemester = infoExecutionDegree.getInfoPeriodExamsFirstSemester();
 		setCompositePeriod(executionDegree, infoPeriodExamsFirstSemester, 11);
@@ -106,7 +106,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 		setCompositePeriod(executionDegree, infoPeriodLessonsSecondSemester, 22);
 	}
 
-	private void setCompositePeriod(IExecutionDegree executionDegree, InfoPeriod infoPeriod,
+	private void setCompositePeriod(ExecutionDegree executionDegree, InfoPeriod infoPeriod,
 			int periodToAssociateExecutionDegree) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -125,7 +125,7 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 
 		InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
-		IOccupationPeriod period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
+		OccupationPeriod period = (OccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
 				.getTime(), infoPeriodNew.getEndDate().getTime(), null);
 
 		if (period == null) {
@@ -138,11 +138,11 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
 		for (int i = infoPeriodListSize - 2; i >= 0; i--) {
 			Integer keyNextPeriod = period.getIdInternal();
 
-			IOccupationPeriod nextPeriod = period;
+			OccupationPeriod nextPeriod = period;
 
 			infoPeriodNew = infoPeriodList.get(i);
 
-			period = (IOccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
+			period = (OccupationPeriod) periodDAO.readByCalendarAndNextPeriod(infoPeriodNew.getStartDate()
 					.getTime(), infoPeriodNew.getEndDate().getTime(), keyNextPeriod);
 
 			if (period == null) {

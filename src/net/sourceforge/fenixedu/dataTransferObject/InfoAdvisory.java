@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IAdvisory;
+import net.sourceforge.fenixedu.domain.Advisory;
 
 /**
  * @author Nuno Nunes & Luis Cruz
@@ -124,7 +124,7 @@ public class InfoAdvisory extends InfoObject {
         sender = string;
     }
 
-    public void copyFromDomain(IAdvisory advisory) {
+    public void copyFromDomain(Advisory advisory) {
         super.copyFromDomain(advisory);
         if (advisory != null) {
             setCreated(advisory.getCreated());
@@ -135,7 +135,7 @@ public class InfoAdvisory extends InfoObject {
         }
     }
 
-    public static InfoAdvisory newInfoFromDomain(IAdvisory advisory) {
+    public static InfoAdvisory newInfoFromDomain(Advisory advisory) {
         InfoAdvisory infoAdvisory = null;
         if (advisory != null) {
             infoAdvisory = new InfoAdvisory();

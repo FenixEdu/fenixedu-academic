@@ -10,9 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -48,17 +48,17 @@ public class CreditsAuthorizationFilter extends Filtro {
         if (AuthorizationUtils.containsRole(roles, RoleType.CREDITS_MANAGER)) {
             authorizedRequester = true;
         } else if (AuthorizationUtils.containsRole(roles, RoleType.DEPARTMENT_CREDITS_MANAGER)) {
-            ITeacher teacherToEdit = readTeacher(arguments[0], sp);
+            Teacher teacherToEdit = readTeacher(arguments[0], sp);
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();            
-            IDepartment department = teacherToEdit.getCurrentWorkingDepartment();
+            Department department = teacherToEdit.getCurrentWorkingDepartment();
             authorizedRequester = departmentsWithAccessGranted.contains(department);
 
         } else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER)) {
-            ITeacher teacherToEdit = readTeacher(arguments[0], sp);
+            Teacher teacherToEdit = readTeacher(arguments[0], sp);
             authorizedRequester = teacherToEdit.getPerson().getUsername().equals(
                     requester.getUtilizador());
 
@@ -76,13 +76,13 @@ public class CreditsAuthorizationFilter extends Filtro {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private ITeacher readTeacher(Object object, ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private Teacher readTeacher(Object object, ISuportePersistente sp) throws ExcepcaoPersistencia {
         Integer teacherOID = null;
         if (object instanceof InfoTeacher) {
             teacherOID = ((InfoTeacher) object).getIdInternal();
         } else if (object instanceof Integer) {
             teacherOID = (Integer) object;
         }
-        return (ITeacher) sp.getIPersistentTeacher().readByOID(Teacher.class, teacherOID);
+        return (Teacher) sp.getIPersistentTeacher().readByOID(Teacher.class, teacherOID);
     }
 }

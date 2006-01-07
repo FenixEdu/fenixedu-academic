@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class SiteVO extends VersionedObjectsBase implements IPersistentSite {
 
-    public ISite readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia {
+    public Site readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia {
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        final ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseID);
 
         return (executionCourse != null) ? executionCourse.getSite() : null;

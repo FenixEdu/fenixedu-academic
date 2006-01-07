@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -38,12 +38,12 @@ public class ExecutionCourseStudentsGroupManagement extends ExecutionCourseUserG
 			FenixFilterException, FenixServiceException
 	{
 		IUserView userView = SessionUtils.getUserView(request);
-		Collection<IPerson> students = new ArrayList<IPerson>();
+		Collection<Person> students = new ArrayList<Person>();
 		Integer executionCourseID = new Integer((String) request.getParameter("executionCourseID"));
-		IExecutionCourse executionCourse = (IExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadDomainExecutionCourseByID", new Object[]
+		ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadDomainExecutionCourseByID", new Object[]
 		{ executionCourseID });
 
-		for (IAttends attend : executionCourse.getAttends())
+		for (Attends attend : executionCourse.getAttends())
 			students.add(attend.getAluno().getPerson());
 		request.setAttribute("elements", students);
 		return mapping.findForward("showStudents");

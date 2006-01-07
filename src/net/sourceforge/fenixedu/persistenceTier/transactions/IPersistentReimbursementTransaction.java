@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.transactions;
 
-import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
+import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -12,6 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentReimbursementTransaction extends IPersistentObject {
 
-    public IReimbursementTransaction readByReimbursementGuideEntry(
+    public ReimbursementTransaction readByReimbursementGuideEntry(
             Integer reimbursementGuideEntryID) throws ExcepcaoPersistencia;
 }

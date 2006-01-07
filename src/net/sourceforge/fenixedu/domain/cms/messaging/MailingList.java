@@ -27,8 +27,8 @@ public class MailingList extends MailingList_Base
 	{
 		public int compare(Object arg0, Object arg1)
 		{
-			IMailConversation conversation1 = (IMailConversation) arg0;
-			IMailConversation conversation2 = (IMailConversation) arg1;
+			MailConversation conversation1 = (MailConversation) arg0;
+			MailConversation conversation2 = (MailConversation) arg1;
 			return - conversation1.getCreationDate().compareTo(conversation2.getCreationDate());
 		}
 	}
@@ -37,8 +37,8 @@ public class MailingList extends MailingList_Base
 	{
 		public int compare(Object arg0, Object arg1)
 		{
-			IMailMessage message1 = (IMailMessage) arg0;
-			IMailMessage message2 = (IMailMessage) arg1;
+			MailMessage message1 = (MailMessage) arg0;
+			MailMessage message2 = (MailMessage) arg1;
 			return - message1.getCreationDate().compareTo(message2.getCreationDate());
 		}
 	}
@@ -55,35 +55,35 @@ public class MailingList extends MailingList_Base
 		public boolean evaluate(Content mailConversation)
 		{
 			boolean result = false;
-			IMailConversation conversation = (IMailConversation) mailConversation;
+			MailConversation conversation = (MailConversation) mailConversation;
 			result = conversation.isAboutSubject(this.subject);
 			return result;
 		}
 
 	}
 
-	public Iterator<IMailConversation> getMailConversationsIterator()
+	public Iterator<MailConversation> getMailConversationsIterator()
 	{
-		return new OrderedIterator(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(IMailConversation.class)),new LastConversationsFirstComparator());
+		return new OrderedIterator(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(MailConversation.class)),new LastConversationsFirstComparator());
 	}
 
-	public Iterator<IMailConversation> getConversationsOnSubjectIterator(String subject)
+	public Iterator<MailConversation> getConversationsOnSubjectIterator(String subject)
 	{
 		return new OrderedIterator(new FilterIterator(this.getMailConversationsIterator(), new ConversationIsAboutSubject(subject)),new LastConversationsFirstComparator());
 	}
 	
-	public Iterator<IMailMessage> getMailMessagesIterator()
+	public Iterator<MailMessage> getMailMessagesIterator()
 	{
-		return new OrderedIterator(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(IMailMessage.class)),new LastMessagesFirstComparator());
+		return new OrderedIterator(new FilterIterator(this.getChildrenIterator(), new ContentAssignableClassPredicate(MailMessage.class)),new LastMessagesFirstComparator());
 	}
 
-	public IMailConversation getMostRecentMailConversationOnSubject(String subject)
+	public MailConversation getMostRecentMailConversationOnSubject(String subject)
 	{
-		Iterator<IMailConversation> conversationsIterator = this.getConversationsOnSubjectIterator(subject);
-		IMailConversation result = null;
+		Iterator<MailConversation> conversationsIterator = this.getConversationsOnSubjectIterator(subject);
+		MailConversation result = null;
 		while (conversationsIterator.hasNext())
 		{
-			IMailConversation currentConversation = conversationsIterator.next();
+			MailConversation currentConversation = conversationsIterator.next();
 			if (result == null || result.getCreationDate().before(currentConversation.getCreationDate()))
 			{
 				result = currentConversation;
@@ -96,7 +96,7 @@ public class MailingList extends MailingList_Base
 	public int getMailConversationsCount()
 	{
 		int count =0;
-		Iterator<IMailConversation> mailConversationsIterator = this.getMailConversationsIterator();
+		Iterator<MailConversation> mailConversationsIterator = this.getMailConversationsIterator();
 		while(mailConversationsIterator.hasNext())
 		{
 			count++;
@@ -108,7 +108,7 @@ public class MailingList extends MailingList_Base
 	public int getMailMessagesCount()
 	{
 		int count =0;
-		Iterator<IMailMessage> mailMessagesIterator = this.getMailMessagesIterator();
+		Iterator<MailMessage> mailMessagesIterator = this.getMailMessagesIterator();
 		while(mailMessagesIterator.hasNext())
 		{
 			count++;
@@ -120,10 +120,10 @@ public class MailingList extends MailingList_Base
 	public int getSize() throws MessagingException
 	{
 		int size=0;
-		Iterator<IMailConversation> mailConversationsIterator = this.getMailConversationsIterator();
+		Iterator<MailConversation> mailConversationsIterator = this.getMailConversationsIterator();
 		while(mailConversationsIterator.hasNext())
 		{
-			IMailConversation conversation = mailConversationsIterator.next();
+			MailConversation conversation = mailConversationsIterator.next();
 			size+=conversation.getSize();
 		}
 		return size;
@@ -132,10 +132,10 @@ public class MailingList extends MailingList_Base
 	@Override
 	public void delete()
 	{
-		Iterator<IMailConversation> iterator = this.getMailConversationsIterator();
+		Iterator<MailConversation> iterator = this.getMailConversationsIterator();
 		while (iterator.hasNext())
 		{
-			IMailConversation conversation = iterator.next();
+			MailConversation conversation = iterator.next();
 			if(conversation.getMailingListsCount()==0)
 				conversation.delete();
 		}

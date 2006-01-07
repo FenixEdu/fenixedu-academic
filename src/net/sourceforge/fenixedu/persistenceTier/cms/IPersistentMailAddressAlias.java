@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.cms;
 
-import net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias;
+import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -16,5 +16,5 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public interface IPersistentMailAddressAlias
 {
-	public IMailAddressAlias readByAddress(String name) throws ExcepcaoPersistencia;
+	public MailAddressAlias readByAddress(String name) throws ExcepcaoPersistencia;
 }

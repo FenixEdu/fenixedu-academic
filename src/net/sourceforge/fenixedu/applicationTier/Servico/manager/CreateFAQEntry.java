@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQEntry;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
-import net.sourceforge.fenixedu.domain.support.IFAQEntry;
-import net.sourceforge.fenixedu.domain.support.IFAQSection;
+import net.sourceforge.fenixedu.domain.support.FAQEntry;
+import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,14 +24,14 @@ public class CreateFAQEntry implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentObject dao = sp.getIPersistentObject();
 
-        IFAQSection parentFAQSection = null;
+        FAQSection parentFAQSection = null;
         if (infoFAQEntry.getParentSection() != null
                 && infoFAQEntry.getParentSection().getIdInternal() != null) {
-            parentFAQSection = (IFAQSection) dao.readByOID(FAQSection.class, infoFAQEntry
+            parentFAQSection = (FAQSection) dao.readByOID(FAQSection.class, infoFAQEntry
                     .getParentSection().getIdInternal());
         }
 
-        IFAQEntry faqEntry = DomainFactory.makeFAQEntry();
+        FAQEntry faqEntry = DomainFactory.makeFAQEntry();
         faqEntry.setParentSection(parentFAQSection);
         faqEntry.setQuestion(infoFAQEntry.getQuestion());
         faqEntry.setAnswer(infoFAQEntry.getAnswer());

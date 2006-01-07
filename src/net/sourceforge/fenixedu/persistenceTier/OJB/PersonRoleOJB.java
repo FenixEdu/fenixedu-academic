@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonRole;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonRole;
@@ -18,11 +18,11 @@ public class PersonRoleOJB extends PersistentObjectOJB implements IPersistentPer
         super();
     }
 
-    public IPersonRole readByPersonAndRole(IPerson person, IRole role) throws ExcepcaoPersistencia {
+    public PersonRole readByPersonAndRole(Person person, Role role) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.username", person.getUsername());
         crit.addEqualTo("role.roleType", role.getRoleType());
-        return (IPersonRole) queryObject(PersonRole.class, crit);
+        return (PersonRole) queryObject(PersonRole.class, crit);
 
     }
 

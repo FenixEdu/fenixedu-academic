@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricularCourseAndInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,11 +24,11 @@ public class ReadCurriculum implements IService {
     public InfoCurriculum run(Integer curricularCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ICurricularCourse curricularCourse;
-        ICurriculum curriculum;
+        CurricularCourse curricularCourse;
+        Curriculum curriculum;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
+        curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
                 CurricularCourse.class, curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();

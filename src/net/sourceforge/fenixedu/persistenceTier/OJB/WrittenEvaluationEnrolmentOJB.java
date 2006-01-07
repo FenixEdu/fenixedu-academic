@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
@@ -33,10 +33,10 @@ public class WrittenEvaluationEnrolmentOJB extends PersistentObjectOJB implement
         return queryList(WrittenEvaluationEnrolment.class, criteria, true);
     }
 
-    public IWrittenEvaluationEnrolment readBy(Integer examOID, Integer studentOID) throws ExcepcaoPersistencia {
+    public WrittenEvaluationEnrolment readBy(Integer examOID, Integer studentOID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyWrittenEvaluation", examOID);
         criteria.addEqualTo("keyStudent", studentOID);
-        return (IWrittenEvaluationEnrolment) queryObject(WrittenEvaluationEnrolment.class, criteria);
+        return (WrittenEvaluationEnrolment) queryObject(WrittenEvaluationEnrolment.class, criteria);
     }
 }

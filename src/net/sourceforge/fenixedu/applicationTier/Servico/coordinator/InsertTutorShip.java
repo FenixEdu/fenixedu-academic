@@ -5,10 +5,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  * 
  */
 public class InsertTutorShip implements IService {
-    public Boolean verifyStudentOfThisDegree(IStudent student, DegreeType degreeType, String degreeCode)
+    public Boolean verifyStudentOfThisDegree(Student student, DegreeType degreeType, String degreeCode)
             throws FenixServiceException, ExcepcaoPersistencia {
         boolean result = false;
 
@@ -32,7 +32,7 @@ public class InsertTutorShip implements IService {
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
 
-        IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
 
         result = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
@@ -41,10 +41,10 @@ public class InsertTutorShip implements IService {
         return Boolean.valueOf(result);
     }
 
-    public Boolean verifyStudentAlreadyTutor(IStudent student, ITeacher teacher)
+    public Boolean verifyStudentAlreadyTutor(Student student, Teacher teacher)
             throws FenixServiceException, ExcepcaoPersistencia {
         boolean result = false;
-        ITutor tutor = null;
+        Tutor tutor = null;
 
         ISuportePersistente sp;
 

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesTeacher;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 /**
@@ -236,7 +236,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
         return 0;
     }
 
-    public static InfoInquiriesTeacher newInfoFromDomain(IInquiriesTeacher inquiriesTeacher) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoInquiriesTeacher newInfoFromDomain(InquiriesTeacher inquiriesTeacher) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         InfoInquiriesTeacher newInfo = null;
         if(inquiriesTeacher != null) {
             newInfo = new InfoInquiriesTeacher();
@@ -245,7 +245,7 @@ public class InfoInquiriesTeacher extends InfoObject implements Comparable {
         return newInfo;
     }
        
-    public void copyFromDomain(IInquiriesTeacher inquiriesTeacher) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void copyFromDomain(InquiriesTeacher inquiriesTeacher) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (inquiriesTeacher != null) {
             super.copyFromDomain(inquiriesTeacher);
 	        CopyUtils.copyPropertiesNullConvertion(this, inquiriesTeacher);

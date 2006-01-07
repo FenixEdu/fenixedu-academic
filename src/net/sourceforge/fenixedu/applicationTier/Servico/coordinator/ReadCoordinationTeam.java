@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinatorWithInfoPerson;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -33,7 +33,7 @@ public class ReadCoordinationTeam implements IService {
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");
@@ -43,7 +43,7 @@ public class ReadCoordinationTeam implements IService {
         Iterator iterator = coordinators.iterator();
         List infoCoordinators = new ArrayList();
         while (iterator.hasNext()) {
-            ICoordinator coordinator = (ICoordinator) iterator.next();
+            Coordinator coordinator = (Coordinator) iterator.next();
             InfoCoordinator infoCoordinator = InfoCoordinatorWithInfoPerson
                     .newInfoFromDomain(coordinator);
             infoCoordinators.add(infoCoordinator);

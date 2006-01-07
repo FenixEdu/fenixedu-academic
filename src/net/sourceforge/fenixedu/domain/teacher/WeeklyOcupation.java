@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -20,7 +20,7 @@ public class WeeklyOcupation extends WeeklyOcupation_Base {
 		super();
 	}
 
-	public WeeklyOcupation(ITeacher teacher, InfoWeeklyOcupation infoWeeklyOcupation) {
+	public WeeklyOcupation(Teacher teacher, InfoWeeklyOcupation infoWeeklyOcupation) {
 		if(teacher == null)
 			throw new DomainException("The teacher should not be null!");
 		setTeacher(teacher);

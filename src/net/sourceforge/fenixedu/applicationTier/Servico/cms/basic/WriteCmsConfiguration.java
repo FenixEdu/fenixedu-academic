@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.basic;
 
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -34,9 +34,9 @@ public class WriteCmsConfiguration extends CmsService
 		public Integer maxMessageSize; /* in bytes */
 	}
 
-	public ICms run(String name,CmsConfiguration changes) throws ExcepcaoPersistencia
+	public Cms run(String name,CmsConfiguration changes) throws ExcepcaoPersistencia
 	{
-		ICms editedCms = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readCmsByName(name);
+		Cms editedCms = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readCmsByName(name);
 		editedCms.getConfiguration().setSmtpServerAddress(changes.smtpServerAddress);
 		editedCms.getConfiguration().setFilterNonTextualAttachments(changes.filterNonTextualAttachments);
 		editedCms.getConfiguration().setMailingListsHost(changes.mailingListsHost);

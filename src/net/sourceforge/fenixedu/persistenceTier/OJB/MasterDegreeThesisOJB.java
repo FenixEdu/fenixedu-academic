@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
@@ -20,12 +20,12 @@ import org.apache.ojb.broker.query.Criteria;
 public class MasterDegreeThesisOJB extends PersistentObjectOJB implements
 		IPersistentMasterDegreeThesis {
 
-	public IMasterDegreeThesis readByStudentCurricularPlan(
+	public MasterDegreeThesis readByStudentCurricularPlan(
 			Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentCurricularPlan.idInternal",
 				studentCurricularPlanId);
-		IMasterDegreeThesis storedMasterDegreeThesis = (IMasterDegreeThesis) queryObject(
+		MasterDegreeThesis storedMasterDegreeThesis = (MasterDegreeThesis) queryObject(
 				MasterDegreeThesis.class, criteria);
 
 		return storedMasterDegreeThesis;

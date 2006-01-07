@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
 /**
  * @author Susana Fernandes
@@ -172,7 +172,7 @@ public class InfoMetadata extends InfoObject {
         return false;
     }
 
-    public void copyFromDomain(IMetadata metadata) {
+    public void copyFromDomain(Metadata metadata) {
         super.copyFromDomain(metadata);
         if (metadata != null) {
             setMetadataFile(metadata.getMetadataFile());
@@ -188,7 +188,7 @@ public class InfoMetadata extends InfoObject {
         }
     }
 
-    public static InfoMetadata newInfoFromDomain(IMetadata metadata) {
+    public static InfoMetadata newInfoFromDomain(Metadata metadata) {
         InfoMetadata infoMetadata = null;
         if (metadata != null) {
             infoMetadata = new InfoMetadata();

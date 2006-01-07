@@ -10,9 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,15 +27,15 @@ public class ReadStudentsWithDistributedTest implements IService {
 		List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+		DistributedTest distributedTest = (DistributedTest) persistentSuport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)
 			throw new FenixServiceException();
 
-		List<IStudent> studentList = persistentSuport.getIPersistentStudentTestQuestion()
+		List<Student> studentList = persistentSuport.getIPersistentStudentTestQuestion()
 				.readStudentsByDistributedTest(distributedTest.getIdInternal());
 
-		for (IStudent student : studentList)
+		for (Student student : studentList)
 			infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
 		return infoStudentList;
 	}

@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
 
 /**
  * @author Fernanda Quitério 24/09/2003
@@ -317,7 +317,7 @@ public class InfoWebSiteItem extends InfoObject {
         this.authorName = authorName;
     }
 
-    public void copyFromDomain(final IWebSiteItem webSiteItem) {
+    public void copyFromDomain(final WebSiteItem webSiteItem) {
         super.copyFromDomain(webSiteItem);
         if (webSiteItem != null) {
             setAuthorEmail(webSiteItem.getAuthorEmail());
@@ -347,7 +347,7 @@ public class InfoWebSiteItem extends InfoObject {
         }
     }
 
-    public static InfoWebSiteItem newInfoFromDomain(final IWebSiteItem webSiteItem) {
+    public static InfoWebSiteItem newInfoFromDomain(final WebSiteItem webSiteItem) {
         if (webSiteItem != null) {
             final InfoWebSiteItem infoWebSiteItem = new InfoWebSiteItem();
             infoWebSiteItem.copyFromDomain(webSiteItem);

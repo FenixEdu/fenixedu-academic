@@ -10,8 +10,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,23 +31,23 @@ public class PrepareEditStudentGroupMembers implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IStudentGroup studentGroup = (IStudentGroup) persistentSupport
+        final StudentGroup studentGroup = (StudentGroup) persistentSupport
                 .getIPersistentStudentGroup().readByOID(StudentGroup.class, studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final List<IAttends> groupingAttends = new ArrayList<IAttends>();
+        final List<Attends> groupingAttends = new ArrayList<Attends>();
         groupingAttends.addAll(studentGroup.getGrouping().getAttends());;
 
-        final List<IStudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroups();
-        for (final IStudentGroup studentGroupIter : studentsGroups) {
-            for (final IAttends attend : studentGroupIter.getAttends()) {
+        final List<StudentGroup> studentsGroups = studentGroup.getGrouping().getStudentGroups();
+        for (final StudentGroup studentGroupIter : studentsGroups) {
+            for (final Attends attend : studentGroupIter.getAttends()) {
                 groupingAttends.remove(attend);                
             }
         }
         final List<InfoStudent> infoStudents = new ArrayList();
-        for (final IAttends attend : groupingAttends) {
+        for (final Attends attend : groupingAttends) {
             infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
         }
         return infoStudents;

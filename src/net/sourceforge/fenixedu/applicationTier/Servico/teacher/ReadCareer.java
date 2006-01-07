@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
+import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -29,9 +29,9 @@ public class ReadCareer extends ReadDomainObjectService {
         return sp.getIPersistentCareer();
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        InfoCareer infoCarrerWithInfoTeacher = InfoCareer.newInfoFromDomain((ICareer) domainObject); 
-    	infoCarrerWithInfoTeacher.setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(((ICareer) domainObject).getTeacher()));
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        InfoCareer infoCarrerWithInfoTeacher = InfoCareer.newInfoFromDomain((Career) domainObject); 
+    	infoCarrerWithInfoTeacher.setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(((Career) domainObject).getTeacher()));
         return infoCarrerWithInfoTeacher;
     }
 

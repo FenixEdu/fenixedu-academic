@@ -23,7 +23,7 @@ public class SchoolClass extends SchoolClass_Base {
         return result;
     }
 
-    public void associateShift(IShift shift) {
+    public void associateShift(Shift shift) {
         if (shift == null) {
             throw new NullPointerException();
         }

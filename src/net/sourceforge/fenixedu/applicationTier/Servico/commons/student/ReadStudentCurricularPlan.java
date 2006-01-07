@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,12 +30,12 @@ public class ReadStudentCurricularPlan implements IService {
         }
 
         ISuportePersistente sp = null;
-        IStudentCurricularPlan studentCurricularPlan = null;
+        StudentCurricularPlan studentCurricularPlan = null;
 
         sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // The student Curricular plan
-        studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+        studentCurricularPlan = (StudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {

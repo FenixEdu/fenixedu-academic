@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  * @author Susana Fernandes
  */
 public interface IPersistentTestQuestion extends IPersistentObject {
-    public abstract List<ITestQuestion> readByTest(Integer testId) throws ExcepcaoPersistencia;
+    public abstract List<TestQuestion> readByTest(Integer testId) throws ExcepcaoPersistencia;
 
-    public abstract ITestQuestion readByTestAndQuestion(Integer testId, Integer questionId) throws ExcepcaoPersistencia;
+    public abstract TestQuestion readByTestAndQuestion(Integer testId, Integer questionId) throws ExcepcaoPersistencia;
 
-    public abstract List<ITestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia;
+    public abstract List<TestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia;
 
 }

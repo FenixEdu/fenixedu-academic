@@ -8,7 +8,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IMoneyCostCenter;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 
 /**
  * @author Tânia Pousão
@@ -124,7 +124,7 @@ public class InfoMoneyCostCenter  extends InfoObject {
         
         return string;
     }
-    public void copyFromDomain(IMoneyCostCenter moneyCostCenter) {
+    public void copyFromDomain(MoneyCostCenter moneyCostCenter) {
         super.copyFromDomain(moneyCostCenter);
         if(moneyCostCenter != null) {
             setInitialValue(moneyCostCenter.getInitialValue());
@@ -135,7 +135,7 @@ public class InfoMoneyCostCenter  extends InfoObject {
         }
     }
     
-    public static InfoMoneyCostCenter newInfoFromDomain(IMoneyCostCenter moneyCostCenter) {
+    public static InfoMoneyCostCenter newInfoFromDomain(MoneyCostCenter moneyCostCenter) {
         InfoMoneyCostCenter infoMoneyCostCenter = null;
         if (moneyCostCenter != null) {
             infoMoneyCostCenter = new InfoMoneyCostCenter();

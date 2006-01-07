@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -30,7 +30,7 @@ public class CloseTransactionFilter implements Filter {
 			}
 		}
 
-		public IPerson getPerson() {
+		public Person getPerson() {
 			throw new InformationNotAvailable(
 					"property person not available on a public requester user view");
 		}

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.transactions;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -19,7 +19,7 @@ public class InfoInsuranceTransaction extends InfoPaymentTransaction {
 
     }
 
-    protected void copyFromDomain(IInsuranceTransaction insuranceTransaction) {
+    protected void copyFromDomain(InsuranceTransaction insuranceTransaction) {
 
         super.copyFromDomain(insuranceTransaction);
 
@@ -28,7 +28,7 @@ public class InfoInsuranceTransaction extends InfoPaymentTransaction {
         this.infoStudent = InfoStudent.newInfoFromDomain(insuranceTransaction.getStudent());
     }
 
-    public static InfoInsuranceTransaction newInfoFromDomain(IInsuranceTransaction insuranceTransaction) {
+    public static InfoInsuranceTransaction newInfoFromDomain(InsuranceTransaction insuranceTransaction) {
 
         if (insuranceTransaction == null) {
             return null;

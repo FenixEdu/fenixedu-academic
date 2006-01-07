@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -52,23 +52,23 @@ public class InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers
 		this.teachers = teachers;
 	}
 	
-    public void copyFromDomain(IAttends attends) {
+    public void copyFromDomain(Attends attends) {
         super.copyFromDomain(attends);
 		
 		this.teachers = new ArrayList<InfoTeacher>();
-		List<IProfessorship> professorships = attends.getDisciplinaExecucao().getProfessorships();
-		for(IProfessorship professorship : professorships) {
+		List<Professorship> professorships = attends.getDisciplinaExecucao().getProfessorships();
+		for(Professorship professorship : professorships) {
 			this.teachers.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
 		}
 		
 		this.nonAffiliatedTeachers = new ArrayList<InfoNonAffiliatedTeacher>();
-		List<INonAffiliatedTeacher> nonAffiliatedTeachers = attends.getDisciplinaExecucao().getNonAffiliatedTeachers();
-		for(INonAffiliatedTeacher naTeacher : nonAffiliatedTeachers) {
+		List<NonAffiliatedTeacher> nonAffiliatedTeachers = attends.getDisciplinaExecucao().getNonAffiliatedTeachers();
+		for(NonAffiliatedTeacher naTeacher : nonAffiliatedTeachers) {
 			this.nonAffiliatedTeachers.add(InfoNonAffiliatedTeacher.newInfoFromDomain(naTeacher));
 		}
     }
 
-    public static InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers newInfoFromDomain(IAttends attends) {
+    public static InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers newInfoFromDomain(Attends attends) {
 		InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers infoAttends = null;
         if (attends != null) {
 			infoAttends = new InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers();

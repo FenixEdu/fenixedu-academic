@@ -7,16 +7,16 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.IDegreeModule;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class UIDegreeModule extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeModule";
 
     public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeModule";
 
-    protected IDegreeModule degreeModule;
+    protected DegreeModule degreeModule;
     protected Boolean onlyStructure;
     protected Boolean toEdit;
     protected int depth;
@@ -32,7 +32,7 @@ public class UIDegreeModule extends UIInput {
         this.setRendererType(null);
     }
 
-    public UIDegreeModule(IDegreeModule degreeModule, Boolean toEdit, int depth, String tabs) {
+    public UIDegreeModule(DegreeModule degreeModule, Boolean toEdit, int depth, String tabs) {
         this();
         this.degreeModule = degreeModule;
         this.toEdit = toEdit;
@@ -40,7 +40,7 @@ public class UIDegreeModule extends UIInput {
         this.tabs = tabs;
     }
 
-    public UIDegreeModule(IDegreeModule degreeModule, Boolean onlyStructure, Boolean toEdit, int depth, String tabs) {
+    public UIDegreeModule(DegreeModule degreeModule, Boolean onlyStructure, Boolean toEdit, int depth, String tabs) {
         this(degreeModule, toEdit, depth, tabs);
         this.onlyStructure = onlyStructure;
     }
@@ -56,16 +56,16 @@ public class UIDegreeModule extends UIInput {
         
         setFromAttributes();
         
-        if (this.degreeModule instanceof ICurricularCourse) {
+        if (this.degreeModule instanceof CurricularCourse) {
             new UICurricularCourse(this.degreeModule, this.toEdit, this.depth, this.tabs, null).encodeBegin(facesContext);
-        } else if (this.degreeModule instanceof ICourseGroup) {
+        } else if (this.degreeModule instanceof CourseGroup) {
             new UICourseGroup(this.degreeModule, this.onlyStructure, this.toEdit, this.depth, this.tabs).encodeBegin(facesContext);
         }
     }
     
     private void setFromAttributes() {
         if (this.degreeModule == null) {
-            this.degreeModule = (IDegreeModule) this.getAttributes().get("degreeModule");
+            this.degreeModule = (DegreeModule) this.getAttributes().get("degreeModule");
         }
         if (this.toEdit == null) {
             this.toEdit = (Boolean) this.getAttributes().get("toEdit");

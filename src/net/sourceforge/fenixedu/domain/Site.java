@@ -44,7 +44,7 @@ public class Site extends Site_Base {
             throw new NullPointerException();
         }
         final Date currentDate = Calendar.getInstance().getTime();
-        final IAnnouncement announcement = new Announcement();
+        final Announcement announcement = new Announcement();
         announcement.setTitle(announcementTitle);
         announcement.setInformation(announcementInformation);
         announcement.setCreationDate(currentDate);
@@ -52,11 +52,11 @@ public class Site extends Site_Base {
         announcement.setSite(this);
     }
 
-    public ISection createSection(String sectionName, ISection parentSection, Integer sectionOrder) {
+    public Section createSection(String sectionName, Section parentSection, Integer sectionOrder) {
         if (sectionName == null || sectionOrder == null)
             throw new NullPointerException();
 
-        final ISection section = new Section();
+        final Section section = new Section();
         section.setName(sectionName);
         section.setLastModifiedDate(Calendar.getInstance().getTime());
 
@@ -69,15 +69,15 @@ public class Site extends Site_Base {
         return section;
     }
 
-    private Integer organizeExistingSectionsOrder(final ISection parentSection, int sectionOrder) {
+    private Integer organizeExistingSectionsOrder(final Section parentSection, int sectionOrder) {
 
-        List<ISection> associatedSections = Section.getSections(parentSection, this);
+        List<Section> associatedSections = Section.getSections(parentSection, this);
         
         if (associatedSections != null) {
             if (sectionOrder == -1) {
                 sectionOrder = associatedSections.size();
             }
-            for (final ISection section : associatedSections) {
+            for (final Section section : associatedSections) {
                 int oldSectionOrder = section.getSectionOrder();
                 if (oldSectionOrder >= sectionOrder) {
                     section.setSectionOrder(oldSectionOrder + 1);
@@ -88,8 +88,8 @@ public class Site extends Site_Base {
     }
 
 
-    private static final Comparator<IAnnouncement> ANNOUNCEMENT_ORDER = new Comparator<IAnnouncement>() {
-	public int compare(IAnnouncement an1, IAnnouncement an2) {
+    private static final Comparator<Announcement> ANNOUNCEMENT_ORDER = new Comparator<Announcement>() {
+	public int compare(Announcement an1, Announcement an2) {
 	    return an2.getLastModifiedDate().compareTo(an1.getLastModifiedDate());
 	}
     };
@@ -98,19 +98,19 @@ public class Site extends Site_Base {
     // in the description of DML relations
     // This approach is not good because we are copying the set everytime we need it...
 
-    public Set<IAnnouncement> getSortedAnnouncements() {
-	TreeSet<IAnnouncement> sortedAnnouncements = new TreeSet<IAnnouncement>(ANNOUNCEMENT_ORDER);
+    public Set<Announcement> getSortedAnnouncements() {
+	TreeSet<Announcement> sortedAnnouncements = new TreeSet<Announcement>(ANNOUNCEMENT_ORDER);
 	sortedAnnouncements.addAll(getAssociatedAnnouncements());
 	return Collections.unmodifiableSet(sortedAnnouncements);
     }
 
-    public IAnnouncement getLastAnnouncement() {
-	List<IAnnouncement> allAnnouncements = getAssociatedAnnouncements();
+    public Announcement getLastAnnouncement() {
+	List<Announcement> allAnnouncements = getAssociatedAnnouncements();
 	if (allAnnouncements.isEmpty()) {
 	    return null;
 	} else {
-	    IAnnouncement last = allAnnouncements.get(0);
-	    for (IAnnouncement ann : allAnnouncements) {
+	    Announcement last = allAnnouncements.get(0);
+	    for (Announcement ann : allAnnouncements) {
 		if (last.getLastModifiedDate().before(ann.getLastModifiedDate())) {
 		    last = ann;
 		}

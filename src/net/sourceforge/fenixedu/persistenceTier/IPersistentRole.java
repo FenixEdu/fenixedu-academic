@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public interface IPersistentRole {
@@ -22,7 +22,7 @@ public interface IPersistentRole {
      * @return Role
      * @throws ExcepcaoPersistencia
      */
-    public IRole readByRoleType(RoleType roleType) throws ExcepcaoPersistencia;
+    public Role readByRoleType(RoleType roleType) throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
 }

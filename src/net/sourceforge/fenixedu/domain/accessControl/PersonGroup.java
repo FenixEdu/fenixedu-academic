@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import relations.PersonUserGroupHook;
 public class PersonGroup extends PersonGroup_Base {
     
@@ -12,7 +12,7 @@ public class PersonGroup extends PersonGroup_Base {
         super();
     }
 
-    public PersonGroup(IPerson creator, IPerson person, INodeGroup aggregator) {
+    public PersonGroup(Person creator, Person person, NodeGroup aggregator) {
         super();
         setCreator(creator);
         setPerson(person);
@@ -27,9 +27,9 @@ public class PersonGroup extends PersonGroup_Base {
 	}
 
 	@Override
-	public Iterator<IPerson> getElementsIterator()
+	public Iterator<Person> getElementsIterator()
 	{
-		List<IPerson> singlePersonList = new ArrayList<IPerson>(1);
+		List<Person> singlePersonList = new ArrayList<Person>(1);
 		singlePersonList.add(this.getPerson());
 		return singlePersonList.iterator();
 	}
@@ -42,7 +42,7 @@ public class PersonGroup extends PersonGroup_Base {
     }
 	
 	@Override
-	public boolean isMember(net.sourceforge.fenixedu.domain.IPerson person)
+	public boolean isMember(net.sourceforge.fenixedu.domain.Person person)
 	{
 		return this.getPerson().equals(person);
 	}

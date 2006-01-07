@@ -5,8 +5,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,17 +21,17 @@ public class EditExternalPerson implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExternalPerson storedExternalPerson = (IExternalPerson) sp.getIPersistentExternalPerson()
+        ExternalPerson storedExternalPerson = (ExternalPerson) sp.getIPersistentExternalPerson()
                 .readByOID(ExternalPerson.class, externalPersonID);
 
         if (storedExternalPerson == null)
             throw new NonExistingServiceException(
                     "error.exception.externalPerson.nonExistingExternalPsrson");
 
-        List<IExternalPerson> allExternalPersons = (List<IExternalPerson>) sp
+        List<ExternalPerson> allExternalPersons = (List<ExternalPerson>) sp
                 .getIPersistentExternalPerson().readAll(ExternalPerson.class);
 
-        IInstitution storedInstitution = (IInstitution) sp.getIPersistentInstitution().readByOID(
+        Institution storedInstitution = (Institution) sp.getIPersistentInstitution().readByOID(
                 Institution.class, institutionID);
 
         storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution,

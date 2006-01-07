@@ -8,7 +8,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 
 /**
  * @author Tânia Pousão
@@ -392,7 +392,7 @@ public class InfoExtraWorkRequests extends InfoObject {
         return string;
     }
 
-    public void copyFromDomain(IExtraWorkRequests extraWorkRequests) {
+    public void copyFromDomain(ExtraWorkRequests extraWorkRequests) {
         super.copyFromDomain(extraWorkRequests);
         if (extraWorkRequests != null) {
             setBeginDate(extraWorkRequests.getBeginDate());
@@ -413,7 +413,7 @@ public class InfoExtraWorkRequests extends InfoObject {
         }
     }
 
-    public static InfoExtraWorkRequests newInfoFromDomain(IExtraWorkRequests extraWorkRequests) {
+    public static InfoExtraWorkRequests newInfoFromDomain(ExtraWorkRequests extraWorkRequests) {
         InfoExtraWorkRequests infoExtraWorkRequests = null;
         if (extraWorkRequests != null) {
             infoExtraWorkRequests = new InfoExtraWorkRequests();
@@ -423,7 +423,7 @@ public class InfoExtraWorkRequests extends InfoObject {
     }
 
     public void copyToDomain(InfoExtraWorkRequests infoExtraWorkRequests,
-            IExtraWorkRequests extraWorkRequests) {
+            ExtraWorkRequests extraWorkRequests) {
         super.copyToDomain(infoExtraWorkRequests, extraWorkRequests);
 
         extraWorkRequests.setBeginDate(infoExtraWorkRequests.getBeginDate());

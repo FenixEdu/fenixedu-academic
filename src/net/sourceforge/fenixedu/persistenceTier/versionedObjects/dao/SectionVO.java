@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class SectionVO extends VersionedObjectsBase implements IPersistentSection {
 
     public List readBySiteAndSection(String executionCourseSigla, String executionPeriodName, String year, Integer superiorSectionID) throws ExcepcaoPersistencia {
-        Collection<ISection> sections = readAll(Section.class);
+        Collection<Section> sections = readAll(Section.class);
         List sections_aux = new ArrayList();
         
-        for(ISection section : sections){
-            IExecutionCourse executionCourse = section.getSite().getExecutionCourse();
+        for(Section section : sections){
+            ExecutionCourse executionCourse = section.getSite().getExecutionCourse();
             if(executionCourse.getSigla().equals(executionCourseSigla) &&
                     executionCourse.getExecutionPeriod().getName().equals(executionPeriodName) &&
                     executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(year))
@@ -41,11 +41,11 @@ public class SectionVO extends VersionedObjectsBase implements IPersistentSectio
     }
   
     public List readBySite(String executionCourseSigla, String executionPeriodName, String year) throws ExcepcaoPersistencia {
-        Collection<ISection> sections = readAll(Section.class);
+        Collection<Section> sections = readAll(Section.class);
         List sections_aux = new ArrayList();
         
-        for(ISection section : sections){
-            IExecutionCourse executionCourse = section.getSite().getExecutionCourse();
+        for(Section section : sections){
+            ExecutionCourse executionCourse = section.getSite().getExecutionCourse();
             if(executionCourse.getSigla().equals(executionCourseSigla) &&
                     executionCourse.getExecutionPeriod().getName().equals(executionPeriodName) &&
                     executionCourse.getExecutionPeriod().getExecutionYear().getYear().equals(year))

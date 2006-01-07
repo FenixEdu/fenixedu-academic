@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -31,7 +31,7 @@ public class TeacherExpectationDefinitionPeriodManagement extends FenixBackingBe
 
     private List<SelectItem> executionYears;
 
-    private ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod;
+    private TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod;
 
     private Integer teacherExpectationDefinitionPeriodID;
 
@@ -111,7 +111,7 @@ public class TeacherExpectationDefinitionPeriodManagement extends FenixBackingBe
         this.getViewState().setAttribute("selectedExecutionYearID", selectedExecutionYearID);
     }
 
-    public ITeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod()
+    public TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod()
             throws FenixFilterException, FenixServiceException {
 
         Integer departmentID = getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
@@ -119,7 +119,7 @@ public class TeacherExpectationDefinitionPeriodManagement extends FenixBackingBe
 
         if (this.teacherExpectationDefinitionPeriod == null) {
             if (getSelectedExecutionYearID() != null) {
-                this.teacherExpectationDefinitionPeriod = (ITeacherExpectationDefinitionPeriod) ServiceUtils
+                this.teacherExpectationDefinitionPeriod = (TeacherExpectationDefinitionPeriod) ServiceUtils
                         .executeService(
                                 getUserView(),
                                 "ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID",
@@ -213,7 +213,7 @@ public class TeacherExpectationDefinitionPeriodManagement extends FenixBackingBe
     }
 
     public String preparePeriodForEdit() throws FenixFilterException, FenixServiceException {
-        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod();
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod();
         Date startDate = teacherExpectationDefinitionPeriod.getStartDate();
         Date endDate = teacherExpectationDefinitionPeriod.getEndDate();
         SimpleDateFormat dateFormatter = new SimpleDateFormat(DATE_FORMAT);

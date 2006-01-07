@@ -12,7 +12,7 @@ import java.util.List;
 import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -27,7 +27,7 @@ import org.apache.ojb.broker.query.QueryBySQL;
  */
 public class PersistentMailingListOJB extends PersistentObjectOJB implements IPersistentMailingList
 {
-	public Collection<IMailingList> readAllMailingListsWithOutgoingMails() throws ExcepcaoPersistencia
+	public Collection<MailingList> readAllMailingListsWithOutgoingMails() throws ExcepcaoPersistencia
 	{
 		QueryBySQL query = new QueryBySQL(MailingList.class, "select CMS_MAILING_LIST.* from CMS_MAILING_LIST inner join CMS_MAIL_QUEUE on CMS_MAILING_LIST.KEY_QUEUE=CMS_MAIL_QUEUE.ID_INTERNAL inner join CMS_MAIL_MESSAGE_MAIL_QUEUE on CMS_MAIL_MESSAGE_MAIL_QUEUE.KEY_MAIL_QUEUE=CMS_MAIL_QUEUE.ID_INTERNAL");
 		try
@@ -41,7 +41,7 @@ public class PersistentMailingListOJB extends PersistentObjectOJB implements IPe
 
 	}
 
-	public Collection<IMailingList> readReceptorMailingListsForAddress(Collection<Address> addresses, String mailingListDomain)
+	public Collection<MailingList> readReceptorMailingListsForAddress(Collection<Address> addresses, String mailingListDomain)
 			throws ExcepcaoPersistencia
 	{
 		StringBuffer sqlQueryAliases= new StringBuffer();

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import net.sourceforge.fenixedu.domain.IPersonAccount;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
@@ -14,10 +14,10 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class PersonAccountOJB extends ObjectFenixOJB implements IPersistentPersonAccount {
 
-    public IPersonAccount readByPerson(final Integer personOID) throws ExcepcaoPersistencia {
+    public PersonAccount readByPerson(final Integer personOID) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("person.idInternal", personOID);
-        return (IPersonAccount) queryObject(PersonAccount.class, crit);
+        return (PersonAccount) queryObject(PersonAccount.class, crit);
     }
 
 }

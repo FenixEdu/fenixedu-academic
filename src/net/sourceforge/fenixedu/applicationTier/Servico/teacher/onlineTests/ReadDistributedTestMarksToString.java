@@ -12,11 +12,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,7 +40,7 @@ public class ReadDistributedTestMarksToString implements IService {
         ISuportePersistente persistentSuport;
 
         persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+        DistributedTest distributedTest = (DistributedTest) persistentSuport
                 .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
@@ -53,7 +53,7 @@ public class ReadDistributedTestMarksToString implements IService {
             result.append("\t");
         }
         result.append("Nota");
-        List<IStudentTestQuestion> studentTestQuestionList = persistentSuport
+        List<StudentTestQuestion> studentTestQuestionList = persistentSuport
                 .getIPersistentStudentTestQuestion().readByDistributedTest(
                         distributedTest.getIdInternal());
         if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
@@ -68,7 +68,7 @@ public class ReadDistributedTestMarksToString implements IService {
         Double finalMark = new Double(0);
         DecimalFormat df = new DecimalFormat("#0.##");
         DecimalFormat percentageFormat = new DecimalFormat("#%");
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (questionIndex == 0) {
                 result.append(studentTestQuestion.getStudent().getNumber());
                 result.append("\t");
@@ -114,22 +114,22 @@ public class ReadDistributedTestMarksToString implements IService {
         IPersistentDistributedTest persistentDistributedTest = persistentSuport
                 .getIPersistentDistributedTest();
 
-        List<IStudent> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSuport
+        List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSuport
                 .getIFrequentaPersistente().readByExecutionCourse(executionCourseId), new Transformer() {
 
             public Object transform(Object input) {
-                return ((IAttends) input).getAluno();
+                return ((Attends) input).getAluno();
             }
         });
         List<Integer> distributedTestIdsList = new ArrayList<Integer>();
         CollectionUtils.addAll(distributedTestIdsList, distributedTestCodes);
-        List<IStudent> studentsFromTestsList = persistentStudentTestQuestion
+        List<Student> studentsFromTestsList = persistentStudentTestQuestion
                 .readStudentsByDistributedTests(distributedTestIdsList);
-        List<IStudent> studentList = concatStudentsLists(studentsFromAttendsList, studentsFromTestsList);
+        List<Student> studentList = concatStudentsLists(studentsFromAttendsList, studentsFromTestsList);
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
-            IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(
+            DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(
                     DistributedTest.class, new Integer(distributedTestCodes[i]));
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
@@ -141,7 +141,7 @@ public class ReadDistributedTestMarksToString implements IService {
                 result.append("%\t");
         }
 
-        for (IStudent student : studentList) {
+        for (Student student : studentList) {
             result.append("\n");
             result.append(student.getNumber());
             result.append("\t");
@@ -184,12 +184,12 @@ public class ReadDistributedTestMarksToString implements IService {
         return result.toString();
     }
 
-    private List<IStudent> concatStudentsLists(List<IStudent> list1, List<IStudent> list2) {
+    private List<Student> concatStudentsLists(List<Student> list1, List<Student> list2) {
 
-        List<IStudent> sortedStudents = new ArrayList<IStudent>();
+        List<Student> sortedStudents = new ArrayList<Student>();
         sortedStudents.addAll(list1);
 
-        for (IStudent student : list2) {
+        for (Student student : list2) {
             if (!sortedStudents.contains(student))
                 sortedStudents.add(student);
         }

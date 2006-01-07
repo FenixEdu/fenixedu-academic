@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -20,7 +20,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID implements IService {
 
-    public ITeacherExpectationDefinitionPeriod run(Integer departmentID, Integer executionYearID)
+    public TeacherExpectationDefinitionPeriod run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente persistenceSupport = PersistenceSupportFactory
@@ -29,9 +29,9 @@ public class ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYea
         IPersistentExecutionYear persistentExecutionYear = persistenceSupport
                 .getIPersistentExecutionYear();
 
-        IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
+        Department department = (Department) persistentDepartment.readByOID(Department.class,
                 departmentID);
-        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                 ExecutionYear.class, executionYearID);
 
         return department.readTeacherExpectationDefinitionPeriodByExecutionYear(executionYear);

@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.De
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,7 +27,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implement
             throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
@@ -40,7 +40,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implement
             throw new ScholarshipNotFinishedServiceException(
                     "error.exception.masterDegree.scholarshipNotFinished");
 
-        IMasterDegreeProofVersion masterDegreeProofVersion = sp.getIPersistentMasterDegreeProofVersion()
+        MasterDegreeProofVersion masterDegreeProofVersion = sp.getIPersistentMasterDegreeProofVersion()
                 .readActiveByStudentCurricularPlan(studentCurricularPlan);
 
         if (masterDegreeProofVersion == null)

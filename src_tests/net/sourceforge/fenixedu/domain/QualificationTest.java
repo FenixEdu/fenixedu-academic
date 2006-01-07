@@ -40,17 +40,17 @@ public class QualificationTest extends DomainTestBase {
     String degree2 = "degree2";
     String school2 = "school2";
 
-	ICountry country1;
-    IPerson person1;
+	Country country1;
+    Person person1;
 	
-	ICountry country2;
-	IPerson person2;
+	Country country2;
+	Person person2;
 	
 	InfoQualification infoQualificationToCreate;
 	InfoQualification infoQualificationToEdit;
 	
-	IQualification qualificationToDelete;
-	IQualification qualificationToEdit;
+	Qualification qualificationToDelete;
+	Qualification qualificationToEdit;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -99,13 +99,13 @@ public class QualificationTest extends DomainTestBase {
 		}
 
 		
-		IQualification newQualificationWithCountry = DomainFactory.makeQualification(person1, country1, infoQualificationToCreate);
+		Qualification newQualificationWithCountry = DomainFactory.makeQualification(person1, country1, infoQualificationToCreate);
 		
 		assertTrue("Failed to reference person!", newQualificationWithCountry.hasPerson());
 		assertTrue("Failed to reference country!", newQualificationWithCountry.hasCountry());
 		verifyQualificationAttributes(newQualificationWithCountry, infoQualificationToCreate);
 
-		IQualification newQualification = DomainFactory.makeQualification(person1, null, infoQualificationToCreate);
+		Qualification newQualification = DomainFactory.makeQualification(person1, null, infoQualificationToCreate);
 		
 		assertTrue("Failed to reference person!", newQualification.hasPerson());
 		assertFalse("Shouldn't reference country!", newQualification.hasCountry());
@@ -133,7 +133,7 @@ public class QualificationTest extends DomainTestBase {
 		verifyQualificationAttributes(qualificationToEdit, infoQualificationToEdit);
 	}
 	
-	private void verifyQualificationAttributes(IQualification qualification, InfoQualification infoQualification) {
+	private void verifyQualificationAttributes(Qualification qualification, InfoQualification infoQualification) {
 		assertEquals("Different degree!", qualification.getDegree(), infoQualification.getDegree());
 		assertEquals("Different title!", qualification.getTitle(), infoQualification.getTitle());
 		assertEquals("Different school!", qualification.getSchool(), infoQualification.getSchool());

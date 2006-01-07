@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -16,14 +16,14 @@ public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteC
     private static final Comparator comparator = new BeanComparator("attend.aluno.number");
 
     private Integer evaluationID;
-    private IEvaluation evaluation;
-    private IExecutionCourse executionCourse;
+    private Evaluation evaluation;
+    private ExecutionCourse executionCourse;
 
-    public IEvaluation getEvaluation() {
+    public Evaluation getEvaluation() {
         return evaluation;
     }
 
-    public void setEvaluation(IEvaluation evaluation) {
+    public void setEvaluation(Evaluation evaluation) {
         this.evaluation = evaluation;
     }
 
@@ -35,17 +35,17 @@ public class InfoSiteEvaluationMarks extends DataTranferObject implements ISiteC
         this.evaluationID = evaluationID;
     }
 
-    public Collection<IMark> getSortedMarks() {
-        final Collection<IMark> sortedMarks = new TreeSet<IMark>(comparator);
+    public Collection<Mark> getSortedMarks() {
+        final Collection<Mark> sortedMarks = new TreeSet<Mark>(comparator);
         sortedMarks.addAll(getEvaluation().getMarks());
         return sortedMarks;
     }
 
-    public IExecutionCourse getExecutionCourse() {
+    public ExecutionCourse getExecutionCourse() {
         return executionCourse;
     }
 
-    public void setExecutionCourse(IExecutionCourse executionCourse) {
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
         this.executionCourse = executionCourse;
     }
 

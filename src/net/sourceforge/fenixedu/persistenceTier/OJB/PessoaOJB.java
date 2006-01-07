@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,12 +23,12 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente {
 
-    public IPerson lerPessoaPorUsername(String username) throws ExcepcaoPersistencia {
-        IPerson person = null;
+    public Person lerPessoaPorUsername(String username) throws ExcepcaoPersistencia {
+        Person person = null;
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("username", username);
-        person = (IPerson) queryObject(Person.class, criteria);
+        person = (Person) queryObject(Person.class, criteria);
         return person;
     }
 
@@ -38,21 +38,21 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
         return new Integer(count(Person.class, criteria));
     }
 
-    public IPerson lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
+    public Person lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
             IDDocumentType tipoDocumentoIdentificacao) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("numeroDocumentoIdentificacao", numeroDocumentoIdentificacao);
         criteria.addEqualTo("idDocumentType", tipoDocumentoIdentificacao);
-        return (IPerson) queryObject(Person.class, criteria);
+        return (Person) queryObject(Person.class, criteria);
     }
 
-    public List<IPerson> readPersonsBySubName(String subName) throws ExcepcaoPersistencia {
+    public List<Person> readPersonsBySubName(String subName) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addLike("name", subName);
         return queryList(Person.class, criteria);
     }
 
-    public List<IPerson> findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
+    public List<Person> findPersonByName(String name, Integer startIndex, Integer numberOfElementsInSpan)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
@@ -65,7 +65,7 @@ public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente
 
     }
 
-    public Collection<IPerson> readByIdentificationDocumentNumber(String identificationDocumentNumber)
+    public Collection<Person> readByIdentificationDocumentNumber(String identificationDocumentNumber)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("numeroDocumentoIdentificacao", identificationDocumentNumber);

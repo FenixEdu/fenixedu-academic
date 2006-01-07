@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -96,7 +96,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.COORDINATOR);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
 
-            ITeacher teacher = null;
+            Teacher teacher = null;
             // Read The ExecutionDegree
             try {
 
@@ -104,14 +104,14 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
                 teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
-                IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+                ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
                         .readByOID(ExecutionCourse.class, executionCourseID);
 
                 // For all Associated Curricular Courses
                 Iterator curricularCourseIterator = executionCourse.getAssociatedCurricularCourses()
                         .iterator();
                 while (curricularCourseIterator.hasNext()) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseIterator
+                    CurricularCourse curricularCourse = (CurricularCourse) curricularCourseIterator
                             .next();
 
                     // Read All Execution Degrees for this Degree Curricular
@@ -124,11 +124,11 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                     // Check if the Coordinator is the logged one
                     Iterator executionDegreesIterator = executionDegrees.iterator();
                     while (executionDegreesIterator.hasNext()) {
-                        IExecutionDegree executionDegree = (IExecutionDegree) executionDegreesIterator
+                        ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesIterator
                                 .next();
 
                         // modified by Tânia Pousão
-                        ICoordinator coordinator = sp.getIPersistentCoordinator()
+                        Coordinator coordinator = sp.getIPersistentCoordinator()
                                 .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
                                         executionDegree.getIdInternal());
                         if (coordinator != null) {
@@ -179,8 +179,8 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IProfessorship professorship = null;
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Professorship professorship = null;
             if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher

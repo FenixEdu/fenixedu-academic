@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,8 +27,8 @@ public class ExecutionDataIsForNotYetOpenedPeriodFilter extends Filtro {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
-        IExecutionCourse executionCourseDestination = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseDestinationId);
-        IExecutionCourse executionCourseSource = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseSourceId);
+        ExecutionCourse executionCourseDestination = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseDestinationId);
+        ExecutionCourse executionCourseSource = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseSourceId);
 
         long now = System.currentTimeMillis();
         if (executionCourseDestination.getExecutionPeriod().getBeginDate().getTime() < now

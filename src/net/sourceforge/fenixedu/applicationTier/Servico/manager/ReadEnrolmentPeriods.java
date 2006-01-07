@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriodInSchoolClasses;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriod;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInClasses;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,14 +24,14 @@ public class ReadEnrolmentPeriods implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, executionPeriodID);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class, executionPeriodID);
 
-        final List<IEnrolmentPeriod> enrolmentPeriods = executionPeriod.getEnrolmentPeriod();
+        final List<EnrolmentPeriod> enrolmentPeriods = executionPeriod.getEnrolmentPeriod();
         final List<InfoEnrolmentPeriod> infoEnrolmentPeriods = new ArrayList<InfoEnrolmentPeriod>();
-        for (final IEnrolmentPeriod enrolmentPeriod : enrolmentPeriods) {
-            if (enrolmentPeriod instanceof IEnrolmentPeriodInCurricularCourses) {
+        for (final EnrolmentPeriod enrolmentPeriod : enrolmentPeriods) {
+            if (enrolmentPeriod instanceof EnrolmentPeriodInCurricularCourses) {
                 infoEnrolmentPeriods.add(InfoEnrolmentPeriodInCurricularCourses.newInfoFromDomain(enrolmentPeriod));
-            } else if (enrolmentPeriod instanceof IEnrolmentPeriodInClasses) {
+            } else if (enrolmentPeriod instanceof EnrolmentPeriodInClasses) {
                 infoEnrolmentPeriods.add(InfoEnrolmentPeriodInSchoolClasses.newInfoFromDomain(enrolmentPeriod));
             }
         }

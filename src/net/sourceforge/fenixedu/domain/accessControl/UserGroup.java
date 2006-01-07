@@ -15,7 +15,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import relations.GroupCreation;
 import relations.GroupMailingList;
 import relations.GroupOwnership;
@@ -28,7 +28,7 @@ public abstract class UserGroup extends UserGroup_Base
 		super();
 	}
 
-	public abstract java.util.Iterator<net.sourceforge.fenixedu.domain.IPerson> getElementsIterator();
+	public abstract java.util.Iterator<net.sourceforge.fenixedu.domain.Person> getElementsIterator();
 
 	/**
 	 * Provides a standard implementation to <code>count()</code><br/>
@@ -48,10 +48,10 @@ public abstract class UserGroup extends UserGroup_Base
 		return elementsCount;
 	}
 	
-	public boolean isMember(IPerson person)
+	public boolean isMember(Person person)
 	{
 		boolean result = false;
-		Iterator<IPerson> persons = this.getElementsIterator();
+		Iterator<Person> persons = this.getElementsIterator();
 		while(persons.hasNext())
 		{
 			if (person.equals(persons.next()))
@@ -69,7 +69,7 @@ public abstract class UserGroup extends UserGroup_Base
 		GroupMailingList.remove(this.getMailingList(),this);
 		if (this.getMailingList() != null && this.getMailingList().getGroups().size()==0)
 			this.getMailingList().delete();		
-		for (IPerson user : this.getOwners())
+		for (Person user : this.getOwners())
 		{
 			GroupOwnership.remove(user,this);
 		}
@@ -82,7 +82,7 @@ public abstract class UserGroup extends UserGroup_Base
 	public boolean allows(IUserView userView)
 	{
 		boolean result = false;
-		IPerson person = userView.getPerson();
+		Person person = userView.getPerson();
 		if (person!=null)
 		{
 			result = this.isMember(person);
@@ -90,4 +90,5 @@ public abstract class UserGroup extends UserGroup_Base
 				
 		return result;
 	}
+
 }

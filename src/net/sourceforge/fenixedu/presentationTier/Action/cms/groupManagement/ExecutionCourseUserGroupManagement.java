@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -240,8 +240,8 @@ public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAc
 		
 		try
 		{
-			IPerson person  = this.getLoggedPerson(request);
-			IExecutionCourse executionCourse = (IExecutionCourse) ServiceManagerServiceFactory.executeService(userView,"ReadDomainExecutionCourseByID",new Object[] {executionCourseID});
+			Person person  = this.getLoggedPerson(request);
+			ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(userView,"ReadDomainExecutionCourseByID",new Object[] {executionCourseID});
 			Object writeArgs[] =
 			{ executionCourse,name,description,person, userGroupType};			
 			group = (UserGroup) ServiceUtils.executeService(userView, "WriteExecutionCourseUserGroup", writeArgs);

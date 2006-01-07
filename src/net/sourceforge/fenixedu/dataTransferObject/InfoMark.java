@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IMark;
+import net.sourceforge.fenixedu.domain.Mark;
 
 /**
  * 
@@ -111,7 +111,7 @@ public class InfoMark extends InfoObject {
         publishedMark = string;
     }
 
-    public void copyFromDomain(IMark mark) {
+    public void copyFromDomain(Mark mark) {
         super.copyFromDomain(mark);
         if (mark != null) {
             setMark(mark.getMark());
@@ -119,7 +119,7 @@ public class InfoMark extends InfoObject {
         }
     }
 
-    public static InfoMark newInfoFromDomain(IMark mark) {
+    public static InfoMark newInfoFromDomain(Mark mark) {
         InfoMark infoMark = null;
         if (mark != null) {
             infoMark = new InfoMark();

@@ -5,7 +5,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithInfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
@@ -122,7 +122,7 @@ public class InfoSupportLesson extends InfoObject {
         this.infoProfessorship = infoProfessorship;
     }
 
-    public static InfoSupportLesson newInfoFromDomain(ISupportLesson supportLesson) {
+    public static InfoSupportLesson newInfoFromDomain(SupportLesson supportLesson) {
         InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
         InfoProfessorship infoProfessorship = InfoProfessorshipWithInfoExecutionCourse.newInfoFromDomain(supportLesson.getProfessorship());
 

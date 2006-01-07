@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
@@ -32,7 +32,7 @@ public class DeleteDegrees implements IService {
             while (iter.hasNext()) {
 
                 Integer internalId = (Integer) iter.next();
-                IDegree degree = (IDegree)persistentDegree.readByOID(Degree.class,internalId);
+                Degree degree = (Degree)persistentDegree.readByOID(Degree.class,internalId);
                 
                 if (degree != null) {
                 

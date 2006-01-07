@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class StudentGroupTest extends DomainTestBase {
 
-    IGrouping grouping;
-    IStudentGroup studentGroup;
-    IAttends attend;
-    IShift shift, shift2;
+    Grouping grouping;
+    StudentGroup studentGroup;
+    Attends attend;
+    Shift shift, shift2;
     
     protected void setUp() throws Exception {
         super.setUp();

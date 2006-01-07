@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 public interface IPersistentMasterDegreeThesisDataVersion extends
 		IPersistentObject {
 
-	public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
+	public MasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
 			Integer studentCurricularPlanId) throws ExcepcaoPersistencia;
 
-	public IMasterDegreeThesisDataVersion readActiveByDissertationTitle(
+	public MasterDegreeThesisDataVersion readActiveByDissertationTitle(
 			String dissertationTitle) throws ExcepcaoPersistencia;
 
 	public List readNotActivesVersionsByStudentCurricularPlan(

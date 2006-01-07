@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.Seminaries.IModality;
+import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -49,7 +49,7 @@ public class InfoModality extends InfoObject {
         name = string;
     }
 
-    public void copyFromDomain(IModality modality) {
+    public void copyFromDomain(Modality modality) {
         super.copyFromDomain(modality);
         if (modality != null) {
             setDescription(modality.getDescription());
@@ -57,7 +57,7 @@ public class InfoModality extends InfoObject {
         }
     }
 
-    public static InfoModality newInfoFromDomain(IModality modality) {
+    public static InfoModality newInfoFromDomain(Modality modality) {
         InfoModality infoModality = null;
 
         if (modality != null) {

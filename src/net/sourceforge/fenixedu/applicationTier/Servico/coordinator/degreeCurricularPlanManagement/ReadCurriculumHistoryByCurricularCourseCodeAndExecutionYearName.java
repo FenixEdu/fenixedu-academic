@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricu
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurriculum;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
@@ -57,19 +57,19 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
         if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
             throw new FenixServiceException("nullExecutionYearName");
         }
-        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
 
-        IExecutionYear executionYear = persistentExecutionYear
+        ExecutionYear executionYear = persistentExecutionYear
                 .readExecutionYearByName(stringExecutionYear);
         if (executionYear == null) {
             throw new NonExistingServiceException("noExecutionYear");
         }
 
-        ICurriculum curriculumExecutionYear = persistentCurriculum
+        Curriculum curriculumExecutionYear = persistentCurriculum
                 .readCurriculumByCurricularCourseAndExecutionYear(curricularCourse.getIdInternal(),
                         executionYear.getEndDate());
         if (curriculumExecutionYear != null) {
@@ -78,7 +78,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
             List executionPeriods = persistentExecutionPeriod.readByExecutionYear(executionYear.getIdInternal());
             Iterator iterExecutionPeriods = executionPeriods.iterator();
             while (iterExecutionPeriods.hasNext()) {
-                IExecutionPeriod executionPeriod = (IExecutionPeriod) iterExecutionPeriods.next();
+                ExecutionPeriod executionPeriod = (ExecutionPeriod) iterExecutionPeriods.next();
                 List curricularCourseScopes = persistentCurricularCourseScope
                         .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(curricularCourse.getIdInternal(),
                                 executionPeriod.getBeginDate(),executionPeriod.getEndDate());
@@ -92,8 +92,8 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
                             disjunctionCurricularCourseScopes, intersectionCurricularCourseScopes);
                 }
                 List associatedExecutionCourses = new ArrayList();
-                List<IExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
-                for(IExecutionCourse executionCourse : executionCourses){
+                List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+                for(ExecutionCourse executionCourse : executionCourses){
                     if(executionCourse.getExecutionPeriod().equals(executionPeriod))
                         associatedExecutionCourses.add(executionCourse);
                 }
@@ -110,7 +110,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
         return infoCurriculum;
     }
 
-    private InfoCurriculum createInfoCurriculum(ICurriculum curriculum,
+    private InfoCurriculum createInfoCurriculum(Curriculum curriculum,
             IPersistentExecutionCourse persistentExecutionCourse, List allCurricularCourseScopes,
             List allExecutionCourses) throws ExcepcaoPersistencia {
 
@@ -120,7 +120,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
         List scopes = new ArrayList();
         CollectionUtils.collect(allCurricularCourseScopes, new Transformer() {
             public Object transform(Object arg0) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
 
                 return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                         .newInfoFromDomain(curricularCourseScope);
@@ -131,7 +131,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName imp
         List infoExecutionCourses = new ArrayList();
         Iterator iterExecutionCourses = allExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
-            IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
+            ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
 
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);

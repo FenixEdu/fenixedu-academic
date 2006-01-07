@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -42,15 +42,15 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     private Integer curricularYearID;
     private HtmlInputHidden executionPeriodIdHidden;
     private HtmlInputHidden curricularYearIdHidden;
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
     private Integer executionCourseID;
     private HtmlInputHidden executionCourseIdHidden;
-    private List<IExecutionCourse> executionCourses;
+    private List<ExecutionCourse> executionCourses;
     private List<SelectItem> executionPeriodsLabels;
     private List<SelectItem> curricularYearsLabels;
     private Integer evaluationID;
     private HtmlInputHidden evaluationIdHidden;
-    protected IEvaluation evaluation;
+    protected Evaluation evaluation;
     private Integer day;
     private Integer month;
     private Integer year;
@@ -59,7 +59,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     private HtmlInputHidden yearHidden;
     private String evaluationType;
     private HtmlInputHidden evaluationTypeHidden;
-    private IExecutionDegree executionDegree;
+    private ExecutionDegree executionDegree;
 
     public HtmlInputHidden getDegreeCurricularPlanIdHidden() {
         if (this.degreeCurricularPlanIdHidden == null) {
@@ -141,14 +141,14 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return this.curricularYearsLabels;
     }
 
-    public IExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
+    public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
 
         final Object[] argsToReadExecutionCourse = { ExecutionCourse.class, this.getExecutionCourseID() };
-        return (IExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject",
+        return (ExecutionCourse) ServiceUtils.executeService(null, "ReadDomainObject",
                 argsToReadExecutionCourse);
     }
 
-    protected List<IExecutionCourse> getExecutionCourses() {
+    protected List<ExecutionCourse> getExecutionCourses() {
         if (this.executionCourses != null) {
             return this.executionCourses;
         }
@@ -166,11 +166,11 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return new ArrayList();
     }
 
-    public IExecutionPeriod getExecutionPeriod() {
+    public ExecutionPeriod getExecutionPeriod() {
         if (executionPeriod == null) {
             try {
                 final Object args[] = { ExecutionPeriod.class, getExecutionPeriodID() };
-                return (IExecutionPeriod) ServiceUtils.executeService(null, "ReadDomainObject", args);
+                return (ExecutionPeriod) ServiceUtils.executeService(null, "ReadDomainObject", args);
             } catch (Exception e) {
             }
         }
@@ -190,18 +190,18 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public List<SelectItem> getExecutionCoursesLabels() {
         final List<SelectItem> result = new ArrayList();
-        for (final IExecutionCourse executionCourse : getExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getExecutionCourses()) {
             result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
         }
         Collections.sort(result, new BeanComparator("label"));
         return result;
     }
 
-    public IEvaluation getEvaluation() {
+    public Evaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
                 final Object[] args = { WrittenEvaluation.class, this.getEvaluationID() };
-                this.evaluation = (IEvaluation) ServiceUtils.executeService(null, "ReadDomainObject",
+                this.evaluation = (Evaluation) ServiceUtils.executeService(null, "ReadDomainObject",
                         args);
             }
             return this.evaluation;
@@ -212,7 +212,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public Date getCalendarBeginDate() {
         Date beginDate = getExecutionPeriod().getBeginDate();
-        final IExecutionDegree executionDegree = getExecutionDegree();
+        final ExecutionDegree executionDegree = getExecutionDegree();
         if (executionDegree != null) {
             if (getExecutionPeriod().getSemester().intValue() == 1
                     && executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
@@ -227,7 +227,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
 
     public Date getCalendarEndDate() {
         Date endDate = getExecutionPeriod().getEndDate();
-        final IExecutionDegree executionDegree = getExecutionDegree();
+        final ExecutionDegree executionDegree = getExecutionDegree();
         if (executionDegree != null) {
             if (getExecutionPeriod().getSemester().intValue() == 1
                     && executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
@@ -240,9 +240,9 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return endDate;
     }
 
-    private IExecutionDegree getExecutionDegree() {
+    private ExecutionDegree getExecutionDegree() {
         if (this.executionDegree == null) {
-            for (final IExecutionDegree executionDegree : getDegreeCurricularPlan()
+            for (final ExecutionDegree executionDegree : getDegreeCurricularPlan()
                     .getExecutionDegrees()) {
                 if (executionDegree.getExecutionYear() == getExecutionPeriod().getExecutionYear()) {
                     return (this.executionDegree = executionDegree);
@@ -252,9 +252,9 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
         return this.executionDegree;
     }
 
-    private IDegreeCurricularPlan getDegreeCurricularPlan() {
+    private DegreeCurricularPlan getDegreeCurricularPlan() {
         try {
-            return (IDegreeCurricularPlan) this.readDomainObject(DegreeCurricularPlan.class,
+            return (DegreeCurricularPlan) this.readDomainObject(DegreeCurricularPlan.class,
                     getDegreeCurricularPlanID());
         } catch (Exception e) {
             return null;
@@ -438,7 +438,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public Integer getDay() {
         if (this.day == null) {
             if (this.getEvaluation() != null) {
-                setDay(((IWrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.DAY_OF_MONTH));
+                setDay(((WrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.DAY_OF_MONTH));
             } else if (this.getRequestParameter("day") != null) {
                 setDay(Integer.valueOf(this.getRequestParameter("day")));
             } else if (this.getDayHidden().getValue() != null) {
@@ -457,7 +457,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public Integer getMonth() {
         if (this.month == null) {
             if (this.getEvaluation() != null) {
-                setMonth(((IWrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.MONTH) + 1);
+                setMonth(((WrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.MONTH) + 1);
             } else if (this.getRequestParameter("month") != null) {
                 setMonth(Integer.valueOf(this.getRequestParameter("month")));
             } else if (this.getMonthHidden().getValue() != null) {
@@ -476,7 +476,7 @@ public class CoordinatorEvaluationManagementBackingBean extends FenixBackingBean
     public Integer getYear() {
         if (this.year == null) {
             if (this.getEvaluation() != null) {
-                setYear(((IWrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.YEAR));
+                setYear(((WrittenEvaluation) this.getEvaluation()).getDay().get(Calendar.YEAR));
             } else if (this.getRequestParameter("year") != null) {
                 setYear(Integer.valueOf(this.getRequestParameter("year")));
             } else if (this.getYearHidden().getValue() != null) {

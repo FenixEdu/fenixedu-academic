@@ -15,17 +15,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherAdviseService;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -62,17 +62,17 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 
         DynaActionForm teacherCreditsForm = (DynaActionForm) form;
         IUserView userView = SessionUtils.getUserView(request);
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView,
                 "ReadDomainExecutionPeriodByOID", new Object[] { (Integer) teacherCreditsForm
                         .get("executionPeriodId") });
 
         Integer teacherID = (Integer) teacherCreditsForm.get("teacherId");
-        ITeacher teacher = null;
+        Teacher teacher = null;
         if (teacherID == null || teacherID == 0) {
             Integer teacherNumber = Integer.valueOf(teacherCreditsForm.getString("teacherNumber"));
-            List<IDepartment> manageableDepartments = userView.getPerson()
+            List<Department> manageableDepartments = userView.getPerson()
                     .getManageableDepartmentCredits();
-            for (IDepartment department : manageableDepartments) {
+            for (Department department : manageableDepartments) {
                 teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
                         executionPeriod.getEndDate());
                 if (teacher != null) {
@@ -84,7 +84,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
                 return mapping.findForward("teacher-not-found");
             }
         } else {
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
+            teacher = (Teacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
                     "ReadDomainTeacherByOID", new Object[] { teacherID });
         }
         
@@ -92,7 +92,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         request.setAttribute("executionPeriod", executionPeriod);
         setTeachingServicesAndSupportLessons(request, teacher, executionPeriod);
 
-        ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null) {
             setMasterDegreeServices(request, teacherService);
             setAdviseServices(request, teacherService);
@@ -100,14 +100,14 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             request.setAttribute("otherServices", teacherService.getOtherServices());
         }
 
-        List<ITeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionSituations(
+        List<TeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionSituations(
                 executionPeriod.getBeginDate(), executionPeriod.getEndDate());
         if (!serviceExemptions.isEmpty()) {
             Iterator orderedServiceExemptions = new OrderedIterator(serviceExemptions.iterator(),
                     new BeanComparator("start"));
             request.setAttribute("serviceExemptions", orderedServiceExemptions);
         }
-        List<IPersonFunction> personFuntions = teacher.getPersonFuntions(executionPeriod.getBeginDate(),
+        List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionPeriod.getBeginDate(),
                 executionPeriod.getEndDate());
         if (!personFuntions.isEmpty()) {
             Iterator orderedPersonFuntions = new OrderedIterator(personFuntions.iterator(),
@@ -115,17 +115,17 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
             request.setAttribute("personFunctions", orderedPersonFuntions);
         }
 
-        List<ICategory> categories = (List<ICategory>) ServiceUtils.executeService(userView,
+        List<Category> categories = (List<Category>) ServiceUtils.executeService(userView,
                 "ReadAllDomainObjects", new Object[] { Category.class });
-        List<ICategory> monitorCategories = (List<ICategory>) CollectionUtils.select(categories, new Predicate(){
+        List<Category> monitorCategories = (List<Category>) CollectionUtils.select(categories, new Predicate(){
             public boolean evaluate(Object object) {
-                ICategory category = (ICategory) object;
+                Category category = (Category) object;
                 return category.getCode().equals("MNL") || category.getCode().equals("MNT");
             }});
         double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
         double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod);
         int mandatoryLessonHours = 0;
-        ICategory category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
+        Category category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
                 executionPeriod.getEndDate());
         if(!monitorCategories.contains(category)){
             mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
@@ -141,21 +141,21 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
      * @param request
      * @param teacherService
      */
-    private void setMasterDegreeServices(HttpServletRequest request, ITeacherService teacherService) {
+    private void setMasterDegreeServices(HttpServletRequest request, TeacherService teacherService) {
         if(!teacherService.getMasterDegreeServices().isEmpty()){
             request.setAttribute("masterDegreeServices",teacherService.getMasterDegreeServices());
         }        
     }
 
-    private void setTeachingServicesAndSupportLessons(HttpServletRequest request, ITeacher teacher,
-            IExecutionPeriod executionPeriod) {
-        List<IProfessorship> professorships = teacher
+    private void setTeachingServicesAndSupportLessons(HttpServletRequest request, Teacher teacher,
+            ExecutionPeriod executionPeriod) {
+        List<Professorship> professorships = teacher
                 .getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
 
         List<ProfessorshipDTO> professorshipDTOs = (List<ProfessorshipDTO>) CollectionUtils.collect(
                 professorships, new Transformer() {
                     public Object transform(Object arg0) {
-                        IProfessorship professorship = (IProfessorship) arg0;
+                        Professorship professorship = (Professorship) arg0;
                         return new ProfessorshipDTO(professorship);
                     }
                 });
@@ -168,7 +168,7 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private void setInstitutionWorkTimes(HttpServletRequest request, ITeacherService teacherService) {
+    private void setInstitutionWorkTimes(HttpServletRequest request, TeacherService teacherService) {
         if (!teacherService.getInstitutionWorkTimes().isEmpty()) {
             ComparatorChain comparatorChain = new ComparatorChain();
             BeanComparator weekDayComparator = new BeanComparator("weekDay");
@@ -182,12 +182,12 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         }
     }
 
-    private void setAdviseServices(HttpServletRequest request, ITeacherService teacherService) {
+    private void setAdviseServices(HttpServletRequest request, TeacherService teacherService) {
         if (!teacherService.getTeacherAdviseServices().isEmpty()) {
-            List<ITeacherAdviseService> tfcAdvises = (List<ITeacherAdviseService>) CollectionUtils
+            List<TeacherAdviseService> tfcAdvises = (List<TeacherAdviseService>) CollectionUtils
                     .select(teacherService.getTeacherAdviseServices(), new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            ITeacherAdviseService teacherAdviseService = (ITeacherAdviseService) arg0;
+                            TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
                             return teacherAdviseService.getAdvise().getAdviseType().equals(
                                     AdviseType.FINAL_WORK_DEGREE);
                         }

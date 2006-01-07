@@ -8,32 +8,32 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IPersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
-import net.sourceforge.fenixedu.domain.department.ICompetenceCourseMembersGroup;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class ManagementGroupsBackingBean extends FenixBackingBean {
 
-    private List<IEmployee> employees = getDepartment().getCurrentActiveWorkingEmployees();
+    private List<Employee> employees = getDepartment().getCurrentActiveWorkingEmployees();
 
     private Integer[] selectedPersonGroupsIDsToRemove;
 
     private Integer[] selectedPersonsIDsToAdd;
 
-    public IDepartment getDepartment() {
+    public Department getDepartment() {
         return getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
     }
 
     public List getDepartmentEmployeesSelectItems() {
         List<SelectItem> result = new ArrayList<SelectItem>(employees.size());
-        for (IEmployee departmentEmployee : employees) {
-            IPerson person = departmentEmployee.getPerson();
+        for (Employee departmentEmployee : employees) {
+            Person person = departmentEmployee.getPerson();
             result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
                     + person.getUsername() + ")"));
         }
@@ -49,11 +49,11 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        ICompetenceCourseMembersGroup competenceCourseMembersGroup = getDepartment()
+        CompetenceCourseMembersGroup competenceCourseMembersGroup = getDepartment()
                 .getCompetenceCourseMembersGroup();
         if (competenceCourseMembersGroup != null) {
-            for (IUserGroup member : competenceCourseMembersGroup.getParts()) {
-                IPerson person = ((IPersonGroup) member).getPerson();
+            for (UserGroup member : competenceCourseMembersGroup.getParts()) {
+                Person person = ((PersonGroup) member).getPerson();
                 result.add(new SelectItem(member.getIdInternal(), person.getNome() + " ("
                         + person.getUsername() + ")"));
             }
@@ -80,11 +80,11 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
 
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
         
-        ICompetenceCourseMembersGroup competenceCourseMembersGroup = getDepartment()
+        CompetenceCourseMembersGroup competenceCourseMembersGroup = getDepartment()
                 .getCompetenceCourseMembersGroup();
         if (competenceCourseMembersGroup == null) {
             Object[] args = { getDepartment() };
-            competenceCourseMembersGroup = (ICompetenceCourseMembersGroup) ServiceUtils.executeService(
+            competenceCourseMembersGroup = (CompetenceCourseMembersGroup) ServiceUtils.executeService(
                     getUserView(), "CreateCompetenceCourseMembersGroup", args);
         }
 

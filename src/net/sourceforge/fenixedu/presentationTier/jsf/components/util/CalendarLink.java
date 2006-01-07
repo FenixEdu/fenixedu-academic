@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProject;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
@@ -25,12 +25,12 @@ public class CalendarLink {
     public CalendarLink() {
     }
 
-    public CalendarLink(final IExecutionCourse executionCourse, final IWrittenEvaluation writtenEvaluation, final Locale locale) {
+    public CalendarLink(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation, final Locale locale) {
         setObjectOccurrence(writtenEvaluation.getDay());
         setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation, locale));
     }
 
-	public CalendarLink(final IExecutionCourse executionCourse, final IProject project, final Date date, final String tail, final Locale locale) {
+	public CalendarLink(final ExecutionCourse executionCourse, final Project project, final Date date, final String tail, final Locale locale) {
         setObjectOccurrence(date);
         setObjectLinkLabel(constructCalendarPresentation(executionCourse, project, date, tail, locale));
 	}
@@ -88,7 +88,7 @@ public class CalendarLink {
 
 	private static final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/PublicDegreeInformation");
 
-    private String constructCalendarPresentation(final IExecutionCourse executionCourse, final IWrittenEvaluation writtenEvaluation, final Locale locale) {
+    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation, final Locale locale) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (writtenEvaluation instanceof WrittenTest) {
             stringBuilder.append(messages.getMessage(locale, "label.evaluation.shortname.test"));
@@ -103,7 +103,7 @@ public class CalendarLink {
         return stringBuilder.toString();
     }
 
-    private String constructCalendarPresentation(final IExecutionCourse executionCourse, final IProject project, final Date time, final String tail, final Locale locale) {
+    private String constructCalendarPresentation(final ExecutionCourse executionCourse, final Project project, final Date time, final String tail, final Locale locale) {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(messages.getMessage(locale, "label.evaluation.shortname.project"));        
         stringBuilder.append(" ");

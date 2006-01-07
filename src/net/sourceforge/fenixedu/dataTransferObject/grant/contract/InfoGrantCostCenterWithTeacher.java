@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 
 /**
  * @author Pica
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
  */
 public class InfoGrantCostCenterWithTeacher extends InfoGrantCostCenter {
 
-    public void copyFromDomain(IGrantCostCenter grantCostCenter) {
+    public void copyFromDomain(GrantCostCenter grantCostCenter) {
         if (grantCostCenter != null) {
             super.copyFromDomain(grantCostCenter);
             if (grantCostCenter.getResponsibleTeacher() != null) {
@@ -22,7 +22,7 @@ public class InfoGrantCostCenterWithTeacher extends InfoGrantCostCenter {
         }
     }
 
-    public static InfoGrantCostCenter newInfoFromDomain(IGrantCostCenter grantCostCenter) {
+    public static InfoGrantCostCenter newInfoFromDomain(GrantCostCenter grantCostCenter) {
         InfoGrantCostCenterWithTeacher infoGrantCostCenter = null;
         if (grantCostCenter != null) {
             infoGrantCostCenter = new InfoGrantCostCenterWithTeacher();

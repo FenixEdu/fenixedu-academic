@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
@@ -27,7 +27,7 @@ public class ReadAllDegreesByType implements IService {
         infoDegreesList = (List) CollectionUtils.collect(degreesList, new Transformer() {
 
             public Object transform(Object input) {
-                IDegree degree = (IDegree) input;
+                Degree degree = (Degree) input;
                 InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 return infoDegree;
             }

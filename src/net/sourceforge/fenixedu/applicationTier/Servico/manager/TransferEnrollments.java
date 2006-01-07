@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -21,12 +21,12 @@ public class TransferEnrollments implements IService {
                 .getIStudentCurricularPlanPersistente();
         final IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
 
-        final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
+        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
                 .readByOID(StudentCurricularPlan.class, destinationStudentCurricularPlanId);
 
         for (int i = 0; i < enrollmentIDsToTransfer.length; i++) {
             final Integer enrollmentIDToTransfer = enrollmentIDsToTransfer[i];
-            final IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class, enrollmentIDToTransfer);
+            final Enrolment enrollment = (Enrolment) persistentEnrollment.readByOID(Enrolment.class, enrollmentIDToTransfer);
 
             enrollment.setStudentCurricularPlan(studentCurricularPlan);
         }

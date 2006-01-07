@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -34,14 +34,14 @@ public class InsertCurricularCourseGroup implements IService {
         IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
                 .getIPersistentCurricularCourseGroup();
 
-        IBranch branch = (IBranch) persistentBranch.readByOID(Branch.class, branchId);
+        Branch branch = (Branch) persistentBranch.readByOID(Branch.class, branchId);
         if (branch == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        ICurricularCourseGroup curricularCourseGroup = null;
+        CurricularCourseGroup curricularCourseGroup = null;
         if (groupId != null) {
-            curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup.readByOID(CurricularCourseGroup.class, groupId);
+            curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup.readByOID(CurricularCourseGroup.class, groupId);
             if (curricularCourseGroup == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -56,7 +56,7 @@ public class InsertCurricularCourseGroup implements IService {
      * @param className
      * @return
      */
-    private ICurricularCourseGroup getInstance(String className) {
+    private CurricularCourseGroup getInstance(String className) {
         if (className.equals(AreaCurricularCourseGroup.class.getName())) {
             return DomainFactory.makeAreaCurricularCourseGroup();
         }

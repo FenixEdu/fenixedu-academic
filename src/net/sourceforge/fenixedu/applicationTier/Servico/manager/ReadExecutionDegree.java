@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICampus;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,7 +43,7 @@ public class ReadExecutionDegree implements IService {
             ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, idInternal);
 
         if (executionDegree == null) {
@@ -52,11 +52,11 @@ public class ReadExecutionDegree implements IService {
 
         InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
-        final IExecutionYear executionYear = executionDegree.getExecutionYear();
+        final ExecutionYear executionYear = executionDegree.getExecutionYear();
         final InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
         infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
-        final ICampus campus = executionDegree.getCampus();
+        final Campus campus = executionDegree.getCampus();
         final InfoCampus infoCampus = InfoCampus.newInfoFromDomain(campus);
         infoExecutionDegree.setInfoCampus(infoCampus);
 
@@ -72,12 +72,12 @@ public class ReadExecutionDegree implements IService {
             List infoCoordinatorList = new ArrayList();
             ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
             while (iteratorCoordinator.hasNext()) {
-                ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+                Coordinator coordinator = (Coordinator) iteratorCoordinator.next();
 
                 InfoCoordinator infoCoordinator = InfoCoordinator.newInfoFromDomain(coordinator);
                 infoCoordinatorList.add(infoCoordinator);
 
-                final ITeacher teacher = coordinator.getTeacher();
+                final Teacher teacher = coordinator.getTeacher();
                 final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
                 infoCoordinator.setInfoTeacher(infoTeacher);
             }

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,7 +25,7 @@ public class ReadGrantOwnerByPerson implements IService {
 		InfoGrantOwner infoGrantOwner = null;
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentGrantOwner persistentGrantOwner = sp.getIPersistentGrantOwner();
-		IGrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personId);
+		GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(personId);
 
 		infoGrantOwner = InfoGrantOwnerWithPerson.newInfoFromDomain(grantOwner);
 		return infoGrantOwner;

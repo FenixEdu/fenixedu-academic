@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantProject;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,7 +36,7 @@ public class EditGrantPaymentEntity implements IService {
        // super.run(new Integer(0), infoObject);
     	ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentGrantPaymentEntity persistentGrantPaymentEntity= sp.getIPersistentGrantPaymentEntity();
-        IGrantCostCenter grantCostCenter = (IGrantCostCenter)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        GrantCostCenter grantCostCenter = (GrantCostCenter)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
         if(grantCostCenter == null){
         	grantCostCenter = DomainFactory.makeGrantCostCenter();
         } 
@@ -45,7 +45,7 @@ public class EditGrantPaymentEntity implements IService {
 //      ResponsibleTeacher
     	if (infoObject.getInfoResponsibleTeacher() != null) {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readByNumber(infoObject
+            Teacher teacher = persistentTeacher.readByNumber(infoObject
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();
@@ -58,7 +58,7 @@ public class EditGrantPaymentEntity implements IService {
     	ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentGrantPaymentEntity persistentGrantPaymentEntity= sp.getIPersistentGrantPaymentEntity();
         IPersistentGrantCostCenter persistentGrantCostCenter= sp.getIPersistentGrantCostCenter();
-        IGrantProject grantProject = (IGrantProject)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        GrantProject grantProject = (GrantProject)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
         if(grantProject == null){
         	grantProject = DomainFactory.makeGrantProject();
         } 
@@ -66,7 +66,7 @@ public class EditGrantPaymentEntity implements IService {
     	grantProject.setNumber(infoObject.getNumber());
     	//Grant Cost Center
     	if (infoObject.getInfoGrantCostCenter() != null ){
-	    	final IGrantCostCenter  grantCostCenter = (IGrantCostCenter) persistentGrantCostCenter.readByOID(GrantCostCenter.class,infoObject.getInfoGrantCostCenter().getIdInternal());
+	    	final GrantCostCenter  grantCostCenter = (GrantCostCenter) persistentGrantCostCenter.readByOID(GrantCostCenter.class,infoObject.getInfoGrantCostCenter().getIdInternal());
 	    	if(grantCostCenter == null)
 	    		throw new GrantOrientationTeacherNotFoundException();
 	    	grantProject.setGrantCostCenter(grantCostCenter);
@@ -76,7 +76,7 @@ public class EditGrantPaymentEntity implements IService {
     	//ResponsibleTeacher
     	if (infoObject.getInfoResponsibleTeacher() != null) {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readByNumber(infoObject
+            Teacher teacher = persistentTeacher.readByNumber(infoObject
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null)
                 throw new GrantOrientationTeacherNotFoundException();

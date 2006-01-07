@@ -9,7 +9,7 @@ public class TeacherExpectationDefinitionPeriod extends TeacherExpectationDefini
         super();
     }
 
-    public TeacherExpectationDefinitionPeriod(IExecutionYear executionYear, Date startDate, Date endDate) {
+    public TeacherExpectationDefinitionPeriod(ExecutionYear executionYear, Date startDate, Date endDate) {
         super();
         this.setExecutionYear(executionYear);
         this.setStartDate(startDate);

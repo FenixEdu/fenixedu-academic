@@ -5,11 +5,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.ClassView;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -29,10 +29,10 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
                 .getIPersistentExecutionPeriod();
         final ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
 
-        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        final IExecutionPeriod nextExecutionPeriod = currentExecutionPeriod.getNextExecutionPeriod();
+        final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        final ExecutionPeriod nextExecutionPeriod = currentExecutionPeriod.getNextExecutionPeriod();
 
-        final IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeOID);
+        final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeOID);
 
         final int numClassesCurrentPeriod = currentExecutionPeriod.getSchoolClasses().size();
         final int numClassesNextPeriod = nextExecutionPeriod.getSchoolClasses().size();
@@ -44,9 +44,9 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
         return classViews;
     }
 
-    private void constructViews(final List classViews, final IDegree degree,
-            final IExecutionPeriod executionPeriod) {
-        for (final ISchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
+    private void constructViews(final List classViews, final Degree degree,
+            final ExecutionPeriod executionPeriod) {
+        for (final SchoolClass schoolClass : executionPeriod.getSchoolClasses()) {
             if (isForDegree(schoolClass, degree)) {
                 ClassView classView = new ClassView();
                 classView.setClassName(schoolClass.getNome());
@@ -65,10 +65,10 @@ public class ReadClassesForCurrentAndNextPeriodByDegree implements IService {
         }
     }
 
-    private boolean isForDegree(final ISchoolClass schoolClass, final IDegree degree) {
-        final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-        final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-        final IDegree degreeFromSchoolClass = degreeCurricularPlan.getDegree();
+    private boolean isForDegree(final SchoolClass schoolClass, final Degree degree) {
+        final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final Degree degreeFromSchoolClass = degreeCurricularPlan.getDegree();
         return degreeFromSchoolClass.getIdInternal().equals(degree.getIdInternal());
     }
 

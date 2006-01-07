@@ -10,9 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
@@ -33,13 +33,13 @@ public class VerifyIfCanEnrollStudentGroupsInShift implements IService {
         final ITurnoPersistente persistentShift = ps.getITurnoPersistente();
         final IPersistentGrouping persistentGroupProperties = ps.getIPersistentGrouping();
 
-        final IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class, groupPropertiesCode);
+        final Grouping grouping = (Grouping) persistentGroupProperties.readByOID(Grouping.class, groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
+        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
 
         if (grouping.getShiftType() != shift.getTipo()) {
             return false;
@@ -55,10 +55,10 @@ public class VerifyIfCanEnrollStudentGroupsInShift implements IService {
         return true;
     }
 
-    private List getStudentGroupsByShift(IGrouping grouping, IShift shift) {
+    private List getStudentGroupsByShift(Grouping grouping, Shift shift) {
         List result = new ArrayList();
-        List<IStudentGroup> studentGroups = grouping.getStudentGroupsWithShift();
-        for (final IStudentGroup studentGroup : studentGroups) {
+        List<StudentGroup> studentGroups = grouping.getStudentGroupsWithShift();
+        for (final StudentGroup studentGroup : studentGroups) {
             if (studentGroup.getShift().equals(shift)) {
                 result.add(studentGroup);
             }

@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -42,7 +42,7 @@ public class EnrollStudentGroupShift implements IService {
 
 		persistentGrouping = persistentSupport.getIPersistentGrouping();
 
-		IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null) {
@@ -50,14 +50,14 @@ public class EnrollStudentGroupShift implements IService {
 		}
 
 		persistentShift = persistentSupport.getITurnoPersistente();
-		IShift shift = (IShift) persistentShift.readByOID(Shift.class, newShiftCode);
+		Shift shift = (Shift) persistentShift.readByOID(Shift.class, newShiftCode);
 
 		if (shift == null) {
 			throw new InvalidSituationServiceException();
 		}
 
 		persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-		IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {

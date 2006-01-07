@@ -4,8 +4,8 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IInsuranceValue;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,11 +25,11 @@ public class EditInsuranceValueByExecutionYearID implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+        final ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
                 ExecutionYear.class, executionYearID);
 
         final IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
-        IInsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear
+        InsuranceValue insuranceValue = insuranceValueDAO.readByExecutionYear(executionYear
                 .getIdInternal());
 
         if (insuranceValue != null) {

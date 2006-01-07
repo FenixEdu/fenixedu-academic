@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
@@ -14,7 +14,7 @@ public class DeleteRestrictionFromDegreeCurricularPlan implements IService {
 	public void run(Integer restrictionID) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentRestriction restrictionDAO = persistentSuport.getIPersistentRestriction();
-		IRestriction restriction = (IRestriction) restrictionDAO.readByOID(Restriction.class,
+		Restriction restriction = (Restriction) restrictionDAO.readByOID(Restriction.class,
 				restrictionID);
 
 		restriction.delete();

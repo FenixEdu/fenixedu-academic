@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPaymentPhase;
+import net.sourceforge.fenixedu.domain.PaymentPhase;
 
 /**
  * @author Fernanda Quitério 10/Jan/2004
@@ -137,7 +137,7 @@ public class InfoPaymentPhase extends InfoObject {
         this.value = value;
     }
 
-    public static Object newInfoFromDoamin(IPaymentPhase paymentPhase) {
+    public static Object newInfoFromDoamin(PaymentPhase paymentPhase) {
         InfoPaymentPhase infoPaymentPhase = new InfoPaymentPhase();
         infoPaymentPhase.setDescription(paymentPhase.getDescription());
         infoPaymentPhase.setEndDate(paymentPhase.getEndDate());

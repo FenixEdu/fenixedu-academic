@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,11 +27,11 @@ public class ReadDegreeCurricularPlansByDegree implements IService {
     public List run(Integer idDegree) throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IDegree degree = (IDegree) sp.getICursoPersistente().readByOID(Degree.class, idDegree);
+        final Degree degree = (Degree) sp.getICursoPersistente().readByOID(Degree.class, idDegree);
 
         List<InfoDegreeCurricularPlan> result = new ArrayList<InfoDegreeCurricularPlan>();
 
-        for (IDegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+        for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
             if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
                 result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp));
             }

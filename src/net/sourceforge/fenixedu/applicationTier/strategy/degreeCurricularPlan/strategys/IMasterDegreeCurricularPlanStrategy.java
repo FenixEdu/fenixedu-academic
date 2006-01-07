@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.s
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -22,7 +22,7 @@ public interface IMasterDegreeCurricularPlanStrategy extends IDegreeCurricularPl
      *            Student's Curricular Plan
      * @return A boolean indicating if he has finished it or not.
      */
-    public boolean checkEndOfScholarship(IStudentCurricularPlan studentCurricularPlan)
+    public boolean checkEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia;
 
     /**
@@ -31,7 +31,7 @@ public interface IMasterDegreeCurricularPlanStrategy extends IDegreeCurricularPl
      * @return The Date of the student's end of his scholar part.
      * @throws ExcepcaoPersistencia
      */
-    public Date dateOfEndOfScholarship(IStudentCurricularPlan studentCurricularPlan)
+    public Date dateOfEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia;
 
 }

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -20,35 +20,35 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class TeacherVO extends VersionedObjectsBase implements
 		IPersistentTeacher {
 
-	public ITeacher readTeacherByUsername(final String userName)
+	public Teacher readTeacherByUsername(final String userName)
 			throws ExcepcaoPersistencia {
-		final Collection<ITeacher> teachers = readAll(Teacher.class);
-		for (final ITeacher teacher : teachers) {
+		final Collection<Teacher> teachers = readAll(Teacher.class);
+		for (final Teacher teacher : teachers) {
 			if (teacher.getPerson().getUsername().equals(userName))
 				return teacher;
 		}
 		return null;
 	}
 
-	public ITeacher readByNumber(final Integer teacherNumber)
+	public Teacher readByNumber(final Integer teacherNumber)
 			throws ExcepcaoPersistencia {
-		final Collection<ITeacher> teachers = readAll(Teacher.class);
-		for (final ITeacher teacher : teachers) {
+		final Collection<Teacher> teachers = readAll(Teacher.class);
+		for (final Teacher teacher : teachers) {
 			if (teacher.getTeacherNumber().equals(teacherNumber))
 				return teacher;
 		}
 		return null;
 	}
 
-	public Collection<ITeacher> readByNumbers(
+	public Collection<Teacher> readByNumbers(
 			final Collection<Integer> teacherNumbers)
 			throws ExcepcaoPersistencia {
 
-		final Collection<ITeacher> result = new ArrayList<ITeacher>();
-		final Collection<ITeacher> teachers = readAll(Teacher.class);
+		final Collection<Teacher> result = new ArrayList<Teacher>();
+		final Collection<Teacher> teachers = readAll(Teacher.class);
 
 		for (final Integer teacherNumber : teacherNumbers) {
-			for (final ITeacher teacher : teachers) {
+			for (final Teacher teacher : teachers) {
 				if (teacher.getTeacherNumber().equals(teacherNumber)) {
 					result.add(teacher);
 					break;

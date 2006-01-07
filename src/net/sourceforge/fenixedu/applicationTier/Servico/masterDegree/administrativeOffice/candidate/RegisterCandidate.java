@@ -18,19 +18,19 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IQualification;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudentKind;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CandidateEnrolment;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -57,11 +57,11 @@ public class RegisterCandidate implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         candidateID);
-        IPerson person = masterDegreeCandidate.getPerson();
-        IStudent student = person.getStudentByType(DegreeType.MASTER_DEGREE);
+        Person person = masterDegreeCandidate.getPerson();
+        Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);
 
         checkCandidateSituation(masterDegreeCandidate.getActiveCandidateSituation());
 
@@ -78,7 +78,7 @@ public class RegisterCandidate implements IService {
 
         checkDuplicateStudentCurricularPlan(masterDegreeCandidate, student);
 
-        IStudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(student, branchID,
+        StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(student, branchID,
                 masterDegreeCandidate, sp);
 
         createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan, sp);
@@ -94,7 +94,7 @@ public class RegisterCandidate implements IService {
     }
 
     private InfoCandidateRegistration createNewInfoCandidateRegistration(
-            IMasterDegreeCandidate masterDegreeCandidate, IStudentCurricularPlan studentCurricularPlan) {
+            MasterDegreeCandidate masterDegreeCandidate, StudentCurricularPlan studentCurricularPlan) {
         InfoCandidateRegistration infoCandidateRegistration = new InfoCandidateRegistration();
         infoCandidateRegistration.setInfoMasterDegreeCandidate(InfoMasterDegreeCandidateWithInfoPerson
                 .newInfoFromDomain(masterDegreeCandidate));
@@ -104,7 +104,7 @@ public class RegisterCandidate implements IService {
         infoCandidateRegistration.setEnrolments(new ArrayList<InfoEnrolment>());
         Iterator iteratorSCPs = studentCurricularPlan.getEnrolments().iterator();
         while (iteratorSCPs.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iteratorSCPs.next();
+            Enrolment enrolment = (Enrolment) iteratorSCPs.next();
             InfoEnrolment infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
                     .newInfoFromDomain(enrolment);
             infoCandidateRegistration.getEnrolments().add(infoEnrolment);
@@ -112,11 +112,11 @@ public class RegisterCandidate implements IService {
         return infoCandidateRegistration;
     }
 
-    private void createGratuitySituation(IMasterDegreeCandidate masterDegreeCandidate,
-            IStudentCurricularPlan studentCurricularPlan)
+    private void createGratuitySituation(MasterDegreeCandidate masterDegreeCandidate,
+            StudentCurricularPlan studentCurricularPlan)
             throws GratuityValuesNotDefinedServiceException {
 
-        IGratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
+        GratuityValues gratuityValues = masterDegreeCandidate.getExecutionDegree().getGratuityValues();
 
         if (gratuityValues == null) {
             throw new GratuityValuesNotDefinedServiceException(
@@ -127,8 +127,8 @@ public class RegisterCandidate implements IService {
 
     }
 
-    private void copyQualifications(IMasterDegreeCandidate masterDegreeCandidate, IPerson person) {
-        IQualification qualification = DomainFactory.makeQualification();
+    private void copyQualifications(MasterDegreeCandidate masterDegreeCandidate, Person person) {
+        Qualification qualification = DomainFactory.makeQualification();
         if (masterDegreeCandidate.getAverage() != null) {
             qualification.setMark(masterDegreeCandidate.getAverage().toString());
         }
@@ -150,51 +150,51 @@ public class RegisterCandidate implements IService {
         qualification.setDegree(masterDegreeCandidate.getMajorDegree());
     }
 
-    private void updateCandidateSituation(IMasterDegreeCandidate masterDegreeCandidate) {
+    private void updateCandidateSituation(MasterDegreeCandidate masterDegreeCandidate) {
         masterDegreeCandidate.getActiveCandidateSituation().setValidation(new State(State.INACTIVE));
 
-        ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+        CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
         candidateSituation.setDate(Calendar.getInstance().getTime());
         candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
         candidateSituation.setValidation(new State(State.ACTIVE));
         candidateSituation.setSituation(SituationName.ENROLLED_OBJ);
     }
 
-    private void createEnrolments(IUserView userView, IMasterDegreeCandidate masterDegreeCandidate,
-            IStudentCurricularPlan studentCurricularPlan, ISuportePersistente sp)
+    private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
+            StudentCurricularPlan studentCurricularPlan, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        List<ICandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-        IExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod()
+        List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
+        ExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod()
                 .readActualExecutionPeriod();
-        for (ICandidateEnrolment candidateEnrolment : candidateEnrolments) {
-            IEnrolment enrolment = DomainFactory.makeEnrolment();
+        for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
+            Enrolment enrolment = DomainFactory.makeEnrolment();
             enrolment.initializeAsNew(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
                     executionPeriod, EnrollmentCondition.FINAL, userView.getUtilizador());
         }
     }
 
-    private IStudentCurricularPlan createNewStudentCurricularPlan(IStudent student, Integer branchID,
-            IMasterDegreeCandidate masterDegreeCandidate, ISuportePersistente sp)
+    private StudentCurricularPlan createNewStudentCurricularPlan(Student student, Integer branchID,
+            MasterDegreeCandidate masterDegreeCandidate, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IBranch branch = (IBranch) sp.getIPersistentBranch().readByOID(Branch.class, branchID);
-        IDegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
+        Branch branch = (Branch) sp.getIPersistentBranch().readByOID(Branch.class, branchID);
+        DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan();
         Date startDate = Calendar.getInstance().getTime();
 
-        IStudentCurricularPlan studentCurricularPlan = DomainFactory.makeStudentCurricularPlan(student,
+        StudentCurricularPlan studentCurricularPlan = DomainFactory.makeStudentCurricularPlan(student,
                 degreecurricularPlan, branch, startDate, StudentCurricularPlanState.ACTIVE,
                 masterDegreeCandidate.getGivenCredits(), masterDegreeCandidate.getSpecialization());
         return studentCurricularPlan;
     }
 
-    private IStudent createNewStudent(Integer studentNumber, IPerson person, ISuportePersistente sp)
+    private Student createNewStudent(Integer studentNumber, Person person, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IStudent student;
+        Student student;
         if (studentNumber == null) {
             studentNumber = sp.getIPersistentStudent().generateStudentNumber(DegreeType.MASTER_DEGREE);
         }
 
-        IStudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(
+        StudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(
                 new StudentType(StudentType.NORMAL));
         StudentState state = new StudentState(StudentState.INSCRITO);
         student = DomainFactory.makeStudent(person, studentNumber, studentKind, state, false, false,
@@ -205,11 +205,11 @@ public class RegisterCandidate implements IService {
         return student;
     }
 
-    private void checkDuplicateStudentCurricularPlan(IMasterDegreeCandidate masterDegreeCandidate,
-            IStudent student) throws ExistingServiceException {
-        List<IStudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate.getExecutionDegree()
+    private void checkDuplicateStudentCurricularPlan(MasterDegreeCandidate masterDegreeCandidate,
+            Student student) throws ExistingServiceException {
+        List<StudentCurricularPlan> studentCurricularPlans = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan().getStudentCurricularPlans();
-        for (IStudentCurricularPlan scp : studentCurricularPlans) {
+        for (StudentCurricularPlan scp : studentCurricularPlans) {
             if (scp.getStudent().equals(student)
                     && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE)) {
                 throw new ExistingServiceException();
@@ -217,10 +217,10 @@ public class RegisterCandidate implements IService {
         }
     }
 
-    private void checkOldStudentNumber(Integer studentNumber, IPerson person, ISuportePersistente sp)
+    private void checkOldStudentNumber(Integer studentNumber, Person person, ISuportePersistente sp)
             throws ExcepcaoPersistencia, ExistingServiceException {
         if (studentNumber != null) {
-            IStudent existingStudent = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(
+            Student existingStudent = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(
                     studentNumber, DegreeType.MASTER_DEGREE);
             if (!existingStudent.getPerson().equals(person)) {
                 throw new ExistingServiceException();
@@ -233,7 +233,7 @@ public class RegisterCandidate implements IService {
      * @return
      * @throws InvalidChangeServiceException
      */
-    private void checkCandidateSituation(ICandidateSituation situation)
+    private void checkCandidateSituation(CandidateSituation situation)
             throws InvalidChangeServiceException {
 
         if (situation.getSituation().equals(SituationName.ADMITIDO_OBJ)

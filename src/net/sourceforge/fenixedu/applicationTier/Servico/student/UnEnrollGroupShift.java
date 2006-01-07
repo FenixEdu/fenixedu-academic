@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
@@ -48,7 +48,7 @@ public class UnEnrollGroupShift implements IService {
 
         persistentGroupProperties = persistentSupport.getIPersistentGrouping();
 
-        IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(
+        Grouping groupProperties = (Grouping) persistentGroupProperties.readByOID(
                 Grouping.class, groupPropertiesCode);
 
         if (groupProperties == null) {
@@ -56,7 +56,7 @@ public class UnEnrollGroupShift implements IService {
         }
 
         persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-        IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, studentGroupCode);
 
         if (studentGroup == null)
@@ -67,7 +67,7 @@ public class UnEnrollGroupShift implements IService {
             throw new InvalidStudentNumberServiceException();
         }
 
-        IStudent student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
@@ -82,7 +82,7 @@ public class UnEnrollGroupShift implements IService {
             throw new InvalidSituationServiceException();
         }
 
-        IShift shift = null;
+        Shift shift = null;
         boolean result = strategy.checkNumberOfGroups(groupProperties, shift);
         if (!result) {
             throw new InvalidChangeServiceException();
@@ -93,15 +93,15 @@ public class UnEnrollGroupShift implements IService {
         return true;
     }
 
-    private boolean checkStudentInStudentGroup(IStudent student, IStudentGroup studentGroup)
+    private boolean checkStudentInStudentGroup(Student student, StudentGroup studentGroup)
             throws ExcepcaoPersistencia {
         boolean found = false;
 
         List studentGroupAttends = studentGroup.getAttends();
-        IAttends attend = null;
+        Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
-            attend = ((IAttends) iterStudentGroupAttends.next());
+            attend = ((Attends) iterStudentGroupAttends.next());
             if (attend.getAluno().equals(student)) {
                 found = true;
             }

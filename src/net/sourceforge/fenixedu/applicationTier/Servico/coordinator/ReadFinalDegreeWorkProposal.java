@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -39,7 +39,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+        Proposal proposal = (Proposal) persistentFinalDegreeWork.readByOID(Proposal.class,
                 finalDegreeWorkProposalOID);
 
         if (proposal != null) {
@@ -59,7 +59,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
                             proposal.getOrientator().getPerson().getIdInternal());
                     infoProposal.getOrientator().getInfoPerson().setNome(
                             proposal.getOrientator().getPerson().getNome());
-                    IDepartment department = proposal.getOrientator().getCurrentWorkingDepartment();
+                    Department department = proposal.getOrientator().getCurrentWorkingDepartment();
                     if (department != null) {
                         infoProposal.setOrientatorsDepartment(new InfoDepartment());
                         infoProposal.getOrientatorsDepartment()
@@ -80,7 +80,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
                             proposal.getCoorientator().getPerson().getIdInternal());
                     infoProposal.getCoorientator().getInfoPerson().setNome(
                             proposal.getCoorientator().getPerson().getNome());
-                    IDepartment department = proposal.getCoorientator().getCurrentWorkingDepartment();
+                    Department department = proposal.getCoorientator().getCurrentWorkingDepartment();
                     if (department != null) {
                         infoProposal.setCoorientatorsDepartment(new InfoDepartment());
                         infoProposal.getCoorientatorsDepartment().setIdInternal(
@@ -113,7 +113,7 @@ public class ReadFinalDegreeWorkProposal implements IService {
             if (proposal.getBranches() != null && !proposal.getBranches().isEmpty()) {
                 infoProposal.setBranches(new ArrayList());
                 for (int i = 0; i < proposal.getBranches().size(); i++) {
-                    IBranch branch = proposal.getBranches().get(i);
+                    Branch branch = proposal.getBranches().get(i);
                     if (branch != null) {
                         InfoBranch infoBranch = new InfoBranch();
                         infoBranch.setIdInternal(branch.getIdInternal());

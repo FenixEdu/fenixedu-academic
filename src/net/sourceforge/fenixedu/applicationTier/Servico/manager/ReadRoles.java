@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,7 +30,7 @@ public class ReadRoles implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		result = (List) CollectionUtils.collect(sp.getIPersistentRole().readAll(), new Transformer() {
 			public Object transform(Object arg0) {
-				return InfoRole.newInfoFromDomain((IRole) arg0);
+				return InfoRole.newInfoFromDomain((Role) arg0);
 			}
 		});
 

@@ -10,8 +10,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,10 +37,10 @@ public class DeleteCandidacy implements IService {
 				.getIPersistentSeminaryCandidacy();
 		IPersistentSeminaryCaseStudyChoice persistentChoice = persistenceSupport
 				.getIPersistentSeminaryCaseStudyChoice();
-		ICandidacy candidacy = (ICandidacy) persistentCandidacy.readByOID(Candidacy.class, id);
+		Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class, id);
 		List choices = candidacy.getCaseStudyChoices();
 		for (Iterator iterator = choices.iterator(); iterator.hasNext();) {
-			ICaseStudyChoice choice = (ICaseStudyChoice) iterator.next();
+			CaseStudyChoice choice = (CaseStudyChoice) iterator.next();
 			choice.setCaseStudy(null);
 			persistentChoice.deleteByOID(CaseStudyChoice.class, choice.getIdInternal());
 		}

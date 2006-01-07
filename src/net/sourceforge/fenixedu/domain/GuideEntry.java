@@ -11,7 +11,7 @@ public class GuideEntry extends GuideEntry_Base {
     }
 
     public GuideEntry(GraduationType graduationType, DocumentType documentType, String description,
-            Integer quantity, Double price, IGuide guide) {
+            Integer quantity, Double price, Guide guide) {
         this.setDescription(description);
         this.setGuide(guide);
         this.setDocumentType(documentType);

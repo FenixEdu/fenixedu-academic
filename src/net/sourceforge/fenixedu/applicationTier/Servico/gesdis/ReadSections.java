@@ -13,8 +13,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class ReadSections implements IService {
 	public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ISite site = (ISite) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
+		Site site = (Site) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
 		List allSections = null;
 
 		allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
@@ -48,7 +48,7 @@ public class ReadSections implements IService {
 		List result = new ArrayList(allSections.size());
 
 		while (iterator.hasNext())
-			result.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
+			result.add(InfoSectionWithAll.newInfoFromDomain((Section) iterator.next()));
 
 		return result;
 	}

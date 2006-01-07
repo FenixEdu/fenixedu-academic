@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier;
 import java.io.Serializable;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public interface IUserView extends Serializable {
 
-	public IPerson getPerson();
+	public Person getPerson();
 
     public String getUtilizador();
 

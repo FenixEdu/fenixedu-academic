@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 
 /**
  * @author Pica
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
  */
 public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantContractRegime {
 
-    public void copyFromDomain(IGrantContractRegime grantContractRegime) {
+    public void copyFromDomain(GrantContractRegime grantContractRegime) {
         super.copyFromDomain(grantContractRegime);
         if (grantContractRegime != null) {
         	
@@ -27,7 +27,7 @@ public class InfoGrantContractRegimeWithTeacherAndContract extends InfoGrantCont
         }
     }
 
-    public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime) {
+    public static InfoGrantContractRegime newInfoFromDomain(GrantContractRegime grantContractRegime) {
         InfoGrantContractRegimeWithTeacherAndContract infoGrantContractRegime = null;
         if (grantContractRegime != null) {	
             infoGrantContractRegime = new InfoGrantContractRegimeWithTeacherAndContract();

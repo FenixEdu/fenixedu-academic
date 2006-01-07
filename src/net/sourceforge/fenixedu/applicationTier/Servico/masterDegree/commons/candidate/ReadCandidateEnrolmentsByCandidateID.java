@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree;
-import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateEnrolment;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,7 +28,7 @@ public class ReadCandidateEnrolmentsByCandidateID implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
@@ -45,7 +45,7 @@ public class ReadCandidateEnrolmentsByCandidateID implements IService {
 
         for (final Iterator candidateEnrolmentIterator = candidateEnrolments.iterator(); candidateEnrolmentIterator
                 .hasNext();) {
-            ICandidateEnrolment candidateEnrolmentTemp = (ICandidateEnrolment) candidateEnrolmentIterator
+            CandidateEnrolment candidateEnrolmentTemp = (CandidateEnrolment) candidateEnrolmentIterator
                     .next();
             InfoCandidateEnrolment infoCandidateEnrolment = InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree
                     .newInfoFromDomain(candidateEnrolmentTemp);

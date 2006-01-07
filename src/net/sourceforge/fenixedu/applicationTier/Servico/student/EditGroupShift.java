@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -47,7 +47,7 @@ public class EditGroupShift implements IService {
                 .getDefaultPersistenceSupport();
 
         final IPersistentGrouping persistentGroupProperties = persistentSupport.getIPersistentGrouping();
-        final IGrouping grouping = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+        final Grouping grouping = (Grouping) persistentGroupProperties.readByOID(Grouping.class,
                 groupingID);
         if (grouping == null) {
             throw new ExistingServiceException();
@@ -55,19 +55,19 @@ public class EditGroupShift implements IService {
 
         final IPersistentStudentGroup persistentStudentGroup = persistentSupport
                 .getIPersistentStudentGroup();
-        final IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+        final StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, newShiftID);
+        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, newShiftID);
         if (grouping.getShiftType() == null || !grouping.getShiftType().equals(shift.getTipo())) {
             throw new InvalidStudentNumberServiceException();
         }
 
-        final IStudent student = persistentSupport.getIPersistentStudent().readByUsername(username);
+        final Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
         IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
@@ -92,14 +92,14 @@ public class EditGroupShift implements IService {
         return true;
     }
 
-    private boolean checkStudentInStudentGroup(IStudent student, IStudentGroup studentGroup)
+    private boolean checkStudentInStudentGroup(Student student, StudentGroup studentGroup)
             throws FenixServiceException {
         boolean found = false;
         List studentGroupAttends = studentGroup.getAttends();
-        IAttends attend = null;
+        Attends attend = null;
         Iterator iterStudentGroupAttends = studentGroupAttends.iterator();
         while (iterStudentGroupAttends.hasNext() && !found) {
-            attend = ((IAttends) iterStudentGroupAttends.next());
+            attend = ((Attends) iterStudentGroupAttends.next());
             if (attend.getAluno().equals(student)) {
                 found = true;
             }

@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 
@@ -20,7 +20,7 @@ public class ServiceProviderRegime extends ServiceProviderRegime_Base {
 
 	}
 	
-	public ServiceProviderRegime(ITeacher teacher, InfoServiceProviderRegime infoServiceProviderRegime) {
+	public ServiceProviderRegime(Teacher teacher, InfoServiceProviderRegime infoServiceProviderRegime) {
 		if(teacher == null)
 			throw new DomainException("The teacher should not be null!");
 		this.setTeacher(teacher);

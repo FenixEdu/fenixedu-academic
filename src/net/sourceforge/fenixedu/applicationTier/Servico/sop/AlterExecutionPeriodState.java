@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -21,7 +21,7 @@ public class AlterExecutionPeriodState implements IService {
 		final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 		final IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
 
-		final IExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
+		final ExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
 				infoExecutionPeriod.getSemester(), executionYearDAO.readExecutionYearByName(
 						infoExecutionPeriod.getInfoExecutionYear().getYear()).getYear());
 

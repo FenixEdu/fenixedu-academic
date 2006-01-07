@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -43,7 +43,7 @@ public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
         return queryList(DegreeCurricularPlan.class, criteria);
     }
 
-    public IDegreeCurricularPlan readByNameAndDegree(String name, Integer degreeId, CurricularStage curricularStage)
+    public DegreeCurricularPlan readByNameAndDegree(String name, Integer degreeId, CurricularStage curricularStage)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
@@ -51,7 +51,7 @@ public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("degreeKey", degreeId);
         criteria.addEqualTo("curricularStage", curricularStage);
 
-        return (IDegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
+        return (DegreeCurricularPlan) queryObject(DegreeCurricularPlan.class, criteria);
     }
 
     public List readByDegreeTypeAndState(DegreeType degreeType, DegreeCurricularPlanState state)

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 
 /**
  * @author Tânia Pousão
@@ -15,9 +15,9 @@ public class InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree extends I
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation#copyFromDomain(Dominio.IGratuitySituation)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation#copyFromDomain(Dominio.GratuitySituation)
      */
-    public void copyFromDomain(IGratuitySituation gratuitySituation) {
+    public void copyFromDomain(GratuitySituation gratuitySituation) {
         super.copyFromDomain(gratuitySituation);
         if (gratuitySituation != null) {
             setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree
@@ -27,7 +27,7 @@ public class InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree extends I
         }
     }
 
-    public static InfoGratuitySituation newInfoFromDomain(IGratuitySituation gratuitySituation) {
+    public static InfoGratuitySituation newInfoFromDomain(GratuitySituation gratuitySituation) {
         InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree infoGratuitySituation = null;
         if (gratuitySituation != null) {
             infoGratuitySituation = new InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree();

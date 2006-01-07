@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,15 +22,15 @@ public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID implements IServ
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentSupport
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
         final List executionDegrees = degreeCurricularPlan.getExecutionDegrees();
-        final IExecutionDegree executionDegree = (IExecutionDegree) CollectionUtils.find(
+        final ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(
                 executionDegrees, new Predicate() {
                     public boolean evaluate(Object arg0) {
-                        final IExecutionDegree executionDegree = (IExecutionDegree) arg0;
+                        final ExecutionDegree executionDegree = (ExecutionDegree) arg0;
                         return PeriodState.CURRENT.equals(executionDegree.getExecutionYear().getState());
                     }
                 });

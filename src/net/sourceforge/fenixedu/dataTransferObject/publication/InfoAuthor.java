@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 
 public class InfoAuthor extends InfoObject {
 
@@ -21,9 +21,9 @@ public class InfoAuthor extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IPerson author) {
+    public void copyFromDomain(Person author) {
         super.copyFromDomain(author);
         if (author != null) {
             setAuthor(author.getNome());

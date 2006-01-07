@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IPaymentPhase;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -42,18 +42,18 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 		}
 
 		ISuportePersistente sp = null;
-		IGratuityValues gratuityValues = null;
+		GratuityValues gratuityValues = null;
 		List infoPaymentPhases = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
 				.getIPersistentDegreeCurricularPlan();
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
 				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
 		IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-		IExecutionYear executionYear = persistentExecutionYear
+		ExecutionYear executionYear = persistentExecutionYear
 				.readExecutionYearByName(executionYearName);
 
 		if (degreeCurricularPlan == null || executionYear == null) {
@@ -62,7 +62,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 
 		// read execution degree
 		IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-		IExecutionDegree executionDegree = persistentExecutionDegree
+		ExecutionDegree executionDegree = persistentExecutionDegree
 				.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan.getName(),
 						degreeCurricularPlan.getDegree().getSigla(), executionYear.getYear());
 
@@ -81,7 +81,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear implements
 			infoPaymentPhases = new ArrayList();
 			CollectionUtils.collect(gratuityValues.getPaymentPhaseList(), new Transformer() {
 				public Object transform(Object input) {
-					IPaymentPhase paymentPhase = (IPaymentPhase) input;
+					PaymentPhase paymentPhase = (PaymentPhase) input;
 					return InfoPaymentPhase.newInfoFromDoamin(paymentPhase);
 				}
 			}, infoPaymentPhases);

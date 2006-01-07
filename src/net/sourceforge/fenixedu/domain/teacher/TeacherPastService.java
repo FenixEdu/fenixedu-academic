@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TeacherPastService extends TeacherPastService_Base {
     
-    public TeacherPastService(ITeacherService teacherService, Double credits){
+    public TeacherPastService(TeacherService teacherService, Double credits){
         super();
         if(teacherService == null || credits == null){
             throw new DomainException("arguments can't be null");
@@ -17,9 +17,9 @@ public class TeacherPastService extends TeacherPastService_Base {
         setCredits(credits);
     }
     
-    private int countPastServices(ITeacher teacher) {
+    private int countPastServices(Teacher teacher) {
         int count = 0;
-        for (ITeacherService teacherService : teacher.getTeacherServices()) {
+        for (TeacherService teacherService : teacher.getTeacherServices()) {
             if(teacherService.getPastService() != null){
                 count++;
             }

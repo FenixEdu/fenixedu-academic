@@ -10,10 +10,10 @@ import java.util.Iterator;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
@@ -61,16 +61,16 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
             final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             final Integer bibliographicReferenceID = getBibliographicReference(args);
-            final IBibliographicReference bibliographicReference = (IBibliographicReference) persistentBibliographicReference
+            final BibliographicReference bibliographicReference = (BibliographicReference) persistentBibliographicReference
                     .readByOID(BibliographicReference.class, bibliographicReferenceID);
-            final ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            final Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             if (bibliographicReference != null && teacher != null) {
-                final IExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();
+                final ExecutionCourse executionCourse = bibliographicReference.getExecutionCourse();
                 final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
                 // Check if Teacher has a professorship to ExecutionCourse BibliographicReference
                 while (associatedProfessorships.hasNext()) {
-                    IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
+                    Professorship professorship = (Professorship) associatedProfessorships.next();
                     if (professorship.getExecutionCourse().equals(executionCourse)) {
                         result = true;
                         break;

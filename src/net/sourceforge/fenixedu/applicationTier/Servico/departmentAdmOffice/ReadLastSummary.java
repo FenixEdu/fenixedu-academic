@@ -12,10 +12,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -49,15 +49,15 @@ public class ReadLastSummary implements IService {
         ITurnoPersistente persistentShift = suportePersistente.getITurnoPersistente();
         IAulaPersistente aulaPersistente = suportePersistente.getIAulaPersistente();
 
-        IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
+        Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftId);
         if (shift == null)
             throw new FenixServiceException("no.shift");
 
-        ILesson aula = (ILesson) aulaPersistente.readByOID(Lesson.class, lessonID);
+        Lesson aula = (Lesson) aulaPersistente.readByOID(Lesson.class, lessonID);
         if (aula == null)
             throw new FenixServiceException("no.lesson");
 
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");
@@ -72,7 +72,7 @@ public class ReadLastSummary implements IService {
             Calendar summaryDate = Calendar.getInstance();
             int summaryDayOfWeek;
             for (int i = summaries.size() - 1; i >= 0; i--) {
-                ISummary summary1 = (ISummary) summaries.get(i);
+                Summary summary1 = (Summary) summaries.get(i);
                 summaryDate.setTime(summary1.getSummaryDate());
                 summaryDayOfWeek = summaryDate.get(Calendar.DAY_OF_WEEK);
                 if (summaryDayOfWeek == diaSemana.getDiaSemana().intValue()) {

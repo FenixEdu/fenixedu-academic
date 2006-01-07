@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -68,14 +68,14 @@ public class InfoSiteTeacherInformation extends DataTranferObject implements ISi
 
     private List infoDidaticPublications;
     
-    private List<IPersonFunction> personFunctions;
+    private List<PersonFunction> personFunctions;
 
     
-    public List<IPersonFunction> getPersonFunctions() {
+    public List<PersonFunction> getPersonFunctions() {
         return personFunctions;
     }
 
-    public void setPersonFunctions(List<IPersonFunction> personFunctions) {
+    public void setPersonFunctions(List<PersonFunction> personFunctions) {
         this.personFunctions = personFunctions;
     }
 

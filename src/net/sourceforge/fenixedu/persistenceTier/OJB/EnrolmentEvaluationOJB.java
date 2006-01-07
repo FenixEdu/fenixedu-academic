@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
@@ -20,7 +20,7 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         IPersistentEnrolmentEvaluation {
 
 
-    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
+    public EnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGrade(
             Integer enrolmentId, EnrolmentEvaluationType evaluationType, String grade)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
@@ -32,7 +32,7 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
             criteria.addEqualTo("grade", grade);
         }
 
-        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) queryObject(
+        EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) queryObject(
                 EnrolmentEvaluation.class, criteria);
 
         return enrolmentEvaluation;
@@ -49,7 +49,7 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
     }
 
 
-    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
+    public EnrolmentEvaluation readEnrolmentEvaluationByEnrolmentAndEnrolmentEvaluationTypeAndGradeAndWhenAlteredDate(
             Integer enrolmentId, EnrolmentEvaluationType evaluationType, String grade, Date whenAltered)
             throws ExcepcaoPersistencia {
 
@@ -59,7 +59,7 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("grade", grade);
         criteria.addEqualTo("when", whenAltered);
 
-        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) queryObject(
+        EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) queryObject(
                 EnrolmentEvaluation.class, criteria);
 
         return enrolmentEvaluation;
@@ -99,7 +99,7 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
     }
     
 
-    public IEnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+    public EnrolmentEvaluation readEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
             Integer enrolmentId, EnrolmentEvaluationState temporary_obj,
             EnrolmentEvaluationType enrolmentEvaluationType) throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
@@ -107,6 +107,6 @@ public class EnrolmentEvaluationOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("enrolmentEvaluationState", temporary_obj);
         criteria.addEqualTo("enrolmentEvaluationType", enrolmentEvaluationType);
         
-        return (IEnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
+        return (EnrolmentEvaluation) queryObject(EnrolmentEvaluation.class, criteria);
     }
 }

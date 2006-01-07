@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -19,7 +19,7 @@ public class DeleteGuideVersionInManager implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
+        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
 
         if (!guide.getGuideEntries().isEmpty()) {
             throw new InvalidChangeServiceException();

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -16,7 +16,7 @@ public class ReadStudentByNumber implements IService {
         InfoStudent infoStudent = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+        Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
                 degreeType);
 
         if (student != null) {

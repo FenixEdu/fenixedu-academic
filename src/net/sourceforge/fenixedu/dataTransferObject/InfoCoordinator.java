@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICoordinator;
+import net.sourceforge.fenixedu.domain.Coordinator;
 
 /**
  * fenix-head Dominio
@@ -62,14 +62,14 @@ public class InfoCoordinator extends InfoObject {
         this.responsible = responsible;
     }
 
-    public void copyFromDomain(ICoordinator coordinator) {
+    public void copyFromDomain(Coordinator coordinator) {
         super.copyFromDomain(coordinator);
         if (coordinator != null) {
             setResponsible(coordinator.getResponsible());
         }
     }
 
-    public static InfoCoordinator newInfoFromDomain(ICoordinator coordinator) {
+    public static InfoCoordinator newInfoFromDomain(Coordinator coordinator) {
         InfoCoordinator infoCoordinator = null;
         if (coordinator != null) {
             infoCoordinator = new InfoCoordinator();

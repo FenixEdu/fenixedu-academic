@@ -10,9 +10,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ILesson;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
@@ -38,17 +38,17 @@ public class DeleteLessons implements IService {
     public static void deleteLesson(final ISuportePersistente persistentSupport, final Integer lessonOID)
             throws ExcepcaoPersistencia {
         final IAulaPersistente persistenetLesson = persistentSupport.getIAulaPersistente();
-        final ILesson lesson = (ILesson) persistenetLesson.readByOID(Lesson.class, lessonOID);
+        final Lesson lesson = (Lesson) persistenetLesson.readByOID(Lesson.class, lessonOID);
         deleteLesson(persistentSupport, lesson);
     }
 
-    public static void deleteLesson(final ISuportePersistente persistentSupport, final ILesson lesson)
+    public static void deleteLesson(final ISuportePersistente persistentSupport, final Lesson lesson)
             throws ExcepcaoPersistencia {
         final IAulaPersistente persistenetLesson = persistentSupport.getIAulaPersistente();
         final IPersistentRoomOccupation persistentRoomOccupation = persistentSupport
                 .getIPersistentRoomOccupation();
 
-        final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+        final RoomOccupation roomOccupation = lesson.getRoomOccupation();
 
         roomOccupation.setPeriod(null);
         roomOccupation.setRoom(null);

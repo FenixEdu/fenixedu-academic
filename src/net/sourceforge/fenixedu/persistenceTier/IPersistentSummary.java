@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.Summary;
 
 public interface IPersistentSummary extends IPersistentObject {
    
@@ -20,12 +20,12 @@ public interface IPersistentSummary extends IPersistentObject {
 
     public List readByShift(Integer executionCourseID, Integer shiftID) throws ExcepcaoPersistencia;
 
-    public List<ISummary> readByTeacher(Integer executionCourseID, Integer teacherNumber)
+    public List<Summary> readByTeacher(Integer executionCourseID, Integer teacherNumber)
             throws ExcepcaoPersistencia;
 
     public List readByOtherTeachers(Integer executionCourseID) throws ExcepcaoPersistencia;
 
-    public ISummary readSummaryByUnique(Integer shiftID, Date summaryDate, Date summaryHour)
+    public Summary readSummaryByUnique(Integer shiftID, Date summaryDate, Date summaryHour)
             throws ExcepcaoPersistencia;
 
 }

@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,13 +40,13 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
             throw new FenixServiceException("nullDegree");
         }
 
-        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeCode);
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();
         }
-        IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         if (degreeCurricularPlan != null) {
 
             String name = degreeCurricularPlan.getName();
@@ -66,7 +66,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
         return infoDegreeCurricularPlan;
     }
 
-    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(IExecutionDegree executionDegree,
+    private InfoDegreeCurricularPlan createInfoDegreeCurricularPlan(ExecutionDegree executionDegree,
             List allCurricularCourses) {
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
@@ -76,11 +76,11 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements ISe
 
         CollectionUtils.collect(allCurricularCourses, new Transformer() {
             public Object transform(Object arg0) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                CurricularCourse curricularCourse = (CurricularCourse) arg0;
                 List allInfoCurricularCourseScopes = new ArrayList();
                 CollectionUtils.collect(curricularCourse.getScopes(), new Transformer() {
                     public Object transform(Object arg0) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
 
                         return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);

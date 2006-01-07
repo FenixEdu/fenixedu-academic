@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -18,7 +18,7 @@ public class ReadExecutionCourse implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-        IExecutionCourse iExecCourse = executionCourseDAO
+        ExecutionCourse iExecCourse = executionCourseDAO
                 .readByExecutionCourseInitialsAndExecutionPeriodId(code, infoExecutionPeriod
                         .getIdInternal());
 

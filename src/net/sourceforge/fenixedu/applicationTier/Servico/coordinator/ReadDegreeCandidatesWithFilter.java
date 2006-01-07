@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -73,7 +73,7 @@ public class ReadDegreeCandidatesWithFilter implements IService {
         List result = new ArrayList();
         while (iterator.hasNext()) {
             // For all candidates ...
-            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
+            MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) iterator.next();
             InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                     .newInfoFromDomain(masterDegreeCandidate);
             // Copy all Situations
@@ -82,7 +82,7 @@ public class ReadDegreeCandidatesWithFilter implements IService {
             while (situationIter.hasNext()) {
 
                 InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
-                        .newInfoFromDomain((ICandidateSituation) situationIter.next());
+                        .newInfoFromDomain((CandidateSituation) situationIter.next());
                 situations.add(infoCandidateSituation);
 
                 // Check if this is the Active Situation

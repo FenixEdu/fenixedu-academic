@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.UniqueFilterIterator;
@@ -13,16 +13,16 @@ public class GroupIntersection extends GroupIntersection_Base {
     }
 
 	@Override
-	public Iterator<IPerson> getElementsIterator()
+	public Iterator<Person> getElementsIterator()
 	{
 		IteratorChain iteratorChain = new IteratorChain();
 		
-		for (IUserGroup part : this.getParts())
+		for (UserGroup part : this.getParts())
 		{	
 			iteratorChain.addIterator(part.getElementsIterator());
 		}
 		
-		Iterator<IPerson> uniqueFilterIterator = new UniqueFilterIterator(iteratorChain);
+		Iterator<Person> uniqueFilterIterator = new UniqueFilterIterator(iteratorChain);
 		
 		return uniqueFilterIterator;
 		

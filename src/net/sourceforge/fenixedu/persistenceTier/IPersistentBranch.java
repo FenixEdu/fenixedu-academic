@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 /**
@@ -16,10 +16,10 @@ public interface IPersistentBranch extends IPersistentObject {
 
     public List readAll() throws ExcepcaoPersistencia;
 
-    public IBranch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId,
+    public Branch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId,
             String branchName) throws ExcepcaoPersistencia;
 
-    public IBranch readByDegreeCurricularPlanAndCode(Integer degreeCurricularPlanId,
+    public Branch readByDegreeCurricularPlanAndCode(Integer degreeCurricularPlanId,
             String code) throws ExcepcaoPersistencia;
 
     public List readAllByDegreeCurricularPlanAndBranchType(Integer degreeCurricularPlanId,

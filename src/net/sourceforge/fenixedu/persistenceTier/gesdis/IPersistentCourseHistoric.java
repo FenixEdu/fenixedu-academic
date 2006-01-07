@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.gesdis;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -17,6 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentCourseHistoric extends IPersistentObject {
 
-    public List readByCurricularCourseAndSemester(ICurricularCourse curricularCourse, Integer semester)
+    public List readByCurricularCourseAndSemester(CurricularCourse curricularCourse, Integer semester)
             throws ExcepcaoPersistencia;
 }

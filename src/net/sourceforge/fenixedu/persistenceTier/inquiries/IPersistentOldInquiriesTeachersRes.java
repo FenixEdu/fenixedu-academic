@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -20,7 +20,7 @@ public interface IPersistentOldInquiriesTeachersRes {
     public List readByTeacherNumberAndExecutionPeriod(Integer teacherNumber,
             Integer executionPeriodId) throws ExcepcaoPersistencia;
     
-    public IOldInquiriesTeachersRes readByInternalId(Integer oldInquiryId)
+    public OldInquiriesTeachersRes readByInternalId(Integer oldInquiryId)
     		throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCodeAndTeacherNumber(

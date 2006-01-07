@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
  */
 public class InfoProfessorshipWithAll extends InfoProfessorship {
 
-    public void copyFromDomain(IProfessorship professorship) {
+    public void copyFromDomain(Professorship professorship) {
         super.copyFromDomain(professorship);
         if (professorship != null) {
             setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod
@@ -22,7 +22,7 @@ public class InfoProfessorshipWithAll extends InfoProfessorship {
         }
     }
 
-    public static InfoProfessorship newInfoFromDomain(IProfessorship professorship) {
+    public static InfoProfessorship newInfoFromDomain(Professorship professorship) {
         InfoProfessorshipWithAll infoProfessorship = null;
         if (professorship != null) {
             infoProfessorship = new InfoProfessorshipWithAll();

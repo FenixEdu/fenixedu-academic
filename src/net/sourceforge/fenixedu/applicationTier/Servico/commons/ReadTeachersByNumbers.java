@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,9 +23,9 @@ public class ReadTeachersByNumbers implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         Collection<InfoTeacher> infoTeachers = new ArrayList(teacherNumbers.size());
-        Collection<ITeacher> teachers = sp.getIPersistentTeacher().readByNumbers(teacherNumbers);
+        Collection<Teacher> teachers = sp.getIPersistentTeacher().readByNumbers(teacherNumbers);
 
-        for (ITeacher teacher : teachers) {
+        for (Teacher teacher : teachers) {
             infoTeachers.add(InfoTeacherWithPerson.newInfoFromDomain(teacher));
         }
 

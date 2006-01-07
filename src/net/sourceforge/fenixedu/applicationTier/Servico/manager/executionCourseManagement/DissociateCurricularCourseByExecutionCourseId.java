@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -37,13 +37,13 @@ public class DissociateCurricularCourseByExecutionCourseId implements IService {
 			throw new FenixServiceException("nullCurricularCourseId");
 		}
 
-		IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+		ExecutionCourse executionCourse = (ExecutionCourse) executionCourseDAO.readByOID(
 				ExecutionCourse.class, executionCourseId, true);
 		if (executionCourse == null) {
 			throw new NonExistingServiceException("noExecutionCourse");
 		}
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, curricularCourseId);
 		if (curricularCourse == null) {
 			throw new NonExistingServiceException("noCurricularCourse");

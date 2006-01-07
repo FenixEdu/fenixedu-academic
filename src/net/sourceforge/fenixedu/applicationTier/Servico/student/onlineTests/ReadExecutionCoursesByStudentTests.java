@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -26,12 +26,12 @@ public class ReadExecutionCoursesByStudentTests implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
 
-        final IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
-        final List<IAttends> attends = persistentSuport.getIFrequentaPersistente().readByStudentNumber(student.getNumber(), student.getDegreeType());
+        final Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+        final List<Attends> attends = persistentSuport.getIFrequentaPersistente().readByStudentNumber(student.getNumber(), student.getDegreeType());
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-        for (IAttends attend : attends) {
-            final IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+        for (Attends attend : attends) {
+            final ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
             if (persistentStudentTestQuestion.countStudentTestByStudentAndExecutionCourse(executionCourse.getIdInternal(), student.getIdInternal()) != 0) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }

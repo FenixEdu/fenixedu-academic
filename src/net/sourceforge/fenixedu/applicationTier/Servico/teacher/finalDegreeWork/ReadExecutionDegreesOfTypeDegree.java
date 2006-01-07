@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,7 +35,7 @@ public class ReadExecutionDegreesOfTypeDegree implements IService {
 		if (executionDegrees != null) {
 			Iterator iterator = executionDegrees.iterator();
 			while (iterator.hasNext()) {
-                IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
+                ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
 
                 infoExecutionDegrees.add(infoExecutionDegree);

@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -177,7 +177,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         this.infoRoomOccupation = infoRoomOccupation;
     }
 
-    public void copyFromDomain(ILesson lesson) {
+    public void copyFromDomain(Lesson lesson) {
         super.copyFromDomain(lesson);
         if (lesson != null) {
             setDiaSemana(lesson.getDiaSemana());
@@ -187,7 +187,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         }
     }
 
-    public static InfoLesson newInfoFromDomain(ILesson lesson) {
+    public static InfoLesson newInfoFromDomain(Lesson lesson) {
         InfoLesson infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLesson();
@@ -218,7 +218,7 @@ public class InfoLesson extends InfoShowOccupation implements ISmsDTO, Comparabl
         return INFO_LESSON_COMPARATOR_CHAIN.compare(this, arg0);
     }
 
-    public static InfoSupportLesson newInfoFromDomain(ISupportLesson supportLesson) {
+    public static InfoSupportLesson newInfoFromDomain(SupportLesson supportLesson) {
         InfoSupportLesson infoSupportLesson = new InfoSupportLesson();
         InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(supportLesson.getProfessorship());
 

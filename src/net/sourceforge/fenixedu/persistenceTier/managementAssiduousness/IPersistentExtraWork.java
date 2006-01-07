@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.persistenceTier.managementAssiduousness;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
@@ -13,5 +13,5 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *
  */
 public interface IPersistentExtraWork  extends IPersistentObject{
-    public IExtraWork readExtraWorkByDay(Date day) throws Exception;
+    public ExtraWork readExtraWorkByDay(Date day) throws Exception;
 }

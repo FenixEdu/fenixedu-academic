@@ -8,9 +8,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.util.State;
 
@@ -160,7 +160,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
     private List copyExternalPersons(List externalPersons) {
         return (List) CollectionUtils.collect(externalPersons, new Transformer() {
             public Object transform(Object arg0) {
-                IExternalPerson externalPerson = (IExternalPerson) arg0;
+                ExternalPerson externalPerson = (ExternalPerson) arg0;
                 return InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(externalPerson);
             }
         });
@@ -173,14 +173,14 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
     private List copyTeachers(List teachers) {
         return (List) CollectionUtils.collect(teachers, new Transformer() {
             public Object transform(Object arg0) {
-                ITeacher teacher = (ITeacher) arg0;
+                Teacher teacher = (Teacher) arg0;
                 return InfoTeacherWithPerson.newInfoFromDomain(teacher);
             }
         });
     }
 
     public static InfoMasterDegreeProofVersion newInfoFromDomain(
-            IMasterDegreeProofVersion masterDegreeProofVersion) {
+            MasterDegreeProofVersion masterDegreeProofVersion) {
         InfoMasterDegreeProofVersion infoMasterDegreeProofVersion = null;
         if (masterDegreeProofVersion != null) {
             infoMasterDegreeProofVersion = new InfoMasterDegreeProofVersion();
@@ -189,7 +189,7 @@ public class InfoMasterDegreeProofVersion extends InfoObject {
         return infoMasterDegreeProofVersion;
     }
 
-    protected void copyFromDomain(IMasterDegreeProofVersion masterDegreeProofVersion) {
+    protected void copyFromDomain(MasterDegreeProofVersion masterDegreeProofVersion) {
         super.copyFromDomain(masterDegreeProofVersion);
         if (masterDegreeProofVersion != null) {
             this.setInfoMasterDegreeThesis(InfoMasterDegreeThesis

@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -25,12 +25,12 @@ import org.apache.commons.collections.Predicate;
  */
 public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
 
-    private IStudentCurricularPlan studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
 
-    public LEMOptionalGroupsEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public LEMOptionalGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         this.studentCurricularPlan = studentCurricularPlan;
         this.executionPeriod = executionPeriod;
     }
@@ -52,17 +52,17 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
             List optionalCurricularCourseGroups = persistentCurricularCourseGroup
                     .readOptionalCurricularCourseGroupsFromArea(studentCurricularPlan.getBranch().getIdInternal());
 
-            ICurricularCourseGroup optionalCurricularCourseGroup = (ICurricularCourseGroup) CollectionUtils
+            CurricularCourseGroup optionalCurricularCourseGroup = (CurricularCourseGroup) CollectionUtils
                     .find(optionalCurricularCourseGroups, new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            ICurricularCourseGroup ccg = (ICurricularCourseGroup) arg0;
+                            CurricularCourseGroup ccg = (CurricularCourseGroup) arg0;
                             return ccg.getName().equalsIgnoreCase("Opções 4ºAno 2ºSem");
                         }
                     });
 
-            ICurricularCourse firstOptionalCurricularCourse = optionalCurricularCourseGroup
+            CurricularCourse firstOptionalCurricularCourse = optionalCurricularCourseGroup
                     .getCurricularCourses().get(0);
-            ICurricularCourse secondOptionalCurricularCourse = optionalCurricularCourseGroup
+            CurricularCourse secondOptionalCurricularCourse = optionalCurricularCourseGroup
                     .getCurricularCourses().get(1);
 
             if (studentCurricularPlan.isCurricularCourseEnrolled(firstOptionalCurricularCourse)
@@ -85,7 +85,7 @@ public class LEMOptionalGroupsEnrollmentRule implements IEnrollmentRule {
     }
 
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
-            ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
+            CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
         return new CurricularCourse2Enroll(curricularCourse, studentCurricularPlan
                 .getCurricularCourseEnrollmentType(curricularCourse, currentExecutionPeriod),
                 new Boolean(true));

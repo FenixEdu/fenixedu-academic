@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGroupProjectStudents;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -42,16 +42,16 @@ public class GetProjectsGroupsByExecutionCourseID implements IService {
         final IPersistentExecutionCourse persistentExecutionCourse = persistenceSupport
                 .getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
-        final List<IGrouping> groupings = executionCourse.getGroupings();
+        final List<Grouping> groupings = executionCourse.getGroupings();
 
-        for (final IGrouping grouping : groupings) {
-            final List<IStudentGroup> studentGroups = grouping.getStudentGroups();
-            for (final IStudentGroup studentGroup : studentGroups) {
-                List<IAttends> attends = studentGroup.getAttends();
+        for (final Grouping grouping : groupings) {
+            final List<StudentGroup> studentGroups = grouping.getStudentGroups();
+            for (final StudentGroup studentGroup : studentGroups) {
+                List<Attends> attends = studentGroup.getAttends();
                 List infoStudents = new ArrayList();
-                for (final IAttends attend : attends) {
+                for (final Attends attend : attends) {
                     infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
                 }
                 InfoStudentGroup infoStudentGroup = InfoStudentGroup.newInfoFromDomain(studentGroup);

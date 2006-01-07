@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -21,7 +21,7 @@ public class ReadPersonsByIDs implements IService {
         IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 
         for (Integer personId : personsInternalIds) {
-            IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);
+            Person person = (Person) persistentPerson.readByOID(Person.class, personId);
             persons.add(InfoPerson.newInfoFromDomain(person));
         }
 

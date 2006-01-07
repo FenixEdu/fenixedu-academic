@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,12 +35,12 @@ public class ReadStudentListByCurricularCourse implements IService {
     public List run(IUserView userView, Integer curricularCourseID, String executionYear)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-        ICurricularCourse curricularCourse = null;
+        CurricularCourse curricularCourse = null;
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // Read the Students
 
-        curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
+        curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
                 CurricularCourse.class, curricularCourseID);
 
         List enrolmentList = null;
@@ -69,7 +69,7 @@ public class ReadStudentListByCurricularCourse implements IService {
 
         Iterator iterator = enrolmentList.iterator();
         while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+            Enrolment enrolment = (Enrolment) iterator.next();
 
             if ((numberAux == null)
                     || (numberAux.intValue() != enrolment.getStudentCurricularPlan().getStudent()

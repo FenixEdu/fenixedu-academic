@@ -12,7 +12,7 @@ import org.apache.struts.util.LabelValueBean;
  * @author Susana Fernandes
  * 
  */
-public class Project implements IProject, Serializable {
+public class Project implements Serializable {
     private String projectCode;
 
     private String title;
@@ -107,8 +107,8 @@ public class Project implements IProject, Serializable {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof IProject) {
-            final IProject project = (IProject) obj;
+        if (obj instanceof Project) {
+            final Project project = (Project) obj;
             return this.getProjectCode().equals(project.getProjectCode());
         }
         return false;

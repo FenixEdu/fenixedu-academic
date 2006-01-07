@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 
@@ -26,10 +26,10 @@ public class CoordinatorOJB extends PersistentObjectOJB implements IPersistentCo
         final Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacherID);
 
-        final List<ICoordinator> coordinators = queryList(Coordinator.class, criteria);
-        final List<IExecutionDegree> executionDegrees = new ArrayList(coordinators.size());
+        final List<Coordinator> coordinators = queryList(Coordinator.class, criteria);
+        final List<ExecutionDegree> executionDegrees = new ArrayList(coordinators.size());
 
-        for (final ICoordinator coordinator : coordinators) {
+        for (final Coordinator coordinator : coordinators) {
             executionDegrees.add(coordinator.getExecutionDegree());
         }
         return executionDegrees;
@@ -40,10 +40,10 @@ public class CoordinatorOJB extends PersistentObjectOJB implements IPersistentCo
         final Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacherID);
 
-        final List<ICoordinator> coordinators = queryList(Coordinator.class, criteria);
-        final List<IDegreeCurricularPlan> degreeCurricularPlans = new ArrayList();
+        final List<Coordinator> coordinators = queryList(Coordinator.class, criteria);
+        final List<DegreeCurricularPlan> degreeCurricularPlans = new ArrayList();
 
-        for (final ICoordinator coordinator : coordinators) {
+        for (final Coordinator coordinator : coordinators) {
             if (!degreeCurricularPlans.contains(coordinator.getExecutionDegree()
                     .getDegreeCurricularPlan())) {
                 degreeCurricularPlans.add(coordinator.getExecutionDegree().getDegreeCurricularPlan());
@@ -59,12 +59,12 @@ public class CoordinatorOJB extends PersistentObjectOJB implements IPersistentCo
 
     }
 
-    public ICoordinator readCoordinatorByTeacherIdAndExecutionDegreeId(final Integer teacherID,
+    public Coordinator readCoordinatorByTeacherIdAndExecutionDegreeId(final Integer teacherID,
             final Integer executionDegreeId) throws ExcepcaoPersistencia {
         final Criteria criteria = new Criteria();
         criteria.addEqualTo("executionDegree.idInternal", executionDegreeId);
         criteria.addEqualTo("teacher.idInternal", teacherID);
-        return (ICoordinator) queryObject(Coordinator.class, criteria);
+        return (Coordinator) queryObject(Coordinator.class, criteria);
     }
 
 }

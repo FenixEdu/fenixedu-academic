@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
-import net.sourceforge.fenixedu.domain.ICampus;
+import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.IBuilding;
+import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -18,10 +18,10 @@ public class EditBuilding implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final IPersistentBuilding persistentBuilding = persistentSupport.getIPersistentBuilding();
-        final IBuilding building = (IBuilding) persistentBuilding.readByOID(Building.class, buildingID);
+        final Building building = (Building) persistentBuilding.readByOID(Building.class, buildingID);
 
         final IPersistentCampus persistentCampus = persistentSupport.getIPersistentCampus();
-        final ICampus campus = (ICampus) persistentCampus.readByOID(Campus.class, campusID);
+        final Campus campus = (Campus) persistentCampus.readByOID(Campus.class, campusID);
 
         building.setCampus(campus);
     }

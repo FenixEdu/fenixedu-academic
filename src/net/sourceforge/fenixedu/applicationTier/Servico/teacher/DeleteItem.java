@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,7 +26,7 @@ public class DeleteItem implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();    
         final IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
-        final IItem deletedItem = (IItem) persistentItem.readByOID(Item.class, itemCode);
+        final Item deletedItem = (Item) persistentItem.readByOID(Item.class, itemCode);
         
         if (deletedItem == null) {
             return new Boolean(true);
@@ -39,7 +39,7 @@ public class DeleteItem implements IService {
         return Boolean.TRUE;
     }
 
-    private void testFilesExistence(final IItem deletedItem) throws notAuthorizedServiceDeleteException {
+    private void testFilesExistence(final Item deletedItem) throws notAuthorizedServiceDeleteException {
         Collection<FileSuportObject> listFiles = JdbcMysqlFileSupport.listFiles(deletedItem.getSlideName());
         if (!listFiles.isEmpty()) {
             throw new notAuthorizedServiceDeleteException();

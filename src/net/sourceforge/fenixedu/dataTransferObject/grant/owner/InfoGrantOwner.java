@@ -9,7 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -104,7 +104,7 @@ public class InfoGrantOwner extends InfoObject {
     /**
      * @param grantOwner
      */
-    public void copyFromDomain(IGrantOwner grantOwner) {
+    public void copyFromDomain(GrantOwner grantOwner) {
         super.copyFromDomain(grantOwner);
         if (grantOwner != null) {
             setGrantOwnerNumber(grantOwner.getNumber());
@@ -117,7 +117,7 @@ public class InfoGrantOwner extends InfoObject {
      * @param grantOwner
      * @return
      */
-    public static InfoGrantOwner newInfoFromDomain(IGrantOwner grantOwner) {
+    public static InfoGrantOwner newInfoFromDomain(GrantOwner grantOwner) {
         InfoGrantOwner infoGrantOwner = null;
         if (grantOwner != null) {
             infoGrantOwner = new InfoGrantOwner();
@@ -126,7 +126,7 @@ public class InfoGrantOwner extends InfoObject {
         return infoGrantOwner;
     }
 
-    public void copyToDomain(InfoGrantOwner infoGrantOwner, IGrantOwner grantOwner)
+    public void copyToDomain(InfoGrantOwner infoGrantOwner, GrantOwner grantOwner)
             throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantOwner, grantOwner);
 

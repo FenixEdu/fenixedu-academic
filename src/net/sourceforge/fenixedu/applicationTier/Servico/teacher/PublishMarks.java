@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSen
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
@@ -32,10 +32,10 @@ public class PublishMarks implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         // Site
         IPersistentSite siteDAO = sp.getIPersistentSite();
-        ISite site = siteDAO.readByExecutionCourse(executionCourseCode);
+        Site site = siteDAO.readByExecutionCourse(executionCourseCode);
         // find what type of evaluation we are dealing with
         IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-        IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class,
                 evaluationCode);
         persistentEvaluation.simpleLockWrite(evaluation);
 
@@ -52,7 +52,7 @@ public class PublishMarks implements IService {
         ListIterator iterMarks = marksList.listIterator();
         while (iterMarks.hasNext()) {
 
-            IMark mark = (IMark) iterMarks.next();
+            Mark mark = (Mark) iterMarks.next();
 
             if (!mark.getMark().equals(mark.getPublishedMark())) {
                 // update published mark

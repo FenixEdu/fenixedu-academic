@@ -6,10 +6,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStrategy implements
         IMasterDegreeCurricularPlanStrategy {
 
-    public MasterDegreeCurricularPlanStrategy(IDegreeCurricularPlan degreeCurricularPlan) {
+    public MasterDegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan) {
         super(degreeCurricularPlan);
     }
 
@@ -35,11 +35,11 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
      *            Student's Curricular Plan
      * @return A boolean indicating if he has fineshed it or not.
      */
-    public boolean checkEndOfScholarship(IStudentCurricularPlan studentCurricularPlan)
+    public boolean checkEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
         double studentCredits = 0;
 
-        IDegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan = super.getDegreeCurricularPlan();
 
         List enrolments = studentCurricularPlan.getEnrolments();
 
@@ -50,10 +50,10 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         }
 
         while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+            Enrolment enrolment = (Enrolment) iterator.next();
 
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
-                    && (!(enrolment instanceof IEnrolmentInExtraCurricularCourse))) {
+                    && (!(enrolment instanceof EnrolmentInExtraCurricularCourse))) {
                 studentCredits += enrolment.getCurricularCourse().getCredits().doubleValue();
             }
         }
@@ -61,7 +61,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         return (studentCredits >= degreeCurricularPlan.getNeededCredits().doubleValue());
     }
 
-    public Date dateOfEndOfScholarship(IStudentCurricularPlan studentCurricularPlan)
+    public Date dateOfEndOfScholarship(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
 
         Date date = null;
@@ -69,7 +69,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
 
         //		float studentCredits = 0;
         //		
-        //		IDegreeCurricularPlan degreeCurricularPlan =
+        //		DegreeCurricularPlan degreeCurricularPlan =
         // super.getDegreeCurricularPlan();
 
         List enrolments = studentCurricularPlan.getEnrolments();
@@ -77,7 +77,7 @@ public class MasterDegreeCurricularPlanStrategy extends DegreeCurricularPlanStra
         Iterator iterator = enrolments.iterator();
 
         while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+            Enrolment enrolment = (Enrolment) iterator.next();
             if (enrolment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
 
                 infoEnrolmentEvaluation = new GetEnrolmentGrade().run(enrolment);

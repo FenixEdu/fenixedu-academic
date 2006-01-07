@@ -4,9 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
 
 import org.apache.commons.lang.NullArgumentException;
 
@@ -21,7 +21,7 @@ public class InquiriesRegistry extends InquiriesRegistry_Base {
 		super();
 	}
 	
-	public InquiriesRegistry(IExecutionCourse executionCourse, IExecutionPeriod executionPeriod, IStudent student) {
+	public InquiriesRegistry(ExecutionCourse executionCourse, ExecutionPeriod executionPeriod, Student student) {
 		if((executionCourse == null) || (executionPeriod == null) || (student == null)) {
 			throw new NullArgumentException("The executionCourse, executionPeriod and student should not be null!");
 		}

@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
@@ -21,10 +21,10 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
 
     public List readByExecutionYear(String executionYear) throws ExcepcaoPersistencia;
 
-    public IExecutionDegree readByDegreeCurricularPlanAndExecutionYear(String degreeCurricularPlanName,
+    public ExecutionDegree readByDegreeCurricularPlanAndExecutionYear(String degreeCurricularPlanName,
             String degreeCurricularPlanAcronym, String year) throws ExcepcaoPersistencia;
 
-    public IExecutionDegree readByDegreeCurricularPlanIDAndExecutionYear(Integer degreeCurricularPlanID,
+    public ExecutionDegree readByDegreeCurricularPlanIDAndExecutionYear(Integer degreeCurricularPlanID,
             String executionYear) throws ExcepcaoPersistencia;
 
     public List readMasterDegrees(String executionYear) throws ExcepcaoPersistencia;
@@ -43,12 +43,12 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
     public List readByExecutionCourseAndByTeacher(Integer executionCourseOID, Integer teacherOID)
             throws ExcepcaoPersistencia;
 
-    public IExecutionDegree readByDegreeCurricularPlanNameAndExecutionYear(String name,
+    public ExecutionDegree readByDegreeCurricularPlanNameAndExecutionYear(String name,
             Integer executionYearOID) throws ExcepcaoPersistencia;
 
     public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia;
 
-    public IExecutionDegree readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
+    public ExecutionDegree readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
             Integer degreeCurricularPlanID, Integer executionYearID) throws ExcepcaoPersistencia;
 
     public List readByExecutionYearOID(Integer executionYearOID) throws ExcepcaoPersistencia;

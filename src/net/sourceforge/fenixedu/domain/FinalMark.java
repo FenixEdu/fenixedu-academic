@@ -7,11 +7,11 @@ public class FinalMark extends FinalMark_Base {
         setGradeListVersion(0);
     }
     
-    public void setFinalEvaluation(IFinalEvaluation finalEvaluation) {
+    public void setFinalEvaluation(FinalEvaluation finalEvaluation) {
     	setEvaluation(finalEvaluation);
     }
     
-    public IFinalEvaluation getFinalEvaluation() {
-    	return (IFinalEvaluation) getEvaluation();
+    public FinalEvaluation getFinalEvaluation() {
+    	return (FinalEvaluation) getEvaluation();
     }
 }

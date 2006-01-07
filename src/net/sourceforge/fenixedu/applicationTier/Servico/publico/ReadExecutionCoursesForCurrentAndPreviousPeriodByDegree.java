@@ -8,12 +8,12 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
@@ -38,31 +38,31 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements 
         		.getIPersistentExecutionPeriod();
         ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
 
-        IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-        IExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
+        ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        ExecutionPeriod previouseExecutionPeriod = currentExecutionPeriod.getPreviousExecutionPeriod();
 
-        IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeOID);
-        List<IDegreeCurricularPlan> degreeCurricularPlans = degree.getDegreeCurricularPlans();
+        Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeOID);
+        List<DegreeCurricularPlan> degreeCurricularPlans = degree.getDegreeCurricularPlans();
 
         Set processedExecutionCourses = new HashSet();
 
-        for (IDegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
+        for (DegreeCurricularPlan degreeCurricularPlan : degreeCurricularPlans) {
             if (degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
                 List curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
                 for (Iterator iteratorCC = curricularCourses.iterator(); iteratorCC.hasNext();) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) iteratorCC.next();
+                    CurricularCourse curricularCourse = (CurricularCourse) iteratorCC.next();
                     List executionCourses = curricularCourse.getAssociatedExecutionCourses();
                    
 
                     for (Iterator iteratorEC = executionCourses.iterator(); iteratorEC.hasNext();) {
-                        IExecutionCourse executionCourse = (IExecutionCourse) iteratorEC.next();
-                        IExecutionPeriod executionPeriodFromExecutionCourse = executionCourse.getExecutionPeriod();
+                        ExecutionCourse executionCourse = (ExecutionCourse) iteratorEC.next();
+                        ExecutionPeriod executionPeriodFromExecutionCourse = executionCourse.getExecutionPeriod();
                        
                         if (executionPeriodFromExecutionCourse.getIdInternal().equals(currentExecutionPeriod.getIdInternal())
                                 || executionPeriodFromExecutionCourse.getIdInternal().equals(previouseExecutionPeriod.getIdInternal())) {
                             for (Iterator iteratorCCS = curricularCourse.getScopes().iterator(); iteratorCCS.hasNext();) {
-                                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iteratorCCS.next();
+                                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iteratorCCS.next();
 
                                 String key = generateExecutionCourseKey(executionCourse, curricularCourseScope);
 
@@ -89,7 +89,7 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements 
 
     }
 
-    private String generateExecutionCourseKey(IExecutionCourse executionCourse, ICurricularCourseScope curricularCourseScope) {
+    private String generateExecutionCourseKey(ExecutionCourse executionCourse, CurricularCourseScope curricularCourseScope) {
         StringBuilder key = new StringBuilder();
 
         key.append(curricularCourseScope.getCurricularSemester().getCurricularYear().getYear());

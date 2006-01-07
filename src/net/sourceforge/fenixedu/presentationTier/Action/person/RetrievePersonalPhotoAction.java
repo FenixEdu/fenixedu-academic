@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IFileEntry;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.FileEntry;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -34,7 +34,7 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
             HttpServletRequest request, HttpServletResponse response) {
 
         IUserView userView = SessionUtils.getUserView(request);
-        IFileEntry personalPhoto = userView.getPerson().getPersonalPhoto();
+        FileEntry personalPhoto = userView.getPerson().getPersonalPhoto();
 
         if (personalPhoto != null) {
 
@@ -59,13 +59,13 @@ public class RetrievePersonalPhotoAction extends FenixDispatchAction {
         Integer personID = new Integer(request.getParameter("personCode"));
 
         Object[] args = { Person.class, personID };
-        IPerson person = (IPerson) ServiceUtils.executeService(userView, "ReadDomainObject", args);
-        IFileEntry personalPhoto = person.getPersonalPhoto();
+        Person person = (Person) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        FileEntry personalPhoto = person.getPersonalPhoto();
 
         if (personalPhoto != null) {
 
             if (!person.getAvailablePhoto()) {
-                IPerson requester = userView.getPerson();
+                Person requester = userView.getPerson();
                 if (!(person.hasRole(RoleType.STUDENT) && requester.hasRole(RoleType.TEACHER))) {
                     return null;
                 }

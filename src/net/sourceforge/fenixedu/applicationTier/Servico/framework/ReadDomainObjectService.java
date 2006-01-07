@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +22,7 @@ public abstract class ReadDomainObjectService implements IService {
 	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject persistentObject = getIPersistentObject(sp);
-		IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
+		DomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 		InfoObject infoObject = null;
 
 		if (domainObject != null) {
@@ -48,11 +48,11 @@ public abstract class ReadDomainObjectService implements IService {
 			throws ExcepcaoPersistencia;
 
 	/**
-	 * This method invokes the cloneing to convert from IDomainObject to
+	 * This method invokes the cloneing to convert from DomainObject to
 	 * InfoObject
 	 * 
 	 * @param infoObject
 	 * @return
 	 */
-	protected abstract InfoObject newInfoFromDomain(IDomainObject domainObject);
+	protected abstract InfoObject newInfoFromDomain(DomainObject domainObject);
 }

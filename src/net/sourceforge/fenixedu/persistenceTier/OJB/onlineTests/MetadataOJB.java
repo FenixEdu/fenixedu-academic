@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
@@ -30,27 +30,27 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  */
 public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetadata {
 
-    public List<IMetadata> readByExecutionCourse(IExecutionCourse executionCourse) throws ExcepcaoPersistencia {
+    public List<Metadata> readByExecutionCourse(ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", executionCourse.getIdInternal());
         return queryList(Metadata.class, criteria);
     }
 
-    public List<IMetadata> readByExecutionCourseAndVisibility(Integer executionCourseId) throws ExcepcaoPersistencia {
+    public List<Metadata> readByExecutionCourseAndVisibility(Integer executionCourseId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyExecutionCourse", executionCourseId);
         criteria.addEqualTo("visibility", new Boolean("true"));
         return queryList(Metadata.class, criteria);
     }
 
-    public List<IMetadata> readByExecutionCourseAndNotTest(Integer executionCourseId, Integer testId) throws ExcepcaoPersistencia {
+    public List<Metadata> readByExecutionCourseAndNotTest(Integer executionCourseId, Integer testId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTest", testId);
         List testQuestionsList = queryList(TestQuestion.class, criteria);
         Collection testMetadatasIdInternals = CollectionUtils.collect(testQuestionsList, new Transformer() {
 
             public Object transform(Object input) {
-                ITestQuestion testQuestion = (ITestQuestion) input;
+                TestQuestion testQuestion = (TestQuestion) input;
                 return testQuestion.getQuestion().getMetadata().getIdInternal();
             }
         });
@@ -63,7 +63,7 @@ public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetad
         return queryList(queryCriteria);
     }
 
-    public List<IMetadata> readByExecutionCourseAndNotDistributedTest(Integer executionCourseId, Integer distributedTestId)
+    public List<Metadata> readByExecutionCourseAndNotDistributedTest(Integer executionCourseId, Integer distributedTestId)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
@@ -73,7 +73,7 @@ public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetad
         Collection metadatasIds = CollectionUtils.collect(studentTestQuestionList, new Transformer() {
 
             public Object transform(Object input) {
-                IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) input;
+                StudentTestQuestion studentTestQuestion = (StudentTestQuestion) input;
                 return studentTestQuestion.getQuestion().getMetadata().getIdInternal();
             }
         });
@@ -85,7 +85,7 @@ public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetad
         return queryList(Metadata.class, criteria);
     }
 
-    public int getNumberOfQuestions(IMetadata metadata) {
+    public int getNumberOfQuestions(Metadata metadata) {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyMetadata", metadata.getIdInternal());
         return count(Question.class, criteria);
@@ -101,8 +101,8 @@ public class MetadataOJB extends PersistentObjectOJB implements IPersistentMetad
     public void cleanMetadatas() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("visibility", new Boolean(false));
-        List<IMetadata> metadatas = queryList(Metadata.class, criteria);
-        for (IMetadata metadata : metadatas) {
+        List<Metadata> metadatas = queryList(Metadata.class, criteria);
+        for (Metadata metadata : metadatas) {
             if (getNumberOfQuestions(metadata) == 0)
                 delete(metadata);
         }

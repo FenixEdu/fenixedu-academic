@@ -13,9 +13,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,12 +29,12 @@ public class EditarTurma implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ISchoolClass classToEdit = (ISchoolClass) sp.getITurmaPersistente().readByOID(
+        final SchoolClass classToEdit = (SchoolClass) sp.getITurmaPersistente().readByOID(
                 SchoolClass.class, oldClassView.getIdInternal());
-        final IExecutionPeriod executionPeriod = classToEdit.getExecutionPeriod();
-        final IExecutionDegree executionDegree = classToEdit.getExecutionDegree();
+        final ExecutionPeriod executionPeriod = classToEdit.getExecutionPeriod();
+        final ExecutionDegree executionDegree = classToEdit.getExecutionDegree();
 
-        final ISchoolClass otherClassWithSameNewName = sp.getITurmaPersistente()
+        final SchoolClass otherClassWithSameNewName = sp.getITurmaPersistente()
                 .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(),
                         executionDegree.getIdInternal(), executionPeriod.getIdInternal());
 

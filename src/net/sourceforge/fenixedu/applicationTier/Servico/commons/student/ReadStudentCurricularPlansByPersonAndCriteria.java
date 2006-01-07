@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.dataTransferObject.util.InfoStudentCurricularPlansWithSelectedEnrollments;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -69,7 +69,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService {
         sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         if (curricularPlanID.isAll() || curricularPlanID.isNewest()) {
-            IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+            Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
             List students = person.getStudents();
             List studentCPsTemp = null;
 
@@ -78,7 +78,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService {
             // para cada Student que esta Person �
             // juntar todos os SCP
             while (studentsIterator.hasNext()) {
-                IStudent student = (IStudent) studentsIterator.next();
+                Student student = (Student) studentsIterator.next();
 
                 // seleccionar todos os planos do aluno
                 studentCPsTemp = student.getStudentCurricularPlans();
@@ -89,12 +89,12 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService {
             if (curricularPlanID.isNewest()) {
                 // seleccionar o mais recente
 
-                IStudentCurricularPlan planoRecente = null;
-                IStudentCurricularPlan planoTemp = null;
+                StudentCurricularPlan planoRecente = null;
+                StudentCurricularPlan planoTemp = null;
                 Iterator iterator = studentCurricularPlans.iterator();
 
                 while (iterator.hasNext()) {
-                    planoTemp = (IStudentCurricularPlan) iterator.next();
+                    planoTemp = (StudentCurricularPlan) iterator.next();
 
                     if (planoRecente == null
                             || planoRecente.getStartDate().before(planoTemp.getStartDate())) {
@@ -116,13 +116,13 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService {
         InfoStudentCurricularPlansWithSelectedEnrollments currPlanEnrol = new InfoStudentCurricularPlansWithSelectedEnrollments();
 
         Iterator iteratorInfo = studentCurricularPlans.iterator();
-        IStudentCurricularPlan studentCurricularPlan = null;
+        StudentCurricularPlan studentCurricularPlan = null;
 
         while (iteratorInfo.hasNext()) {
             // criacao da info a retornar a partir dos objectos de dominio
             // pretendidos
 
-            studentCurricularPlan = (IStudentCurricularPlan) iteratorInfo.next();
+            studentCurricularPlan = (StudentCurricularPlan) iteratorInfo.next();
 
             List enrollments = studentCurricularPlan.getEnrolments();// lista
                                                                         // de
@@ -135,7 +135,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria implements IService {
             GetEnrolmentGrade getEnrolmentGrade = new GetEnrolmentGrade();
 
             while (selectedEnrollmentsIterator.hasNext()) {
-                IEnrolment enrollment = (IEnrolment) selectedEnrollmentsIterator.next();
+                Enrolment enrollment = (Enrolment) selectedEnrollmentsIterator.next();
                 InfoEnrolment infoEnrollment = InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
                         .newInfoFromDomain(enrollment);
 

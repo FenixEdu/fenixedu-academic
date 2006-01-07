@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -71,9 +71,9 @@ public class CandidacyAccessFilter extends Filtro {
         IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
                 .getIPersistentSeminaryCandidacy();
         //
-        IStudent student = persistenceSupport.getIPersistentStudent().readByUsername(id.getUtilizador());
+        Student student = persistenceSupport.getIPersistentStudent().readByUsername(id.getUtilizador());
         if (student != null) {
-            ICandidacy candidacy = (ICandidacy) persistentCandidacy.readByOID(Candidacy.class,
+            Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class,
                     candidacyID);
             //
             if ((candidacy != null)

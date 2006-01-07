@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
  * @author jpvl
@@ -97,7 +97,7 @@ public class InfoProfessorship extends InfoObject {
         this.toDelete = toDelete;
     }
 
-    public void copyFromDomain(IProfessorship professorship) {
+    public void copyFromDomain(Professorship professorship) {
         super.copyFromDomain(professorship);
         if (professorship != null) {
             setHours(professorship.getHours());
@@ -105,7 +105,7 @@ public class InfoProfessorship extends InfoObject {
         }
     }
 
-    public static InfoProfessorship newInfoFromDomain(IProfessorship professorship) {
+    public static InfoProfessorship newInfoFromDomain(Professorship professorship) {
         InfoProfessorship infoProfessorship = null;
         if (professorship != null) {
             infoProfessorship = new InfoProfessorship();

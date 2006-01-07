@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.UpdateKerberos;
@@ -26,7 +26,7 @@ public class AuthenticateKerberos extends Authenticate implements IService, Seri
     }
 
 	private void updateKerberos(final IUserView userView) throws ExcepcaoPersistencia, InvalidPasswordServiceException {
-    	final IPerson person = userView.getPerson();
+    	final Person person = userView.getPerson();
 
     	if (person == null) {
     		throw new Error("No person found for provided UserView. This should not be possible!");

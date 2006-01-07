@@ -17,8 +17,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -31,12 +31,12 @@ public class LerAulasDeTurno implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-        final IShift shift = persistentShift.readByNameAndExecutionCourse(shiftKey.getShiftName(), shiftKey
+        final Shift shift = persistentShift.readByNameAndExecutionCourse(shiftKey.getShiftName(), shiftKey
                 .getInfoExecutionCourse().getIdInternal());
-        final List<ILesson> aulas = shift.getAssociatedLessons();
+        final List<Lesson> aulas = shift.getAssociatedLessons();
 
         List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
-        for (ILesson elem : aulas) {
+        for (Lesson elem : aulas) {
             InfoLesson infoLesson = InfoLesson.newInfoFromDomain(elem);
 
             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);

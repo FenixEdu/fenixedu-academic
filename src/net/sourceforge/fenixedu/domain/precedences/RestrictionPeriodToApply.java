@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
@@ -9,13 +9,12 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
  * @author David Santos in Jun 9, 2004
  */
 
-public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base implements
-        IRestrictionPeriodToApply {
+public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base {
 
 	public RestrictionPeriodToApply() {}
 	
 	
-	public RestrictionPeriodToApply(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+	public RestrictionPeriodToApply(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
 		
         setPrecedence(precedence);
         setPeriodToApplyRestriction(PeriodToApplyRestriction.getEnum(number.intValue()));
@@ -30,7 +29,7 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base impl
     }
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        IExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();
+        ExecutionPeriod executionPeriod = precedenceContext.getExecutionPeriod();
 
         boolean isValid = false;
 

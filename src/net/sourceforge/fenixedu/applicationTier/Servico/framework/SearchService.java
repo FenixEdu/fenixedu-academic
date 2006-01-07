@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,7 +37,7 @@ public abstract class SearchService implements IService {
 
         final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
             public Object transform(Object input) {
-                InfoObject infoObject = newInfoFromDomain((IDomainObject) input);
+                InfoObject infoObject = newInfoFromDomain((DomainObject) input);
                 return infoObject;
             }
         });
@@ -46,18 +46,18 @@ public abstract class SearchService implements IService {
     }
 
     /**
-     * Clones the de IDomainObject to InfoObject
+     * Clones the de DomainObject to InfoObject
      * 
      * @param object
      * @return
      */
-    abstract protected InfoObject newInfoFromDomain(IDomainObject object);
+    abstract protected InfoObject newInfoFromDomain(DomainObject object);
 
     /**
      * Do the search using search using the search parameters.
      * 
      * @param searchParameters
-     * @return A list of IDomainObject.
+     * @return A list of DomainObject.
      */
     abstract protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
             throws ExcepcaoPersistencia;

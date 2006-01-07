@@ -5,9 +5,9 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -31,9 +31,9 @@ public class UsernameUtils extends FenixUtil {
      *            person for whom the username is being determined
      * @return a string representing what should be the person's username
      */
-    public static String updateUsername(IPerson person) {
+    public static String updateUsername(Person person) {
 
-        IRole mostImportantRole = getMostImportantRole(person.getPersonRoles());
+        Role mostImportantRole = getMostImportantRole(person.getPersonRoles());
 
         if (mostImportantRole == null) {
             return person.getUsername();
@@ -42,7 +42,7 @@ public class UsernameUtils extends FenixUtil {
 
     }
     
-    public static String updateIstUsername(IPerson person) {
+    public static String updateIstUsername(Person person) {
         if (person.getIstUsername() == null) {
             String ist = "ist";
             String istUsername = null; 
@@ -65,7 +65,7 @@ public class UsernameUtils extends FenixUtil {
         return person.getIstUsername();
     }
 
-    private static String generateNewUsername(String oldUsername, RoleType roleType, IPerson person) {
+    private static String generateNewUsername(String oldUsername, RoleType roleType, Person person) {
         if (oldUsername.startsWith("INA") || roleType.equals(RoleType.MASTER_DEGREE_CANDIDATE)) {
             return oldUsername;
         }
@@ -83,10 +83,10 @@ public class UsernameUtils extends FenixUtil {
                 throw new DomainException("error.person.addingInvalidRole", RoleType.EMPLOYEE.getName());
             }
         } else if (roleType.equals(RoleType.FIRST_TIME_STUDENT)) {
-            IStudent student = person.getStudentByType(DegreeType.DEGREE);
+            Student student = person.getStudentByType(DegreeType.DEGREE);
             return "L" + student.getNumber();
         } else if (roleType.equals(RoleType.STUDENT)) {
-            IStudent student = person.getStudentByType(DegreeType.MASTER_DEGREE);
+            Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);
             if (student != null) {
                 return "M" + student.getNumber();
             }
@@ -113,9 +113,9 @@ public class UsernameUtils extends FenixUtil {
     /*
      * Given a list of roles returns the most important role
      */
-    private static IRole getMostImportantRole(Collection<IRole> roles) {
+    private static Role getMostImportantRole(Collection<Role> roles) {
         for (RoleType roleType : RoleType.getRolesImportance()) {
-            for (IRole role : roles) {
+            for (Role role : roles) {
                 if (role.getRoleType().equals(roleType)) {
                     return role;
                 }

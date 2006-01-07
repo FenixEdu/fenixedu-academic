@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.util.MarkType;
 
 public class DegreeCurricularPlanTest extends DomainTestBase {
 
-	IDegreeCurricularPlan newDegreeCurricularPlan;
-	IDegreeCurricularPlan degreeCurricularPlanToEdit;
+	DegreeCurricularPlan newDegreeCurricularPlan;
+	DegreeCurricularPlan degreeCurricularPlanToEdit;
 	String newName;
 	DegreeCurricularPlanState newState;
 	Date newInicialDate;
@@ -22,14 +22,14 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 	Integer newNumerusClausus;
 	String newAnnotation;
 	
-	IDegreeCurricularPlan dcpToDelete;
-	IDegreeCurricularPlan dcpWithAll;
-	IDegreeCurricularPlan dcpWithStudentCurricularPlans;
-	IDegreeCurricularPlan dcpWithCurricularCourseEquivalences;
-	IDegreeCurricularPlan dcpWithEnrolmentPeriods;
-	IDegreeCurricularPlan dcpWithCurricularCourses;
-	IDegreeCurricularPlan dcpWithExecutionDegrees;
-	IDegreeCurricularPlan dcpWithBranches;
+	DegreeCurricularPlan dcpToDelete;
+	DegreeCurricularPlan dcpWithAll;
+	DegreeCurricularPlan dcpWithStudentCurricularPlans;
+	DegreeCurricularPlan dcpWithCurricularCourseEquivalences;
+	DegreeCurricularPlan dcpWithEnrolmentPeriods;
+	DegreeCurricularPlan dcpWithCurricularCourses;
+	DegreeCurricularPlan dcpWithExecutionDegrees;
+	DegreeCurricularPlan dcpWithBranches;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -49,7 +49,7 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 	
 	private void setUpCreate() {
 		
-		IDegree degree = new Degree();
+		Degree degree = new Degree();
 		degree.setConcreteClassForDegreeCurricularPlans(DegreeCurricularPlan.class.getName());
 		
 		newDegreeCurricularPlan = new DegreeCurricularPlan(degree, newName, newState, newInicialDate, newEndDate, newDegreeDuration,
@@ -73,7 +73,7 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 		dcpWithExecutionDegrees = new DegreeCurricularPlan();
 		dcpWithBranches = new DegreeCurricularPlan();
 		
-		IDegree degree = new Degree();
+		Degree degree = new Degree();
 		degree.addDegreeCurricularPlans(dcpToDelete);
 		degree.addDegreeCurricularPlans(dcpWithAll);
 		degree.addDegreeCurricularPlans(dcpWithStudentCurricularPlans);
@@ -83,28 +83,28 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 		degree.addDegreeCurricularPlans(dcpWithExecutionDegrees);
 		degree.addDegreeCurricularPlans(dcpWithBranches);
 		
-		IStudentCurricularPlan studentCurricularPlan1 = new StudentCurricularPlan();
-		IStudentCurricularPlan studentCurricularPlan2 = new StudentCurricularPlan();
+		StudentCurricularPlan studentCurricularPlan1 = new StudentCurricularPlan();
+		StudentCurricularPlan studentCurricularPlan2 = new StudentCurricularPlan();
 		studentCurricularPlan1.setDegreeCurricularPlan(dcpWithAll);
 		studentCurricularPlan2.setDegreeCurricularPlan(dcpWithStudentCurricularPlans);
 		
-		ICurricularCourseEquivalence curricularCourseEquivalence1 = new CurricularCourseEquivalence();
-		ICurricularCourseEquivalence curricularCourseEquivalence2 = new CurricularCourseEquivalence();
+		CurricularCourseEquivalence curricularCourseEquivalence1 = new CurricularCourseEquivalence();
+		CurricularCourseEquivalence curricularCourseEquivalence2 = new CurricularCourseEquivalence();
 		curricularCourseEquivalence1.setDegreeCurricularPlan(dcpWithAll);
 		curricularCourseEquivalence2.setDegreeCurricularPlan(dcpWithCurricularCourseEquivalences);
 		
-		ICurricularCourse curricularCourse1 = new CurricularCourse();
-		ICurricularCourse curricularCourse2 = new CurricularCourse();
+		CurricularCourse curricularCourse1 = new CurricularCourse();
+		CurricularCourse curricularCourse2 = new CurricularCourse();
 		curricularCourse1.setDegreeCurricularPlan(dcpWithAll);
 		curricularCourse2.setDegreeCurricularPlan(dcpWithCurricularCourses);
 		
-		IExecutionDegree executionDegree1 = new ExecutionDegree();
-		IExecutionDegree executionDegree2 = new ExecutionDegree();
+		ExecutionDegree executionDegree1 = new ExecutionDegree();
+		ExecutionDegree executionDegree2 = new ExecutionDegree();
 		executionDegree1.setDegreeCurricularPlan(dcpWithAll);
 		executionDegree2.setDegreeCurricularPlan(dcpWithExecutionDegrees);
 		
-		IBranch branch1 = new Branch();
-		IBranch branch2 = new Branch();
+		Branch branch1 = new Branch();
+		Branch branch2 = new Branch();
 		branch1.setDegreeCurricularPlan(dcpWithAll);
 		branch2.setDegreeCurricularPlan(dcpWithBranches);
 	}
@@ -236,7 +236,7 @@ public class DegreeCurricularPlanTest extends DomainTestBase {
 	}
 	
 	
-	private void assertCorrectInitialization(String errorMessagePrefix, IDegreeCurricularPlan dcp, String name, DegreeCurricularPlanState state,
+	private void assertCorrectInitialization(String errorMessagePrefix, DegreeCurricularPlan dcp, String name, DegreeCurricularPlanState state,
 			Date initialDate, Date endDate, Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
 			MarkType markType, Integer numerusClausus, String annotation) {
 		assertTrue(errorMessagePrefix + ": name", dcp.getName().equals(name));

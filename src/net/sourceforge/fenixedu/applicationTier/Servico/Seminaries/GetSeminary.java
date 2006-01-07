@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
-import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
+import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,7 +31,7 @@ public class GetSeminary implements IService {
 		ISuportePersistente persistenceSupport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
 		IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();
-		ISeminary seminary = (ISeminary) persistentSeminary.readByOID(Seminary.class, seminaryID);
+		Seminary seminary = (Seminary) persistentSeminary.readByOID(Seminary.class, seminaryID);
 		if (seminary != null) {
 
 			infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);

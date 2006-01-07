@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,7 +22,7 @@ public class CreateContributor implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(
                 newContributor.getContributorNumber());
 
         if (contributor != null) {

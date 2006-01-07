@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
 
 /**
  * @author Ricardo Rodrigues
@@ -17,17 +17,17 @@ import net.sourceforge.fenixedu.domain.IProfessorship;
 
 public class ProfessorshipDTO {
     
-    public ProfessorshipDTO(IProfessorship professorship) {
+    public ProfessorshipDTO(Professorship professorship) {
         setProfessorship(professorship);
     }
 
-    IProfessorship professorship;
+    Professorship professorship;
 
-    public IProfessorship getProfessorship() {
+    public Professorship getProfessorship() {
         return professorship;
     }
 
-    public void setProfessorship(IProfessorship professorship) {
+    public void setProfessorship(Professorship professorship) {
         this.professorship = professorship;
     }
 
@@ -35,7 +35,7 @@ public class ProfessorshipDTO {
         List<String> degreeSiglas = new ArrayList();
         for (Iterator iter = getProfessorship().getExecutionCourse()
                 .getAssociatedCurricularCourses().iterator(); iter.hasNext();) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            CurricularCourse curricularCourse = (CurricularCourse) iter.next();
             String degreeSigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
             if (!degreeSiglas.contains(degreeSigla)) {
                 degreeSiglas.add(degreeSigla);

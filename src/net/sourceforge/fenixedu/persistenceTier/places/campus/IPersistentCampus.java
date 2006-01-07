@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.places.campus;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICampus;
+import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -13,6 +13,6 @@ public interface IPersistentCampus extends IPersistentObject {
 
     List readAll() throws ExcepcaoPersistencia;
     
-    public ICampus readByName(String campusName) throws ExcepcaoPersistencia; 
+    public Campus readByName(String campusName) throws ExcepcaoPersistencia; 
 
 }

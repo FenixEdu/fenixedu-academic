@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadDomainObject;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -70,8 +70,8 @@ public class UpdateObjects implements IService {
         return object;
     }
 
-    protected IDomainObject getNewObject(ObjectChange change) throws ExcepcaoPersistencia, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        ReadDomainObject<IDomainObject> readService = new ReadDomainObject<IDomainObject>();
+    protected DomainObject getNewObject(ObjectChange change) throws ExcepcaoPersistencia, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ReadDomainObject<DomainObject> readService = new ReadDomainObject<DomainObject>();
         
         return readService.run(change.key.getType(), change.key.getOid());
     }

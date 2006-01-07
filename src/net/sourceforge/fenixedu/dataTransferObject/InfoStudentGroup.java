@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 
 /**
  * @author asnr and scpo
@@ -134,7 +134,7 @@ public class InfoStudentGroup extends InfoObject {
         this.infoShift = infoShift;
     }
 
-    public void copyFromDomain(IStudentGroup studentGroup) {
+    public void copyFromDomain(StudentGroup studentGroup) {
         super.copyFromDomain(studentGroup);
         
         if(studentGroup != null) {
@@ -142,7 +142,7 @@ public class InfoStudentGroup extends InfoObject {
         }
     }
     
-    public static InfoStudentGroup newInfoFromDomain(IStudentGroup studentGroup) {
+    public static InfoStudentGroup newInfoFromDomain(StudentGroup studentGroup) {
         InfoStudentGroup infoStudentGroup = null;
         
         if(studentGroup != null) {

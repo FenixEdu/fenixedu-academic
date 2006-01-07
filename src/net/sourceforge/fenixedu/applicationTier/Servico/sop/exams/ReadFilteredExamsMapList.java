@@ -23,10 +23,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecut
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -53,7 +53,7 @@ public class ReadFilteredExamsMapList implements IService {
         // Set List of Curricular Years
         infoExamsMap.setCurricularYears(curricularYears);
 
-        final IExecutionDegree executionDegreeFromDB = (IExecutionDegree) persistentExecutionDegree
+        final ExecutionDegree executionDegreeFromDB = (ExecutionDegree) persistentExecutionDegree
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         final Calendar startSeason1;
@@ -97,18 +97,18 @@ public class ReadFilteredExamsMapList implements IService {
                 // exams
                 for (int j = 0; j < executionCourses.size(); j++) {
                     InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriodAndExams
-                            .newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
+                            .newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
 
                     infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
                     List associatedInfoCurricularCourses = new ArrayList();
-                    List associatedCurricularCourses = ((IExecutionCourse) executionCourses.get(j))
+                    List associatedCurricularCourses = ((ExecutionCourse) executionCourses.get(j))
                             .getAssociatedCurricularCourses();
 
                     // Curricular courses
                     for (int k = 0; k < associatedCurricularCourses.size(); k++) {
                         InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-                                .newInfoFromDomain((ICurricularCourse) associatedCurricularCourses
+                                .newInfoFromDomain((CurricularCourse) associatedCurricularCourses
                                         .get(k));
 
                         associatedInfoCurricularCourses.add(infoCurricularCourse);
@@ -117,16 +117,16 @@ public class ReadFilteredExamsMapList implements IService {
                             .setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
 
                     List associatedInfoExams = new ArrayList();
-                    List associatedExams = ((IExecutionCourse) executionCourses.get(j))
+                    List associatedExams = ((ExecutionCourse) executionCourses.get(j))
                             .getAssociatedEvaluations();
                     // Exams
                     for (int k = 0; k < associatedExams.size(); k++) {
-                        if (!(associatedExams.get(k) instanceof IExam)) {
+                        if (!(associatedExams.get(k) instanceof Exam)) {
                             continue;
                         }
 
                         InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
-                                .newInfoFromDomain((IExam) associatedExams.get(k));
+                                .newInfoFromDomain((Exam) associatedExams.get(k));
                         int numberOfStudentsForExam = 0;
                         List curricularCourseIDs = new ArrayList();
                         for (int l = 0; l < infoExam.getAssociatedCurricularCourseScope().size(); l++) {

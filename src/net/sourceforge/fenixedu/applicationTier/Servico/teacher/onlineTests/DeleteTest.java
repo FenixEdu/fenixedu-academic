@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,15 +28,15 @@ public class DeleteTest implements IService {
         final IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
         final IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
 
-        ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
-        List<ITestQuestion> testQuestionList = test.getTestQuestions();
+        Test test = (Test) persistentTest.readByOID(Test.class, testId);
+        List<TestQuestion> testQuestionList = test.getTestQuestions();
         for (; !testQuestionList.isEmpty(); deleteTestQuestion(persistentTestQuestion, testQuestionList.get(0)))
             ;
         test.removeTestScope();
         persistentTest.deleteByOID(Test.class, testId);
     }
 
-    private void deleteTestQuestion(final IPersistentTestQuestion persistentTestQuestion, final ITestQuestion testQuestion)
+    private void deleteTestQuestion(final IPersistentTestQuestion persistentTestQuestion, final TestQuestion testQuestion)
             throws ExcepcaoPersistencia {
         testQuestion.removeQuestion();
         testQuestion.removeTest();

@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,7 +30,7 @@ public class ReadOldInquiryTeachersResById implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentOldInquiriesTeachersRes poits = sp.getIPersistentOldInquiriesTeachersRes();
 
-		IOldInquiriesTeachersRes oits = poits.readByInternalId(internalId);
+		OldInquiriesTeachersRes oits = poits.readByInternalId(internalId);
 
 		oldInquiriesTeachersRes = new InfoOldInquiriesTeachersRes();
 		oldInquiriesTeachersRes.copyFromDomain(oits);

@@ -5,8 +5,8 @@ import java.util.Collections;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,12 +26,12 @@ public class ReadDegreeInfoByDegree implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ICursoPersistente persistentDegree = sp.getICursoPersistente();
 
-        final IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
+        final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
         if (degree == null || degree.getDegreeInfos().isEmpty()) {
             throw new FenixServiceException("error.impossibleDegreeSite");
         }
 
-        final IDegreeInfo latestDegreeInfo = (IDegreeInfo) Collections.max(degree.getDegreeInfos(), new BeanComparator("lastModificationDate"));
+        final DegreeInfo latestDegreeInfo = (DegreeInfo) Collections.max(degree.getDegreeInfos(), new BeanComparator("lastModificationDate"));
         return InfoDegreeInfo.newInfoFromDomain(latestDegreeInfo);
     }
 

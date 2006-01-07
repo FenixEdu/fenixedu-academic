@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IStudentKind;
+import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.util.StudentType;
 
 /**
@@ -9,6 +9,6 @@ import net.sourceforge.fenixedu.util.StudentType;
  */
 public interface IPersistentStudentKind extends IPersistentObject {
 
-    IStudentKind readByStudentType(StudentType studentType) throws ExcepcaoPersistencia;
+    StudentKind readByStudentType(StudentType studentType) throws ExcepcaoPersistencia;
 
 }

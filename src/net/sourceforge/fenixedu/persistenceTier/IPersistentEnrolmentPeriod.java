@@ -6,27 +6,27 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInClasses;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
 
 /**
  * @author jpvl
  */
 public interface IPersistentEnrolmentPeriod extends IPersistentObject {
 
-    IEnrolmentPeriodInCurricularCourses readActualEnrolmentPeriodForDegreeCurricularPlan(
+    EnrolmentPeriodInCurricularCourses readActualEnrolmentPeriodForDegreeCurricularPlan(
 			Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
     /**
      * 
      * @param plan
-     * @return IEnrolmentPeriodInCurricularCourses next enrolment period if any.
+     * @return EnrolmentPeriodInCurricularCourses next enrolment period if any.
      *         If doesn't exist other curricular plan then it returns null.
      */
-    IEnrolmentPeriodInCurricularCourses readNextEnrolmentPeriodForDegreeCurricularPlan(
+    EnrolmentPeriodInCurricularCourses readNextEnrolmentPeriodForDegreeCurricularPlan(
             Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
-    public IEnrolmentPeriodInClasses readCurrentClassesEnrollmentPeriodForDegreeCurricularPlan(
+    public EnrolmentPeriodInClasses readCurrentClassesEnrollmentPeriodForDegreeCurricularPlan(
 			Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
     public List readAllEnrollmentPeriodsInCourses() throws ExcepcaoPersistencia;

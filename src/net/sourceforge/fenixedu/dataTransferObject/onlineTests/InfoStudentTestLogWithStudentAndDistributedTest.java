@@ -4,21 +4,21 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 
 /**
  * @author Susana Fernandes
  */
 public class InfoStudentTestLogWithStudentAndDistributedTest extends InfoStudentTestLogWithStudent {
 
-    public void copyFromDomain(IStudentTestLog studentTestLog) {
+    public void copyFromDomain(StudentTestLog studentTestLog) {
         super.copyFromDomain(studentTestLog);
         if (studentTestLog != null) {
             setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(studentTestLog.getDistributedTest()));
         }
     }
 
-    public static InfoStudentTestLog newInfoFromDomain(IStudentTestLog studentTestLog) {
+    public static InfoStudentTestLog newInfoFromDomain(StudentTestLog studentTestLog) {
         InfoStudentTestLogWithStudentAndDistributedTest infoStudentTestLog = null;
         if (studentTestLog != null) {
             infoStudentTestLog = new InfoStudentTestLogWithStudentAndDistributedTest();

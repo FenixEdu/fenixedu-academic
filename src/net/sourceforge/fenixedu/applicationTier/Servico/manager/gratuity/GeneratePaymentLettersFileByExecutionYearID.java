@@ -20,15 +20,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.mast
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsuranceNotDefinedServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IInsuranceValue;
-import net.sourceforge.fenixedu.domain.IPaymentPhase;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.InsuranceValue;
+import net.sourceforge.fenixedu.domain.PaymentPhase;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -89,7 +89,7 @@ class GratuityLetterFileEntry {
 
 	private int numberOfPaymentPhases;
 
-	private IStudentCurricularPlan studentCurricularPlan;
+	private StudentCurricularPlan studentCurricularPlan;
 
 	private String totalGratuityValue;
 
@@ -105,7 +105,7 @@ class GratuityLetterFileEntry {
 
 	private List gratuityLetterPaymentPhases;
 
-	public GratuityLetterFileEntry(IStudentCurricularPlan studentCurricularPlan) {
+	public GratuityLetterFileEntry(StudentCurricularPlan studentCurricularPlan) {
 		this.numberOfPaymentPhases = 0;
 		this.gratuityLetterPaymentPhases = new ArrayList();
 		this.studentCurricularPlan = studentCurricularPlan;
@@ -176,11 +176,11 @@ class GratuityLetterFileEntry {
 		this.numberOfPaymentPhases = numberOfPaymentPhases;
 	}
 
-	public IStudentCurricularPlan getStudentCurricularPlan() {
+	public StudentCurricularPlan getStudentCurricularPlan() {
 		return studentCurricularPlan;
 	}
 
-	public void setStudentCurricularPlan(IStudentCurricularPlan studentCurricularPlan) {
+	public void setStudentCurricularPlan(StudentCurricularPlan studentCurricularPlan) {
 		this.studentCurricularPlan = studentCurricularPlan;
 	}
 }
@@ -238,7 +238,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 	public void run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
 				ExecutionYear.class, executionYearID);
 
 		IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
@@ -246,7 +246,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 		IPersistentInsuranceTransaction insuranceTransactionDAO = sp
 				.getIPersistentInsuranceTransaction();
 
-		IInsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
+		InsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
 				executionYear.getIdInternal());
 
 		if (insuranceValue == null) {
@@ -271,19 +271,19 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
 		for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 
-			IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
+			ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
 
-			IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+			DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
 			List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
-			IGratuityValues gratuityValues = executionDegree.getGratuityValues();
+			GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
 			for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
 
-				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
-				IStudent student = (studentCurricularPlan.getStudent());
+				Student student = (studentCurricularPlan.getStudent());
 
 				GratuityLetterFileEntry gratuityLetterFileEntryInsurancePart = null;
 
@@ -324,7 +324,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
 				if (gratuityValues != null) {
 
-					IGratuitySituation gratuitySituation = gratuitySituationDAO
+					GratuitySituation gratuitySituation = gratuitySituationDAO
 							.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
 									studentCurricularPlan.getIdInternal(), gratuityValues
 											.getIdInternal());
@@ -376,7 +376,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 	 * @throws ExcepcaoPersistencia
 	 * @throws InsufficientSibsPaymentPhaseCodesServiceException
 	 */
-	private GratuityLetterFileEntry createGratuityLetterFileEntry(IGratuitySituation gratuitySituation,
+	private GratuityLetterFileEntry createGratuityLetterFileEntry(GratuitySituation gratuitySituation,
 			String shortYear) throws InsufficientSibsPaymentPhaseCodesServiceException {
 
 		GratuityLetterFileEntry gratuityLetterFileEntry = null;
@@ -412,7 +412,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 			return gratuityLetterFileEntry;
 		}
 
-		IStudentCurricularPlan studentCurricularPlan = gratuitySituation.getStudentCurricularPlan();
+		StudentCurricularPlan studentCurricularPlan = gratuitySituation.getStudentCurricularPlan();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -448,7 +448,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
 		double totalValueInPhases = 0;
 		for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-			IPaymentPhase paymentPhase = (IPaymentPhase) iter.next();
+			PaymentPhase paymentPhase = (PaymentPhase) iter.next();
 			totalValueInPhases += paymentPhase.getValue().doubleValue();
 		}
 
@@ -468,7 +468,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 		double totalValueToDivideInPhases = scholarShipPartValue.doubleValue();
 
 		for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-			IPaymentPhase paymentPhase = (IPaymentPhase) iter.next();
+			PaymentPhase paymentPhase = (PaymentPhase) iter.next();
 
 			if (paymentPhase.getEndDate().before(Calendar.getInstance().getTime())) {
 				// end date for that phase already passed
@@ -536,7 +536,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 		return stringComplete.toString();
 	}
 
-	private String determineTotalPaymentCode(IStudentCurricularPlan studentCurricularPlan) {
+	private String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
 
 		int sibsPaymentCode = 0;
 		Specialization specialization = studentCurricularPlan.getSpecialization();
@@ -564,7 +564,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 	 * @return
 	 */
 	private String determinePaymentPhaseCode(int paymentPhaseNumber,
-			IStudentCurricularPlan studentCurricularPlan, IGratuitySituation gratuitySituation)
+			StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
 			throws InsufficientSibsPaymentPhaseCodesServiceException {
 
 		int sibsPaymentCode = 0;
@@ -614,7 +614,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 	 * @param gratuityLetterFileEntries
 	 * @throws FileNotCreatedServiceException
 	 */
-	private void writeLetterFiles(List gratuityLetterFileEntries, IExecutionYear executionYear)
+	private void writeLetterFiles(List gratuityLetterFileEntries, ExecutionYear executionYear)
 			throws FileNotCreatedServiceException {
 		HashMap letterFiles = new HashMap();
 		Integer numberOfPhases = null;

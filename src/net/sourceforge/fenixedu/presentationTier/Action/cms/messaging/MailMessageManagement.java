@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -43,7 +43,7 @@ public class MailMessageManagement extends FenixDispatchAction
 		try
 		{
 			IUserView userView = SessionUtils.getUserView(request);
-			IMailMessage message = (IMailMessage) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailMessage.class,mailMessageId});
+			MailMessage message = (MailMessage) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailMessage.class,mailMessageId});
 			InputStream contentStream = message.getAttachment(attachmentName).getInputStream();
 			
 			try {

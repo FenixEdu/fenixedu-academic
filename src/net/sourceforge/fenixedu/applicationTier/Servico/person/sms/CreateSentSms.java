@@ -26,7 +26,7 @@ public class CreateSentSms implements IService {
         //            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         //            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
         //
-        //            IPerson person =
+        //            Person person =
         // ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
         //
         //            //count number of sent SMS's by this person
@@ -41,7 +41,7 @@ public class CreateSentSms implements IService {
         //            }
         //
         //            //create sentSms Object
-        //            ISentSms sentSms = new SentSms();
+        //            SentSms sentSms = new SentSms();
         //            persistentSentSms.simpleLockWrite(sentSms);
         //
         //            sentSms.setDestinationNumber(destinationNumber);

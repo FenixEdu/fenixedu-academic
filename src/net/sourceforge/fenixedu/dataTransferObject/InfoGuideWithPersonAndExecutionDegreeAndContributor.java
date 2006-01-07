@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IGuideSituation;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.GuideSituation;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -22,9 +22,9 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(Dominio.IGuide)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(Dominio.Guide)
      */
-    public void copyFromDomain(IGuide guide) {
+    public void copyFromDomain(Guide guide) {
         super.copyFromDomain(guide);
         if (guide != null) {
             setInfoPerson(InfoPerson.newInfoFromDomain(guide.getPerson()));
@@ -38,7 +38,7 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
                         new Transformer() {
 
                             public Object transform(Object arg0) {
-                                IGuideEntry guideEntry = (IGuideEntry) arg0;
+                                GuideEntry guideEntry = (GuideEntry) arg0;
                                 return InfoGuideEntry.newInfoFromDomain(guideEntry);
                             }
                         });
@@ -50,7 +50,7 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
                         new Transformer() {
 
                             public Object transform(Object arg0) {
-                                IGuideSituation guideSituation = (IGuideSituation) arg0;
+                                GuideSituation guideSituation = (GuideSituation) arg0;
                                 return InfoGuideSituation.newInfoFromDomain(guideSituation);
                             }
                         });
@@ -59,7 +59,7 @@ public class InfoGuideWithPersonAndExecutionDegreeAndContributor extends InfoGui
         }
     }
 
-    public static InfoGuide newInfoFromDomain(IGuide guide) {
+    public static InfoGuide newInfoFromDomain(Guide guide) {
         InfoGuideWithPersonAndExecutionDegreeAndContributor infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
         if (guide != null) {
             infoGuide.copyFromDomain(guide);

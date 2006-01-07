@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
@@ -23,16 +23,16 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class OldInquiriesSummaryVO extends VersionedObjectsBase implements IPersistentOldInquiriesSummary {
 
     public List readAll() throws ExcepcaoPersistencia {
-		List<IOldInquiriesSummary> res = (List<IOldInquiriesSummary>) readAll(OldInquiriesSummary.class);
+		List<OldInquiriesSummary> res = (List<OldInquiriesSummary>) readAll(OldInquiriesSummary.class);
 		return res;
     }
     
     public List readByDegreeIdAndExecutionPeriod(Integer degreeID, Integer executionPeriodID) throws ExcepcaoPersistencia {		
-		IDegree degree = (IDegree) readByOID(Degree.class, degreeID);
-		List<IOldInquiriesSummary> inquiriesSummaries = degree.getAssociatedOldInquiriesSummaries();
+		Degree degree = (Degree) readByOID(Degree.class, degreeID);
+		List<OldInquiriesSummary> inquiriesSummaries = degree.getAssociatedOldInquiriesSummaries();
 		
-		List<IOldInquiriesSummary> res = new ArrayList<IOldInquiriesSummary>();
-		for(IOldInquiriesSummary iois : inquiriesSummaries) {
+		List<OldInquiriesSummary> res = new ArrayList<OldInquiriesSummary>();
+		for(OldInquiriesSummary iois : inquiriesSummaries) {
 			if(iois.getExecutionPeriod().getIdInternal().equals(executionPeriodID))
 				res.add(iois);
 		}
@@ -41,8 +41,8 @@ public class OldInquiriesSummaryVO extends VersionedObjectsBase implements IPers
     }
 
     public List readByDegreeId(Integer degreeID) throws ExcepcaoPersistencia {
-		IDegree degree = (IDegree) readByOID(Degree.class, degreeID);
-		List<IOldInquiriesSummary> res = degree.getAssociatedOldInquiriesSummaries();
+		Degree degree = (Degree) readByOID(Degree.class, degreeID);
+		List<OldInquiriesSummary> res = degree.getAssociatedOldInquiriesSummaries();
 		return res;
     }
 

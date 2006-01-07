@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
+import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 
 public class InfoSeminary extends InfoObject{
     private String name;
@@ -185,7 +185,7 @@ public class InfoSeminary extends InfoObject{
         hasThemes = boolean1;
     }
 
-    public void copyFromDomain(ISeminary seminary) {
+    public void copyFromDomain(Seminary seminary) {
         super.copyFromDomain(seminary);
         if (seminary != null) {
             setAllowedCandidaciesPerStudent(seminary.getAllowedCandidaciesPerStudent());
@@ -200,7 +200,7 @@ public class InfoSeminary extends InfoObject{
         }
     }
 
-    public static InfoSeminary newInfoFromDomain(ISeminary seminary) {
+    public static InfoSeminary newInfoFromDomain(Seminary seminary) {
         InfoSeminary infoSeminary = null;
         if (seminary != null) {
             infoSeminary = new InfoSeminary();

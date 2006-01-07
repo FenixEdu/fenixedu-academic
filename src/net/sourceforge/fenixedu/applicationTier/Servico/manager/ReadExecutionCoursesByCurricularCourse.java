@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -31,7 +31,7 @@ public class ReadExecutionCoursesByCurricularCourse implements IService {
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+		CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
 				.readByOID(CurricularCourse.class, curricularCourseId);
 
 		if (curricularCourse == null) {
@@ -54,9 +54,9 @@ public class ReadExecutionCoursesByCurricularCourse implements IService {
 		while (iterator.hasNext()) {
 
 			InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
-					.newInfoFromDomain((IExecutionCourse) iterator.next());
+					.newInfoFromDomain((ExecutionCourse) iterator.next());
 
-			IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+			ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
 					.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 			if (executionCourse.getSite() != null)
 				hasSite = true;

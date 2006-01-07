@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -21,12 +21,12 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class ProfessorshipOJB extends PersistentObjectOJB implements IPersistentProfessorship {
 
-    public IProfessorship readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
+    public Professorship readByTeacherAndExecutionCourse(Integer teacherID, Integer executionCourseID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacherID);
         criteria.addEqualTo("keyExecutionCourse", executionCourseID);
-        return (IProfessorship) queryObject(Professorship.class, criteria);
+        return (Professorship) queryObject(Professorship.class, criteria);
     }
 
     public List readByTeacherNumber(Integer teacherNumber) throws ExcepcaoPersistencia {

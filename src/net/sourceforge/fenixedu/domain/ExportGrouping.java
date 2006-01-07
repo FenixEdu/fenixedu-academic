@@ -13,8 +13,8 @@ public class ExportGrouping extends ExportGrouping_Base {
     public ExportGrouping() {
     }
 
-    public ExportGrouping(IGrouping groupProperties,
-            IExecutionCourse executionCourse) {
+    public ExportGrouping(Grouping groupProperties,
+            ExecutionCourse executionCourse) {
         super.setGrouping(groupProperties);
         super.setExecutionCourse(executionCourse);
     }

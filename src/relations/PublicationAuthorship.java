@@ -1,6 +1,6 @@
 package relations;
 
-import net.sourceforge.fenixedu.domain.publication.IAuthorship;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
 
 public class PublicationAuthorship extends PublicationAuthorship_Base {
 
@@ -9,13 +9,13 @@ public class PublicationAuthorship extends PublicationAuthorship_Base {
 	 * the others authorships associated with the same publication have their order rearranged.
 	 * @param publicationAuthorship the authorship being removed from the publication
 	 * @param publication the publication from whom the authorship will be removed
-	 * @see relations.PublicationAuthorship_Base#remove(net.sourceforge.fenixedu.domain.publication.IAuthorship, net.sourceforge.fenixedu.domain.publication.IPublication)
+	 * @see relations.PublicationAuthorship_Base#remove(net.sourceforge.fenixedu.domain.publication.Authorship, net.sourceforge.fenixedu.domain.publication.Publication)
 	 */
-    public static void remove(net.sourceforge.fenixedu.domain.publication.IAuthorship publicationAuthorships, net.sourceforge.fenixedu.domain.publication.IPublication publication) {
+    public static void remove(net.sourceforge.fenixedu.domain.publication.Authorship publicationAuthorships, net.sourceforge.fenixedu.domain.publication.Publication publication) {
     	PublicationAuthorship_Base.remove(publicationAuthorships, publication);
 	int removedOrder = publicationAuthorships.getOrder();
 	if (publication != null) {
-	    for(IAuthorship authorship : publication.getPublicationAuthorships()) {
+	    for(Authorship authorship : publication.getPublicationAuthorships()) {
 		if (authorship.getOrder() > removedOrder) {
 		    authorship.setOrder(authorship.getOrder()-1);
 		}

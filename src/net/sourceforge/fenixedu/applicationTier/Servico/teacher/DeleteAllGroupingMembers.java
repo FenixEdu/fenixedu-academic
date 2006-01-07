@@ -11,9 +11,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class DeleteAllGroupingMembers implements IService {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
-        IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupingCode);
+        Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class, groupingCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
@@ -42,13 +42,13 @@ public class DeleteAllGroupingMembers implements IService {
         attendsElements.addAll(grouping.getAttends());
         Iterator iterator = attendsElements.iterator();
         while (iterator.hasNext()) {
-            IAttends attend = (IAttends) iterator.next();
+            Attends attend = (Attends) iterator.next();
 
             boolean found = false;
             Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
             while (iterStudentsGroups.hasNext() && !found) {
 
-                IStudentGroup studentGroup = (IStudentGroup) iterStudentsGroups.next();
+                StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
                 
                 if (studentGroup != null) {
                     studentGroup.removeAttends(attend);

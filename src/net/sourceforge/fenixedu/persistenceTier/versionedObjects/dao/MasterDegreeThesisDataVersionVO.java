@@ -9,9 +9,9 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,18 +30,18 @@ import org.apache.commons.collections.Predicate;
 public class MasterDegreeThesisDataVersionVO extends VersionedObjectsBase implements
         IPersistentMasterDegreeThesisDataVersion {
 
-    public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
+    public MasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
             Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
 
-        final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
+        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readByOID(
                 StudentCurricularPlan.class, studentCurricularPlanId);
 
         if (studentCurricularPlan.getMasterDegreeThesis() != null) {
             
-            final List<IMasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = studentCurricularPlan
+            final List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = studentCurricularPlan
                     .getMasterDegreeThesis().getMasterDegreeThesisDataVersions();
 
-            for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesisDataVersions) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesisDataVersions) {
                 if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     return masterDegreeThesisDataVersion;
                 }
@@ -51,12 +51,12 @@ public class MasterDegreeThesisDataVersionVO extends VersionedObjectsBase implem
         return null;
     }
 
-    public IMasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle)
+    public MasterDegreeThesisDataVersion readActiveByDissertationTitle(String dissertationTitle)
             throws ExcepcaoPersistencia {
 
-        Collection<IMasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = readAll(MasterDegreeThesisDataVersion.class);
+        Collection<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = readAll(MasterDegreeThesisDataVersion.class);
 
-        for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesisDataVersions) {
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesisDataVersions) {
             if ((masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE))
                     && (masterDegreeThesisDataVersion.getDissertationTitle()
                             .equalsIgnoreCase(dissertationTitle))) {
@@ -70,16 +70,16 @@ public class MasterDegreeThesisDataVersionVO extends VersionedObjectsBase implem
     public List readNotActivesVersionsByStudentCurricularPlan(Integer studentCurricularPlanId)
             throws ExcepcaoPersistencia {
 
-        final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
+        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readByOID(
                 StudentCurricularPlan.class, studentCurricularPlanId);
 
-        final List<IMasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = studentCurricularPlan
+        final List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = studentCurricularPlan
                 .getMasterDegreeThesis().getMasterDegreeThesisDataVersions();
 
         CollectionUtils.filter(masterDegreeThesisDataVersions, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) arg0;
+                MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) arg0;
                 if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.INACTIVE)) {
                     return true;
                 } 
@@ -96,15 +96,15 @@ public class MasterDegreeThesisDataVersionVO extends VersionedObjectsBase implem
 
         List result = new ArrayList();
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-        for (IStudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+        for (StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
 
-            final List<IMasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = studentCurricularPlan
+            final List<MasterDegreeThesisDataVersion> masterDegreeThesisDataVersions = studentCurricularPlan
                     .getMasterDegreeThesis().getMasterDegreeThesisDataVersions();
 
-            for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesisDataVersions) {
+            for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : masterDegreeThesisDataVersions) {
                 if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                     result.add(masterDegreeThesisDataVersion);
                 }

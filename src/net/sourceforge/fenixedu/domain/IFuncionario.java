@@ -90,7 +90,7 @@ public interface IFuncionario {
     /**
      * @return
      */
-    public abstract ICostCenter getMailingCostCenter();
+    public abstract CostCenter getMailingCostCenter();
 
     /**
      * Getter for property numeroMecanografico.
@@ -103,7 +103,7 @@ public interface IFuncionario {
     /**
      * @return
      */
-    public abstract IPerson getPerson();
+    public abstract Person getPerson();
 
     /**
      * @return Timestamp
@@ -116,7 +116,7 @@ public interface IFuncionario {
     public abstract int getQuem();
 
     //	/**
-    public abstract ICostCenter getWorkingPlaceCostCenter();
+    public abstract CostCenter getWorkingPlaceCostCenter();
 
     /**
      * Sets the antiguidade.
@@ -221,7 +221,7 @@ public interface IFuncionario {
     /**
      * @param mailingCostCenter
      */
-    public abstract void setMailingCostCenter(ICostCenter mailingCostCenter);
+    public abstract void setMailingCostCenter(CostCenter mailingCostCenter);
 
     /**
      * Setter for property numeroMecanografico.
@@ -235,7 +235,7 @@ public interface IFuncionario {
     /**
      * @param pessoa
      */
-    public abstract void setPerson(IPerson person);
+    public abstract void setPerson(Person person);
 
     /**
      * Sets the quando.
@@ -254,5 +254,5 @@ public interface IFuncionario {
     public abstract void setQuem(int quem);
 
     //	/**
-    public abstract void setWorkingPlaceCostCenter(ICostCenter workingPlaceCostCenter);
+    public abstract void setWorkingPlaceCostCenter(CostCenter workingPlaceCostCenter);
 }

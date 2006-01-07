@@ -5,9 +5,9 @@ import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.IDegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class UICourseGroup extends UIDegreeModule {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
@@ -18,7 +18,7 @@ public class UICourseGroup extends UIDegreeModule {
         super();
     }
     
-    public UICourseGroup(IDegreeModule courseGroup, Boolean onlyStructure, Boolean toEdit, int depth, String tabs) {
+    public UICourseGroup(DegreeModule courseGroup, Boolean onlyStructure, Boolean toEdit, int depth, String tabs) {
         super(courseGroup, onlyStructure, toEdit, depth, tabs);
     }
 
@@ -43,7 +43,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeCourseGroup() throws IOException {
-        if (((ICourseGroup)this.degreeModule).getNewDegreeCurricularPlan() == null) {
+        if (((CourseGroup)this.degreeModule).getNewDegreeCurricularPlan() == null) {
             // this is not the root course group
             encodeSelf();
         } else {
@@ -80,7 +80,7 @@ public class UICourseGroup extends UIDegreeModule {
         }
         encodeHeader();
         if (!this.onlyStructure) {
-            if (((ICourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
+            if (((CourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
                 encodeChildCurricularCourses();
                 encodeTotalCreditsFooter();
             } else {
@@ -147,7 +147,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
     
     private void encodeChildCurricularCourses() throws IOException {
-        for (IContext context : ((ICourseGroup)this.degreeModule).getContextsWithCurricularCourses()) {
+        for (Context context : ((CourseGroup)this.degreeModule).getContextsWithCurricularCourses()) {
             new UICurricularCourse(context.getDegreeModule(), this.toEdit, this.depth, this.tabs + "\t", context).encodeBegin(facesContext);
         }
     }
@@ -191,7 +191,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeChildCourseGroups() throws IOException {
-        for (IContext context : ((ICourseGroup)this.degreeModule).getContextsWithCourseGroups()) {
+        for (Context context : ((CourseGroup)this.degreeModule).getContextsWithCourseGroups()) {
             new UICourseGroup(context.getDegreeModule(), this.onlyStructure, this.toEdit, this.depth + 1, this.tabs + "\t").encodeBegin(facesContext);
         }
     }

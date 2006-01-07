@@ -19,16 +19,16 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.equivalence.InfoEnrollmentGrade;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -58,9 +58,9 @@ public class ReadStudentCurricularInformation implements IService {
         final List studentCurricularPlans = persistentStudentCurricularPlan
                 .readByStudentNumberAndDegreeType(studentNumber, degreeType);
         for (final Iterator iterator = studentCurricularPlans.iterator(); iterator.hasNext();) {
-            final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator
+            final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator
                     .next();
-            final IStudent student = studentCurricularPlan.getStudent();
+            final Student student = studentCurricularPlan.getStudent();
 
             if (infoStudent == null) {
                 infoStudent = constructInfoStudent(student);
@@ -75,10 +75,10 @@ public class ReadStudentCurricularInformation implements IService {
         return infoStudentCurricularPlans;
     }
 
-    protected InfoStudent constructInfoStudent(final IStudent student) {
+    protected InfoStudent constructInfoStudent(final Student student) {
         final InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
         final InfoPerson infoPerson = new InfoPerson();
-        final IPerson person = student.getPerson();
+        final Person person = student.getPerson();
 
         infoStudent.setInfoPerson(infoPerson);
         infoPerson.setNome(person.getNome());
@@ -90,10 +90,10 @@ public class ReadStudentCurricularInformation implements IService {
     }
 
     protected InfoStudentCurricularPlan constructInfoStudentCurricularPlan(
-            final IStudentCurricularPlan studentCurricularPlan) {
-        final IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
+            final StudentCurricularPlan studentCurricularPlan) {
+        final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
                 .getDegreeCurricularPlan();
-        final IDegree degree = degreeCurricularPlan.getDegree();
+        final Degree degree = degreeCurricularPlan.getDegree();
         final List enrollments = studentCurricularPlan.getEnrolments();
 
         final InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlan
@@ -113,13 +113,13 @@ public class ReadStudentCurricularInformation implements IService {
     protected List constructEnrollmentsList(final List enrollments) {
         return (List) CollectionUtils.collect(enrollments, new Transformer() {
             public Object transform(Object arg0) {
-                final IEnrolment enrollment = (IEnrolment) arg0;
-                final IExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
-                final IExecutionYear executionYear = executionPeriod.getExecutionYear();
-                final ICurricularCourse curricularCourse = enrollment.getCurricularCourse();
-                final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse
+                final Enrolment enrollment = (Enrolment) arg0;
+                final ExecutionPeriod executionPeriod = enrollment.getExecutionPeriod();
+                final ExecutionYear executionYear = executionPeriod.getExecutionYear();
+                final CurricularCourse curricularCourse = enrollment.getCurricularCourse();
+                final DegreeCurricularPlan degreeCurricularPlan = curricularCourse
                         .getDegreeCurricularPlan();
-                final IDegree degree = degreeCurricularPlan.getDegree();
+                final Degree degree = degreeCurricularPlan.getDegree();
                 final List enrollmentEvaluations = enrollment.getEvaluations();
 
                 final InfoEnrollmentGrade infoEnrollmentGrade = new InfoEnrollmentGrade();
@@ -144,7 +144,7 @@ public class ReadStudentCurricularInformation implements IService {
                 infoCurricularCourse.setCode(curricularCourse.getCode());
 
 				
-				final IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrollmentEvaluations);
+				final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrollmentEvaluations);
 
                 infoEnrollmentGrade.setGrade(enrolmentEvaluation.getGrade());
 

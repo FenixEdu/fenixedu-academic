@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IMark;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
@@ -22,27 +22,27 @@ public class MarkOJB extends PersistentObjectOJB implements IPersistentMark {
         super();
     }
 
-    public void delete(IMark mark) throws ExcepcaoPersistencia {
+    public void delete(Mark mark) throws ExcepcaoPersistencia {
 	super.delete(mark);
     }
 
-    public List readBy(IAttends attend) throws ExcepcaoPersistencia {
+    public List readBy(Attends attend) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("attend.idInternal", attend.getIdInternal());
         return queryList(Mark.class, criteria);
     }
 
-    public List readBy(IEvaluation evaluation) throws ExcepcaoPersistencia {
+    public List readBy(Evaluation evaluation) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("evaluation.idInternal", evaluation.getIdInternal());
         return queryList(Mark.class, criteria);
     }
 
-    public IMark readBy(IEvaluation evaluation, IAttends attend) throws ExcepcaoPersistencia {
+    public Mark readBy(Evaluation evaluation, Attends attend) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("evaluation.idInternal", evaluation.getIdInternal());
         criteria.addEqualTo("attend.idInternal", attend.getIdInternal());
-        return (IMark) queryObject(Mark.class, criteria);
+        return (Mark) queryObject(Mark.class, criteria);
     }
 
     public List readAll() throws ExcepcaoPersistencia {
@@ -50,7 +50,7 @@ public class MarkOJB extends PersistentObjectOJB implements IPersistentMark {
         return queryList(Mark.class, criteria);
     }
 
-    public List readBy(IEvaluation evaluation, boolean published) throws ExcepcaoPersistencia {
+    public List readBy(Evaluation evaluation, boolean published) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyEvaluation", evaluation.getIdInternal());
@@ -60,13 +60,13 @@ public class MarkOJB extends PersistentObjectOJB implements IPersistentMark {
         return queryList(Mark.class, criteria);
     }
 
-    public void deleteByEvaluation(IEvaluation evaluation) throws ExcepcaoPersistencia {
+    public void deleteByEvaluation(Evaluation evaluation) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyEvaluation", evaluation.getIdInternal());
         List marks = queryList(Mark.class, criteria);
         Iterator it = marks.iterator();
         while (it.hasNext()) {
-            delete((IMark) it.next());
+            delete((Mark) it.next());
         }
     }
 }

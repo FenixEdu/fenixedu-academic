@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.model.DefaultMetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
@@ -15,7 +15,7 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     
     @Override
     protected MetaObject createOneMetaObject(Object object, Schema schema) {
-        if (object instanceof IDomainObject) {
+        if (object instanceof DomainObject) {
             // persistent object
             return createDomainMetaObject(object, schema);
         }
@@ -30,7 +30,7 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
     }
 
     private MetaObject createDomainMetaObject(Object object, Schema schema) {
-        DomainMetaObject metaObject = new DomainMetaObject((IDomainObject) object);
+        DomainMetaObject metaObject = new DomainMetaObject((DomainObject) object);
         metaObject.setSchema(schema.getName());
         
         List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 

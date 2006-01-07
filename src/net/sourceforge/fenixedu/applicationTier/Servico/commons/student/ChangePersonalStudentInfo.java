@@ -15,8 +15,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,10 +28,10 @@ public class ChangePersonalStudentInfo implements IService {
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoPersistencia, ExcepcaoInexistente  {
 
         ISuportePersistente sp = null;
-        IPerson person = null;
+        Person person = null;
 
         sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+        person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
                 newInfoPerson.getIdInternal());
 
         if (person == null) {
@@ -39,7 +39,7 @@ public class ChangePersonalStudentInfo implements IService {
         }
 
         // Get new Country
-        ICountry country = null;
+        Country country = null;
         if ((newInfoPerson.getInfoPais() != null)
             && (newInfoPerson.getInfoPais().getNationality().length() != 0)) {
             if ((person.getPais() == null)
@@ -54,7 +54,7 @@ public class ChangePersonalStudentInfo implements IService {
         else {
             //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
             //In a not distance future this will not be needed since the coutry can never be null
-            country = (ICountry) sp.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
+            country = (Country) sp.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
 
         // Change personal Information

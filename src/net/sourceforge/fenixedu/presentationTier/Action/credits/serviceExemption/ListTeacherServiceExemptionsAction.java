@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
@@ -28,7 +28,7 @@ public class ListTeacherServiceExemptionsAction extends Action {
         InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");       
 
         final Object[] argsToRead = { Teacher.class, infoTeacher.getIdInternal() };
-        ITeacher teacher = (ITeacher) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
+        Teacher teacher = (Teacher) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
                      
         request.setAttribute("infoServiceExemptions", teacher.getServiceExemptionSituations());
 

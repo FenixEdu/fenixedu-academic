@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
@@ -26,10 +26,10 @@ public class SibsPaymentFileEntryVO extends VersionedObjectsBase implements
 	public List readByYearAndStudentNumberAndPaymentType(final Integer year,
 			final Integer studentNumber, final SibsPaymentType paymentType) throws ExcepcaoPersistencia {
 
-		List<ISibsPaymentFileEntry> sibsPaymentFileEntries = (List<ISibsPaymentFileEntry>) readAll(SibsPaymentFileEntry.class);
-		List<ISibsPaymentFileEntry> result = new ArrayList();
+		List<SibsPaymentFileEntry> sibsPaymentFileEntries = (List<SibsPaymentFileEntry>) readAll(SibsPaymentFileEntry.class);
+		List<SibsPaymentFileEntry> result = new ArrayList();
 
-		for (ISibsPaymentFileEntry sibsPaymentFileEntry : sibsPaymentFileEntries) {
+		for (SibsPaymentFileEntry sibsPaymentFileEntry : sibsPaymentFileEntries) {
 			if (sibsPaymentFileEntry.getYear().equals(year)
 					&& sibsPaymentFileEntry.getStudentNumber().equals(studentNumber)
 					&& sibsPaymentFileEntry.getPaymentType().equals(paymentType)) {
@@ -41,10 +41,10 @@ public class SibsPaymentFileEntryVO extends VersionedObjectsBase implements
 
 	public List readNonProcessed() throws ExcepcaoPersistencia {
 
-		List<ISibsPaymentFileEntry> sibsPaymentFileEntries = (List<ISibsPaymentFileEntry>) readAll(SibsPaymentFileEntry.class);
-		List<ISibsPaymentFileEntry> result = new ArrayList();
+		List<SibsPaymentFileEntry> sibsPaymentFileEntries = (List<SibsPaymentFileEntry>) readAll(SibsPaymentFileEntry.class);
+		List<SibsPaymentFileEntry> result = new ArrayList();
 
-		for (ISibsPaymentFileEntry sibsPaymentFileEntry : sibsPaymentFileEntries) {
+		for (SibsPaymentFileEntry sibsPaymentFileEntry : sibsPaymentFileEntries) {
 			if (sibsPaymentFileEntry.getPaymentStatus().equals(SibsPaymentStatus.PROCESSED_PAYMENT)) {
 				result.add(sibsPaymentFileEntry);
 			}

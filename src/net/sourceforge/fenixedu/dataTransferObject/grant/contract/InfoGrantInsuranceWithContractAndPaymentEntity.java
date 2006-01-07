@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 
 /**
  * @author Pica
@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
  */
 public class InfoGrantInsuranceWithContractAndPaymentEntity extends InfoGrantInsurance {
 
-    public void copyFromDomain(IGrantInsurance grantInsurance) {
+    public void copyFromDomain(GrantInsurance grantInsurance) {
         super.copyFromDomain(grantInsurance);
         if (grantInsurance != null) {
             setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
@@ -21,7 +21,7 @@ public class InfoGrantInsuranceWithContractAndPaymentEntity extends InfoGrantIns
         }
     }
 
-    public static InfoGrantInsurance newInfoFromDomain(IGrantInsurance grantInsurance) {
+    public static InfoGrantInsurance newInfoFromDomain(GrantInsurance grantInsurance) {
         InfoGrantInsuranceWithContractAndPaymentEntity infoGrantInsuranceWithContract = null;
         if (grantInsurance != null) {
             infoGrantInsuranceWithContract = new InfoGrantInsuranceWithContractAndPaymentEntity();

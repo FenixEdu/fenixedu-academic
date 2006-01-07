@@ -9,7 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
@@ -66,7 +66,7 @@ public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
         return result;
     }
 
-    public void copyFromDomain(IOnlineTest onlineTest) {
+    public void copyFromDomain(OnlineTest onlineTest) {
         super.copyFromDomain(onlineTest);
         if (onlineTest != null) {
             setEvaluationType(EvaluationType.ONLINE_TEST_TYPE);
@@ -78,7 +78,7 @@ public class InfoOnlineTest extends InfoEvaluation implements ISiteComponent {
      * @param onlineTest
      * @return
      */
-    public static InfoOnlineTest newInfoFromDomain(IOnlineTest onlineTest) {
+    public static InfoOnlineTest newInfoFromDomain(OnlineTest onlineTest) {
         InfoOnlineTest infoOnlineTest = null;
         if (onlineTest != null) {
             infoOnlineTest = new InfoOnlineTest();

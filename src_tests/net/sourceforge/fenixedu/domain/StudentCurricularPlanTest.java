@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -10,36 +10,36 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPl
 
 public class StudentCurricularPlanTest extends DomainTestBase {
 
-	private IStudentCurricularPlan newStudentCurricularPlan;
-	private IStudentCurricularPlan activeStudentCurricularPlan;
-	private IStudentCurricularPlan concludedStudentCurricularPlan;
+	private StudentCurricularPlan newStudentCurricularPlan;
+	private StudentCurricularPlan activeStudentCurricularPlan;
+	private StudentCurricularPlan concludedStudentCurricularPlan;
 	
-	private IStudentCurricularPlan studentCurricularPlanToDelete = null;
-	private IStudentCurricularPlanLEIC studentCurricularPlanLEICToDelete = null;
-	private IStudentCurricularPlanLEEC studentCurricularPlanLEECToDelete = null;
+	private StudentCurricularPlan studentCurricularPlanToDelete = null;
+	private StudentCurricularPlanLEIC studentCurricularPlanLEICToDelete = null;
+	private StudentCurricularPlanLEEC studentCurricularPlanLEECToDelete = null;
 	
-	private IStudentCurricularPlan studentCurricularPlanToReadFrom = null;
-	private IEnrolment enrolmentToBeRead = null;
-	private ICurricularCourse curricularCourse = null;
-	private IExecutionPeriod executionPeriod = null;
+	private StudentCurricularPlan studentCurricularPlanToReadFrom = null;
+	private Enrolment enrolmentToBeRead = null;
+	private CurricularCourse curricularCourse = null;
+	private ExecutionPeriod executionPeriod = null;
 	
-	private IStudent studentForNewStudentCurricularPlan = null;
-	private IDegreeCurricularPlan degreeCurricularPlanForNewStudentCurricularPlan = null;
-	private IBranch branchForNewStudentCurricularPlan = null;
+	private Student studentForNewStudentCurricularPlan = null;
+	private DegreeCurricularPlan degreeCurricularPlanForNewStudentCurricularPlan = null;
+	private Branch branchForNewStudentCurricularPlan = null;
 	private Date startDateForNewStudentCurricularPlan = null;
 	private StudentCurricularPlanState stateForNewStudentCurricularPlan = null;
 	private Double givenCreditsForNewStudentCurricularPlan = null;
 	private Specialization specializationForNewStudentCurricularPlan = null;
 	
-	private IStudentCurricularPlanLEIC studentCurricularPlanToSetAreas = null;
-	private IBranch primaryArea = null;
-	private IBranch secondaryArea = null;
+	private StudentCurricularPlanLEIC studentCurricularPlanToSetAreas = null;
+	private Branch primaryArea = null;
+	private Branch secondaryArea = null;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		IStudent student = new Student();
-		IDegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
+		Student student = new Student();
+		DegreeCurricularPlan degreeCurricularPlan = new DegreeCurricularPlan();
 		
 		setUpChangeState(student, degreeCurricularPlan);
 		setUpCreate(student, degreeCurricularPlan);
@@ -56,33 +56,33 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		studentCurricularPlanLEICToDelete = new StudentCurricularPlanLEIC();
 		studentCurricularPlanLEECToDelete = new StudentCurricularPlanLEEC();
 
-		IBranch br1 = new Branch();
+		Branch br1 = new Branch();
 		studentCurricularPlanToDelete.setBranch(br1);
 		studentCurricularPlanLEICToDelete.setSecundaryBranch(br1);
 		studentCurricularPlanLEECToDelete.setSecundaryBranch(br1);
 		
-		IEnrolment e1 = new Enrolment();
+		Enrolment e1 = new Enrolment();
 		studentCurricularPlanToDelete.addEnrolments(e1);
 		
-		IStudent s1 = new Student();
+		Student s1 = new Student();
 		studentCurricularPlanToDelete.setStudent(s1);
 		
-		IDegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
+		DegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
 		studentCurricularPlanToDelete.setDegreeCurricularPlan(dcp1);
 		
-		IEmployee emp1 = new Employee();
+		Employee emp1 = new Employee();
 		studentCurricularPlanToDelete.setEmployee(emp1);
 		
-		IMasterDegreeThesis mdt1 = new MasterDegreeThesis();
+		MasterDegreeThesis mdt1 = new MasterDegreeThesis();
 		studentCurricularPlanToDelete.setMasterDegreeThesis(mdt1);
 		
-		INotNeedToEnrollInCurricularCourse notNeed1 = new NotNeedToEnrollInCurricularCourse();
+		NotNeedToEnrollInCurricularCourse notNeed1 = new NotNeedToEnrollInCurricularCourse();
 		notNeed1.setStudentCurricularPlan(studentCurricularPlanToDelete);
 		
-		ICreditsInAnySecundaryArea cred1 = new CreditsInAnySecundaryArea();
+		CreditsInAnySecundaryArea cred1 = new CreditsInAnySecundaryArea();
 		cred1.setStudentCurricularPlan(studentCurricularPlanToDelete);
 		
-		ICreditsInScientificArea cred2 = new CreditsInScientificArea();
+		CreditsInScientificArea cred2 = new CreditsInScientificArea();
 		cred2.setStudentCurricularPlan(studentCurricularPlanToDelete);
 	}
 
@@ -93,15 +93,15 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		curricularCourse = new CurricularCourse();
 		executionPeriod = new ExecutionPeriod();
 		
-		ICurricularCourse cc1 = new CurricularCourse();
-		IExecutionPeriod ep1 = new ExecutionPeriod();
+		CurricularCourse cc1 = new CurricularCourse();
+		ExecutionPeriod ep1 = new ExecutionPeriod();
 		
-		IEnrolment e1 = new Enrolment();
+		Enrolment e1 = new Enrolment();
 		e1.setExecutionPeriod(executionPeriod);
 		e1.setCurricularCourse(cc1);
 		studentCurricularPlanToReadFrom.addEnrolments(e1);
 		
-		IEnrolment e2 = new Enrolment();
+		Enrolment e2 = new Enrolment();
 		e2.setExecutionPeriod(ep1);
 		e2.setCurricularCourse(curricularCourse);
 		studentCurricularPlanToReadFrom.addEnrolments(e2);
@@ -115,7 +115,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 
 
 
-	private void setUpCreate(IStudent student, IDegreeCurricularPlan degreeCurricularPlan) {
+	private void setUpCreate(Student student, DegreeCurricularPlan degreeCurricularPlan) {
 		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan,
 												StudentCurricularPlanState.ACTIVE, new Date());
 		
@@ -131,7 +131,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 	
 	
 	
-	private void setUpChangeState(IStudent student, IDegreeCurricularPlan degreeCurricularPlan) {
+	private void setUpChangeState(Student student, DegreeCurricularPlan degreeCurricularPlan) {
 		activeStudentCurricularPlan = new StudentCurricularPlan();
 		concludedStudentCurricularPlan = new StudentCurricularPlan();
 		
@@ -162,7 +162,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		
 		
 		
-		IStudentCurricularPlan scp = new StudentCurricularPlan(studentForNewStudentCurricularPlan,
+		StudentCurricularPlan scp = new StudentCurricularPlan(studentForNewStudentCurricularPlan,
 				degreeCurricularPlanForNewStudentCurricularPlan, branchForNewStudentCurricularPlan,
 				startDateForNewStudentCurricularPlan, stateForNewStudentCurricularPlan, 
 				givenCreditsForNewStudentCurricularPlan, specializationForNewStudentCurricularPlan) ;
@@ -236,7 +236,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		
 		setUpGetEnrolmentByCurricularCourseAndExecutionPeriod();
 		
-		IEnrolment enrolment = studentCurricularPlanToReadFrom.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
+		Enrolment enrolment = studentCurricularPlanToReadFrom.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
 		
 		assertEquals("Enrolment is not the one that was expected", enrolment,enrolmentToBeRead);
 	}

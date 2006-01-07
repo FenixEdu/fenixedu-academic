@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.publication;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.ObjectFenixOJB;
@@ -23,15 +23,15 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class PublicationTeacherOJB extends ObjectFenixOJB implements IPersistentPublicationTeacher{
 
-    public IPublicationTeacher readByTeacherAndPublication(ITeacher teacher,
-			IPublication publication) throws ExcepcaoPersistencia{
+    public PublicationTeacher readByTeacherAndPublication(Teacher teacher,
+			Publication publication) throws ExcepcaoPersistencia{
     	Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher",teacher.getIdInternal());
         criteria.addEqualTo("keyPublication",publication.getIdInternal());
-    	return (IPublicationTeacher) queryObject(PublicationTeacher.class, criteria);
+    	return (PublicationTeacher) queryObject(PublicationTeacher.class, criteria);
     }
     
-    public List readByTeacherAndPublicationArea(ITeacher teacher, PublicationArea publicationArea)
+    public List readByTeacherAndPublicationArea(Teacher teacher, PublicationArea publicationArea)
             throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher",teacher.getIdInternal());

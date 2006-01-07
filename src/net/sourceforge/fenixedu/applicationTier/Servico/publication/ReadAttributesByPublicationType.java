@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.publication.IAttribute;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.Attribute;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -34,17 +34,17 @@ public class ReadAttributesByPublicationType implements IService {
 
         IPersistentPublicationType persistentPublicationType = persistentSuport
                 .getIPersistentPublicationType();
-        IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+        PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeID));
 
-        List<IAttribute> requiredAttributes = publicationType.getRequiredAttributes();
-        List<IAttribute> nonRequiredAttributes = publicationType.getNonRequiredAttributes();
-        List<IAttribute> allAttributes = new ArrayList<IAttribute>(requiredAttributes);
+        List<Attribute> requiredAttributes = publicationType.getRequiredAttributes();
+        List<Attribute> nonRequiredAttributes = publicationType.getNonRequiredAttributes();
+        List<Attribute> allAttributes = new ArrayList<Attribute>(requiredAttributes);
         allAttributes.addAll(nonRequiredAttributes);
         
         HashMap result = new HashMap();
         for (Iterator iter = allAttributes.iterator(); iter.hasNext();) {
-            IAttribute attribute = (IAttribute) iter.next();
+            Attribute attribute = (Attribute) iter.next();
             String attributeName = attribute.getAttributeType();
             result.put(attributeName, attributeName);
         }

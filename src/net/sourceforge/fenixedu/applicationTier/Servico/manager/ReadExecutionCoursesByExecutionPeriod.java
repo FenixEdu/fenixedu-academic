@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -38,7 +38,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
 				ExecutionPeriod.class, executionPeriodId);
 
 		if (executionPeriod == null) {
@@ -54,7 +54,7 @@ public class ReadExecutionCoursesByExecutionPeriod implements IService {
 		allExecutionCourses = new ArrayList(allExecutionCoursesFromExecutionPeriod.size());
 		Iterator iter = allExecutionCoursesFromExecutionPeriod.iterator();
 		while (iter.hasNext()) {
-			IExecutionCourse executionCourse = (IExecutionCourse) iter.next();
+			ExecutionCourse executionCourse = (ExecutionCourse) iter.next();
 			Boolean hasSite;
 			if (executionCourse.getSite() != null)
 				hasSite = true;

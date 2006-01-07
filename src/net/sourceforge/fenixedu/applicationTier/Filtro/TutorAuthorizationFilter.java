@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
@@ -63,7 +63,7 @@ public class TutorAuthorizationFilter extends AuthorizationByRoleFilter {
             IPersistentTutor persistentTutor = sp.getIPersistentTutor();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             
-            ITeacher teacher = persistentTeacher.readTeacherByUsername((String) argumentos[0]);
+            Teacher teacher = persistentTeacher.readTeacherByUsername((String) argumentos[0]);
 
             List tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(), teacher.getTeacherNumber());
             

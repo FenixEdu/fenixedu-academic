@@ -15,8 +15,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,13 +29,13 @@ public class ApagarTurma implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(
+        final SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(
                 SchoolClass.class, infoClass.getIdInternal());
 
         // Shift
         Iterator iter = schoolClass.getAssociatedShiftsIterator();
         while(iter.hasNext()){
-            IShift shift = (IShift) iter.next();
+            Shift shift = (Shift) iter.next();
             iter.remove();
             shift.getAssociatedClasses().remove(schoolClass);
         }

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,10 +23,10 @@ public class ReadGuide implements IService {
 	public InfoGuide run(Integer guideId) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = null;
-		IGuide guide;
+		Guide guide;
 		InfoGuide infoGuide = null;
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideId);
+		guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideId);
 		if (guide == null) {
 			throw new InvalidArgumentsServiceException();
 		}

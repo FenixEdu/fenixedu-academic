@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -22,20 +22,20 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGrantOwner {
 
-    public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia {
-        IGrantOwner grantOwner = null;
+    public GrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia {
+        GrantOwner grantOwner = null;
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("number", grantOwnerNumber);
-        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+        grantOwner = (GrantOwner) queryObject(GrantOwner.class, criteria);
         return grantOwner;
     }
 
-    public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia {
-        IGrantOwner grantOwner = null;
+    public GrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia {
+        GrantOwner grantOwner = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyPerson", personIdInternal);
-        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+        grantOwner = (GrantOwner) queryObject(GrantOwner.class, criteria);
         return grantOwner;
     }
 
@@ -56,21 +56,21 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
         return new Integer(count(GrantOwner.class, criteria));
     }
 
-    public IGrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
+    public GrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
             throws ExcepcaoPersistencia {
-        IGrantOwner grantOwner = null;
+        GrantOwner grantOwner = null;
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.numeroDocumentoIdentificacao", idNumber);
         criteria.addEqualTo("person.idDocumentType", idType);
-        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, criteria);
+        grantOwner = (GrantOwner) queryObject(GrantOwner.class, criteria);
         return grantOwner;
     }
 
     public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia {
-        IGrantOwner grantOwner = null;
+        GrantOwner grantOwner = null;
         Integer maxGrantOwnerNumber = null;
 
-        grantOwner = (IGrantOwner) queryObject(GrantOwner.class, new Criteria(), "number", false);
+        grantOwner = (GrantOwner) queryObject(GrantOwner.class, new Criteria(), "number", false);
         if (grantOwner != null)
             maxGrantOwnerNumber = grantOwner.getNumber();
         return maxGrantOwnerNumber;
@@ -108,7 +108,7 @@ public class GrantOwnerOJB extends PersistentObjectOJB implements IPersistentGra
         }
 
         for (int i = begin; i < end && iter.hasNext(); i++) {
-            IGrantOwner grantOwner = (IGrantOwner) iter.next();
+            GrantOwner grantOwner = (GrantOwner) iter.next();
             result.add(grantOwner);
         }
         return result;

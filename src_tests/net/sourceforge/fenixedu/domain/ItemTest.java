@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class ItemTest extends DomainTestBase {
 
-    private ISection section;
-    private ISite site;
-    private IItem item, item2, item3;
+    private Section section;
+    private Site site;
+    private Item item, item2, item3;
 
     protected void setUp() throws Exception {
         super.setUp();

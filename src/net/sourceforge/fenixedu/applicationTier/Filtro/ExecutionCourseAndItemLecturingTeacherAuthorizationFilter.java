@@ -10,10 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IItem;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -58,9 +58,9 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
      */
     private boolean itemBelongsExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
+        ExecutionCourse executionCourse = null;
         ISuportePersistente sp;
-        IItem item = null;
+        Item item = null;
         InfoItem infoItem = null;
 
         if (argumentos == null) {
@@ -72,19 +72,19 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
             IPersistentItem persistentItem = sp.getIPersistentItem();
             if (argumentos[1] instanceof InfoItem) {
                 infoItem = (InfoItem) argumentos[1];
 
-                item = (IItem) persistentItem.readByOID(Item.class, infoItem.getIdInternal());
+                item = (Item) persistentItem.readByOID(Item.class, infoItem.getIdInternal());
             } else {
-                item = (IItem) persistentItem.readByOID(Item.class, (Integer) argumentos[1]);
+                item = (Item) persistentItem.readByOID(Item.class, (Integer) argumentos[1]);
 
             }
         } catch (Exception e) {
@@ -117,8 +117,8 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IProfessorship professorship = null;
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Professorship professorship = null;
             if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher

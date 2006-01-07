@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroupWithInfoBranch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,7 +25,7 @@ public class ReadCurricularCourseGroup implements IService {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
 				.getIPersistentCurricularCourseGroup();
-		ICurricularCourseGroup group = (ICurricularCourseGroup) persistentCurricularCourseGroup
+		CurricularCourseGroup group = (CurricularCourseGroup) persistentCurricularCourseGroup
 				.readByOID(CurricularCourseGroup.class, groupId);
 		return InfoCurricularCourseGroupWithInfoBranch.newInfoFromDomain(group);
 	}

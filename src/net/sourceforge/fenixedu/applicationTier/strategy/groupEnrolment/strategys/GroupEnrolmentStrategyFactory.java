@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
 /**
@@ -32,7 +32,7 @@ public class GroupEnrolmentStrategyFactory implements IGroupEnrolmentStrategyFac
         }
     }
 
-    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(IGrouping grouping) {
+    public IGroupEnrolmentStrategy getGroupEnrolmentStrategyInstance(Grouping grouping) {
 
         IGroupEnrolmentStrategy strategyInstance = null;
         EnrolmentGroupPolicyType policy = grouping.getEnrolmentPolicy();

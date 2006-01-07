@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,7 +37,7 @@ public class ReadSubstituteCandidates implements IService {
 
 				Integer idInternal = new Integer(ids[i]);
 
-				IMasterDegreeCandidate masterDegreeCandidateToWrite = (IMasterDegreeCandidate) sp
+				MasterDegreeCandidate masterDegreeCandidateToWrite = (MasterDegreeCandidate) sp
 						.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
 								idInternal);
 				result.add(InfoMasterDegreeCandidateWithInfoPerson

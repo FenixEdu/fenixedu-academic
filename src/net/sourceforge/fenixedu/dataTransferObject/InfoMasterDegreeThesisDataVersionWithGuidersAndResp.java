@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 
 /**
  * @author Fernanda Quitério Created on 6/Set/2004
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
 public class InfoMasterDegreeThesisDataVersionWithGuidersAndResp extends
         InfoMasterDegreeThesisDataVersionWithGuiders {
 
-    public void copyFromDomain(IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+    public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         super.copyFromDomain(masterDegreeThesisDataVersion);
         if (masterDegreeThesisDataVersion != null) {
             setInfoResponsibleEmployee(InfoEmployeeWithPerson
@@ -18,7 +18,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuidersAndResp extends
     }
 
     public static InfoMasterDegreeThesisDataVersion newInfoFromDomain(
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+            MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         InfoMasterDegreeThesisDataVersionWithGuidersAndResp infoMasterDegreeThesisDataVersionWithGuidersAndResp = null;
         if (masterDegreeThesisDataVersion != null) {
             infoMasterDegreeThesisDataVersionWithGuidersAndResp = new InfoMasterDegreeThesisDataVersionWithGuidersAndResp();

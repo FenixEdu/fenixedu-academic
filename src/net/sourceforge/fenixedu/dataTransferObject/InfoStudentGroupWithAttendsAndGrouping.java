@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public class InfoStudentGroupWithAttendsAndGrouping extends InfoStudentGroupWithAttends {
 
-    public void copyFromDomain(final IStudentGroup studentGroup) {
+    public void copyFromDomain(final StudentGroup studentGroup) {
         super.copyFromDomain(studentGroup);
 
         if(studentGroup != null) {
@@ -12,7 +12,7 @@ public class InfoStudentGroupWithAttendsAndGrouping extends InfoStudentGroupWith
         }
     }
     
-    public static InfoStudentGroupWithAttendsAndGrouping newInfoFromDomain(final IStudentGroup studentGroup) {
+    public static InfoStudentGroupWithAttendsAndGrouping newInfoFromDomain(final StudentGroup studentGroup) {
         final InfoStudentGroupWithAttendsAndGrouping infoStudentGroup;
 
         if(studentGroup != null) {

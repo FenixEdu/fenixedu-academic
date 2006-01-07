@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -39,16 +39,16 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
     public List readByExecutionPeriodAndCurricularYearAndExecutionDegree(Integer executionPeriodOID,
             Integer curricularYear, Integer executionDegreeOID) throws ExcepcaoPersistencia {
 
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
-        List<ISchoolClass> schoolClasses = executionDegree.getSchoolClasses();
+        List<SchoolClass> schoolClasses = executionDegree.getSchoolClasses();
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
 
-        List<ISchoolClass> result = new ArrayList();
+        List<SchoolClass> result = new ArrayList();
 
-        for (ISchoolClass schoolClass : schoolClasses) {
+        for (SchoolClass schoolClass : schoolClasses) {
             if (schoolClass.getExecutionPeriod().getExecutionYear().getYear().equals(
                     executionPeriod.getExecutionYear().getYear())
                     && schoolClass.getExecutionPeriod().getName().equals(executionPeriod.getName())
@@ -82,17 +82,17 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
 
     }
 
-    public ISchoolClass readByNameAndExecutionDegreeAndExecutionPeriod(String className,
+    public SchoolClass readByNameAndExecutionDegreeAndExecutionPeriod(String className,
             Integer executionDegreeOID, Integer executionPeriodOID) throws ExcepcaoPersistencia {
 
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
-        List<ISchoolClass> schoolClasses = executionDegree.getSchoolClasses();
+        List<SchoolClass> schoolClasses = executionDegree.getSchoolClasses();
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
 
-        for (ISchoolClass schoolClass : schoolClasses) {
+        for (SchoolClass schoolClass : schoolClasses) {
             if (schoolClass.getNome().equals(className)
                     && schoolClass.getExecutionPeriod().getName().equals(executionPeriod.getName())
                     && schoolClass.getExecutionPeriod().getExecutionYear().getYear().equals(
@@ -117,17 +117,17 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
          * criteria.addEqualTo("executionDegree.degreeCurricularPlan.name",executionDegree.getDegreeCurricularPlan().getName());
          * criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla",executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
          * 
-         * return (ISchoolClass) queryObject(SchoolClass.class, criteria);
+         * return (SchoolClass) queryObject(SchoolClass.class, criteria);
          */
 
     }
 
     public List readByExecutionPeriod(Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
-        List<ISchoolClass> result = new ArrayList();
-        for (ISchoolClass schoolClass : schoolClasses) {
+        List<SchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
+        List<SchoolClass> result = new ArrayList();
+        for (SchoolClass schoolClass : schoolClasses) {
             if (schoolClass.getExecutionPeriod().getExecutionYear().getYear().equals(
                     executionPeriod.getExecutionYear().getYear())
                     && schoolClass.getExecutionPeriod().getName().equals(executionPeriod.getName())) {
@@ -147,11 +147,11 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
     }
 
     public List readByExecutionDegree(Integer executionDegreeOID) throws ExcepcaoPersistencia {
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
-        List<ISchoolClass> schoolClasses = executionDegree.getSchoolClasses();
-        List<ISchoolClass> result = new ArrayList();
-        for (ISchoolClass schoolClass : schoolClasses) {
+        List<SchoolClass> schoolClasses = executionDegree.getSchoolClasses();
+        List<SchoolClass> result = new ArrayList();
+        for (SchoolClass schoolClass : schoolClasses) {
             if (schoolClass.getExecutionDegree().getExecutionYear().getYear().equals(
                     executionDegree.getExecutionYear().getYear())
                     && schoolClass.getExecutionDegree().getDegreeCurricularPlan().getName().equals(
@@ -179,13 +179,13 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
     public List readByExecutionDegreeAndExecutionPeriod(Integer execucaoOID, Integer executionPeriodOID)
             throws ExcepcaoPersistencia {
 
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 execucaoOID);
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        List<ISchoolClass> schoolClasses = executionDegree.getSchoolClasses();
-        List<ISchoolClass> result = new ArrayList();
-        for (ISchoolClass schoolClass : schoolClasses) {
+        List<SchoolClass> schoolClasses = executionDegree.getSchoolClasses();
+        List<SchoolClass> result = new ArrayList();
+        for (SchoolClass schoolClass : schoolClasses) {
             if (schoolClass.getExecutionPeriod().getExecutionYear().getYear().equals(
                     executionPeriod.getExecutionYear().getYear())
                     && schoolClass.getExecutionPeriod().getName().equals(executionPeriod.getName())
@@ -219,14 +219,14 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
 
     public List readByExecutionDegreeAndDegreeAndExecutionPeriod(Integer execucaoOID, Integer degreeOID,
             Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 execucaoOID);
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        IDegree degree = (IDegree) readByOID(Degree.class, degreeOID);
-        List<ISchoolClass> schoolClasses = executionDegree.getSchoolClasses();
-        List<ISchoolClass> result = new ArrayList();
-        for (ISchoolClass schoolClass : schoolClasses) {
+        Degree degree = (Degree) readByOID(Degree.class, degreeOID);
+        List<SchoolClass> schoolClasses = executionDegree.getSchoolClasses();
+        List<SchoolClass> result = new ArrayList();
+        for (SchoolClass schoolClass : schoolClasses) {
             if (schoolClass.getExecutionDegree().getIdInternal().equals(executionDegree.getIdInternal())
                     && schoolClass.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                             .getIdInternal().equals(degree.getIdInternal())
@@ -250,15 +250,15 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
     }
 
     public List readByExecutionCourse(Integer executionCourseOID) throws ExcepcaoPersistencia {
-        IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseOID);
-        List<IShift> associatedShifts = executionCourse.getAssociatedShifts();
-        List<ISchoolClass> result = new ArrayList();
-        for (IShift shift : associatedShifts) {
-            List<ISchoolClass> schoolClasses = shift.getAssociatedClasses();
-            for (ISchoolClass schoolClass : schoolClasses) {
-                List<IShift> shifts = schoolClass.getAssociatedShifts();
-                for (IShift turno : shifts) {
+        List<Shift> associatedShifts = executionCourse.getAssociatedShifts();
+        List<SchoolClass> result = new ArrayList();
+        for (Shift shift : associatedShifts) {
+            List<SchoolClass> schoolClasses = shift.getAssociatedClasses();
+            for (SchoolClass schoolClass : schoolClasses) {
+                List<Shift> shifts = schoolClass.getAssociatedShifts();
+                for (Shift turno : shifts) {
                     if (turno.getDisciplinaExecucao().getIdInternal().equals(
                             executionCourse.getIdInternal()) && !result.contains(schoolClass)) {
                         result.add(schoolClass);
@@ -278,19 +278,19 @@ public class TurmaVO extends VersionedObjectsBase implements ITurmaPersistente {
 
     public List readClassesThatContainsStudentAttendsOnExecutionPeriod(Integer studentOID,
             Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        IStudent student = (IStudent) readByOID(Student.class, studentOID);
-        List<ISchoolClass> result = new ArrayList();
-        List<ISchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
-        for (ISchoolClass schoolClass : schoolClasses) {
-            List<IShift> shifts = schoolClass.getAssociatedShifts();
-            for (IShift shift : shifts) {
+        Student student = (Student) readByOID(Student.class, studentOID);
+        List<SchoolClass> result = new ArrayList();
+        List<SchoolClass> schoolClasses = executionPeriod.getSchoolClasses();
+        for (SchoolClass schoolClass : schoolClasses) {
+            List<Shift> shifts = schoolClass.getAssociatedShifts();
+            for (Shift shift : shifts) {
                 if (shift.getDisciplinaExecucao().getExecutionPeriod().getIdInternal().equals(
                         executionPeriod.getIdInternal())) {
-                    final List<IAttends> attends = shift.getDisciplinaExecucao().getAttends();
-                    for (final IAttends attend : attends) {
-                        final IStudent otherStudent = attend.getAluno();
+                    final List<Attends> attends = shift.getDisciplinaExecucao().getAttends();
+                    for (final Attends attend : attends) {
+                        final Student otherStudent = attend.getAluno();
                         if (student.equals(otherStudent)) {
                             result.add(schoolClass);
                         }

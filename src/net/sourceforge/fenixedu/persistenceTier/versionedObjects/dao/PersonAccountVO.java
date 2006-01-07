@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class PersonAccountVO extends VersionedObjectsBase implements IPersistentPersonAccount {
 
-    public IPersonAccount readByPerson(final Integer personOID) throws ExcepcaoPersistencia {
-		final IPerson person = (IPerson) readByOID(Person.class, personOID);
+    public PersonAccount readByPerson(final Integer personOID) throws ExcepcaoPersistencia {
+		final Person person = (Person) readByOID(Person.class, personOID);
 		return person.getAssociatedPersonAccount();
     }
 

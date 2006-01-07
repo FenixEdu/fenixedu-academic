@@ -51,11 +51,11 @@ public class OptionalCurricularCourseGroup extends OptionalCurricularCourseGroup
                 + getBranch().getName() + "]";
     }
 	
-	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, AreaType areaType) {
+	public void edit(String name, Branch branch, Integer minimumValue, Integer maximumValue, AreaType areaType) {
 		edit(name, branch, minimumValue, maximumValue);
 	}
 	
-	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue){
+	public void edit(String name, Branch branch, Integer minimumValue, Integer maximumValue){
 		setName(name);
 		setBranch(branch);
 		setMinimumNumberOfOptionalCourses(minimumValue);

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.Curriculum;
 
 /**
  * @author Tânia Pousão
@@ -15,9 +15,9 @@ public class InfoCurriculumWithInfoCurricularCourse extends InfoCurriculum {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum#copyFromDomain(Dominio.ICurriculum)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum#copyFromDomain(Dominio.Curriculum)
      */
-    public void copyFromDomain(ICurriculum curriculum) {
+    public void copyFromDomain(Curriculum curriculum) {
         super.copyFromDomain(curriculum);
         if (curriculum != null) {
             setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curriculum
@@ -25,7 +25,7 @@ public class InfoCurriculumWithInfoCurricularCourse extends InfoCurriculum {
         }
     }
 
-    public static InfoCurriculum newInfoFromDomain(ICurriculum curriculum) {
+    public static InfoCurriculum newInfoFromDomain(Curriculum curriculum) {
         InfoCurriculumWithInfoCurricularCourse infoCurriculum = null;
         if (curriculum != null) {
             infoCurriculum = new InfoCurriculumWithInfoCurricularCourse();

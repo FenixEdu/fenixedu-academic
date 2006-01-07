@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
@@ -21,14 +21,14 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class GrantContractOJB extends PersistentObjectOJB implements IPersistentGrantContract {
 
-    public IGrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,
+    public GrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,
             Integer grantOwnerId) throws ExcepcaoPersistencia {
-        IGrantContract grantContract = null;
+        GrantContract grantContract = null;
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("number", grantContractNumber);
         criteria.addEqualTo("key_grant_owner", grantOwnerId);
-        grantContract = (IGrantContract) queryObject(GrantContract.class, criteria);
+        grantContract = (GrantContract) queryObject(GrantContract.class, criteria);
         return grantContract;
     }
 
@@ -46,7 +46,7 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("key_grant_owner", grantOwnerId);
-        IGrantContract grantContract = (IGrantContract) queryObject(GrantContract.class, criteria, "number", false);
+        GrantContract grantContract = (GrantContract) queryObject(GrantContract.class, criteria, "number", false);
         if (grantContract != null)
             maxGrantContractNumber = grantContract.getContractNumber();
         return maxGrantContractNumber;
@@ -106,7 +106,7 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
         }
 
         for (int i = begin; i < end && iter.hasNext(); i++) {
-            IGrantContract grantContract = (IGrantContract) iter.next();
+            GrantContract grantContract = (GrantContract) iter.next();
             result.add(grantContract);
         }
         return result;

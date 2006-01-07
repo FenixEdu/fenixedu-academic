@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
+import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -34,8 +34,8 @@ public class OldPublicationTeacherAuthorizationFilter extends DomainObjectAuthor
             IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IOldPublication oldPublication = (IOldPublication) persistentOldPublication.readByOID(
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            OldPublication oldPublication = (OldPublication) persistentOldPublication.readByOID(
                     OldPublication.class, objectId);
 
             return oldPublication.getTeacher().equals(teacher);

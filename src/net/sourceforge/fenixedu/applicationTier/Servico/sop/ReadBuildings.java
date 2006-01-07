@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
-import net.sourceforge.fenixedu.domain.space.IBuilding;
+import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,7 +26,7 @@ public class ReadBuildings implements IService {
 
         return (List) CollectionUtils.collect(persistentBuilding.readAll(), new Transformer() {
             public Object transform(Object arg0) {
-                final IBuilding building = (IBuilding) arg0;
+                final Building building = (Building) arg0;
                 return InfoBuilding.newInfoFromDomain(building);
             }});
     }

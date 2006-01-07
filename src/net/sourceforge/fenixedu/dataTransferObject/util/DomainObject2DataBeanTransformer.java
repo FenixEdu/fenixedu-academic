@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.util;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,7 +20,7 @@ public class DomainObject2DataBeanTransformer extends ObjectBeanTransformer {
      * @param fromClass
      */
     public DomainObject2DataBeanTransformer() {
-        super(InfoObject.class, IDomainObject.class);
+        super(InfoObject.class, DomainObject.class);
     }
 
     /*
@@ -29,7 +29,7 @@ public class DomainObject2DataBeanTransformer extends ObjectBeanTransformer {
      * @see dataBean.util.ObjectBeanTransformer#getHashKey(java.lang.Object)
      */
     protected Object getHashKey(Object fromObject) {
-        return fromObject.getClass().getName() + ((IDomainObject) fromObject).getIdInternal();
+        return fromObject.getClass().getName() + ((DomainObject) fromObject).getIdInternal();
     }
 
     /*

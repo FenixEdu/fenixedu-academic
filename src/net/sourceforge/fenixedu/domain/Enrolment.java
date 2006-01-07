@@ -38,16 +38,16 @@ public class Enrolment extends Enrolment_Base {
         this.accumulatedWeight = accumulatedWeight;
     }
 
-    public void initializeAsNew(IStudentCurricularPlan studentCurricularPlan,
-            ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod,
+    public void initializeAsNew(StudentCurricularPlan studentCurricularPlan,
+            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             EnrollmentCondition enrolmentCondition, String createdBy) {
         initializeAsNewWithoutEnrolmentEvaluation(studentCurricularPlan, curricularCourse,
                 executionPeriod, enrolmentCondition, createdBy);
         createEnrolmentEvaluationWithoutGrade();
     }
 
-    public void initializeAsNewWithoutEnrolmentEvaluation(IStudentCurricularPlan studentCurricularPlan,
-            ICurricularCourse curricularCourse, IExecutionPeriod executionPeriod,
+    public void initializeAsNewWithoutEnrolmentEvaluation(StudentCurricularPlan studentCurricularPlan,
+            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             EnrollmentCondition enrolmentCondition, String createdBy) {
         setCurricularCourse(curricularCourse);
         setEnrollmentState(EnrollmentState.ENROLLED);
@@ -73,7 +73,7 @@ public class Enrolment extends Enrolment_Base {
 
     public void unEnroll() throws DomainException {
 
-        for (IEnrolmentEvaluation eval : getEvaluations()) {
+        for (EnrolmentEvaluation eval : getEvaluations()) {
 
             if (eval.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL)
                     && eval.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.TEMPORARY_OBJ)
@@ -91,9 +91,9 @@ public class Enrolment extends Enrolment_Base {
         removeStudentCurricularPlan();
         removeCurricularCourse();
 
-        Iterator<IAttends> attendsIter = getAttendsIterator();
+        Iterator<Attends> attendsIter = getAttendsIterator();
         while (attendsIter.hasNext()) {
-            IAttends attends = attendsIter.next();
+            Attends attends = attendsIter.next();
 
             try {
                 attendsIter.remove();
@@ -103,39 +103,39 @@ public class Enrolment extends Enrolment_Base {
             }
         }
 
-        Iterator<IEnrolmentEvaluation> evalsIter = getEvaluationsIterator();
+        Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsIterator();
         while (evalsIter.hasNext()) {
-            IEnrolmentEvaluation eval = evalsIter.next();
+            EnrolmentEvaluation eval = evalsIter.next();
             evalsIter.remove();
             eval.delete();
         }
 
-        Iterator<ICreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasIterator();
+        Iterator<CreditsInAnySecundaryArea> creditsInAnysecundaryAreaIterator = getCreditsInAnySecundaryAreasIterator();
 
         while (creditsInAnysecundaryAreaIterator.hasNext()) {
-            ICreditsInAnySecundaryArea credits = creditsInAnysecundaryAreaIterator.next();
+            CreditsInAnySecundaryArea credits = creditsInAnysecundaryAreaIterator.next();
             creditsInAnysecundaryAreaIterator.remove();
             credits.delete();
         }
 
-        Iterator<ICreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasIterator();
+        Iterator<CreditsInScientificArea> creditsInScientificAreaIterator = getCreditsInScientificAreasIterator();
 
         while (creditsInScientificAreaIterator.hasNext()) {
-            ICreditsInScientificArea credits = creditsInScientificAreaIterator.next();
+            CreditsInScientificArea credits = creditsInScientificAreaIterator.next();
             creditsInScientificAreaIterator.remove();
             credits.delete();
         }
 
-        Iterator<IEquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentIterator = getEquivalentEnrolmentForEnrolmentEquivalencesIterator();
+        Iterator<EquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentIterator = getEquivalentEnrolmentForEnrolmentEquivalencesIterator();
 
         while (equivalentEnrolmentIterator.hasNext()) {
-            IEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolment = equivalentEnrolmentIterator
+            EquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolment = equivalentEnrolmentIterator
                     .next();
             equivalentEnrolmentIterator.remove();
             equivalentEnrolment.removeEquivalentEnrolment();
 
-            IEnrolmentEquivalence equivalence = equivalentEnrolment.getEnrolmentEquivalence();
-            IEnrolment enrolment = equivalence.getEnrolment();
+            EnrolmentEquivalence equivalence = equivalentEnrolment.getEnrolmentEquivalence();
+            Enrolment enrolment = equivalence.getEnrolment();
 
             equivalence.removeEnrolment();
             enrolment.delete();
@@ -145,18 +145,18 @@ public class Enrolment extends Enrolment_Base {
             equivalence.delete();
         }
 
-        Iterator<IEnrolmentEquivalence> equivalenceIterator = getEnrolmentEquivalencesIterator();
+        Iterator<EnrolmentEquivalence> equivalenceIterator = getEnrolmentEquivalencesIterator();
 
         while (equivalenceIterator.hasNext()) {
-            IEnrolmentEquivalence equivalence = equivalenceIterator.next();
+            EnrolmentEquivalence equivalence = equivalenceIterator.next();
             equivalenceIterator.remove();
             equivalence.removeEnrolment();
 
-            Iterator<IEquivalentEnrolmentForEnrolmentEquivalence> equivalentRestrictionIterator = equivalence
+            Iterator<EquivalentEnrolmentForEnrolmentEquivalence> equivalentRestrictionIterator = equivalence
                     .getEquivalenceRestrictionsIterator();
 
             while (equivalentRestrictionIterator.hasNext()) {
-                IEquivalentEnrolmentForEnrolmentEquivalence equivalentRestriction = equivalentRestrictionIterator
+                EquivalentEnrolmentForEnrolmentEquivalence equivalentRestriction = equivalentRestrictionIterator
                         .next();
                 equivalentRestriction.removeEquivalentEnrolment();
                 equivalentRestrictionIterator.remove();
@@ -171,9 +171,9 @@ public class Enrolment extends Enrolment_Base {
 
     }
 
-    public IEnrolmentEvaluation getImprovementEvaluation() {
+    public EnrolmentEvaluation getImprovementEvaluation() {
 
-        for (IEnrolmentEvaluation evaluation : getEvaluations()) {
+        for (EnrolmentEvaluation evaluation : getEvaluations()) {
             if (evaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT)
                     && evaluation.getEnrolmentEvaluationState().equals(
                             EnrolmentEvaluationState.TEMPORARY_OBJ))
@@ -184,13 +184,13 @@ public class Enrolment extends Enrolment_Base {
         return null;
     }
 
-    public IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
+    public EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
             final EnrolmentEvaluationType evaluationType, final String grade) {
 
-        return (IEnrolmentEvaluation) CollectionUtils.find(getEvaluations(), new Predicate() {
+        return (EnrolmentEvaluation) CollectionUtils.find(getEvaluations(), new Predicate() {
 
             public boolean evaluate(Object o) {
-                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
                 String evaluationGrade = enrolmentEvaluation.getGrade();
 
                 return enrolmentEvaluation.getEnrolmentEvaluationType().equals(evaluationType)
@@ -201,12 +201,12 @@ public class Enrolment extends Enrolment_Base {
         });
     }
 
-    private IEnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+    private EnrolmentEvaluation getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
             final EnrolmentEvaluationState state, final EnrolmentEvaluationType type) {
-        return (IEnrolmentEvaluation) CollectionUtils.find(getEvaluations(), new Predicate() {
+        return (EnrolmentEvaluation) CollectionUtils.find(getEvaluations(), new Predicate() {
 
             public boolean evaluate(Object o) {
-                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
                 return (enrolmentEvaluation.getEnrolmentEvaluationState().equals(state) && enrolmentEvaluation
                         .getEnrolmentEvaluationType().equals(type));
             }
@@ -214,11 +214,11 @@ public class Enrolment extends Enrolment_Base {
         });
     }
 
-    public IEnrolmentEvaluation submitEnrolmentEvaluation(
-            EnrolmentEvaluationType enrolmentEvaluationType, IMark publishedMark, IEmployee employee,
-            IPerson personResponsibleForGrade, Date evaluationDate, String observation) {
+    public EnrolmentEvaluation submitEnrolmentEvaluation(
+            EnrolmentEvaluationType enrolmentEvaluationType, Mark publishedMark, Employee employee,
+            Person personResponsibleForGrade, Date evaluationDate, String observation) {
 
-        IEnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
+        EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationStateAndType(
                 EnrolmentEvaluationState.TEMPORARY_OBJ, enrolmentEvaluationType);
 
         // There can be only one enrolmentEvaluation with Temporary State
@@ -259,7 +259,7 @@ public class Enrolment extends Enrolment_Base {
 
     private void createEnrolmentEvaluationWithoutGrade() {
 
-        IEnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
+        EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
                 EnrolmentEvaluationType.NORMAL, null);
 
         if (enrolmentEvaluation == null) {
@@ -271,41 +271,41 @@ public class Enrolment extends Enrolment_Base {
         }
     }
 
-    private void createAttend(IStudent student, ICurricularCourse curricularCourse,
-            IExecutionPeriod executionPeriod) {
+    private void createAttend(Student student, CurricularCourse curricularCourse,
+            ExecutionPeriod executionPeriod) {
 
         List executionCourses = curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod);
 
-        IExecutionCourse executionCourse = null;
+        ExecutionCourse executionCourse = null;
         if (executionCourses.size() > 1) {
             Iterator iterator = executionCourses.iterator();
             while (iterator.hasNext()) {
-                IExecutionCourse executionCourse2 = (IExecutionCourse) iterator.next();
+                ExecutionCourse executionCourse2 = (ExecutionCourse) iterator.next();
                 if (executionCourse2.getExecutionCourseProperties() == null
                         || executionCourse2.getExecutionCourseProperties().isEmpty()) {
                     executionCourse = executionCourse2;
                 }
             }
         } else if (executionCourses.size() == 1) {
-            executionCourse = (IExecutionCourse) executionCourses.get(0);
+            executionCourse = (ExecutionCourse) executionCourses.get(0);
         }
 
         if (executionCourse != null) {
-            IAttends attend = executionCourse.getAttendsByStudent(student);
+            Attends attend = executionCourse.getAttendsByStudent(student);
 
             if (attend != null) {
                 addAttends(attend);
             } else {
-                IAttends attendToWrite = new Attends(student, executionCourse);
+                Attends attendToWrite = new Attends(student, executionCourse);
                 addAttends(attendToWrite);
             }
         }
     }
 
-    public void createEnrolmentEvaluationForImprovement(IEmployee employee,
-            IExecutionPeriod currentExecutionPeriod, IStudent student) {
+    public void createEnrolmentEvaluationForImprovement(Employee employee,
+            ExecutionPeriod currentExecutionPeriod, Student student) {
 
-        IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation();
 
         enrolmentEvaluation.setEmployee(employee);
         enrolmentEvaluation.setWhen(new Date());
@@ -316,15 +316,15 @@ public class Enrolment extends Enrolment_Base {
         createAttendForImprovment(currentExecutionPeriod, student);
     }
 
-    private void createAttendForImprovment(final IExecutionPeriod currentExecutionPeriod,
-            final IStudent student) {
+    private void createAttendForImprovment(final ExecutionPeriod currentExecutionPeriod,
+            final Student student) {
 
         List executionCourses = getCurricularCourse().getAssociatedExecutionCourses();
-        IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(
+        ExecutionCourse currentExecutionCourse = (ExecutionCourse) CollectionUtils.find(
                 executionCourses, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                        ExecutionCourse executionCourse = (ExecutionCourse) arg0;
                         if (executionCourse.getExecutionPeriod().equals(currentExecutionPeriod))
                             return true;
                         return false;
@@ -334,10 +334,10 @@ public class Enrolment extends Enrolment_Base {
 
         if (currentExecutionCourse != null) {
             List attends = currentExecutionCourse.getAttends();
-            IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
+            Attends attend = (Attends) CollectionUtils.find(attends, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
-                    IAttends frequenta = (IAttends) arg0;
+                    Attends frequenta = (Attends) arg0;
                     if (frequenta.getAluno().equals(student))
                         return true;
                     return false;
@@ -354,25 +354,25 @@ public class Enrolment extends Enrolment_Base {
         }
     }
 
-    public boolean isImprovementForExecutionCourse(IExecutionCourse executionCourse) {
+    public boolean isImprovementForExecutionCourse(ExecutionCourse executionCourse) {
         return !getExecutionPeriod().equals(executionCourse.getExecutionPeriod());
     }
 
-    public void unEnrollImprovement(final IExecutionPeriod executionPeriod) throws DomainException {
-        IEnrolmentEvaluation improvmentEnrolmentEvaluation = getImprovementEvaluation();
+    public void unEnrollImprovement(final ExecutionPeriod executionPeriod) throws DomainException {
+        EnrolmentEvaluation improvmentEnrolmentEvaluation = getImprovementEvaluation();
         if (improvmentEnrolmentEvaluation != null) {
 
             improvmentEnrolmentEvaluation.delete();
 
-            final IStudent student = getStudentCurricularPlan().getStudent();
-            List<IExecutionCourse> executionCourses = getCurricularCourse()
+            final Student student = getStudentCurricularPlan().getStudent();
+            List<ExecutionCourse> executionCourses = getCurricularCourse()
                     .getAssociatedExecutionCourses();
 
-            IExecutionCourse currentExecutionCourse = (IExecutionCourse) CollectionUtils.find(
+            ExecutionCourse currentExecutionCourse = (ExecutionCourse) CollectionUtils.find(
                     executionCourses, new Predicate() {
 
                         public boolean evaluate(Object arg0) {
-                            IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                            ExecutionCourse executionCourse = (ExecutionCourse) arg0;
                             if (executionCourse.getExecutionPeriod().equals(executionPeriod))
                                 return true;
                             return false;
@@ -381,10 +381,10 @@ public class Enrolment extends Enrolment_Base {
 
             if (currentExecutionCourse != null) {
                 List attends = currentExecutionCourse.getAttends();
-                IAttends attend = (IAttends) CollectionUtils.find(attends, new Predicate() {
+                Attends attend = (Attends) CollectionUtils.find(attends, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        IAttends frequenta = (IAttends) arg0;
+                        Attends frequenta = (Attends) arg0;
                         if (frequenta.getAluno().equals(student))
                             return true;
                         return false;
@@ -404,11 +404,11 @@ public class Enrolment extends Enrolment_Base {
         }
     }
 
-    public List<IEnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
-        return (List<IEnrolmentEvaluation>) CollectionUtils.select(getEvaluations(), new Predicate() {
+    public List<EnrolmentEvaluation> getAllFinalEnrolmentEvaluations() {
+        return (List<EnrolmentEvaluation>) CollectionUtils.select(getEvaluations(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
                 return enrolmentEvaluation.getEnrolmentEvaluationState().equals(
                         EnrolmentEvaluationState.FINAL_OBJ);
             }
@@ -417,7 +417,7 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public boolean hasSpecialSeason() {
-        for (IEnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+        for (EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
             if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
                     EnrolmentEvaluationType.SPECIAL_SEASON)) {
                 return true;
@@ -428,9 +428,9 @@ public class Enrolment extends Enrolment_Base {
 
     public Integer getFinalGrade() {
         
-        IEnrolmentEvaluation enrolmentEvaluation = null;
+        EnrolmentEvaluation enrolmentEvaluation = null;
         
-        for (IEnrolmentEvaluation evaluation : getEvaluations()) {
+        for (EnrolmentEvaluation evaluation : getEvaluations()) {
             if(evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ)){
                 if(enrolmentEvaluation == null || evaluation.compareTo(enrolmentEvaluation) > 0) {
                     enrolmentEvaluation = evaluation;

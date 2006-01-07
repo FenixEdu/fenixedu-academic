@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -44,7 +44,7 @@ public class CreateDeclaration implements IService {
         }
 
         for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
+            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
             if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
                 infoStudentCurricularPlanList
@@ -82,7 +82,7 @@ public class CreateDeclaration implements IService {
         }
 
         for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
+            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
             if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
                 infoStudentCurricularPlanList
@@ -122,7 +122,7 @@ public class CreateDeclaration implements IService {
             }
 
             for (Iterator iterator = studentCurricularPlanListTmp.iterator(); iterator.hasNext();) {
-                IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+                StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
                 studentCurricularPlanList.add(studentCurricularPlan);
             }
@@ -134,7 +134,7 @@ public class CreateDeclaration implements IService {
         }
 
         for (Iterator iter = studentCurricularPlanList.iterator(); iter.hasNext();) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iter.next();
+            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iter.next();
 
             if (studentCurricularPlan != null || studentCurricularPlan.getIdInternal() != null) {
                 infoStudentCurricularPlanList

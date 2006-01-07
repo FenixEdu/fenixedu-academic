@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
@@ -26,7 +26,7 @@ public class BranchOJB extends PersistentObjectOJB implements IPersistentBranch 
 
     }
 
-//    public List readByExecutionDegree(IExecutionDegree executionDegree) throws ExcepcaoPersistencia {
+//    public List readByExecutionDegree(ExecutionDegree executionDegree) throws ExcepcaoPersistencia {
 //        Criteria crit = new Criteria();
 //        crit.addEqualTo("degreeCurricularPlan.idInternal", executionDegree.getDegreeCurricularPlan()
 //                .getIdInternal());
@@ -34,20 +34,20 @@ public class BranchOJB extends PersistentObjectOJB implements IPersistentBranch 
 //
 //    }
 
-    public IBranch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId,
+    public Branch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId,
             String branchName) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlanId);
         crit.addEqualTo("name", branchName);
-        return (IBranch) queryObject(Branch.class, crit);
+        return (Branch) queryObject(Branch.class, crit);
     }
 
-    public IBranch readByDegreeCurricularPlanAndCode(Integer degreeCurricularPlanId,
+    public Branch readByDegreeCurricularPlanAndCode(Integer degreeCurricularPlanId,
             String code) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("keyDegreeCurricularPlan", degreeCurricularPlanId);
         crit.addEqualTo("code", code);
-        return (IBranch) queryObject(Branch.class, crit);
+        return (Branch) queryObject(Branch.class, crit);
     }
 
     public List readAllByDegreeCurricularPlanAndBranchType(Integer degreeCurricularPlanId,

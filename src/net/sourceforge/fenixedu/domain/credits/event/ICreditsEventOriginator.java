@@ -3,8 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.credits.event;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 
 public interface ICreditsEventOriginator {
-    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod);
+    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod);
 }

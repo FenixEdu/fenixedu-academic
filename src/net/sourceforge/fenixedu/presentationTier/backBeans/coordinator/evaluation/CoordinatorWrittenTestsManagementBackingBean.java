@@ -9,11 +9,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 public class CoordinatorWrittenTestsManagementBackingBean extends
@@ -27,7 +27,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
 
     public String createWrittenTest() {
         try {
-            final IExecutionCourse executionCourse = getExecutionCourse();
+            final ExecutionCourse executionCourse = getExecutionCourse();
             if (executionCourse == null) {
                 this.setErrorMessage("error.noExecutionCourse");
                 return "";
@@ -54,7 +54,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
 
     public String editWrittenTest() {
         try {
-            final IExecutionCourse executionCourse = getExecutionCourse();
+            final ExecutionCourse executionCourse = getExecutionCourse();
             if (executionCourse == null) {
                 this.setErrorMessage("error.noExecutionCourse");
                 return "";
@@ -99,10 +99,10 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
         return "showWrittenTestsForExecutionCourses";
     }
 
-    private List<String> getCurricularCourseScopeIDs(final IExecutionCourse executionCourse) {
+    private List<String> getCurricularCourseScopeIDs(final ExecutionCourse executionCourse) {
         final List<String> curricularCourseScopeIDs = new ArrayList<String>();
-        for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-            for (final ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
                 if (curricularCourseScope.getCurricularSemester().getSemester().equals(
                         executionCourse.getExecutionPeriod().getSemester())) {
                     curricularCourseScopeIDs.add(curricularCourseScope.getIdInternal().toString());
@@ -130,7 +130,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
 
     public Integer getBeginHour() {
         if (this.beginHour == null && this.getEvaluation() != null) {
-            this.beginHour = ((IWrittenEvaluation) getEvaluation()).getBeginning().get(
+            this.beginHour = ((WrittenEvaluation) getEvaluation()).getBeginning().get(
                     Calendar.HOUR_OF_DAY);
         }
         return this.beginHour;
@@ -142,7 +142,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
 
     public Integer getBeginMinute() {
         if (this.beginMinute == null && this.getEvaluation() != null) {
-            this.beginMinute = ((IWrittenEvaluation) getEvaluation()).getBeginning()
+            this.beginMinute = ((WrittenEvaluation) getEvaluation()).getBeginning()
                     .get(Calendar.MINUTE);
         }
         return this.beginMinute;
@@ -154,9 +154,9 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
 
     public String getDescription() {
         if (this.description == null && this.getEvaluation() != null) {
-            final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) getEvaluation();
-            if (writtenEvaluation instanceof IWrittenTest) {
-                this.description = ((IWrittenTest) writtenEvaluation).getDescription();
+            final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) getEvaluation();
+            if (writtenEvaluation instanceof WrittenTest) {
+                this.description = ((WrittenTest) writtenEvaluation).getDescription();
             }
         }
         return this.description;
@@ -168,7 +168,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
 
     public Integer getEndHour() {
         if (this.endHour == null && this.getEvaluation() != null) {
-            this.endHour = ((IWrittenEvaluation) getEvaluation()).getEnd().get(Calendar.HOUR_OF_DAY);
+            this.endHour = ((WrittenEvaluation) getEvaluation()).getEnd().get(Calendar.HOUR_OF_DAY);
         }
         return this.endHour;
     }
@@ -179,7 +179,7 @@ public class CoordinatorWrittenTestsManagementBackingBean extends
 
     public Integer getEndMinute() {
         if (this.endMinute == null && this.getEvaluation() != null) {
-            this.endMinute = ((IWrittenEvaluation) getEvaluation()).getEnd().get(Calendar.MINUTE);
+            this.endMinute = ((WrittenEvaluation) getEvaluation()).getEnd().get(Calendar.MINUTE);
         }
         return this.endMinute;
     }

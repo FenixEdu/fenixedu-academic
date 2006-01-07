@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IContract;
+import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class Unit extends Unit_Base {
 
-    public List<IUnit> getTopUnits() {
-        IUnit unit = this;
-        List<IUnit> allTopUnits = new ArrayList<IUnit>();
+    public List<Unit> getTopUnits() {
+        Unit unit = this;
+        List<Unit> allTopUnits = new ArrayList<Unit>();
         if (unit.hasAnyParentUnits()) {
-            for (IUnit parentUnit : this.getParentUnits()) {
+            for (Unit parentUnit : this.getParentUnits()) {
                 if (!parentUnit.hasAnyParentUnits() && !allTopUnits.contains(parentUnit)) {
                     allTopUnits.add(parentUnit);
                 } else if (parentUnit.hasAnyParentUnits()) {
-                    for (IUnit parentUnit2 : parentUnit.getTopUnits()) {
+                    for (Unit parentUnit2 : parentUnit.getTopUnits()) {
                         if (!allTopUnits.contains(parentUnit2)) {
                             allTopUnits.add(parentUnit2);
                         }
@@ -33,9 +33,9 @@ public class Unit extends Unit_Base {
         return allTopUnits;
     }
 
-    public List<IUnit> getInactiveSubUnits(Date currentDate) {
-        List<IUnit> allInactiveSubUnits = new ArrayList<IUnit>();
-        for (IUnit subUnit : this.getSubUnits()) {
+    public List<Unit> getInactiveSubUnits(Date currentDate) {
+        List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits()) {
             if (!subUnit.isActive(currentDate)) {
                 allInactiveSubUnits.add(subUnit);
             }
@@ -43,9 +43,9 @@ public class Unit extends Unit_Base {
         return allInactiveSubUnits;
     }
 
-    public List<IUnit> getActiveSubUnits(Date currentDate) {
-        List<IUnit> allActiveSubUnits = new ArrayList<IUnit>();
-        for (IUnit subUnit : this.getSubUnits()) {
+    public List<Unit> getActiveSubUnits(Date currentDate) {
+        List<Unit> allActiveSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits()) {
             if (subUnit.isActive(currentDate)) {
                 allActiveSubUnits.add(subUnit);
             }
@@ -54,7 +54,7 @@ public class Unit extends Unit_Base {
     }
 
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
-            UnitType type, IUnit parentUnit) {
+            UnitType type, Unit parentUnit) {
 
         this.setName(unitName);
         this.setBeginDate(beginDate);
@@ -94,9 +94,9 @@ public class Unit extends Unit_Base {
         }
     }
 
-    public List<IContract> getWorkingContracts(Date begin, Date end) {
-        List<IContract> contracts = new ArrayList<IContract>();
-        for (IContract contract : this.getWorkingContracts()) {
+    public List<Contract> getWorkingContracts(Date begin, Date end) {
+        List<Contract> contracts = new ArrayList<Contract>();
+        for (Contract contract : this.getWorkingContracts()) {
             if (contract.belongsToPeriod(begin, end)) {
                 contracts.add(contract);
             }
@@ -104,9 +104,9 @@ public class Unit extends Unit_Base {
         return contracts;
     }
 
-    public List<IUnit> getScientificAreaUnits() {
-        List<IUnit> result = new ArrayList<IUnit>();
-        for (IUnit unit : this.getSubUnits()) {
+    public List<Unit> getScientificAreaUnits() {
+        List<Unit> result = new ArrayList<Unit>();
+        for (Unit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.SCIENTIFIC_AREA)) {
                 result.add(unit);
             }
@@ -114,9 +114,9 @@ public class Unit extends Unit_Base {
         return result;
     }
 
-    public List<IUnit> getCompetenceCourseGroupUnits() {
-        List<IUnit> result = new ArrayList<IUnit>();
-        for (IUnit unit : this.getSubUnits()) {
+    public List<Unit> getCompetenceCourseGroupUnits() {
+        List<Unit> result = new ArrayList<Unit>();
+        for (Unit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.COMPETENCE_COURSE_GROUP)) {
                 result.add(unit);
             }
@@ -124,9 +124,9 @@ public class Unit extends Unit_Base {
         return result;
     }
 
-    public List<IUnit> getDegreeUnits() {
-        List<IUnit> result = new ArrayList<IUnit>();
-        for (IUnit unit : this.getSubUnits()) {
+    public List<Unit> getDegreeUnits() {
+        List<Unit> result = new ArrayList<Unit>();
+        for (Unit unit : this.getSubUnits()) {
             if (unit.getType() != null && unit.getType().equals(UnitType.DEGREE)) {
                 result.add(unit);
             }

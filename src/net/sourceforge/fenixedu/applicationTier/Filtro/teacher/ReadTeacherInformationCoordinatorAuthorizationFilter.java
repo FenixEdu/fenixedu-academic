@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -67,10 +67,10 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
             IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
-            ITeacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(user);
+            Teacher coordinator = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
-            List<IExecutionDegree> executionDegrees = persistentExecutionDegree
+            List<ExecutionDegree> executionDegrees = persistentExecutionDegree
                     .readByTeacher(coordinator.getIdInternal());
             List<Integer> degreeCurricularPlanIDs = getDegreeCurricularPlanIDs(executionDegrees);
             Integer executionYearID = (!degreeCurricularPlanIDs.isEmpty()) ? executionDegrees
@@ -81,7 +81,7 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
                     degreeCurricularPlanIDs, executionYearID);
             Iterator iter = professorships.iterator();
             while (iter.hasNext()) {
-                IProfessorship professorship = (IProfessorship) iter.next();
+                Professorship professorship = (Professorship) iter.next();
                 if (professorship.getTeacher().equals(teacher))
                     return true;
             }
@@ -93,9 +93,9 @@ public class ReadTeacherInformationCoordinatorAuthorizationFilter extends Author
         }
     }
 
-    private List<Integer> getDegreeCurricularPlanIDs(final List<IExecutionDegree> executionDegrees) {
+    private List<Integer> getDegreeCurricularPlanIDs(final List<ExecutionDegree> executionDegrees) {
         final List<Integer> result = new ArrayList<Integer>();
-        for (final IExecutionDegree executionDegree : executionDegrees) {
+        for (final ExecutionDegree executionDegree : executionDegrees) {
             result.add(executionDegree.getDegreeCurricularPlan().getIdInternal());
         }
         return result;

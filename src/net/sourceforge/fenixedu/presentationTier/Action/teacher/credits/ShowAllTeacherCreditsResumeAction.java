@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.CreditLine;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -33,7 +33,7 @@ public class ShowAllTeacherCreditsResumeAction extends Action {
             HttpServletResponse response) throws Exception {
         IUserView userView = SessionUtils.getUserView(request);
         Object args[] = { userView.getUtilizador() };
-        ITeacher teacher = (ITeacher) ServiceUtils.executeService(userView,
+        Teacher teacher = (Teacher) ServiceUtils.executeService(userView,
                 "ReadDomainTeacherByUsername", args);
         request.setAttribute("teacher", teacher);
 

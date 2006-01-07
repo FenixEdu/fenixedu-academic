@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -17,7 +17,7 @@ public class DefineInquiryResponsePeriod implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentObject.readByOID(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
 
         executionPeriod.setInquiryResponseBegin(inquiryResponseBegin);

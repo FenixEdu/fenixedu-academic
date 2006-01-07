@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 /**
  * @author farsola
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
 public class InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch extends
         InfoStudentCurricularPlanWithInfoStudentAndDegree
 {
-    public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
+    public void copyFromDomain(StudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null)
         {
@@ -26,7 +26,7 @@ public class InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch extends
     }
 
     public static InfoStudentCurricularPlan newInfoFromDomain(
-            IStudentCurricularPlan studentCurricularPlan) {
+            StudentCurricularPlan studentCurricularPlan) {
         InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch infoStudentCurricularPlan = null;
         if (studentCurricularPlan != null) {
             infoStudentCurricularPlan = new InfoStudentCurricularPlanWithInfoStudentAndDegreeAndBranch();

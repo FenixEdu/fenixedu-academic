@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class InstitutionVO extends VersionedObjectsBase implements IPersistentInstitution {
 
-    public IInstitution readByName(String name) throws ExcepcaoPersistencia {
+    public Institution readByName(String name) throws ExcepcaoPersistencia {
 
-        Collection<IInstitution> institutions = readAll(Institution.class);
+        Collection<Institution> institutions = readAll(Institution.class);
 
-        for (IInstitution institution : institutions) {
+        for (Institution institution : institutions) {
             if (institution.getName().equals(name)) {
                 return institution;
             }

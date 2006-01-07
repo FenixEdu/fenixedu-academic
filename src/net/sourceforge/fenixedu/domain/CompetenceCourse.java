@@ -9,21 +9,21 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseInformation;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class CompetenceCourse extends CompetenceCourse_Base {
     
-    private ICompetenceCourseInformation recentCompetenceCourseInformation;
+    private CompetenceCourseInformation recentCompetenceCourseInformation;
     
     protected CompetenceCourse() {
         super();        
     }
     
-    public CompetenceCourse(String code, String name, Collection<IDepartment> departments, CurricularStage curricularStage) {
+    public CompetenceCourse(String code, String name, Collection<Department> departments, CurricularStage curricularStage) {
     	this();
         setCurricularStage(curricularStage);
         fillFields(code, name);
@@ -34,7 +34,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     
     
     public CompetenceCourse(String name, String nameEn, String acronym, Boolean basic, 
-            RegimeType regimeType, CurricularStage curricularStage, IUnit unit) {           
+            RegimeType regimeType, CurricularStage curricularStage, Unit unit) {           
         this();
         setCurricularStage(curricularStage);
         setUnit(unit);
@@ -63,14 +63,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         setName(name);
 	}
     
-    public void edit(String code, String name, Collection<IDepartment> departments) {
+    public void edit(String code, String name, Collection<Department> departments) {
     	fillFields(code, name);
-    	for (final IDepartment department : this.getDepartments()) {
+    	for (final Department department : this.getDepartments()) {
 			if(!departments.contains(department)) {
 				removeDepartments(department);
 			}
 		}
-    	for (final IDepartment department : departments) {
+    	for (final Department department : departments) {
 			if(!hasDepartments(department)) {
 				addDepartments(department);
 			}
@@ -98,26 +98,26 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     	super.deleteDomainObject();
     }
     
-    public void addCurricularCourses(Collection<ICurricularCourse> curricularCourses) {
-    	for (ICurricularCourse curricularCourse : curricularCourses) {
+    public void addCurricularCourses(Collection<CurricularCourse> curricularCourses) {
+    	for (CurricularCourse curricularCourse : curricularCourses) {
     		addAssociatedCurricularCourses(curricularCourse);
 		}
     }
     
-    public void addDepartments(Collection<IDepartment> departments) {
-    	for (IDepartment department : departments) {
+    public void addDepartments(Collection<Department> departments) {
+    	for (Department department : departments) {
 			addDepartments(department);
 		}
     }
     
-    private ICompetenceCourseInformation getRecentCompetenceCourseInformation() {
+    private CompetenceCourseInformation getRecentCompetenceCourseInformation() {
         return (recentCompetenceCourseInformation != null) ? recentCompetenceCourseInformation :
             (recentCompetenceCourseInformation = findRecentCompetenceCourseInformation()); 
     }
     
     // TODO: Check this method!!!
-    private ICompetenceCourseInformation findRecentCompetenceCourseInformation() {
-        for (final ICompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformations()) {
+    private CompetenceCourseInformation findRecentCompetenceCourseInformation() {
+        for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformations()) {
             if (competenceCourseInformation.getEndDate() == null) { // endDate not defined: most recent information
                 return competenceCourseInformation;
             }
@@ -153,7 +153,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         getRecentCompetenceCourseInformation().setRegime(regimeType);
     }
     
-    public List<ICompetenceCourseLoad> getCompetenceCourseLoads() {
+    public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
         return getRecentCompetenceCourseInformation().getCompetenceCourseLoads();
     }
     
@@ -181,13 +181,13 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
     }
     
-    public Map<IDegree, List<ICurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
-        Map<IDegree, List<ICurricularCourse>> curricularCoursesMap = new HashMap<IDegree, List<ICurricularCourse>>();
-        for (ICurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
-            IDegree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
-            List<ICurricularCourse> curricularCourses = curricularCoursesMap.get(degree);
+    public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
+        Map<Degree, List<CurricularCourse>> curricularCoursesMap = new HashMap<Degree, List<CurricularCourse>>();
+        for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+            Degree degree = curricularCourse.getDegreeCurricularPlan().getDegree();
+            List<CurricularCourse> curricularCourses = curricularCoursesMap.get(degree);
             if (curricularCourses == null) {
-                curricularCourses = new ArrayList<ICurricularCourse>();
+                curricularCourses = new ArrayList<CurricularCourse>();
                 curricularCoursesMap.put(degree, curricularCourses);
             }
             curricularCourses.add(curricularCourse);
@@ -195,19 +195,19 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return curricularCoursesMap;
     }
 
-    public List<IEnrolmentEvaluation> getActiveEnrollmentEvaluations(IExecutionYear executionYear) {
-        List<IEnrolmentEvaluation> results = new ArrayList<IEnrolmentEvaluation>();
-        for (ICurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+    public List<EnrolmentEvaluation> getActiveEnrollmentEvaluations(ExecutionYear executionYear) {
+        List<EnrolmentEvaluation> results = new ArrayList<EnrolmentEvaluation>();
+        for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
             results.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
         }
         return results;
     }
     
-    public Boolean hasActiveScopesInExecutionYear(IExecutionYear executionYear) {
-        List<IExecutionPeriod> executionPeriods = executionYear.getExecutionPeriods();
-        List<ICurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();       
-        for (IExecutionPeriod executionPeriod : executionPeriods) {
-            for (ICurricularCourse curricularCourse : curricularCourses) {
+    public Boolean hasActiveScopesInExecutionYear(ExecutionYear executionYear) {
+        List<ExecutionPeriod> executionPeriods = executionYear.getExecutionPeriods();
+        List<CurricularCourse> curricularCourses = this.getAssociatedCurricularCourses();       
+        for (ExecutionPeriod executionPeriod : executionPeriods) {
+            for (CurricularCourse curricularCourse : curricularCourses) {
                 if (curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod).size() > 0) {
                     return Boolean.TRUE;
                 }
@@ -216,8 +216,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return Boolean.FALSE;
     }
     
-    public IUnit getDepartmentUnit() {
-        final List<IUnit> departmentUnits = this.getUnit().getTopUnits(); 
+    public Unit getDepartmentUnit() {
+        final List<Unit> departmentUnits = this.getUnit().getTopUnits(); 
         return (departmentUnits.isEmpty()) ? null : this.getUnit().getTopUnits().get(0);
     }
 }

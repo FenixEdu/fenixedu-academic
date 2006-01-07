@@ -19,7 +19,7 @@ public class Attends extends Attends_Base {
 
     public Attends() {}
 	
-	public Attends (IStudent student, IExecutionCourse executionCourse) {
+	public Attends (Student student, ExecutionCourse executionCourse) {
 		setAluno(student);
 		setDisciplinaExecucao(executionCourse);
 	}
@@ -45,17 +45,17 @@ public class Attends extends Attends_Base {
 			throw new DomainException("error.attends.cant.delete");
 	}
 	
-	public IFinalMark getFinalMark() {
-		for (IMark mark : getAssociatedMarks()) {
+	public FinalMark getFinalMark() {
+		for (Mark mark : getAssociatedMarks()) {
 			if(mark instanceof FinalMark) {
-				return (IFinalMark) mark;
+				return (FinalMark) mark;
 			}
 		}
 		return null;
 	}
 
-	public IMark getMarkByEvaluation(IEvaluation evaluation) {
-		for (IMark mark : getAssociatedMarks()) {
+	public Mark getMarkByEvaluation(Evaluation evaluation) {
+		for (Mark mark : getAssociatedMarks()) {
 			if(mark.getEvaluation().equals(evaluation)) {
 				return mark;
 			}
@@ -63,14 +63,14 @@ public class Attends extends Attends_Base {
 		return null;
 	}
 
-    public List<IMark> getAssociatedMarksOrderedByEvaluationDate() {
-        final List<IEvaluation> orderedEvaluations = getDisciplinaExecucao().getOrderedAssociatedEvaluations();
-        final List<IMark> orderedMarks = new ArrayList<IMark>(orderedEvaluations.size());
+    public List<Mark> getAssociatedMarksOrderedByEvaluationDate() {
+        final List<Evaluation> orderedEvaluations = getDisciplinaExecucao().getOrderedAssociatedEvaluations();
+        final List<Mark> orderedMarks = new ArrayList<Mark>(orderedEvaluations.size());
         for (int i = 0; i < orderedEvaluations.size(); i++) {
             orderedMarks.add(null);
         }
-        for (final IMark mark : getAssociatedMarks()) {
-            final IEvaluation evaluation = mark.getEvaluation();
+        for (final Mark mark : getAssociatedMarks()) {
+            final Evaluation evaluation = mark.getEvaluation();
             orderedMarks.set(orderedEvaluations.indexOf(evaluation), mark);
         }
         return orderedMarks;

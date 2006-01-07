@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
@@ -18,13 +18,13 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class GrantPaymentEntityOJB extends PersistentObjectOJB implements IPersistentGrantPaymentEntity {
 
-    public IGrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass)
+    public GrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("number", entityNumber);
         criteria.addEqualTo("ojbConcreteClass", entityClass);
-        IGrantPaymentEntity paymentEntity = paymentEntity = (IGrantPaymentEntity) queryObject(
+        GrantPaymentEntity paymentEntity = paymentEntity = (GrantPaymentEntity) queryObject(
                 GrantPaymentEntity.class, criteria);
         return paymentEntity;
     }

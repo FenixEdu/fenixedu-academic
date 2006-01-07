@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain.space;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -30,7 +30,7 @@ public class RoomOccupation extends RoomOccupation_Base {
     public RoomOccupation() {
     }
 
-    public RoomOccupation(IRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
+    public RoomOccupation(Room room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             int frequency) {
         this.setRoom(room);
         this.setStartTime(startTime);
@@ -99,15 +99,15 @@ public class RoomOccupation extends RoomOccupation_Base {
         return result;
     }
 
-    public boolean roomOccupationForDateAndTime(IRoomOccupation roomOccupation) {
+    public boolean roomOccupationForDateAndTime(RoomOccupation roomOccupation) {
         return roomOccupationForDateAndTime(roomOccupation.getPeriod(), roomOccupation.getStartTime(),
                 roomOccupation.getEndTime(), roomOccupation.getDayOfWeek(), roomOccupation
                         .getFrequency(), roomOccupation.getWeekOfQuinzenalStart(), roomOccupation
                         .getRoom());
     }
 
-    public boolean roomOccupationForDateAndTime(IOccupationPeriod period, Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week, IRoom room) {
+    public boolean roomOccupationForDateAndTime(OccupationPeriod period, Calendar startTime, Calendar endTime,
+            DiaSemana dayOfWeek, Integer frequency, Integer week, Room room) {
         if (!room.equals(this.getRoom())) {
             return false;
         }
@@ -215,7 +215,7 @@ public class RoomOccupation extends RoomOccupation_Base {
         return false;
     }
 
-    public boolean roomOccupationForDateAndTime(IOccupationPeriod period, Calendar startTime, Calendar endTime,
+    public boolean roomOccupationForDateAndTime(OccupationPeriod period, Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer frequency, Integer week) {
         return roomOccupationForDateAndTime(period.getStartDate(), period.getEndDate(), startTime,
                 endTime, dayOfWeek, frequency, week);
@@ -237,7 +237,7 @@ public class RoomOccupation extends RoomOccupation_Base {
     }
 
     public static boolean periodQuinzenalContainsWeekPeriod(Calendar startDate, Calendar endDate,
-            int startWeek, DiaSemana weekDay, Calendar day, Calendar endDay, IOccupationPeriod nextPeriod) {
+            int startWeek, DiaSemana weekDay, Calendar day, Calendar endDay, OccupationPeriod nextPeriod) {
         ArrayList listWeekly = weeklyDatesInPeriod(day, endDay, weekDay, nextPeriod);
         ArrayList listQuinzenal = quinzenalDatesInPeriod(startDate, endDate, startWeek, weekDay);
         for (int i = 0; i < listQuinzenal.size(); i++) {
@@ -292,7 +292,7 @@ public class RoomOccupation extends RoomOccupation_Base {
     }
 
     public static ArrayList weeklyDatesInPeriod(Calendar day, Calendar endDay, DiaSemana weekDay,
-            IOccupationPeriod nextPeriod) {
+            OccupationPeriod nextPeriod) {
         ArrayList list = new ArrayList();
         Calendar date = Calendar.getInstance();
         date.setTimeInMillis(day.getTimeInMillis());
@@ -337,7 +337,7 @@ public class RoomOccupation extends RoomOccupation_Base {
     }
 
     public void delete() {
-        final IOccupationPeriod period = getPeriod();
+        final OccupationPeriod period = getPeriod();
 
         removeLesson();
         removeWrittenEvaluation();

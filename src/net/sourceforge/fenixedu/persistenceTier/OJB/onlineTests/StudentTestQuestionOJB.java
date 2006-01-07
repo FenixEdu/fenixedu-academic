@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -27,14 +27,14 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  */
 public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPersistentStudentTestQuestion {
 
-    public List<IStudentTestQuestion> readByStudentAndDistributedTest(Integer studentId, Integer distributedTestId) throws ExcepcaoPersistencia {
+    public List<StudentTestQuestion> readByStudentAndDistributedTest(Integer studentId, Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.idInternal", studentId);
         criteria.addEqualTo("distributedTest.idInternal", distributedTestId);
         return queryList(StudentTestQuestion.class, criteria);
     }
 
-    public List<IStudentTestQuestion> readByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
+    public List<StudentTestQuestion> readByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
         QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
@@ -43,71 +43,71 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
         return queryList(queryCriteria);
     }
 
-    public List<IStudentTestQuestion> readByStudent(Integer studentId) throws ExcepcaoPersistencia {
+    public List<StudentTestQuestion> readByStudent(Integer studentId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyStudent", studentId);
         return queryList(StudentTestQuestion.class, criteria);
     }
 
-    public List<IStudentTestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
+    public List<StudentTestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyQuestion", questionId);
         return queryList(StudentTestQuestion.class, criteria);
     }
 
-    public List<IStudentTestQuestion> readByQuestionAndDistributedTest(Integer questionId, Integer distributedTestId) throws ExcepcaoPersistencia {
+    public List<StudentTestQuestion> readByQuestionAndDistributedTest(Integer questionId, Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyQuestion", questionId);
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
         return queryList(StudentTestQuestion.class, criteria);
     }
 
-    public IStudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
+    public StudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyQuestion", questionId);
         criteria.addEqualTo("keyStudent", studentId);
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        return (IStudentTestQuestion) queryObject(StudentTestQuestion.class, criteria);
+        return (StudentTestQuestion) queryObject(StudentTestQuestion.class, criteria);
     }
 
-    public List<IStudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
+    public List<StudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("testQuestionOrder", order);
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
         return queryList(StudentTestQuestion.class, criteria);
     }
 
-    public List<IStudent> readStudentsByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
+    public List<Student> readStudentsByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
         criteria.addEqualTo("testQuestionOrder", new Integer(1));
-        List<IStudentTestQuestion> result = queryList(StudentTestQuestion.class, criteria);
-        List<IStudent> studentList = new ArrayList<IStudent>();
-        for (IStudentTestQuestion studentTestQuestion : result) {
+        List<StudentTestQuestion> result = queryList(StudentTestQuestion.class, criteria);
+        List<Student> studentList = new ArrayList<Student>();
+        for (StudentTestQuestion studentTestQuestion : result) {
             if (!studentList.contains(studentTestQuestion.getStudent()))
                 studentList.add(studentTestQuestion.getStudent());
         }
         return studentList;
     }
 
-    public List<IStudent> readStudentsByDistributedTests(Collection distributedTestsIds) throws ExcepcaoPersistencia {
+    public List<Student> readStudentsByDistributedTests(Collection distributedTestsIds) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addIn("keyDistributedTest", distributedTestsIds);
         criteria.addEqualTo("testQuestionOrder", new Integer(1));
         QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
         queryCriteria.addGroupBy("student.number");
-        List<IStudentTestQuestion> result = queryList(queryCriteria);
+        List<StudentTestQuestion> result = queryList(queryCriteria);
         lockRead(result);
-        List<IStudent> studentList = new ArrayList<IStudent>();
-        for (IStudentTestQuestion studentTestQuestion : result) {
+        List<Student> studentList = new ArrayList<Student>();
+        for (StudentTestQuestion studentTestQuestion : result) {
             if (!studentList.contains(studentTestQuestion.getStudent()))
                 studentList.add(studentTestQuestion.getStudent());
         }
         return studentList;
     }
 
-    public List<IStudentTestQuestion> readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public List<StudentTestQuestion> readStudentTestQuestionsByDistributedTest(DistributedTest distributedTest) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
@@ -121,10 +121,10 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
     public Double getMaximumDistributedTestMark(Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", distributedTestId);
-        IDistributedTest distributedTest = (IDistributedTest) queryObject(DistributedTest.class, criteria);
+        DistributedTest distributedTest = (DistributedTest) queryObject(DistributedTest.class, criteria);
         double result = 0;
-        List<IStudentTestQuestion> studentTestQuestionList = readStudentTestQuestionsByDistributedTest(distributedTest);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList)
+        List<StudentTestQuestion> studentTestQuestionList = readStudentTestQuestionsByDistributedTest(distributedTest);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList)
             result = result + studentTestQuestion.getTestQuestionValue().doubleValue();
         return new Double(result);
     }
@@ -133,23 +133,23 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
         criteria.addEqualTo("keyStudent", studentId);
-        List<IStudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
+        List<StudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
         if (studentTestQuestions == null || studentTestQuestions.size() == 0)
             return null;
         Double result = new Double(0);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestions) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
             result = new Double(result.doubleValue() + studentTestQuestion.getTestQuestionMark().doubleValue());
         }
         return result;
     }
 
-    public List<IDistributedTest> readDistributedTestsByTestQuestion(Integer questionId) throws ExcepcaoPersistencia {
+    public List<DistributedTest> readDistributedTestsByTestQuestion(Integer questionId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyQuestion", questionId);
-        List<IStudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
-        List<IDistributedTest> result = new ArrayList<IDistributedTest>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestions) {
-            IDistributedTest distributedTest = studentTestQuestion.getDistributedTest();
+        List<StudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
+        List<DistributedTest> result = new ArrayList<DistributedTest>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
+            DistributedTest distributedTest = studentTestQuestion.getDistributedTest();
             if (!result.contains(distributedTest))
                 result.add(distributedTest);
         }
@@ -171,10 +171,10 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
         criteria.addNotNull("response");
         QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, true);
         queryCriteria.addGroupBy("response");
-        List<IStudentTestQuestion> result = queryList(queryCriteria);
+        List<StudentTestQuestion> result = queryList(queryCriteria);
 
         List<String> resultList = new ArrayList<String>();
-        for (IStudentTestQuestion studentTestQuestion : result) {
+        for (StudentTestQuestion studentTestQuestion : result) {
             resultList.add(studentTestQuestion.getResponse());
         }
         return resultList;
@@ -224,7 +224,7 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
         return count(StudentTestQuestion.class, criteria, false);
     }
 
-    public int countNumberOfStudents(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public int countNumberOfStudents(DistributedTest distributedTest) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         return count(StudentTestQuestion.class, criteria, false) / distributedTest.getNumberOfQuestions().intValue();
@@ -248,8 +248,8 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
     public void deleteByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTestId);
-        List<IStudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestions) {
+        List<StudentTestQuestion> studentTestQuestions = queryList(StudentTestQuestion.class, criteria);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestions) {
             delete(studentTestQuestion);
         }
     }

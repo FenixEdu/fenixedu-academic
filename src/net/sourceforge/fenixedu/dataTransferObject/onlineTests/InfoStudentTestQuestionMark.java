@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 
 /**
  * @author Susana Fernandes
@@ -62,7 +62,7 @@ public class InfoStudentTestQuestionMark extends InfoObject {
                 && (getStudentNumber().equals(infoStudentTestQuestionMark.getStudentNumber()));
     }
 
-    public void copyFromDomain(IStudentTestQuestion studentTestQuestion) {
+    public void copyFromDomain(StudentTestQuestion studentTestQuestion) {
         super.copyFromDomain(studentTestQuestion);
         if (studentTestQuestion != null) {
             if (studentTestQuestion.getStudent() != null) {
@@ -75,7 +75,7 @@ public class InfoStudentTestQuestionMark extends InfoObject {
         }
     }
 
-    public static InfoStudentTestQuestionMark newInfoFromDomain(IStudentTestQuestion studentTestQuestion) {
+    public static InfoStudentTestQuestionMark newInfoFromDomain(StudentTestQuestion studentTestQuestion) {
         InfoStudentTestQuestionMark infoStudentTestQuestionMark = null;
         if (studentTestQuestion != null) {
             infoStudentTestQuestionMark = new InfoStudentTestQuestionMark();

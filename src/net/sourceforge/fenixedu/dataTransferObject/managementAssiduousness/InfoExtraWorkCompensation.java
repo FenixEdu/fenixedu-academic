@@ -7,7 +7,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkCompensation;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkCompensation;
 
 /**
  * @author Tânia Pousão
@@ -123,7 +123,7 @@ public class InfoExtraWorkCompensation extends InfoObject {
         this.when = when;
     }
    
-    public void copyFromDomain(IExtraWorkCompensation extraWorkCompensation) {
+    public void copyFromDomain(ExtraWorkCompensation extraWorkCompensation) {
         super.copyFromDomain(extraWorkCompensation);
         if(extraWorkCompensation != null) {
             setDayPerWeek(extraWorkCompensation.getDayPerWeek());
@@ -134,7 +134,7 @@ public class InfoExtraWorkCompensation extends InfoObject {
     }
     
 
-    public static InfoExtraWorkCompensation newInfoFromDomain(IExtraWorkCompensation extraWorkCompensation) {
+    public static InfoExtraWorkCompensation newInfoFromDomain(ExtraWorkCompensation extraWorkCompensation) {
         InfoExtraWorkCompensation infoExtraWorkCompensation = null;
         if (extraWorkCompensation != null) {
             infoExtraWorkCompensation = new InfoExtraWorkCompensation();

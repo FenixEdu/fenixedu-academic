@@ -9,7 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 
 /**
  * @author Pica
@@ -241,7 +241,7 @@ public class InfoGrantContractRegime extends InfoObject {
     /**
      * @param GrantContractRegime
      */
-    public void copyFromDomain(IGrantContractRegime grantContractRegime) {
+    public void copyFromDomain(GrantContractRegime grantContractRegime) {
         super.copyFromDomain(grantContractRegime);
         if (grantContractRegime != null) {
             setState(grantContractRegime.getState());
@@ -267,7 +267,7 @@ public class InfoGrantContractRegime extends InfoObject {
      * @param GrantContractRegime
      * @return
      */
-    public static InfoGrantContractRegime newInfoFromDomain(IGrantContractRegime grantContractRegime) {
+    public static InfoGrantContractRegime newInfoFromDomain(GrantContractRegime grantContractRegime) {
         InfoGrantContractRegime infoGrantContractRegime = null;
 
         if (grantContractRegime != null) {

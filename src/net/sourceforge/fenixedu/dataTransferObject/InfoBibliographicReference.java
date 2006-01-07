@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
 
 /**
  * @author EP 15
@@ -142,7 +142,7 @@ public class InfoBibliographicReference extends InfoObject implements ISiteCompo
         this.year = year;
     }
 
-    public void copyFromDomain(IBibliographicReference bibliographicReference) {
+    public void copyFromDomain(BibliographicReference bibliographicReference) {
         super.copyFromDomain(bibliographicReference);
         if (bibliographicReference != null) {
             setAuthors(bibliographicReference.getAuthors());
@@ -154,7 +154,7 @@ public class InfoBibliographicReference extends InfoObject implements ISiteCompo
     }
 
     public static InfoBibliographicReference newInfoFromDomain(
-            IBibliographicReference bibliographicReference) {
+            BibliographicReference bibliographicReference) {
         InfoBibliographicReference infoBibliographicReference = null;
         if (bibliographicReference != null) {
             infoBibliographicReference = new InfoBibliographicReference();

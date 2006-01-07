@@ -16,12 +16,12 @@ public class StudentGroup extends StudentGroup_Base {
     public StudentGroup() {
     }
 
-    public StudentGroup(Integer groupNumber, IGrouping grouping) {
+    public StudentGroup(Integer groupNumber, Grouping grouping) {
         super.setGroupNumber(groupNumber);
         super.setGrouping(grouping);
     }
 
-    public StudentGroup(Integer groupNumber, IGrouping grouping, IShift shift) {
+    public StudentGroup(Integer groupNumber, Grouping grouping, Shift shift) {
         super.setGroupNumber(groupNumber);
         super.setGrouping(grouping);
         super.setShift(shift);
@@ -47,7 +47,7 @@ public class StudentGroup extends StudentGroup_Base {
         this.setGrouping(null);
     }
     
-    public void editShift(IShift shift){
+    public void editShift(Shift shift){
         if (this.getGrouping().getShiftType() == null
                 || (!this.getGrouping().getShiftType().equals(shift.getTipo()))) {
             throw new DomainException(this.getClass().getName(), "");
@@ -60,7 +60,7 @@ public class StudentGroup extends StudentGroup_Base {
         boolean found;
         for (final String studentUsername :  studentUsernames) {
             found = false;
-            for (final IAttends attend : this.getAttends()) {
+            for (final Attends attend : this.getAttends()) {
                 if (attend.getAluno().getPerson().getUsername() == studentUsername) {
                     found = true;
                     break;

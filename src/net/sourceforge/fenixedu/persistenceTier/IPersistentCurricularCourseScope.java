@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 /**
  * @author dcs-rjao 24/Mar/2003
@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 
 public interface IPersistentCurricularCourseScope extends IPersistentObject {
 
-    public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
             Integer curricularCourseId, Integer curricularSemesterId, Integer branchId)
             throws ExcepcaoPersistencia;
 
-    public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
             Integer curricularCourseId, Integer curricularSemesterId, Integer branchId,
             Calendar endDate) throws ExcepcaoPersistencia;
 

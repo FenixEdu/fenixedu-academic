@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
+import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -135,7 +135,7 @@ public class InfoEquivalency extends InfoObject {
         hasTheme = boolean1;
     }
 
-    public void copyFromDomain(ICourseEquivalency courseEquivalency) {
+    public void copyFromDomain(CourseEquivalency courseEquivalency) {
         super.copyFromDomain(courseEquivalency);
         if (courseEquivalency != null) {
             setCurricularCourse(InfoCurricularCourse.newInfoFromDomain(courseEquivalency
@@ -151,7 +151,7 @@ public class InfoEquivalency extends InfoObject {
         }
     }
 
-    public static InfoEquivalency newInfoFromDomain(ICourseEquivalency courseEquivalency) {
+    public static InfoEquivalency newInfoFromDomain(CourseEquivalency courseEquivalency) {
         InfoEquivalency infoEquivalency = null;
         if (courseEquivalency != null) {
             infoEquivalency = new InfoEquivalency();

@@ -15,78 +15,78 @@ public class EnrolmentTest extends DomainTestBase {
 	// A + B -> C
 	// A -> D
 	
-	private IEnrolment enrolmentA;
-	private IEnrolment enrolmentB;
-	private IEnrolment enrolmentC;
-	private IEnrolment enrolmentD;
+	private Enrolment enrolmentA;
+	private Enrolment enrolmentB;
+	private Enrolment enrolmentC;
+	private Enrolment enrolmentD;
 	
-	private IEnrolment enrolmentE;		//enrolment able to unenroll
-	private IEnrolment enrolmentF;		//enrolment unable to unenroll
+	private Enrolment enrolmentE;		//enrolment able to unenroll
+	private Enrolment enrolmentF;		//enrolment unable to unenroll
     
-    private IEnrolment enrolmentG;
-    private IEnrolment enrolmentH;
+    private Enrolment enrolmentG;
+    private Enrolment enrolmentH;
 	
-	private IEnrolment enrolmentWithImprovement;
-	private IEnrolment enrolmentWithoutImprovement;
-	private List<IEnrolmentEvaluation> evaluations;
-	private List<ICreditsInAnySecundaryArea> creditsInAnySecundaryAreas;
-	private List<ICreditsInScientificArea> creditsInScientificAreas;
-	private List<IEquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentsA;
-	private List<IEquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentsB;
-	private List<IEnrolmentEquivalence> enrolmentEquivalencesC;
-	private List<IEnrolmentEquivalence> enrolmentEquivalencesD;
-	private IEnrolmentEvaluation improvementEvaluation;
+	private Enrolment enrolmentWithImprovement;
+	private Enrolment enrolmentWithoutImprovement;
+	private List<EnrolmentEvaluation> evaluations;
+	private List<CreditsInAnySecundaryArea> creditsInAnySecundaryAreas;
+	private List<CreditsInScientificArea> creditsInScientificAreas;
+	private List<EquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentsA;
+	private List<EquivalentEnrolmentForEnrolmentEquivalence> equivalentEnrolmentsB;
+	private List<EnrolmentEquivalence> enrolmentEquivalencesC;
+	private List<EnrolmentEquivalence> enrolmentEquivalencesD;
+	private EnrolmentEvaluation improvementEvaluation;
 	
-	private IEnrolment enrolmentToInitialize = null;
-	private IStudentCurricularPlan studentCurricularPlan = null;
-	private ICurricularCourse curricularCourseToEnroll = null;
-	private IExecutionCourse executionCourseToEnroll = null;
-	private IAttends attendsToEnroll = null;
-	private IExecutionPeriod currentExecutionPeriod = null;
+	private Enrolment enrolmentToInitialize = null;
+	private StudentCurricularPlan studentCurricularPlan = null;
+	private CurricularCourse curricularCourseToEnroll = null;
+	private ExecutionCourse executionCourseToEnroll = null;
+	private Attends attendsToEnroll = null;
+	private ExecutionPeriod currentExecutionPeriod = null;
 	private EnrollmentCondition enrolmentCondition = null;
 	private String createdBy = null;
-	private IStudent thisStudent = null;
+	private Student thisStudent = null;
 	
-	private IEnrolment enrolmentToInitializeForAnotherExecutionPeriod = null;
-	private IExecutionCourse executionCourseToEnrollWithAttendsForThisStudent = null;
-	private IExecutionPeriod anotherExecutionPeriod = null;
+	private Enrolment enrolmentToInitializeForAnotherExecutionPeriod = null;
+	private ExecutionCourse executionCourseToEnrollWithAttendsForThisStudent = null;
+	private ExecutionPeriod anotherExecutionPeriod = null;
 
-	private IEnrolment enrolmentToReadFrom = null;
-	private IEnrolmentEvaluation evaluationWithGradeToBeRead = null;
-	private IEnrolmentEvaluation evaluationWithoutGradeToBeRead = null;
+	private Enrolment enrolmentToReadFrom = null;
+	private EnrolmentEvaluation evaluationWithGradeToBeRead = null;
+	private EnrolmentEvaluation evaluationWithoutGradeToBeRead = null;
 	private String gradeToSearchFor = null;
 	private String impossibleGrade = null;
 	private EnrolmentEvaluationType enrolmentEvaluationTypeToSearchFor = null;
 	
-	private IEnrolment enrolmentToSubmitWithoutTemporaryEvaluation = null;
-	private IEnrolment enrolmentToSubmitWithTemporaryEvaluation = null;
-	private IEnrolmentEvaluation existingTemporaryEnrolmentEvaluation = null;
+	private Enrolment enrolmentToSubmitWithoutTemporaryEvaluation = null;
+	private Enrolment enrolmentToSubmitWithTemporaryEvaluation = null;
+	private EnrolmentEvaluation existingTemporaryEnrolmentEvaluation = null;
 	private EnrolmentEvaluationType notExistingEnrolmentEvaluationType = null;
 	private EnrolmentEvaluationType existingEnrolmentEvaluationType = null;
-	private IMark realMark = null;
-	private IMark emptyMark = null;
+	private Mark realMark = null;
+	private Mark emptyMark = null;
 	private Date examDate = null;
-	private IEmployee employeeSubmittingGrade = null;
-	private IPerson personResponsibleForGrade = null;
+	private Employee employeeSubmittingGrade = null;
+	private Person personResponsibleForGrade = null;
 	private String observation = null;
 	
-	private IEnrolment improvementEnrolment = null;
-	private IEnrolment nonImprovementEnrolment = null;
-	private IExecutionCourse executionCourseForImprovement = null;
+	private Enrolment improvementEnrolment = null;
+	private Enrolment nonImprovementEnrolment = null;
+	private ExecutionCourse executionCourseForImprovement = null;
 	
-	private IEnrolment enrolmentToUnEnrollImprovement = null;
-	private IEnrolmentEvaluation improvementEnrolmentEvaluation = null;
-	private IEnrolmentEvaluation nonImprovementEnrolmentEvaluation = null;
-	private IExecutionPeriod executionPeriodToUnEnrollImprovement = null;
-	private IAttends attendsToDelete = null;
-	private IExecutionCourse executionCourseToUnEnrollImprovement = null;
+	private Enrolment enrolmentToUnEnrollImprovement = null;
+	private EnrolmentEvaluation improvementEnrolmentEvaluation = null;
+	private EnrolmentEvaluation nonImprovementEnrolmentEvaluation = null;
+	private ExecutionPeriod executionPeriodToUnEnrollImprovement = null;
+	private Attends attendsToDelete = null;
+	private ExecutionCourse executionCourseToUnEnrollImprovement = null;
 	
-	private IEnrolment enrolmentToImprove = null;
-	private ICurricularCourse curricularCourseToImprove = null;
-	private IExecutionCourse executionCourseToEnrollImprovement = null;
-	private IStudent studentToImprove = null;
-	private IExecutionPeriod executionPeriodForImprovement = null;
-	private IEmployee someEmployee = null;
+	private Enrolment enrolmentToImprove = null;
+	private CurricularCourse curricularCourseToImprove = null;
+	private ExecutionCourse executionCourseToEnrollImprovement = null;
+	private Student studentToImprove = null;
+	private ExecutionPeriod executionPeriodForImprovement = null;
+	private Employee someEmployee = null;
     
     /*public void setUp() {
         setUpForIsFirstTime();
@@ -122,13 +122,13 @@ public class EnrolmentTest extends DomainTestBase {
 		attendsToDelete = new Attends();
 		executionCourseToUnEnrollImprovement = new ExecutionCourse();
 		
-		IStudentCurricularPlan scp = new StudentCurricularPlan();
-		IStudent student = new Student();
-		IStudent otherStudent = new Student();
-		ICurricularCourse cc = new CurricularCourse();
-		IExecutionCourse ec1 = new ExecutionCourse();
-		IExecutionPeriod ep1 = new ExecutionPeriod();
-		IAttends otherAttends = new Attends();
+		StudentCurricularPlan scp = new StudentCurricularPlan();
+		Student student = new Student();
+		Student otherStudent = new Student();
+		CurricularCourse cc = new CurricularCourse();
+		ExecutionCourse ec1 = new ExecutionCourse();
+		ExecutionPeriod ep1 = new ExecutionPeriod();
+		Attends otherAttends = new Attends();
 
 		enrolmentToUnEnrollImprovement.addEvaluations(improvementEnrolmentEvaluation);
 		enrolmentToUnEnrollImprovement.addEvaluations(nonImprovementEnrolmentEvaluation);
@@ -157,18 +157,18 @@ public class EnrolmentTest extends DomainTestBase {
 		/*
 		 *  EnrolmentEvaluation
 		 */
-		IEnrolmentEvaluation ee1 = new EnrolmentEvaluation();
-		IEnrolmentEvaluation ee2 = new EnrolmentEvaluation();
+		EnrolmentEvaluation ee1 = new EnrolmentEvaluation();
+		EnrolmentEvaluation ee2 = new EnrolmentEvaluation();
 		
-		IPerson person = new Person();
-		IEmployee employee = new Employee();
+		Person person = new Person();
+		Employee employee = new Employee();
 		
 		ee1.setPersonResponsibleForGrade(person);
 		ee2.setPersonResponsibleForGrade(person);
 		ee1.setEmployee(employee);
 		ee2.setEmployee(employee);
 		
-		evaluations = new ArrayList<IEnrolmentEvaluation>();
+		evaluations = new ArrayList<EnrolmentEvaluation>();
 		evaluations.add(ee1);
 		evaluations.add(ee2);
 		enrolmentA.addEvaluations(ee1);
@@ -179,27 +179,27 @@ public class EnrolmentTest extends DomainTestBase {
 		/*
 		 * ExecutionPeriod
 		 */
-		IExecutionPeriod ep1 = new ExecutionPeriod();
+		ExecutionPeriod ep1 = new ExecutionPeriod();
 		enrolmentA.setExecutionPeriod(ep1);
 		
 		
 		/*
 		 * StudentCurricularPlan
 		 */
-		IStudentCurricularPlan scp = new StudentCurricularPlan();
+		StudentCurricularPlan scp = new StudentCurricularPlan();
 		enrolmentA.setStudentCurricularPlan(scp);
 		
 		
 		/*
 		 * CreditsInAnySecundaryArea
 		 */
-		ICreditsInAnySecundaryArea ciasa1 = new CreditsInAnySecundaryArea();
-		ICreditsInAnySecundaryArea ciasa2 = new CreditsInAnySecundaryArea();
+		CreditsInAnySecundaryArea ciasa1 = new CreditsInAnySecundaryArea();
+		CreditsInAnySecundaryArea ciasa2 = new CreditsInAnySecundaryArea();
 		
 		ciasa1.setStudentCurricularPlan(scp);
 		ciasa2.setStudentCurricularPlan(scp);
 		
-		creditsInAnySecundaryAreas = new ArrayList<ICreditsInAnySecundaryArea>();
+		creditsInAnySecundaryAreas = new ArrayList<CreditsInAnySecundaryArea>();
 		creditsInAnySecundaryAreas.add(ciasa1);
 		creditsInAnySecundaryAreas.add(ciasa2);
 		enrolmentA.addCreditsInAnySecundaryAreas(ciasa1);
@@ -209,12 +209,12 @@ public class EnrolmentTest extends DomainTestBase {
 		/*
 		 * CreditsInScientificArea
 		 */
-		ICreditsInScientificArea cisa1 = new CreditsInScientificArea();
-		ICreditsInScientificArea cisa2 = new CreditsInScientificArea();		
+		CreditsInScientificArea cisa1 = new CreditsInScientificArea();
+		CreditsInScientificArea cisa2 = new CreditsInScientificArea();		
 		cisa1.setStudentCurricularPlan(scp);
 		cisa2.setStudentCurricularPlan(scp);
 		
-		creditsInScientificAreas = new ArrayList<ICreditsInScientificArea>();
+		creditsInScientificAreas = new ArrayList<CreditsInScientificArea>();
 		creditsInScientificAreas.add(cisa1);
 		creditsInScientificAreas.add(cisa2);
 		enrolmentA.addCreditsInScientificAreas(cisa1);
@@ -224,18 +224,18 @@ public class EnrolmentTest extends DomainTestBase {
 		/*
 		 * CurricularCourse
 		 */
-		ICurricularCourse cc = new CurricularCourse();
+		CurricularCourse cc = new CurricularCourse();
 		enrolmentA.setCurricularCourse(cc);
 		
 			
-		IEquivalentEnrolmentForEnrolmentEquivalence eeee1 = new EquivalentEnrolmentForEnrolmentEquivalence();
-		IEquivalentEnrolmentForEnrolmentEquivalence eeee2 = new EquivalentEnrolmentForEnrolmentEquivalence();
-		IEquivalentEnrolmentForEnrolmentEquivalence eeee3 = new EquivalentEnrolmentForEnrolmentEquivalence();
-		IEnrolmentEquivalence eeq1 = new EnrolmentEquivalence();
-		IEnrolmentEquivalence eeq2 = new EnrolmentEquivalence();
+		EquivalentEnrolmentForEnrolmentEquivalence eeee1 = new EquivalentEnrolmentForEnrolmentEquivalence();
+		EquivalentEnrolmentForEnrolmentEquivalence eeee2 = new EquivalentEnrolmentForEnrolmentEquivalence();
+		EquivalentEnrolmentForEnrolmentEquivalence eeee3 = new EquivalentEnrolmentForEnrolmentEquivalence();
+		EnrolmentEquivalence eeq1 = new EnrolmentEquivalence();
+		EnrolmentEquivalence eeq2 = new EnrolmentEquivalence();
 		
-		equivalentEnrolmentsA = new ArrayList<IEquivalentEnrolmentForEnrolmentEquivalence>();
-		equivalentEnrolmentsB = new ArrayList<IEquivalentEnrolmentForEnrolmentEquivalence>();
+		equivalentEnrolmentsA = new ArrayList<EquivalentEnrolmentForEnrolmentEquivalence>();
+		equivalentEnrolmentsB = new ArrayList<EquivalentEnrolmentForEnrolmentEquivalence>();
 		equivalentEnrolmentsA.add(eeee1);
 		equivalentEnrolmentsB.add(eeee2);
 		equivalentEnrolmentsA.add(eeee3);
@@ -249,8 +249,8 @@ public class EnrolmentTest extends DomainTestBase {
 		eeq1.setEnrolment(enrolmentC);
 		eeq2.setEnrolment(enrolmentD);
 		
-		enrolmentEquivalencesC = new ArrayList<IEnrolmentEquivalence>();
-		enrolmentEquivalencesD = new ArrayList<IEnrolmentEquivalence>();
+		enrolmentEquivalencesC = new ArrayList<EnrolmentEquivalence>();
+		enrolmentEquivalencesD = new ArrayList<EnrolmentEquivalence>();
 		enrolmentEquivalencesC.add(eeq1);
 		enrolmentEquivalencesD.add(eeq2);
 	}
@@ -261,8 +261,8 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentE = new Enrolment();
 		enrolmentF = new Enrolment();
 		
-		IEnrolmentEvaluation ee3 = new EnrolmentEvaluation();
-		IEnrolmentEvaluation ee4 = new EnrolmentEvaluation();
+		EnrolmentEvaluation ee3 = new EnrolmentEvaluation();
+		EnrolmentEvaluation ee4 = new EnrolmentEvaluation();
 		
 		ee3.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 		ee3.setEnrolmentEvaluationType(EnrolmentEvaluationType.NORMAL);
@@ -281,8 +281,8 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentWithImprovement = new Enrolment();
 		enrolmentWithoutImprovement = new Enrolment();
 		
-		IEnrolmentEvaluation normalEvaluation = new EnrolmentEvaluation();
-		IEnrolmentEvaluation normalEvaluationToImprove = new EnrolmentEvaluation();
+		EnrolmentEvaluation normalEvaluation = new EnrolmentEvaluation();
+		EnrolmentEvaluation normalEvaluationToImprove = new EnrolmentEvaluation();
 		improvementEvaluation = new EnrolmentEvaluation();
 		
 		normalEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
@@ -304,12 +304,12 @@ public class EnrolmentTest extends DomainTestBase {
 		improvementEnrolment = new Enrolment();
 		nonImprovementEnrolment = new Enrolment();
 		
-		IExecutionPeriod sameExecutionPeriod = new ExecutionPeriod();
+		ExecutionPeriod sameExecutionPeriod = new ExecutionPeriod();
 		executionCourseForImprovement = new ExecutionCourse();
 		executionCourseForImprovement.setExecutionPeriod(sameExecutionPeriod);
 		nonImprovementEnrolment.setExecutionPeriod(sameExecutionPeriod);
 		
-		IExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
+		ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
 		improvementEnrolment.setExecutionPeriod(otherExecutionPeriod);
 	}
 
@@ -342,9 +342,9 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentToInitialize = new Enrolment();
 		
 		thisStudent = new Student();
-		IStudent otherStudent = new Student();
+		Student otherStudent = new Student();
 		
-		IAttends attends2 = new Attends();
+		Attends attends2 = new Attends();
 		attends2.setAluno(otherStudent);
 
 		
@@ -352,12 +352,12 @@ public class EnrolmentTest extends DomainTestBase {
 		studentCurricularPlan.setStudent(thisStudent);
 		curricularCourseToEnroll = new CurricularCourse();
 		currentExecutionPeriod = new ExecutionPeriod();
-		IExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
+		ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
 		
 		enrolmentCondition = EnrollmentCondition.FINAL;
 		createdBy = "XxX";
 		
-		IExecutionCourse ec1 = new ExecutionCourse();
+		ExecutionCourse ec1 = new ExecutionCourse();
 		ec1.setExecutionPeriod(otherExecutionPeriod);
 		curricularCourseToEnroll.addAssociatedExecutionCourses(ec1);
 		
@@ -386,7 +386,7 @@ public class EnrolmentTest extends DomainTestBase {
 		EnrolmentEvaluationType otherType = EnrolmentEvaluationType.CLOSED;
 		
 		// with required type and grade
-		IEnrolmentEvaluation ee1 = createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
+		EnrolmentEvaluation ee1 = createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
 		evaluationWithGradeToBeRead = ee1;
 		
 		// with required type and NOT grade
@@ -397,20 +397,20 @@ public class EnrolmentTest extends DomainTestBase {
 		createEnrolmentEvaluation(enrolmentToReadFrom,otherType,otherGrade);
 		
 		// with required type and null grade
-		IEnrolmentEvaluation ee2 = createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,null);
+		EnrolmentEvaluation ee2 = createEnrolmentEvaluation(enrolmentToReadFrom,enrolmentEvaluationTypeToSearchFor,null);
 		evaluationWithoutGradeToBeRead = ee2;
 	}
 
 	private void setUpForIsFirstTimeCase() {
         enrolmentG = new Enrolment();
         enrolmentH = new Enrolment();
-        IEnrolment enrolmentI = new Enrolment();
-        IEnrolment enrolmentJ = new Enrolment();
-        IEnrolment enrolmentK = new Enrolment();
+        Enrolment enrolmentI = new Enrolment();
+        Enrolment enrolmentJ = new Enrolment();
+        Enrolment enrolmentK = new Enrolment();
         
-        ICurricularCourse curricularCourseG = new CurricularCourse();
-        ICurricularCourse curricularCourseH = new CurricularCourse();
-        ICurricularCourse curricularCourseI = new CurricularCourse();
+        CurricularCourse curricularCourseG = new CurricularCourse();
+        CurricularCourse curricularCourseH = new CurricularCourse();
+        CurricularCourse curricularCourseI = new CurricularCourse();
         
         enrolmentG.setCurricularCourse(curricularCourseG);
         enrolmentH.setCurricularCourse(curricularCourseH);
@@ -418,8 +418,8 @@ public class EnrolmentTest extends DomainTestBase {
         enrolmentJ.setCurricularCourse(curricularCourseI);
         enrolmentK.setCurricularCourse(curricularCourseI);
         
-        IStudentCurricularPlan studentCurricularPlanG = new StudentCurricularPlan();
-        IStudentCurricularPlan studentCurricularPlanH = new StudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlanG = new StudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlanH = new StudentCurricularPlan();
         
         studentCurricularPlanG.addEnrolments(enrolmentG);
         studentCurricularPlanH.addEnrolments(enrolmentH);
@@ -436,7 +436,7 @@ public class EnrolmentTest extends DomainTestBase {
 				
 		assertFalse("Should have dereferenced EnrolmentEquivalences", enrolmentD.hasAnyEnrolmentEquivalences());
 		
-		for (IEnrolmentEquivalence equivalence : enrolmentEquivalencesD) {
+		for (EnrolmentEquivalence equivalence : enrolmentEquivalencesD) {
 			assertFalse("Should have dereferenced EnrolmentEquivalence from Restrictions", equivalence.hasAnyEquivalenceRestrictions());
 			assertFalse("Should have dereferenced EnrolmentEquivalence from Enrolment", equivalence.hasEnrolment());
 		}
@@ -461,26 +461,26 @@ public class EnrolmentTest extends DomainTestBase {
 		assertFalse("Should have dereferenced EnrolmentEquivalences", enrolmentA.hasAnyEnrolmentEquivalences());
 		assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalences", enrolmentA.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
 		
-		for (IEnrolmentEvaluation eval : evaluations) {
+		for (EnrolmentEvaluation eval : evaluations) {
 			assertFalse("Should have dereferenced EnrolmentEvaluation from Person", eval.hasPersonResponsibleForGrade());
 			assertFalse("Should have dereferenced EnrolmentEvaluation from Employee", eval.hasEmployee());
 		}
 		
-		for (ICreditsInAnySecundaryArea credits : creditsInAnySecundaryAreas)
+		for (CreditsInAnySecundaryArea credits : creditsInAnySecundaryAreas)
 			assertFalse("Should have dereferenced CreditsInAnySecondaryAreas from StudentCurricularPlan", credits.hasStudentCurricularPlan());
 		
-		for (ICreditsInScientificArea credits : creditsInScientificAreas)
+		for (CreditsInScientificArea credits : creditsInScientificAreas)
 			assertFalse("Should have dereferenced CreditsInScientificAreas from StudentCurricularPlan", credits.hasStudentCurricularPlan());
 		
 		assertFalse("Should have dereferenced EnrolmentEquivalences", enrolmentC.hasAnyEnrolmentEquivalences());
 		assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalences", enrolmentC.hasAnyEquivalentEnrolmentForEnrolmentEquivalences());
 		
-		for (IEquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolment : equivalentEnrolmentsA) {
+		for (EquivalentEnrolmentForEnrolmentEquivalence equivalentEnrolment : equivalentEnrolmentsA) {
 			assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalence from Enrolment", equivalentEnrolment.hasEquivalentEnrolment());
 			assertFalse("Should have dereferenced EquivalentEnrolmentForEnrolmentEquivalence from EnrolmentEquivalence", equivalentEnrolment.hasEnrolmentEquivalence());
 		}
 		
-		for (IEnrolmentEquivalence equivalence : enrolmentEquivalencesC) {
+		for (EnrolmentEquivalence equivalence : enrolmentEquivalencesC) {
 			assertFalse("Should have dereferenced EnrolmentEquivalence from Enrolment", equivalence.hasEnrolment());
 			assertFalse("Should have dereferenced EnrolmentEquivalence from Restrictions", equivalence.hasAnyEquivalenceRestrictions());
 		}
@@ -522,13 +522,13 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		setUpForGetEnrolmentEvaluationByEnrolmentEvaluationTypeAndGradeCase();
 				
-		IEnrolmentEvaluation enrolmentEvaluationWithGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
+		EnrolmentEvaluation enrolmentEvaluationWithGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,gradeToSearchFor);
 		assertEquals("Enrolment returned EnrolmentEvaluation different from expected", enrolmentEvaluationWithGrade,evaluationWithGradeToBeRead);
 		
-		IEnrolmentEvaluation enrolmentEvaluationWithoutGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,null);
+		EnrolmentEvaluation enrolmentEvaluationWithoutGrade = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,null);
 		assertEquals("Enrolment returned EnrolmentEvaluation different from expected", enrolmentEvaluationWithoutGrade,evaluationWithoutGradeToBeRead);
 		
-		IEnrolmentEvaluation nullEnrolmentEvaluation = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,impossibleGrade);
+		EnrolmentEvaluation nullEnrolmentEvaluation = enrolmentToReadFrom.getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(enrolmentEvaluationTypeToSearchFor,impossibleGrade);
 		assertNull("Enrolment should not have returned EnrolmentEvaluation", nullEnrolmentEvaluation);
 	}
 	
@@ -551,13 +551,13 @@ public class EnrolmentTest extends DomainTestBase {
 		assertTrue("CreationDate is in the future", after.after(enrolmentToInitialize.getCreationDate()));
 		
 		assertTrue("Initialized Enrolment should only have 1 EnrolmentEvaluation", enrolmentToInitialize.getEvaluationsCount() == 1);
-		IEnrolmentEvaluation evaluation = enrolmentToInitialize.getEvaluations().get(0);
+		EnrolmentEvaluation evaluation = enrolmentToInitialize.getEvaluations().get(0);
 		assertEquals("Newly created EnrolmentEvaluation should have TEMPORARY state", evaluation.getEnrolmentEvaluationState(),EnrolmentEvaluationState.TEMPORARY_OBJ);
         assertEquals("Newly created EnrolmentEvaluation should have NORMAL type",evaluation.getEnrolmentEvaluationType(),EnrolmentEvaluationType.NORMAL);
 		assertNull("Newly created EnrolmentEvaluation should not have grade", evaluation.getGrade());
 		
 		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitialize.getAttendsCount() == 1);
-		IAttends attends = enrolmentToInitialize.getAttends().get(0);
+		Attends attends = enrolmentToInitialize.getAttends().get(0);
 		assertEquals("Newly created Attends has wrong Student", attends.getAluno(),studentCurricularPlan.getStudent());
 		assertEquals("Newly created Attends has wrong ExecutionCourse", attends.getDisciplinaExecucao(),executionCourseToEnroll);
 		assertEquals("Newly created Attends has wrong Enrolment", attends.getEnrolment(),enrolmentToInitialize);
@@ -566,7 +566,7 @@ public class EnrolmentTest extends DomainTestBase {
 		enrolmentToInitializeForAnotherExecutionPeriod.initializeAsNew(studentCurricularPlan,curricularCourseToEnroll,anotherExecutionPeriod,enrolmentCondition,createdBy);
 		
 		assertTrue("Initialized Enrolment should only have 1 Attends", enrolmentToInitializeForAnotherExecutionPeriod.getAttendsCount() == 1);
-		IAttends att = enrolmentToInitializeForAnotherExecutionPeriod.getAttends().get(0);
+		Attends att = enrolmentToInitializeForAnotherExecutionPeriod.getAttends().get(0);
 		assertEquals("Attends does not match expected", att,attendsToEnroll);
 		assertEquals("Attends has wrong Student", att.getAluno(),thisStudent);
 		assertEquals("Attends has wrong ExecutionCourse", att.getDisciplinaExecucao(),executionCourseToEnrollWithAttendsForThisStudent);
@@ -583,7 +583,7 @@ public class EnrolmentTest extends DomainTestBase {
 		// there isn't an evaluation with TEMPORARY state
 		Date before = new Date();
 		sleep(sleepTime);
-		IEnrolmentEvaluation newEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
+		EnrolmentEvaluation newEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
 				notExistingEnrolmentEvaluationType,realMark,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
@@ -604,14 +604,14 @@ public class EnrolmentTest extends DomainTestBase {
 		assertTrue("GradeAvailableDate is in the future", after.after(newEvaluation.getGradeAvailableDate()));
 
 		// there *is* an evaluation with TEMPORARY state
-		IEnrolmentEvaluation existingEvaluation = enrolmentToSubmitWithTemporaryEvaluation.submitEnrolmentEvaluation(
+		EnrolmentEvaluation existingEvaluation = enrolmentToSubmitWithTemporaryEvaluation.submitEnrolmentEvaluation(
 				existingEnrolmentEvaluationType,realMark,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
 		assertEquals("Submitted EnrolmentEvaluation does not match expected", existingEvaluation,existingTemporaryEnrolmentEvaluation);
 		
 		// null mark
-		IEnrolmentEvaluation anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
+		EnrolmentEvaluation anotherEnrolmentEvaluation = enrolmentToSubmitWithoutTemporaryEvaluation.submitEnrolmentEvaluation(
 				notExistingEnrolmentEvaluationType,null,employeeSubmittingGrade,
 				personResponsibleForGrade,examDate,observation);
 		
@@ -676,14 +676,14 @@ public class EnrolmentTest extends DomainTestBase {
 		
 		enrolmentToImprove.createEnrolmentEvaluationForImprovement(someEmployee,executionPeriodForImprovement,studentToImprove);
 		
-		IEnrolmentEvaluation improvementEvaluation = enrolmentToImprove.getImprovementEvaluation(); 
+		EnrolmentEvaluation improvementEvaluation = enrolmentToImprove.getImprovementEvaluation(); 
 		assertNotNull("Enrolment should have returned an EnrolmentEvaluation", improvementEvaluation);
 		assertEquals("Newly created EnrolmentEvaluation's Employee does not match expected", improvementEvaluation.getEmployee(),someEmployee);
 		assertTrue("ExecutionCourse for improvement should have a new Attends", executionCourseToEnrollImprovement.hasAnyAttends());
 	}
 	
-	private IEnrolmentEvaluation createEnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type, String grade) {
-		IEnrolmentEvaluation ee = new EnrolmentEvaluation();
+	private EnrolmentEvaluation createEnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type, String grade) {
+		EnrolmentEvaluation ee = new EnrolmentEvaluation();
 		ee.setEnrolmentEvaluationType(type);
 		ee.setGrade(grade);
 		ee.setEnrolment(enrolment);

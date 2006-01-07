@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -50,10 +50,10 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         IUserView id = getRemoteUser(request);
         Object[] arguments = getServiceCallArguments(request);
-        ISummary summary = getSummary(arguments);
+        Summary summary = getSummary(arguments);
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacherLogged = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        Teacher teacherLogged = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
         try {
             if (isTeacherResponsible(arguments, request)) {
@@ -88,7 +88,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, ((Integer) arguments[0]));
 
         List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse
@@ -99,14 +99,14 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
 
     private boolean isTeacherExecutionCourseMember(List teachers, Object[] arguments, IUserView userView)
             throws ExcepcaoPersistencia {
-        ISummary summary = getSummary(arguments);
+        Summary summary = getSummary(arguments);
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
 
-        ITeacher teacherLogged = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+        Teacher teacherLogged = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
         Integer executionCourseID = (Integer) arguments[0];
-        IProfessorship professorshipLogged = persistentProfessorship.readByTeacherAndExecutionCourse(
+        Professorship professorshipLogged = persistentProfessorship.readByTeacherAndExecutionCourse(
                 teacherLogged.getIdInternal(), executionCourseID);
 
         if (summary.getProfessorship() != null
@@ -114,7 +114,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             return true;
         }
         if (summary.getTeacher() != null) {
-            IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
+            Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
                     summary.getTeacher().getIdInternal(), executionCourseID);
             if (teachers.contains(professorship) && !summary.getTeacher().equals(teacherLogged)) {
                 return true;
@@ -135,7 +135,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         boolean loggedIsResponsible = false;
 
         for (Iterator iter = responsibleTeachers.iterator(); iter.hasNext();) {
-            ITeacher teacher = (ITeacher) iter.next();
+            Teacher teacher = (Teacher) iter.next();
             if (teacher.getPerson().getUsername().equals(userView.getUtilizador()))
                 loggedIsResponsible = true;
             break;
@@ -155,17 +155,17 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseId);
 
             result = executionCourse.responsibleFors();
 
-            List<ITeacher> infoResult = new ArrayList<ITeacher>();
+            List<Teacher> infoResult = new ArrayList<Teacher>();
             if (result != null) {
                 Iterator iter = result.iterator();
                 while (iter.hasNext()) {
-                    IProfessorship responsibleFor = (IProfessorship) iter.next();
-                    ITeacher teacher = responsibleFor.getTeacher();
+                    Professorship responsibleFor = (Professorship) iter.next();
+                    Teacher teacher = responsibleFor.getTeacher();
                     infoResult.add(teacher);
                 }
                 return infoResult;
@@ -184,18 +184,18 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @throws ExcepcaoPersistencia
      */
     private boolean validTeacher(IUserView id, Object[] arguments) throws ExcepcaoPersistencia {
-        ITeacher teacher = getTeacher(id);
+        Teacher teacher = getTeacher(id);
         final InfoSummary infoSummary = getInfoSummary(arguments);
         if (infoSummary == null) {
-            final ISummary summary = getSummary(arguments);
+            final Summary summary = getSummary(arguments);
             if (summary.getProfessorship() == null && summary.getTeacher() != null
                     && !summary.getTeacher().getTeacherNumber().equals(teacher.getTeacherNumber())) {
 
                 List professorships = getProfessorships(arguments);
-                IProfessorship professorship = (IProfessorship) CollectionUtils.find(professorships,
+                Professorship professorship = (Professorship) CollectionUtils.find(professorships,
                         new Predicate() {
                             public boolean evaluate(Object arg0) {
-                                IProfessorship professorship = (IProfessorship) arg0;
+                                Professorship professorship = (Professorship) arg0;
                                 return professorship.getTeacher().getTeacherNumber().equals(
                                         summary.getTeacher().getTeacherNumber());
                             }
@@ -210,10 +210,10 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
                             teacher.getTeacherNumber())) {
 
                 List professorships = getProfessorships(arguments);
-                IProfessorship professorship = (IProfessorship) CollectionUtils.find(professorships,
+                Professorship professorship = (Professorship) CollectionUtils.find(professorships,
                         new Predicate() {
                             public boolean evaluate(Object arg0) {
-                                IProfessorship professorship = (IProfessorship) arg0;
+                                Professorship professorship = (Professorship) arg0;
                                 return professorship.getTeacher().getTeacherNumber().equals(
                                         infoSummary.getInfoTeacher().getTeacherNumber());
                             }
@@ -225,7 +225,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     }
 
     private List getProfessorships(Object[] arguments) throws ExcepcaoPersistencia {
-        ISummary summary = getSummary(arguments);
+        Summary summary = getSummary(arguments);
         ISuportePersistente persistenteSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         IPersistentProfessorship persistentProfessorship = persistenteSupport
@@ -258,8 +258,8 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      */
     private boolean summaryBelongsToTeacher(IUserView id, Object[] arguments)
             throws ExcepcaoPersistencia {
-        ITeacher teacher = getTeacher(id);
-        ISummary summary = getSummary(arguments);
+        Teacher teacher = getTeacher(id);
+        Summary summary = getSummary(arguments);
         if (summary.getProfessorship() == null) {
             return isResponsible(teacher, summary);
         }
@@ -272,7 +272,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @param summary
      * @return
      */
-    private boolean isOwner(ITeacher teacher, ISummary summary) {
+    private boolean isOwner(Teacher teacher, Summary summary) {
         if (summary.getTeacher() != null) {
             return teacher.getIdInternal().equals(summary.getTeacher().getIdInternal());
         }
@@ -285,7 +285,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @return
      * @throws ExcepcaoPersistencia 
      */
-    private boolean isResponsible(final ITeacher teacher, ISummary summary) throws ExcepcaoPersistencia {
+    private boolean isResponsible(final Teacher teacher, Summary summary) throws ExcepcaoPersistencia {
         if (summary.getShift() == null) {
 
             List responsibleTeachers = summary.getExecutionCourse().responsibleFors();
@@ -293,7 +293,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             return CollectionUtils.find(responsibleTeachers, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
-                    IProfessorship responsibleFor = (IProfessorship) arg0;
+                    Professorship responsibleFor = (Professorship) arg0;
                     return responsibleFor.getTeacher().getIdInternal().equals(teacher.getIdInternal());
                 }
             }) != null;
@@ -304,7 +304,7 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         return CollectionUtils.find(responsibleTeachers, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IProfessorship responsibleFor = (IProfessorship) arg0;
+                Professorship responsibleFor = (Professorship) arg0;
                 return responsibleFor.getTeacher().getIdInternal().equals(teacher.getIdInternal());
             }
         }) != null;
@@ -316,17 +316,17 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private ISummary getSummary(Object[] arguments) throws ExcepcaoPersistencia {
-        ISummary summary = null;
+    private Summary getSummary(Object[] arguments) throws ExcepcaoPersistencia {
+        Summary summary = null;
         InfoSummary infoSummary = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSummary persistentSummary = sp.getIPersistentSummary();
         if (arguments[1] instanceof InfoSummary) {
             infoSummary = (InfoSummary) arguments[1];
-            summary = (ISummary) persistentSummary.readByOID(Summary.class, infoSummary.getIdInternal());
+            summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary.getIdInternal());
         } else {
-            summary = (ISummary) persistentSummary.readByOID(Summary.class, (Integer) arguments[1]);
+            summary = (Summary) persistentSummary.readByOID(Summary.class, (Integer) arguments[1]);
         }
         return summary;
     }
@@ -336,10 +336,10 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private ITeacher getTeacher(IUserView id) throws ExcepcaoPersistencia {
+    private Teacher getTeacher(IUserView id) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+        Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
         return teacher;
     }
 
@@ -350,9 +350,9 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
      */
     private boolean SummaryBelongsExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
+        ExecutionCourse executionCourse = null;
         ISuportePersistente sp;
-        ISummary summary = null;
+        Summary summary = null;
         InfoSummary infoSummary = null;
 
         if (argumentos == null) {
@@ -364,23 +364,23 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
             IPersistentSummary persistentSummary = sp.getIPersistentSummary();
             if (argumentos[1] instanceof InfoSummary) {
                 infoSummary = (InfoSummary) argumentos[1];
 
-                summary = (ISummary) persistentSummary.readByOID(Summary.class, infoSummary
+                summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary
                         .getIdInternal());
                 if (summary == null) {
                     return false;
                 }
             } else {
-                summary = (ISummary) persistentSummary.readByOID(Summary.class, (Integer) argumentos[1]);
+                summary = (Summary) persistentSummary.readByOID(Summary.class, (Integer) argumentos[1]);
                 if (summary == null) {
                     return false;
                 }
@@ -417,8 +417,8 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IProfessorship professorship = null;
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Professorship professorship = null;
             if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,10 +25,10 @@ public class CreateDegree implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final List<IDegree> degrees = (List<IDegree>) persistentSupport.getICursoPersistente()
+        final List<Degree> degrees = (List<Degree>) persistentSupport.getICursoPersistente()
                 .readAllFromNewDegreeStructure();
 
-        for (IDegree degree : degrees) {
+        for (Degree degree : degrees) {
             if (degree.getAcronym().equalsIgnoreCase(acronym)) {
                 throw new FenixServiceException("error.existing.degree.acronym");
             }

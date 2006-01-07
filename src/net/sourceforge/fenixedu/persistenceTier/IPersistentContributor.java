@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
@@ -21,7 +21,7 @@ public interface IPersistentContributor extends IPersistentObject {
      * @return IContributor
      * @throws ExcepcaoPersistencia
      */
-    public IContributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia;
+    public Contributor readByContributorNumber(Integer contributorNumber) throws ExcepcaoPersistencia;
 
     /**
      * 

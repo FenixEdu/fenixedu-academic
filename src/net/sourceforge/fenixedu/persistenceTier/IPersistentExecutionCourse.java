@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 public interface IPersistentExecutionCourse extends IPersistentObject {
@@ -14,7 +14,7 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
 
     public List readByExecutionPeriodAndExecutionDegree(Integer executionPeriodID, String curricularPlanName, String degreeSigla) throws ExcepcaoPersistencia;
 
-    public IExecutionCourse readByExecutionCourseInitialsAndExecutionPeriodId(String courseInitials,
+    public ExecutionCourse readByExecutionCourseInitialsAndExecutionPeriodId(String courseInitials,
             Integer executionPeriodId) throws ExcepcaoPersistencia;
 
     public List readByExecutionPeriod(Integer executionPeriod, DegreeType curso)
@@ -45,5 +45,5 @@ public interface IPersistentExecutionCourse extends IPersistentObject {
             throws ExcepcaoPersistencia;
 
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegreeList(Integer curricularYear,
-            Integer executionPeriod, Integer executionPeriodSemestre, List<IExecutionDegree> executionDegreeList) throws ExcepcaoPersistencia;
+            Integer executionPeriod, Integer executionPeriodSemestre, List<ExecutionDegree> executionDegreeList) throws ExcepcaoPersistencia;
 }

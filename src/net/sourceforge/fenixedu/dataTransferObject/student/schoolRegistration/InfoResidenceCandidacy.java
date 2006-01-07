@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
+import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 
 /**
  * @author Nuno Correia
@@ -107,7 +107,7 @@ public class InfoResidenceCandidacy extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(IResidenceCandidacies residentCandidacy) {
+    public void copyFromDomain(ResidenceCandidacies residentCandidacy) {
         super.copyFromDomain(residentCandidacy);
 
         if (residentCandidacy != null) {
@@ -117,7 +117,7 @@ public class InfoResidenceCandidacy extends InfoObject {
         }
     }
 
-    public static InfoResidenceCandidacy newInfoFromDomain(IResidenceCandidacies residenceCandidacy) {
+    public static InfoResidenceCandidacy newInfoFromDomain(ResidenceCandidacies residenceCandidacy) {
         InfoResidenceCandidacy infoResidenceCandidacy = null;
         if (residenceCandidacy != null) {
             infoResidenceCandidacy = new InfoResidenceCandidacy();

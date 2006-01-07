@@ -8,7 +8,7 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,7 +31,7 @@ public class EditExercise implements IService {
 
 		IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 
-		IMetadata metadata = (IMetadata) persistentMetadata.readByOID(Metadata.class, metadataId, true);
+		Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId, true);
 		if (metadata == null)
 			throw new InvalidArgumentsServiceException();
 		if (author != null)

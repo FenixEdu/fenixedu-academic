@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -27,13 +27,13 @@ public class SupportLessonOJB extends PersistentObjectOJB implements IPersistent
         return queryList(SupportLesson.class, criteria);
     }
 
-    public ISupportLesson readByUnique(Integer professorshipID, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
+    public SupportLesson readByUnique(Integer professorshipID, DiaSemana weekDay, Date startTime, Date endTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyProfessorship", professorshipID);
         criteria.addEqualTo("weekDay", weekDay);
         criteria.addEqualTo("startTime", startTime);
         criteria.addEqualTo("endTime", endTime);
-        return (ISupportLesson) queryObject(SupportLesson.class, criteria);
+        return (SupportLesson) queryObject(SupportLesson.class, criteria);
     }
 
     public List readOverlappingPeriod(Integer teacherID, Integer executionPeriodID,

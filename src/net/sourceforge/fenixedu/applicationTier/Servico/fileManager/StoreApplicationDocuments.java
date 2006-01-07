@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
@@ -28,7 +28,7 @@ public class StoreApplicationDocuments implements IService {
         try {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);
+        Person person = (Person) persistentPerson.readByOID(Person.class, personId);
         IFileSuport fileSuport = FileSuport.getInstance();
         String uri = person.getSlideNameForCandidateDocuments();
 

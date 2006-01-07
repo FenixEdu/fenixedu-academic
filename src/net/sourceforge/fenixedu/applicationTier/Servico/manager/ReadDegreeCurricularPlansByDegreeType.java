@@ -10,8 +10,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,8 +37,8 @@ public class ReadDegreeCurricularPlansByDegreeType implements IService {
             final List degreeCurricularPlans) {
         final List infoDegreeCurricularPlans = new ArrayList(degreeCurricularPlans.size());
         for (final Iterator iterator = degreeCurricularPlans.iterator(); iterator.hasNext();) {
-            final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iterator.next();
-            final IDegree degree = degreeCurricularPlan.getDegree();
+            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iterator.next();
+            final Degree degree = degreeCurricularPlan.getDegree();
 
             if (degree.getTipoCurso().equals(tipoCurso)) {
                 final InfoDegreeCurricularPlan infoDegreeCurricularPlan = constructInfoDegreeCurricularPlan(
@@ -50,7 +50,7 @@ public class ReadDegreeCurricularPlansByDegreeType implements IService {
     }
 
     protected InfoDegreeCurricularPlan constructInfoDegreeCurricularPlan(
-            final IDegreeCurricularPlan degreeCurricularPlan, final IDegree degree) {
+            final DegreeCurricularPlan degreeCurricularPlan, final Degree degree) {
         final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
                 .newInfoFromDomain(degreeCurricularPlan);
         final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);

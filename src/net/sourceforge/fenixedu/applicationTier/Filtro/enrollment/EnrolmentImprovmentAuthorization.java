@@ -10,9 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -89,7 +89,7 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
             Integer studentNumber = (Integer) arguments[0];
             if (studentNumber != null) {
                 IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-                IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         degreeType);
                 if (student != null) {
                     isRightType = true; // right student curricular plan
@@ -106,10 +106,10 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         
         if(user != null) {
             IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente(); 
-            IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(user);
+            Person pessoa = pessoaPersistente.lerPessoaPorUsername(user);
             if(pessoa != null) {
                 IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-                IEmployee employee = persistentEmployee.readByPerson(pessoa);
+                Employee employee = persistentEmployee.readByPerson(pessoa);
                 if(employee != null) {
                     return true;
                 }

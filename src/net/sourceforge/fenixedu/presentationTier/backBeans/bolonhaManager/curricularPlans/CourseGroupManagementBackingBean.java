@@ -8,9 +8,9 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -40,12 +40,12 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         this.name = name;
     }
     
-    public IDegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
-        return (IDegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDegreeCurricularPlanID());
+    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
+        return (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDegreeCurricularPlanID());
     }
     
-    public ICourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
-        return (ICourseGroup) readDomainObject(CourseGroup.class, getCourseGroupID());
+    public CourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
+        return (CourseGroup) readDomainObject(CourseGroup.class, getCourseGroupID());
     }
     
     public String createCourseGroup() throws FenixFilterException {        

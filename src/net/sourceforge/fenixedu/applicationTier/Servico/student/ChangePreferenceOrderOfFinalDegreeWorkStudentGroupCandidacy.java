@@ -5,8 +5,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,12 +28,12 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy impleme
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
-        IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork.readByOID(
+        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        GroupProposal groupProposal = (GroupProposal) persistentFinalDegreeWork.readByOID(
                 GroupProposal.class, groupProposalOID);
         if (group != null && groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                IGroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+                GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
                 if (otherGroupProposal != null
                         && !groupProposal.getIdInternal().equals(otherGroupProposal.getIdInternal())) {
                     int otherOrderOfPreference = otherGroupProposal.getOrderOfPreference().intValue();

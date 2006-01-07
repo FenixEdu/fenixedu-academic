@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -32,7 +32,7 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
     /**
      * @param GrantProject
      */
-    public void copyFromDomain(IGrantProject grantProject) {
+    public void copyFromDomain(GrantProject grantProject) {
         if (grantProject != null) {
 
             super.copyFromDomain(grantProject);
@@ -46,7 +46,7 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
      * @param GrantProject
      * @return
      */
-    public static InfoGrantProject newInfoFromDomain(IGrantProject grantProject) {
+    public static InfoGrantProject newInfoFromDomain(GrantProject grantProject) {
         InfoGrantProject infoGrantProject = null;
         if (grantProject != null) {
             infoGrantProject = new InfoGrantProject();
@@ -55,7 +55,7 @@ public class InfoGrantProject extends InfoGrantPaymentEntity {
         return infoGrantProject;
     }
 
-    public void copyToDomain(InfoGrantProject infoGrantProject, IGrantProject grantProject)
+    public void copyToDomain(InfoGrantProject infoGrantProject, GrantProject grantProject)
             throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantProject, grantProject);
 

@@ -9,8 +9,8 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -32,7 +32,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork implements IService {
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-        IScheduleing scheduleing = persistentFinalDegreeWork
+        Scheduleing scheduleing = persistentFinalDegreeWork
                 .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
         if (scheduleing == null || scheduleing.getStartOfCandidacyPeriod() == null
@@ -51,7 +51,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork implements IService {
             throw new OutOfCandidacyPeriodException(start + " - " + end);
         }
 
-        IStudent student = persistentStudent.readByUsername(userView.getUtilizador());
+        Student student = persistentStudent.readByUsername(userView.getUtilizador());
 
         int numberOfCompletedCourses = persistentEnrolment
                 .countCompletedCoursesForStudentForActiveUndergraduateCurricularPlan(student.getIdInternal());

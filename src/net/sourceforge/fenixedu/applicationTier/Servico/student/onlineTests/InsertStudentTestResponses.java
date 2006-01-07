@@ -27,15 +27,15 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentTe
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -71,13 +71,13 @@ public class InsertStudentTestResponses implements IService {
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+        Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
         if (student.getNumber().compareTo(studentNumber) != 0)
             throw new NotAuthorizedStudentToDoTestException();
 
-        IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
@@ -89,13 +89,13 @@ public class InsertStudentTestResponses implements IService {
         List<String> errors = new ArrayList<String>();
 
         if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
-            List<IStudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+            List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
                     .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
             if (studentTestQuestionList.size() == 0)
                 throw new FenixServiceException();
             ParseQuestion parse = new ParseQuestion();
 
-            for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+            for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                 InfoStudentTestQuestion infoStudentTestQuestion = InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest
                         .newInfoFromDomain(studentTestQuestion);
                 infoStudentTestQuestion.setResponse(response[studentTestQuestion.getTestQuestionOrder().intValue() - 1]);
@@ -168,10 +168,10 @@ public class InsertStudentTestResponses implements IService {
                 }
             }
             if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-                IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
-                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
-                        ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
-                IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
+                OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+                Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+                        ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
+                Mark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
 
                 if (mark == null) {
                     mark = DomainFactory.makeMark();
@@ -187,7 +187,7 @@ public class InsertStudentTestResponses implements IService {
                 mark.setMark(grade);
             }
 
-            IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
             studentTestLog.setStudent(student);
             studentTestLog.setDate(Calendar.getInstance().getTime());

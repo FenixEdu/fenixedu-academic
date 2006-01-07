@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -86,7 +86,7 @@ public class InfoGrantOrientationTeacher extends InfoObject {
     /**
      * @param GrantOrientationTeacher
      */
-    public void copyFromDomain(IGrantOrientationTeacher grantOrientationTeacher) {
+    public void copyFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
         super.copyFromDomain(grantOrientationTeacher);
         if (grantOrientationTeacher != null) {
             setBeginDate(grantOrientationTeacher.getBeginDate());
@@ -99,7 +99,7 @@ public class InfoGrantOrientationTeacher extends InfoObject {
      * @return
      */
     public static InfoGrantOrientationTeacher newInfoFromDomain(
-            IGrantOrientationTeacher grantOrientationTeacher) {
+            GrantOrientationTeacher grantOrientationTeacher) {
         InfoGrantOrientationTeacher infoGrantOrientationTeacher = null;
         if (grantOrientationTeacher != null) {
             infoGrantOrientationTeacher = new InfoGrantOrientationTeacher();
@@ -109,7 +109,7 @@ public class InfoGrantOrientationTeacher extends InfoObject {
     }
 
     public void copyToDomain(InfoGrantOrientationTeacher infoGrantOrientationTeacher,
-            IGrantOrientationTeacher grantOrientationTeacher) throws ExcepcaoPersistencia {
+            GrantOrientationTeacher grantOrientationTeacher) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantOrientationTeacher, grantOrientationTeacher);
 
         grantOrientationTeacher.setBeginDate(infoGrantOrientationTeacher.getBeginDate());

@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -34,8 +34,8 @@ public class ReadTeacherDegreeFinalProjectStudentByOID extends ReadDomainObjectS
         return sp.getIPersistentTeacherDegreeFinalProjectStudent();
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain((ITeacherDegreeFinalProjectStudent) domainObject);
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain((TeacherDegreeFinalProjectStudent) domainObject);
     }
 
 }

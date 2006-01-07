@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
@@ -38,13 +38,13 @@ public class InsertStudentGroupMembers implements IService {
         final IPersistentStudentGroup persistentStudentGroup = persistentSupport
                 .getIPersistentStudentGroup();
 
-        final IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+        final StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, studentGroupID);
         if (studentGroup == null) {
             throw new ExistingServiceException();
         }
 
-        final IGrouping grouping = studentGroup.getGrouping();
+        final Grouping grouping = studentGroup.getGrouping();
         final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
         final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory
@@ -57,7 +57,7 @@ public class InsertStudentGroupMembers implements IService {
         for (final String studentUsername : (List<String>) studentUsernames) {
             if (strategy.checkAlreadyEnroled(grouping, studentUsername))
                 throw new InvalidSituationServiceException();
-            final IAttends attend = grouping.getStudentAttend(studentUsername);
+            final Attends attend = grouping.getStudentAttend(studentUsername);
             studentGroup.addAttends(attend);
         }
         return Boolean.TRUE;

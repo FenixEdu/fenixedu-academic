@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -62,12 +62,12 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 
     public ActionForward search(ActionMapping mapping, HttpServletRequest request,
             final Date day, final Date begin, final Date end) throws Exception {
-        final IExecutionPeriod executionPeriod = getExecutionPeriod(request);
-        final Set<IWrittenEvaluation> writtenEvaluations = new HashSet<IWrittenEvaluation>();
-        for (final IExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
-            for (final IEvaluation evaluation : executionCourse.getAssociatedEvaluations()) {
-                if (evaluation instanceof IWrittenEvaluation) {
-                    final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) evaluation;
+        final ExecutionPeriod executionPeriod = getExecutionPeriod(request);
+        final Set<WrittenEvaluation> writtenEvaluations = new HashSet<WrittenEvaluation>();
+        for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+            for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                if (evaluation instanceof WrittenEvaluation) {
+                    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
                     if (DateFormatUtil.equalDates("yyyy/MM/dd", day, writtenEvaluation.getDayDate())) {
                         if (begin == null || DateFormatUtil.equalDates("HH:mm", begin, writtenEvaluation.getBeginningDate())) {
                             if (end == null || DateFormatUtil.equalDates("HH:mm", end, writtenEvaluation.getEndDate())) {
@@ -84,14 +84,14 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
         return mapping.findForward("show");
     }
 
-	private IExecutionPeriod getExecutionPeriod(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+	private ExecutionPeriod getExecutionPeriod(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 		final IUserView userView = SessionUtils.getUserView(request);
 
 		final String executionPeriodString = (String) request.getAttribute(SessionConstants.EXECUTION_PERIOD_OID);
 		final Integer executionPeriodID = Integer.valueOf(executionPeriodString);
 
 		final Object[] args = { ExecutionPeriod.class, executionPeriodID };
-		return (IExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+		return (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
 	}
 
 	private Date getDate(final DynaActionForm dynaActionForm) throws ParseException {

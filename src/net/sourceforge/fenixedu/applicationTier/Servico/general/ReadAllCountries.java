@@ -20,7 +20,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
-import net.sourceforge.fenixedu.domain.ICountry;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -44,7 +44,7 @@ public class ReadAllCountries implements IService {
         return CollectionUtils.collect(countries, new Transformer() {
 
             public Object transform(Object input) {
-                ICountry country = (ICountry) input;
+                Country country = (Country) input;
                 return InfoCountry.newInfoFromDomain(country);
             }
         });

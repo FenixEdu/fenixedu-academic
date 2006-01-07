@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -23,7 +23,7 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     private final String NO_SELECTION = "noSelection";  
     
     private Integer degreeId;
-    private IDegree degree;
+    private Degree degree;
     private String name;
     private String nameEn;
     private String acronym;
@@ -31,12 +31,12 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     private String gradeScale;
     private Double ectsCredits;
 
-    public List<IDegree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
+    public List<Degree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
         Object[] args = { Degree.class };
-        List<IDegree> allDegrees = (List<IDegree>) ServiceUtils.executeService(null, "ReadAllDomainObjects", args);
+        List<Degree> allDegrees = (List<Degree>) ServiceUtils.executeService(null, "ReadAllDomainObjects", args);
         
-        List<IDegree> result = new ArrayList<IDegree>();
-        for (IDegree degree : allDegrees) {
+        List<Degree> result = new ArrayList<Degree>();
+        for (Degree degree : allDegrees) {
             if (degree.getBolonhaDegreeType() != null) {
                 result.add(degree);
             }
@@ -53,8 +53,8 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
         this.degreeId = degreeId;
     }
     
-    public IDegree getDegree() throws FenixFilterException, FenixServiceException {
-        return (degree == null) ? (degree = (IDegree) readDomainObject(Degree.class, getDegreeId())) : degree;
+    public Degree getDegree() throws FenixFilterException, FenixServiceException {
+        return (degree == null) ? (degree = (Degree) readDomainObject(Degree.class, getDegreeId())) : degree;
     }
     
     public String getName() throws FenixFilterException, FenixServiceException {

@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,7 +37,7 @@ public class ReadExecutionYearsService implements IService {
 		return (List) CollectionUtils.collect(executionYears,
 				new Transformer() {
 					public Object transform(Object arg0) {
-						final IExecutionYear executionYear = (IExecutionYear) arg0;
+						final ExecutionYear executionYear = (ExecutionYear) arg0;
 						return InfoExecutionYear
 								.newInfoFromDomain(executionYear);
 					}

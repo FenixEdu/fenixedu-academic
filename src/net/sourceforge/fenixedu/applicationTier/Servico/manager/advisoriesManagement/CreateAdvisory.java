@@ -10,9 +10,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,10 +25,10 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class CreateAdvisory implements IService {
 
-    private boolean hasRole(final IPerson person, final RoleType roleType) {
+    private boolean hasRole(final Person person, final RoleType roleType) {
         final Collection roles = person.getPersonRoles();
         for (final Iterator iterator = roles.iterator(); iterator.hasNext();) {
-            final IRole role = (IRole) iterator.next();
+            final Role role = (Role) iterator.next();
             if (roleType.equals(role.getRoleType())) {
                 return true;
             }
@@ -42,17 +42,17 @@ public class CreateAdvisory implements IService {
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();       
 
-        final IAdvisory advisory = DomainFactory.makeAdvisory();
+        final Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(infoAdvisory.getCreated());
         advisory.setSubject(infoAdvisory.getSubject());
         advisory.setExpires(infoAdvisory.getExpires());
         advisory.setMessage(infoAdvisory.getMessage());
         advisory.setSender(infoAdvisory.getSender());
      
-        IRole role = persistenceSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
-        List<IPerson> people = role.getAssociatedPersons();
+        Role role = persistenceSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
+        List<Person> people = role.getAssociatedPersons();
               
-        for (IPerson person : people) {
+        for (Person person : people) {
             if ((advisoryRecipients.equals(AdvisoryRecipients.STUDENTS) && hasRole(person,
                     RoleType.STUDENT))
                     || (advisoryRecipients.equals(AdvisoryRecipients.TEACHERS) && hasRole(person,

@@ -1,24 +1,22 @@
 package net.sourceforge.fenixedu.tools.enrollment;
 
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IScientificArea;
+import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
-import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByNumberOfDoneCurricularCourses;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionDoneCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionPeriodToApply;
+import net.sourceforge.fenixedu.domain.precedences.Precedence;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -28,7 +26,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author David Santos in Jan 29, 2004
@@ -43,14 +40,14 @@ public class VerifyLEECCurricularPlan {
 
             persistentSuport.iniciarTransaccao();
 
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) degreeCurricularPlanDAO
                     .readByOID(DegreeCurricularPlan.class, new Integer("48"));
 
             List branches = degreeCurricularPlan.getAreas();
 
             Iterator iterator = branches.iterator();
             while (iterator.hasNext()) {
-                IBranch branch = (IBranch) iterator.next();
+                Branch branch = (Branch) iterator.next();
                 if (branch.getBranchType().equals(BranchType.COMNBR)) {
                     System.out.println("BASES: [" + branch.getName() + "]");
                     printItForThisAreaWithScopes(branch, AreaType.BASE);
@@ -75,7 +72,7 @@ public class VerifyLEECCurricularPlan {
      * @param areaType
      * @throws ExcepcaoPersistencia
      */
-    private static void printItForThisAreaWithScopes(IBranch branch, AreaType areaType)
+    private static void printItForThisAreaWithScopes(Branch branch, AreaType areaType)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseGroup curricularCourseGroupDAO = persistentSuport
@@ -84,7 +81,7 @@ public class VerifyLEECCurricularPlan {
         List groups = curricularCourseGroupDAO.readByBranchAndAreaType(branch.getIdInternal(), areaType);
         Iterator iterator1 = groups.iterator();
         while (iterator1.hasNext()) {
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator1.next();
+            CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) iterator1.next();
             List scientificAreas = curricularCourseGroup.getScientificAreas();
             Iterator iterator2 = scientificAreas.iterator();
 
@@ -97,7 +94,7 @@ public class VerifyLEECCurricularPlan {
                     + curricularCourseGroup.getMaximumCredits().toString() + "]");
 
             while (iterator2.hasNext()) {
-                IScientificArea scientificArea = (IScientificArea) iterator2.next();
+                ScientificArea scientificArea = (ScientificArea) iterator2.next();
 
                 System.out.println("");
                 System.out.print("\t\t");
@@ -109,7 +106,7 @@ public class VerifyLEECCurricularPlan {
 
                 Iterator iterator3 = curricularCourses.iterator();
                 while (iterator3.hasNext()) {
-                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator3
+                    CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iterator3
                             .next();
                     if (curricularCourseScope.getEndDate() == null) {
                         String name = curricularCourseScope.getCurricularCourse().getName();
@@ -141,16 +138,16 @@ public class VerifyLEECCurricularPlan {
      *         that scientific area.
      */
     private static List getCurricularCourseScopesByScientificAreaInGroup(
-            ICurricularCourseGroup curricularCourseGroup, IScientificArea scientificArea) {
+            CurricularCourseGroup curricularCourseGroup, ScientificArea scientificArea) {
         List result = new ArrayList();
         List curricularCourses = curricularCourseGroup.getCurricularCourses();
         Iterator iterator1 = curricularCourses.iterator();
         while (iterator1.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
+            CurricularCourse curricularCourse = (CurricularCourse) iterator1.next();
             if (curricularCourse.getScientificArea().equals(scientificArea)) {
                 Iterator iterator2 = curricularCourse.getScopes().iterator();
                 while (iterator2.hasNext()) {
-                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iterator2
+                    CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iterator2
                             .next();
                     result.add(curricularCourseScope);
                 }
@@ -174,7 +171,7 @@ public class VerifyLEECCurricularPlan {
      * @param degreeCurricularPlan
      * @throws ExcepcaoPersistencia
      */
-    private static void printItForPrecedences(IDegreeCurricularPlan degreeCurricularPlan)
+    private static void printItForPrecedences(DegreeCurricularPlan degreeCurricularPlan)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourse curricularCourseDAO = persistentSuport
@@ -191,7 +188,7 @@ public class VerifyLEECCurricularPlan {
         sortCurricularCourses(curricularCourses);
         Iterator iterator1 = curricularCourses.iterator();
         while (iterator1.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iterator1.next();
+            CurricularCourse curricularCourse = (CurricularCourse) iterator1.next();
             List precedences = curricularCourse.getPrecedences();
             if (precedences != null && !precedences.isEmpty()) {
                 System.out.print("\t");
@@ -199,30 +196,25 @@ public class VerifyLEECCurricularPlan {
                         + "] TEM PRECED�NCIA DE:");
                 Iterator iterator2 = precedences.iterator();
                 while (iterator2.hasNext()) {
-                    IPrecedence precedence = (IPrecedence) iterator2.next();
+                    Precedence precedence = (Precedence) iterator2.next();
                     List restrictions = precedence.getRestrictions();
                     Iterator iterator3 = restrictions.iterator();
                     while (iterator3.hasNext()) {
-                        IRestriction restriction = (IRestriction) iterator3.next();
-
-                        if (restriction instanceof Proxy) {
-                            restriction = (IRestriction) ProxyHelper.getRealObject(restriction);
-                        }
-
-                        if (restriction instanceof IRestrictionByNumberOfDoneCurricularCourses) {
-                            IRestrictionByNumberOfDoneCurricularCourses actualRestriction = (IRestrictionByNumberOfDoneCurricularCourses) restriction;
+                        Restriction restriction = (Restriction) iterator3.next();
+                        if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses) {
+                            RestrictionByNumberOfDoneCurricularCourses actualRestriction = (RestrictionByNumberOfDoneCurricularCourses) restriction;
                             Integer numberOfDoneCurricularCourses = actualRestriction
                                     .getNumberOfCurricularCourses();
                             System.out.print("\t\t");
                             System.out.println(numberOfDoneCurricularCourses + " disciplinas feitas");
-                        } else if (restriction instanceof IRestrictionDoneCurricularCourse) {
-                            IRestrictionDoneCurricularCourse actualRestriction = (IRestrictionDoneCurricularCourse) restriction;
+                        } else if (restriction instanceof RestrictionDoneCurricularCourse) {
+                            RestrictionDoneCurricularCourse actualRestriction = (RestrictionDoneCurricularCourse) restriction;
                             System.out.print("\t\t");
                             System.out.println(actualRestriction.getPrecedentCurricularCourse()
                                     .getName()
                                     + " feita");
-                        } else if (restriction instanceof IRestrictionPeriodToApply) {
-                            IRestrictionPeriodToApply actualRestriction = (IRestrictionPeriodToApply) restriction;
+                        } else if (restriction instanceof RestrictionPeriodToApply) {
+                            RestrictionPeriodToApply actualRestriction = (RestrictionPeriodToApply) restriction;
                             System.out.print("\t\t");
                             System.out.println("no "
                                     + actualRestriction.getPeriodToApplyRestriction().getValue()

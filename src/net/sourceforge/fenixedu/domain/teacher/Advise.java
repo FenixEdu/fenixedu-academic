@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -12,8 +12,8 @@ import org.apache.commons.collections.Predicate;
 
 public class Advise extends Advise_Base {
 
-    public Advise(ITeacher teacher, IStudent student, AdviseType adviseType,
-            IExecutionPeriod startPeriod, IExecutionPeriod endPeriod) {
+    public Advise(Teacher teacher, Student student, AdviseType adviseType,
+            ExecutionPeriod startPeriod, ExecutionPeriod endPeriod) {
         super();
         if (teacher == null || student == null || adviseType == null || startPeriod == null
                 || endPeriod == null) {
@@ -38,21 +38,21 @@ public class Advise extends Advise_Base {
         }
     }
     
-    public ITeacherAdviseService getTeacherAdviseServiceByExecutionPeriod(
-            final IExecutionPeriod executionPeriod) {
-        return (ITeacherAdviseService) CollectionUtils.find(getTeacherAdviseServices(), new Predicate() {
+    public TeacherAdviseService getTeacherAdviseServiceByExecutionPeriod(
+            final ExecutionPeriod executionPeriod) {
+        return (TeacherAdviseService) CollectionUtils.find(getTeacherAdviseServices(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                ITeacherAdviseService teacherAdviseService = (ITeacherAdviseService) arg0;
+                TeacherAdviseService teacherAdviseService = (TeacherAdviseService) arg0;
                 return teacherAdviseService.getTeacherService().getExecutionPeriod() == executionPeriod;
             }
         });
     }
 
-    public void checkPercentageCoherenceWithOtherAdvises(IExecutionPeriod executionPeriod,
+    public void checkPercentageCoherenceWithOtherAdvises(ExecutionPeriod executionPeriod,
             double percentage) throws AdvisePercentageException {
-        for (IAdvise advise : getStudent().getAdvises()) {
+        for (Advise advise : getStudent().getAdvises()) {
             if (advise != this && advise.getAdviseType().equals(getAdviseType())) {
-                ITeacherAdviseService teacherAdviseService = advise
+                TeacherAdviseService teacherAdviseService = advise
                         .getTeacherAdviseServiceByExecutionPeriod(executionPeriod);
                 if (teacherAdviseService != null) {
                     percentage += teacherAdviseService.getPercentage().doubleValue();
@@ -66,9 +66,9 @@ public class Advise extends Advise_Base {
     }
 
     public void updateEndExecutionPeriod() {
-        IExecutionPeriod executionPeriod = getStartExecutionPeriod();
-        for (ITeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
-            IExecutionPeriod adviseServiceEP = teacherAdviseService.getTeacherService()
+        ExecutionPeriod executionPeriod = getStartExecutionPeriod();
+        for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
+            ExecutionPeriod adviseServiceEP = teacherAdviseService.getTeacherService()
                     .getExecutionPeriod();
             if (adviseServiceEP.getEndDate().after(executionPeriod.getEndDate())) {
                 executionPeriod = adviseServiceEP;
@@ -78,9 +78,9 @@ public class Advise extends Advise_Base {
     }
 
     public void updateStartExecutionPeriod() {
-        IExecutionPeriod executionPeriod = getEndExecutionPeriod();
-        for (ITeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
-            IExecutionPeriod adviseServiceEP = teacherAdviseService.getTeacherService()
+        ExecutionPeriod executionPeriod = getEndExecutionPeriod();
+        for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
+            ExecutionPeriod adviseServiceEP = teacherAdviseService.getTeacherService()
                     .getExecutionPeriod();
             if (adviseServiceEP.getBeginDate().before(executionPeriod.getBeginDate())) {
                 executionPeriod = adviseServiceEP;
@@ -93,14 +93,14 @@ public class Advise extends Advise_Base {
 
         private final String key;
 
-        private final List<IAdvise> advises;
+        private final List<Advise> advises;
 
-        private final IExecutionPeriod executionPeriod;
+        private final ExecutionPeriod executionPeriod;
 
         private final AdviseType adviseType;
 
-        public AdvisePercentageException(String key, List<IAdvise> advises,
-                IExecutionPeriod executionPeriod, AdviseType adviseType) {
+        public AdvisePercentageException(String key, List<Advise> advises,
+                ExecutionPeriod executionPeriod, AdviseType adviseType) {
             super(key);
             this.key = key;
             this.advises = advises;
@@ -108,7 +108,7 @@ public class Advise extends Advise_Base {
             this.adviseType = adviseType;
         }
 
-        public List<IAdvise> getAdvises() {
+        public List<Advise> getAdvises() {
             return advises;
         }
 
@@ -116,7 +116,7 @@ public class Advise extends Advise_Base {
             return key;
         }
 
-        public IExecutionPeriod getExecutionPeriod() {
+        public ExecutionPeriod getExecutionPeriod() {
             return executionPeriod;
         }
 

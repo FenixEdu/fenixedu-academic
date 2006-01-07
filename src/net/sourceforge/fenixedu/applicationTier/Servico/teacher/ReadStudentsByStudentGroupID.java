@@ -11,9 +11,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -41,15 +41,15 @@ public class ReadStudentsByStudentGroupID implements IService {
         IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, groupId);
        
         Iterator iter = studentGroup.getAttends().iterator();
 
         while(iter.hasNext()) {
-            IAttends attend = (IAttends) iter.next();
+            Attends attend = (Attends) iter.next();
             Integer studentID = attend.getAluno().getIdInternal();
-            IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
+            Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
             infoStudents.add(InfoStudent.newInfoFromDomain(student));
         }
         return infoStudents;

@@ -6,10 +6,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.teacher.IAdvise;
+import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.StudentState;
 
@@ -34,7 +34,7 @@ public class Student extends Student_Base {
         this.setSpecialSeason(Boolean.FALSE);
     }
 
-    public Student(IPerson person, Integer studentNumber, IStudentKind studentKind, StudentState state,
+    public Student(Person person, Integer studentNumber, StudentKind studentKind, StudentState state,
             Boolean payedTuition, Boolean enrolmentForbidden, EntryPhase entryPhase,
             DegreeType degreeType) {
 
@@ -64,8 +64,8 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public IStudentCurricularPlan getActiveStudentCurricularPlan() {
-        for (final IStudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+    public StudentCurricularPlan getActiveStudentCurricularPlan() {
+        for (final StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
             if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.ACTIVE) {
                 return studentCurricularPlan;
             }
@@ -73,8 +73,8 @@ public class Student extends Student_Base {
         return null;
     }
 
-    public boolean attends(final IExecutionCourse executionCourse) {
-        for (final IAttends attends : getAssociatedAttends()) {
+    public boolean attends(final ExecutionCourse executionCourse) {
+        for (final Attends attends : getAssociatedAttends()) {
             if (attends.getDisciplinaExecucao() == executionCourse) {
                 return true;
             }
@@ -82,14 +82,14 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public List<IWrittenEvaluation> getWrittenEvaluations(final IExecutionPeriod executionPeriod) {
-        final List<IWrittenEvaluation> result = new ArrayList<IWrittenEvaluation>();
-        for (final IAttends attend : this.getAssociatedAttends()) {
+    public List<WrittenEvaluation> getWrittenEvaluations(final ExecutionPeriod executionPeriod) {
+        final List<WrittenEvaluation> result = new ArrayList<WrittenEvaluation>();
+        for (final Attends attend : this.getAssociatedAttends()) {
             if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final IEvaluation evaluation : attend.getDisciplinaExecucao()
+                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
                         .getAssociatedEvaluations()) {
-                    if (evaluation instanceof IWrittenEvaluation && !result.contains(evaluation)) {
-                        result.add((IWrittenEvaluation) evaluation);
+                    if (evaluation instanceof WrittenEvaluation && !result.contains(evaluation)) {
+                        result.add((WrittenEvaluation) evaluation);
                     }
                 }
             }
@@ -97,26 +97,26 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public List<IExam> getEnroledExams(final IExecutionPeriod executionPeriod) {
-        final List<IExam> result = new ArrayList<IExam>();
-        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+    public List<Exam> getEnroledExams(final ExecutionPeriod executionPeriod) {
+        final List<Exam> result = new ArrayList<Exam>();
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
                 .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof IExam
+            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof Exam
                     && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
-                result.add((IExam) writtenEvaluationEnrolment.getWrittenEvaluation());
+                result.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
             }
         }
         return result;
     }
 
-    public List<IExam> getUnenroledExams(final IExecutionPeriod executionPeriod) {
-        final List<IExam> result = new ArrayList<IExam>();
-        for (final IAttends attend : this.getAssociatedAttends()) {
+    public List<Exam> getUnenroledExams(final ExecutionPeriod executionPeriod) {
+        final List<Exam> result = new ArrayList<Exam>();
+        for (final Attends attend : this.getAssociatedAttends()) {
             if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final IEvaluation evaluation : attend.getDisciplinaExecucao()
+                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
                         .getAssociatedEvaluations()) {
-                    if (evaluation instanceof IExam && !this.isEnroledIn(evaluation)) {
-                        result.add((IExam) evaluation);
+                    if (evaluation instanceof Exam && !this.isEnroledIn(evaluation)) {
+                        result.add((Exam) evaluation);
                     }
                 }
             }
@@ -124,26 +124,26 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public List<IWrittenTest> getEnroledWrittenTests(final IExecutionPeriod executionPeriod) {
-        final List<IWrittenTest> result = new ArrayList<IWrittenTest>();
-        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+    public List<WrittenTest> getEnroledWrittenTests(final ExecutionPeriod executionPeriod) {
+        final List<WrittenTest> result = new ArrayList<WrittenTest>();
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
                 .getWrittenEvaluationEnrolments()) {
-            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof IWrittenTest
+            if (writtenEvaluationEnrolment.getWrittenEvaluation() instanceof WrittenTest
                     && writtenEvaluationEnrolment.isForExecutionPeriod(executionPeriod)) {
-                result.add((IWrittenTest) writtenEvaluationEnrolment.getWrittenEvaluation());
+                result.add((WrittenTest) writtenEvaluationEnrolment.getWrittenEvaluation());
             }
         }
         return result;
     }
 
-    public List<IWrittenTest> getUnenroledWrittenTests(final IExecutionPeriod executionPeriod) {
-        final List<IWrittenTest> result = new ArrayList<IWrittenTest>();
-        for (final IAttends attend : this.getAssociatedAttends()) {
+    public List<WrittenTest> getUnenroledWrittenTests(final ExecutionPeriod executionPeriod) {
+        final List<WrittenTest> result = new ArrayList<WrittenTest>();
+        for (final Attends attend : this.getAssociatedAttends()) {
             if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final IEvaluation evaluation : attend.getDisciplinaExecucao()
+                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
                         .getAssociatedEvaluations()) {
-                    if (evaluation instanceof IWrittenTest && !this.isEnroledIn(evaluation)) {
-                        result.add((IWrittenTest) evaluation);
+                    if (evaluation instanceof WrittenTest && !this.isEnroledIn(evaluation)) {
+                        result.add((WrittenTest) evaluation);
                     }
                 }
             }
@@ -151,14 +151,14 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public List<IProject> getProjects(final IExecutionPeriod executionPeriod) {
-        final List<IProject> result = new ArrayList<IProject>();
-        for (final IAttends attend : this.getAssociatedAttends()) {
+    public List<Project> getProjects(final ExecutionPeriod executionPeriod) {
+        final List<Project> result = new ArrayList<Project>();
+        for (final Attends attend : this.getAssociatedAttends()) {
             if (attend.getDisciplinaExecucao().getExecutionPeriod() == executionPeriod) {
-                for (final IEvaluation evaluation : attend.getDisciplinaExecucao()
+                for (final Evaluation evaluation : attend.getDisciplinaExecucao()
                         .getAssociatedEvaluations()) {
-                    if (evaluation instanceof IProject) {
-                        result.add((IProject) evaluation);
+                    if (evaluation instanceof Project) {
+                        result.add((Project) evaluation);
                     }
                 }
             }
@@ -166,8 +166,8 @@ public class Student extends Student_Base {
         return result;
     }
 
-    public boolean isEnroledIn(final IEvaluation evaluation) {
-        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+    public boolean isEnroledIn(final Evaluation evaluation) {
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == evaluation) {
                 return true;
@@ -176,8 +176,8 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public IRoom getRoomFor(final IWrittenEvaluation writtenEvaluation) {
-        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : this
+    public Room getRoomFor(final WrittenEvaluation writtenEvaluation) {
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {
                 return writtenEvaluationEnrolment.getRoom();
@@ -200,15 +200,15 @@ public class Student extends Student_Base {
         return this.arithmeticMean;
     }
 
-    public void calculateApprovationRatioAndArithmeticMeanIfActive(IExecutionYear currentExecutionYear) {
+    public void calculateApprovationRatioAndArithmeticMeanIfActive(ExecutionYear currentExecutionYear) {
 
         int enrollmentsNumber = 0;
         int approvedEnrollmentsNumber = 0;
         int actualApprovedEnrollmentsNumber = 0;
         int totalGrade = 0;
 
-        for (IStudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
-            for (IEnrolment enrolment : studentCurricularPlan.getEnrolments()) {
+        for (StudentCurricularPlan studentCurricularPlan : getStudentCurricularPlans()) {
+            for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
                 if (enrolment.getCondition() != EnrollmentCondition.INVISIBLE
                         && (currentExecutionYear == null || enrolment.getExecutionPeriod().getExecutionYear() != currentExecutionYear)) {
                     enrollmentsNumber++;
@@ -255,20 +255,20 @@ public class Student extends Student_Base {
         this.approvedEnrollmentsNumber = approvedEnrollmentsNumber;
     }
 
-    public List<IAdvise> getAdvisesByTeacher(final ITeacher teacher) {
-        return (List<IAdvise>) CollectionUtils.select(getAdvises(), new Predicate() {
+    public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
+        return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IAdvise advise = (IAdvise) arg0;
+                Advise advise = (Advise) arg0;
                 return advise.getTeacher() == teacher;
             }
         });
     }
     
-    public List<IAdvise> getAdvisesByType(final AdviseType adviseType) {
-        return (List<IAdvise>) CollectionUtils.select(getAdvises(), new Predicate(){
+    public List<Advise> getAdvisesByType(final AdviseType adviseType) {
+        return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate(){
             public boolean evaluate(Object arg0) {
-                IAdvise advise = (IAdvise) arg0;                
+                Advise advise = (Advise) arg0;                
                 return advise.getAdviseType().equals(adviseType);
             }});
     }

@@ -17,7 +17,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,7 +35,7 @@ public class LerTurnosDeDisciplinaExecucao implements IService {
         Iterator itShiftList = infoShiftList.iterator();
 
         while (itShiftList.hasNext()) {
-            IShift shift = (IShift) itShiftList.next();
+            Shift shift = (Shift) itShiftList.next();
 
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoShiftAndLessons.add(infoShift);

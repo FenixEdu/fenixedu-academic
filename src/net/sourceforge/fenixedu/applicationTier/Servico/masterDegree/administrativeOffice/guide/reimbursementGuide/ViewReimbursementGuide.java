@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,7 +30,7 @@ public class ViewReimbursementGuide implements IService {
 
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IReimbursementGuide reimbursementGuide = (IReimbursementGuide) ps
+        ReimbursementGuide reimbursementGuide = (ReimbursementGuide) ps
                 .getIPersistentReimbursementGuide().readByOID(ReimbursementGuide.class,
                         reimbursementGuideId);
 

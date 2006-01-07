@@ -9,23 +9,23 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CurricularCourseScopeTest extends DomainTestBase {
 
-	private ICurricularCourseScope newCurricularCourseScope;
-	private ICurricularSemester newCurricularSemester;
-	private ICurricularCourse newCurricularCourse;
-	private IBranch newBranch;
+	private CurricularCourseScope newCurricularCourseScope;
+	private CurricularSemester newCurricularSemester;
+	private CurricularCourse newCurricularCourse;
+	private Branch newBranch;
 	
-	private ICurricularSemester commonCurricularSemester;
-	private ICurricularCourse commonCurricularCourse;
-	private IBranch commonBranch;
+	private CurricularSemester commonCurricularSemester;
+	private CurricularCourse commonCurricularCourse;
+	private Branch commonBranch;
 	
 	private Calendar newBeginDate;
 	private Calendar newEndDate;
 	private String newAnnotation;
 	
-	ICurricularCourseScope scopeToEdit;
+	CurricularCourseScope scopeToEdit;
 	
-	private ICurricularCourseScope curricularCourseScopeToDelete;
-	private ICurricularCourseScope curricularCourseScopeNotToDelete;
+	private CurricularCourseScope curricularCourseScopeToDelete;
+	private CurricularCourseScope curricularCourseScopeNotToDelete;
 	
 	protected void setUp() throws Exception {
         super.setUp();
@@ -52,7 +52,7 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		commonCurricularCourse = new CurricularCourse();
 		commonBranch = new Branch();
 		
-		ICurricularCourseScope otherCurricularCourseScope = new CurricularCourseScope();
+		CurricularCourseScope otherCurricularCourseScope = new CurricularCourseScope();
 		otherCurricularCourseScope.setCurricularCourse(commonCurricularCourse);
 		otherCurricularCourseScope.setCurricularSemester(commonCurricularSemester);
 		otherCurricularCourseScope.setBranch(commonBranch);
@@ -72,12 +72,12 @@ public class CurricularCourseScopeTest extends DomainTestBase {
 		curricularCourseScopeToDelete = new CurricularCourseScope();
 		curricularCourseScopeNotToDelete = new CurricularCourseScope();
 		
-		ICurricularCourse cc1 = new CurricularCourse();
+		CurricularCourse cc1 = new CurricularCourse();
 		
-		ICurricularSemester cs1 = new CurricularSemester();
+		CurricularSemester cs1 = new CurricularSemester();
 		
-		IWrittenEvaluation we1 = new WrittenEvaluation();
-		IWrittenEvaluation we2 = new WrittenEvaluation();
+		WrittenEvaluation we1 = new WrittenEvaluation();
+		WrittenEvaluation we2 = new WrittenEvaluation();
 		
 		curricularCourseScopeToDelete.setCurricularCourse(cc1);
 		curricularCourseScopeToDelete.setCurricularSemester(cs1);

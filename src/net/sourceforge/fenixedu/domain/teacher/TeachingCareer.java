@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -20,7 +20,7 @@ public class TeachingCareer extends TeachingCareer_Base {
         setOjbConcreteClass(TeachingCareer.class.getName());
     }
 	
-	public TeachingCareer(ITeacher teacher, ICategory category, InfoTeachingCareer infoTeachingCareer) {
+	public TeachingCareer(Teacher teacher, Category category, InfoTeachingCareer infoTeachingCareer) {
 	
 		if(teacher == null || category == null)
 			throw new DomainException("Neither teacher nor category should be null!");
@@ -47,7 +47,7 @@ public class TeachingCareer extends TeachingCareer_Base {
 		super.delete();
 	}
 	
-	public void edit(InfoTeachingCareer infoTeachingCareer, ICategory category) {
+	public void edit(InfoTeachingCareer infoTeachingCareer, Category category) {
 		
 		if(category == null)
 			throw new DomainException("The category should not be null!");

@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -44,7 +44,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
         List allExecutionDegrees = null;
 
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             idDegreeCurricularPlan);
             allExecutionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
@@ -58,7 +58,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
         List result = new ArrayList(allExecutionDegrees.size());
 
         while (iterator.hasNext()) {
-            IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
+            ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
 
             InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
                     .newInfoFromDomain(executionDegree);
@@ -68,7 +68,7 @@ public class ReadExecutionDegreesByDegreeCurricularPlan implements IService {
                 List infoCoordinatorList = new ArrayList();
                 ListIterator iteratorCoordinator = executionDegree.getCoordinatorsList().listIterator();
                 while (iteratorCoordinator.hasNext()) {
-                    ICoordinator coordinator = (ICoordinator) iteratorCoordinator.next();
+                    Coordinator coordinator = (Coordinator) iteratorCoordinator.next();
 
                     infoCoordinatorList
                             .add(InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator));

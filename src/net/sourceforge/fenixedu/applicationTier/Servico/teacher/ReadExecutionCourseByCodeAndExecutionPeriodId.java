@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -23,7 +23,7 @@ public class ReadExecutionCourseByCodeAndExecutionPeriodId implements IService {
 	public InfoExecutionCourse run(Integer executionPeriodId, String code) throws ExcepcaoInexistente,
 			FenixServiceException, ExcepcaoPersistencia {
 
-		IExecutionCourse iExecCourse = null;
+		ExecutionCourse iExecCourse = null;
 		InfoExecutionCourse infoExecCourse = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -8,8 +8,8 @@ import java.text.ParseException;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IProject;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -76,11 +76,11 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
         return this.showProjectsForExecutionCourses();
     }
 
-    public IEvaluation getEvaluation() {
+    public Evaluation getEvaluation() {
         try {
             if (this.evaluation == null && this.getEvaluationID() != null) {
                 final Object[] args = { Project.class, this.getEvaluationID() };
-                this.evaluation = (IEvaluation) ServiceUtils.executeService(null, "ReadDomainObject",
+                this.evaluation = (Evaluation) ServiceUtils.executeService(null, "ReadDomainObject",
                         args);
             }
             return this.evaluation;
@@ -97,7 +97,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
     public String getBeginDate() {
         if (this.beginDate == null) {
             if (this.getEvaluation() != null) {
-                this.beginDate = DateFormatUtil.format("dd/MM/yyyy", ((IProject) this.getEvaluation()).getBegin());
+                this.beginDate = DateFormatUtil.format("dd/MM/yyyy", ((Project) this.getEvaluation()).getBegin());
             } else if(getDay() != null & getMonth() != null & getYear() != null) {
                 this.beginDate = getDay() + "/" + getMonth() + "/" + getYear();                
             }
@@ -111,7 +111,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 
     public String getEndDate() {
         if (this.endDate == null && this.getEvaluation() != null) {
-            this.endDate = DateFormatUtil.format("dd/MM/yyyy", ((IProject) this.getEvaluation()).getEnd());
+            this.endDate = DateFormatUtil.format("dd/MM/yyyy", ((Project) this.getEvaluation()).getEnd());
         }
         return this.endDate;
     }
@@ -122,7 +122,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 
     public String getName() {
         if (this.name == null && this.getEvaluation() != null)  {
-            this.name = ((IProject) this.getEvaluation()).getName();
+            this.name = ((Project) this.getEvaluation()).getName();
         }
         return this.name;
     }
@@ -133,7 +133,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 
     public String getDescription() {
         if (this.description == null && this.getEvaluation() != null) {
-            this.description = ((IProject) this.getEvaluation()).getDescription();
+            this.description = ((Project) this.getEvaluation()).getDescription();
         }
         return this.description;
     }
@@ -144,7 +144,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 
     public String getBeginHour() {
         if (this.beginHour == null && this.getEvaluation() != null) {
-            this.beginHour = DateFormatUtil.format("HH:mm", ((IProject) this.getEvaluation()).getBegin());
+            this.beginHour = DateFormatUtil.format("HH:mm", ((Project) this.getEvaluation()).getBegin());
         }
         return this.beginHour;
     }
@@ -155,7 +155,7 @@ public class CoordinatorProjectsManagementBackingBean extends CoordinatorProject
 
     public String getEndHour() {
         if (this.endHour == null && this.getEvaluation() != null) {
-            this.endHour = DateFormatUtil.format("HH:mm", ((IProject) this.getEvaluation()).getEnd());
+            this.endHour = DateFormatUtil.format("HH:mm", ((Project) this.getEvaluation()).getEnd());
         }
         return this.endHour;
     }

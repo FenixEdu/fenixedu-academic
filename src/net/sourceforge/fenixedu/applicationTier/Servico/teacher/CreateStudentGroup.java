@@ -9,10 +9,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
@@ -28,13 +28,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class CreateStudentGroup implements IService {
 
   
-    private List buildStudentList(List<String> studentUserNames, IGrouping grouping)
+    private List buildStudentList(List<String> studentUserNames, Grouping grouping)
             throws FenixServiceException, ExcepcaoPersistencia {
       
         List studentList = new ArrayList();
         for (final String studantUserName : studentUserNames) {
-            IAttends attend = grouping.getStudentAttend(studantUserName);
-            IStudent student = attend.getAluno();
+            Attends attend = grouping.getStudentAttend(studantUserName);
+            Student student = attend.getAluno();
             studentList.add(student);
         }
         return studentList;
@@ -48,12 +48,12 @@ public class CreateStudentGroup implements IService {
         final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         
-        final IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupingID);
+        final Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class, groupingID);
         
         if (grouping == null)
             throw new FenixServiceException();
         
-        IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftID);
+        Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftID);
         
         List studentList = buildStudentList(studentUserNames, grouping);
         

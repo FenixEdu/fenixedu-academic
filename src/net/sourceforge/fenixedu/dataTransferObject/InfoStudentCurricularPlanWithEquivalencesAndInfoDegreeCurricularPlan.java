@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 /**
  * @author Ricardo Rodrigues
@@ -26,13 +26,13 @@ public class InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPla
     public InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan() {
     }
 
-    public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
+    public void copyFromDomain(StudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {
             List infoNotNeedToEnrollInCurricularCourses = new ArrayList();
             for (Iterator iter = studentCurricularPlan.getNotNeedToEnrollCurricularCourses().iterator(); iter
                     .hasNext();) {
-                INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) iter
+                NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) iter
                         .next();
                 infoNotNeedToEnrollInCurricularCourses.add(InfoNotNeedToEnrollInCurricularCourse
                         .newInfoFromDomain(notNeedToEnrollInCurricularCourse));
@@ -42,7 +42,7 @@ public class InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPla
     }
 
     public static InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan newInfoFromDomain(
-            IStudentCurricularPlan studentCurricularPlan) {
+            StudentCurricularPlan studentCurricularPlan) {
         InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoStudentCurricularPlan = null;
         if (studentCurricularPlan != null) {
             infoStudentCurricularPlan = new InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan();

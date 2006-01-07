@@ -8,21 +8,21 @@ package net.sourceforge.fenixedu.persistenceTier.grant;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 public interface IPersistentGrantOwner extends IPersistentObject {
 
-    public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia;
+    public GrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia;
 
-    public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia;
+    public GrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia;
 
     public List readGrantOwnerByPersonName(String personName, Integer startIndex,
             Integer numberOfElementsInSpan) throws ExcepcaoPersistencia;
 
-    public IGrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
+    public GrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
             throws ExcepcaoPersistencia;
 
     public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia;

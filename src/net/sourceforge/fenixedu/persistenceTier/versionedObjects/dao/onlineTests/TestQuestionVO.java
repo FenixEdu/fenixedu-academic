@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
@@ -21,10 +21,10 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class TestQuestionVO extends VersionedObjectsBase implements IPersistentTestQuestion {
 
-    public List<ITestQuestion> readByTest(Integer testId) {
-        final List<ITestQuestion> testQuestionList = (List<ITestQuestion>) readAll(TestQuestion.class);
-        List<ITestQuestion> result = new ArrayList<ITestQuestion>();
-        for (ITestQuestion testQuestion : testQuestionList) {
+    public List<TestQuestion> readByTest(Integer testId) {
+        final List<TestQuestion> testQuestionList = (List<TestQuestion>) readAll(TestQuestion.class);
+        List<TestQuestion> result = new ArrayList<TestQuestion>();
+        for (TestQuestion testQuestion : testQuestionList) {
             if (testQuestion.getKeyTest().equals(testId)) {
                 result.add(testQuestion);
             }
@@ -33,9 +33,9 @@ public class TestQuestionVO extends VersionedObjectsBase implements IPersistentT
         return result;
     }
 
-    public ITestQuestion readByTestAndQuestion(Integer testId, Integer questionId) throws ExcepcaoPersistencia {
-        final List<ITestQuestion> testQuestionList = (List<ITestQuestion>) readAll(TestQuestion.class);
-        for (ITestQuestion testQuestion : testQuestionList) {
+    public TestQuestion readByTestAndQuestion(Integer testId, Integer questionId) throws ExcepcaoPersistencia {
+        final List<TestQuestion> testQuestionList = (List<TestQuestion>) readAll(TestQuestion.class);
+        for (TestQuestion testQuestion : testQuestionList) {
             if (testQuestion.getKeyTest().equals(testId) && testQuestion.getKeyQuestion().equals(questionId)) {
                 return testQuestion;
             }
@@ -43,10 +43,10 @@ public class TestQuestionVO extends VersionedObjectsBase implements IPersistentT
         return null;
     }
 
-    public List<ITestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
-        final List<ITestQuestion> testQuestionList = (List<ITestQuestion>) readAll(TestQuestion.class);
-        List<ITestQuestion> result = new ArrayList<ITestQuestion>();
-        for (ITestQuestion testQuestion : testQuestionList) {
+    public List<TestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
+        final List<TestQuestion> testQuestionList = (List<TestQuestion>) readAll(TestQuestion.class);
+        List<TestQuestion> result = new ArrayList<TestQuestion>();
+        for (TestQuestion testQuestion : testQuestionList) {
             if (testQuestion.getKeyQuestion().equals(questionId)) {
                 result.add(testQuestion);
             }

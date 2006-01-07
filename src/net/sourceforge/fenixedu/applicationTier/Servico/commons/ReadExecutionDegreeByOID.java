@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,7 +35,7 @@ public class ReadExecutionDegreeByOID implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject persistentObject = sp.getIPersistentObject();
-		IExecutionDegree executionDegree = (IExecutionDegree) persistentObject
+		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
 				.readByOID(ExecutionDegree.class, oid);
 		if (executionDegree != null) {
 
@@ -47,7 +47,7 @@ public class ReadExecutionDegreeByOID implements IService {
 				ListIterator iteratorCoordinator = executionDegree
 						.getCoordinatorsList().listIterator();
 				while (iteratorCoordinator.hasNext()) {
-					ICoordinator coordinator = (ICoordinator) iteratorCoordinator
+					Coordinator coordinator = (Coordinator) iteratorCoordinator
 							.next();
 
 					infoCoordinatorList.add(InfoCoordinatorWithInfoPerson

@@ -18,12 +18,12 @@ public class FinalEvaluation extends FinalEvaluation_Base {
         this.setOjbConcreteClass(FinalEvaluation.class.getName());
     }
 
-    public boolean deleteFrom(IExecutionCourse executionCourse) {
+    public boolean deleteFrom(ExecutionCourse executionCourse) {
         removeMarks();
         return remove(executionCourse);
     }
 
-    private boolean remove(IExecutionCourse executionCourse) {
+    private boolean remove(ExecutionCourse executionCourse) {
         if (this.getAssociatedExecutionCoursesCount() == 1
                 && this.getAssociatedExecutionCourses().contains(executionCourse)){
                 /*&& this.getEvaluationExecutionCoursesCount() == 1) {
@@ -46,8 +46,8 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     
     public Integer getGradesListVersion() {
     	int lastVersion = 0;
-    	for (IMark mark : getMarks()) {
-    		IFinalMark finalMark = (IFinalMark) mark;
+    	for (Mark mark : getMarks()) {
+    		FinalMark finalMark = (FinalMark) mark;
     		if(finalMark.getGradeListVersion() > lastVersion) {
     			lastVersion = finalMark.getGradeListVersion();
     		}
@@ -58,8 +58,8 @@ public class FinalEvaluation extends FinalEvaluation_Base {
     	return Integer.valueOf(++lastVersion);
     }
     
-	public IFinalMark addNewMark(IAttends attends, String markValue) {
-		IFinalMark mark =  new FinalMark();
+	public FinalMark addNewMark(Attends attends, String markValue) {
+		FinalMark mark =  new FinalMark();
 		mark.setAttend(attends);
 		mark.setEvaluation(this);
 		mark.setMark(markValue);
@@ -70,10 +70,10 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 		return EvaluationType.FINAL_TYPE;
 	}
 	
-	public List<IFinalMark> getAlreadySubmitedMarks(IExecutionCourse executionCourse){
-		List<IFinalMark> result = new ArrayList<IFinalMark>();
-		for (IMark mark : getMarks()) {
-			IFinalMark finalMark = (IFinalMark) mark;
+	public List<FinalMark> getAlreadySubmitedMarks(ExecutionCourse executionCourse){
+		List<FinalMark> result = new ArrayList<FinalMark>();
+		for (Mark mark : getMarks()) {
+			FinalMark finalMark = (FinalMark) mark;
 			if(finalMark.getAttend().getDisciplinaExecucao().equals(executionCourse) 
 					&& finalMark.getGradeListVersion() != 0 && finalMark.getSubmitedMark() != null) {
 				result.add(finalMark);
@@ -82,12 +82,12 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 		return result;
 	}
 	
-	public List<IAttends> getNotSubmitedMarkAttends(IExecutionCourse executionCourse){
-		List<IAttends> result = new ArrayList<IAttends>();
+	public List<Attends> getNotSubmitedMarkAttends(ExecutionCourse executionCourse){
+		List<Attends> result = new ArrayList<Attends>();
 		
-		for (IAttends attends : executionCourse.getAttends()) {
+		for (Attends attends : executionCourse.getAttends()) {
 			if(attends.getEnrolment() != null && attends.getAluno().getDegreeType().equals(DegreeType.DEGREE)) {
-				IFinalMark mark = getFinalMark(attends);
+				FinalMark mark = getFinalMark(attends);
 				if(mark == null || (mark.getGradeListVersion() == 0 && mark.getSubmitedMark() == null)) {
 					result.add(attends);
 				}
@@ -96,10 +96,10 @@ public class FinalEvaluation extends FinalEvaluation_Base {
 		return result;
 	}
 
-	private IFinalMark getFinalMark(IAttends attends) {
-		for (IMark mark : attends.getAssociatedMarks()) {
+	private FinalMark getFinalMark(Attends attends) {
+		for (Mark mark : attends.getAssociatedMarks()) {
 			if(mark.getEvaluation().equals(this)) {
-				return (IFinalMark) mark;
+				return (FinalMark) mark;
 			}
 		}
 		return null;

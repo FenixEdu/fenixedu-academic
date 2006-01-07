@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.degree.enrollment;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
  */
 
 public class CurricularCourse2Enroll implements Serializable {
-    private ICurricularCourse curricularCourse;
+    private CurricularCourse curricularCourse;
 
     private CurricularCourseEnrollmentType enrollmentType;
 
@@ -28,7 +28,7 @@ public class CurricularCourse2Enroll implements Serializable {
     public CurricularCourse2Enroll() {
     }
 
-    public CurricularCourse2Enroll(ICurricularCourse curricularCourse,
+    public CurricularCourse2Enroll(CurricularCourse curricularCourse,
             CurricularCourseEnrollmentType enrollmentRuleType, Boolean optionalCurricularCourse) {
         this.curricularCourse = curricularCourse;
         this.enrollmentType = enrollmentRuleType;
@@ -38,7 +38,7 @@ public class CurricularCourse2Enroll implements Serializable {
     /**
      * @return Returns the curricularCourse.
      */
-    public ICurricularCourse getCurricularCourse() {
+    public CurricularCourse getCurricularCourse() {
         return curricularCourse;
     }
 
@@ -54,7 +54,7 @@ public class CurricularCourse2Enroll implements Serializable {
      * @param curricularCourse
      *            The curricularCourse to set.
      */
-    public void setCurricularCourse(ICurricularCourse curricularCourse) {
+    public void setCurricularCourse(CurricularCourse curricularCourse) {
         this.curricularCourse = curricularCourse;
     }
 

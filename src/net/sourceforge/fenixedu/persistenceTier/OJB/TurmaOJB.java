@@ -14,10 +14,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
@@ -33,9 +33,9 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
     public List readByExecutionPeriodAndCurricularYearAndExecutionDegree(Integer executionPeriodOID,
             Integer curricularYear, Integer executionDegreeOID) throws ExcepcaoPersistencia {
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
         Criteria crit = new Criteria();
         crit.addEqualTo("executionPeriod.executionYear.year", executionPeriod.getExecutionYear()
@@ -52,12 +52,12 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
 
     }
 
-    public ISchoolClass readByNameAndExecutionDegreeAndExecutionPeriod(String className,
+    public SchoolClass readByNameAndExecutionDegreeAndExecutionPeriod(String className,
             Integer executionDegreeOID, Integer executionPeriodOID) throws ExcepcaoPersistencia {
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
 
         Criteria criteria = new Criteria();
@@ -72,13 +72,13 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
         criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.sigla", executionDegree
                 .getDegreeCurricularPlan().getDegree().getSigla());
 
-        return (ISchoolClass) queryObject(SchoolClass.class, criteria);
+        return (SchoolClass) queryObject(SchoolClass.class, criteria);
 
     }
 
     public List readByExecutionPeriod(Integer executionPeriodOID) throws ExcepcaoPersistencia {
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
 
         Criteria crit = new Criteria();
@@ -91,7 +91,7 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
 
     public List readByExecutionDegree(Integer executionDegreeOID) throws ExcepcaoPersistencia {
 
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
 
         Criteria crit = new Criteria();
@@ -107,8 +107,8 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
 
     public List readByExecutionDegreeAndExecutionPeriod(Integer execucaoOID, Integer executionPeriodOID)
             throws ExcepcaoPersistencia {
-        IExecutionDegree execucao = (IExecutionDegree) readByOID(ExecutionDegree.class, execucaoOID);
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionDegree execucao = (ExecutionDegree) readByOID(ExecutionDegree.class, execucaoOID);
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
 
         Criteria criteria = new Criteria();
@@ -126,10 +126,10 @@ public class TurmaOJB extends PersistentObjectOJB implements ITurmaPersistente {
 
     public List readByExecutionDegreeAndDegreeAndExecutionPeriod(Integer execucaoOID, Integer degreeOID,
             Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        IExecutionDegree execucao = (IExecutionDegree) readByOID(ExecutionDegree.class, execucaoOID);
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionDegree execucao = (ExecutionDegree) readByOID(ExecutionDegree.class, execucaoOID);
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        IDegree degree = (IDegree) readByOID(Degree.class, degreeOID);
+        Degree degree = (Degree) readByOID(Degree.class, degreeOID);
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionDegree.idInternal", execucao.getIdInternal());
         criteria.addEqualTo("executionDegree.degreeCurricularPlan.degree.idInternal", degree

@@ -28,16 +28,16 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -82,7 +82,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     private Map<Integer, String> associatedExecutionCoursesNames = new HashMap<Integer, String>();
     private Map<Integer, List<SelectItem>> curricularCourseScopesSelectItems = new HashMap<Integer, List<SelectItem>>();
-    private Map<Integer, List<IWrittenEvaluation>> writtenEvaluations = new HashMap<Integer, List<IWrittenEvaluation>>();;
+    private Map<Integer, List<WrittenEvaluation>> writtenEvaluations = new HashMap<Integer, List<WrittenEvaluation>>();;
     private Map<Integer, Integer> writtenEvaluationsMissingPlaces = new HashMap<Integer, Integer>();
     private Map<Integer, String> writtenEvaluationsRooms = new HashMap<Integer, String>();
     private Map<Integer, Integer> executionCoursesEnroledStudents = new HashMap<Integer, Integer>();
@@ -130,17 +130,17 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.executionPeriodIdHidden = executionPeriodIdHidden;
     }
 
-    public IExecutionPeriod getExecutionPeriod() {
+    public ExecutionPeriod getExecutionPeriod() {
         final Object[] args = { ExecutionPeriod.class, this.getExecutionPeriodID() };
         try {
-            return (IExecutionPeriod) ServiceUtils.executeService(null, "ReadDomainObject", args);
+            return (ExecutionPeriod) ServiceUtils.executeService(null, "ReadDomainObject", args);
         } catch (Exception e) {
             return null;
         }
     }
 
     public String getExecutionPeriodLabel() {
-        IExecutionPeriod executionPeriodSelected = getExecutionPeriod();
+        ExecutionPeriod executionPeriodSelected = getExecutionPeriod();
 
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(executionPeriodSelected.getName());
@@ -208,17 +208,17 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.executionDegreeIdHidden = executionDegreeIdHidden;
     }
 
-    public IExecutionDegree getExecutionDegree() {
+    public ExecutionDegree getExecutionDegree() {
         final Object[] args = { ExecutionDegree.class, this.getExecutionDegreeID() };
         try {
-            return (IExecutionDegree) ServiceUtils.executeService(null, "ReadDomainObject", args);
+            return (ExecutionDegree) ServiceUtils.executeService(null, "ReadDomainObject", args);
         } catch (Exception e) {
             return null;
         }
     }
 
     public String getExecutionDegreeLabel() {
-        IExecutionDegree executionDegreeSelected = getExecutionDegree();
+        ExecutionDegree executionDegreeSelected = getExecutionDegree();
 
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append(enumerations.getMessage(executionDegreeSelected.getDegreeCurricularPlan()
@@ -513,7 +513,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // BEGIN Build of Calendar
     public Date getWrittenEvaluationsCalendarBegin() {
         Date beginDate = getExecutionPeriod().getBeginDate();
-        final IExecutionDegree executionDegree = getExecutionDegree();
+        final ExecutionDegree executionDegree = getExecutionDegree();
         if (executionDegree != null) {
             if (getExecutionPeriod().getSemester().intValue() == 1
                     && executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
@@ -528,7 +528,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public Date getWrittenEvaluationsCalendarEnd() {
         Date endDate = getExecutionPeriod().getEndDate();
-        final IExecutionDegree executionDegree = getExecutionDegree();
+        final ExecutionDegree executionDegree = getExecutionDegree();
         if (executionDegree != null) {
             if (getExecutionPeriod().getSemester().intValue() == 1
                     && executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
@@ -544,10 +544,10 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public List<CalendarLink> getWrittenTestsCalendarLink() {
         List<CalendarLink> result = new ArrayList<CalendarLink>();
 
-        for (final IExecutionCourse executionCourse : getExecutionCourses()) {
-            for (final IEvaluation evaluation : executionCourse.getAssociatedEvaluations()) {
-                if (evaluation instanceof IWrittenEvaluation) {
-                    final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) evaluation;
+        for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+            for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+                if (evaluation instanceof WrittenEvaluation) {
+                    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
 
                     final CalendarLink calendarLink = new CalendarLink();
                     calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
@@ -564,8 +564,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return result;
     }
 
-    private Map<String, String> constructLinkParameters(final IExecutionCourse executionCourse,
-            final IWrittenEvaluation writtenEvaluation) {
+    private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,
+            final WrittenEvaluation writtenEvaluation) {
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
         linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
@@ -578,7 +578,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private String constructEvaluationCalendarPresentationString(
-            final IWrittenEvaluation writtenEvaluation, final IExecutionCourse executionCourse) {
+            final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (writtenEvaluation instanceof WrittenTest) {
             stringBuilder.append(messages.getMessage("label.evaluation.shortname.test"));
@@ -596,11 +596,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     // END Build of Calendar
 
     // BEGIN Build of Lists
-    private List<IExecutionCourse> getExecutionCourses() {
+    private List<ExecutionCourse> getExecutionCourses() {
         try {
             final Object args[] = { this.getExecutionDegree().getDegreeCurricularPlan().getIdInternal(),
                     this.getExecutionPeriodID(), this.getCurricularYearID() };
-            List<IExecutionCourse> executionCourses = new ArrayList(
+            List<ExecutionCourse> executionCourses = new ArrayList(
                     (List) ServiceManagerServiceFactory
                             .executeService(
                                     getUserView(),
@@ -611,18 +611,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         } catch (Exception e) {
 
         }
-        return new ArrayList<IExecutionCourse>();
+        return new ArrayList<ExecutionCourse>();
     }
 
-    public List<IExecutionCourse> getExecutionCoursesWithWrittenEvaluations() {
-        List<IExecutionCourse> executionCoursesWithWrittenEvaluations = new ArrayList<IExecutionCourse>();
+    public List<ExecutionCourse> getExecutionCoursesWithWrittenEvaluations() {
+        List<ExecutionCourse> executionCoursesWithWrittenEvaluations = new ArrayList<ExecutionCourse>();
 
         Collections.sort(getExecutionCourses(), new BeanComparator("sigla"));
         writtenEvaluations.clear();
         writtenEvaluationsMissingPlaces.clear();
         writtenEvaluationsRooms.clear();
         executionCoursesEnroledStudents.clear();
-        for (final IExecutionCourse executionCourse : getExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getExecutionCourses()) {
             final List associatedWrittenEvaluations = executionCourse.getAssociatedWrittenTests();
             associatedWrittenEvaluations.addAll(executionCourse.getAssociatedExams());
             if (!associatedWrittenEvaluations.isEmpty()) {
@@ -636,18 +636,18 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     private int calculateEnroledStudents(
-            final List<IWrittenEvaluation> associatedWrittenEvaluations,
-            final IExecutionPeriod executionPeriod) {
+            final List<WrittenEvaluation> associatedWrittenEvaluations,
+            final ExecutionPeriod executionPeriod) {
 
         final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
         int numberOfEnroledStudents = 0;
-        for (final IWrittenEvaluation evaluation : associatedWrittenEvaluations) {
-            for (final ICurricularCourseScope curricularCourseScope : evaluation
+        for (final WrittenEvaluation evaluation : associatedWrittenEvaluations) {
+            for (final CurricularCourseScope curricularCourseScope : evaluation
                     .getAssociatedCurricularCourseScope()) {
                 if (!curricularCourseIDs.contains(curricularCourseScope.getCurricularCourse()
                         .getIdInternal())) {
                     curricularCourseIDs.add(curricularCourseScope.getCurricularCourse().getIdInternal());
-                    for (final IEnrolment enrolment : curricularCourseScope.getCurricularCourse()
+                    for (final Enrolment enrolment : curricularCourseScope.getCurricularCourse()
                             .getEnrolments()) {
                         if (enrolment.getExecutionPeriod() == executionPeriod) {
                             numberOfEnroledStudents++;
@@ -659,13 +659,13 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return numberOfEnroledStudents;
     }
 
-    private void processWrittenTestAdditionalValues(final IExecutionCourse executionCourse,
-            final List<IWrittenEvaluation> associatedWrittenEvaluations) {
+    private void processWrittenTestAdditionalValues(final ExecutionCourse executionCourse,
+            final List<WrittenEvaluation> associatedWrittenEvaluations) {
         
-        for (final IWrittenEvaluation writtenTest : associatedWrittenEvaluations) {
+        for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
             int totalCapacity = 0;
             final StringBuffer buffer = new StringBuffer(20);
-            for (final IRoom room : writtenTest.getAssociatedRooms()) {
+            for (final Room room : writtenTest.getAssociatedRooms()) {
                 buffer.append(room.getNome()).append("; ");
                 totalCapacity += room.getCapacidadeExame();
             }
@@ -683,9 +683,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         }
     }
 
-    public List<IExecutionCourse> getExecutionCoursesWithoutWrittenEvaluations() {
-        List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
-        for (final IExecutionCourse executionCourse : getExecutionCourses()) {
+    public List<ExecutionCourse> getExecutionCoursesWithoutWrittenEvaluations() {
+        List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+        for (final ExecutionCourse executionCourse : getExecutionCourses()) {
             if (executionCourse.getAssociatedWrittenTests().isEmpty()
                     && executionCourse.getAssociatedExams().isEmpty()) {
                 result.add(executionCourse);
@@ -696,7 +696,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public List<SelectItem> getExecutionCoursesLabels() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final IExecutionCourse executionCourse : getExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : getExecutionCourses()) {
             result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -765,7 +765,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
             List<Integer> associatedRooms = new ArrayList<Integer>();
 
-            for (IRoom room : ((IWrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (Room room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 associatedRooms.add(room.getIdInternal());
             }
 
@@ -808,7 +808,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 .getUserView(), "ReadAvailableRoomsForExam", args);
 
         if (this.getEvaluationID() != null) {
-            for (IRoom room : ((IWrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (Room room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
                 if (!availableInfoRoom.contains(associatedRoom)) {
                     availableInfoRoom.add(associatedRoom);
@@ -865,7 +865,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
                 final Object[] args = { Room.class, chosenRoomID };
-                IRoom room = (IRoom) ServiceUtils.executeService(null, "ReadDomainObject", args);
+                Room room = (Room) ServiceUtils.executeService(null, "ReadDomainObject", args);
 
                 result.append(room.getNome());
                 result.append("; ");
@@ -1005,14 +1005,14 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     "associatedExecutionCourses");
         } else if (this.getEvaluationID() != null) {
             List<Integer> result = new ArrayList<Integer>();
-            for (IExecutionCourse executionCourse : this.getEvaluation().getAssociatedExecutionCourses()) {
+            for (ExecutionCourse executionCourse : this.getEvaluation().getAssociatedExecutionCourses()) {
                 result.add(executionCourse.getIdInternal());
 
                 List<Integer> selectedScopes = new ArrayList<Integer>();
-                for (ICurricularCourse curricularCourse : executionCourse
+                for (CurricularCourse curricularCourse : executionCourse
                         .getAssociatedCurricularCourses()) {
-                    for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-                        if (((IWrittenEvaluation) this.getEvaluation())
+                    for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                        if (((WrittenEvaluation) this.getEvaluation())
                                 .getAssociatedCurricularCourseScope().contains(curricularCourseScope)) {
                             selectedScopes.add(curricularCourseScope.getIdInternal());
                         }
@@ -1039,7 +1039,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private void fillInAuxiliarMaps() throws FenixFilterException, FenixServiceException {
         for (Integer executionCourseID : this.associatedExecutionCourses) {
             final Object[] args = { ExecutionCourse.class, executionCourseID };
-            IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null,
+            ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
                     "ReadDomainObject", args);
             this.associatedExecutionCoursesNames.put(executionCourseID, executionCourse.getNome());
 
@@ -1052,8 +1052,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                     auxiliarArray.add(curricularCourseScopeToAssociate);
                 }
             }
-            for (ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-                for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
                     StringBuffer label = new StringBuffer();
                     label.append(curricularCourse.getDegreeCurricularPlan().getName());
                     label.append(" ");
@@ -1117,12 +1117,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             }
 
             final Object[] args = { ExecutionCourse.class, integer };
-            IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(null,
+            ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(null,
                     "ReadDomainObject", args);
 
             List<Integer> auxiliarArray = new ArrayList<Integer>();
-            for (ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-                for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
                     auxiliarArray.add(curricularCourseScope.getIdInternal());
                 }
             }
@@ -1162,7 +1162,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         this.associatedExecutionCoursesNames = associatedExecutionCoursesNames;
     }
 
-    public Map<Integer, List<IWrittenEvaluation>> getWrittenEvaluations() {
+    public Map<Integer, List<WrittenEvaluation>> getWrittenEvaluations() {
         return writtenEvaluations;
     }
 
@@ -1269,11 +1269,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         setSelectedExecutionCourseID((Integer) valueChangeEvent.getNewValue());
     }
 
-    private List<IExecutionCourse> readExecutionCourses() {
-        IExecutionDegree executionDegree;
+    private List<ExecutionCourse> readExecutionCourses() {
+        ExecutionDegree executionDegree;
         final Object[] argsRead = { ExecutionDegree.class, this.getSelectedExecutionDegreeID() };
         try {
-            executionDegree = (IExecutionDegree) ServiceUtils.executeService(null, "ReadDomainObject",
+            executionDegree = (ExecutionDegree) ServiceUtils.executeService(null, "ReadDomainObject",
                     argsRead);
         } catch (Exception e) {
             return null;
@@ -1282,7 +1282,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         try {
             final Object args[] = { executionDegree.getDegreeCurricularPlan().getIdInternal(),
                     this.getExecutionPeriodID(), this.getSelectedCurricularYearID() };
-            List<IExecutionCourse> executionCourses = new ArrayList(
+            List<ExecutionCourse> executionCourses = new ArrayList(
                     (List) ServiceManagerServiceFactory
                             .executeService(
                                     getUserView(),
@@ -1292,12 +1292,12 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             return executionCourses;
         } catch (Exception e) {
         }
-        return new ArrayList<IExecutionCourse>();
+        return new ArrayList<ExecutionCourse>();
     }
 
     public List<SelectItem> getExecutionCoursesItems() {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        for (final IExecutionCourse executionCourse : readExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : readExecutionCourses()) {
             result.add(new SelectItem(executionCourse.getIdInternal(), executionCourse.getNome()));
         }
         Collections.sort(result, new BeanComparator("label"));

@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlanMembersGroup;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IPersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -56,13 +56,13 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
 
-        IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        IDegreeCurricularPlanMembersGroup curricularPlanMembersGroup = degreeCurricularPlan
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = degreeCurricularPlan
                 .getCurricularPlanMembersGroup();
 
         if (curricularPlanMembersGroup == null) {
             Object[] argsCreateGroup = { degreeCurricularPlan };
-            curricularPlanMembersGroup = (IDegreeCurricularPlanMembersGroup) ServiceUtils
+            curricularPlanMembersGroup = (DegreeCurricularPlanMembersGroup) ServiceUtils
                     .executeService(getUserView(), "CreateCurricularPlanMembersGroup", argsCreateGroup);
         }
 
@@ -82,19 +82,19 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         }
     }
 
-    public IDegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException,
+    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException,
             FenixFilterException {
         Object[] args = { DegreeCurricularPlan.class, getSelectedCurricularPlanID() };
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) ServiceUtils
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ServiceUtils
                 .executeService(getUserView(), "ReadDomainObject", args);
         return degreeCurricularPlan;
     }
 
-    private IDepartment getDepartment() throws FenixServiceException, FenixFilterException {
+    private Department getDepartment() throws FenixServiceException, FenixFilterException {
 
         if (getSelectedDepartmentID() != null) {
             Object[] args = { Department.class, getSelectedDepartmentID() };
-            IDepartment department = (IDepartment) ServiceUtils.executeService(getUserView(),
+            Department department = (Department) ServiceUtils.executeService(getUserView(),
                     "ReadDomainObject", args);
             return department;
         }
@@ -104,12 +104,12 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     public List<SelectItem> getDepartments() throws FenixFilterException, FenixServiceException {
 
         Object[] args = { Department.class };
-        Collection<IDepartment> departments = (Collection<IDepartment>) ServiceUtils.executeService(
+        Collection<Department> departments = (Collection<Department>) ServiceUtils.executeService(
                 getUserView(), "ReadAllDomainObjects", args);
 
         List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(0, scouncilBundle.getString("choose")));
-        for (IDepartment department : departments) {
+        for (Department department : departments) {
             result.add(new SelectItem(department.getIdInternal(), department.getRealName()));
         }
 
@@ -120,11 +120,11 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        IDegreeCurricularPlanMembersGroup curricularPlanMembersGroup = getDegreeCurricularPlan()
+        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = getDegreeCurricularPlan()
                 .getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
-            for (IUserGroup member : curricularPlanMembersGroup.getParts()) {
-                IPerson person = ((IPersonGroup) member).getPerson();
+            for (UserGroup member : curricularPlanMembersGroup.getParts()) {
+                Person person = ((PersonGroup) member).getPerson();
                 result.add(new SelectItem(member.getIdInternal(), person.getNome() + " ("
                         + person.getUsername() + ")"));
             }
@@ -136,12 +136,12 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     public List<SelectItem> getDepartmentEmployees() throws FenixFilterException, FenixServiceException {
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        IDepartment department = getDepartment();
+        Department department = getDepartment();
         if (department != null) {
-            List<IEmployee> employees = getDepartment().getCurrentActiveWorkingEmployees();
+            List<Employee> employees = getDepartment().getCurrentActiveWorkingEmployees();
 
-            for (IEmployee departmentEmployee : employees) {
-                IPerson person = departmentEmployee.getPerson();
+            for (Employee departmentEmployee : employees) {
+                Person person = departmentEmployee.getPerson();
                 result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
                         + person.getUsername() + ")"));
             }

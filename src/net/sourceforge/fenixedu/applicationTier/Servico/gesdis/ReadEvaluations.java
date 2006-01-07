@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,12 +29,12 @@ public class ReadEvaluations implements IService {
      */
     public List run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
             ISuportePersistente sp;
-            IExecutionCourse executionCourse;
+            ExecutionCourse executionCourse;
 
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-            executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseCode);
             if (executionCourse == null) {
                 throw new NonExistingServiceException();
@@ -45,7 +45,7 @@ public class ReadEvaluations implements IService {
             Iterator iterator = evaluations.iterator();
             while (iterator.hasNext()) {
 
-                infoEvaluations.add(InfoEvaluation.newInfoFromDomain((IEvaluation) iterator.next()));
+                infoEvaluations.add(InfoEvaluation.newInfoFromDomain((Evaluation) iterator.next()));
             }
 
             return infoEvaluations;

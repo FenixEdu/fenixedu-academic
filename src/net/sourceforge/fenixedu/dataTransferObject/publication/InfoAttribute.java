@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.publication.IAttribute;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.Attribute;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 
 public class InfoAttribute extends InfoObject {
 
@@ -17,19 +17,19 @@ public class InfoAttribute extends InfoObject {
         super();
     }
     
-    public void copyFromDomain(IAttribute att) {
+    public void copyFromDomain(Attribute att) {
         super.copyFromDomain(att);
         if (att != null) {
 	        attributeType = att.getAttributeType();
-	        publications = new ArrayList<IPublicationType>();
+	        publications = new ArrayList<PublicationType>();
             
-            for (IPublicationType publicationType : (List<IPublicationType>)att.getPublicationTypes()) {
+            for (PublicationType publicationType : (List<PublicationType>)att.getPublicationTypes()) {
                 publications.add(InfoPublicationType.newInfoFromDomain(publicationType));
             }
         }
     }
     
-    public static InfoAttribute newInfoFromDomain(IAttribute att) {
+    public static InfoAttribute newInfoFromDomain(Attribute att) {
         InfoAttribute iatt = new InfoAttribute();
         if (att != null) {
             iatt.copyFromDomain(att);

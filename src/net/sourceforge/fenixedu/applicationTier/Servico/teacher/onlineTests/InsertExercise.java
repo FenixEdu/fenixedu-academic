@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.tests.Invalid
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -48,11 +48,11 @@ public class InsertExercise implements IService {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
-        IMetadata metadata = null;
+        Metadata metadata = null;
         try {
             metadata = DomainFactory.makeMetadata(executionCourse, metadataFile, replacedPath);
         } catch (DomainException e) {
@@ -72,7 +72,7 @@ public class InsertExercise implements IService {
                 ParseQuestion parseQuestion = new ParseQuestion();
 
                 parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
-                IQuestion question = DomainFactory.makeQuestion();
+                Question question = DomainFactory.makeQuestion();
                 question.setMetadata(metadata);
                 question.setXmlFile(xmlFile);
                 question.setXmlFileName(xmlFileName);

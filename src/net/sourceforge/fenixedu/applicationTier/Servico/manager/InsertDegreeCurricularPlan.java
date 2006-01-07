@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
@@ -30,9 +30,9 @@ public class InsertDegreeCurricularPlan implements IService {
                 .getDefaultPersistenceSupport();
 
         // assert unique pair name/degree
-        final List<IDegreeCurricularPlan> dcps = (List<IDegreeCurricularPlan>) persistentSupport
+        final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
-        for (IDegreeCurricularPlan dcp : dcps) {
+        for (DegreeCurricularPlan dcp : dcps) {
             if (dcp.getDegree().getIdInternal().equals(infoDcp.getInfoDegree().getIdInternal())
                     && dcp.getName().equalsIgnoreCase(infoDcp.getName())) {
                 throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
@@ -40,7 +40,7 @@ public class InsertDegreeCurricularPlan implements IService {
         }
 
         final ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-        final IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, infoDcp
+        final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, infoDcp
                 .getInfoDegree().getIdInternal());
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");

@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.delegate;
 import java.util.HashMap;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoDelegate;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,8 +29,8 @@ public class ReadDelegate implements IService {
         final IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
         final String user = (String) hashMap.get("user");
-        final IStudent student = persistentStudent.readByUsername(user);
-        final IDelegate delegate = persistentDelegate.readByStudent(student);
+        final Student student = persistentStudent.readByUsername(user);
+        final Delegate delegate = persistentDelegate.readByStudent(student);
 
         return InfoDelegate.newInfoFromDomain(delegate);
     }

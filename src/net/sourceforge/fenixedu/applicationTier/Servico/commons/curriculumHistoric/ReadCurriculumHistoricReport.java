@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.commons.curriculumHistoric.InfoCurriculumHistoricReport;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -53,19 +53,19 @@ public class ReadCurriculumHistoricReport implements IService {
         // read ExecutionYear
         IPersistentExecutionYear persistentExecutionYear = suportePersistente
                 .getIPersistentExecutionYear();
-        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                 ExecutionYear.class, executionYearID, false);
 
         // read ExecutionPeriod
         IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
                 .getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
+        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                 semester, executionYear.getYear());
 
         // read CurricularCourse
         IPersistentCurricularCourse persistentCurricularCourse = suportePersistente
                 .getIPersistentCurricularCourse();
-        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseID);
         // read all enrollments
         IPersistentEnrollment persistentEnrollment = suportePersistente.getIPersistentEnrolment();
@@ -97,7 +97,7 @@ public class ReadCurriculumHistoricReport implements IService {
         List notAnulledEnrollments = (List) CollectionUtils.select(enrollments, new Predicate() {
 
             public boolean evaluate(Object obj) {
-                IEnrolment enrollment = (IEnrolment) obj;
+                Enrolment enrollment = (Enrolment) obj;
                 if (!enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED)) {
                     return true;
                 }
@@ -109,7 +109,7 @@ public class ReadCurriculumHistoricReport implements IService {
                 new Predicate() {
 
                     public boolean evaluate(Object obj) {
-                        IEnrolment enrollment = (IEnrolment) obj;
+                        Enrolment enrollment = (Enrolment) obj;
                         if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
                                 || enrollment.getEnrollmentState().equals(EnrollmentState.NOT_APROVED)) {
                             return true;
@@ -121,7 +121,7 @@ public class ReadCurriculumHistoricReport implements IService {
         List aprovedEnrollments = (List) CollectionUtils.select(evaluatedEnrollments, new Predicate() {
 
             public boolean evaluate(Object obj) {
-                IEnrolment enrollment = (IEnrolment) obj;
+                Enrolment enrollment = (Enrolment) obj;
                 if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)) {
                     return true;
                 }
@@ -138,7 +138,7 @@ public class ReadCurriculumHistoricReport implements IService {
         Iterator iterator = notAnulledEnrollments.iterator();
         List infoEnrollments = new ArrayList();
         while (iterator.hasNext()) {
-            IEnrolment enrolmentTemp = (IEnrolment) iterator.next();
+            Enrolment enrolmentTemp = (Enrolment) iterator.next();
 
             InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(enrolmentTemp);
 
@@ -169,7 +169,7 @@ public class ReadCurriculumHistoricReport implements IService {
 
         Iterator iterator = evaluations.iterator();
         while (iterator.hasNext()) {
-            IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+            EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iterator.next();
             if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
                 normalEnrolmentEvaluations.add(enrolmentEvaluation);
 
@@ -202,7 +202,7 @@ public class ReadCurriculumHistoricReport implements IService {
      */
     private InfoEnrolmentEvaluation getLatestInfoEnrolmentEvaluation(List enrolmentEvaluations) {
         return (enrolmentEvaluations.isEmpty()) ? null : InfoEnrolmentEvaluation
-                .newInfoFromDomain((IEnrolmentEvaluation) Collections.max(enrolmentEvaluations));
+                .newInfoFromDomain((EnrolmentEvaluation) Collections.max(enrolmentEvaluations));
     }
 
 }

@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -22,9 +22,9 @@ public class GroupSiteComponentService implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSite persistentSite = sp.getIPersistentSite();
-        ISite site = null;
+        Site site = null;
         if (infoSiteCode != null) {
-            site = (ISite) persistentSite.readByOID(Site.class, infoSiteCode);
+            site = (Site) persistentSite.readByOID(Site.class, infoSiteCode);
             if (site == null) {
                 throw new NonExistingServiceException();
             }

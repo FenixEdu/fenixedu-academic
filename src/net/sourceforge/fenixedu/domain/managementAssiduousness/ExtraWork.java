@@ -8,5 +8,5 @@ package net.sourceforge.fenixedu.domain.managementAssiduousness;
  * @author Tânia Pousão
  *
  */
-public class ExtraWork extends ExtraWork_Base implements IExtraWork {
+public class ExtraWork extends ExtraWork_Base {
 }

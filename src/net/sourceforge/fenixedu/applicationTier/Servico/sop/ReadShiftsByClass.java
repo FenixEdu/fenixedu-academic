@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,20 +36,20 @@ public class ReadShiftsByClass implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
+        SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
-        List<IShift> shifts = schoolClass.getAssociatedShifts();
+        List<Shift> shifts = schoolClass.getAssociatedShifts();
 
         return CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {
-                IShift shift = (IShift) arg0;
+                Shift shift = (Shift) arg0;
                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                 infoShift.setInfoLessons((List) CollectionUtils.collect(shift.getAssociatedLessons(),
                         new Transformer() {
                             public Object transform(Object arg0) {
-                                InfoLesson infoLesson = InfoLessonWithInfoRoom.newInfoFromDomain((ILesson) arg0);
-                                IShift shift = ((ILesson) arg0).getShift();
+                                InfoLesson infoLesson = InfoLessonWithInfoRoom.newInfoFromDomain((Lesson) arg0);
+                                Shift shift = ((Lesson) arg0).getShift();
                                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                                 infoLesson.setInfoShift(infoShift);
 

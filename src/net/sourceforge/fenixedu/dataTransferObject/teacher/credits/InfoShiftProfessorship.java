@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.credits;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 
 /**
  * @author jpvl
@@ -61,14 +61,14 @@ public class InfoShiftProfessorship extends InfoObject {
         percentage = double1;
     }
 
-    public void copyFromDomain(IShiftProfessorship shifProfessorship) {
+    public void copyFromDomain(ShiftProfessorship shifProfessorship) {
         super.copyFromDomain(shifProfessorship);
         if (shifProfessorship != null) {
             setPercentage(shifProfessorship.getPercentage());
         }
     }
     
-    public static InfoShiftProfessorship newInfoFromDomain(IShiftProfessorship shifProfessorship) {
+    public static InfoShiftProfessorship newInfoFromDomain(ShiftProfessorship shifProfessorship) {
         InfoShiftProfessorship infoShiftProfessorship = null;
         if (shifProfessorship != null) {
             infoShiftProfessorship = new InfoShiftProfessorship();

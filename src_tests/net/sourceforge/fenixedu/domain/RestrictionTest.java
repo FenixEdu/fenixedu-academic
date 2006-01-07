@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByNumberOfCurricularCourses;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionPeriodToApply;
+import net.sourceforge.fenixedu.domain.precedences.Precedence;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfCurricularCourses;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
@@ -21,21 +21,21 @@ import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
 public class RestrictionTest extends DomainTestBase {
 
-	private IRestrictionByCurricularCourse newRestrictionDoneCurricularCourse;
-	private IRestrictionByCurricularCourse newRestrictionDoneOrHasBeenEnroledInCurricularCourse;
-	private IRestrictionByCurricularCourse newRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse;
-	private IRestrictionByCurricularCourse newRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse;
-	private IRestrictionByCurricularCourse newRestrictionNotDoneCurricularCourse;
-	private IRestrictionByCurricularCourse newRestrictionNotEnroledCurricularCourse;
-	private IRestrictionByNumberOfCurricularCourses newRestrictionByNumberOfDoneCurricularCourses;
-	private IRestrictionPeriodToApply newRestrictionPeriodToApply;
+	private RestrictionByCurricularCourse newRestrictionDoneCurricularCourse;
+	private RestrictionByCurricularCourse newRestrictionDoneOrHasBeenEnroledInCurricularCourse;
+	private RestrictionByCurricularCourse newRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse;
+	private RestrictionByCurricularCourse newRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse;
+	private RestrictionByCurricularCourse newRestrictionNotDoneCurricularCourse;
+	private RestrictionByCurricularCourse newRestrictionNotEnroledCurricularCourse;
+	private RestrictionByNumberOfCurricularCourses newRestrictionByNumberOfDoneCurricularCourses;
+	private RestrictionPeriodToApply newRestrictionPeriodToApply;
 	
-	private IPrecedence newPrecedence;
-	private ICurricularCourse newPrecedentCurricularCourse;
+	private Precedence newPrecedence;
+	private CurricularCourse newPrecedentCurricularCourse;
 	private Integer newNumber;
 		
-	private IRestriction restriction;
-	private IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse restrictionByCurricularCourse;
+	private Restriction restriction;
+	private RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse restrictionByCurricularCourse;
 	
 	private void setUpCreate() {
 		newPrecedence = new Precedence();
@@ -49,9 +49,9 @@ public class RestrictionTest extends DomainTestBase {
 		restriction = new RestrictionByNumberOfDoneCurricularCourses();
 		restrictionByCurricularCourse = new RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
 		
-		IPrecedence precedence = new Precedence();
+		Precedence precedence = new Precedence();
 		
-		ICurricularCourse curricularCourse = new CurricularCourse();
+		CurricularCourse curricularCourse = new CurricularCourse();
 		
 		restriction.setPrecedence(precedence);
 		restrictionByCurricularCourse.setPrecedence(precedence);
@@ -104,17 +104,17 @@ public class RestrictionTest extends DomainTestBase {
 	}
 	
 	
-	private void assertRestrictionPeriodToApplyCreationCorrect(IRestrictionPeriodToApply restriction, IPrecedence precedence, Integer number, String message) {
+	private void assertRestrictionPeriodToApplyCreationCorrect(RestrictionPeriodToApply restriction, Precedence precedence, Integer number, String message) {
 		assertTrue(message, restriction.getPrecedence().equals(precedence));
 		assertTrue(message, restriction.getPeriodToApplyRestriction().equals(PeriodToApplyRestriction.getEnum(number.intValue())));		
 	}
 
-	private void assertRestrictionByNumberOfCurricularCoursesCreationCorrect (IRestrictionByNumberOfCurricularCourses restriction, IPrecedence precedence, Integer number, String message) {
+	private void assertRestrictionByNumberOfCurricularCoursesCreationCorrect (RestrictionByNumberOfCurricularCourses restriction, Precedence precedence, Integer number, String message) {
 		assertTrue(message, restriction.getPrecedence().equals(precedence));
 		assertTrue(message, restriction.getNumberOfCurricularCourses().equals(number));
 	}
 
-	private void assertRestrictionByCurricularCourseCreationCorrect(IRestrictionByCurricularCourse restriction, IPrecedence precedence, ICurricularCourse curricularCourse, String message) {
+	private void assertRestrictionByCurricularCourseCreationCorrect(RestrictionByCurricularCourse restriction, Precedence precedence, CurricularCourse curricularCourse, String message) {
 		assertTrue(message, restriction.getPrecedence().equals(precedence));
 		assertTrue(message, restriction.getPrecedentCurricularCourse().equals(curricularCourse));
 	}

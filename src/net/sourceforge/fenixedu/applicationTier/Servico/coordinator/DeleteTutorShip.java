@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
@@ -42,7 +42,7 @@ public class DeleteTutorShip implements IService {
             ListIterator iterator = tutorIds2Delete.listIterator();
             while (iterator.hasNext()) {
                 Integer tutorId = (Integer) iterator.next();
-                ITutor tutor = (ITutor) persistentTutor.readByOID(Tutor.class, tutorId);
+                Tutor tutor = (Tutor) persistentTutor.readByOID(Tutor.class, tutorId);
                 if (tutor != null) {
                     persistentTutor.deleteByOID(Tutor.class, tutorId);
                 }

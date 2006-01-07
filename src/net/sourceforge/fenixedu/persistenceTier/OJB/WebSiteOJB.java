@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWebSite;
+import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
@@ -24,7 +24,7 @@ public class WebSiteOJB extends PersistentObjectOJB implements IPersistentWebSit
         return queryList(WebSite.class, crit);
     }
 
-    public void delete(IWebSite site) throws ExcepcaoPersistencia {
+    public void delete(WebSite site) throws ExcepcaoPersistencia {
         super.delete(site);
     }
 

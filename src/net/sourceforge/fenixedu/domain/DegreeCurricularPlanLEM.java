@@ -20,8 +20,8 @@ public class DegreeCurricularPlanLEM extends DegreeCurricularPlanLEM_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
 
         List result = new ArrayList();
 

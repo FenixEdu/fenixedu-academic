@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.dataTransferObject.transactions;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -18,7 +18,7 @@ public abstract class InfoPaymentTransaction extends InfoTransaction {
 
     }
 
-    public static InfoPaymentTransaction newInfoFromDomain(IPaymentTransaction paymentTransaction) {
+    public static InfoPaymentTransaction newInfoFromDomain(PaymentTransaction paymentTransaction) {
 
         if (paymentTransaction == null) {
             return null;
@@ -26,22 +26,22 @@ public abstract class InfoPaymentTransaction extends InfoTransaction {
 
         InfoPaymentTransaction infoPaymentTransaction = null;
 
-        if (paymentTransaction instanceof IGratuityTransaction) {
+        if (paymentTransaction instanceof GratuityTransaction) {
 
             infoPaymentTransaction = InfoGratuityTransaction
-                    .newInfoFromDomain((IGratuityTransaction) paymentTransaction);
+                    .newInfoFromDomain((GratuityTransaction) paymentTransaction);
 
-        } else if (paymentTransaction instanceof IInsuranceTransaction) {
+        } else if (paymentTransaction instanceof InsuranceTransaction) {
 
             infoPaymentTransaction = InfoInsuranceTransaction
-                    .newInfoFromDomain((IInsuranceTransaction) paymentTransaction);
+                    .newInfoFromDomain((InsuranceTransaction) paymentTransaction);
 
         }
 
         return infoPaymentTransaction;
     }
 
-    protected void copyFromDomain(IPaymentTransaction paymentTransaction) {
+    protected void copyFromDomain(PaymentTransaction paymentTransaction) {
 
         super.copyFromDomain(paymentTransaction);
 

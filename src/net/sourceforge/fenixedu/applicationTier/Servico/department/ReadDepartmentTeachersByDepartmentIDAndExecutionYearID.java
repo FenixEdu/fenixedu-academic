@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -23,24 +23,24 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID implements IService {
 
-    public List<ITeacher> run(Integer departmentID, Integer executionYearID)
+    public List<Teacher> run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         IPersistentDepartment persistentDepartment = persistenceSupport.getIDepartamentoPersistente();
 
-        IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
+        Department department = (Department) persistentDepartment.readByOID(Department.class,
                 departmentID);
 
-        List<ITeacher> teachersFromDepartment = new ArrayList<ITeacher>();
+        List<Teacher> teachersFromDepartment = new ArrayList<Teacher>();
 
         if (executionYearID != null) {
 
             IPersistentExecutionYear persistentExecutionYear = persistenceSupport
                     .getIPersistentExecutionYear();
 
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+            ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                     ExecutionYear.class, executionYearID);
 
             teachersFromDepartment = department.getTeachers(executionYear.getBeginDate(), executionYear

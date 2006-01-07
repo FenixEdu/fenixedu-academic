@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class WeeklyOcupationVO extends VersionedObjectsBase implements
 		IPersistentWeeklyOcupation {
 
-	public IWeeklyOcupation readByTeacherId(Integer teacherId)
+	public WeeklyOcupation readByTeacherId(Integer teacherId)
 			throws ExcepcaoPersistencia {
 
-		List<IWeeklyOcupation> weeklyOcupationList = (List<IWeeklyOcupation>) readAll(WeeklyOcupation.class);
-		for(IWeeklyOcupation wo : weeklyOcupationList) {
+		List<WeeklyOcupation> weeklyOcupationList = (List<WeeklyOcupation>) readAll(WeeklyOcupation.class);
+		for(WeeklyOcupation wo : weeklyOcupationList) {
 			if(wo.getTeacher().getIdInternal().equals(teacherId))
 				return wo;
 		}

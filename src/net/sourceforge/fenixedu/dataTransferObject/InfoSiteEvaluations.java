@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -19,21 +19,21 @@ public class InfoSiteEvaluations extends DataTranferObject implements ISiteCompo
         comparator.addComparator(new BeanComparator("endDate.time"));
     }
 
-    private List<IEvaluation> evaluations;
+    private List<Evaluation> evaluations;
 
-    public List<IEvaluation> getEvaluations() {
+    public List<Evaluation> getEvaluations() {
         return evaluations;
     }
 
-    public void setEvaluations(List<IEvaluation> evaluations) {
+    public void setEvaluations(List<Evaluation> evaluations) {
         this.evaluations = evaluations;
     } 
 
-    public Collection<IWrittenEvaluation> getSortedWrittenEvaluations() {
-        final Collection<IWrittenEvaluation> sortedWrittenEvaluations = new TreeSet<IWrittenEvaluation>(comparator);
-        for (final IEvaluation evaluation : getEvaluations()) {
-            if (evaluation instanceof IWrittenEvaluation) {
-                sortedWrittenEvaluations.add((IWrittenEvaluation) evaluation);
+    public Collection<WrittenEvaluation> getSortedWrittenEvaluations() {
+        final Collection<WrittenEvaluation> sortedWrittenEvaluations = new TreeSet<WrittenEvaluation>(comparator);
+        for (final Evaluation evaluation : getEvaluations()) {
+            if (evaluation instanceof WrittenEvaluation) {
+                sortedWrittenEvaluations.add((WrittenEvaluation) evaluation);
             }
         }
         return sortedWrittenEvaluations;

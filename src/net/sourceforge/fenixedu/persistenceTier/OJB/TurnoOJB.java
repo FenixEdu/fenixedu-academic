@@ -13,10 +13,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -27,12 +27,12 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
-    public IShift readByNameAndExecutionCourse(String shiftName, Integer executionCourseOID)
+    public Shift readByNameAndExecutionCourse(String shiftName, Integer executionCourseOID)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("disciplinaExecucao.idInternal", executionCourseOID);
         crit.addEqualTo("nome", shiftName);
-        return (IShift) queryObject(Shift.class, crit);
+        return (Shift) queryObject(Shift.class, crit);
     }
 
     public List readByExecutionCourseAndType(Integer executionCourseOID, ShiftType type)
@@ -56,9 +56,9 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(Integer executionPeriodOID,
             Integer executionDegreeOID, Integer curricularYearOID) throws ExcepcaoPersistencia {
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
 
         Criteria criteria = new Criteria();
@@ -82,7 +82,7 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
 
     public List readAvailableShiftsForClass(Integer schoolClassOID) throws ExcepcaoPersistencia {
 
-        ISchoolClass schoolClass = (ISchoolClass) readByOID(SchoolClass.class, schoolClassOID);
+        SchoolClass schoolClass = (SchoolClass) readByOID(SchoolClass.class, schoolClassOID);
 
         Criteria criteria = new Criteria();
 
@@ -105,11 +105,11 @@ public class TurnoOJB extends ObjectFenixOJB implements ITurnoPersistente {
         return shifts;
     }
 
-    public IShift readByLesson(Integer lessonOID) throws ExcepcaoPersistencia {
+    public Shift readByLesson(Integer lessonOID) throws ExcepcaoPersistencia {
         if (lessonOID != null) {
         Criteria criteria = new Criteria();
             criteria.addEqualTo("associatedLessons.idInternal", lessonOID);
-            return (IShift) queryObject(Shift.class, criteria);
+            return (Shift) queryObject(Shift.class, criteria);
     }
 
         return null;

@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTest
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class QuestionVO extends VersionedObjectsBase implements IPersistentQuestion {
 
-    public IQuestion readByFileNameAndMetadataId(String fileName, IMetadata metadata) throws ExcepcaoPersistencia {
-        final List<IQuestion> questionList = (List<IQuestion>) readAll(Question.class);
-        for (IQuestion question : questionList) {
+    public Question readByFileNameAndMetadataId(String fileName, Metadata metadata) throws ExcepcaoPersistencia {
+        final List<Question> questionList = (List<Question>) readAll(Question.class);
+        for (Question question : questionList) {
             if (question.getKeyMetadata().equals(metadata.getIdInternal()) && question.getXmlFileName().equals(fileName)) {
                 return question;
             }
@@ -32,10 +32,10 @@ public class QuestionVO extends VersionedObjectsBase implements IPersistentQuest
         return null;
     }
 
-    public List<IQuestion> readByMetadata(IMetadata metadata) throws ExcepcaoPersistencia {
-        final List<IQuestion> questionList = (List<IQuestion>) readAll(Question.class);
-        List<IQuestion> result = new ArrayList<IQuestion>();
-        for (IQuestion question : questionList) {
+    public List<Question> readByMetadata(Metadata metadata) throws ExcepcaoPersistencia {
+        final List<Question> questionList = (List<Question>) readAll(Question.class);
+        List<Question> result = new ArrayList<Question>();
+        for (Question question : questionList) {
             if (question.getKeyMetadata().equals(metadata.getIdInternal())) {
                 result.add(question);
             }
@@ -43,10 +43,10 @@ public class QuestionVO extends VersionedObjectsBase implements IPersistentQuest
         return result;
     }
 
-    public List<IQuestion> readByMetadataAndVisibility(IMetadata metadata) throws ExcepcaoPersistencia {
-        final List<IQuestion> questionList = (List<IQuestion>) readAll(Question.class);
-        List<IQuestion> result = new ArrayList<IQuestion>();
-        for (IQuestion question : questionList) {
+    public List<Question> readByMetadataAndVisibility(Metadata metadata) throws ExcepcaoPersistencia {
+        final List<Question> questionList = (List<Question>) readAll(Question.class);
+        List<Question> result = new ArrayList<Question>();
+        for (Question question : questionList) {
             if (question.getKeyMetadata().equals(metadata.getIdInternal()) && question.getVisibility().equals(true)) {
                 result.add(question);
             }
@@ -54,10 +54,10 @@ public class QuestionVO extends VersionedObjectsBase implements IPersistentQuest
         return result;
     }
 
-    public int countByMetadata(IMetadata metadata) {
-        final List<IQuestion> questionList = (List<IQuestion>) readAll(Question.class);
+    public int countByMetadata(Metadata metadata) {
+        final List<Question> questionList = (List<Question>) readAll(Question.class);
         int result = 0;
-        for (IQuestion question : questionList) {
+        for (Question question : questionList) {
             if (question.getKeyMetadata().equals(metadata.getIdInternal())) {
                 result++;
             }
@@ -68,10 +68,10 @@ public class QuestionVO extends VersionedObjectsBase implements IPersistentQuest
     public String correctFileName(String fileName, Integer metadataId) {
         String original = fileName.replaceAll(".xml", "");
         String newName = fileName;
-        final List<IQuestion> questionList = (List<IQuestion>) readAll(Question.class);
+        final List<Question> questionList = (List<Question>) readAll(Question.class);
         for (int i = 1;; i++) {
             int result = 0;
-            for (IQuestion question : questionList) {
+            for (Question question : questionList) {
                 if (question.getKeyMetadata().equals(metadataId) && question.getXmlFileName().equals(fileName)) {
                     result++;
                 }
@@ -82,10 +82,10 @@ public class QuestionVO extends VersionedObjectsBase implements IPersistentQuest
         }
     }
 
-    public void cleanQuestions(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public void cleanQuestions(DistributedTest distributedTest) throws ExcepcaoPersistencia {
 
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyDistributedTest().equals(distributedTest.getIdInternal())
                     && studentTestQuestion.getQuestion().getVisibility().equals(false)
                     && countReferences(distributedTest.getIdInternal(), studentTestQuestion.getQuestion().getIdInternal()) == 0) {
@@ -95,9 +95,9 @@ public class QuestionVO extends VersionedObjectsBase implements IPersistentQuest
     }
 
     private int countReferences(Integer distributedTestId, Integer questionId) {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
         int result = 0;
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyDistributedTest().equals(distributedTestId) && studentTestQuestion.getKeyQuestion().equals(questionId)) {
                 result++;
             }
@@ -105,9 +105,9 @@ public class QuestionVO extends VersionedObjectsBase implements IPersistentQuest
         return result;
     }
 
-    public void deleteByMetadata(IMetadata metadata) throws ExcepcaoPersistencia {
-        final List<IQuestion> questionList = (List<IQuestion>) readAll(Question.class);
-        for (IQuestion question : questionList) {
+    public void deleteByMetadata(Metadata metadata) throws ExcepcaoPersistencia {
+        final List<Question> questionList = (List<Question>) readAll(Question.class);
+        for (Question question : questionList) {
             if (question.getKeyMetadata().equals(metadata.getIdInternal())) {
                 deleteByOID(Question.class, question.getIdInternal());
             }

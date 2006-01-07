@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
@@ -20,28 +20,28 @@ public class BranchVO extends VersionedObjectsBase implements IPersistentBranch 
 		return (List)readAll(Branch.class);
 	}
 
-	public IBranch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId, final String branchName) throws ExcepcaoPersistencia {
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(DegreeCurricularPlan.class,degreeCurricularPlanId);
+	public Branch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId, final String branchName) throws ExcepcaoPersistencia {
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(DegreeCurricularPlan.class,degreeCurricularPlanId);
 		
 		if (degreeCurricularPlan != null) {
-			List<IBranch> branches = degreeCurricularPlan.getAreas();
-			return (IBranch)CollectionUtils.find(branches,new Predicate() {
+			List<Branch> branches = degreeCurricularPlan.getAreas();
+			return (Branch)CollectionUtils.find(branches,new Predicate() {
 				public boolean evaluate (Object o) {
-					return ((IBranch)o).getName().equals(branchName);
+					return ((Branch)o).getName().equals(branchName);
 				}
 			});
 		}
 		return null;
 	}
 
-	public IBranch readByDegreeCurricularPlanAndCode(Integer degreeCurricularPlanId, final String code) throws ExcepcaoPersistencia {
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(DegreeCurricularPlan.class,degreeCurricularPlanId);
+	public Branch readByDegreeCurricularPlanAndCode(Integer degreeCurricularPlanId, final String code) throws ExcepcaoPersistencia {
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(DegreeCurricularPlan.class,degreeCurricularPlanId);
 		
 		if (degreeCurricularPlan != null) {
-			List<IBranch> branches = degreeCurricularPlan.getAreas();
-			return (IBranch)CollectionUtils.find(branches,new Predicate() {
+			List<Branch> branches = degreeCurricularPlan.getAreas();
+			return (Branch)CollectionUtils.find(branches,new Predicate() {
 				public boolean evaluate (Object o) {
-					return ((IBranch)o).getCode().equals(code);
+					return ((Branch)o).getCode().equals(code);
 				}
 			});
 		}
@@ -49,13 +49,13 @@ public class BranchVO extends VersionedObjectsBase implements IPersistentBranch 
 	}
 
 	public List readAllByDegreeCurricularPlanAndBranchType(Integer degreeCurricularPlanId, final BranchType branchType) throws ExcepcaoPersistencia {
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(DegreeCurricularPlan.class,degreeCurricularPlanId);
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(DegreeCurricularPlan.class,degreeCurricularPlanId);
 		
 		if (degreeCurricularPlan != null) {
-			List<IBranch> branches = degreeCurricularPlan.getAreas();
+			List<Branch> branches = degreeCurricularPlan.getAreas();
 			return (List)CollectionUtils.select(branches,new Predicate() {
 				public boolean evaluate (Object o) {
-					return ((IBranch)o).getBranchType().equals(branchType);
+					return ((Branch)o).getBranchType().equals(branchType);
 				}
 			});
 		}

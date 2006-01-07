@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ICountry;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -64,8 +64,8 @@ public class CountryLoader extends BaseLoader {
         persistentSupport.iniciarTransaccao();
 
         final IPersistentCountry persistentCountry = persistentSupport.getIPersistentCountry();
-        final List<ICountry> countries = (List<ICountry>) persistentCountry.readAll(Country.class);
-        for (final ICountry country : countries) {
+        final List<Country> countries = (List<Country>) persistentCountry.readAll(Country.class);
+        for (final Country country : countries) {
             final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
             final HSSFCell nameCell = row.createCell((short) 0);
             final HSSFCell codeCell = row.createCell((short) 1);

@@ -10,9 +10,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,14 +37,14 @@ public class ReadExecutionYearsByDegreeCurricularPlanID implements IService {
 
         IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = sp
                 .getIPersistentDegreeCurricularPlan();
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) degreeCurricularPlanDAO
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) degreeCurricularPlanDAO
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-        List<IExecutionYear> executionYears = (List<IExecutionYear>) CollectionUtils.collect(
+        List<ExecutionYear> executionYears = (List<ExecutionYear>) CollectionUtils.collect(
                 degreeCurricularPlan.getExecutionDegrees(), new Transformer() {
 
                     public Object transform(Object arg0) {
-                        IExecutionDegree executionDegree = (IExecutionDegree) arg0;
+                        ExecutionDegree executionDegree = (ExecutionDegree) arg0;
                         return InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear());
                     }
 

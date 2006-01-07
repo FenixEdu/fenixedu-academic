@@ -5,13 +5,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.Invalid
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPart;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPart;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,13 +31,13 @@ public class EditGrantPart implements IService {
                 .getIPersistentGrantSubsidy();
         final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-        IGrantPart grantPart = (IGrantPart) persistentSupport.getIPersistentObject().readByOID(
+        GrantPart grantPart = (GrantPart) persistentSupport.getIPersistentObject().readByOID(
                 GrantPart.class, infoGrantPart.getIdInternal());
         if (grantPart == null) {
             grantPart = DomainFactory.makeGrantPart();
         }
 
-        final IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) persistentGrantPaymentEntity
+        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentGrantPaymentEntity
                 .readByOID(GrantPaymentEntity.class, infoGrantPart.getInfoGrantPaymentEntity()
                         .getIdInternal());
         if (grantPaymentEntity == null) {
@@ -45,14 +45,14 @@ public class EditGrantPart implements IService {
         }
         grantPart.setGrantPaymentEntity(grantPaymentEntity);
 
-        final IGrantSubsidy grantSubsidy = (IGrantSubsidy) persistentGrantSubsidy.readByOID(
+        final GrantSubsidy grantSubsidy = (GrantSubsidy) persistentGrantSubsidy.readByOID(
                 GrantSubsidy.class, infoGrantPart.getInfoGrantSubsidy().getIdInternal());
         grantPart.setGrantSubsidy(grantSubsidy);
 
         grantPart.setPercentage(infoGrantPart.getPercentage());
 
         if (infoGrantPart.getInfoResponsibleTeacher() != null) {
-            final ITeacher teacher = persistentTeacher.readByNumber(infoGrantPart
+            final Teacher teacher = persistentTeacher.readByNumber(infoGrantPart
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null) {
                 throw new InvalidPartResponsibleTeacherException();

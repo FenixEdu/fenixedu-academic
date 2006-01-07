@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
@@ -29,12 +29,12 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
     public ExternalPersonOJB() {
     }
 
-    public IExternalPerson readByUsername(String username) throws ExcepcaoPersistencia {
+    public ExternalPerson readByUsername(String username) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        IExternalPerson externalPerson = null;
+        ExternalPerson externalPerson = null;
 
         criteria.addEqualTo("person.username", username);
-        externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
+        externalPerson = (ExternalPerson) queryObject(ExternalPerson.class, criteria);
 
         return externalPerson;
 
@@ -51,15 +51,15 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
 
     }
 
-    public IExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
+    public ExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
             Integer institutionID) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
-        IExternalPerson externalPerson = null;
+        ExternalPerson externalPerson = null;
 
         criteria.addEqualTo("person.nome", name);
         criteria.addEqualTo("person.address", address);
         criteria.addEqualTo("institution.idInternal", institutionID);
-        externalPerson = (IExternalPerson) queryObject(ExternalPerson.class, criteria);
+        externalPerson = (ExternalPerson) queryObject(ExternalPerson.class, criteria);
 
         return externalPerson;
     }
@@ -78,12 +78,12 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
     }
 
     public String readLastDocumentIdNumber() throws ExcepcaoPersistencia {
-        IExternalPerson externalPerson = null;
+        ExternalPerson externalPerson = null;
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idDocumentType", IDDocumentType.EXTERNAL);
 
-        externalPerson = (IExternalPerson) queryList(ExternalPerson.class, criteria,
+        externalPerson = (ExternalPerson) queryList(ExternalPerson.class, criteria,
                 "person.numeroDocumentoIdentificacao", false).get(0);
         String lastIdStr = null;
         if (externalPerson == null) {
@@ -95,9 +95,9 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
         return lastIdStr;
     }
 
-    public Collection<IExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) throws ExcepcaoPersistencia {
+    public Collection<ExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) throws ExcepcaoPersistencia {
         if(externalPersonsIDs.isEmpty()){
-            return new ArrayList<IExternalPerson>();
+            return new ArrayList<ExternalPerson>();
         }
         
         Criteria criteria = new Criteria();

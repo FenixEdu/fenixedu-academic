@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 
 /**
  * @author David Santos in Jun 29, 2004
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
 
 public interface IPersistentCurricularCourseEquivalence extends IPersistentObject {
 
-    public ICurricularCourseEquivalence readByEquivalence(Integer oldCurricularCourseId,
+    public CurricularCourseEquivalence readByEquivalence(Integer oldCurricularCourseId,
             Integer equivalentCurricularCourseId, Integer degreeCurricularPlanId) throws ExcepcaoPersistencia;
 
 }

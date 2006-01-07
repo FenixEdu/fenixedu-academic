@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.IAuthorship;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,16 +25,16 @@ public class ReadPublicationsNotInTeacherInformationSheet implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         
-        ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+        Teacher teacher = persistentTeacher.readTeacherByUsername(user);
 
-        List<IPublication> publicationsInTeacherSheet = new ArrayList<IPublication>(teacher.getTeacherPublicationsCount());
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        List<Publication> publicationsInTeacherSheet = new ArrayList<Publication>(teacher.getTeacherPublicationsCount());
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             publicationsInTeacherSheet.add(publicationTeacher.getPublication());
         }
         
         List<InfoPublication> infoPublications = new ArrayList<InfoPublication>();
-        for(IAuthorship authorship : teacher.getPerson().getPersonAuthorships()) {
-            IPublication publication = authorship.getPublication();
+        for(Authorship authorship : teacher.getPerson().getPersonAuthorships()) {
+            Publication publication = authorship.getPublication();
             if (!publicationsInTeacherSheet.contains(publication)) {
                 infoPublications.add(InfoPublication.newInfoFromDomain(publication));
             }

@@ -4,13 +4,10 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.lang.reflect.Proxy;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IAreaCurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
+import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 
 /**
  * @author Nuno Correia
@@ -123,7 +120,7 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
         this.scientificAreas = scientificAreas;
     }
 
-    public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
+    public void copyFromDomain(CurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
         if (curricularCourseGroup != null) {
             setName(curricularCourseGroup.getName());
@@ -131,16 +128,10 @@ public abstract class InfoCurricularCourseGroup extends InfoObject {
     }
 
     public static InfoCurricularCourseGroup newInfoFromDomain(
-            ICurricularCourseGroup curricularCourseGroup) {
+            CurricularCourseGroup curricularCourseGroup) {
 
         if (curricularCourseGroup != null) {
-
-            if (curricularCourseGroup instanceof Proxy) {
-                curricularCourseGroup = (ICurricularCourseGroup) ProxyHelper
-                        .getRealObject(curricularCourseGroup);
-            }
-
-            if (curricularCourseGroup instanceof IAreaCurricularCourseGroup) {
+            if (curricularCourseGroup instanceof AreaCurricularCourseGroup) {
                 return InfoAreaCurricularCourseGroup.newInfoFromDomain(curricularCourseGroup);
             }
             return InfoOptionalCurricularCourseGroup.newInfoFromDomain(curricularCourseGroup);

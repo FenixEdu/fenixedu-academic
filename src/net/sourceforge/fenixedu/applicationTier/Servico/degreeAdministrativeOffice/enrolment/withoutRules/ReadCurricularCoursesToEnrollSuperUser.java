@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 /**
  * @author Tânia Pousão
@@ -17,15 +17,15 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
  */
 public class ReadCurricularCoursesToEnrollSuperUser extends ReadCurricularCoursesToEnroll {
 
-    protected List findCurricularCourses(List curricularCourses, IStudentCurricularPlan studentCurricularPlan,
-    		IExecutionPeriod executionPeriod) {
+    protected List findCurricularCourses(List curricularCourses, StudentCurricularPlan studentCurricularPlan,
+    		ExecutionPeriod executionPeriod) {
     	final List result = new ArrayList();
-    	for (final ICurricularCourse curricularCourse : (List<ICurricularCourse>) curricularCourses) {
+    	for (final CurricularCourse curricularCourse : (List<CurricularCourse>) curricularCourses) {
     		if (!studentCurricularPlan
     				.isCurricularCourseApprovedWithoutEquivalencesInCurrentOrPreviousPeriod(
-                            (ICurricularCourse) curricularCourse, executionPeriod)
+                            (CurricularCourse) curricularCourse, executionPeriod)
                     && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
-                            (ICurricularCourse) curricularCourse, executionPeriod)) {
+                            (CurricularCourse) curricularCourse, executionPeriod)) {
     			result.add(curricularCourse);
     		}
     	}

@@ -3,7 +3,7 @@
 */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IDistrict;
+import net.sourceforge.fenixedu.domain.District;
 
 /**
  * @author Ricardo Rodrigues
@@ -32,7 +32,7 @@ public class InfoDistrict extends InfoObject {
     }
     
     
-    public void copyFromDomain(IDistrict district) {
+    public void copyFromDomain(District district) {
         super.copyFromDomain(district);
         if (district != null) {            
             setName(district.getName());
@@ -40,7 +40,7 @@ public class InfoDistrict extends InfoObject {
         }
     }
 
-    public static InfoDistrict newInfoFromDomain(IDistrict district) {
+    public static InfoDistrict newInfoFromDomain(District district) {
         InfoDistrict infoDistrict = null;
         if (district != null) {
             infoDistrict = new InfoDistrict();

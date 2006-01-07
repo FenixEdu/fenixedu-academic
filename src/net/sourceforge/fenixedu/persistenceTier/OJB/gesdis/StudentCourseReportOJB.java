@@ -3,8 +3,8 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.gesdis;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -32,11 +32,11 @@ public class StudentCourseReportOJB extends PersistentObjectOJB implements
      * 
      * @see ServidorPersistente.gesdis.IPersistentCourseReport#readCourseReportByExecutionCourse(Dominio.IDisciplinaExecucao)
      */
-    public IStudentCourseReport readByCurricularCourse(ICurricularCourse curricularCourse)
+    public StudentCourseReport readByCurricularCourse(CurricularCourse curricularCourse)
             throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourse.getIdInternal());
-        return (IStudentCourseReport) queryObject(StudentCourseReport.class, criteria);
+        return (StudentCourseReport) queryObject(StudentCourseReport.class, criteria);
     }
 }

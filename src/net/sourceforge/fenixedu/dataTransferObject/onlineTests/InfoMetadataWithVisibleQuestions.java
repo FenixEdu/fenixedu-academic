@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -18,13 +18,13 @@ import org.apache.commons.collections.Transformer;
 
 public class InfoMetadataWithVisibleQuestions extends InfoMetadata {
 
-    public void copyFromDomain(IMetadata metadata) {
+    public void copyFromDomain(Metadata metadata) {
         super.copyFromDomain(metadata);
         if (metadata != null && metadata.getVisibleQuestions() != null) {
             setVisibleQuestions((List) CollectionUtils.collect(metadata.getVisibleQuestions(), new Transformer() {
 
                 public Object transform(Object question) {
-                    return InfoQuestion.newInfoFromDomain((IQuestion) question);
+                    return InfoQuestion.newInfoFromDomain((Question) question);
                 }
             })
 
@@ -33,7 +33,7 @@ public class InfoMetadataWithVisibleQuestions extends InfoMetadata {
         }
     }
 
-    public static InfoMetadata newInfoFromDomain(IMetadata metadata) {
+    public static InfoMetadata newInfoFromDomain(Metadata metadata) {
         InfoMetadataWithVisibleQuestions infoMetadata = null;
         if (metadata != null) {
             infoMetadata = new InfoMetadataWithVisibleQuestions();

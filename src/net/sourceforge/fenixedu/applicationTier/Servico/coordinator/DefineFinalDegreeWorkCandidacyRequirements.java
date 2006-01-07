@@ -5,8 +5,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,11 +29,11 @@ public class DefineFinalDegreeWorkCandidacyRequirements implements IService {
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
 
-            IExecutionDegree cursoExecucao = (IExecutionDegree) persistentFinalDegreeWork.readByOID(
+            ExecutionDegree cursoExecucao = (ExecutionDegree) persistentFinalDegreeWork.readByOID(
                     ExecutionDegree.class, executionDegreeOID);
 
             if (cursoExecucao != null) {
-                IScheduleing scheduleing = persistentFinalDegreeWork
+                Scheduleing scheduleing = persistentFinalDegreeWork
                         .readFinalDegreeWorkScheduleing(executionDegreeOID);
 
                 if (scheduleing == null) {

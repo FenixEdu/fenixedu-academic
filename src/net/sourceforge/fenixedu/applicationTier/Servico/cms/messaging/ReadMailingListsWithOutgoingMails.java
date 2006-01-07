@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  */
 public class ReadMailingListsWithOutgoingMails extends CmsService
 {
-	public Collection<IMailingList> run() throws ExcepcaoPersistencia
+	public Collection<MailingList> run() throws ExcepcaoPersistencia
 	{
-		Collection<IMailingList> mailingLists =
+		Collection<MailingList> mailingLists =
 		PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailingList().readAllMailingListsWithOutgoingMails();
 		
 		return mailingLists;

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
@@ -133,7 +133,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         this.infoDegreeInfos = infoDegreeInfos;
     }
 
-	public void copyFromDomain(IDegree degree){
+	public void copyFromDomain(Degree degree){
 		super.copyFromDomain(degree);
 		if (degree != null){
 			setNome(degree.getNome());
@@ -143,7 +143,7 @@ public class InfoDegree extends InfoObject implements Comparable {
 			setGradeScale(degree.getGradeScale());
 
             List<InfoDegreeCurricularPlan> degreeCurricularPlans = new ArrayList<InfoDegreeCurricularPlan>();
-            for (IDegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+            for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
                 if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
                     degreeCurricularPlans.add(InfoDegreeCurricularPlan.newInfoFromDomain(dcp));
                 }
@@ -157,7 +157,7 @@ public class InfoDegree extends InfoObject implements Comparable {
      * @param degree
      * @return
      */
-    public static InfoDegree newInfoFromDomain(IDegree degree) {
+    public static InfoDegree newInfoFromDomain(Degree degree) {
         InfoDegree infoDegree = null;
         if (degree != null) {
             infoDegree = new InfoDegree();
@@ -166,7 +166,7 @@ public class InfoDegree extends InfoObject implements Comparable {
         return infoDegree;
     }
 
-    public void copyToDomain(InfoDegree infoDegree, IDegree degree) {
+    public void copyToDomain(InfoDegree infoDegree, Degree degree) {
         super.copyToDomain(infoDegree, degree);
         degree.setNome(infoDegree.getNome());
         degree.setSigla(infoDegree.getSigla());

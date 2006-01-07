@@ -3,36 +3,36 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 public interface IPersistentShiftProfessorship extends IPersistentObject {
-    IShiftProfessorship readByUnique(IShiftProfessorship teacherShiftPercentage)
+    ShiftProfessorship readByUnique(ShiftProfessorship teacherShiftPercentage)
             throws ExcepcaoPersistencia;
 
-    IShiftProfessorship readByProfessorshipAndShift(IProfessorship professorship, IShift shift)
+    ShiftProfessorship readByProfessorshipAndShift(Professorship professorship, Shift shift)
             throws ExcepcaoPersistencia;
 
     List readOverlappingPeriod(Integer teacherId, Integer executionPeriodId, DiaSemana weekDay,
             Date startTime, Date endTime) throws ExcepcaoPersistencia;
 
-    List readByTeacherAndExecutionPeriodAndDegreeType(ITeacher teacher,
-            IExecutionPeriod executionPeriod, DegreeType curso) throws ExcepcaoPersistencia;
+    List readByTeacherAndExecutionPeriodAndDegreeType(Teacher teacher,
+            ExecutionPeriod executionPeriod, DegreeType curso) throws ExcepcaoPersistencia;
 
-    List readByProfessorship(IProfessorship professorship) throws ExcepcaoPersistencia;
+    List readByProfessorship(Professorship professorship) throws ExcepcaoPersistencia;
 
-    List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    List readByExecutionPeriod(ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
-    List readByTeacherAndExecutionPeriodWithDifferentIds(ITeacher teacher, IExecutionPeriod period,
+    List readByTeacherAndExecutionPeriodWithDifferentIds(Teacher teacher, ExecutionPeriod period,
             List shiftProfessorShipsIds) throws ExcepcaoPersistencia;
 
-    List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod period)
+    List readByTeacherAndExecutionPeriod(Teacher teacher, ExecutionPeriod period)
             throws ExcepcaoPersistencia;
 
-    List readByShift(IShift shift) throws ExcepcaoPersistencia;
+    List readByShift(Shift shift) throws ExcepcaoPersistencia;
 }

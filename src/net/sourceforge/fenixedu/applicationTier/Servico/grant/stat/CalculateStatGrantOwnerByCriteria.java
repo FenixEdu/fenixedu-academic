@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatResultGrantOwner;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -51,7 +51,7 @@ public class CalculateStatGrantOwnerByCriteria implements IService {
 		if (infoStatGrantOwner.getGrantType() != null) {
 			// Read the sigla for presentation reasons
 			IPersistentGrantType persistentGrantType = suportePersistente.getIPersistentGrantType();
-			IGrantType granttype = (IGrantType) persistentGrantType.readByOID(GrantType.class,
+			GrantType granttype = (GrantType) persistentGrantType.readByOID(GrantType.class,
 					infoStatGrantOwner.getGrantType());
 			infoStatGrantOwner.setGrantTypeSigla(granttype.getSigla());
 		}

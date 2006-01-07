@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CourseGroup extends CourseGroup_Base {
@@ -40,20 +40,20 @@ public class CourseGroup extends CourseGroup_Base {
         }
     }
 
-    public void print(StringBuffer dcp, String tabs, IContext previousContext) {
+    public void print(StringBuffer dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";
         dcp.append(tab);
         dcp.append("[CG ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
         
-        for (IContext context : this.getCourseGroupContexts()) {
+        for (Context context : this.getCourseGroupContexts()) {
             context.getDegreeModule().print(dcp, tab, context);
         }
     }
     
-    public List<IContext> getContextsWithCurricularCourses() {
-        List<IContext> result = new ArrayList<IContext>();
-        for (IContext context : this.getCourseGroupContexts()) {
-            if (context.getDegreeModule() instanceof ICurricularCourse) {
+    public List<Context> getContextsWithCurricularCourses() {
+        List<Context> result = new ArrayList<Context>();
+        for (Context context : this.getCourseGroupContexts()) {
+            if (context.getDegreeModule() instanceof CurricularCourse) {
                 result.add(context);
             }
         }
@@ -61,10 +61,10 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public List<IContext> getContextsWithCourseGroups() {
-        List<IContext> result = new ArrayList<IContext>();
-        for (IContext context : this.getCourseGroupContexts()) {
-            if (context.getDegreeModule() instanceof ICourseGroup) {
+    public List<Context> getContextsWithCourseGroups() {
+        List<Context> result = new ArrayList<Context>();
+        for (Context context : this.getCourseGroupContexts()) {
+            if (context.getDegreeModule() instanceof CourseGroup) {
                 result.add(context);
             }
         }
@@ -75,7 +75,7 @@ public class CourseGroup extends CourseGroup_Base {
     public Double computeEctsCredits() {
         Double result = 0.0;
         
-        for (IContext context : this.getCourseGroupContexts()) {
+        for (Context context : this.getCourseGroupContexts()) {
             if (context.getDegreeModule() != null && context.getDegreeModule().computeEctsCredits() != null) {
                 result += context.getDegreeModule().computeEctsCredits();    
             }
@@ -84,8 +84,8 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
     
-    protected void checkContextsFor(final ICourseGroup parentCourseGroup, final ICurricularSemester curricularSemester) {
-        for (final IContext context : this.getDegreeModuleContexts()) {
+    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularSemester curricularSemester) {
+        for (final Context context : this.getDegreeModuleContexts()) {
             if (context.getCourseGroup() == parentCourseGroup) {
                 throw new DomainException("error.contextAlreadyExistForCourseGroup");
             }

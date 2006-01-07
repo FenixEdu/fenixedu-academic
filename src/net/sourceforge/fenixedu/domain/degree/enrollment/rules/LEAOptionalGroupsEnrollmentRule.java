@@ -10,10 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
 
@@ -28,9 +28,9 @@ import org.apache.commons.collections.Predicate;
 
 public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
 
-    private IStudentCurricularPlan studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
 
     private final static String options1FirstSemester = "Opções 5ºano 1ºsem 1";
 
@@ -40,8 +40,8 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
 
     private final static String options2SecondSemester = "Opções 5ºano 2ºsem 2";
 
-    public LEAOptionalGroupsEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public LEAOptionalGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         this.studentCurricularPlan = studentCurricularPlan;
         this.executionPeriod = executionPeriod;
     }
@@ -49,28 +49,28 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
     public List apply(List curricularCoursesToBeEnrolledIn) throws EnrolmentRuleDomainException {
         List allOptionalGroups = studentCurricularPlan.getDegreeCurricularPlan()
                 .getAllOptionalCurricularCourseGroups();
-        List<ICurricularCourseGroup> branchOptionalGroups = (List) CollectionUtils.select(
+        List<CurricularCourseGroup> branchOptionalGroups = (List) CollectionUtils.select(
                 allOptionalGroups, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) arg0;
+                        CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) arg0;
                         return curricularCourseGroup.getBranch().equals(
                                 studentCurricularPlan.getBranch());
                     }
                 });
-        List<ICurricularCourseGroup> allOptionalGroups2 = (List) CollectionUtils.select(
+        List<CurricularCourseGroup> allOptionalGroups2 = (List) CollectionUtils.select(
                 branchOptionalGroups, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) arg0;
+                        CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) arg0;
                         return curricularCourseGroup.getName().endsWith("2");
                     }
                 });
-        List<ICurricularCourseGroup> optionalGroupsThisSemester = (List<ICurricularCourseGroup>) CollectionUtils
+        List<CurricularCourseGroup> optionalGroupsThisSemester = (List<CurricularCourseGroup>) CollectionUtils
                 .select(branchOptionalGroups, new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        ICurricularCourseGroup ccg = (ICurricularCourseGroup) arg0;
+                        CurricularCourseGroup ccg = (CurricularCourseGroup) arg0;
                         if ((ccg.getName().equalsIgnoreCase(options1FirstSemester) || ccg.getName()
                                 .equalsIgnoreCase(options2FirstSemester))
                                 && executionPeriod.getSemester() == 1) {
@@ -86,12 +86,12 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
 
         Collections.sort(optionalGroupsThisSemester, new BeanComparator("name"));
 
-        Set<ICurricularCourseGroup> curricularCourseGroupsToRemove = new HashSet();
+        Set<CurricularCourseGroup> curricularCourseGroupsToRemove = new HashSet();
         // if the student is enrolled in a group of type 2, it can't enroll in
         // any other course of this groups
-        for (ICurricularCourseGroup curricularCourseGroup : allOptionalGroups2) {
+        for (CurricularCourseGroup curricularCourseGroup : allOptionalGroups2) {
             for (Iterator iter = curricularCourseGroup.getCurricularCourses().iterator(); iter.hasNext();) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+                CurricularCourse curricularCourse = (CurricularCourse) iter.next();
                 if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)
                         || studentCurricularPlan.isCurricularCourseEnrolled(curricularCourse)) {
                     curricularCourseGroupsToRemove.addAll(allOptionalGroups2);
@@ -99,9 +99,9 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
                 }
             }
         }
-        for (ICurricularCourseGroup curricularCourseGroup : optionalGroupsThisSemester) {
+        for (CurricularCourseGroup curricularCourseGroup : optionalGroupsThisSemester) {
             for (Iterator iter = curricularCourseGroup.getCurricularCourses().iterator(); iter.hasNext();) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+                CurricularCourse curricularCourse = (CurricularCourse) iter.next();
                 if (studentCurricularPlan.isCurricularCourseApproved(curricularCourse)
                         || studentCurricularPlan.isCurricularCourseEnrolled(curricularCourse)) {
                     if (curricularCourseGroup.getName().endsWith("1")) {
@@ -122,11 +122,11 @@ public class LEAOptionalGroupsEnrollmentRule implements IEnrollmentRule {
      * @param curricularCourseGroupsToRemove
      * @return
      */
-    private List getCurricularCoursesToEnrollToRemove(Set<ICurricularCourseGroup> curricularCourseGroupsToRemove) {
+    private List getCurricularCoursesToEnrollToRemove(Set<CurricularCourseGroup> curricularCourseGroupsToRemove) {
         List curricularCoursesToEnroll = new ArrayList();
-        for (ICurricularCourseGroup curricularCourseGroup : curricularCourseGroupsToRemove) {
+        for (CurricularCourseGroup curricularCourseGroup : curricularCourseGroupsToRemove) {
             for (Iterator iter = curricularCourseGroup.getCurricularCourses().iterator(); iter.hasNext();) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+                CurricularCourse curricularCourse = (CurricularCourse) iter.next();
                 curricularCoursesToEnroll.add(curricularCoursesToEnroll.add(new CurricularCourse2Enroll(
                         curricularCourse, null, null)));
             }

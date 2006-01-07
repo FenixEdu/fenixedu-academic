@@ -14,11 +14,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
@@ -76,10 +76,10 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     public String getUnits() throws FenixFilterException, FenixServiceException {
         
         StringBuffer buffer = new StringBuffer();
-        List<IUnit> allUnits = readAllDomainObjects(Unit.class);
+        List<Unit> allUnits = readAllDomainObjects(Unit.class);
 
         Date currentDate = Calendar.getInstance().getTime();
-        for (IUnit unit : allUnits) {
+        for (Unit unit : allUnits) {
             if (unit.getParentUnits().isEmpty() && unit.isActive(currentDate)) {
                 getUnitTree(buffer, unit);
             }
@@ -88,20 +88,20 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuffer buffer, IUnit parentUnit) {
+    public void getUnitTree(StringBuffer buffer, Unit parentUnit) {
         buffer.append("<ul>");
         getUnitsList(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(IUnit parentUnit, StringBuffer buffer) {
+    private void getUnitsList(Unit parentUnit, StringBuffer buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append(
                 "&unitID=").append(parentUnit.getIdInternal()).append("\">")
                 .append(parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
        
-        for (IUnit subUnit : parentUnit.getSubUnits()) {
+        for (Unit subUnit : parentUnit.getSubUnits()) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, buffer);
             }
@@ -109,30 +109,30 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         buffer.append("</ul>");
     }
 
-    public List<IPersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
+    public List<PersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
 
         if (this.activeFunctions == null) {
-            IPerson person = this.getPerson();
-            List<IPersonFunction> activeFunctions = person.getActiveFunctions();
+            Person person = this.getPerson();
+            List<PersonFunction> activeFunctions = person.getActiveFunctions();
             Collections.sort(activeFunctions, new BeanComparator("endDate"));
             this.activeFunctions = activeFunctions;
         }
         return activeFunctions;
     }
 
-    public List<IPersonFunction> getInactiveFunctions() throws FenixFilterException,
+    public List<PersonFunction> getInactiveFunctions() throws FenixFilterException,
             FenixServiceException {
 
         if (this.inactiveFunctions == null) {
-            IPerson person = this.getPerson();
-            List<IPersonFunction> inactiveFunctions = person.getInactiveFunctions();
+            Person person = this.getPerson();
+            List<PersonFunction> inactiveFunctions = person.getInactiveFunctions();
             Collections.sort(inactiveFunctions, new BeanComparator("endDate"));
             this.inactiveFunctions = inactiveFunctions;
         }
         return inactiveFunctions;
     }
 
-    public List<IFunction> getInherentFunctions() throws FenixFilterException, FenixServiceException {
+    public List<Function> getInherentFunctions() throws FenixFilterException, FenixServiceException {
         if (this.inherentFunctions == null) {
             this.inherentFunctions = this.getPerson().getActiveInherentFunctions();
         }

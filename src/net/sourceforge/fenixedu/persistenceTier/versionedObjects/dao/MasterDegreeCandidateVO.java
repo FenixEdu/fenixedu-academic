@@ -19,12 +19,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -38,10 +38,10 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		IPersistentMasterDegreeCandidate {
 
 	public List readMasterDegreeCandidatesByUsername(final String username) throws ExcepcaoPersistencia {
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = (List<IMasterDegreeCandidate>) readAll(MasterDegreeCandidate.class);
-		final List<IMasterDegreeCandidate> result = new ArrayList();
+		final List<MasterDegreeCandidate> masterDegreeCandidates = (List<MasterDegreeCandidate>) readAll(MasterDegreeCandidate.class);
+		final List<MasterDegreeCandidate> result = new ArrayList();
 
-		for (final IMasterDegreeCandidate candidate : masterDegreeCandidates) {
+		for (final MasterDegreeCandidate candidate : masterDegreeCandidates) {
 			if (candidate.getPerson().getUsername().equals(username)) {
 				result.add(candidate);
 			}
@@ -52,10 +52,10 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 	public Integer generateCandidateNumber(final String executionYear, final String degreeName,
 			final Specialization specialization) throws ExcepcaoPersistencia {
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidateList = (List<IMasterDegreeCandidate>) readAll(MasterDegreeCandidate.class);
+		final List<MasterDegreeCandidate> masterDegreeCandidateList = (List<MasterDegreeCandidate>) readAll(MasterDegreeCandidate.class);
 		int number = 0;
 
-		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidateList) {
+		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidateList) {
 			if (masterDegreeCandidate.getExecutionDegree().getExecutionYear().getYear().equals(
 					executionYear)
 					&& masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getDegree()
@@ -66,17 +66,17 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		return ++number;
 	}
 
-	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
+	public MasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
 			final String idDocumentNumber, final IDDocumentType idDocumentType,
 			final Integer executionDegreeID, final Specialization specialization)
 			throws ExcepcaoPersistencia {
 
-		final IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+		final ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
 				executionDegreeID);
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = executionDegree
+		final List<MasterDegreeCandidate> masterDegreeCandidates = executionDegree
 				.getMasterDegreeCandidates();
 
-		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
+		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
 			if (masterDegreeCandidate.getSpecialization().equals(specialization)
 					&& masterDegreeCandidate.getPerson().getIdDocumentType().equals(idDocumentType)
 					&& masterDegreeCandidate.getPerson().getNumeroDocumentoIdentificacao().equals(
@@ -96,18 +96,18 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 	 * @return a list with all candidates that satisfy the conditions specified
 	 *         by the non-null arguments.
 	 */
-	public List<IMasterDegreeCandidate> readCandidateList(final Integer executionDegreeID,
+	public List<MasterDegreeCandidate> readCandidateList(final Integer executionDegreeID,
 			final Specialization specialization, final SituationName situationName,
 			final Integer candidateNumber, final Integer executionYearID) throws ExcepcaoPersistencia {
 
-		final IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class,
+		final ExecutionYear executionYear = (ExecutionYear) readByOID(ExecutionYear.class,
 				executionYearID);
-		final List<IExecutionDegree> executionDegrees = executionYear
+		final List<ExecutionDegree> executionDegrees = executionYear
 				.getExecutionDegrees();
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidatesByYear = new ArrayList<IMasterDegreeCandidate>();
+		final List<MasterDegreeCandidate> masterDegreeCandidatesByYear = new ArrayList<MasterDegreeCandidate>();
 
-		for (IExecutionDegree degree : executionDegrees) {
+		for (ExecutionDegree degree : executionDegrees) {
 			masterDegreeCandidatesByYear.addAll(degree.getMasterDegreeCandidates());
 		}
 
@@ -117,7 +117,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 			return masterDegreeCandidatesByYear;
 		}
 
-		final List<IMasterDegreeCandidate> result = new ArrayList<IMasterDegreeCandidate>();
+		final List<MasterDegreeCandidate> result = new ArrayList<MasterDegreeCandidate>();
 
 		final List<Boolean> mask = new ArrayList(4);
 
@@ -126,7 +126,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		mask.set(2, candidateNumber == null ? false : true);
 		mask.set(3, situationName == null ? false : true);
 
-		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidatesByYear) {
+		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidatesByYear) {
 			boolean checked = true;
 
 			if (mask.get(0)) {
@@ -141,7 +141,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 			}
 			if (mask.get(3) && checked) {
 				checked = false;
-				for (ICandidateSituation candidateSituation : masterDegreeCandidate
+				for (CandidateSituation candidateSituation : masterDegreeCandidate
 						.getSituations()) {
 					if (candidateSituation.getSituation().equals(situationName)) {
 						checked = true;
@@ -156,17 +156,17 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		return result;
 	}
 
-	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(final Integer number,
+	public MasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(final Integer number,
 			final Integer executionDegreeID, final Specialization specialization)
 			throws ExcepcaoPersistencia {
 
-		final IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+		final ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
 				executionDegreeID);
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = executionDegree
+		final List<MasterDegreeCandidate> masterDegreeCandidates = executionDegree
 				.getMasterDegreeCandidates();
 
-		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
+		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
 			if (masterDegreeCandidate.getSpecialization().equals(specialization)
 					&& masterDegreeCandidate.getCandidateNumber().equals(number)) {
 				return masterDegreeCandidate;
@@ -177,15 +177,15 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 	}
 
-	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(final Integer executionDegreeID,
+	public MasterDegreeCandidate readByExecutionDegreeAndPerson(final Integer executionDegreeID,
 			final Integer personID) throws ExcepcaoPersistencia {
 
-		final IPerson person = (IPerson) readByOID(Person.class, personID);
+		final Person person = (Person) readByOID(Person.class, personID);
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = person
+		final List<MasterDegreeCandidate> masterDegreeCandidates = person
 				.getMasterDegreeCandidates();
 
-		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
+		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
 			if (masterDegreeCandidate.getExecutionDegree().getIdInternal().equals(executionDegreeID)) {
 				return masterDegreeCandidate;
 			}
@@ -193,16 +193,16 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 		return null;
 	}
 
-	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(
+	public MasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(
 			final Integer executionDegreeID, final Integer personID, final Integer number)
 			throws ExcepcaoPersistencia {
 
-		final IPerson person = (IPerson) readByOID(Person.class, personID);
+		final Person person = (Person) readByOID(Person.class, personID);
 
-		final List<IMasterDegreeCandidate> masterDegreeCandidates = person
+		final List<MasterDegreeCandidate> masterDegreeCandidates = person
 				.getMasterDegreeCandidates();
 
-		for (final IMasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
+		for (final MasterDegreeCandidate masterDegreeCandidate : masterDegreeCandidates) {
 			if (masterDegreeCandidate.getExecutionDegree().getIdInternal().equals(executionDegreeID)
 					&& masterDegreeCandidate.getCandidateNumber().equals(number)) {
 				return masterDegreeCandidate;
@@ -214,7 +214,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 	public List readByExecutionDegree(final Integer executionDegreeID) throws ExcepcaoPersistencia {
 
-		final IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+		final ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
 				executionDegreeID);
 
 		return executionDegree.getMasterDegreeCandidates();
@@ -222,12 +222,12 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 	public List readByDegreeCurricularPlanId(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
 
-		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
 				DegreeCurricularPlan.class, degreeCurricularPlanId);
 
-		final List<IMasterDegreeCandidate> result = new ArrayList<IMasterDegreeCandidate>();
+		final List<MasterDegreeCandidate> result = new ArrayList<MasterDegreeCandidate>();
 
-		for (IExecutionDegree degree : degreeCurricularPlan
+		for (ExecutionDegree degree : degreeCurricularPlan
 				.getExecutionDegrees()) {
 			result.addAll(degree.getMasterDegreeCandidates());
 		}
@@ -237,7 +237,7 @@ public class MasterDegreeCandidateVO extends VersionedObjectsBase implements
 
 	public List readByPersonID(Integer personID) throws ExcepcaoPersistencia {
 
-		final IPerson person = (IPerson) readByOID(Person.class, personID);
+		final Person person = (Person) readByOID(Person.class, personID);
 
 		return person.getMasterDegreeCandidates();
 	}

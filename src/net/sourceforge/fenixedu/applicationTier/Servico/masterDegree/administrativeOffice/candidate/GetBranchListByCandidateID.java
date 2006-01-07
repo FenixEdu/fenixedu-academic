@@ -10,8 +10,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,7 +30,7 @@ public class GetBranchListByCandidateID implements IService {
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
 				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
 						candidateID);
 		// result =
@@ -48,7 +48,7 @@ public class GetBranchListByCandidateID implements IService {
 		Iterator iterator = result.iterator();
 
 		while (iterator.hasNext()) {
-			IBranch branch = (IBranch) iterator.next();
+			Branch branch = (Branch) iterator.next();
 			InfoBranch infoBranch = InfoBranch.newInfoFromDomain(branch);
 
 			if ((infoBranch.getName() == null) || (infoBranch.getName().length() == 0)) {

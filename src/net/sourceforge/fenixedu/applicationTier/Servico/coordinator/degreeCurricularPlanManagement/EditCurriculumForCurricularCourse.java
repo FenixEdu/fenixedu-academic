@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurriculum;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -51,18 +51,18 @@ public class EditCurriculumForCurricularCourse implements IService {
             throw new FenixServiceException("nullUsername");
         }
 
-        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
 
-        IPerson person = persistentPerson.lerPessoaPorUsername(username);
+        Person person = persistentPerson.lerPessoaPorUsername(username);
         if (person == null) {
             throw new NonExistingServiceException("noPerson");
         }
 
-        ICurriculum oldCurriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
+        Curriculum oldCurriculum = (Curriculum) persistentCurriculum.readByOID(Curriculum.class,
                 oldCurriculumId);
 
         if (oldCurriculum == null) {
@@ -73,7 +73,7 @@ public class EditCurriculumForCurricularCourse implements IService {
             oldCurriculum.setLastModificationDate(today.getTime());
         }
 
-        IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
 
         if (!oldCurriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
                 && !oldCurriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
@@ -84,7 +84,7 @@ public class EditCurriculumForCurricularCourse implements IService {
                     newInfoCurriculum.getProgramEn(), language, person);
 
         } else {
-            ICurriculum newCurriculum = DomainFactory.makeCurriculum();
+            Curriculum newCurriculum = DomainFactory.makeCurriculum();
             newCurriculum.setCurricularCourse(curricularCourse);
 
             newCurriculum.edit(newInfoCurriculum.getGeneralObjectives(), newInfoCurriculum

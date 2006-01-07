@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,15 +25,15 @@ public class ReadDisciplinesByStudent implements IService {
 		List courses = new ArrayList();
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+		Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
 				degreeType);
 
 		if (student != null) {
 			List frequencies = sp.getIFrequentaPersistente()
 					.readByStudentNumberInCurrentExecutionPeriod(number);
 			for (int i = 0; i < frequencies.size(); i++) {
-				IAttends frequent = (IAttends) frequencies.get(i);
-				IExecutionCourse executionCourse = frequent.getDisciplinaExecucao();
+				Attends frequent = (Attends) frequencies.get(i);
+				ExecutionCourse executionCourse = frequent.getDisciplinaExecucao();
 
 				disciplines.add(executionCourse);
 
@@ -41,7 +41,7 @@ public class ReadDisciplinesByStudent implements IService {
 		}
 		if (disciplines != null)
 			for (int i = 0; i < disciplines.size(); i++) {
-				IExecutionCourse executionCourse = (IExecutionCourse) disciplines.get(i);
+				ExecutionCourse executionCourse = (ExecutionCourse) disciplines.get(i);
 				InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
 						.newInfoFromDomain(executionCourse);
 				courses.add(infoExecutionCourse);

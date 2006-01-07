@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfCurricularCourseEnrolmentPeriod;
 import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCoursesSpecialSeason;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /*
@@ -27,10 +27,10 @@ public class ShowAvailableCurricularCourses extends
     public InfoStudentEnrollmentContext run(Integer executionDegreeId, Integer studentCurricularPlanId,
             Integer studentNumber) throws Exception {
 
-        IStudent student = getStudent(studentNumber);
+        Student student = getStudent(studentNumber);
 
             if (student != null) {
-                IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+                StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 
                 if (studentCurricularPlan != null) {
                 	if(checkSpecialSeason(studentCurricularPlan)) {
@@ -40,8 +40,8 @@ public class ShowAvailableCurricularCourses extends
                             throw new FenixServiceException("degree");
                         }
                 	} else {
-	                    IEnrolmentPeriodInCurricularCourses enrolmentPeriod = getEnrolmentPeriod(studentCurricularPlan);
-	                    IExecutionPeriod executionPeriod = getExecutionPeriod(null);
+	                    EnrolmentPeriodInCurricularCourses enrolmentPeriod = getEnrolmentPeriod(studentCurricularPlan);
+	                    ExecutionPeriod executionPeriod = getExecutionPeriod(null);
 	                    if (executionPeriod.equals(enrolmentPeriod.getExecutionPeriod())) {
 	                        try {
 	                            return super.run(executionDegreeId, studentCurricularPlanId, studentNumber);
@@ -61,11 +61,11 @@ public class ShowAvailableCurricularCourses extends
 
     }
 
-	private boolean checkSpecialSeason(IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
-		IExecutionPeriod executionPeriod = getExecutionPeriod(null);
-		IExecutionPeriod previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
+	private boolean checkSpecialSeason(StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+		ExecutionPeriod executionPeriod = getExecutionPeriod(null);
+		ExecutionPeriod previousExecutionPeriod = executionPeriod.getPreviousExecutionPeriod();
 		if(studentCurricularPlan.isEnroledInSpecialSeason(previousExecutionPeriod) || studentCurricularPlan.isEnroledInSpecialSeason(previousExecutionPeriod.getPreviousExecutionPeriod())) {
-			IEnrolmentPeriodInCurricularCoursesSpecialSeason periodInCurricularCoursesSpecialSeason = studentCurricularPlan.getDegreeCurricularPlan().getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionPeriod);
+			EnrolmentPeriodInCurricularCoursesSpecialSeason periodInCurricularCoursesSpecialSeason = studentCurricularPlan.getDegreeCurricularPlan().getEnrolmentPeriodInCurricularCoursesSpecialSeasonByExecutionPeriod(executionPeriod);
 			if(periodInCurricularCoursesSpecialSeason != null) {
 				if (isInPeriod(periodInCurricularCoursesSpecialSeason.getStartDate(), periodInCurricularCoursesSpecialSeason.getEndDate())) {
 					return true;

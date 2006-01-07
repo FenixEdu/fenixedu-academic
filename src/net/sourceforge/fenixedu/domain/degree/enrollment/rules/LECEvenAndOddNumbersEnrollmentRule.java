@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -20,10 +20,10 @@ public class LECEvenAndOddNumbersEnrollmentRule implements IEnrollmentRule {
 
     private Integer evenCourseId = new Integer(2720);
 
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
 
-    public LECEvenAndOddNumbersEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public LECEvenAndOddNumbersEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         studentNumber = studentCurricularPlan.getStudent().getNumber().floatValue();
         this.executionPeriod = executionPeriod;
     }

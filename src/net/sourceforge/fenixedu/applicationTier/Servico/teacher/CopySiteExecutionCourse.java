@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -31,22 +31,22 @@ public class CopySiteExecutionCourse implements IService {
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourseFrom = (IExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentExecutionCourse
                 .readByOID(ExecutionCourse.class, executionCourseFromID);
         if (executionCourseFrom == null)
             throw new InvalidArgumentsServiceException();
 
-        final IExecutionCourse executionCourseTo = (IExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentExecutionCourse
                 .readByOID(ExecutionCourse.class, executionCourseToID);
         if (executionCourseTo == null)
             throw new InvalidArgumentsServiceException();
 
-        ISite siteFrom = executionCourseFrom.getSite();
+        Site siteFrom = executionCourseFrom.getSite();
         if (siteFrom == null) {
             throw new FenixServiceException();
         }
 
-        ISite siteTo = executionCourseTo.getSite();
+        Site siteTo = executionCourseTo.getSite();
         if (siteTo == null) {
             executionCourseTo.createSite();
             siteTo = executionCourseTo.getSite();

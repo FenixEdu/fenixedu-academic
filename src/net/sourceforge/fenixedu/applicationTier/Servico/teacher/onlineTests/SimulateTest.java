@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQu
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -54,7 +54,7 @@ public class SimulateTest implements IService {
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new FenixServiceException();
 
@@ -63,10 +63,10 @@ public class SimulateTest implements IService {
         int notResponseNumber = 0;
         List<String> errors = new ArrayList<String>();
 
-        ITestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
                     executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
@@ -157,9 +157,9 @@ public class SimulateTest implements IService {
             InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        List<ITestQuestion> testQuestionList = sp.getIPersistentTestQuestion().readByTest(testId);
+        List<TestQuestion> testQuestionList = sp.getIPersistentTestQuestion().readByTest(testId);
         for (int i = 0; i < testQuestionList.size(); i++) {
-            ITestQuestion testQuestionExample = testQuestionList.get(i);
+            TestQuestion testQuestionExample = testQuestionList.get(i);
             InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
             infoStudentTestQuestion.setDistributedTest(infoDistributedTest);
             infoStudentTestQuestion.setTestQuestionOrder(testQuestionExample.getTestQuestionOrder());
@@ -168,7 +168,7 @@ public class SimulateTest implements IService {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(new Double(0));
             infoStudentTestQuestion.setResponse(null);
-            IQuestion question = (IQuestion) sp.getIPersistentQuestion().readByOID(Question.class, new Integer(questionCodes[i]));
+            Question question = (Question) sp.getIPersistentQuestion().readByOID(Question.class, new Integer(questionCodes[i]));
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }

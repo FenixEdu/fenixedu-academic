@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.Lesson;
 
 /**
  * 
@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.ILesson;
 public class InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod extends InfoLessonWithInfoRoom {
 
     @Override
-    public void copyFromDomain(ILesson lesson) {
+    public void copyFromDomain(Lesson lesson) {
         super.copyFromDomain(lesson);
         if (lesson != null) {
             setInfoRoomOccupation(InfoRoomOccupationWithInfoRoomAndInfoPeriod.newInfoFromDomain(lesson.getRoomOccupation()));
         }
     }
 
-    public static InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod newInfoFromDomain(ILesson lesson) {
+    public static InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod newInfoFromDomain(Lesson lesson) {
         InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod();

@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
  * @author tfc130
@@ -332,7 +332,7 @@ public class InfoExecutionCourse extends InfoObject {
         this.associatedInfoShifts = associatedInfoShifts;
     }
 
-    public void copyFromDomain(IExecutionCourse executionCourse) {
+    public void copyFromDomain(ExecutionCourse executionCourse) {
         super.copyFromDomain(executionCourse);
         if (executionCourse != null) {
             setNome(executionCourse.getNome());
@@ -346,7 +346,7 @@ public class InfoExecutionCourse extends InfoObject {
         }
     }
 
-    public static InfoExecutionCourse newInfoFromDomain(IExecutionCourse executionCourse) {
+    public static InfoExecutionCourse newInfoFromDomain(ExecutionCourse executionCourse) {
         InfoExecutionCourse infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourse();

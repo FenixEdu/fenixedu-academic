@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -20,7 +20,7 @@ public class PublicationsNumber extends PublicationsNumber_Base {
 		super();
 	}
 	
-	public PublicationsNumber(ITeacher teacher, InfoPublicationsNumber infoPublicationsNumber) {
+	public PublicationsNumber(Teacher teacher, InfoPublicationsNumber infoPublicationsNumber) {
 		if(teacher == null)
 			throw new DomainException("The teacher should not be null!");
 		

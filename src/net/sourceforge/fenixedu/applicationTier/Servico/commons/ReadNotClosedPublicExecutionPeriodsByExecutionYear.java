@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -33,7 +33,7 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear implements IServ
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
         IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-        IExecutionYear executionYear;
+        ExecutionYear executionYear;
         List executionPeriods;
 
         if (infoExecutionYear == null) {
@@ -49,7 +49,7 @@ public class ReadNotClosedPublicExecutionPeriodsByExecutionYear implements IServ
         result = (List) CollectionUtils.collect(executionPeriods, new Transformer() {
 
             public Object transform(Object input) {
-                IExecutionPeriod executionPeriod = (IExecutionPeriod) input;
+                ExecutionPeriod executionPeriod = (ExecutionPeriod) input;
                 InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
                         .newInfoFromDomain(executionPeriod);
                 return infoExecutionPeriod;

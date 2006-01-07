@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 
 /**
  * @author Tânia Pousão
@@ -15,9 +15,9 @@ public class InfoSiteWithInfoExecutionCourse extends InfoSite {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoSite#copyFromDomain(Dominio.ISite)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoSite#copyFromDomain(Dominio.Site)
      */
-    public void copyFromDomain(ISite site) {
+    public void copyFromDomain(Site site) {
         super.copyFromDomain(site);
         if (site != null) {
             setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(site
@@ -25,7 +25,7 @@ public class InfoSiteWithInfoExecutionCourse extends InfoSite {
         }
     }
 
-    public static InfoSite newInfoFromDomain(ISite site) {
+    public static InfoSite newInfoFromDomain(Site site) {
         InfoSiteWithInfoExecutionCourse infoSite = null;
         if (site != null) {
             infoSite = new InfoSiteWithInfoExecutionCourse();

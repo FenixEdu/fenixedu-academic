@@ -6,12 +6,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
@@ -27,10 +27,10 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     }
 
     public Integer readMaxGrantOwnerNumber() throws ExcepcaoPersistencia {
-        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        List<GrantOwner> grantOwners = (List<GrantOwner>) readAll(GrantOwner.class);
         Integer maxGrantOwnerNumber = 0;
 
-        for (IGrantOwner owner : grantOwners) {
+        for (GrantOwner owner : grantOwners) {
             if (owner.getNumber() > maxGrantOwnerNumber) {
                 maxGrantOwnerNumber = owner.getNumber();
             }
@@ -39,10 +39,10 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
         return maxGrantOwnerNumber;
     }
 
-    public IGrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia {
-        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+    public GrantOwner readGrantOwnerByNumber(Integer grantOwnerNumber) throws ExcepcaoPersistencia {
+        List<GrantOwner> grantOwners = (List<GrantOwner>) readAll(GrantOwner.class);
 
-        for (IGrantOwner owner : grantOwners) {
+        for (GrantOwner owner : grantOwners) {
             if (owner.getNumber().equals(grantOwnerNumber)) {
                 return owner;
             }
@@ -51,17 +51,17 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
         return null;
     }
 
-    public IGrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia {
-        IPerson person = (IPerson) readByOID(Person.class, personIdInternal);
+    public GrantOwner readGrantOwnerByPerson(Integer personIdInternal) throws ExcepcaoPersistencia {
+        Person person = (Person) readByOID(Person.class, personIdInternal);
         return person.getGrantOwner();
     }
 
-    public IGrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
+    public GrantOwner readGrantOwnerByPersonID(String idNumber, IDDocumentType idType)
             throws ExcepcaoPersistencia {
 
-        List<IPerson> persons = (List<IPerson>) readAll(Person.class);
+        List<Person> persons = (List<Person>) readAll(Person.class);
 
-        for (IPerson person : persons) {
+        for (Person person : persons) {
             if (person.getNumeroDocumentoIdentificacao().equals(idNumber)
                     && person.getIdDocumentType().equals(idType)) {
                 return person.getGrantOwner();
@@ -76,10 +76,10 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     }
 
     public Integer countAllGrantOwnerByName(String personName) {
-        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        List<GrantOwner> grantOwners = (List<GrantOwner>) readAll(GrantOwner.class);
         int result = 0;
 
-        for (IGrantOwner grantOwner : grantOwners) {
+        for (GrantOwner grantOwner : grantOwners) {
             if (grantOwner.getPerson().getNome().equals(personName)) {
                 result++;
             }
@@ -91,16 +91,16 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     public Integer countAllByCriteria(Boolean justActiveContracts, Boolean justDesactiveContracts,
             Date dateBeginContract, Date dateEndContract, Integer grantTypeId) {
 
-        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        List<GrantOwner> grantOwners = (List<GrantOwner>) readAll(GrantOwner.class);
         int result = 0;
         long now = System.currentTimeMillis();
 
-        for (IGrantOwner owner : grantOwners) {
+        for (GrantOwner owner : grantOwners) {
 
             boolean verifiesContract = true;
-            for (IGrantContract grantContract : owner.getGrantContracts()) {
+            for (GrantContract grantContract : owner.getGrantContracts()) {
 
-                for (IGrantContractRegime grantContractRegime : grantContract
+                for (GrantContractRegime grantContractRegime : grantContract
                         .getContractRegimes()) {
                     if (justActiveContracts != null
                             && justActiveContracts.booleanValue()
@@ -158,14 +158,14 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     public List readGrantOwnerByPersonName(String personName, Integer startIndex,
             Integer numberOfElementsInSpan) throws ExcepcaoPersistencia {
 
-        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
-        List<IGrantOwner> result = new ArrayList(numberOfElementsInSpan);
+        List<GrantOwner> grantOwners = (List<GrantOwner>) readAll(GrantOwner.class);
+        List<GrantOwner> result = new ArrayList(numberOfElementsInSpan);
 
-        IGrantOwner grantOwner = null;
+        GrantOwner grantOwner = null;
         for (Iterator iter = grantOwners.listIterator(startIndex); iter.hasNext()
                 && result.size() <= numberOfElementsInSpan;) {
 
-            grantOwner = (IGrantOwner) iter.next();
+            grantOwner = (GrantOwner) iter.next();
 
             if (grantOwner.getPerson().getNome().equals(personName)) {
                 result.add(grantOwner);
@@ -178,7 +178,7 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     public List readAllBySpan(Integer spanNumber, Integer numberOfElementsInSpan)
             throws ExcepcaoPersistencia {
 
-        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        List<GrantOwner> grantOwners = (List<GrantOwner>) readAll(GrantOwner.class);
         
         int begin = (spanNumber - 1) * numberOfElementsInSpan;
         int end = begin + numberOfElementsInSpan;
@@ -189,7 +189,7 @@ public class GrantOwnerVO extends VersionedObjectsBase implements IPersistentGra
     public List readAllGrantOwnersBySpan(Integer spanNumber, Integer numberOfElementsInSpan,
             String orderBy) throws ExcepcaoPersistencia {
 
-        List<IGrantOwner> grantOwners = (List<IGrantOwner>) readAll(GrantOwner.class);
+        List<GrantOwner> grantOwners = (List<GrantOwner>) readAll(GrantOwner.class);
         ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator(orderBy), true);
         Collections.sort(grantOwners, comparatorChain);
         

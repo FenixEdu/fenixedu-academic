@@ -6,11 +6,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequests;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
-import net.sourceforge.fenixedu.domain.ICostCenter;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CostCenter;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,32 +30,32 @@ public class WriteExtraWorkRequests implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-        final IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
+        final Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
 
         // Read employee logged
-        IEmployee employeeWho = null;
+        Employee employeeWho = null;
         IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
         if (personWho != null) {
             employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
         }
 
         IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
-        ICostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
+        CostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
         if (costCenter == null) {
             // TODO
         }
 
-        ICostCenter costCenterMoney = costCenterDAO.readCostCenterByCode(costCenterMoneyCode);
+        CostCenter costCenterMoney = costCenterDAO.readCostCenterByCode(costCenterMoneyCode);
         if (costCenterMoney == null) {
             // TODO
         }
 
-        List<IExtraWorkRequests> extraWorkRequestsList = new ArrayList<IExtraWorkRequests>();
+        List<ExtraWorkRequests> extraWorkRequestsList = new ArrayList<ExtraWorkRequests>();
         for (InfoExtraWorkRequests infoExtraWorkRequests : infoExtraWorkRequestsList) {
-            IExtraWorkRequests extraWorkRequests = null;
+            ExtraWorkRequests extraWorkRequests = null;
             if (infoExtraWorkRequests.getIdInternal() != null
                     && infoExtraWorkRequests.getIdInternal().intValue() > 0) {
-                extraWorkRequests = (IExtraWorkRequests) sp.getIPersistentObject().readByOID(
+                extraWorkRequests = (ExtraWorkRequests) sp.getIPersistentObject().readByOID(
                         ExtraWorkRequests.class, infoExtraWorkRequests.getIdInternal());
             }
             if (extraWorkRequests == null) {
@@ -80,7 +80,7 @@ public class WriteExtraWorkRequests implements IService {
             extraWorkRequests.setCostCenterExtraWork(costCenter);
             extraWorkRequests.setCostCenterMoney(costCenterMoney);
 
-            IEmployee employee = employeeDAO.readByNumber(infoExtraWorkRequests.getInfoEmployee()
+            Employee employee = employeeDAO.readByNumber(infoExtraWorkRequests.getInfoEmployee()
                     .getEmployeeNumber());
             if (employee == null) {
                 // TODO
@@ -96,7 +96,7 @@ public class WriteExtraWorkRequests implements IService {
 
         return (List) CollectionUtils.collect(extraWorkRequestsList, new Transformer() {
             public Object transform(Object arg0) {
-                IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
+                ExtraWorkRequests extraWorkRequests = (ExtraWorkRequests) arg0;
                 return InfoExtraWorkRequestsWithAll.newInfoFromDomain(extraWorkRequests);
             }
         });

@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.IPrice;
+import net.sourceforge.fenixedu.domain.Price;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -34,7 +34,7 @@ public interface IPersistentPrice extends IPersistentObject {
      * @return IPrice
      * @throws ExcepcaoPersistencia
      */
-    public IPrice readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
+    public Price readByGraduationTypeAndDocumentTypeAndDescription(GraduationType graduationType,
             DocumentType documentType, String description) throws ExcepcaoPersistencia;
 
     /**

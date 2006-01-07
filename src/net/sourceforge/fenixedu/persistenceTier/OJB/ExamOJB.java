@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 
@@ -31,7 +31,7 @@ public class ExamOJB extends ObjectFenixOJB implements IPersistentExam {
         List examsWithRepetition = queryList(Exam.class, criteria);
         List examsWithoutRepetition = new ArrayList();
         for (int i = 0; i < examsWithRepetition.size(); i++) {
-            IExam exam = (IExam) examsWithRepetition.get(i);
+            Exam exam = (Exam) examsWithRepetition.get(i);
             if (!examsWithoutRepetition.contains(exam)) {
                 examsWithoutRepetition.add(exam);
             }

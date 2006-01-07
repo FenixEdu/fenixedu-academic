@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -32,7 +32,7 @@ public class InfoExternalEvaluationInfo
         this.grade = grade;
     }
     
-    public static InfoExternalEvaluationInfo newFromEvaluation(IEnrolmentEvaluation evaluation)
+    public static InfoExternalEvaluationInfo newFromEvaluation(EnrolmentEvaluation evaluation)
     {
         InfoExternalEvaluationInfo info = new InfoExternalEvaluationInfo();
         info.setGrade(evaluation.getGrade());

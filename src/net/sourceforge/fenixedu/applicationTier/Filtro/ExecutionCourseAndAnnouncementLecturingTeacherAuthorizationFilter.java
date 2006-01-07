@@ -10,10 +10,10 @@ import java.util.Iterator;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Announcement;
-import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Announcement;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -61,16 +61,16 @@ public class ExecutionCourseAndAnnouncementLecturingTeacherAuthorizationFilter e
             final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             final Integer announcementID = getAnnouncementID(args);
-            final IAnnouncement announcement = (IAnnouncement) persistentSupport.getIPersistentObject().readByOID(
+            final Announcement announcement = (Announcement) persistentSupport.getIPersistentObject().readByOID(
                     Announcement.class, announcementID);
-            final ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            final Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             if (announcement != null && teacher != null) {
-                final IExecutionCourse executionCourse = announcement.getSite().getExecutionCourse();
+                final ExecutionCourse executionCourse = announcement.getSite().getExecutionCourse();
                 // Check if Teacher has a professorship to ExecutionCourse Announcement
                 final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
                 while (associatedProfessorships.hasNext()) {
-                    IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
+                    Professorship professorship = (Professorship) associatedProfessorships.next();
                     if (professorship.getExecutionCourse().equals(executionCourse)) {
                         result = true;
                         break;

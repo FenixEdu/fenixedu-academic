@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
  */
 public class InfoExecutionCourseWithExecutionPeriod extends InfoExecutionCourse {
 
-    public void copyFromDomain(IExecutionCourse executionCourse) {
+    public void copyFromDomain(ExecutionCourse executionCourse) {
         super.copyFromDomain(executionCourse);
         if (executionCourse != null) {
             setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
@@ -20,7 +20,7 @@ public class InfoExecutionCourseWithExecutionPeriod extends InfoExecutionCourse 
         }
     }
 
-    public static InfoExecutionCourse newInfoFromDomain(IExecutionCourse executionCourse) {
+    public static InfoExecutionCourse newInfoFromDomain(ExecutionCourse executionCourse) {
         InfoExecutionCourseWithExecutionPeriod infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourseWithExecutionPeriod();

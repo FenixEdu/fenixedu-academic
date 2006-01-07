@@ -5,9 +5,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,7 +31,7 @@ public class EnrollStudentInShifts implements IService {
 
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        final IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentId);
+        final Student student = (Student) persistentStudent.readByOID(Student.class, studentId);
         if (student == null) {
             throw new StudentNotFoundServiceException();
         }
@@ -40,12 +40,12 @@ public class EnrollStudentInShifts implements IService {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftId);
+        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftId);
         if (shift == null) {
             errorReport.getUnExistingShifts().add(shiftId);
         }             
 
-        final IShift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(student, shift);
+        final Shift shiftFromStudent = findShiftOfSameTypeForSameExecutionCourse(student, shift);
         if (shift != shiftFromStudent) {
             //Student is not yet enroled, so let's reserve the shift...
             if (reserveShiftForStudent(student, shift)) {
@@ -60,13 +60,13 @@ public class EnrollStudentInShifts implements IService {
         return errorReport;
     }
 
-    private IShift findShiftOfSameTypeForSameExecutionCourse(final IStudent student, final IShift shift) {
-        final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+    private Shift findShiftOfSameTypeForSameExecutionCourse(final Student student, final Shift shift) {
+        final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 
-        final List<IShift> shiftsFromStudent = student.getShifts();
-        for (final IShift shiftFromStudent : shiftsFromStudent) {
+        final List<Shift> shiftsFromStudent = student.getShifts();
+        for (final Shift shiftFromStudent : shiftsFromStudent) {
             if (shiftFromStudent.getTipo() == shift.getTipo()) {
-                final IExecutionCourse executionCourseFromStudent = shiftFromStudent.getDisciplinaExecucao();
+                final ExecutionCourse executionCourseFromStudent = shiftFromStudent.getDisciplinaExecucao();
                 if (executionCourseFromStudent == executionCourse) {
                     return shiftFromStudent;
                 }
@@ -76,8 +76,8 @@ public class EnrollStudentInShifts implements IService {
         return null;
     }
 
-    private boolean reserveShiftForStudent(IStudent student, IShift shift) {
-        final List<IStudent> students = shift.getStudents();
+    private boolean reserveShiftForStudent(Student student, Shift shift) {
+        final List<Student> students = shift.getStudents();
         if (shift.getLotacao().intValue() > students.size()) {
             students.add(student);
             return true;

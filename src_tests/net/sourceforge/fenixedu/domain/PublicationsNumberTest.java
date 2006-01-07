@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.IPublicationsNumber;
+import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.util.PublicationType;
 
 /**
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.PublicationType;
  */
 public class PublicationsNumberTest extends DomainTestBase {
 	
-	private ITeacher teacher;
+	private Teacher teacher;
 	
 	private InfoPublicationsNumber infoPublicationsNumberToCreate;
 	private InfoPublicationsNumber infoPublicationsNumberEdit;
@@ -48,7 +48,7 @@ public class PublicationsNumberTest extends DomainTestBase {
 			
 		}
 		
-		IPublicationsNumber newPublicationsNumber = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumberToCreate);
+		PublicationsNumber newPublicationsNumber = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumberToCreate);
 		
 		assertTrue("Failed to reference teacher!", newPublicationsNumber.hasTeacher());
 		assertEquals("Different teacher!", newPublicationsNumber.getTeacher(), teacher);
@@ -57,7 +57,7 @@ public class PublicationsNumberTest extends DomainTestBase {
 	
 	public void testEditPublicationsNumber() {
 		setUpEdit();
-		IPublicationsNumber publicationsNumberToEdit = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumberToCreate);
+		PublicationsNumber publicationsNumberToEdit = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumberToCreate);
 		
 		publicationsNumberToEdit.edit(infoPublicationsNumberEdit);
 		verifyPublicationsNumberAttributes(publicationsNumberToEdit, infoPublicationsNumberEdit);
@@ -65,7 +65,7 @@ public class PublicationsNumberTest extends DomainTestBase {
 	}
 
 
-	private void verifyPublicationsNumberAttributes(IPublicationsNumber publicationsNumber, InfoPublicationsNumber infoPublicationsNumber) {
+	private void verifyPublicationsNumberAttributes(PublicationsNumber publicationsNumber, InfoPublicationsNumber infoPublicationsNumber) {
 		assertEquals("Different national!", publicationsNumber.getNational(), infoPublicationsNumber.getNational());
 		assertEquals("Different international!", publicationsNumber.getInternational(), infoPublicationsNumber.getInternational());
 		assertEquals("Different publicationType!", publicationsNumber.getPublicationType(), infoPublicationsNumber.getPublicationType());

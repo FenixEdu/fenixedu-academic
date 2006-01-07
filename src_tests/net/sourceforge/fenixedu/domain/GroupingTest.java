@@ -15,21 +15,21 @@ import net.sourceforge.fenixedu.util.ProposalState;
 
 public class GroupingTest extends DomainTestBase {
 
-    private IGrouping groupingToEdit;
+    private Grouping groupingToEdit;
 
-    private IShift shift, shift2;
+    private Shift shift, shift2;
 
-    IGrouping grouping, grouping2;
+    Grouping grouping, grouping2;
 
-    IExecutionCourse executionCourse, executionCourse1, executionCourse2;
+    ExecutionCourse executionCourse, executionCourse1, executionCourse2;
 
-    IExportGrouping exportGrouping, exportGrouping2;
+    ExportGrouping exportGrouping, exportGrouping2;
 
-    IStudentGroup studentGroup;
+    StudentGroup studentGroup;
 
-    IStudent student, student2, student3, student4, student5, student6, student7;
+    Student student, student2, student3, student4, student5, student6, student7;
 
-    IAttends attend, attend2, attend3, attend4, attend5, attend6, attend7;
+    Attends attend, attend2, attend3, attend4, attend5, attend6, attend7;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -48,7 +48,7 @@ public class GroupingTest extends DomainTestBase {
             assertEquals("StudentGroup UnExpected", studentGroup, grouping.getStudentGroups().get(0));
         }
 
-        List<IStudent> students = new ArrayList();
+        List<Student> students = new ArrayList();
         students.add(student3);
         students.add(student4);
 
@@ -183,7 +183,7 @@ public class GroupingTest extends DomainTestBase {
         } catch (NullPointerException e) {
             assertEquals("Different ExportingGroups Count!", executionCourse.getExportGroupingsCount(),
                     0);
-            for (final IAttends attend : executionCourse.getAttends()) {
+            for (final Attends attend : executionCourse.getAttends()) {
                 assertEquals("Invalid Attend Groupings Count!", attend.getGroupingsCount(), 0);
             }
         }
@@ -195,14 +195,14 @@ public class GroupingTest extends DomainTestBase {
         } catch (NullPointerException e) {
             assertEquals("Different ExportingGroups Count!", executionCourse.getExportGroupingsCount(),
                     0);
-            for (final IAttends attend : executionCourse.getAttends()) {
+            for (final Attends attend : executionCourse.getAttends()) {
                 assertEquals("Invalid Attend Groupings Count!", attend.getGroupingsCount(), 0);
             }
         }
 
         Date enrolmentBeginDayDate = createDate(2005, 10, 1);
         Date enrolmentEndDayDate = createDate(2005, 11, 1);
-        IGrouping newGrouping = Grouping.create("goupingName", enrolmentBeginDayDate,
+        Grouping newGrouping = Grouping.create("goupingName", enrolmentBeginDayDate,
                 enrolmentEndDayDate, new EnrolmentGroupPolicyType(EnrolmentGroupPolicyType.ATOMIC), 2,
                 2, 3, 1, "projectDescription", ShiftType.TEORICA, executionCourse);
         checkIfGroupingAttributesAreCorrect(newGrouping, "goupingName", new EnrolmentGroupPolicyType(
@@ -215,11 +215,11 @@ public class GroupingTest extends DomainTestBase {
 
         assertEquals("Different ExportingGroupings Count in Grouping!", newGrouping
                 .getExportGroupingsCount(), 1);
-        IExportGrouping exportGrouping = newGrouping.getExportGroupings().get(0);
+        ExportGrouping exportGrouping = newGrouping.getExportGroupings().get(0);
         assertEquals("", exportGrouping.getProposalState().getState(), Integer
                 .valueOf(ProposalState.CRIADOR));
 
-        for (final IAttends attend : executionCourse.getAttends()) {
+        for (final Attends attend : executionCourse.getAttends()) {
             assertEquals("Different Groupings Count in Attends!", attend.getGroupingsCount(), 1);
             assertEquals("Invalid Grouping int Attends!", attend.getGroupings().get(0), newGrouping);
         }
@@ -286,7 +286,7 @@ public class GroupingTest extends DomainTestBase {
         assertEquals("Different StudentGroups Count!", groupingToEdit.getStudentGroupsCount(), 2);
         assertEquals("Different Shift StudentGroups Count!", shift.getAssociatedStudentGroupsCount(), 0);
 
-        for (final IStudentGroup studentGroup : groupingToEdit.getStudentGroups()) {
+        for (final StudentGroup studentGroup : groupingToEdit.getStudentGroups()) {
             assertNull("StudentGroup Shift should be null!", studentGroup.getShift());
         }
     }
@@ -314,7 +314,7 @@ public class GroupingTest extends DomainTestBase {
         assertNull("ExecutionCourse UnExpected", exportGrouping2.getExecutionCourse());
     }
 
-    private void checkIfGroupingAttributesAreCorrect(final IGrouping grouping, final String goupingName,
+    private void checkIfGroupingAttributesAreCorrect(final Grouping grouping, final String goupingName,
             final EnrolmentGroupPolicyType enrolmentGroupPolicyType, final Integer groupMaximumNumber,
             final Integer idealCapacity, final Integer maximumCapacity, final Integer minimumCapacity,
             final String projectDescription, final ShiftType shiftType) {
@@ -448,20 +448,20 @@ public class GroupingTest extends DomainTestBase {
         groupingToEdit.setProjectDescription("projectDescription");
         groupingToEdit.setShiftType(ShiftType.TEORICA);
 
-        IExecutionCourse executionCourse = new ExecutionCourse();
+        ExecutionCourse executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(1);
 
-        IExportGrouping exportGrouping = new ExportGrouping();
+        ExportGrouping exportGrouping = new ExportGrouping();
         exportGrouping.setIdInternal(1);
         exportGrouping.setExecutionCourse(executionCourse);
         exportGrouping.setGrouping(groupingToEdit);
         exportGrouping.setProposalState(new ProposalState(ProposalState.CRIADOR));
 
-        IGrouping otherGrouping = new Grouping();
+        Grouping otherGrouping = new Grouping();
         otherGrouping.setIdInternal(2);
         otherGrouping.setName("otherInvalidName");
 
-        IExportGrouping otherExportGrouping = new ExportGrouping();
+        ExportGrouping otherExportGrouping = new ExportGrouping();
         otherExportGrouping.setIdInternal(2);
         otherExportGrouping.setExecutionCourse(executionCourse);
         otherExportGrouping.setGrouping(otherGrouping);
@@ -470,11 +470,11 @@ public class GroupingTest extends DomainTestBase {
         shift = new Shift();
         shift.setIdInternal(1);
 
-        IStudentGroup studentGroup1 = new StudentGroup();
+        StudentGroup studentGroup1 = new StudentGroup();
         studentGroup1.setIdInternal(1);
         studentGroup1.setShift(shift);
 
-        IStudentGroup studentGroup2 = new StudentGroup();
+        StudentGroup studentGroup2 = new StudentGroup();
         studentGroup2.setIdInternal(2);
         studentGroup2.setShift(shift);
 
@@ -486,9 +486,9 @@ public class GroupingTest extends DomainTestBase {
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(1);
 
-        IAttends attend1 = new Attends();
+        Attends attend1 = new Attends();
         attend1.setIdInternal(1);
-        IAttends attend2 = new Attends();
+        Attends attend2 = new Attends();
         attend2.setIdInternal(2);
 
         executionCourse.addAttends(attend1);

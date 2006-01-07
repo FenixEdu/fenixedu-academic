@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.ojb.broker.query.Criteria;
 
@@ -27,7 +27,7 @@ public interface IPersistentObject {
      * @return Object that we want to read
      * @deprecated
      */
-    public IDomainObject readByOId(IDomainObject obj, boolean lockWrite);
+    public DomainObject readByOId(DomainObject obj, boolean lockWrite);
 
     /**
      * Only locks the object for write. <b>Doesn't do anything else </b>
@@ -38,18 +38,18 @@ public interface IPersistentObject {
      *             when can't lock object.
      * @deprecated
      */
-    void simpleLockWrite(IDomainObject obj) throws ExcepcaoPersistencia;
+    void simpleLockWrite(DomainObject obj) throws ExcepcaoPersistencia;
 
-    public IDomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
+    public DomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
 
-    public IDomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
+    public DomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
             throws ExcepcaoPersistencia;
 
     public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia;
 
     public int count(Class classToQuery, Criteria criteria);
 
-    public IDomainObject materialize(IDomainObject domainObject);
+    public DomainObject materialize(DomainObject domainObject);
 
     public Collection readAll(Class classToQuery)  throws ExcepcaoPersistencia;
 }

@@ -8,9 +8,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -86,7 +86,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
         roleTemp.add(RoleType.COORDINATOR);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
 
-            ITeacher teacher = null;
+            Teacher teacher = null;
             // Read The ExecutionDegree
             try {
 
@@ -94,7 +94,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
 
                 teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
-                IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                         .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                                 candidateID);
 
@@ -103,7 +103,7 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
                 }
 
                 //modified by Tânia Pousão
-                ICoordinator coordinator = sp.getIPersistentCoordinator()
+                Coordinator coordinator = sp.getIPersistentCoordinator()
                         .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
                                 masterDegreeCandidate.getExecutionDegree().getIdInternal());
                 if (coordinator != null) {

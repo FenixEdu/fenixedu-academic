@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,12 +40,12 @@ public class CreateExercise implements IService {
 			ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport
 				.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
 		if (executionCourse == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		IMetadata metadata = null;
+		Metadata metadata = null;
 		if (metadataId == null) {
 			metadata = DomainFactory.makeMetadata(executionCourse, null, null);
 			metadata.setAuthor(author);
@@ -58,14 +58,14 @@ public class CreateExercise implements IService {
 			metadata.setLevel(level);
 			metadata.setVisibility(new Boolean(true));
 		} else {
-			metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class,
+			metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class,
 					metadataId);
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();
 			}
 		}
 		IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
-		IQuestion question = DomainFactory.makeQuestion();
+		Question question = DomainFactory.makeQuestion();
 		question.setMetadata(metadata);
 		question.setVisibility(new Boolean(true));
 		try {
@@ -75,7 +75,7 @@ public class CreateExercise implements IService {
 		} catch (UnsupportedEncodingException e) {
 			throw new FenixServiceException(e);
 		}
-		final List<IQuestion> visibleQuestions = metadata.getVisibleQuestions();
+		final List<Question> visibleQuestions = metadata.getVisibleQuestions();
 		if (metadataId == null)
 			question.setXmlFileName("Pergunta" + visibleQuestions.size() + ".xml");
 		else

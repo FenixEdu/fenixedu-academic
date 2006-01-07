@@ -9,17 +9,17 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
@@ -115,7 +115,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 
         Integer studentCurricularPlanID = (Integer) arguments[1];
 
-        IStudentCurricularPlan studentCurricularPlan = null;
+        StudentCurricularPlan studentCurricularPlan = null;
 
         // Read The DegreeCurricularPlan
         try {
@@ -133,17 +133,17 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         }
 
         try {
-            IStudent student = studentCurricularPlan.getStudent();
+            Student student = studentCurricularPlan.getStudent();
 
             IPersistentFinalDegreeWork persistentFinalDegreeWork = PersistenceSupportFactory.getDefaultPersistenceSupport()
                     .getIPersistentFinalDegreeWork();
 
-            IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
+            Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
                     .getPerson().getUsername());
             if (group != null) {
-                IExecutionDegree executionDegree = group.getExecutionDegree();
+                ExecutionDegree executionDegree = group.getExecutionDegree();
                 for (int i = 0; i < executionDegree.getCoordinatorsList().size(); i++) {
-                    ICoordinator coordinator = executionDegree.getCoordinatorsList().get(i);
+                    Coordinator coordinator = executionDegree.getCoordinatorsList().get(i);
                     if (coordinator.getTeacher().getPerson().getUsername().equals(id.getUtilizador())) {
                         // The student is a candidate for a final degree work of
                         // the degree of the
@@ -153,9 +153,9 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                 }
 
                 for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                    IGroupProposal groupProposal = group.getGroupProposals().get(i);
-                    IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
-                    ITeacher teacher = proposal.getOrientator();
+                    GroupProposal groupProposal = group.getGroupProposals().get(i);
+                    Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
+                    Teacher teacher = proposal.getOrientator();
 
                     if (teacher.getPerson().getUsername().equals(id.getUtilizador())) {
                         // The student is a candidate for a final degree work of
@@ -201,7 +201,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                     IPersistentExecutionDegree persistentExecutionDegree = sp
                             .getIPersistentExecutionDegree();
 
-                    IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree
+                    ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree
                             .readByOID(ExecutionDegree.class, (Integer) arguments[0]);
 
                     if (executionDegree == null) {
@@ -215,11 +215,11 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                     }
 
                     final String username = id.getUtilizador();
-                    ICoordinator coordinator = (ICoordinator) CollectionUtils.find(coordinatorsList,
+                    Coordinator coordinator = (Coordinator) CollectionUtils.find(coordinatorsList,
                             new Predicate() {
 
                                 public boolean evaluate(Object input) {
-                                    ICoordinator coordinatorTemp = (ICoordinator) input;
+                                    Coordinator coordinatorTemp = (Coordinator) input;
                                     if (username.equals(coordinatorTemp.getTeacher().getPerson()
                                             .getUsername())) {
                                         return true;
@@ -248,8 +248,8 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
                      * hasAnActiveCurricularPlanThatCoincidesWithTheCoordinatorsCurricularPlan =
                      * false; for (int i = 0; i <
                      * activeStudentCurricularPlans.size(); i++) {
-                     * IStudentCurricularPlan activeStudentCurricularPlan =
-                     * (IStudentCurricularPlan) activeStudentCurricularPlans
+                     * StudentCurricularPlan activeStudentCurricularPlan =
+                     * (StudentCurricularPlan) activeStudentCurricularPlans
                      * .get(i); if (coordinator.getExecutionDegree()
                      * .getDegreeCurricularPlan().getIdInternal().equals(
                      * activeStudentCurricularPlan .getDegreeCurricularPlan()
@@ -283,7 +283,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.TEACHER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             try {
-                ITeacher teacher = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTeacher()
+                Teacher teacher = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTeacher()
                         .readTeacherByUsername(id.getUtilizador());
                 if (teacher == null) {
                     return "noAuthorization";
@@ -313,17 +313,17 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         return "noAuthorization";
     }
 
-    private boolean verifyStudentTutor(ITeacher teacher, IStudent student) throws ExcepcaoPersistencia {
-        ITutor tutor = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTutor()
+    private boolean verifyStudentTutor(Teacher teacher, Student student) throws ExcepcaoPersistencia {
+        Tutor tutor = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTutor()
                 .readTutorByTeacherAndStudent(teacher, student);
 
         return (tutor != null);
     }
 
-    private IStudentCurricularPlan readStudentCurricularPlan(Integer studentCurricularPlanID,
+    private StudentCurricularPlan readStudentCurricularPlan(Integer studentCurricularPlanID,
             IPersistentStudentCurricularPlan persistentStudentCurricularPlan)
             throws ExcepcaoPersistencia {
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
         return studentCurricularPlan;
     }

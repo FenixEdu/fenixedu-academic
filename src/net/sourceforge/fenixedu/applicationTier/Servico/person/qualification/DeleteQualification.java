@@ -5,7 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person.qualification;
 
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
@@ -23,7 +23,7 @@ public class DeleteQualification implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentQualification pq = sp.getIPersistentQualification();
 		
-		IQualification qualification = (IQualification) pq.readByOID(Qualification.class, qualificationId);
+		Qualification qualification = (Qualification) pq.readByOID(Qualification.class, qualificationId);
 		qualification.delete();
 		
 	}

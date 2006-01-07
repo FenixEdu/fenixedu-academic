@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
@@ -31,11 +31,11 @@ public class DeleteBranches implements IService {
 
 		List undeletedCodes = new ArrayList();
 		Integer internalId;
-		IBranch branch;
+		Branch branch;
 
 		while (iter.hasNext()) {
 			internalId = (Integer) iter.next();
-			branch = (IBranch) persistentBranch.readByOID(Branch.class, internalId);
+			branch = (Branch) persistentBranch.readByOID(Branch.class, internalId);
 			if (branch != null) {
 				try {
 					if (branch.getStudentCurricularPlans().isEmpty()) {

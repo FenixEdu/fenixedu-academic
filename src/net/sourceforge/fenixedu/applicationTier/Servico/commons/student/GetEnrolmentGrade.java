@@ -5,11 +5,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -19,29 +19,29 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class GetEnrolmentGrade {
 
-    public InfoEnrolmentEvaluation run(IEnrolment enrolment) throws ExcepcaoPersistencia {
+    public InfoEnrolmentEvaluation run(Enrolment enrolment) throws ExcepcaoPersistencia {
         if (enrolment == null) {
             return null;
         }
 
-        final IStudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
-        final IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-        final IDegree degree = degreeCurricularPlan.getDegree();
+        final StudentCurricularPlan studentCurricularPlan = enrolment.getStudentCurricularPlan();
+        final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        final Degree degree = degreeCurricularPlan.getDegree();
 
         return (degree.getTipoCurso() == DegreeType.DEGREE) ?
                     run(enrolment.getAllFinalEnrolmentEvaluations()) : run(enrolment.getEvaluations());
     }
 
-    private InfoEnrolmentEvaluation run(List<IEnrolmentEvaluation> enrolmentEvaluations) throws ExcepcaoPersistencia {
+    private InfoEnrolmentEvaluation run(List<EnrolmentEvaluation> enrolmentEvaluations) throws ExcepcaoPersistencia {
         if(enrolmentEvaluations == null || enrolmentEvaluations.isEmpty()) {
             return null;
         }
         
-        final IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) Collections.max(enrolmentEvaluations);
+        final EnrolmentEvaluation evaluation = (EnrolmentEvaluation) Collections.max(enrolmentEvaluations);
         return getInfoLatestEvaluation(evaluation);
     }
 
-    private InfoEnrolmentEvaluation getInfoLatestEvaluation(IEnrolmentEvaluation latestEvaluation)
+    private InfoEnrolmentEvaluation getInfoLatestEvaluation(EnrolmentEvaluation latestEvaluation)
             throws ExcepcaoPersistencia {
 
         InfoEnrolmentEvaluation infolatestEvaluation = InfoEnrolmentEvaluation

@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
 
@@ -538,7 +538,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
     	this.acronym = acronym;
     }
 
-    public void copyFromDomain(ICurricularCourse curricularCourse) {
+    public void copyFromDomain(CurricularCourse curricularCourse) {
         super.copyFromDomain(curricularCourse);
         if (curricularCourse != null) {
             setBasic(curricularCourse.getBasic());
@@ -568,7 +568,7 @@ public class InfoCurricularCourse extends InfoObject implements Comparable, ISit
         }
     }
 
-    public static InfoCurricularCourse newInfoFromDomain(ICurricularCourse curricularCourse) {
+    public static InfoCurricularCourse newInfoFromDomain(CurricularCourse curricularCourse) {
         InfoCurricularCourse infoCurricularCourse = null;
         if (curricularCourse != null) {
             infoCurricularCourse = new InfoCurricularCourse();

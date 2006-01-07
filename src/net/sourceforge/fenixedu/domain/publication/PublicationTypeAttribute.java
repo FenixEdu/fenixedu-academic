@@ -10,7 +10,7 @@ package net.sourceforge.fenixedu.domain.publication;
  *
  */
 
-public class PublicationTypeAttribute extends PublicationTypeAttribute_Base implements IPublicationTypeAttribute{
+public class PublicationTypeAttribute extends PublicationTypeAttribute_Base {
     
 
 }

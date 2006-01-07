@@ -10,8 +10,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
-import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
-import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -39,7 +39,7 @@ public class GetEquivalency implements IService {
 				.getDefaultPersistenceSupport();
 		IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistenceSupport
 				.getIPersistentSeminaryCurricularCourseEquivalency();
-		ICourseEquivalency equivalency = (ICourseEquivalency) persistentEquivalency.readByOID(
+		CourseEquivalency equivalency = (CourseEquivalency) persistentEquivalency.readByOID(
 				CourseEquivalency.class, equivalencyID);
 		if (equivalency != null) {
 			infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);
@@ -48,7 +48,7 @@ public class GetEquivalency implements IService {
 
 						public Object transform(Object arg0) {
 
-							return InfoTheme.newInfoFromDomain((ITheme) arg0);
+							return InfoTheme.newInfoFromDomain((Theme) arg0);
 						}
 					}));
 		}

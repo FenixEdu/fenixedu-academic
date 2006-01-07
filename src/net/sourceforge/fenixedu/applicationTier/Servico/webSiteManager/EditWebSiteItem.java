@@ -5,8 +5,8 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,13 +37,13 @@ public class EditWebSiteItem extends ManageWebSiteItem {
         IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
         IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
 
-        IWebSiteSection webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(
+        WebSiteSection webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(
                 WebSiteSection.class, sectionCode);
         InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
 
         checkData(infoWebSiteItem, webSiteSection);
 
-        IWebSiteItem webSiteItem = (IWebSiteItem) persistentWebSiteItem.readByOID(WebSiteItem.class,
+        WebSiteItem webSiteItem = (WebSiteItem) persistentWebSiteItem.readByOID(WebSiteItem.class,
                 infoWebSiteItem.getIdInternal(), true);
 
         InfoWebSiteItem infoItemFromDB = InfoWebSiteItem.newInfoFromDomain(webSiteItem);

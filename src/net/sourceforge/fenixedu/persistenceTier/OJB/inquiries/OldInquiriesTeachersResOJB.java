@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -35,8 +35,8 @@ public class OldInquiriesTeachersResOJB extends PersistentObjectOJB implements I
     	return queryList(OldInquiriesTeachersRes.class, criteria);
     }
 
-    public IOldInquiriesTeachersRes readByInternalId(Integer oldInquiryId) throws ExcepcaoPersistencia {
-        IOldInquiriesTeachersRes oitr = (IOldInquiriesTeachersRes)readByOID(OldInquiriesTeachersRes.class, oldInquiryId);
+    public OldInquiriesTeachersRes readByInternalId(Integer oldInquiryId) throws ExcepcaoPersistencia {
+        OldInquiriesTeachersRes oitr = (OldInquiriesTeachersRes)readByOID(OldInquiriesTeachersRes.class, oldInquiryId);
         return oitr;
         
     }

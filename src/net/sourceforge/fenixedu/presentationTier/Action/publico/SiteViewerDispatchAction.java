@@ -40,11 +40,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -175,15 +175,15 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
         final ExecutionCourseSiteView siteView = (ExecutionCourseSiteView) readSiteView(request, evaluationMarksComponent, null, null, null);
 
         final Integer executionCourseID = ((InfoSiteCommon) siteView.getCommonComponent()).getExecutionCourse().getIdInternal();
-        final IEvaluation evaluation = evaluationMarksComponent.getEvaluation();
-        final List<IExecutionCourse> executionCourses;
-        if (evaluation instanceof IOnlineTest) {
-            executionCourses = ((IOnlineTest) evaluation).getAssociatedExecutionCoursesForOnlineTest();
+        final Evaluation evaluation = evaluationMarksComponent.getEvaluation();
+        final List<ExecutionCourse> executionCourses;
+        if (evaluation instanceof OnlineTest) {
+            executionCourses = ((OnlineTest) evaluation).getAssociatedExecutionCoursesForOnlineTest();
         } else {
             executionCourses = evaluation.getAssociatedExecutionCourses();
         }
 
-        for (final IExecutionCourse executionCourse : executionCourses) {
+        for (final ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.getIdInternal().equals(executionCourseID)) {
                 evaluationMarksComponent.setExecutionCourse(executionCourse);
                 break;
@@ -524,12 +524,12 @@ public class SiteViewerDispatchAction extends FenixContextDispatchAction {
                     i++;
                 }
 
-                final List<IExecutionPeriod> executionPeriods = (List<IExecutionPeriod>)
+                final List<ExecutionPeriod> executionPeriods = (List<ExecutionPeriod>)
                     ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] {
                         ExecutionPeriod.class
                 });
                 final List<LabelValueBean> executionPeriodLabelValueBeans = new ArrayList<LabelValueBean>();
-                for (final IExecutionPeriod ep : executionPeriods) {
+                for (final ExecutionPeriod ep : executionPeriods) {
                     if (ep.getState() == PeriodState.OPEN || ep.getState() == PeriodState.CURRENT) {
                         executionPeriodLabelValueBeans.add(new LabelValueBean(
                                 ep.getName() + " " + ep.getExecutionYear().getYear(), ep.getIdInternal().toString()));

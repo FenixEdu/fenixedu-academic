@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -20,8 +20,8 @@ public class ReadExecutionCourseOIDByCodeInLatestPeriod implements IService {
         IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-        IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
-        IExecutionCourse executionCourse = executionCourseDAO
+        ExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        ExecutionCourse executionCourse = executionCourseDAO
                 .readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseCode, executionPeriod.getIdInternal());
 
         if (executionCourse != null) {

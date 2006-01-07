@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewRoomSchedule;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -49,7 +49,7 @@ public class ReadPavillionsRoomsLessons implements IService {
 
         // Read rooms classes
         for (final Iterator iterator = rooms.iterator(); iterator.hasNext();) {
-            final IRoom room = (IRoom) iterator.next();
+            final Room room = (Room) iterator.next();
 
             final InfoViewRoomSchedule infoViewRoomSchedule = new InfoViewRoomSchedule();
             infoViewRoomScheduleList.add(infoViewRoomSchedule);
@@ -61,11 +61,11 @@ public class ReadPavillionsRoomsLessons implements IService {
                     infoExecutionPeriod.getIdInternal());
             final List infoLessons = new ArrayList(lessons.size());
             for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
-                final ILesson lesson = (ILesson) iterator2.next();
+                final Lesson lesson = (Lesson) iterator2.next();
                 final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                 infoLessons.add(infoLesson);
 
-                final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+                final RoomOccupation roomOccupation = lesson.getRoomOccupation();
                 final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation
                         .newInfoFromDomain(roomOccupation);
                 infoLesson.setInfoRoomOccupation(infoRoomOccupation);
@@ -73,17 +73,17 @@ public class ReadPavillionsRoomsLessons implements IService {
                 infoRoomOccupation.setInfoRoom(infoRoom);
                 infoLesson.setInfoSala(infoRoom);
 
-                final IOccupationPeriod period = roomOccupation.getPeriod();
+                final OccupationPeriod period = roomOccupation.getPeriod();
                 final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
                 infoRoomOccupation.setInfoPeriod(infoPeriod);
 
-                final IShift shift = lesson.getShift();
+                final Shift shift = lesson.getShift();
                 final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
                 infoLesson.setInfoShift(infoShift);
                 infoLesson.setInfoShiftList(new ArrayList(1));
                 infoLesson.getInfoShiftList().add(infoShift);
 
-                final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+                final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
                 final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                         .newInfoFromDomain(executionCourse);
                 infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);

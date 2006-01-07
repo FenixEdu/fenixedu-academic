@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.cms.basic;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  */
 public class ReadCmsByName extends CmsService
 {
-	public ICms run(String name) throws ExcepcaoPersistencia
+	public Cms run(String name) throws ExcepcaoPersistencia
 	{
 		return PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readCmsByName(name);
 	}

@@ -8,9 +8,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -22,7 +22,7 @@ public class GratuitySituation extends GratuitySituation_Base {
 	public GratuitySituation() {
 	}
 	
-    public GratuitySituation(IGratuityValues gratuityValues, IStudentCurricularPlan studentCurricularPlan) {
+    public GratuitySituation(GratuityValues gratuityValues, StudentCurricularPlan studentCurricularPlan) {
 
         setGratuityValues(gratuityValues);
         setStudentCurricularPlan(studentCurricularPlan);
@@ -86,15 +86,15 @@ public class GratuitySituation extends GratuitySituation_Base {
         double payedValue = 0;
         double reimbursedValue = 0;
 
-        for (IGratuityTransaction gratuityTransaction : this.getTransactionList()) {
+        for (GratuityTransaction gratuityTransaction : this.getTransactionList()) {
 
             payedValue += gratuityTransaction.getValue();
 
             if (gratuityTransaction.getGuideEntry() != null) {
 
-                List<IReimbursementGuideEntry> reimbursementGuideEntries = gratuityTransaction
+                List<ReimbursementGuideEntry> reimbursementGuideEntries = gratuityTransaction
                         .getGuideEntry().getReimbursementGuideEntries();
-                for (IReimbursementGuideEntry reimbursementGuideEntry : reimbursementGuideEntries) {
+                for (ReimbursementGuideEntry reimbursementGuideEntry : reimbursementGuideEntries) {
                     if (reimbursementGuideEntry.getReimbursementGuide()
                             .getActiveReimbursementGuideSituation().getReimbursementGuideState().equals(
                                     ReimbursementGuideState.PAYED)) {

@@ -9,8 +9,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,12 +32,12 @@ public class ReadExecutionCoursesByTeacherResponsibility implements IService {
    
         final IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
        
-        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);        
+        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);        
         
-        final List<IProfessorship> responsibilities = teacher.responsibleFors();
+        final List<Professorship> responsibilities = teacher.responsibleFors();
         
         if (responsibilities != null) {
-            for (final IProfessorship professorship : responsibilities) {
+            for (final Professorship professorship : responsibilities) {
                 infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(professorship
                         .getExecutionCourse()));
             }

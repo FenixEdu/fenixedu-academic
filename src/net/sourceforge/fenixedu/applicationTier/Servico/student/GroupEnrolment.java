@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -42,14 +42,14 @@ public class GroupEnrolment implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IGrouping grouping = (IGrouping) persistentSupport.getIPersistentGrouping().readByOID(
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentGrouping().readByOID(
                 Grouping.class, groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();
         }
 
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final IStudent userStudent = persistentStudent.readByUsername(studentUsername);
+        final Student userStudent = persistentStudent.readByUsername(studentUsername);
 
         final IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
                 .getInstance();
@@ -59,9 +59,9 @@ public class GroupEnrolment implements IService {
         if (grouping.getStudentAttend(studentUsername) == null) {
             throw new NoChangeMadeServiceException();
         }
-        IShift shift = null;
+        Shift shift = null;
         if (shiftID != null) {
-            shift = (IShift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
+            shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
         }
         Integer result = strategy.enrolmentPolicyNewGroup(grouping, studentUsernames.size() + 1, shift);
 
@@ -75,7 +75,7 @@ public class GroupEnrolment implements IService {
             throw new NotAuthorizedException();
         }
 
-        final IAttends userAttend = grouping.getStudentAttend(userStudent);
+        final Attends userAttend = grouping.getStudentAttend(userStudent);
         if (userAttend == null) {
             throw new InvalidStudentNumberServiceException();
         }
@@ -83,7 +83,7 @@ public class GroupEnrolment implements IService {
             throw new InvalidSituationServiceException();
         }
 
-        IStudentGroup newStudentGroup = grouping.readStudentGroupBy(groupNumber);
+        StudentGroup newStudentGroup = grouping.readStudentGroupBy(groupNumber);
         if (newStudentGroup != null) {
             throw new FenixServiceException();
         }
@@ -95,7 +95,7 @@ public class GroupEnrolment implements IService {
 
         newStudentGroup = DomainFactory.makeStudentGroup(groupNumber, grouping, shift);
         for (final String studentUsernameIter : (List<String>) studentUsernames) {
-            IAttends attend = grouping.getStudentAttend(studentUsernameIter);
+            Attends attend = grouping.getStudentAttend(studentUsernameIter);
             attend.addStudentGroups(newStudentGroup);
         }
         userAttend.addStudentGroups(newStudentGroup);
@@ -106,7 +106,7 @@ public class GroupEnrolment implements IService {
 
     private void checkStudentUsernamesAlreadyEnroledInStudentGroup(
             final IGroupEnrolmentStrategy strategy, final List<String> studentUsernames,
-            final IGrouping grouping) throws FenixServiceException {
+            final Grouping grouping) throws FenixServiceException {
 
         for (final String studentUsername : studentUsernames) {
             if (strategy.checkAlreadyEnroled(grouping, studentUsername)) {

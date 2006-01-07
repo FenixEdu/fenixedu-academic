@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 public class CurricularCourseGroupTest extends DomainTestBase {
 	
-	private ICurricularCourseGroup curricularCourseGroupToDelete;
-	private ICurricularCourseGroup curricularCourseGroupNotToDelete;
+	private CurricularCourseGroup curricularCourseGroupToDelete;
+	private CurricularCourseGroup curricularCourseGroupNotToDelete;
 	
-	private IAreaCurricularCourseGroup areaCurricularcourseGroupToEdit = null;
-	private IOptionalCurricularCourseGroup optionalCurricularcourseGroupToEdit = null;
+	private AreaCurricularCourseGroup areaCurricularcourseGroupToEdit = null;
+	private OptionalCurricularCourseGroup optionalCurricularcourseGroupToEdit = null;
 	private String editedAreaCCGName = null;
 	private String editedOptionalCCGName = null;
-	private IBranch editedBranch = null;
+	private Branch editedBranch = null;
 	private Integer editedMinimumValue = null;
 	private Integer editedMaximumValue = null;
 	private AreaType editedAreaType = null;
@@ -37,12 +37,12 @@ public class CurricularCourseGroupTest extends DomainTestBase {
 		curricularCourseGroupToDelete = new AreaCurricularCourseGroup();
 		curricularCourseGroupNotToDelete = new OptionalCurricularCourseGroup();
 		
-		ICurricularCourse cc1 = new CurricularCourse();
-		ICurricularCourse cc2 = new CurricularCourse();
+		CurricularCourse cc1 = new CurricularCourse();
+		CurricularCourse cc2 = new CurricularCourse();
 		
-		IBranch br1 = new Branch();
-		IScientificArea sa1 = new ScientificArea();
-		IScientificArea sa2 = new ScientificArea();
+		Branch br1 = new Branch();
+		ScientificArea sa1 = new ScientificArea();
+		ScientificArea sa2 = new ScientificArea();
 		
 		curricularCourseGroupToDelete.setBranch(br1);
 		curricularCourseGroupNotToDelete.setBranch(br1);

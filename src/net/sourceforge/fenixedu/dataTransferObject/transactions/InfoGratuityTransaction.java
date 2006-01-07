@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.transactions;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -12,14 +12,14 @@ public class InfoGratuityTransaction extends InfoPaymentTransaction {
 
     private InfoGratuitySituation infoGratuitySituation;
 
-    protected void copyFromDomain(IGratuityTransaction gratuityTransaction) {
+    protected void copyFromDomain(GratuityTransaction gratuityTransaction) {
         super.copyFromDomain(gratuityTransaction);
         this.infoGratuitySituation = InfoGratuitySituation.newInfoFromDomain(gratuityTransaction
                 .getGratuitySituation());
 
     }
 
-    public static InfoGratuityTransaction newInfoFromDomain(IGratuityTransaction gratuityTransaction) {
+    public static InfoGratuityTransaction newInfoFromDomain(GratuityTransaction gratuityTransaction) {
 
         if (gratuityTransaction == null) {
             return null;

@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.transactions;
 
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -31,8 +31,8 @@ public class ReimbursementTransaction extends ReimbursementTransaction_Base {
      */
     public ReimbursementTransaction(Double value, Timestamp transactionDate, String remarks,
             PaymentType paymentType, TransactionType transactionType, Boolean wasInternalBalance,
-            IPerson responsiblePerson, IPersonAccount personAccount,
-            IReimbursementGuideEntry reimbursementGuideEntry) {
+            Person responsiblePerson, PersonAccount personAccount,
+            ReimbursementGuideEntry reimbursementGuideEntry) {
 		setValue(value);
 		setTransactionDate(transactionDate);
 		setRemarks(remarks);

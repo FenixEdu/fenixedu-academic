@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,12 +33,12 @@ public class ReadTeachersByExecutionCourseProfessorship implements IService {
 
         final IPersistentProfessorship persistentProfessorship = suportePersistente
                 .getIPersistentProfessorship();
-        final List<IProfessorship> result = persistentProfessorship
+        final List<Professorship> result = persistentProfessorship
                 .readByExecutionCourse(infoExecutionCourse.getIdInternal());
 
         final List<InfoTeacher> infoResult = new ArrayList<InfoTeacher>();
         if (result != null) {
-            for (final IProfessorship professorship : result) {
+            for (final Professorship professorship : result) {
                 infoResult.add(InfoTeacher.newInfoFromDomain(professorship.getTeacher()));
             }
             return infoResult;

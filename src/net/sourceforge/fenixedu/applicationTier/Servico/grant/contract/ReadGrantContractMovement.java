@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractMovementWithContract;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -26,9 +26,9 @@ public class ReadGrantContractMovement extends ReadDomainObjectService {
         return sp.getIPersistentGrantContractMovement();
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         return InfoGrantContractMovementWithContract
-                .newInfoFromDomain((IGrantContractMovement) domainObject);
+                .newInfoFromDomain((GrantContractMovement) domainObject);
     }
 
 }

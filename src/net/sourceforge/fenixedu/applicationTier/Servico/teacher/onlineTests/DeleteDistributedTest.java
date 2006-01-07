@@ -6,16 +6,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -32,22 +32,22 @@ public class DeleteDistributedTest implements IService {
     public void run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
-        IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
 
         persistentSuport.getIPersistentQuestion().cleanQuestions(distributedTest);
         persistentSuport.getIPersistentMetadata().cleanMetadatas();
 
         if (distributedTest.getTestType().getType().intValue() == TestType.EVALUATION) {
-            IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
-            Iterator<IExecutionCourse> executionCourseIterator = onlineTest.getAssociatedExecutionCoursesForOnlineTestIterator();
+            OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+            Iterator<ExecutionCourse> executionCourseIterator = onlineTest.getAssociatedExecutionCoursesForOnlineTestIterator();
             while (executionCourseIterator.hasNext()) {
                 executionCourseIterator.next();
                 executionCourseIterator.remove();
             }
 
-            Iterator<IMark> marksIterator = onlineTest.getMarksIterator();
+            Iterator<Mark> marksIterator = onlineTest.getMarksIterator();
             while (marksIterator.hasNext()) {
-                IMark mark = marksIterator.next();
+                Mark mark = marksIterator.next();
                 marksIterator.remove();
                 persistentSuport.getIPersistentMark().deleteByOID(Mark.class, mark.getIdInternal());
             }
@@ -58,25 +58,25 @@ public class DeleteDistributedTest implements IService {
 
         distributedTest.removeTestScope();
 
-        Iterator<IStudentTestQuestion> studentTestQuestionIterator = distributedTest.getDistributedTestQuestionsIterator();
+        Iterator<StudentTestQuestion> studentTestQuestionIterator = distributedTest.getDistributedTestQuestionsIterator();
 
         while (studentTestQuestionIterator.hasNext()) {
-            IStudentTestQuestion studentTestQuestion = studentTestQuestionIterator.next();
+            StudentTestQuestion studentTestQuestion = studentTestQuestionIterator.next();
             studentTestQuestionIterator.remove();
             studentTestQuestion.delete();
         }
 
-        Iterator<IDistributedTestAdvisory> distributedTestAdvisoryIterator = distributedTest.getDistributedTestAdvisoriesIterator();
+        Iterator<DistributedTestAdvisory> distributedTestAdvisoryIterator = distributedTest.getDistributedTestAdvisoriesIterator();
         while (distributedTestAdvisoryIterator.hasNext()) {
-            IDistributedTestAdvisory distributedTestAdvisory = distributedTestAdvisoryIterator.next();
+            DistributedTestAdvisory distributedTestAdvisory = distributedTestAdvisoryIterator.next();
             distributedTestAdvisoryIterator.remove();
             persistentSuport.getIPersistentDistributedTestAdvisory().deleteByOID(DistributedTestAdvisory.class,
                     distributedTestAdvisory.getIdInternal());
         }
 
-        Iterator<IStudentTestLog> studentTestLogsIterator = distributedTest.getStudentsLogsIterator();
+        Iterator<StudentTestLog> studentTestLogsIterator = distributedTest.getStudentsLogsIterator();
         while (studentTestLogsIterator.hasNext()) {
-            IStudentTestLog studentTestLog = studentTestLogsIterator.next();
+            StudentTestLog studentTestLog = studentTestLogsIterator.next();
             studentTestLogsIterator.remove();
             studentTestLog.removeStudent();
             persistentSuport.getIPersistentStudentTestLog().deleteByOID(StudentTestLog.class, studentTestLog.getIdInternal());

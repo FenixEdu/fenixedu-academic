@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -46,12 +46,12 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
         if (teacherId != null) {
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPerson requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
             IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-            ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
+            Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
-            IDepartment teacherDepartment = teacher.getCurrentWorkingDepartment();
+            Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();
 

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,7 +32,7 @@ public class ChangeCandidacyApprovanceStatus implements IService {
 		IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
 				.getIPersistentSeminaryCandidacy();
 		for (Iterator iterator = candidaciesIDs.iterator(); iterator.hasNext();) {
-			ICandidacy candidacy = (ICandidacy) persistentCandidacy.readByOID(Candidacy.class,
+			Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class,
 					(Integer) iterator.next());
 			persistentCandidacy.simpleLockWrite(candidacy);
 			if (candidacy.getApproved() == null)

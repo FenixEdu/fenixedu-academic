@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.cms.basic;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -20,7 +20,7 @@ public class DeleteCms extends CmsService
 {
 	public void run(String name) throws ExcepcaoPersistencia
 	{
-		ICms cms  = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readCmsByName(name);
+		Cms cms  = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readCmsByName(name);
 		cms.delete();
 	}
 }

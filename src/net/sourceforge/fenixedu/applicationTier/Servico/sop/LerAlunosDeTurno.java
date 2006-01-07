@@ -18,8 +18,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.ShiftKey;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -32,14 +32,14 @@ public class LerAlunosDeTurno implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
         final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        IShift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), keyTurno
+        Shift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), keyTurno
                 .getInfoExecutionCourse().getIdInternal());
 
-        List<IStudent> alunos = shift.getStudents();
+        List<Student> alunos = shift.getStudents();
 
         List infoAlunos = new ArrayList(alunos.size());
         for (final Iterator iterator = alunos.iterator(); iterator.hasNext();) {
-            IStudent elem = (IStudent) iterator.next();
+            Student elem = (Student) iterator.next();
             InfoPerson infoPessoa = new InfoPerson();
             infoPessoa.setNome(elem.getPerson().getNome());
             infoPessoa.setUsername(elem.getPerson().getUsername());

@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -16,11 +16,11 @@ public class Precedence extends Precedence_Base {
 
 	public Precedence () {}
 	
-	public Precedence(ICurricularCourse curricularCourseToAddPrecedence, String className, ICurricularCourse precedentCurricularCourse, Integer number) {
+	public Precedence(CurricularCourse curricularCourseToAddPrecedence, String className, CurricularCourse precedentCurricularCourse, Integer number) {
 		
 		setCurricularCourse(curricularCourseToAddPrecedence);
 		
-		Class[] parameters = {Integer.class, IPrecedence.class, ICurricularCourse.class};
+		Class[] parameters = {Integer.class, Precedence.class, CurricularCourse.class};
 		Object[] arguments = {number, this, precedentCurricularCourse};
 				
 		Constructor constructor;
@@ -39,7 +39,7 @@ public class Precedence extends Precedence_Base {
         stringBuffer.append(this.getCurricularCourse()).append("\n");
         List restrictions = this.getRestrictions();
         for (int i = 0; i < restrictions.size(); i++) {
-            IRestriction restriction = (IRestriction) restrictions.get(i);
+            Restriction restriction = (Restriction) restrictions.get(i);
             stringBuffer.append(restriction).append("\n");
         }
         stringBuffer.append("---------\n");
@@ -51,11 +51,11 @@ public class Precedence extends Precedence_Base {
 
         int size = restrictions.size();
 
-        CurricularCourseEnrollmentType evaluate = ((IRestriction) restrictions.get(0))
+        CurricularCourseEnrollmentType evaluate = ((Restriction) restrictions.get(0))
                 .evaluate(precedenceContext);
 
         for (int i = 1; i < size; i++) {
-            IRestriction restriction = (IRestriction) restrictions.get(i);
+            Restriction restriction = (Restriction) restrictions.get(i);
             evaluate = evaluate.and(restriction.evaluate(precedenceContext));
         }
 
@@ -65,10 +65,10 @@ public class Precedence extends Precedence_Base {
 	
 	public void delete() {
 		
-		Iterator<IRestriction> restrictionIterator = getRestrictionsIterator();
+		Iterator<Restriction> restrictionIterator = getRestrictionsIterator();
 		
 		while (restrictionIterator.hasNext()) {
-			IRestriction restriction = restrictionIterator.next();
+			Restriction restriction = restrictionIterator.next();
 			
 			restrictionIterator.remove();
 			restriction.delete();
@@ -79,12 +79,12 @@ public class Precedence extends Precedence_Base {
 	}
 	
 	
-	public void mergePrecedences(IPrecedence sourcePrecedence) {
+	public void mergePrecedences(Precedence sourcePrecedence) {
 		
-        Iterator<IRestriction> restrictionsIterator = sourcePrecedence.getRestrictionsIterator();
+        Iterator<Restriction> restrictionsIterator = sourcePrecedence.getRestrictionsIterator();
 		
         while (restrictionsIterator.hasNext()) {
-			IRestriction restriction = restrictionsIterator.next();
+			Restriction restriction = restrictionsIterator.next();
 			
 			restrictionsIterator.remove();
 			restriction.setPrecedence(this);

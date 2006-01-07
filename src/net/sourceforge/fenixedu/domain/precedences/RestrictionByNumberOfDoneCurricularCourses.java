@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
@@ -13,7 +13,7 @@ public class RestrictionByNumberOfDoneCurricularCourses extends RestrictionByNum
         super();
     }
 	
-	public RestrictionByNumberOfDoneCurricularCourses(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+	public RestrictionByNumberOfDoneCurricularCourses(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
 		super();
 		
         setNumberOfCurricularCourses(number);

@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,7 +29,7 @@ public class ReadStudentCurriculum implements IService {
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
          ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {
@@ -41,7 +41,7 @@ public class ReadStudentCurriculum implements IService {
 
         GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
         while (iterator.hasNext()) {
-            IEnrolment enrolmentTemp = (IEnrolment) iterator.next();
+            Enrolment enrolmentTemp = (Enrolment) iterator.next();
 
             InfoEnrolmentEvaluation infoEnrolmentEvaluation = getEnrollmentGrade.run(enrolmentTemp);
 

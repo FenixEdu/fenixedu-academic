@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class ProjectTest extends DomainTestBase {
 
-    private IExecutionCourse executionCourse;
-    private IProject project;    
+    private ExecutionCourse executionCourse;
+    private Project project;    
     private Date begin, end;
 
     protected void setUp() throws Exception {
@@ -30,7 +30,7 @@ public class ProjectTest extends DomainTestBase {
     }
 
     public void testCreateProject() {
-        IProject newProject = null;
+        Project newProject = null;
         Date newBegin = null;
         Date newEnd = null;
         Date wrongEnd = null;
@@ -136,9 +136,9 @@ public class ProjectTest extends DomainTestBase {
                 .getAssociatedEvaluationsCount(), 0);
     }
 
-    private void checkIfProjectAttributesAreCorrect(final IProject project, final String projectName,
+    private void checkIfProjectAttributesAreCorrect(final Project project, final String projectName,
             final Date newBegin, final Date newEnd, final String description,
-            final IExecutionCourse executionCourse) {
+            final ExecutionCourse executionCourse) {
         assertEquals("Different Project Name!", projectName, project.getName());
         assertEquals("Different Project Begin Date!", newBegin, project.getBegin());
         assertEquals("Different Project End Date!", newEnd, project.getEnd());

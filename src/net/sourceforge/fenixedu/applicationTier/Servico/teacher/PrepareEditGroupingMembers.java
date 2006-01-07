@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,18 +32,18 @@ public class PrepareEditGroupingMembers implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();        
         final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
-        final IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupingID);
+        final Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class, groupingID);
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }
         
-        final List<IAttends> attends = new ArrayList<IAttends>();
+        final List<Attends> attends = new ArrayList<Attends>();
         final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>();
         
-        for (final IExportGrouping exportGrouping : grouping.getExportGroupings()) {
+        for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
-                for (final IAttends attend : exportGrouping.getExecutionCourse().getAttends()) {
+                for (final Attends attend : exportGrouping.getExecutionCourse().getAttends()) {
                     if (!attends.contains(attend) && !grouping.getAttends().contains(attend)) {
                         attends.add(attend);
                         infoStudents.add(InfoStudent.newInfoFromDomain(attend.getAluno()));

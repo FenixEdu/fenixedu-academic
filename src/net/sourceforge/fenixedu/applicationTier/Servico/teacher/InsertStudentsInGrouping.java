@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -47,7 +47,7 @@ public class InsertStudentsInGrouping implements IService {
 		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentAttend = persistentSupport.getIFrequentaPersistente();
 
-		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -65,7 +65,7 @@ public class InsertStudentsInGrouping implements IService {
 			String number = (String) iterator.next();
 			if (number.equals("Todos os Alunos")) {
 			} else {
-				IStudent student = (IStudent) persistentStudent.readByOID(Student.class, new Integer(
+				Student student = (Student) persistentStudent.readByOID(Student.class, new Integer(
 						number));
 				students.add(student);
 			}
@@ -74,8 +74,8 @@ public class InsertStudentsInGrouping implements IService {
 		Iterator iterAttends = groupProperties.getAttends().iterator();
 
 		while (iterAttends.hasNext()) {
-			IAttends existingAttend = (IAttends) iterAttends.next();
-			IStudent existingAttendStudent = existingAttend.getAluno();
+			Attends existingAttend = (Attends) iterAttends.next();
+			Student existingAttendStudent = existingAttend.getAluno();
 
 			List studentsList = new ArrayList();
 			studentsList.addAll(students);
@@ -83,7 +83,7 @@ public class InsertStudentsInGrouping implements IService {
 
 			while (iteratorStudents.hasNext()) {
 
-				IStudent student = (IStudent) iteratorStudents.next();
+				Student student = (Student) iteratorStudents.next();
 				if (student.equals(existingAttendStudent)) {
 					throw new InvalidSituationServiceException();
 				}
@@ -95,15 +95,15 @@ public class InsertStudentsInGrouping implements IService {
 		Iterator iterStudents1 = studentsList1.iterator();
 
 		while (iterStudents1.hasNext()) {
-			IAttends attend = null;
-			IStudent student = (IStudent) iterStudents1.next();
+			Attends attend = null;
+			Student student = (Student) iterStudents1.next();
 
 			List listaExecutionCourses = new ArrayList();
 			listaExecutionCourses.addAll(groupProperties.getExecutionCourses());
 			Iterator iterExecutionCourse = listaExecutionCourses.iterator();
 			while (iterExecutionCourse.hasNext() && attend == null) {
 
-				IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourse.next();
+				ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourse.next();
 				attend = persistentAttend.readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
 						executionCourse.getIdInternal());
 			}

@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -33,14 +33,14 @@ public class InsertCurriculum implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
         IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseId);
 
         if (curricularCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        ICurriculum curriculumFromDB = persistentCurriculum
+        Curriculum curriculumFromDB = persistentCurriculum
                 .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
 
         if (curriculumFromDB != null) {

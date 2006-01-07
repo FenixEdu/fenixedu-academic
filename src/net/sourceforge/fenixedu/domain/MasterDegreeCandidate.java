@@ -28,11 +28,11 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
 
     // from old application service 'GenerateUsername'
     public static String generateUsernameForNewCandidate(
-            IMasterDegreeCandidate newMasterDegreeCandidate, List<IPerson> persons) {
+            MasterDegreeCandidate newMasterDegreeCandidate, List<Person> persons) {
 
     	Integer max = 0;
     	
-    	for (IPerson person : persons) {
+    	for (Person person : persons) {
 			if(person.getUsername().startsWith("C")) {
 				Integer candidateNumber = Integer.valueOf(person.getUsername().substring(1));
 				if(candidateNumber > max) {
@@ -52,9 +52,9 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
         this.setCourseAssistant(false);
     }
 
-    public MasterDegreeCandidate(IPerson person, IExecutionDegree executionDegree,
+    public MasterDegreeCandidate(Person person, ExecutionDegree executionDegree,
             Integer candidateNumber, Specialization specialization, String majorDegree,
-            String majorDegreeSchool, Integer majorDegreeYear, Double average, ITeacher guider,
+            String majorDegreeSchool, Integer majorDegreeYear, Double average, Teacher guider,
             Boolean hasGuider, Boolean courseAssistant, String coursesToAssist) {
         this.setPerson(person);
         this.setExecutionDegree(executionDegree);
@@ -102,9 +102,9 @@ public class MasterDegreeCandidate extends MasterDegreeCandidate_Base {
         return result;
     }
 
-    public ICandidateSituation getActiveCandidateSituation() {
+    public CandidateSituation getActiveCandidateSituation() {
 
-        for (ICandidateSituation candidateSituation : getSituations()) {
+        for (CandidateSituation candidateSituation : getSituations()) {
             if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
                 return candidateSituation;
             }

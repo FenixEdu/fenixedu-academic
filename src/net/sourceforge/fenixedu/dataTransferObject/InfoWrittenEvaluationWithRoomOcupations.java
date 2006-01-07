@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -18,7 +18,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluation {
 
-    public void copyFromDomain(IWrittenEvaluation writtenEvaluation) {
+    public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);
         if (writtenEvaluation != null) {
             setAssociatedRoomOccupation(copyIRoomOccupation2InfoRoomOccupation(writtenEvaluation
@@ -32,7 +32,7 @@ public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluati
         infoRoomOccupation = (List) CollectionUtils.collect(associatedRoomOccupation, new Transformer() {
 
             public Object transform(Object arg0) {
-                IRoomOccupation roomOccupation = (IRoomOccupation) arg0;
+                RoomOccupation roomOccupation = (RoomOccupation) arg0;
                 return InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation);
             }
         });
@@ -40,7 +40,7 @@ public class InfoWrittenEvaluationWithRoomOcupations extends InfoWrittenEvaluati
         return infoRoomOccupation;
     }
 
-    public static InfoWrittenEvaluation newInfoFromDomain(IWrittenEvaluation writtenEvaluation) {
+    public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
         InfoWrittenEvaluationWithRoomOcupations infoWrittenEvaluation = null;
         if (writtenEvaluation != null) {
             infoWrittenEvaluation = new InfoWrittenEvaluationWithRoomOcupations();

@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -44,10 +44,10 @@ public class ReadCurricularCourseHistoric implements IService {
 		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, curricularCourseId);
 
-		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 		Integer semester = executionPeriod.getSemester();
 		// TODO: corrigir o calculo do semestre
 		semester = new Integer(semester.intValue() == 2 ? 1 : 2);
@@ -59,19 +59,19 @@ public class ReadCurricularCourseHistoric implements IService {
 	 * @param sp
 	 * @return
 	 */
-	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(ICurricularCourse curricularCourse,
+	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(CurricularCourse curricularCourse,
 			Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 				.newInfoFromDomain(curricularCourse);
 		infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-		final List<ICourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
+		final List<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
 
 		// the historic must only show info regarding the years previous to the
 		// year chosen by the user
 		List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
-		for (ICourseHistoric courseHistoric : courseHistorics) {
+		for (CourseHistoric courseHistoric : courseHistorics) {
 			if (courseHistoric.getSemester().equals(semester)) {
 				infoCourseHistorics.add(InfoCourseHistoricWithInfoCurricularCourse
 						.newInfoFromDomain(courseHistoric));

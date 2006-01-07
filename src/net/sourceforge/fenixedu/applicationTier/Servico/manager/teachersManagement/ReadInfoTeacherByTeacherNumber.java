@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -39,7 +39,7 @@ public class ReadInfoTeacherByTeacherNumber implements IService {
             throw new FenixServiceException("nullTeacherNumber");
         }
 
-        ITeacher teacher = teacherDAO.readByNumber(teacherNumber);
+        Teacher teacher = teacherDAO.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException("noTeacher");
         }
@@ -55,7 +55,7 @@ public class ReadInfoTeacherByTeacherNumber implements IService {
         List<InfoProfessorship> infoProfessorShips = new ArrayList();
         CollectionUtils.collect(professorShips, new Transformer() {
             public Object transform(Object input) {
-                IProfessorship professorship = (IProfessorship) input;
+                Professorship professorship = (Professorship) input;
                 return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
             }
         }, infoProfessorShips);

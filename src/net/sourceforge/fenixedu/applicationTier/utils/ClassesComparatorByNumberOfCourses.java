@@ -9,8 +9,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -40,8 +40,8 @@ public class ClassesComparatorByNumberOfCourses implements Comparator {
     }
 
     public int compare(Object obj1, Object obj2) {
-        ISchoolClass domainClass1 = (ISchoolClass) obj1;
-        ISchoolClass domainClass2 = (ISchoolClass) obj2;
+        SchoolClass domainClass1 = (SchoolClass) obj1;
+        SchoolClass domainClass2 = (SchoolClass) obj2;
         List shifts1 = domainClass1.getAssociatedShifts();
         List shifts2 = domainClass2.getAssociatedShifts();
         List executionCourses1 = getExecutionCoursesFromShifts(shifts1);
@@ -63,7 +63,7 @@ public class ClassesComparatorByNumberOfCourses implements Comparator {
         Iterator iter = list.iterator();
         List executionCourses = new ArrayList();
         while (iter.hasNext()) {
-            IShift shift = (IShift) iter.next();
+            Shift shift = (Shift) iter.next();
             executionCourses.add(shift.getDisciplinaExecucao());
         }
         return executionCourses;

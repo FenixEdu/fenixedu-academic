@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -37,7 +37,7 @@ public class SetBasicCurricularCoursesService implements IService {
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
 				.getIPersistentDegreeCurricularPlan();
 
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
 				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
 		List basicCurricularCourses = persistentCurricularCourse
@@ -45,11 +45,11 @@ public class SetBasicCurricularCoursesService implements IService {
 						.getIdInternal(), new Boolean(true));
 
 		Iterator itBCCourses = basicCurricularCourses.iterator();
-		ICurricularCourse basicCourse;
+		CurricularCourse basicCourse;
 
 		while (itBCCourses.hasNext()) {
 
-			basicCourse = (ICurricularCourse) itBCCourses.next();
+			basicCourse = (CurricularCourse) itBCCourses.next();
 			persistentCurricularCourse.simpleLockWrite(basicCourse);
 			basicCourse.setBasic(new Boolean(false));
 		}
@@ -58,7 +58,7 @@ public class SetBasicCurricularCoursesService implements IService {
 
 		while (itId.hasNext()) {
 
-			ICurricularCourse curricularCourseBasic = (ICurricularCourse) persistentCurricularCourse
+			CurricularCourse curricularCourseBasic = (CurricularCourse) persistentCurricularCourse
 					.readByOID(CurricularCourse.class, (Integer) itId.next(), true);
 			curricularCourseBasic.setBasic(new Boolean(true));
 

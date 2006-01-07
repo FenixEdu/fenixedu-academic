@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
@@ -43,12 +43,12 @@ public class ValidateSubmitMarks implements IService {
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = sp.getIPersistentEnrolmentEvaluation();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         //evaluation
         IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-        IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class,
                 evaluationCode);
 
         //attend list
@@ -60,8 +60,8 @@ public class ValidateSubmitMarks implements IService {
         List enrolmentListIds = (List) CollectionUtils.collect(attendList, new Transformer() {
 
             public Object transform(Object input) {
-                IAttends attend = (IAttends) input;
-                IEnrolment enrolment = attend.getEnrolment();
+                Attends attend = (Attends) input;
+                Enrolment enrolment = attend.getEnrolment();
                 if (enrolment != null) {
                     if (enrolment.getExecutionPeriod().equals(executionCourse.getExecutionPeriod()))
                         return enrolment.getIdInternal();

@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
@@ -25,11 +25,11 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
 
     public List readByTeacherNumber(Integer teacherNumber) throws ExcepcaoPersistencia {
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = (List<IOldInquiriesTeachersRes>) readAll(OldInquiriesTeachersRes.class);
+		List<OldInquiriesTeachersRes> inquiriesTeachersRes = (List<OldInquiriesTeachersRes>) readAll(OldInquiriesTeachersRes.class);
 
-		List<IOldInquiriesTeachersRes> res = new ArrayList<IOldInquiriesTeachersRes>();
+		List<OldInquiriesTeachersRes> res = new ArrayList<OldInquiriesTeachersRes>();
 		
-		for(IOldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
+		for(OldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
 			if(ioitr.getTeacherNumber().equals(teacherNumber))
 				res.add(ioitr);
 		}
@@ -39,13 +39,13 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
 
     public List readByTeacherNumberAndExecutionPeriod(Integer teacherNumber, Integer executionPeriodId) throws ExcepcaoPersistencia {
 
-		IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class, executionPeriodId);
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class, executionPeriodId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = executionPeriod.getAssociatedOldInquiriesTeachersRes();
+		List<OldInquiriesTeachersRes> inquiriesTeachersRes = executionPeriod.getAssociatedOldInquiriesTeachersRes();
 
-		List<IOldInquiriesTeachersRes> res = new ArrayList<IOldInquiriesTeachersRes>();
+		List<OldInquiriesTeachersRes> res = new ArrayList<OldInquiriesTeachersRes>();
 		
-		for(IOldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
+		for(OldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
 			if(ioitr.getTeacherNumber().equals(teacherNumber))
 				res.add(ioitr);
 		}
@@ -54,8 +54,8 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
 
 	}
 
-    public IOldInquiriesTeachersRes readByInternalId(Integer oldInquiryId) throws ExcepcaoPersistencia {
-        IOldInquiriesTeachersRes oitr = (IOldInquiriesTeachersRes)readByOID(OldInquiriesTeachersRes.class, oldInquiryId);
+    public OldInquiriesTeachersRes readByInternalId(Integer oldInquiryId) throws ExcepcaoPersistencia {
+        OldInquiriesTeachersRes oitr = (OldInquiriesTeachersRes)readByOID(OldInquiriesTeachersRes.class, oldInquiryId);
         return oitr;
         
     }
@@ -64,13 +64,13 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
             Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode, Integer teacherNumber)
     		throws ExcepcaoPersistencia {
         
-		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
+		Degree degree = (Degree) readByOID(Degree.class, degreeId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = degree.getAssociatedOldInquiriesTeachersRes();
+		List<OldInquiriesTeachersRes> inquiriesTeachersRes = degree.getAssociatedOldInquiriesTeachersRes();
 
-		List<IOldInquiriesTeachersRes> res = new ArrayList<IOldInquiriesTeachersRes>();
+		List<OldInquiriesTeachersRes> res = new ArrayList<OldInquiriesTeachersRes>();
 		
-		for(IOldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
+		for(OldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
 			if(ioitr.getTeacherNumber().equals(teacherNumber) &&
 					ioitr.getExecutionPeriod().getIdInternal().equals(executionPeriodId) &&
 					ioitr.getCurricularYear().equals(curricularYear) &&
@@ -85,13 +85,13 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
             Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode)
     		throws ExcepcaoPersistencia {
         
-		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
+		Degree degree = (Degree) readByOID(Degree.class, degreeId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = degree.getAssociatedOldInquiriesTeachersRes();
+		List<OldInquiriesTeachersRes> inquiriesTeachersRes = degree.getAssociatedOldInquiriesTeachersRes();
 
-		List<IOldInquiriesTeachersRes> res = new ArrayList<IOldInquiriesTeachersRes>();
+		List<OldInquiriesTeachersRes> res = new ArrayList<OldInquiriesTeachersRes>();
 		
-		for(IOldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
+		for(OldInquiriesTeachersRes ioitr : inquiriesTeachersRes) {
 			if(ioitr.getExecutionPeriod().getIdInternal().equals(executionPeriodId) &&
 					ioitr.getCurricularYear().equals(curricularYear) &&
 					ioitr.getCourseCode().equalsIgnoreCase(courseCode))
@@ -102,9 +102,9 @@ public class OldInquiriesTeachersResVO extends VersionedObjectsBase implements I
     }
     
     public List readByDegreeId(Integer degreeId) throws ExcepcaoPersistencia {
-		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
+		Degree degree = (Degree) readByOID(Degree.class, degreeId);
 		
-		List<IOldInquiriesTeachersRes> inquiriesTeachersRes = degree.getAssociatedOldInquiriesTeachersRes();
+		List<OldInquiriesTeachersRes> inquiriesTeachersRes = degree.getAssociatedOldInquiriesTeachersRes();
 		return inquiriesTeachersRes;
     }
 

@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class EvaluationMethodTest extends DomainTestBase {
 
-    private IExecutionCourse executionCourse;
+    private ExecutionCourse executionCourse;
 
-    private IEvaluationMethod evaluationMethod;
+    private EvaluationMethod evaluationMethod;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -58,7 +58,7 @@ public class EvaluationMethodTest extends DomainTestBase {
     }
 
     private void checkIfEvaluationMethodAttributesAreCorrect(final String evaluationElements,
-            final String evaluationElementsEng, final IExecutionCourse executionCourse) {
+            final String evaluationElementsEng, final ExecutionCourse executionCourse) {
         assertEquals("Different EvaluationElements in EvaluationMethod!", evaluationElements,
                 evaluationMethod.getEvaluationElements());
         assertEquals("Different EvaluationElementsEng in EvaluationMethod!", evaluationElementsEng,

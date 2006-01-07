@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -34,14 +34,14 @@ public class ReadWebSiteSectionByCode implements IService {
 
 	public Object run(Integer sectionCode) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-		IWebSiteSection webSiteSection;
+		WebSiteSection webSiteSection;
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
 		IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-		webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+		webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
 				sectionCode);
 
 		if (webSiteSection == null) {
@@ -58,7 +58,7 @@ public class ReadWebSiteSectionByCode implements IService {
 		// get items with valid dates of publishment
 		CollectionUtils.filter(webSiteItems, new Predicate() {
 			public boolean evaluate(Object arg0) {
-				IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+				WebSiteItem webSiteItem = (WebSiteItem) arg0;
 				if (!webSiteItem.getOnlineBeginDay().after(Calendar.getInstance().getTime())
 						&& !webSiteItem.getOnlineEndDay().before(Calendar.getInstance().getTime())) {
 					return true;
@@ -73,7 +73,7 @@ public class ReadWebSiteSectionByCode implements IService {
 
 		List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
 			public Object transform(Object arg0) {
-				IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+				WebSiteItem webSiteItem = (WebSiteItem) arg0;
 				InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
 
 				return infoWebSiteItem;

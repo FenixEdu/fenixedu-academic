@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.cms;
 
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public interface IPersistentCMS
 {
-	ICms readFenixCMS() throws ExcepcaoPersistencia;
+	Cms readFenixCMS() throws ExcepcaoPersistencia;
 	
-	ICms readCmsByName(String name) throws ExcepcaoPersistencia;
+	Cms readCmsByName(String name) throws ExcepcaoPersistencia;
 }

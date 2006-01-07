@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteExternalActivities;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -34,7 +34,7 @@ public class ReadExternalActivities implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-        ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+        Teacher teacher = persistentTeacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
         IPersistentExternalActivity persistentExternalActivity = persistentSuport
@@ -43,7 +43,7 @@ public class ReadExternalActivities implements IService {
 
         List result = (List) CollectionUtils.collect(externalActivities, new Transformer() {
             public Object transform(Object o) {
-                IExternalActivity externalActivity = (IExternalActivity) o;
+                ExternalActivity externalActivity = (ExternalActivity) o;
                 return InfoExternalActivity.newInfoFromDomain(externalActivity);
             }
         });

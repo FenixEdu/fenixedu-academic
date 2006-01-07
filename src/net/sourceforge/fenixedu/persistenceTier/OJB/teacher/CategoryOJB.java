@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
@@ -50,11 +50,11 @@ public class CategoryOJB extends PersistentObjectOJB implements IPersistentCateg
      * 
      * @see ServidorPersistente.teacher.IPersistentCategory#readCategoryByCode(java.lang.String)
      */
-    public ICategory readCategoryByCode(String code) throws ExcepcaoPersistencia {
+    public Category readCategoryByCode(String code) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("code", code);
-        return (ICategory) queryObject(Category.class, criteria);
+        return (Category) queryObject(Category.class, criteria);
     }
 
 }

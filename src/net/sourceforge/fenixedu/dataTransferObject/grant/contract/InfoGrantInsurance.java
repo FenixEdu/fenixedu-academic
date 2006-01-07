@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.projectsManagement.FormatDouble;
 
@@ -138,7 +138,7 @@ public class InfoGrantInsurance extends InfoObject {
                 this.dateEndInsurance);
     }
 
-    public void copyFromDomain(IGrantInsurance grantInsurance) {
+    public void copyFromDomain(GrantInsurance grantInsurance) {
         super.copyFromDomain(grantInsurance);
         if (grantInsurance != null) {
             setDateBeginInsurance(grantInsurance.getDateBeginInsurance());
@@ -147,7 +147,7 @@ public class InfoGrantInsurance extends InfoObject {
         }
     }
 
-    public static InfoGrantInsurance newInfoFromDomain(IGrantInsurance grantInsurance) {
+    public static InfoGrantInsurance newInfoFromDomain(GrantInsurance grantInsurance) {
         InfoGrantInsurance infoGrantInsurance = null;
         if (grantInsurance != null) {
             infoGrantInsurance = new InfoGrantInsurance();
@@ -156,7 +156,7 @@ public class InfoGrantInsurance extends InfoObject {
         return infoGrantInsurance;
     }
 
-    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, IGrantInsurance grantInsurance)
+    public void copyToDomain(InfoGrantInsurance infoGrantInsurance, GrantInsurance grantInsurance)
             throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantInsurance, grantInsurance);
 

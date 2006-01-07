@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeach
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.TeacherDegreeFinalProjectStudentsDTO;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -41,11 +41,11 @@ public class ReadTeacherDFPStudentsService implements IService {
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-        IExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
+        ExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
 
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
-        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
         IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = sp
@@ -58,7 +58,7 @@ public class ReadTeacherDFPStudentsService implements IService {
                 new Transformer() {
 
                     public Object transform(Object input) {
-                        ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) input;
+                        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) input;
                         InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson.newInfoFromDomain(
                                 teacherDegreeFinalProjectStudent);
                         return infoTeacherDegreeFinalProjectStudent;
@@ -79,14 +79,14 @@ public class ReadTeacherDFPStudentsService implements IService {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private IExecutionPeriod getExecutionPeriod(Integer executionPeriodId,
+    private ExecutionPeriod getExecutionPeriod(Integer executionPeriodId,
             IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia {
-        IExecutionPeriod executionPeriod;
+        ExecutionPeriod executionPeriod;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
         } else {
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
         return executionPeriod;

@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -16,14 +16,14 @@ import org.apache.commons.collections.Transformer;
  * @author Tânia Pousão 18/Jun/2004
  */
 public class InfoShiftWithInfoExecutionCourseAndInfoLessons extends InfoShiftWithInfoExecutionCourse {
-    public void copyFromDomain(IShift shift) {
+    public void copyFromDomain(Shift shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
             setInfoLessons(copyILessons2InfoLessons(shift.getAssociatedLessons()));
         }
     }
 
-    public static InfoShift newInfoFromDomain(IShift shift) {
+    public static InfoShift newInfoFromDomain(Shift shift) {
         InfoShiftWithInfoExecutionCourseAndInfoLessons infoShift = null;
         if (shift != null) {
             infoShift = new InfoShiftWithInfoExecutionCourseAndInfoLessons();
@@ -39,7 +39,7 @@ public class InfoShiftWithInfoExecutionCourseAndInfoLessons extends InfoShiftWit
 
                 public Object transform(Object arg0) {
 
-                    return InfoLessonWithInfoRoom.newInfoFromDomain((ILesson) arg0);
+                    return InfoLessonWithInfoRoom.newInfoFromDomain((Lesson) arg0);
                 }
 
             });

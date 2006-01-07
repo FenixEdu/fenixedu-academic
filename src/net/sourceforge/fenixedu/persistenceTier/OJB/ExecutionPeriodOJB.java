@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -22,23 +22,23 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         super();
     }
 
-    public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
+    public ExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("state", PeriodState.CURRENT);
-        return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
+        return (ExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
 
     }
 
-    public IExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
+    public ExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
             String year) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("name", executionPeriodName);
         crit.addEqualTo("executionYear.year", year);
-        return (IExecutionPeriod) queryObject(ExecutionPeriod.class, crit);
+        return (ExecutionPeriod) queryObject(ExecutionPeriod.class, crit);
 
     }
 
-    public IExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year)
+    public ExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year)
             throws ExcepcaoPersistencia {
         if (year == null) {
             return null;
@@ -47,7 +47,7 @@ public class ExecutionPeriodOJB extends ObjectFenixOJB implements IPersistentExe
         Criteria criteria = new Criteria();
         criteria.addEqualTo("semester", semester);
         criteria.addEqualTo("executionYear.year", year);
-        return (IExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
+        return (ExecutionPeriod) queryObject(ExecutionPeriod.class, criteria);
     }
 
     public List readPublic() throws ExcepcaoPersistencia {

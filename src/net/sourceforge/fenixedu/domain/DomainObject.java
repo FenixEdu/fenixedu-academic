@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,7 +22,7 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
 /**
  * @author jpvl
  */
-public abstract class DomainObject extends DomainObject_Base {
+public abstract class DomainObject extends DomainObject_Base implements Serializable {
 
     public class UnableToDetermineIdException extends DomainException {
         public UnableToDetermineIdException(Throwable cause) {

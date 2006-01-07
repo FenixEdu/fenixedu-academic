@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithCoordi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
@@ -41,12 +41,12 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IService 
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
 		// Execution OccupationPeriod
-		IExecutionPeriod executionPeriod;
+		ExecutionPeriod executionPeriod;
 		if (executionPeriodId == null) {
 			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 		} else {
 
-			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+			executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
 					ExecutionPeriod.class, executionPeriodId);
 		}
 
@@ -54,14 +54,14 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IService 
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}
 
-		IExecutionYear executionYear = executionPeriod.getExecutionYear();
+		ExecutionYear executionYear = executionPeriod.getExecutionYear();
 		if (executionYear == null) {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}
 
 		// Degree
 		ICursoPersistente persistentDegree = sp.getICursoPersistente();
-		IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
+		Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
 		if (degree == null) {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}
@@ -77,7 +77,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IService 
 		infoExecutionDegreeList = new ArrayList();
 		ListIterator listIterator = executionDegreeList.listIterator();
 		while (listIterator.hasNext()) {
-			IExecutionDegree executionDegree = (IExecutionDegree) listIterator.next();
+			ExecutionDegree executionDegree = (ExecutionDegree) listIterator.next();
 
 			InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithCoordinators
 					.newInfoFromDomain(executionDegree);

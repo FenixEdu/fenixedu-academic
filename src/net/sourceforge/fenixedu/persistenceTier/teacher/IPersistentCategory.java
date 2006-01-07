@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.persistenceTier.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -23,5 +23,5 @@ public interface IPersistentCategory extends IPersistentObject {
 
     public List readAll() throws ExcepcaoPersistencia;
 
-    public ICategory readCategoryByCode(String code) throws ExcepcaoPersistencia;
+    public Category readCategoryByCode(String code) throws ExcepcaoPersistencia;
 }

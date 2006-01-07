@@ -1,18 +1,15 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import java.lang.reflect.Proxy;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoOnlineTest;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IFinalEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
-
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author Ângela
@@ -105,7 +102,7 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
         return null;
     }
 
-    public void copyFromDomain(IEvaluation evaluation) {
+    public void copyFromDomain(Evaluation evaluation) {
         super.copyFromDomain(evaluation);
         if (evaluation != null) {
             setPublishmentMessage(evaluation.getPublishmentMessage());
@@ -116,21 +113,16 @@ public class InfoEvaluation extends InfoShowOccupation implements ISiteComponent
      * @param evaluation
      * @return
      */
-    public static InfoEvaluation newInfoFromDomain(IEvaluation evaluation) {
+    public static InfoEvaluation newInfoFromDomain(Evaluation evaluation) {
         InfoEvaluation infoEvaluation = null;
         if (evaluation != null) {
-
-            if (evaluation instanceof Proxy) {
-                evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
-            }
-
-            if (evaluation instanceof IWrittenEvaluation) {
+            if (evaluation instanceof WrittenEvaluation) {
                 infoEvaluation = InfoWrittenEvaluation
-                        .newInfoFromDomain((IWrittenEvaluation) evaluation);
-            } else if (evaluation instanceof IFinalEvaluation) {
-                infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((IFinalEvaluation) evaluation);
-            } else if (evaluation instanceof IOnlineTest) {
-                infoEvaluation = InfoOnlineTest.newInfoFromDomain((IOnlineTest) evaluation);
+                        .newInfoFromDomain((WrittenEvaluation) evaluation);
+            } else if (evaluation instanceof FinalEvaluation) {
+                infoEvaluation = InfoFinalEvaluation.newInfoFromDomain((FinalEvaluation) evaluation);
+            } else if (evaluation instanceof OnlineTest) {
+                infoEvaluation = InfoOnlineTest.newInfoFromDomain((OnlineTest) evaluation);
             } else {
                 infoEvaluation = new InfoEvaluation();
                 infoEvaluation.copyFromDomain(evaluation);

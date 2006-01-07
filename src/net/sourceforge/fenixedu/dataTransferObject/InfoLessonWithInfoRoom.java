@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.Lesson;
 
 /**
  * @author João Mota
@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.ILesson;
  */
 public class InfoLessonWithInfoRoom extends InfoLesson {
 
-    public void copyFromDomain(ILesson lesson) {
+    public void copyFromDomain(Lesson lesson) {
         super.copyFromDomain(lesson);
         if (lesson != null) {
             setInfoSala(InfoRoom.newInfoFromDomain(lesson.getSala()));
         }
     }
 
-    public static InfoLesson newInfoFromDomain(ILesson lesson) {
+    public static InfoLesson newInfoFromDomain(Lesson lesson) {
         InfoLessonWithInfoRoom infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLessonWithInfoRoom();

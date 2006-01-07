@@ -10,9 +10,9 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -51,7 +51,7 @@ public class ReadStudentsByIdArray implements IService {
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = new Integer(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain((IStudent) persistentSuport.getIPersistentStudent().readAllBetweenNumbers(number,
+                studentList.add(InfoStudent.newInfoFromDomain((Student) persistentSuport.getIPersistentStudent().readAllBetweenNumbers(number,
                         number).get(0)));
             }
         }
@@ -68,9 +68,9 @@ public class ReadStudentsByIdArray implements IService {
             if (shifts[i].equals(bundle.getString("label.allShifts"))) {
                 continue;
             }
-            IShift shift = (IShift) persistentShift.readByOID(Shift.class, new Integer(shifts[i]));
-            List<IStudent> studentList = shift.getStudents();
-            for (IStudent student : studentList) {
+            Shift shift = (Shift) persistentShift.readByOID(Shift.class, new Integer(shifts[i]));
+            List<Student> studentList = shift.getStudents();
+            for (Student student : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
                 if (!infoStudentList.contains(infoStudent))
                     infoStudentList.add(infoStudent);
@@ -87,13 +87,13 @@ public class ReadStudentsByIdArray implements IService {
 
         for (int i = 0; i < students.length; i++) {
             if (students[i].equals(bundle.getString("label.allStudents"))) {
-                List<IAttends> attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
-                for (IAttends attend : attendList) {
+                List<Attends> attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
+                for (Attends attend : attendList) {
                     studentsList.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
                 }
                 break;
             }
-            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class,
+            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) persistentSuport.getIPersistentStudent().readByOID(Student.class,
                     new Integer(students[i])));
             if (!studentsList.contains(infoStudent))
                 studentsList.add(infoStudent);

@@ -207,10 +207,10 @@
 		targetUrl.append("/mailingListThreadManagement.do?").append("method=messagesVisibilityManagement");
 		targetUrl.append("&mailingListID=").append(mailingList.getIdInternal());
 		targetUrl.append("&threadId=").append(mailConversation.getIdInternal());
-		Iterator<IMailMessage> messagesIterator = mailConversation.getMailMessagesIterator();
+		Iterator<MailMessage> messagesIterator = mailConversation.getMailMessagesIterator();
 		while (messagesIterator.hasNext())
 		{
-			IMailMessage currentMessage = messagesIterator.next();
+			MailMessage currentMessage = messagesIterator.next();
 			targetUrl.append("&expandedMessages=").append(currentMessage.getIdInternal());
 			allMessagesToExpand.add(currentMessage.getIdInternal());
 			if (!messagesIterator.hasNext())

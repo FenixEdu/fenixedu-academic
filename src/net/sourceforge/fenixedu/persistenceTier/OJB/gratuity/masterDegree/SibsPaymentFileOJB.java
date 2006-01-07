@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree;
 
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -24,12 +24,12 @@ public class SibsPaymentFileOJB extends PersistentObjectOJB implements IPersiste
     public SibsPaymentFileOJB() {
     }
 
-    public ISibsPaymentFile readByFilename(String filename) throws ExcepcaoPersistencia {
+    public SibsPaymentFile readByFilename(String filename) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("filename", filename);
 
-        return (ISibsPaymentFile) queryObject(SibsPaymentFile.class, criteria);
+        return (SibsPaymentFile) queryObject(SibsPaymentFile.class, criteria);
     }
 
 }

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -19,7 +19,7 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class CurricularCourseOJB extends PersistentObjectOJB implements IPersistentCurricularCourse {
 
-    public List<ICurricularCourse> readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
+    public List<CurricularCourse> readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("curricularStage", curricularStage);
         return queryList(CurricularCourse.class, crit);
@@ -36,14 +36,14 @@ public class CurricularCourseOJB extends PersistentObjectOJB implements IPersist
     }
 	
 	
-    public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
+    public CurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
             Integer degreeCurricularPlanId, String name, String code) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("name", name);
         crit.addEqualTo("code", code);
         crit.addEqualTo("degreeCurricularPlan.idInternal", degreeCurricularPlanId);
         crit.addEqualTo("curricularStage", CurricularStage.OLD);
-        return (ICurricularCourse) queryObject(CurricularCourse.class, crit);
+        return (CurricularCourse) queryObject(CurricularCourse.class, crit);
 
     }
 

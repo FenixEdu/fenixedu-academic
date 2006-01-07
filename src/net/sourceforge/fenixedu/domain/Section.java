@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.fileSuport.INode;
 /**
  * @author Ivo Brandão
  */
-public class Section extends Section_Base {
+public class Section extends Section_Base implements INode {
 
     public String toString() {
         String result = "[SECTION";
@@ -37,11 +37,11 @@ public class Section extends Section_Base {
 
     public INode getParentNode() {
         if (getSuperiorSection() == null) {
-            ISite site = getSite();
-            IExecutionCourse executionCourse = site.getExecutionCourse();
+            Site site = getSite();
+            ExecutionCourse executionCourse = site.getExecutionCourse();
             return executionCourse;
         }
-        ISection section = getSuperiorSection();
+        Section section = getSuperiorSection();
         return section;
     }
 
@@ -52,12 +52,12 @@ public class Section extends Section_Base {
             throw new NullPointerException();
         }
 
-        for (IItem item : this.getAssociatedItems()) {
+        for (Item item : this.getAssociatedItems()) {
             if (item.getName().equals(itemName))
                 throw new DomainException("error.duplicate.item");
         }
 
-        IItem item = new Item();
+        Item item = new Item();
         item.setInformation(itemInformation);
         item.setName(itemName);
         item.setUrgent(itemUrgent);
@@ -75,7 +75,7 @@ public class Section extends Section_Base {
             int itemOrder;
 
             for (; items.hasNext();) {
-                IItem item = (IItem) items.next();
+                Item item = (Item) items.next();
                 itemOrder = item.getItemOrder().intValue();
                 if (itemOrder >= insertItemOrder)
                     item.setItemOrder(new Integer(itemOrder + 1));
@@ -97,23 +97,23 @@ public class Section extends Section_Base {
         this.setSectionOrder(newOrder);
     }
 
-    private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder, ISection superiorSection,
-            ISite site) {
+    private Integer organizeSectionsOrder(Integer newOrder, Integer oldOrder, Section superiorSection,
+            Site site) {
 
-        List<ISection> sectionsList = getSections(superiorSection, this.getSite());
+        List<Section> sectionsList = getSections(superiorSection, this.getSite());
 
         int diffOrder = newOrder.intValue() - oldOrder.intValue();
 
         if (diffOrder != 0) {
             if (diffOrder > 0) {
-                for (ISection section : sectionsList) {
+                for (Section section : sectionsList) {
                     int sectionOrder = section.getSectionOrder().intValue();
                     if (sectionOrder > oldOrder.intValue() && sectionOrder <= newOrder.intValue()) {
                         section.setSectionOrder(new Integer(sectionOrder - 1));
                     }
                 }
             } else {
-                for (ISection section : sectionsList) {
+                for (Section section : sectionsList) {
                     int sectionOrder = section.getSectionOrder().intValue();
                     if (sectionOrder >= newOrder.intValue() && sectionOrder < oldOrder.intValue()) {
                         section.setSectionOrder(new Integer(sectionOrder + 1));
@@ -126,24 +126,24 @@ public class Section extends Section_Base {
 
     public void delete() {
 
-        ISection superiorSection = this.getSuperiorSection();
-        ISite sectionSite = this.getSite();
+        Section superiorSection = this.getSuperiorSection();
+        Site sectionSite = this.getSite();
         Integer sectionToDeleteOrder = this.getSectionOrder();
 
         // Delete Associated Items
         if (this.getAssociatedItemsCount() != 0) {
-            List<IItem> items = new ArrayList();
+            List<Item> items = new ArrayList();
             items.addAll(this.getAssociatedItems());
-            for (IItem item : items) {
+            for (Item item : items) {
                 item.delete();
             }
         }
 
         // Delete Associated Sections
         if (this.getAssociatedSectionsCount() != 0) {
-            List<ISection> sections = new ArrayList();
+            List<Section> sections = new ArrayList();
             sections.addAll(this.getAssociatedSections());
-            for (ISection section : sections) {
+            for (Section section : sections) {
                 section.delete();
             }
         }
@@ -157,8 +157,8 @@ public class Section extends Section_Base {
         this.setSite(null);
 
         // ReOrder Sections
-        List<ISection> sectionsReordered = getSections(superiorSection, sectionSite);
-        for (ISection section : sectionsReordered) {
+        List<Section> sectionsReordered = getSections(superiorSection, sectionSite);
+        for (Section section : sectionsReordered) {
             Integer sectionOrder = section.getSectionOrder();
             if (sectionOrder.intValue() > sectionToDeleteOrder.intValue()) {
                 section.setSectionOrder(new Integer(sectionOrder.intValue() - 1));
@@ -168,16 +168,16 @@ public class Section extends Section_Base {
         super.deleteDomainObject();
     }
 
-    public static List<ISection> getSections(ISection superiorSection, ISite site) {
+    public static List<Section> getSections(Section superiorSection, Site site) {
 
-        List<ISection> sections = new ArrayList();
+        List<Section> sections = new ArrayList();
 
         if (superiorSection != null) {
             sections = superiorSection.getAssociatedSections();
 
         } else {
-            List<ISection> sectionListAux = site.getAssociatedSections();
-            for (ISection section : sectionListAux) {
+            List<Section> sectionListAux = site.getAssociatedSections();
+            for (Section section : sectionListAux) {
                 if (section.getSuperiorSection() == null)
                     sections.add(section);
             }

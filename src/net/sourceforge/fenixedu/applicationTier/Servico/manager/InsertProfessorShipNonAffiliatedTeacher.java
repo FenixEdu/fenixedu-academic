@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -16,13 +16,13 @@ public class InsertProfessorShipNonAffiliatedTeacher implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentObject().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentObject().readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
-        final INonAffiliatedTeacher nonAffiliatedTeacher = (INonAffiliatedTeacher) sp
+        final NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) sp
                 .getIPersistentObject().readByOID(NonAffiliatedTeacher.class, nonAffiliatedTeacherID);
         if (nonAffiliatedTeacher == null) {
             throw new NonExistingServiceException("message.non.existing.nonAffiliatedTeacher", null);

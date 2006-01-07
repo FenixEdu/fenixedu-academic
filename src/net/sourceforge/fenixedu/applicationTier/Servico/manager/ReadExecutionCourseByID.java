@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -15,11 +15,11 @@ public class ReadExecutionCourseByID implements IService {
 
 	public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
-		IExecutionCourse executionCourse = null;
+		ExecutionCourse executionCourse = null;
 		InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = new InfoExecutionCourseWithNonAffiliatedTeachers();
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
+		executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
 				ExecutionCourse.class, idInternal);
 
 		if (executionCourse == null) {

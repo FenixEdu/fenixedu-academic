@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IInsuranceValue;
+import net.sourceforge.fenixedu.domain.InsuranceValue;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -8,6 +8,6 @@ import net.sourceforge.fenixedu.domain.IInsuranceValue;
  */
 public interface IPersistentInsuranceValue extends IPersistentObject {
 
-	public IInsuranceValue readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia;
+	public InsuranceValue readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia;
 
 }

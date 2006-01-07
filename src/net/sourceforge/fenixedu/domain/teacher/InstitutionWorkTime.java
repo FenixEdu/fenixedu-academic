@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.util.date.TimePeriod;
 
 public class InstitutionWorkTime extends InstitutionWorkTime_Base {
 
-    public InstitutionWorkTime(ITeacherService teacherService, Date startTime, Date endTime,
+    public InstitutionWorkTime(TeacherService teacherService, Date startTime, Date endTime,
             WeekDay weekDay) {
         super();
         if(teacherService == null || startTime == null || endTime == null || weekDay == null){
@@ -51,7 +51,7 @@ public class InstitutionWorkTime extends InstitutionWorkTime_Base {
     }
 
     private void verifyOverlappingWithOtherInstitutionWorkingTimes() {
-        for (IInstitutionWorkTime teacherInstitutionWorkTime : getTeacherService()
+        for (InstitutionWorkTime teacherInstitutionWorkTime : getTeacherService()
                 .getInstitutionWorkTimes()) {
             if (this != teacherInstitutionWorkTime) {
                 if (teacherInstitutionWorkTime.getWeekDay().equals(getWeekDay())) {

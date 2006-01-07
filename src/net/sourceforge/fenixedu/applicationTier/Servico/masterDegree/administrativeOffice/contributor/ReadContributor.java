@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
-import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -21,7 +21,7 @@ public class ReadContributor implements IService {
 	public InfoContributor run(Integer contributorNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = null;
-		IContributor contributor = null;
+		Contributor contributor = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 

@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -22,9 +22,9 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertInexistentAuthors implements IService {
 
-    public List<IPerson> run(final List<InfoAuthor> infoAuthorsList) throws ExcepcaoPersistencia, ExistingServiceException {
+    public List<Person> run(final List<InfoAuthor> infoAuthorsList) throws ExcepcaoPersistencia, ExistingServiceException {
         
-        final List<IPerson> authorsList = new ArrayList<IPerson>(infoAuthorsList.size());
+        final List<Person> authorsList = new ArrayList<Person>(infoAuthorsList.size());
         
         List<Integer> externalPersonsIndexes = new ArrayList<Integer>();
         
@@ -47,7 +47,7 @@ public class InsertInexistentAuthors implements IService {
                 externalPersonsIndexes.add(index);
             }
             else {
-                IPerson person = (IPerson) personDAO.readByOID(Person.class, infoAuthor.getIdInternal());
+                Person person = (Person) personDAO.readByOID(Person.class, infoAuthor.getIdInternal());
                 authorsList.add(person);
             }
             index++;
@@ -55,10 +55,10 @@ public class InsertInexistentAuthors implements IService {
         }
         
         InsertExternalPersons iep = new InsertExternalPersons();
-        List<IExternalPerson> externalPersons = iep.run(infoExternalPersons);
+        List<ExternalPerson> externalPersons = iep.run(infoExternalPersons);
         
         Iterator<Integer> indexIterator =  externalPersonsIndexes.iterator();
-        for (IExternalPerson externalPerson : externalPersons) {
+        for (ExternalPerson externalPerson : externalPersons) {
             
             authorsList.add(indexIterator.next(),externalPerson.getPerson());
             

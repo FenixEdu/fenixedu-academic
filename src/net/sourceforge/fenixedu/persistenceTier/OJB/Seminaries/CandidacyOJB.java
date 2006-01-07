@@ -10,9 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
@@ -72,7 +72,7 @@ public class CandidacyOJB extends PersistentObjectOJB implements IPersistentSemi
             List curricularCoursesInDegree = super.queryList(CurricularCourse.class, criteriaDegree);
             List curricularCoursesIds = new LinkedList();
             for (Iterator iter = curricularCoursesInDegree.iterator(); iter.hasNext();) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+                CurricularCourse curricularCourse = (CurricularCourse) iter.next();
                 curricularCoursesIds.add(curricularCourse.getIdInternal());
             }
             criteria.addIn("curricular_course_id_internal", curricularCoursesIds);
@@ -85,7 +85,7 @@ public class CandidacyOJB extends PersistentObjectOJB implements IPersistentSemi
         List filteredCandidacies = new LinkedList();
         for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
             boolean case1 = true, case2 = true, case3 = true, case4 = true, case5 = true;
-            ICandidacy candidacy = (ICandidacy) iterator.next();
+            Candidacy candidacy = (Candidacy) iterator.next();
             if (case1Id.intValue() != -1 && candidacy.getCaseStudyChoices().size() > 0)
                 case1 = candidacy.getCaseStudyChoices().get(0).getCaseStudy()
                         .getIdInternal().intValue() == case1Id.intValue();

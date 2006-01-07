@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProject;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -25,9 +25,9 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     protected String beginProjectHour;
     protected String endProjectDate;
     protected String endProjectHour;
-    protected IProject project;
+    protected Project project;
     protected Integer projectID;
-    protected List<IProject> associatedProjects;
+    protected List<Project> associatedProjects;
 
     private String getBeginString() {
         return getBeginProjectDate() + " " + getBeginProjectHour();
@@ -85,11 +85,11 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return "projectsIndex";
     }
 
-    private IProject getProject() {
+    private Project getProject() {
         if (this.project == null && this.getProjectID() != null) {
             try {
                 final Object[] args = { Project.class, getProjectID() };
-                this.project = (IProject) ServiceUtils.executeService(null, "ReadDomainObject", args);
+                this.project = (Project) ServiceUtils.executeService(null, "ReadDomainObject", args);
             } catch (FenixFilterException e) {
                 return null;
             } catch (FenixServiceException e) {
@@ -99,10 +99,10 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return this.project;
     }
 
-    public List<IProject> getAssociatedProjects() throws FenixFilterException, FenixServiceException {
+    public List<Project> getAssociatedProjects() throws FenixFilterException, FenixServiceException {
         if (this.associatedProjects == null) {
             final Object[] args = { ExecutionCourse.class, this.getExecutionCourseID() };
-            final IExecutionCourse executionCourse = (IExecutionCourse) ServiceUtils.executeService(
+            final ExecutionCourse executionCourse = (ExecutionCourse) ServiceUtils.executeService(
                     null, "ReadDomainObject", args);
             this.associatedProjects = executionCourse.getAssociatedProjects();
             Collections.sort(this.associatedProjects, new BeanComparator("begin"));
@@ -110,7 +110,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
         return associatedProjects;
     }
 
-    public void setAssociatedProjects(List<IProject> associatedProjects) {
+    public void setAssociatedProjects(List<Project> associatedProjects) {
         this.associatedProjects = associatedProjects;
     }
 

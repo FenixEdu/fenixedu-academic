@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Guide;
 
 /**
  * @author Luis Cruz
@@ -13,16 +13,16 @@ import net.sourceforge.fenixedu.domain.IGuide;
  */
 public class InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear extends InfoGuideWithPersonAndExecutionDegreeAndContributor {
 
-    public void copyFromDomain(IGuide guide) {
+    public void copyFromDomain(Guide guide) {
         super.copyFromDomain(guide);
         if (guide != null) {
-            IExecutionYear executionYear = guide.getExecutionDegree().getExecutionYear();
+            ExecutionYear executionYear = guide.getExecutionDegree().getExecutionYear();
             InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionYear);
             getInfoExecutionDegree().setInfoExecutionYear(infoExecutionYear);
         }
     }
 
-    public static InfoGuide newInfoFromDomain(IGuide guide) {
+    public static InfoGuide newInfoFromDomain(Guide guide) {
         InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear();
         if (guide != null) {
             infoGuide.copyFromDomain(guide);

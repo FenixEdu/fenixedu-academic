@@ -20,11 +20,11 @@ import javax.mail.internet.MimeMessage;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailConversation;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -42,10 +42,10 @@ import relations.MailingListQueueOutgoingMails;
  */
 public class ProcessReceivedMail extends CmsService
 {
-	public IMailMessage run(MimeMessage message, String messageName, String messageDescription) throws FenixServiceException, ExcepcaoPersistencia
+	public MailMessage run(MimeMessage message, String messageName, String messageDescription) throws FenixServiceException, ExcepcaoPersistencia
 	{
-		IMailMessage mailMessage = null;
-		IPerson creator=null;
+		MailMessage mailMessage = null;
+		Person creator=null;
 		try
 		{
 			if (message.isMimeType("multipart/*"))
@@ -64,7 +64,7 @@ public class ProcessReceivedMail extends CmsService
 			{
 				addressesList.add(addresses[i]);
 			}
-			Collection<IMailingList> mailingLists = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailingList().readReceptorMailingListsForAddress(addressesList, this.readFenixCMS().getConfiguration().getMailingListsHostToUse());
+			Collection<MailingList> mailingLists = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailingList().readReceptorMailingListsForAddress(addressesList, this.readFenixCMS().getConfiguration().getMailingListsHostToUse());
 			boolean messageCreated = false;
 			boolean firstMailingList = true;
 			if (mailingLists.size() > 0)
@@ -74,7 +74,7 @@ public class ProcessReceivedMail extends CmsService
 				mailMessage.setDescription(messageDescription);
 				messageCreated = true;
 			}
-			for (IMailingList mailingList : mailingLists)
+			for (MailingList mailingList : mailingLists)
 			{
 				if (firstMailingList)
 				{
@@ -115,20 +115,20 @@ public class ProcessReceivedMail extends CmsService
 	 * @return
 	 * @throws MessagingException
 	 */
-	private boolean senderIsAllowedToSendMessage(MimeMessage mailMessage, IMailingList mailingList)
+	private boolean senderIsAllowedToSendMessage(MimeMessage mailMessage, MailingList mailingList)
 			throws MessagingException
 	{
 		boolean result = false;
 		if (mailingList.getMembersOnly())
 		{
-			Iterator<IUserGroup> groups = mailingList.getGroupsIterator();
+			Iterator<UserGroup> groups = mailingList.getGroupsIterator();
 			while (groups.hasNext())
 			{
-				IUserGroup group = groups.next();
-				Iterator<IPerson> persons = group.getElementsIterator();
+				UserGroup group = groups.next();
+				Iterator<Person> persons = group.getElementsIterator();
 				while (persons.hasNext())
 				{
-					IPerson person = persons.next();
+					Person person = persons.next();
 					Address[] senders = mailMessage.getFrom();
 					for (int i = 0; i < senders.length; i++)
 					{
@@ -154,10 +154,10 @@ public class ProcessReceivedMail extends CmsService
 	 * @param mailingList
 	 * @throws MessagingException
 	 */
-	private void addMailMessageToMailingList(IMailMessage mailMessage, IMailingList mailingList,
-			IPerson creator) throws MessagingException
+	private void addMailMessageToMailingList(MailMessage mailMessage, MailingList mailingList,
+			Person creator) throws MessagingException
 	{
-		IMailConversation conversation = mailingList.getMostRecentMailConversationOnSubject(mailMessage.getSubject());
+		MailConversation conversation = mailingList.getMostRecentMailConversationOnSubject(mailMessage.getSubject());
 		if (conversation == null)
 		{
 			conversation = new MailConversation();
@@ -184,7 +184,7 @@ public class ProcessReceivedMail extends CmsService
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
-	private IMailMessage createMessage(MimeMessage message) throws IOException, MessagingException
+	private MailMessage createMessage(MimeMessage message) throws IOException, MessagingException
 	{
 		MailMessage mailMessage = new MailMessage();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -230,18 +230,18 @@ public class ProcessReceivedMail extends CmsService
 		return mp;
 	}
 
-	protected void updateRootObjectReferences(IMailMessage message) throws ExcepcaoPersistencia
+	protected void updateRootObjectReferences(MailMessage message) throws ExcepcaoPersistencia
 	{
 		CmsContents.add(this.readFenixCMS(), message);
 		CmsUsers.add(this.readFenixCMS(), message.getCreator());
-		Iterator<IMailConversation> conversationsInterator = message.getMailConversationsIterator();
+		Iterator<MailConversation> conversationsInterator = message.getMailConversationsIterator();
 		while (conversationsInterator.hasNext())
 		{ // TODO: gedl aqui talvez seja necessário verificar se a relação
 			// ainda não existe (enviei mail ao João Cachopo em 27-10-2005,
 			// 18:35)
 			// em caso afirmativo verificar nos outros serviços do CMS ou
 			// alterar as classes não base de relação
-			IMailConversation conversation = conversationsInterator.next();
+			MailConversation conversation = conversationsInterator.next();
 			CmsContents.add(message.getCms(), conversation);
 		}
 	}

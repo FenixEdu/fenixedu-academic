@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumbe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.IOrientation;
-import net.sourceforge.fenixedu.domain.teacher.IPublicationsNumber;
-import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
-import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.Orientation;
+import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
+import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
+import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
@@ -50,7 +50,7 @@ public class EditTeacherInformation implements IService {
 		persistentObject = sp.getIPersistentObject();
 
         final IPersistentTeacher pteacher = sp.getIPersistentTeacher();
-        ITeacher teacher = (ITeacher) pteacher.readByOID(Teacher.class, infoServiceProviderRegime
+        Teacher teacher = (Teacher) pteacher.readByOID(Teacher.class, infoServiceProviderRegime
                 .getInfoTeacher().getIdInternal());
 
 		editServiceProviderRegime(infoServiceProviderRegime, teacher);	
@@ -64,10 +64,10 @@ public class EditTeacherInformation implements IService {
     }
 	
 	private void editServiceProviderRegime(InfoServiceProviderRegime infoServiceProviderRegime,
-			ITeacher teacher) throws ExcepcaoPersistencia {
+			Teacher teacher) throws ExcepcaoPersistencia {
 
-        IServiceProviderRegime serviceProviderRegime =
-			(IServiceProviderRegime) persistentObject.readByOID(ServiceProviderRegime.class, infoServiceProviderRegime.getIdInternal(), true);
+        ServiceProviderRegime serviceProviderRegime =
+			(ServiceProviderRegime) persistentObject.readByOID(ServiceProviderRegime.class, infoServiceProviderRegime.getIdInternal(), true);
 
         if (serviceProviderRegime == null) {
 			serviceProviderRegime = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegime);
@@ -80,9 +80,9 @@ public class EditTeacherInformation implements IService {
 		
 	}
 
-	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, ITeacher teacher) throws ExcepcaoPersistencia {
+	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) throws ExcepcaoPersistencia {
         // Weekly Ocupation
-        IWeeklyOcupation weeklyOcupation = (IWeeklyOcupation) persistentObject.readByOID(
+        WeeklyOcupation weeklyOcupation = (WeeklyOcupation) persistentObject.readByOID(
                 WeeklyOcupation.class, infoWeeklyOcupation.getIdInternal(), true);
 
         if (weeklyOcupation == null) {
@@ -95,10 +95,10 @@ public class EditTeacherInformation implements IService {
 		
 	}
 
-	private void editOrientations(List<InfoOrientation> infoOrientations, ITeacher teacher) throws ExcepcaoPersistencia {
+	private void editOrientations(List<InfoOrientation> infoOrientations, Teacher teacher) throws ExcepcaoPersistencia {
         // Orientations
         for (InfoOrientation infoOrientation : infoOrientations) {
-            IOrientation orientation = (IOrientation) persistentObject.readByOID(
+            Orientation orientation = (Orientation) persistentObject.readByOID(
                     Orientation.class, infoOrientation.getIdInternal(), true);
 
             if (orientation == null) {
@@ -112,10 +112,10 @@ public class EditTeacherInformation implements IService {
 
 	}
 
-	private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, ITeacher teacher) throws ExcepcaoPersistencia {
+	private void editPublicationNumbers(List<InfoPublicationsNumber> infoPublicationsNumbers, Teacher teacher) throws ExcepcaoPersistencia {
         // Publications Number
         for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
-            IPublicationsNumber publicationsNumber = (IPublicationsNumber)
+            PublicationsNumber publicationsNumber = (PublicationsNumber)
             	persistentObject.readByOID(PublicationsNumber.class, infoPublicationsNumber.getIdInternal(), true);
 
             if (publicationsNumber == null) {

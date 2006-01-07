@@ -9,7 +9,7 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 
 public class UIBreadCrumbs extends UIInput {
 
@@ -35,7 +35,7 @@ public class UIBreadCrumbs extends UIInput {
 
         final Map attributes = getAttributes();
 
-        final IDegree degree = (IDegree) attributes.get("degree");
+        final Degree degree = (Degree) attributes.get("degree");
         final String trailingCrumb = (String) attributes.get("trailingCrumb");
 
         final ResponseWriter responseWriter = context.getResponseWriter();

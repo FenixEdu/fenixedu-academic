@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestionWithInfoQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,7 +29,7 @@ public class ReadTestQuestion implements IService {
 			String path) throws FenixServiceException, ExcepcaoPersistencia {
 		this.path = path.replace('\\', '/');
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ITestQuestion testQuestion = persistentSuport.getIPersistentTestQuestion()
+		TestQuestion testQuestion = persistentSuport.getIPersistentTestQuestion()
 				.readByTestAndQuestion(testId, questionId);
 		InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion
 				.newInfoFromDomain(testQuestion);

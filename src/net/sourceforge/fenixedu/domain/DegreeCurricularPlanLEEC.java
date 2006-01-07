@@ -25,8 +25,8 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
 
         //        List result = super.getListOfEnrollmentRules(studentCurricularPlan,
         // executionPeriod);
@@ -43,7 +43,7 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
         return result;
     }
 
-    public List getCurricularCoursesFromArea(IBranch area, AreaType areaType) {
+    public List getCurricularCoursesFromArea(Branch area, AreaType areaType) {
 
         List curricularCourses = new ArrayList();
 
@@ -57,13 +57,13 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
             int groupsSize = groups.size();
 
             for (int i = 0; i < groupsSize; i++) {
-                ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) groups.get(i);
+                CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) groups.get(i);
 
                 List courses = curricularCourseGroup.getCurricularCourses();
 
                 int coursesSize = courses.size();
                 for (int j = 0; j < coursesSize; j++) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) courses.get(j);
+                    CurricularCourse curricularCourse = (CurricularCourse) courses.get(j);
                     if (!curricularCourses.contains(curricularCourse)) {
                         curricularCourses.add(curricularCourse);
                     }
@@ -84,12 +84,12 @@ public class DegreeCurricularPlanLEEC extends DegreeCurricularPlanLEEC_Base {
         List secundaryAreas = getSecundaryAreas();
         
         for (Iterator iter = specializationAreas.iterator(); iter.hasNext();) {
-            IBranch branch = (IBranch) iter.next();
+            Branch branch = (Branch) iter.next();
             curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SPECIALIZATION));
         }
         
         for (Iterator iter = secundaryAreas.iterator(); iter.hasNext();) {
-            IBranch branch = (IBranch) iter.next();
+            Branch branch = (Branch) iter.next();
             curricularCourses.addAll(getCurricularCoursesFromArea(branch, AreaType.SECONDARY));
         }
 

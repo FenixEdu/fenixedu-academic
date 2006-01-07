@@ -19,21 +19,21 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesCourse;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -65,7 +65,7 @@ public class WriteInquiry implements IService {
 
         // Writing the inquiries course
         final InfoInquiriesCourse iic = inquiry.getInquiriesCourse();
-        final IInquiriesCourse inquiriesCourse = writeInquiriesCourse(inquiry, iic, infoStudent);
+        final InquiriesCourse inquiriesCourse = writeInquiriesCourse(inquiry, iic, infoStudent);
 
         // Writting the inquiries teacher
 
@@ -93,23 +93,23 @@ public class WriteInquiry implements IService {
         writeInquiriesRegistry(inquiriesRegistryDAO, inquiriesCourse, infoStudent);
     }
 
-    private IInquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic, final InfoStudent infoStudent)
+    private InquiriesCourse writeInquiriesCourse(final InfoInquiry ii, final InfoInquiriesCourse iic, final InfoStudent infoStudent)
             throws ExcepcaoPersistencia {
 		
-		IExecutionCourse executionCourse = (IExecutionCourse) persistentObject.readByOID(
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, ii.getExecutionCourse().getIdInternal());
-		IExecutionDegree executionDegreeCourse = (IExecutionDegree) persistentObject.readByOID(
+		ExecutionDegree executionDegreeCourse = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, iic.getExecutionDegreeCourse().getIdInternal());
-        IExecutionDegree executionDegreeStudent = (IExecutionDegree) persistentObject.readByOID(
+        ExecutionDegree executionDegreeStudent = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, ii.getExecutionDegreeStudent().getIdInternal());
-		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentObject.readByOID(
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, ii.getExecutionPeriod().getIdInternal());
-        IStudent student = (IStudent) persistentObject.readByOID(
+        Student student = (Student) persistentObject.readByOID(
                 Student.class, infoStudent.getIdInternal());
 
-		ISchoolClass schoolClass = null;
+		SchoolClass schoolClass = null;
         if (iic.getStudentSchoolClass() != null) {
-			schoolClass = (ISchoolClass) persistentObject.readByOID(
+			schoolClass = (SchoolClass) persistentObject.readByOID(
                     SchoolClass.class, iic.getStudentSchoolClass().getIdInternal());
         }
 
@@ -117,20 +117,20 @@ public class WriteInquiry implements IService {
                 student.getEntryGradeClassification(), student.getApprovationRatioClassification(), student.getArithmeticMeanClassification());
     }
 
-    private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final IInquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
+    private void writeInquiriesTeacher(final InfoInquiriesTeacher iit, final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
 
         for (ShiftType shiftType : iit.getClassTypes()) {
 
 			InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes = iit
                     .getTeacherOrNonAffiliatedTeacher();
             if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getTeacher() != null) {
-				ITeacher teacher = (ITeacher) persistentObject.readByOID(Teacher.class,
+				Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
 						infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());
 				inquiriesCourse.createInquiriesTeacher(teacher, shiftType, iit);
 				
 
             } else if (infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getNonAffiliatedTeacher() != null) {
-				INonAffiliatedTeacher nonAffiliatedTeacher = (INonAffiliatedTeacher) persistentObject.readByOID(
+				NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) persistentObject.readByOID(
 						NonAffiliatedTeacher.class, infoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes.getIdInternal());
 				inquiriesCourse.createInquiriesTeacher(nonAffiliatedTeacher, shiftType, iit);
             }
@@ -139,18 +139,18 @@ public class WriteInquiry implements IService {
 
     }
 
-    private void writeInquiriesRoom(final InfoInquiriesRoom iir, final IInquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
-		IRoom room = (IRoom) persistentObject.readByOID(Room.class, iir.getRoom().getIdInternal());
+    private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
+		Room room = (Room) persistentObject.readByOID(Room.class, iir.getRoom().getIdInternal());
 		inquiriesCourse.createInquiriesRoom(room, iir);
 
     }
 
-    private IInquiriesRegistry writeInquiriesRegistry(
+    private InquiriesRegistry writeInquiriesRegistry(
             final IPersistentInquiriesRegistry inquiriesRegistryDAO,
-            final IInquiriesCourse inquiriesCourse, final InfoStudent infoStudent) throws ExcepcaoPersistencia {
+            final InquiriesCourse inquiriesCourse, final InfoStudent infoStudent) throws ExcepcaoPersistencia {
 		
 
-        IStudent student = (IStudent) persistentObject.readByOID(Student.class, infoStudent
+        Student student = (Student) persistentObject.readByOID(Student.class, infoStudent
                 .getIdInternal());
 
         return DomainFactory.makeInquiriesRegistry(inquiriesCourse.getExecutionCourse(), inquiriesCourse.getExecutionPeriod(), student);

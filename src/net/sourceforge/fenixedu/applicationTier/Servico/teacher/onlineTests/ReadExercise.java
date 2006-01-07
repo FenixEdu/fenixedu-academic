@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadataWithExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,14 +28,14 @@ public class ReadExercise implements IService {
     public InfoMetadata run(Integer executionCourseId, Integer metadataId, Integer variationId, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
+        Metadata metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
         if (metadata == null || !metadata.getVisibility().booleanValue()) {
             return null;
         }
         InfoMetadata infoMetadata = InfoMetadataWithExecutionCourse.newInfoFromDomain(metadata);
         List<InfoQuestion> visibleInfoQuestions = new ArrayList<InfoQuestion>();
         for (int i = 0; i < metadata.getVisibleQuestions().size(); i++) {
-            IQuestion question = metadata.getVisibleQuestions().get(i);
+            Question question = metadata.getVisibleQuestions().get(i);
             InfoQuestion infoQuestion = InfoQuestion.newInfoFromDomain(question);
             if (question.getIdInternal().equals(variationId) || variationId.intValue() == -2) {
                 ParseQuestion parse = new ParseQuestion();

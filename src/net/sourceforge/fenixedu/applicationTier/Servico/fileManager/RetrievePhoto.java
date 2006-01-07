@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,7 +26,7 @@ public class RetrievePhoto implements IService {
     public FileSuportObject run(Integer personId) throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        final IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);
+        final Person person = (Person) persistentPerson.readByOID(Person.class, personId);
         final Collection<FileSuportObject> fileSupportObjects = JdbcMysqlFileSupport.listFiles(person.getSlideName());
         for (final FileSuportObject fileSupportObject : fileSupportObjects) {
             if (fileSupportObject.getFileName().indexOf("personPhoto") != -1) {

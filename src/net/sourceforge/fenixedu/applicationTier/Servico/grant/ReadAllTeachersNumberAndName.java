@@ -11,7 +11,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -33,10 +33,10 @@ public class ReadAllTeachersNumberAndName implements IService {
         final ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         final IPersistentTeacher persistentTeacher = suportePersistente.getIPersistentTeacher();
-        final Collection<ITeacher> teachers = persistentTeacher.readAll(Teacher.class);
+        final Collection<Teacher> teachers = persistentTeacher.readAll(Teacher.class);
 
         if (teachers != null) {
-            for (final ITeacher teacher : teachers) {
+            for (final Teacher teacher : teachers) {
                 InfoTeacher infoTeacher = new InfoTeacher();
                 InfoPerson infoPerson = new InfoPerson();
 

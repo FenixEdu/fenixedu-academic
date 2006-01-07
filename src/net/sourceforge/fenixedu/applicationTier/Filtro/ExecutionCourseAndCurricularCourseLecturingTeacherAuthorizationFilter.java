@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -68,8 +68,8 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
      */
     private boolean CurricularCourseBelongsExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
-        ICurricularCourse curricularCourse = null;
+        ExecutionCourse executionCourse = null;
+        CurricularCourse curricularCourse = null;
         InfoCurricularCourse infoCurricularCourse = null;
         ISuportePersistente sp;
         if (argumentos == null) {
@@ -82,18 +82,18 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                         CurricularCourse.class, infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                         CurricularCourse.class, (Integer) argumentos[1]);
             }
 
@@ -122,8 +122,8 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IProfessorship professorship = null;
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Professorship professorship = null;
             if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher

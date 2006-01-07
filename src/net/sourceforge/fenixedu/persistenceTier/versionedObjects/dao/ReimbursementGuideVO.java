@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
@@ -20,9 +20,9 @@ public class ReimbursementGuideVO extends VersionedObjectsBase implements IPersi
     public Integer generateReimbursementGuideNumber() throws ExcepcaoPersistencia {
 
         int maxNumber = 0;
-        final List<IReimbursementGuide> reimbursementGuides = (List<IReimbursementGuide>) readAll(ReimbursementGuide.class);
+        final List<ReimbursementGuide> reimbursementGuides = (List<ReimbursementGuide>) readAll(ReimbursementGuide.class);
 
-        for (IReimbursementGuide reimbursementGuide : reimbursementGuides) {
+        for (ReimbursementGuide reimbursementGuide : reimbursementGuides) {
             maxNumber = Math.max(maxNumber, reimbursementGuide.getNumber());
         }
 

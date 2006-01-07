@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoDislocatedStudent;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -24,7 +24,7 @@ public class ReadDislocatedStudentByStudentID implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
+        Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
         return InfoDislocatedStudent.newInfoFromDomain(student.getDislocatedStudent());
     }
 }

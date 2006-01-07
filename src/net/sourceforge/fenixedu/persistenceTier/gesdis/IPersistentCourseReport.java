@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.gesdis;
 
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -15,6 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentCourseReport extends IPersistentObject {
 
-    public ICourseReport readCourseReportByExecutionCourse(Integer executionCourseOID)
+    public CourseReport readCourseReportByExecutionCourse(Integer executionCourseOID)
             throws ExcepcaoPersistencia;
 }

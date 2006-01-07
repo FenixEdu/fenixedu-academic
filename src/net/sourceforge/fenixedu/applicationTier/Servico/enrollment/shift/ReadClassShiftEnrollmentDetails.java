@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ExecutionCourseShiftEnrollmentDetails;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.InfoClassEnrollmentDetails;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentDetails;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -62,11 +62,11 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 		ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
 		// Current Execution OccupationPeriod
-		IExecutionPeriod executionPeriod = executionPeriodDAO
+		ExecutionPeriod executionPeriod = executionPeriodDAO
 				.readActualExecutionPeriod();
 
 		// Student
-		IStudent student = readStudent(infoStudent, studentDAO);
+		Student student = readStudent(infoStudent, studentDAO);
 
 		// Classes
 		List classList = classDAO
@@ -74,9 +74,9 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 						.getIdInternal(), executionPeriod.getIdInternal());
 
 		// Class selected
-		ISchoolClass klass = null;
+		SchoolClass klass = null;
 		if (klassId != null) {
-			klass = (ISchoolClass) classDAO.readByOID(SchoolClass.class,
+			klass = (SchoolClass) classDAO.readByOID(SchoolClass.class,
 					klassId);
 		}
 
@@ -86,9 +86,9 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 						.getIdInternal(), executionPeriod.getIdInternal());
 
 		// Shifts enrolment
-		List<IShift> shifts = student.getShifts();
+		List<Shift> shifts = student.getShifts();
 		List studentShifts = new ArrayList();
-		for (IShift shift : shifts) {
+		for (Shift shift : shifts) {
 			if (shift.getDisciplinaExecucao().getExecutionPeriod()
 					.getIdInternal().equals(executionPeriod.getIdInternal()))
 				studentShifts.add(shift);
@@ -119,7 +119,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 				new Transformer() {
 
 					public Object transform(Object input) {
-						IShift shift = (IShift) input;
+						Shift shift = (Shift) input;
 						InfoShift infoShift = InfoShiftWithInfoExecutionCourse
 								.newInfoFromDomain(shift);
 						return infoShift;
@@ -138,7 +138,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private Map createMapAndPopulateInfoClassList(List classList,
-			List shiftsAttendList, List infoClassList, ISchoolClass klassToTreat)
+			List shiftsAttendList, List infoClassList, SchoolClass klassToTreat)
 			throws ExcepcaoPersistencia {
 		Map classExecutionCourseShiftEnrollmentDetailsMap = new HashMap();
 
@@ -154,7 +154,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 			executionCourseTreated.clear();
 
 			// Clone class
-			ISchoolClass klass = (ISchoolClass) classList.get(i);
+			SchoolClass klass = (SchoolClass) classList.get(i);
 			InfoClass infoClass = InfoClass.newInfoFromDomain(klass);
 			infoClassList.add(infoClass);
 
@@ -167,7 +167,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 						.getAssociatedShifts(), shiftsAttendList);
 				if (shiftsRequired != null) {
 					for (int j = 0; j < shiftsRequired.size(); j++) {
-						IShift shift = (IShift) shiftsRequired.get(j);
+						Shift shift = (Shift) shiftsRequired.get(j);
 
 						ShiftEnrollmentDetails shiftEnrollmentDetails = createShiftEnrollmentDetails(
 								shiftsTreated, shift);
@@ -206,8 +206,8 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 	 * @return
 	 */
 	private ExecutionCourseShiftEnrollmentDetails createExecutionCourseShiftEnrollmentDetails(
-			Map executionCourseTreated, IShift shift) {
-		IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+			Map executionCourseTreated, Shift shift) {
+		ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 		ExecutionCourseShiftEnrollmentDetails executionCourseShiftEnrollmentDetails = (ExecutionCourseShiftEnrollmentDetails) executionCourseTreated
 				.get(executionCourse.getIdInternal());
 
@@ -233,7 +233,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 	 * @throws ExcepcaoPersistencia
 	 */
 	private ShiftEnrollmentDetails createShiftEnrollmentDetails(
-			Map shiftsTreated, IShift shift) throws ExcepcaoPersistencia {
+			Map shiftsTreated, Shift shift) throws ExcepcaoPersistencia {
 		ShiftEnrollmentDetails shiftEnrollmentDetails = (ShiftEnrollmentDetails) shiftsTreated
 				.get(shift.getIdInternal());
 		if (shiftEnrollmentDetails == null) {
@@ -259,10 +259,10 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 	 * @throws StudentNotFoundServiceException
 	 * @throws ExcepcaoPersistencia
 	 */
-	private IStudent readStudent(InfoStudent infoStudent,
+	private Student readStudent(InfoStudent infoStudent,
 			IPersistentStudent studentDAO)
 			throws StudentNotFoundServiceException, ExcepcaoPersistencia {
-		IStudent student = (IStudent) studentDAO.readByOID(Student.class,
+		Student student = (Student) studentDAO.readByOID(Student.class,
 				infoStudent.getIdInternal());
 		if (student == null) {
 			throw new StudentNotFoundServiceException();
@@ -274,7 +274,7 @@ public class ReadClassShiftEnrollmentDetails implements IService {
 	 * @param student
 	 * @return
 	 */
-	private InfoStudent copyIStudent2InfoStudent(IStudent student) {
+	private InfoStudent copyIStudent2InfoStudent(Student student) {
 		InfoStudent infoStudent = null;
 		if (student != null) {
 			infoStudent = new InfoStudent();

@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -42,18 +42,18 @@ public class InsertSummary implements IService {
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        final IShift shift = SummaryUtils.getShift(persistentSupport, null, infoSummary);
-        final IRoom room = SummaryUtils.getRoom(persistentSupport, null, shift, infoSummary);
+        final Shift shift = SummaryUtils.getShift(persistentSupport, null, infoSummary);
+        final Room room = SummaryUtils.getRoom(persistentSupport, null, shift, infoSummary);
 
-        final IProfessorship professorship = SummaryUtils.getProfessorship(persistentSupport,
+        final Professorship professorship = SummaryUtils.getProfessorship(persistentSupport,
                 infoSummary);
         if (professorship != null) {
-            final ISummary summary = executionCourse.createSummary(infoSummary.getTitle(), infoSummary
+            final Summary summary = executionCourse.createSummary(infoSummary.getTitle(), infoSummary
                     .getSummaryText(), infoSummary.getStudentsNumber(), infoSummary.getIsExtraLesson(),
                     professorship);
             shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
@@ -61,10 +61,10 @@ public class InsertSummary implements IService {
             return true;
         }
 
-        final ITeacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
+        final Teacher teacher = SummaryUtils.getTeacher(persistentSupport, infoSummary);
         if (teacher != null) {
             if (!executionCourse.teacherLecturesExecutionCourse(teacher)) {
-                final ISummary summary = executionCourse.createSummary(infoSummary.getTitle(),
+                final Summary summary = executionCourse.createSummary(infoSummary.getTitle(),
                         infoSummary.getSummaryText(), infoSummary.getStudentsNumber(), infoSummary
                                 .getIsExtraLesson(), teacher);
                 shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
@@ -78,7 +78,7 @@ public class InsertSummary implements IService {
 
         String teacherName = infoSummary.getTeacherName();
         if (teacherName != null) {
-            final ISummary summary = executionCourse.createSummary(infoSummary.getTitle(), infoSummary
+            final Summary summary = executionCourse.createSummary(infoSummary.getTitle(), infoSummary
                     .getSummaryText(), infoSummary.getStudentsNumber(), infoSummary.getIsExtraLesson(),
                     teacherName);
             shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary

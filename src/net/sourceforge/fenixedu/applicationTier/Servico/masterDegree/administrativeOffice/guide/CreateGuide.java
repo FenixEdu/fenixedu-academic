@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IContributor;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.GuideSituation;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -44,7 +44,7 @@ public class CreateGuide implements IService {
             ExcepcaoPersistencia {
 
         ISuportePersistente sp = sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IGuideSituation guideSituation = null;
+        GuideSituation guideSituation = null;
 
         // Check the Guide Situation
         if (situationOfGuide.equals(GuideState.ANNULLED))
@@ -80,14 +80,14 @@ public class CreateGuide implements IService {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
                 infoGuide.getInfoPerson().getIdInternal());
-        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, infoGuide.getInfoExecutionDegree().getIdInternal());
-        IContributor contributor = (IContributor) sp.getIPersistentContributor().readByOID(
+        Contributor contributor = (Contributor) sp.getIPersistentContributor().readByOID(
                 Contributor.class, infoGuide.getInfoContributor().getIdInternal());
 
-        IGuide guide = DomainFactory.makeGuide();
+        Guide guide = DomainFactory.makeGuide();
         guide.setExecutionDegree(executionDegree);
         guide.setContributor(contributor);
         guide.setPerson(person);
@@ -108,7 +108,7 @@ public class CreateGuide implements IService {
 
         // Write the new Entries of the Guide
         for (InfoGuideEntry infoGuideEntryIter : (List<InfoGuideEntry>) infoGuide.getInfoGuideEntries()) {
-            IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
+            GuideEntry guideEntry = DomainFactory.makeGuideEntry();
             
             guideEntry.setDescription(infoGuideEntryIter.getDescription());
             guideEntry.setDocumentType(infoGuideEntryIter.getDocumentType());

@@ -12,7 +12,7 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 
 public interface ITurmaPersistente extends IPersistentObject {
 
@@ -26,7 +26,7 @@ public interface ITurmaPersistente extends IPersistentObject {
 
     public List readByExecutionPeriod(Integer executionPeriodOID) throws ExcepcaoPersistencia;
 
-    public ISchoolClass readByNameAndExecutionDegreeAndExecutionPeriod(String className,
+    public SchoolClass readByNameAndExecutionDegreeAndExecutionPeriod(String className,
             Integer executionDegreeOID, Integer executionPeriodOID) throws ExcepcaoPersistencia;
 
     public List readByExecutionDegree(Integer executionDegreeOID) throws ExcepcaoPersistencia;

@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractMovementWithContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,7 +37,7 @@ public class ReadAllGrantMovementsByContract implements IService {
 		if (grantMovements != null) {
 			result = (List) CollectionUtils.collect(grantMovements, new Transformer() {
 				public Object transform(Object o) {
-					IGrantContractMovement grantMovement = (IGrantContractMovement) o;
+					GrantContractMovement grantMovement = (GrantContractMovement) o;
 					return InfoGrantContractMovementWithContract.newInfoFromDomain(grantMovement);
 				}
 			});

@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoGlossaryEntry;
-import net.sourceforge.fenixedu.domain.support.IGlossaryEntry;
+import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGlossaryEntries;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,7 +31,7 @@ public class ReadGlossaryEntries implements IService {
         List glossaryEntries = dao.readAll();
         return CollectionUtils.collect(glossaryEntries, new Transformer() {
             public Object transform(Object arg0) {
-                IGlossaryEntry glossaryEntry = (IGlossaryEntry) arg0;
+                GlossaryEntry glossaryEntry = (GlossaryEntry) arg0;
                 return InfoGlossaryEntry.newInfoFromDomain(glossaryEntry);
             }
         });

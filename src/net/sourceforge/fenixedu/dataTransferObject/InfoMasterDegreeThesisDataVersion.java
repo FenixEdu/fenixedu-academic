@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.sql.Timestamp;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -138,7 +138,7 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
     }
 
     public static InfoMasterDegreeThesisDataVersion newInfoFromDomain(
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+            MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
         if (masterDegreeThesisDataVersion != null) {
             infoMasterDegreeThesisDataVersion = new InfoMasterDegreeThesisDataVersion();
@@ -147,7 +147,7 @@ public class InfoMasterDegreeThesisDataVersion extends InfoObject {
         return infoMasterDegreeThesisDataVersion;
     }
 
-    public void copyFromDomain(IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+    public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         super.copyFromDomain(masterDegreeThesisDataVersion);
         if (masterDegreeThesisDataVersion != null) {
             setCurrentState(masterDegreeThesisDataVersion.getCurrentState());

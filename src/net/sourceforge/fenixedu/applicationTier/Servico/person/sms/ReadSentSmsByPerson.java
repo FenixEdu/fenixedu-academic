@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.sms.InfoSentSms;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.sms.ISentSms;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,16 +30,16 @@ public class ReadSentSmsByPerson implements IService {
 		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
-		IPerson person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+		Person person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
 		List infoSentSmsList = new ArrayList();
 
 		List sentSmsList = persistentSentSms.readByPerson(person.getIdInternal(), new Integer(50));
 		Iterator it = sentSmsList.iterator();
-		ISentSms sentSms = null;
+		SentSms sentSms = null;
 
 		while (it.hasNext()) {
-			sentSms = (ISentSms) it.next();
+			sentSms = (SentSms) it.next();
 			infoSentSmsList.add(InfoSentSms.copyFromDomain(sentSms));
 		}
 

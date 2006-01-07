@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public class InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos extends InfoDegree {
@@ -14,15 +14,15 @@ public class InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos extends I
 		this.setInfoDegreeInfos(new ArrayList());
 	}
 	
-	public void copyFromDomain(IDegree degree) {
+	public void copyFromDomain(Degree degree) {
         super.copyFromDomain(degree);
         if (degree != null) {
-            for (IDegreeInfo degreeInfo : degree.getDegreeInfos()) {
+            for (DegreeInfo degreeInfo : degree.getDegreeInfos()) {
 				InfoDegreeInfo infoDegreeInfo = InfoDegreeInfoWithDegree.newInfoFromDomain(degreeInfo);
 				this.getInfoDegreeInfos().add(infoDegreeInfo);
             }
 			
-			for (IDegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
+			for (DegreeCurricularPlan dcp : degree.getDegreeCurricularPlans()) {
 				if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
                     InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp);
                     this.getInfoDegreeCurricularPlans().add(infoDCP);
@@ -32,7 +32,7 @@ public class InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos extends I
     }
 
     public static InfoDegree newInfoFromDomain(
-            IDegree degree) {
+            Degree degree) {
 		InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos infoDegree = null;
         if (degree != null) {
             infoDegree = new InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos();

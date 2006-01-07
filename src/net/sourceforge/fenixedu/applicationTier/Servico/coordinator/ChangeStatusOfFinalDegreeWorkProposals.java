@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -23,7 +23,7 @@ public class ChangeStatusOfFinalDegreeWorkProposals implements IService {
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
             for (Integer selectedProposalOID : selectedProposalOIDs) {
-                IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+                Proposal proposal = (Proposal) persistentFinalDegreeWork.readByOID(Proposal.class,
                         selectedProposalOID);
                 proposal.setStatus(status);
             }

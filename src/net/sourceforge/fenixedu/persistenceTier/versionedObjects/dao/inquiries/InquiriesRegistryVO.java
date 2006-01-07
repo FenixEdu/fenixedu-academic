@@ -8,10 +8,10 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -23,23 +23,23 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class InquiriesRegistryVO extends VersionedObjectsBase implements
 		IPersistentInquiriesRegistry {
 
-	public List<IInquiriesRegistry> readByStudentId(Integer studentId)
+	public List<InquiriesRegistry> readByStudentId(Integer studentId)
 	throws ExcepcaoPersistencia {
 
-		IStudent student = (IStudent) readByOID(Student.class, studentId);
+		Student student = (Student) readByOID(Student.class, studentId);
 		
-		List<IInquiriesRegistry> res = student.getAssociatedInquiriesRegistries();
+		List<InquiriesRegistry> res = student.getAssociatedInquiriesRegistries();
 		
 		return res;
 		
 		
 	}
 
-	public List<IInquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
+	public List<InquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
 	throws ExcepcaoPersistencia {
-		IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class, executionPeriodId);
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class, executionPeriodId);
 		
-		List<IInquiriesRegistry> res = executionPeriod.getAssociatedInquiriesRegistries();
+		List<InquiriesRegistry> res = executionPeriod.getAssociatedInquiriesRegistries();
 		
 		return res;
 		

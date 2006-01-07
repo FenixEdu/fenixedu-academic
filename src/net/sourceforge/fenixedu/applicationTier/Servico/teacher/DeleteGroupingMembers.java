@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,7 +35,7 @@ public class DeleteGroupingMembers implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
-        final IGrouping grouping = (IGrouping) persistentGrouping
+        final Grouping grouping = (Grouping) persistentGrouping
                 .readByOID(Grouping.class, groupingCode);
         if (grouping == null) {
             throw new ExistingServiceException();
@@ -51,16 +51,16 @@ public class DeleteGroupingMembers implements IService {
         }
 
         for (final String studentUsername : (List<String>) studentUsernames) {
-            IAttends attend = grouping.getStudentAttend(studentUsername);
+            Attends attend = grouping.getStudentAttend(studentUsername);
             removeAttendFromStudentGroups(grouping, attend);
             grouping.removeAttends(attend);
         }        
         return true;
     }
 
-    private void removeAttendFromStudentGroups(final IGrouping grouping, IAttends attend) {
+    private void removeAttendFromStudentGroups(final Grouping grouping, Attends attend) {
         if (attend != null) {
-            for (final IStudentGroup studentGroup : grouping.getStudentGroups()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
                 studentGroup.removeAttends(attend);
             }
         }

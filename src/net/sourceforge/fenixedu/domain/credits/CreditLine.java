@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 /**
  * @author jpvl
  */
-public abstract class CreditLine extends CreditLine_Base {
+public abstract class CreditLine extends CreditLine_Base implements net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator {
 
     protected abstract CreditsEvent getCreditEventGenerated();
 

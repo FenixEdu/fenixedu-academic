@@ -11,7 +11,7 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -38,7 +38,7 @@ public class StoreItemFile implements IService {
             HeuristicRollbackException {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentItem persistentItem = sp.getIPersistentItem();
-        IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
+        Item item = (Item) persistentItem.readByOID(Item.class, itemId);
         file.setUri("/files" + item.getSlideName() + "/" + file.getFileName());
         file.setRootUri(item.getSection().getSite().getExecutionCourse().getSlideName());
         JdbcMysqlFileSupport.createFile(file);

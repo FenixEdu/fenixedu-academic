@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 
 /**
  * This is the view class that contains information about the site domain
@@ -214,9 +214,9 @@ public class InfoSite extends InfoObject implements ISiteComponent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(ISite site) {
+    public void copyFromDomain(Site site) {
         super.copyFromDomain(site);
         if (site != null) {
             setAlternativeSite(site.getAlternativeSite());
@@ -227,7 +227,7 @@ public class InfoSite extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoSite newInfoFromDomain(ISite site) {
+    public static InfoSite newInfoFromDomain(Site site) {
         InfoSite infoSite = null;
         if (site != null) {
             infoSite = new InfoSite();

@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.util.StudentState;
 
@@ -123,7 +123,7 @@ public class InfoStudent extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(IStudent student) {
+    public void copyFromDomain(Student student) {
         super.copyFromDomain(student);
 
         if (student != null) {
@@ -138,7 +138,7 @@ public class InfoStudent extends InfoObject {
         }
     }
 
-    public static InfoStudent newInfoFromDomain(IStudent student) {
+    public static InfoStudent newInfoFromDomain(Student student) {
         InfoStudent infoStudent = null;
         if (student != null) {
             infoStudent = new InfoStudent();

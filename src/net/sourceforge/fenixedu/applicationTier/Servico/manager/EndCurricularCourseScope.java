@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,7 +29,7 @@ public class EndCurricularCourseScope implements IService {
         final ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentCurricularCourseScope persistentCurricularCourseScope = ps
                 .getIPersistentCurricularCourseScope();
-        ICurricularCourseScope oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
+        CurricularCourseScope oldCurricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope
                 .readByOID(CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal(),
                         true);
         if (oldCurricularCourseScope == null) {

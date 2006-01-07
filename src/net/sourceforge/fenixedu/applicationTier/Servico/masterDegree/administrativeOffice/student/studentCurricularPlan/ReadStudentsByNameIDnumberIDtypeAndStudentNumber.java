@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber implements IServic
         return (List) CollectionUtils.collect(masterDegreeStudents, new Transformer() {
 
             public Object transform(Object arg0) {
-                IStudent student = (IStudent) arg0;
+                Student student = (Student) arg0;
                 return InfoStudentWithInfoPerson.newInfoFromDomain(student);
             }
 

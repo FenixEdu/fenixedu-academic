@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IDislocatedStudent;
-import net.sourceforge.fenixedu.domain.IDistrict;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DislocatedStudent;
+import net.sourceforge.fenixedu.domain.District;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
@@ -33,15 +33,15 @@ public class WriteDislocatedStudentAnswer implements IService {
         IPersistentDistrict persistentDistrict = sp.getIPersistentDistrict();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         
-        IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
-        ICountry country = (ICountry) persistentCountry.readByOID(Country.class, countryID);
-        ICountry dislocatedCountry = null;
+        Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
+        Country country = (Country) persistentCountry.readByOID(Country.class, countryID);
+        Country dislocatedCountry = null;
         if(dislocatedCountryID != null){
-            dislocatedCountry = (ICountry) persistentCountry.readByOID(Country.class, dislocatedCountryID);
+            dislocatedCountry = (Country) persistentCountry.readByOID(Country.class, dislocatedCountryID);
         }
-        IDistrict district = (IDistrict) persistentDistrict.readByOID(District.class, districtID);
+        District district = (District) persistentDistrict.readByOID(District.class, districtID);
         
-        IDislocatedStudent dislocatedStudent = DomainFactory.makeDislocatedStudent();
+        DislocatedStudent dislocatedStudent = DomainFactory.makeDislocatedStudent();
         dislocatedStudent.setStudent(student);
         dislocatedStudent.setCountry(country);
         dislocatedStudent.setDislocatedCountry(dislocatedCountry);

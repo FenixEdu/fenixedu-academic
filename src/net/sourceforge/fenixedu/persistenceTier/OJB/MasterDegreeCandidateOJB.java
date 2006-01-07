@@ -15,8 +15,8 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -51,13 +51,13 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 			Object result = queryList(MasterDegreeCandidate.class, crit, "candidateNumber", false)
 					.get(0);
 			if (result != null)
-				number = ((IMasterDegreeCandidate) result).getCandidateNumber().intValue();
+				number = ((MasterDegreeCandidate) result).getCandidateNumber().intValue();
 		}
 
 		return ++number;
 	}
 
-	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
+	public MasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
 			String idDocumentNumber, IDDocumentType idDocumentType, Integer executionDegreeID,
 			Specialization specialization) throws ExcepcaoPersistencia {
 
@@ -66,7 +66,7 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
 		crit.addEqualTo("person.numeroDocumentoIdentificacao", idDocumentNumber);
 		crit.addEqualTo("person.idDocumentType", idDocumentType);
-		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
 	}
 
@@ -110,37 +110,37 @@ public class MasterDegreeCandidateOJB extends PersistentObjectOJB implements
 		return queryList(MasterDegreeCandidate.class, criteria);
 	}
 
-	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
+	public MasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
 			Integer executionDegreeID, Specialization specialization) throws ExcepcaoPersistencia {
 		Criteria crit = new Criteria();
 		crit.addEqualTo("specialization", specialization);
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
 		crit.addEqualTo("candidateNumber", number);
-		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
 	}
 
-	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(Integer executionDegreeID,
+	public MasterDegreeCandidate readByExecutionDegreeAndPerson(Integer executionDegreeID,
 			Integer personID) throws ExcepcaoPersistencia {
 
 		Criteria crit = new Criteria();
 		crit.addEqualTo("person.idInternal", personID);
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
 
-		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
 	}
 
-	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
+	public MasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
 			Integer personID, Integer number) throws ExcepcaoPersistencia {
 
-		IPerson person = (IPerson) readByOID(Person.class, personID);
+		Person person = (Person) readByOID(Person.class, personID);
 
 		Criteria crit = new Criteria();
 		crit.addEqualTo("person.username", person.getUsername());
 		crit.addEqualTo("executionDegree.idInternal", executionDegreeID);
 		crit.addEqualTo("candidateNumber", number);
-		return (IMasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
+		return (MasterDegreeCandidate) queryObject(MasterDegreeCandidate.class, crit);
 
 	}
 

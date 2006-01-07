@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
-import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,7 +23,7 @@ public class InsertItem implements IService {
                 .getDefaultPersistenceSupport();
         final IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
                        
-        final ISection section = (ISection) persistentSection.readByOID(Section.class, sectionCode);
+        final Section section = (Section) persistentSection.readByOID(Section.class, sectionCode);
               
         if (infoItem.getItemOrder() == -1) {
             infoItem.setItemOrder(section.getAssociatedItemsCount());

@@ -8,9 +8,9 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
@@ -29,12 +29,12 @@ public class OldPublicationVO extends VersionedObjectsBase implements
 	public List readAllByTeacherIdAndOldPublicationType(final Integer teacherId,
 			final OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
 		
-		ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherId);
+		Teacher teacher = (Teacher) readByOID(Teacher.class, teacherId);
 		List oldPublications = (List) CollectionUtils.select(teacher.getAssociatedOldPublications(), new Predicate() {
 
 			public boolean evaluate(Object obj) {
 				if(obj instanceof OldPublication) {
-					IOldPublication oldPub = (OldPublication) obj;
+					OldPublication oldPub = (OldPublication) obj;
 					return oldPub.getOldPublicationType().equals(oldPublicationType);
 				}
 				return false;

@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -54,14 +54,14 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         return queryList(Enrolment.class, crit);
     }
 
-    public IEnrolment readEnrolmentByStudentNumberAndCurricularCourse(
+    public Enrolment readEnrolmentByStudentNumberAndCurricularCourse(
             Integer studentNumber, Integer curricularCourseId, String year)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourseId);
         criteria.addEqualTo("executionPeriod.executionYear.year", year);
         criteria.addEqualTo("studentCurricularPlan.student.number", studentNumber);
-        return (IEnrolment) queryObject(Enrolment.class, criteria);
+        return (Enrolment) queryObject(Enrolment.class, criteria);
     }
 
     public List readAprovedEnrolmentsFromOtherExecutionPeriodByStudentCurricularPlanAndCurricularCourse(
@@ -75,14 +75,14 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         return queryList(Enrolment.class, criteria);
     }
 
-    public IEnrolment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+    public Enrolment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
             Integer studentCurricularPlanId, Integer curricularCourseId,
             Integer executionPeriodId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlanId);
         criteria.addEqualTo("curricularCourse.idInternal", curricularCourseId);
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriodId);
-        return (IEnrolment) queryObject(Enrolment.class, criteria);
+        return (Enrolment) queryObject(Enrolment.class, criteria);
     }
 
     public List readByStudentCurricularPlanAndCurricularCourse(
@@ -98,8 +98,8 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentEnrolment#readEnrollmentsByStudentAndCurricularCourseNameAndCode(Dominio.IStudent,
-     *      Dominio.ICurricularCourse)
+     * @see ServidorPersistente.IPersistentEnrolment#readEnrollmentsByStudentAndCurricularCourseNameAndCode(Dominio.Student,
+     *      Dominio.CurricularCourse)
      */
     public List readEnrollmentsByStudentAndCurricularCourseNameAndDegree(Integer studentId,
             String curricularCourseName, Integer degreeId) throws ExcepcaoPersistencia {
@@ -124,13 +124,13 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
 
         int numberCompletedCourses = countCompletedCoursesInActiveStudentCurricularPlans(studentId);
 
-        IStudentCurricularPlan studentCurricularPlan = getStudentsActiveUndergraduateCurricularPlan(studentId);
+        StudentCurricularPlan studentCurricularPlan = getStudentsActiveUndergraduateCurricularPlan(studentId);
         if ((studentCurricularPlan != null)
                 && !(studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla()
                         .equals("LEEC"))) {
             List enrolmentsInOtherStudentCurricularPlans = getApprovedEnrolmentsInOtherStudentCurricularPlans(studentId);
             for (int i = 0; i < enrolmentsInOtherStudentCurricularPlans.size(); i++) {
-                IEnrolment enrolment = (IEnrolment) enrolmentsInOtherStudentCurricularPlans.get(i);
+                Enrolment enrolment = (Enrolment) enrolmentsInOtherStudentCurricularPlans.get(i);
 
                 int numberOfEquivilantEnrolments = countEnrolmentEquivalences(enrolment);
 
@@ -143,7 +143,7 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
         return numberCompletedCourses;
     }
 
-	private int countEnrolmentEquivalences(IEnrolment enrolment) {
+	private int countEnrolmentEquivalences(Enrolment enrolment) {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("equivalentEnrolment.idInternal", enrolment.getIdInternal());
 		return count(EquivalentEnrolmentForEnrolmentEquivalence.class, criteria);
@@ -169,12 +169,12 @@ public class EnrollmentOJB extends PersistentObjectOJB implements IPersistentEnr
 		return queryList(Enrolment.class, criteria);
 	}
 
-    private IStudentCurricularPlan getStudentsActiveUndergraduateCurricularPlan(Integer studentId)
+    private StudentCurricularPlan getStudentsActiveUndergraduateCurricularPlan(Integer studentId)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.idInternal", studentId);
         criteria.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
         criteria.addEqualTo("degreeCurricularPlan.degree.tipoCurso", DegreeType.DEGREE);
-        return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
+        return (StudentCurricularPlan) queryObject(StudentCurricularPlan.class, criteria);
     }
 }

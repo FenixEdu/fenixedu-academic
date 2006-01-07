@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoNewShiftEnrollment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,7 +35,7 @@ public class ReadShiftsToEnroll implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+        Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                 DegreeType.DEGREE);
         if (student == null) {
             student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
@@ -57,7 +57,7 @@ public class ReadShiftsToEnroll implements IService {
         List infoNewShiftEnrollments = new ArrayList();
         for (Iterator iter = attendList.iterator(); iter.hasNext();) {
             InfoNewShiftEnrollment infoNewShiftEnrollment = new InfoNewShiftEnrollment();
-            IAttends attends = (IAttends) iter.next();
+            Attends attends = (Attends) iter.next();
             setShifts(infoNewShiftEnrollment, attends.getDisciplinaExecucao(), student);
             infoNewShiftEnrollment.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(attends
                     .getDisciplinaExecucao()));
@@ -76,9 +76,9 @@ public class ReadShiftsToEnroll implements IService {
      * @param student
      */
     private void setShifts(InfoNewShiftEnrollment infoNewShiftEnrollment,
-            IExecutionCourse executionCourse, IStudent student) {
+            ExecutionCourse executionCourse, Student student) {
         for (Iterator iter = executionCourse.getAssociatedShifts().iterator(); iter.hasNext();) {
-            IShift shift = (IShift) iter.next();
+            Shift shift = (Shift) iter.next();
             if (shift.getTipo().equals(ShiftType.TEORICA)) {
                 infoNewShiftEnrollment.setTheoricType(ShiftType.TEORICA);
             } else if (shift.getTipo().equals(ShiftType.PRATICA)) {
@@ -90,7 +90,7 @@ public class ReadShiftsToEnroll implements IService {
             }
         }
         for (Iterator iter = student.getShifts().iterator(); iter.hasNext();) {
-            IShift shift = (IShift) iter.next();
+            Shift shift = (Shift) iter.next();
             if (shift.getDisciplinaExecucao().equals(executionCourse)
                     && shift.getTipo().equals(ShiftType.TEORICA)) {
                 infoNewShiftEnrollment.setTheoricShift(InfoShift.newInfoFromDomain(shift));

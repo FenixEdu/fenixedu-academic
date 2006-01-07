@@ -49,7 +49,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         return true;
     }
 
-    public boolean areNewAreasCompatible(IBranch specializationArea, IBranch secundaryArea)
+    public boolean areNewAreasCompatible(Branch specializationArea, Branch secundaryArea)
             throws BothAreasAreTheSameServiceException,
             InvalidArgumentsServiceException {
         if (specializationArea == null && secundaryArea == null) {
@@ -76,7 +76,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
         Iterator iterator = studentsAprovedEnrollments.iterator();
         while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+            Enrolment enrolment = (Enrolment) iterator.next();
             if (curricularCoursesBelongingToAnySpecializationAndSecundaryArea.contains(enrolment
                     .getCurricularCourse())){
                 if(curricularCoursesFromSpecArea.contains(enrolment.getCurricularCourse())) {
@@ -96,7 +96,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
     
  
     public CurricularCourseEnrollmentType getCurricularCourseEnrollmentType(
-            ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
+            CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
 
         if (!curricularCourse.hasActiveScopeInGivenSemester(currentExecutionPeriod.getSemester())) {
             return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -109,7 +109,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         List enrollmentsWithEnrolledStateInCurrentExecutionPeriod = getAllStudentEnrolledEnrollmentsInExecutionPeriod(currentExecutionPeriod);
 
         for (int i = 0; i < enrollmentsWithEnrolledStateInCurrentExecutionPeriod.size(); i++) {
-            IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
+            Enrolment enrollment = (Enrolment) enrollmentsWithEnrolledStateInCurrentExecutionPeriod
                     .get(i);
             if (curricularCourse.equals(enrollment.getCurricularCourse())) {
                 return CurricularCourseEnrollmentType.NOT_ALLOWED;
@@ -120,7 +120,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
                 .getPreviousExecutionPeriod());
 
         for (int i = 0; i < enrollmentsWithEnrolledStateInPreviousExecutionPeriod.size(); i++) {
-            IEnrolment enrollment = (IEnrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
+            Enrolment enrollment = (Enrolment) enrollmentsWithEnrolledStateInPreviousExecutionPeriod
                     .get(i);
             if (curricularCourse.equals(enrollment.getCurricularCourse())) {
                 return CurricularCourseEnrollmentType.TEMPORARY;
@@ -142,14 +142,14 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         return true;
     }
 
-    protected List getCurricularCoursesFromArea(IBranch specializationArea, AreaType areaType) {
+    protected List getCurricularCoursesFromArea(Branch specializationArea, AreaType areaType) {
         List curricularCourses = new ArrayList();
 
         List groups = specializationArea.getAreaCurricularCourseGroups(areaType);
 
         Iterator iterator = groups.iterator();
         while (iterator.hasNext()) {
-            ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator.next();
+            CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) iterator.next();
             curricularCourses.addAll(curricularCourseGroup
                     .getCurricularCourses());
         }
@@ -183,14 +183,14 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
             AreaType areaType) {
         Iterator iterator = areas.iterator();
         while (iterator.hasNext()) {
-            IBranch area = (IBranch) iterator.next();
+            Branch area = (Branch) iterator.next();
             List groups = area.getAreaCurricularCourseGroups(areaType);
             Iterator iterator2 = groups.iterator();
             while (iterator2.hasNext()) {
-                ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) iterator2.next();
+                CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) iterator2.next();
                 Iterator iterator3 = curricularCourseGroup.getCurricularCourses().iterator();
                 while (iterator3.hasNext()) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) iterator3.next();
+                    CurricularCourse curricularCourse = (CurricularCourse) iterator3.next();
                     if (!curricularCourses.contains(curricularCourse)) {
                         curricularCourses.add(curricularCourse);
                     }
@@ -200,15 +200,15 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
     }
     
     
-    protected List getCommonBranchAndStudentBranchesCourses(IExecutionPeriod executionPeriod) {
+    protected List getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
 
         HashSet curricularCourses = new HashSet();
-        IDegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         List commonAreas = degreeCurricularPlan.getCommonAreas();
         int commonAreasSize = commonAreas.size();
 
         for (int i = 0; i < commonAreasSize; i++) {
-            IBranch area = (IBranch) commonAreas.get(i);
+            Branch area = (Branch) commonAreas.get(i);
             curricularCourses.addAll(degreeCurricularPlan.getCurricularCoursesFromArea(area,
                     AreaType.BASE));
         }
@@ -225,9 +225,9 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
 
         curricularCourses.addAll(degreeCurricularPlan.getTFCs());
         
-        List<ICurricularCourseGroup> optionalCurricularCourseGroups = degreeCurricularPlan.getAllOptionalCurricularCourseGroups();
-        for (ICurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
-			List<ICurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
+        List<CurricularCourseGroup> optionalCurricularCourseGroups = degreeCurricularPlan.getAllOptionalCurricularCourseGroups();
+        for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
+			List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
 			curricularCourses.addAll(optionalCurricularCourses);
 		}
 
@@ -238,7 +238,7 @@ public class StudentCurricularPlanLEIC extends StudentCurricularPlanLEIC_Base {
         int curricularCoursesSize = curricularCourses.size();
 
         for (int i = 0; i < curricularCoursesSize; i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) allCurricularCourses.get(i);
+            CurricularCourse curricularCourse = (CurricularCourse) allCurricularCourses.get(i);
             result.add(transformToCurricularCourse2Enroll(curricularCourse, executionPeriod));
         }
 

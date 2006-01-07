@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
@@ -44,14 +44,14 @@ public class CreateWrittenEvaluation implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final List<IExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
+        final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
                 persistentSupport, executionCourseIDs);
 
-        final List<ICurricularCourseScope> curricularCourseScopesToAssociate = readCurricularCourseScopes(
+        final List<CurricularCourseScope> curricularCourseScopesToAssociate = readCurricularCourseScopes(
                 persistentSupport, curricularCourseScopeIDs);
 
-        List<IRoom> roomsToAssociate = null;
-        IOccupationPeriod period = null;
+        List<Room> roomsToAssociate = null;
+        OccupationPeriod period = null;
         if (roomIDs != null) {
             roomsToAssociate = readRooms(persistentSupport, roomIDs);
             period = readPeriod(persistentSupport, writtenEvaluationDate);
@@ -73,17 +73,17 @@ public class CreateWrittenEvaluation implements IService {
         }
     }
 
-    private List<IExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
+    private List<ExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
             final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (executionCourseIDs.isEmpty()) {
             throw new FenixServiceException("error.invalidExecutionCourse");
         }
-        final List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
         for (final String executionCourseID : executionCourseIDs) {
-            final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse
                     .readByOID(ExecutionCourse.class, Integer.valueOf(executionCourseID));
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");
@@ -93,18 +93,18 @@ public class CreateWrittenEvaluation implements IService {
         return result;
     }
 
-    private List<ICurricularCourseScope> readCurricularCourseScopes(
+    private List<CurricularCourseScope> readCurricularCourseScopes(
             final ISuportePersistente persistentSupport, final List<String> curricularCourseScopeIDs)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         if (curricularCourseScopeIDs.isEmpty()) {
             throw new FenixServiceException("error.invalidCurricularCourseScope");
         }
-        final List<ICurricularCourseScope> result = new ArrayList<ICurricularCourseScope>();
+        final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
         final IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
         for (final String curricularCourseScopeID : curricularCourseScopeIDs) {
-            final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
+            final CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope
                     .readByOID(CurricularCourseScope.class, Integer.valueOf(curricularCourseScopeID));
             if (curricularCourseScope == null) {
                 throw new FenixServiceException("error.invalidCurricularCourseScope");
@@ -114,13 +114,13 @@ public class CreateWrittenEvaluation implements IService {
         return result;
     }
 
-    private List<IRoom> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
+    private List<Room> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final List<IRoom> result = new ArrayList<IRoom>();
+        final List<Room> result = new ArrayList<Room>();
         final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         for (final String roomID : roomIDs) {
-            final IRoom room = (IRoom) persistentRoom.readByOID(Room.class, Integer.valueOf(roomID));
+            final Room room = (Room) persistentRoom.readByOID(Room.class, Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -129,10 +129,10 @@ public class CreateWrittenEvaluation implements IService {
         return result;
     }
 
-    private IOccupationPeriod readPeriod(final ISuportePersistente persistentSupport,
+    private OccupationPeriod readPeriod(final ISuportePersistente persistentSupport,
             final Date writtenEvaluationDate) throws ExcepcaoPersistencia {
         final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
-        IOccupationPeriod period = (IOccupationPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate,
+        OccupationPeriod period = (OccupationPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate,
                 writtenEvaluationDate, null);
         if (period == null) {
             period = DomainFactory.makeOccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);

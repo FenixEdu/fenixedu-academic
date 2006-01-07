@@ -16,8 +16,8 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -53,14 +53,14 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 			// in case of configuration we have to update all sections
 			sections = persistentWebSiteSection.readAll();
 		} else {
-			IWebSiteSection webSiteSectionTmp;
-			webSiteSectionTmp = (IWebSiteSection) persistentWebSiteSection.readByOID(
+			WebSiteSection webSiteSectionTmp;
+			webSiteSectionTmp = (WebSiteSection) persistentWebSiteSection.readByOID(
 					WebSiteSection.class, sectionCode);
 			sections.add(webSiteSectionTmp);
 		}
 		Iterator iterSections = sections.iterator();
 		while (iterSections.hasNext()) {
-			IWebSiteSection webSiteSection = (IWebSiteSection) iterSections.next();
+			WebSiteSection webSiteSection = (WebSiteSection) iterSections.next();
 
 			List webSiteItems = persistentWebSiteItem
 					.readPublishedWebSiteItemsByWebSiteSection(webSiteSection);
@@ -69,7 +69,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 			List infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
 
 				public Object transform(Object arg0) {
-					IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+					WebSiteItem webSiteItem = (WebSiteItem) arg0;
 					InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
 					infoWebSiteItem.setInfoWebSiteSection(infoWebSiteSection);
 					return infoWebSiteItem;

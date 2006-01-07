@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -41,9 +41,9 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readByExecutionYear(String executionYear) throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
+        List<ExecutionYear> executionYears = (List<ExecutionYear>) readAll(ExecutionYear.class);
 
-        for (IExecutionYear executionYearElement : executionYears) {
+        for (ExecutionYear executionYearElement : executionYears) {
             if (executionYearElement.getYear().equals(executionYear)) {
                 return executionYearElement.getExecutionDegrees();
             }
@@ -51,11 +51,11 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
         return new ArrayList();
     }
 
-    public IExecutionDegree readByDegreeCurricularPlanAndExecutionYear(String degreeCurricularPlanName,
+    public ExecutionDegree readByDegreeCurricularPlanAndExecutionYear(String degreeCurricularPlanName,
             String degreeCurricularPlanAcronym, String year) throws ExcepcaoPersistencia {
 
-        List<IExecutionDegree> executionDegrees = (List<IExecutionDegree>) readAll(ExecutionDegree.class);
-        for (IExecutionDegree executionDegree : executionDegrees) {
+        List<ExecutionDegree> executionDegrees = (List<ExecutionDegree>) readAll(ExecutionDegree.class);
+        for (ExecutionDegree executionDegree : executionDegrees) {
             if (executionDegree.getDegreeCurricularPlan().getName().equals(degreeCurricularPlanName)
                     && executionDegree.getDegreeCurricularPlan().getDegree().getSigla().equals(
                             degreeCurricularPlanAcronym)
@@ -68,15 +68,15 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
         return null;
     }
 
-    public IExecutionDegree readByDegreeCurricularPlanIDAndExecutionYear(Integer degreeCurricularPlanID,
+    public ExecutionDegree readByDegreeCurricularPlanIDAndExecutionYear(Integer degreeCurricularPlanID,
             String executionYear) throws ExcepcaoPersistencia {
 
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-        List<IExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+        List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
 
-        for (IExecutionDegree executionDegree : executionDegrees) {
+        for (ExecutionDegree executionDegree : executionDegrees) {
             if (executionDegree.getExecutionYear().getYear().equals(executionYear)) {
                 return executionDegree;
             }
@@ -88,13 +88,13 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
 
     public List readMasterDegrees(String year) throws ExcepcaoPersistencia {
 
-        List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
+        List<ExecutionYear> executionYears = (List<ExecutionYear>) readAll(ExecutionYear.class);
         List result = new ArrayList();
 
-        for (IExecutionYear executionYear : executionYears) {
+        for (ExecutionYear executionYear : executionYears) {
             if (executionYear.getYear().equals(year)) {
-                List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
-                for (IExecutionDegree executionDegree : executionDegrees) {
+                List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+                for (ExecutionDegree executionDegree : executionDegrees) {
                     if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                             DegreeType.MASTER_DEGREE)) {
                         result.add(executionDegree);
@@ -107,12 +107,12 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
 
     public List readByDegreeAndExecutionYear(Integer degreeOID, String year, CurricularStage curricularStage) throws ExcepcaoPersistencia {
 
-        IDegree degree = (IDegree) readByOID(Degree.class, degreeOID);
+        Degree degree = (Degree) readByOID(Degree.class, degreeOID);
 
-        List<IExecutionDegree> result = new ArrayList<IExecutionDegree>();
-        for (IDegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+        for (DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
             if (degreeCurricularPlan.getCurricularStage().equals(curricularStage)) {
-                for (IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+                for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                     if (executionDegree.getExecutionYear().getYear().equals(year)) {
                         result.add(executionDegree);
                     }
@@ -123,11 +123,11 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readByTeacher(Integer teacherOID) throws ExcepcaoPersistencia {
-        ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherOID);
-        List<IExecutionDegree> result = new ArrayList();
+        Teacher teacher = (Teacher) readByOID(Teacher.class, teacherOID);
+        List<ExecutionDegree> result = new ArrayList();
         if(teacher != null){
-            List<ICoordinator> coordinators = teacher.getCoordinators();
-            for (ICoordinator coordinator : coordinators) {
+            List<Coordinator> coordinators = teacher.getCoordinators();
+            for (Coordinator coordinator : coordinators) {
                 result.add(coordinator.getExecutionDegree());
             }
         }
@@ -138,15 +138,15 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     public List readByExecutionYearAndDegreeType(String year, DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
-        List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
-        List<IExecutionDegree> result = new ArrayList();
+        List<ExecutionYear> executionYears = (List<ExecutionYear>) readAll(ExecutionYear.class);
+        List<ExecutionDegree> result = new ArrayList();
 
-        for (IExecutionYear executionYear : executionYears) {
+        for (ExecutionYear executionYear : executionYears) {
             if (executionYear.getYear().equals(year)) {
 
-                List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+                List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
 
-                for (IExecutionDegree executionDegree : executionDegrees) {
+                for (ExecutionDegree executionDegree : executionDegrees) {
                     if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                             degreeType)) {
                         result.add(executionDegree);
@@ -159,7 +159,7 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readByDegreeCurricularPlan(Integer degreeCurricularPlanOID) throws ExcepcaoPersistencia {
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanOID);
 
         return degreeCurricularPlan.getExecutionDegrees();
@@ -167,9 +167,9 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readExecutionsDegreesByDegree(Integer degreeOID, CurricularStage curricularStage) throws ExcepcaoPersistencia {
-        IDegree degree = (IDegree) readByOID(Degree.class, degreeOID);
-        List<IExecutionDegree> result = new ArrayList<IExecutionDegree>();
-        for (IDegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+        Degree degree = (Degree) readByOID(Degree.class, degreeOID);
+        List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
+        for (DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
             if (degreeCurricularPlan.getCurricularStage().equals(curricularStage)) {
                     result.addAll(degreeCurricularPlan.getExecutionDegrees());
             }
@@ -181,16 +181,16 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     public List readByExecutionCourseAndByTeacher(Integer executionCourseOID, Integer teacherOID)
             throws ExcepcaoPersistencia {
 
-        IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseOID);
-        ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherOID);
-        List<IExecutionDegree> result = new ArrayList();
+        Teacher teacher = (Teacher) readByOID(Teacher.class, teacherOID);
+        List<ExecutionDegree> result = new ArrayList();
 
-        List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
-        for (ICurricularCourse curricularCourse : curricularCourses) {
-            IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-            List<IExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
-            for (IExecutionDegree executionDegree : executionDegrees) {
+        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        for (CurricularCourse curricularCourse : curricularCourses) {
+            DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+            List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+            for (ExecutionDegree executionDegree : executionDegrees) {
                 if (executionDegree.getCoordinatorsList().contains(teacher)) {
                     result.add(executionDegree);
                 }
@@ -200,12 +200,12 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
 
     }
 
-    public IExecutionDegree readByDegreeCurricularPlanNameAndExecutionYear(String name,
+    public ExecutionDegree readByDegreeCurricularPlanNameAndExecutionYear(String name,
             Integer executionYearOID) throws ExcepcaoPersistencia {
 
-        IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class, executionYearOID);
-        List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
-        for (IExecutionDegree executionDegree : executionDegrees) {
+        ExecutionYear executionYear = (ExecutionYear) readByOID(ExecutionYear.class, executionYearOID);
+        List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+        for (ExecutionDegree executionDegree : executionDegrees) {
             if (executionDegree.getDegreeCurricularPlan().getName().equals(name)) {
                 return executionDegree;
             }
@@ -215,12 +215,12 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readExecutionDegreesOfTypeDegree() throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
-        List<IExecutionDegree> result = new ArrayList();
-        for (IExecutionYear executionYear : executionYears) {
+        List<ExecutionYear> executionYears = (List<ExecutionYear>) readAll(ExecutionYear.class);
+        List<ExecutionDegree> result = new ArrayList();
+        for (ExecutionYear executionYear : executionYears) {
             if (executionYear.getState().equals(PeriodState.CURRENT)) {
-                List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
-                for (IExecutionDegree executionDegree : executionDegrees) {
+                List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+                for (ExecutionDegree executionDegree : executionDegrees) {
                     if (executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                             DegreeType.DEGREE)) {
                         result.add(executionDegree);
@@ -231,11 +231,11 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
         return result;
     }
 
-    public IExecutionDegree readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
+    public ExecutionDegree readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(
             Integer degreeCurricularPlanID, Integer executionYearID) throws ExcepcaoPersistencia {
-        IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class, executionYearID);
-        List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
-        for (IExecutionDegree executionDegree : executionDegrees) {
+        ExecutionYear executionYear = (ExecutionYear) readByOID(ExecutionYear.class, executionYearID);
+        List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+        for (ExecutionDegree executionDegree : executionDegrees) {
             if (executionDegree.getDegreeCurricularPlan().getIdInternal().equals(degreeCurricularPlanID)) {
                 return executionDegree;
             }
@@ -245,7 +245,7 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readByExecutionYearOID(Integer executionYearOID) throws ExcepcaoPersistencia {
-        IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class, executionYearOID);
+        ExecutionYear executionYear = (ExecutionYear) readByOID(ExecutionYear.class, executionYearOID);
         return executionYear.getExecutionDegrees();
 
     }
@@ -253,10 +253,10 @@ public class CursoExecucaoVO extends VersionedObjectsBase implements IPersistent
     public List readListByDegreeNameAndExecutionYearAndDegreeType(String name, Integer executionYearOID,
             DegreeType degreeType) throws ExcepcaoPersistencia {
 
-        IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class, executionYearOID);
-        List<IExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
-        List<IExecutionDegree> result = new ArrayList();
-        for (IExecutionDegree executionDegree : executionDegrees) {
+        ExecutionYear executionYear = (ExecutionYear) readByOID(ExecutionYear.class, executionYearOID);
+        List<ExecutionDegree> executionDegrees = executionYear.getExecutionDegrees();
+        List<ExecutionDegree> result = new ArrayList();
+        for (ExecutionDegree executionDegree : executionDegrees) {
             if (executionDegree.getDegreeCurricularPlan().getDegree().getNome().equals(name)
                     && executionDegree.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                             degreeType)) {

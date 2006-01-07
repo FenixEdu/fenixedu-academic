@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.precedences;
 
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
 
 /**
  * @author David Santos on Jul 27, 2004
@@ -12,14 +12,14 @@ public class InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse extends
     public InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse() {
     }
 
-    public void copyFromDomain(IRestrictionByCurricularCourse restriction) {
+    public void copyFromDomain(RestrictionByCurricularCourse restriction) {
         super.copyFromDomain(restriction);
         super
                 .setRestrictionKindResourceKey("label.manager.restrictionDoneOrHasEverBeenEnrolledInCurricularCourse");
     }
 
     public static InfoRestrictionByCurricularCourse newInfoFromDomain(
-            IRestrictionByCurricularCourse restriction) {
+            RestrictionByCurricularCourse restriction) {
 
         InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse infoRestriction = null;
 

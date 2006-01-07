@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.domain.precedences;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -19,7 +19,7 @@ public class RestrictionNotDoneCurricularCourse extends RestrictionNotDoneCurric
         super();
     }
 	
-	public RestrictionNotDoneCurricularCourse(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+	public RestrictionNotDoneCurricularCourse(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
 		super();
 		
 		setPrecedence(precedence);
@@ -41,7 +41,7 @@ public class RestrictionNotDoneCurricularCourse extends RestrictionNotDoneCurric
         List result = (List) CollectionUtils.collect(
                 enrollmentsWithEnrolledStateInPreviousExecutionPeriod, new Transformer() {
                     public Object transform(Object obj) {
-                        IEnrolment enrollment = (IEnrolment) obj;
+                        Enrolment enrollment = (Enrolment) obj;
                         return enrollment.getCurricularCourse();
                     }
                 });

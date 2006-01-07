@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestionWithInfoMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,17 +30,17 @@ public class ReadQuestion implements IService {
             ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IQuestion question = null;
+        Question question = null;
         if (questionId == null || questionId.equals(new Integer(-1))) {
             if (metadataId == null)
                 throw new InvalidArgumentsServiceException();
-            IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
+            Metadata metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
             if (metadata == null || metadata.getVisibleQuestions() == null && metadata.getVisibleQuestions().size() == 0) {
                 throw new InvalidArgumentsServiceException();
             }
             question = metadata.getVisibleQuestions().get(0);
         } else {
-            question = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionId);
+            question = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionId);
         }
         if (question == null) {
             throw new InvalidArgumentsServiceException();

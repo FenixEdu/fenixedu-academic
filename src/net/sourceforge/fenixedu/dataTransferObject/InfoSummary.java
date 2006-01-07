@@ -12,7 +12,7 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -571,7 +571,7 @@ public class InfoSummary extends InfoObject implements Comparable {
 
     }
 
-    public void copyFromDomain(ISummary summary) {
+    public void copyFromDomain(Summary summary) {
         super.copyFromDomain(summary);
         if (summary != null) {
             setIsExtraLesson(summary.getIsExtraLesson());
@@ -597,7 +597,7 @@ public class InfoSummary extends InfoObject implements Comparable {
      * @param summary
      * @return
      */
-    public static InfoSummary newInfoFromDomain(ISummary summary) {
+    public static InfoSummary newInfoFromDomain(Summary summary) {
         InfoSummary infoSummary = null;
         if (summary != null) {
             infoSummary = new InfoSummary();

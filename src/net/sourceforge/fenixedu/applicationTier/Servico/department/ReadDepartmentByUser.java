@@ -8,8 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,10 +26,10 @@ public class ReadDepartmentByUser implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-        IPerson person = personDAO.lerPessoaPorUsername(username);
+        Person person = personDAO.lerPessoaPorUsername(username);
         List departmentList = person.getManageableDepartmentCredits();
         if (departmentList != null && !departmentList.isEmpty()) {
-            infoDepartment = InfoDepartment.newInfoFromDomain((IDepartment) departmentList.get(0));
+            infoDepartment = InfoDepartment.newInfoFromDomain((Department) departmentList.get(0));
         }
 
         return infoDepartment;

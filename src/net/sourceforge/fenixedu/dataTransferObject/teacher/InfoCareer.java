@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
-import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+import net.sourceforge.fenixedu.domain.teacher.Career;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
 /**
  * @author Leonor Almeida
@@ -71,7 +71,7 @@ public abstract class InfoCareer extends InfoObject implements ISiteComponent {
         this.lastModificationDate = lastModificationDate;
     }
 
-    public void copyFromDomain(ICareer career) {
+    public void copyFromDomain(Career career) {
         super.copyFromDomain(career);
         if (career != null) {
             setBeginYear(career.getBeginYear());
@@ -80,14 +80,14 @@ public abstract class InfoCareer extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoCareer newInfoFromDomain(ICareer career) {
+    public static InfoCareer newInfoFromDomain(Career career) {
         InfoCareer infoCareer = null;
         if (career != null) {
-            if (career instanceof ITeachingCareer) {
+            if (career instanceof TeachingCareer) {
                 infoCareer = InfoTeachingCareerWithInfoCategory
-                        .newInfoFromDomain((ITeachingCareer) career);
-            } else if (career instanceof IProfessionalCareer) {
-                infoCareer = InfoProfessionalCareer.newInfoFromDomain((IProfessionalCareer) career);
+                        .newInfoFromDomain((TeachingCareer) career);
+            } else if (career instanceof ProfessionalCareer) {
+                infoCareer = InfoProfessionalCareer.newInfoFromDomain((ProfessionalCareer) career);
             }
         }
         return infoCareer;

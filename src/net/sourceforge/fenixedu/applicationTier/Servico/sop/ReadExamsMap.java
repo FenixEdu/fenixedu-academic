@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamsMap;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -88,34 +88,34 @@ public class ReadExamsMap implements IService {
 			// exams
 			for (int j = 0; j < executionCourses.size(); j++) {
 				InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
-						.newInfoFromDomain((IExecutionCourse) executionCourses.get(j));
+						.newInfoFromDomain((ExecutionCourse) executionCourses.get(j));
 
 				infoExecutionCourse.setCurricularYear((Integer) curricularYears.get(i));
 
 				List associatedInfoCurricularCourses = new ArrayList();
-				List associatedCurricularCourses = ((IExecutionCourse) executionCourses.get(j))
+				List associatedCurricularCourses = ((ExecutionCourse) executionCourses.get(j))
 						.getAssociatedCurricularCourses();
 				// Curricular courses
 				for (int k = 0; k < associatedCurricularCourses.size(); k++) {
 					InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
-							.newInfoFromDomain((ICurricularCourse) associatedCurricularCourses.get(k));
+							.newInfoFromDomain((CurricularCourse) associatedCurricularCourses.get(k));
 					associatedInfoCurricularCourses.add(infoCurricularCourse);
 				}
 				infoExecutionCourse.setAssociatedInfoCurricularCourses(associatedInfoCurricularCourses);
 
 				List associatedInfoExams = new ArrayList();
-				List<IExam> associatedExams = new ArrayList();
-				List<IEvaluation> associatedEvaluations = ((IExecutionCourse) executionCourses.get(j))
+				List<Exam> associatedExams = new ArrayList();
+				List<Evaluation> associatedEvaluations = ((ExecutionCourse) executionCourses.get(j))
 						.getAssociatedEvaluations();
-				for (IEvaluation evaluation : associatedEvaluations) {
-					if (evaluation instanceof IExam) {
-						associatedExams.add((IExam) evaluation);
+				for (Evaluation evaluation : associatedEvaluations) {
+					if (evaluation instanceof Exam) {
+						associatedExams.add((Exam) evaluation);
 					}
 				}
 
 				// Exams
 				for (int k = 0; k < associatedExams.size(); k++) {
-					InfoExam infoExam = InfoExam.newInfoFromDomain((IExam) associatedExams.get(k));
+					InfoExam infoExam = InfoExam.newInfoFromDomain((Exam) associatedExams.get(k));
 					associatedInfoExams.add(infoExam);
 				}
 				infoExecutionCourse.setAssociatedInfoExams(associatedInfoExams);

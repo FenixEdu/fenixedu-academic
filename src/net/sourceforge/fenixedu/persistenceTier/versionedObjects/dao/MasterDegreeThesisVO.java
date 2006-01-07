@@ -5,8 +5,8 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class MasterDegreeThesisVO extends VersionedObjectsBase implements IPersistentMasterDegreeThesis {
 
-    public IMasterDegreeThesis readByStudentCurricularPlan(Integer studentCurricularPlanId)
+    public MasterDegreeThesis readByStudentCurricularPlan(Integer studentCurricularPlanId)
             throws ExcepcaoPersistencia {
 
-        return ((IStudentCurricularPlan) readByOID(StudentCurricularPlan.class, studentCurricularPlanId))
+        return ((StudentCurricularPlan) readByOID(StudentCurricularPlan.class, studentCurricularPlanId))
                 .getMasterDegreeThesis();
 
     }

@@ -5,8 +5,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -23,9 +23,9 @@ public class InsertPublication implements IService {
 
         final List infoAuthorsList = infoPublication.getInfoPublicationAuthors();
 
-        final List<IPerson> authors = new InsertInexistentAuthors().run(infoAuthorsList);
+        final List<Person> authors = new InsertInexistentAuthors().run(infoAuthorsList);
 
-        final IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+        final PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, infoPublication.getInfoPublicationType().getIdInternal());
         
         DomainFactory.makePublication(infoPublication,publicationType,authors);

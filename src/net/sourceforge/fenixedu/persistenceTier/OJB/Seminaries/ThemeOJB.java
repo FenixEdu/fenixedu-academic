@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -23,10 +23,10 @@ import org.apache.ojb.broker.query.Criteria;
  *  
  */
 public class ThemeOJB extends PersistentObjectOJB implements IPersistentSeminaryTheme {
-    public ITheme readByName(String name) throws ExcepcaoPersistencia {
+    public Theme readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
-        return (ITheme) super.queryObject(Theme.class, criteria);
+        return (Theme) super.queryObject(Theme.class, criteria);
     }
 
     public List readAll() throws ExcepcaoPersistencia {
@@ -34,7 +34,7 @@ public class ThemeOJB extends PersistentObjectOJB implements IPersistentSeminary
         return super.queryList(Theme.class, criteria);
     }
 
-    public void delete(ITheme theme) throws ExcepcaoPersistencia {
+    public void delete(Theme theme) throws ExcepcaoPersistencia {
         super.deleteByOID(Theme.class, theme.getIdInternal());
     }
 }

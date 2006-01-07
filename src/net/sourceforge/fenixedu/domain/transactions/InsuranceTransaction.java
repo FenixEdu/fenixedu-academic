@@ -2,11 +2,11 @@ package net.sourceforge.fenixedu.domain.transactions;
 
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.Student;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -35,9 +35,9 @@ public class InsuranceTransaction extends InsuranceTransaction_Base {
 	public InsuranceTransaction(Double value, Timestamp transactionDate,
 			String remarks, PaymentType paymentType,
 			TransactionType transactionType, Boolean wasInternalBalance,
-			IPerson responsiblePerson, IPersonAccount personAccount,
-			IGuideEntry guideEntry, IExecutionYear executionYear,
-			IStudent student) {
+			Person responsiblePerson, PersonAccount personAccount,
+			GuideEntry guideEntry, ExecutionYear executionYear,
+			Student student) {
         setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);

@@ -8,11 +8,11 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -38,10 +38,10 @@ public class ConfirmStudentsFinalEvaluation implements IService {
 		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 		IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 
-		IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-		IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, curricularCourseCode, false);
 
 		List enrolments = null;
@@ -55,10 +55,10 @@ public class ConfirmStudentsFinalEvaluation implements IService {
 		List enrolmentEvaluations = new ArrayList();
 		Iterator iterEnrolment = enrolments.listIterator();
 		while (iterEnrolment.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
+			Enrolment enrolment = (Enrolment) iterEnrolment.next();
 
 			List allEnrolmentEvaluations = enrolment.getEvaluations();
-			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
+			EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) allEnrolmentEvaluations
 					.get(allEnrolmentEvaluations.size() - 1);
 			enrolmentEvaluations.add(enrolmentEvaluation);
 		}
@@ -68,7 +68,7 @@ public class ConfirmStudentsFinalEvaluation implements IService {
 			ListIterator iterEnrolmentEvaluations = enrolmentEvaluations.listIterator();
 			while (iterEnrolmentEvaluations.hasNext()) {
 
-				IEnrolmentEvaluation enrolmentEvaluationElem = (IEnrolmentEvaluation) iterEnrolmentEvaluations
+				EnrolmentEvaluation enrolmentEvaluationElem = (EnrolmentEvaluation) iterEnrolmentEvaluations
 						.next();
 
 				if (enrolmentEvaluationElem.getGrade() != null

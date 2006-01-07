@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.inquiries;
 
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  * 
  */
 public interface IPersistentOldInquiriesCoursesRes {
-    public IOldInquiriesCoursesRes readByExecutionPeriodAndDegreeIdAndCourseCode(
+    public OldInquiriesCoursesRes readByExecutionPeriodAndDegreeIdAndCourseCode(
             Integer executionPeriodId, Integer degreeId, String courseCode)
             throws ExcepcaoPersistencia;
 }

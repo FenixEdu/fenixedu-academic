@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.precedences;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
 
 /**
  * @author David Santos on Jul 27, 2004
@@ -22,12 +22,12 @@ public class InfoRestrictionWithPrecedence extends InfoObject {
         this.infoPrecedence = infoPrecedence;
     }
 
-    public void copyFromDomain(IRestriction restriction) {
+    public void copyFromDomain(Restriction restriction) {
         super.copyFromDomain(restriction);
         this.setInfoPrecedence(InfoPrecedence.newInfoFromDomain(restriction.getPrecedence()));
     }
 
-    public static InfoRestrictionWithPrecedence newInfoFromDomain(IRestriction restriction) {
+    public static InfoRestrictionWithPrecedence newInfoFromDomain(Restriction restriction) {
 
         InfoRestrictionWithPrecedence infoRestrictionWithPrecedence = null;
 

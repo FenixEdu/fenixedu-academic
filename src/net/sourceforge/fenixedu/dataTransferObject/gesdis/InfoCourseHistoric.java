@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.gesdis;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
+import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 
 /**
  * @author Leonor Almeida
@@ -123,9 +123,9 @@ public class InfoCourseHistoric extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(ICourseHistoric courseHistoric) {
+    public void copyFromDomain(CourseHistoric courseHistoric) {
         super.copyFromDomain(courseHistoric);
         if (courseHistoric != null) {
             setApproved(courseHistoric.getApproved());
@@ -136,7 +136,7 @@ public class InfoCourseHistoric extends InfoObject {
         }
     }
 
-    public static InfoCourseHistoric newInfoFromDomain(ICourseHistoric courseHistoric) {
+    public static InfoCourseHistoric newInfoFromDomain(CourseHistoric courseHistoric) {
         InfoCourseHistoric infoCourseHistoric = null;
         if (courseHistoric != null) {
             infoCourseHistoric = new InfoCourseHistoric();

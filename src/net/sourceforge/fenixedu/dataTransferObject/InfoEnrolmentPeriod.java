@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 
 public class InfoEnrolmentPeriod extends InfoObject implements Serializable {
 
@@ -12,7 +12,7 @@ public class InfoEnrolmentPeriod extends InfoObject implements Serializable {
     private InfoDegreeCurricularPlan infoDegreeCurricularPlan;
     private InfoExecutionPeriod infoExecutionPeriod;
 
-    public void copyFromDomain(final IEnrolmentPeriod enrolmentPeriod) {
+    public void copyFromDomain(final EnrolmentPeriod enrolmentPeriod) {
         super.copyFromDomain(enrolmentPeriod);
         if (enrolmentPeriod != null) {
             setEndDate(enrolmentPeriod.getEndDate());
@@ -22,7 +22,7 @@ public class InfoEnrolmentPeriod extends InfoObject implements Serializable {
         }
     }
 
-    public static InfoEnrolmentPeriod newInfoFromDomain(final IEnrolmentPeriod enrolmentPeriod) {
+    public static InfoEnrolmentPeriod newInfoFromDomain(final EnrolmentPeriod enrolmentPeriod) {
         InfoEnrolmentPeriod infoExecutionPeriod = null;
         if (enrolmentPeriod != null) {
             infoExecutionPeriod = new InfoEnrolmentPeriod();

@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,19 +32,19 @@ public class LerAulasDeDisciplinaExecucao implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
-        final List<IShift> shifts = executionCourse.getAssociatedShifts();
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+        final List<Shift> shifts = executionCourse.getAssociatedShifts();
 
         // An estimated upper bound for the number of elements is three lessons per shift.
         final int estimatedNumberOfLessons = shifts.size() * 3;
 
         final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(estimatedNumberOfLessons);
 
-        for (final IShift shift : shifts) {
+        for (final Shift shift : shifts) {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
-            final List<ILesson> lessons = shift.getAssociatedLessons();
-            for (final ILesson lesson : lessons) {
+            final List<Lesson> lessons = shift.getAssociatedLessons();
+            for (final Lesson lesson : lessons) {
                 //final InfoLesson infoLesson = 
                 //        InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod.newInfoFromDomain(lesson);
                 final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
@@ -52,7 +52,7 @@ public class LerAulasDeDisciplinaExecucao implements IService {
 
                 infoLesson.setInfoShift(infoShift);
 
-                final IRoom room = lesson.getSala();
+                final Room room = lesson.getSala();
                 final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
                 infoLesson.setInfoSala(infoRoom);
             }

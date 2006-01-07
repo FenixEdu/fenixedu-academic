@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
@@ -23,7 +23,7 @@ public abstract class VersionedObjectsBase {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
-    public final IDomainObject readByOId(final IDomainObject obj, final boolean lockWrite) {
+    public final DomainObject readByOId(final DomainObject obj, final boolean lockWrite) {
         try {
             return SuportePersistenteOJB.getInstance().getIPersistentObject().readByOId(obj, false);
         } catch (ExcepcaoPersistencia e) {
@@ -31,7 +31,7 @@ public abstract class VersionedObjectsBase {
         }
     }
 
-    public void simpleLockWrite(IDomainObject obj) {
+    public void simpleLockWrite(DomainObject obj) {
         try {
             SuportePersistenteOJB.getInstance().getIPersistentObject().simpleLockWrite(obj);
         } catch (ExcepcaoPersistencia e) {
@@ -39,12 +39,12 @@ public abstract class VersionedObjectsBase {
         }
     }
 
-    public final IDomainObject readByOID(final Class classToQuery, final Integer oid)
+    public final DomainObject readByOID(final Class classToQuery, final Integer oid)
             throws ExcepcaoPersistencia {
         return SuportePersistenteOJB.getInstance().getIPersistentObject().readByOID(classToQuery, oid);
     }
 
-    public final IDomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
+    public final DomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
             throws ExcepcaoPersistencia {
         return readByOID(classToQuery, oid);
     }
@@ -64,7 +64,7 @@ public abstract class VersionedObjectsBase {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
-    public IDomainObject materialize(IDomainObject domainObject) {
+    public DomainObject materialize(DomainObject domainObject) {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 

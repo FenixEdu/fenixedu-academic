@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -52,17 +52,17 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
         //Execution Course
 
         IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIPersistentExecutionCourse();
-        final IExecutionCourse executionCourse = (IExecutionCourse) disciplinaExecucaoDAO.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) disciplinaExecucaoDAO.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         //Site
         IPersistentSite siteDAO = sp.getIPersistentSite();
-        final ISite site = siteDAO.readByExecutionCourse(executionCourseCode);
+        final Site site = siteDAO.readByExecutionCourse(executionCourseCode);
 
         //Evaluation
 
         IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
-        IEvaluation evaluation = (IEvaluation) evaluationDAO.readByOID(Evaluation.class, evaluationCode);
+        Evaluation evaluation = (Evaluation) evaluationDAO.readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
@@ -76,7 +76,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {
             public Object transform(Object input) {
-                IAttends attend = (IAttends) input;
+                Attends attend = (Attends) input;
                 InfoFrequenta infoAttend = InfoFrequentaWithAll.newInfoFromDomain(attend);
                 //Melhoria Alterar isto depois: isto está feio assim
                 if (attend.getEnrolment() != null) {
@@ -93,7 +93,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
 
         List infoMarkList = (List) CollectionUtils.collect(marksList, new Transformer() {
             public Object transform(Object input) {
-                IMark mark = (IMark) input;
+                Mark mark = (Mark) input;
 
                 InfoMark infoMark = InfoMarkWithInfoAttendAndInfoStudent.newInfoFromDomain(mark);
                 return infoMark;

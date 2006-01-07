@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -19,11 +19,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  *          lepc Exp $
  */
 public class ReadDomainExecutionCourseByID implements IService {
-    public IExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
+    public ExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
-        IExecutionCourse executionCourse = null;
+        ExecutionCourse executionCourse = null;
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
+        executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
                 ExecutionCourse.class, idInternal);
 
         if (executionCourse == null) {

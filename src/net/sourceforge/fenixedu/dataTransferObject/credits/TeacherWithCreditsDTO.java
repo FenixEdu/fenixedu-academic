@@ -3,8 +3,8 @@
 */
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 
 /**
  * @author Ricardo Rodrigues
@@ -13,21 +13,21 @@ import net.sourceforge.fenixedu.domain.teacher.ICategory;
 
 public class TeacherWithCreditsDTO {
 
-    private ITeacher teacher;
+    private Teacher teacher;
     private CreditLineDTO creditLineDTO;
-    private ICategory category;
+    private Category category;
     
-    public TeacherWithCreditsDTO(ITeacher teacher, ICategory category, CreditLineDTO creditLineDTO){
+    public TeacherWithCreditsDTO(Teacher teacher, Category category, CreditLineDTO creditLineDTO){
         setTeacher(teacher);
         setCategory(category);
         setCreditLineDTO(creditLineDTO);
     }
 
-    public ICategory getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(ICategory category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -39,11 +39,11 @@ public class TeacherWithCreditsDTO {
         this.creditLineDTO = creditLineDTO;
     }
 
-    public ITeacher getTeacher() {
+    public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(ITeacher teacher) {
+    public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
 }

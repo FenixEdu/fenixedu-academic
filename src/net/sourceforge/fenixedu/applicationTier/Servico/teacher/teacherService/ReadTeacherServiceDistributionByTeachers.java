@@ -9,14 +9,14 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -34,9 +34,9 @@ public class ReadTeacherServiceDistributionByTeachers implements IService {
 
 		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-		List<ITeacher> teachers;
+		List<Teacher> teachers;
 
-		List<IExecutionPeriod> executionPeriodList;
+		List<ExecutionPeriod> executionPeriodList;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -46,7 +46,7 @@ public class ReadTeacherServiceDistributionByTeachers implements IService {
 
 		executionPeriodList = persistentExecutionPeriod.readByExecutionYear(executionYearID);
 
-		IDepartment department = persistentTeacher.readTeacherByUsername(username)
+		Department department = persistentTeacher.readTeacherByUsername(username)
 				.getLastWorkingDepartment();
 
 		teachers = department.getCurrentTeachers();
@@ -54,12 +54,12 @@ public class ReadTeacherServiceDistributionByTeachers implements IService {
 		/* Information about teacher */
 		Double hoursSpentByTeacher;
 
-		for (ITeacher teacher : teachers) {
+		for (Teacher teacher : teachers) {
 			returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
 					.getCategory().getCode(), teacher.getPerson().getNome(), 0, 0d);
 
-			for (IProfessorship professorShip : teacher.getProfessorships()) {
-				IExecutionCourse executionCourse = professorShip.getExecutionCourse();
+			for (Professorship professorShip : teacher.getProfessorships()) {
+				ExecutionCourse executionCourse = professorShip.getExecutionCourse();
 
 				if (!executionPeriodList.contains(executionCourse.getExecutionPeriod())) {
 					continue;
@@ -67,12 +67,12 @@ public class ReadTeacherServiceDistributionByTeachers implements IService {
 
 				Set<String> curricularYears = new HashSet<String>();
 				Set<String> degreeNames = new HashSet<String>();
-				for (ICurricularCourse curricularCourse : executionCourse
+				for (CurricularCourse curricularCourse : executionCourse
 						.getAssociatedCurricularCourses()) {
 					degreeNames.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
 
-					for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-						ICurricularSemester curricularSemester = curricularCourseScope
+					for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+						CurricularSemester curricularSemester = curricularCourseScope
 								.getCurricularSemester();
 						curricularYears.add(curricularSemester.getCurricularYear().getYear().toString());
 					}

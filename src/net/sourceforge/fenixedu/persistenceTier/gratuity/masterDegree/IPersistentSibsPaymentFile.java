@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree;
 
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -15,5 +15,5 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentSibsPaymentFile extends IPersistentObject {
 
-    public abstract ISibsPaymentFile readByFilename(String filename) throws ExcepcaoPersistencia;
+    public abstract SibsPaymentFile readByFilename(String filename) throws ExcepcaoPersistencia;
 }

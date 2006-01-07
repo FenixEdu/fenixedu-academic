@@ -8,19 +8,19 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 public class MasterDegreeCandidateTest extends DomainTestBase {
 
-    IMasterDegreeCandidate masterDegreeCandidate;
-    IExecutionDegree executionDegree;
-    IDegreeCurricularPlan degreeCurricularPlan;
-    IDegree degree;
+    MasterDegreeCandidate masterDegreeCandidate;
+    ExecutionDegree executionDegree;
+    DegreeCurricularPlan degreeCurricularPlan;
+    Degree degree;
     Specialization specialization;
     
-    IPerson person1;
-    IPerson person2;
-    IPerson person3;
+    Person person1;
+    Person person2;
+    Person person3;
     
-    List<IPerson> onePerson;
-    List<IPerson> twoPersons;
-    List<IPerson> allPersons;
+    List<Person> onePerson;
+    List<Person> twoPersons;
+    List<Person> allPersons;
     
     protected void setUp() throws Exception {
         super.setUp();

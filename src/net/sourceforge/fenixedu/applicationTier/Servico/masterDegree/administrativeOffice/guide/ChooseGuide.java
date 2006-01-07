@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributorAndExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -48,7 +48,7 @@ public class ChooseGuide implements IService {
 		Iterator iterator = guides.iterator();
 		List result = new ArrayList();
 		while (iterator.hasNext()) {
-			IGuide guide = (IGuide) iterator.next();
+			Guide guide = (Guide) iterator.next();
 
 			InfoGuide infoGuide = InfoGuideWithPersonAndExecutionDegreeAndContributor
 					.newInfoFromDomain(guide);
@@ -56,7 +56,7 @@ public class ChooseGuide implements IService {
 			if (guide.getReimbursementGuides() != null) {
 				Iterator iter = guide.getReimbursementGuides().iterator();
 				while (iter.hasNext()) {
-					IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
+					ReimbursementGuide reimbursementGuide = (ReimbursementGuide) iter.next();
 					InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
 							.newInfoFromDomain(reimbursementGuide);
 
@@ -73,7 +73,7 @@ public class ChooseGuide implements IService {
 	public InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
 
 		ISuportePersistente sp = null;
-		IGuide guide = null;
+		Guide guide = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -90,7 +90,7 @@ public class ChooseGuide implements IService {
 		if (guide.getReimbursementGuides() != null) {
 			Iterator iter = guide.getReimbursementGuides().iterator();
 			while (iter.hasNext()) {
-				IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
+				ReimbursementGuide reimbursementGuide = (ReimbursementGuide) iter.next();
 				InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
 						.newInfoFromDomain(reimbursementGuide);
 				infoReimbursementGuides.add(infoReimbursementGuide);
@@ -144,7 +144,7 @@ public class ChooseGuide implements IService {
 
 		Iterator iterator = guides.iterator();
 		while (iterator.hasNext()) {
-			IGuide guide = (IGuide) iterator.next();
+			Guide guide = (Guide) iterator.next();
 
 			if ((numberAux == null) || (numberAux.intValue() != guide.getNumber().intValue())) {
 				numberAux = guide.getNumber();
@@ -155,7 +155,7 @@ public class ChooseGuide implements IService {
 				if (guide.getReimbursementGuides() != null) {
 					Iterator iter = guide.getReimbursementGuides().iterator();
 					while (iter.hasNext()) {
-						IReimbursementGuide reimbursementGuide = (IReimbursementGuide) iter.next();
+						ReimbursementGuide reimbursementGuide = (ReimbursementGuide) iter.next();
 						InfoReimbursementGuide infoReimbursementGuide = InfoReimbursementGuide
 								.newInfoFromDomain(reimbursementGuide);
 						infoReimbursementGuides.add(infoReimbursementGuide);
@@ -176,7 +176,7 @@ public class ChooseGuide implements IService {
 
 		ISuportePersistente sp = null;
 		List guides = null;
-		IPerson person = null;
+		Person person = null;
 
 		// Check if person exists
 

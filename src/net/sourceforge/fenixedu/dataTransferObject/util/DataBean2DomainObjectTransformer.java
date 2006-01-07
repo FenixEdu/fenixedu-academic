@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.util;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,7 +20,7 @@ public class DataBean2DomainObjectTransformer extends ObjectBeanTransformer {
      * @param fromClass
      */
     public DataBean2DomainObjectTransformer() {
-        super(IDomainObject.class, InfoObject.class);
+        super(DomainObject.class, InfoObject.class);
     }
 
     /*

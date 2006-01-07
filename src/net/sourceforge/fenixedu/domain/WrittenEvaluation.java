@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -22,9 +21,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
-            List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IOccupationPeriod period) {
+            List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            OccupationPeriod period) {
 
         setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
                 executionCoursesToAssociate, curricularCourseScopesToAssociate, rooms, period);
@@ -160,9 +159,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end,
-            List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IOccupationPeriod period) {
+            List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            OccupationPeriod period) {
 
         checkValidHours(beginning, end);
 
@@ -185,9 +184,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return true;
     }
 
-    private void associateRooms(final List<IRoom> rooms, final IOccupationPeriod period) {
+    private void associateRooms(final List<Room> rooms, final OccupationPeriod period) {
         final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
-        for (final IRoom room : rooms) {
+        for (final Room room : rooms) {
             if (!hasOccupationForRoom(room)) {
                 room.createRoomOccupation(period, this.getBeginning(), this.getEnd(), dayOfWeek,
                         RoomOccupation.DIARIA, null, this);
@@ -197,8 +196,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         deleteRoomOccupationsNotContainedInList(rooms);
     }
 
-    private boolean hasOccupationForRoom(IRoom room) {
-        for (final IRoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+    private boolean hasOccupationForRoom(Room room) {
+        for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
             if (roomOccupation.getRoom() == room) {
                 return true;
             }
@@ -206,8 +205,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return false;
     }
 
-    protected void deleteRoomOccupationsNotContainedInList(final List<IRoom> rooms) {
-        for (final IRoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+    protected void deleteRoomOccupationsNotContainedInList(final List<Room> rooms) {
+        for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
             if (rooms == null || !rooms.contains(roomOccupation.getRoom())) {
                 roomOccupation.delete();
             }
@@ -215,9 +214,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     protected void edit(Date day, Date beginning, Date end,
-            List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, List<IRoom> rooms,
-            IOccupationPeriod period) {
+            List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            OccupationPeriod period) {
         setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms, period);
     }
@@ -233,9 +232,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         super.deleteDomainObject();
     }
 
-    public List<IRoom> getAssociatedRooms() {
-        final List<IRoom> result = new ArrayList<IRoom>();
-        for (final IRoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
+    public List<Room> getAssociatedRooms() {
+        final List<Room> result = new ArrayList<Room>();
+        for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
             result.add(roomOccupation.getRoom());
         }
         return result;
@@ -288,8 +287,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return date.getTime();
     }
 
-    public void enrolStudent(IStudent student) {
-        for (IWrittenEvaluationEnrolment writtenEvaluationEnrolment : student
+    public void enrolStudent(Student student) {
+        for (WrittenEvaluationEnrolment writtenEvaluationEnrolment : student
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
                 throw new DomainException("error.alreadyEnrolledError");
@@ -298,12 +297,12 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         new WrittenEvaluationEnrolment(this, student);
     }
 
-    public void unEnrolStudent(IStudent student) {
+    public void unEnrolStudent(Student student) {
         if (!this.validUnEnrollment()) {
             throw new DomainException("error.notAuthorizedUnEnrollment");
         }
 
-        IWrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this
+        WrittenEvaluationEnrolment writtenEvaluationEnrolmentToDelete = this
                 .getWrittenEvaluationEnrolmentFor(student);
         if (writtenEvaluationEnrolmentToDelete == null) {
             throw new DomainException("error.studentNotEnroled");
@@ -325,16 +324,16 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return false;
     }
 
-    public void distributeStudentsByRooms(List<IStudent> studentsToDistribute, List<IRoom> selectedRooms) {
+    public void distributeStudentsByRooms(List<Student> studentsToDistribute, List<Room> selectedRooms) {
 
         this.checkIfCanDistributeStudentsByRooms();
         this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
 
-        for (final IRoom room : selectedRooms) {
+        for (final Room room : selectedRooms) {
             for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
                     && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
-                final IStudent student = getRandomStudentFromList(studentsToDistribute);
-                final IWrittenEvaluationEnrolment writtenEvaluationEnrolment = this
+                final Student student = getRandomStudentFromList(studentsToDistribute);
+                final WrittenEvaluationEnrolment writtenEvaluationEnrolment = this
                         .getWrittenEvaluationEnrolmentFor(student);
                 if (writtenEvaluationEnrolment == null) {
                     new WrittenEvaluationEnrolment(this, student, room);
@@ -375,10 +374,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private void checkRoomsCapacityForStudents(final List<IRoom> selectedRooms,
+    private void checkRoomsCapacityForStudents(final List<Room> selectedRooms,
             int studentsToDistributeSize) {
         int totalCapacity = 0;
-        for (final IRoom room : selectedRooms) {
+        for (final Room room : selectedRooms) {
             totalCapacity += room.getCapacidadeExame();
         }
         if (studentsToDistributeSize > totalCapacity) {
@@ -386,14 +385,14 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private IStudent getRandomStudentFromList(List<IStudent> studentsToDistribute) {
+    private Student getRandomStudentFromList(List<Student> studentsToDistribute) {
         final Random randomizer = new Random();
         int pos = randomizer.nextInt(Math.abs(randomizer.nextInt()));
-        return (IStudent) studentsToDistribute.remove(pos % studentsToDistribute.size());
+        return (Student) studentsToDistribute.remove(pos % studentsToDistribute.size());
     }
 
-    public IWrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final IStudent student) {
-        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : student
+    public WrittenEvaluationEnrolment getWrittenEvaluationEnrolmentFor(final Student student) {
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : student
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == this) {
                 return writtenEvaluationEnrolment;
@@ -425,8 +424,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public Integer getCountStudentsEnroledAttendingExecutionCourses() {
     	int i = 0;
-    	for (final IExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-    		for (final IAttends attends : executionCourse.getAttends()) {
+    	for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+    		for (final Attends attends : executionCourse.getAttends()) {
     			if (attends.getEnrolment() != null) {
     				i++;
     			}
@@ -437,7 +436,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public Integer getCountNumberReservedSeats() {
     	int i = 0;
-    	for (final IRoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
+    	for (final RoomOccupation roomOccupation : getAssociatedRoomOccupation()) {
     		i += roomOccupation.getRoom().getCapacidadeExame().intValue();
     	}
     	return i;

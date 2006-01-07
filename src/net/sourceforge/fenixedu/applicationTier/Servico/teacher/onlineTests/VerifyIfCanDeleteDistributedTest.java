@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,7 +23,7 @@ public class VerifyIfCanDeleteDistributedTest implements IService {
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+		DistributedTest distributedTest = (DistributedTest) persistentSuport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null) {
 			throw new InvalidArgumentsServiceException();

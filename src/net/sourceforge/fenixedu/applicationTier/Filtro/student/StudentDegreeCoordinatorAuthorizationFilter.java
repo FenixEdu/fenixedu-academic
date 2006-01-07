@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -71,23 +71,23 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentFinalDegreeWork persistentFinalDegreeWork = sp.getIPersistentFinalDegreeWork();
 
-            IStudent student1 = sp.getIPersistentStudent().readByUsername(username);
+            Student student1 = sp.getIPersistentStudent().readByUsername(username);
 
             List students = student1.getPerson().getStudents();
 
             // for each of the Person's Student roles
             for (Iterator studentsIterator = students.iterator(); studentsIterator.hasNext();) {
-                IStudent student = (IStudent) studentsIterator.next();
+                Student student = (Student) studentsIterator.next();
 
-                IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
+                Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
                         .getPerson().getUsername());
 
                 if (group != null) {
-                    IExecutionDegree executionDegree = group.getExecutionDegree();
+                    ExecutionDegree executionDegree = group.getExecutionDegree();
                     List coordinators = executionDegree.getCoordinatorsList();
 
                     for (Iterator it = coordinators.iterator(); it.hasNext();) {
-                        ICoordinator coordinator = (ICoordinator) it.next();
+                        Coordinator coordinator = (Coordinator) it.next();
                         if (coordinator.getTeacher().getPerson().getUsername()
                                 .equals(id.getUtilizador())) {
                             // The student is a candidate for a final degree
@@ -101,9 +101,9 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                     List groupProposals = group.getGroupProposals();
 
                     for (Iterator it = groupProposals.iterator(); it.hasNext();) {
-                        IGroupProposal groupProposal = (IGroupProposal) it.next();
-                        IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
-                        ITeacher teacher = proposal.getOrientator();
+                        GroupProposal groupProposal = (GroupProposal) it.next();
+                        Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
+                        Teacher teacher = proposal.getOrientator();
 
                         if (teacher.getPerson().getUsername().equals(id.getUtilizador())) {
                             // The student is a candidate for a final degree
@@ -131,7 +131,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                 List studentCurricularPlans = student.getStudentCurricularPlans();
 
                 for (Iterator scpIterator = studentCurricularPlans.iterator(); scpIterator.hasNext();) {
-                    IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) scpIterator
+                    StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) scpIterator
                             .next();
 
                     List executionDegrees = persistentExecutionDegree
@@ -146,7 +146,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 
                     for (Iterator executionDegreeIterator = executionDegrees.iterator(); executionDegreeIterator
                             .hasNext();) {
-                        IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeIterator
+                        ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeIterator
                                 .next();
                         List coordinatorsList = persistentCoordinator
                                 .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
@@ -157,11 +157,11 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
 
                         final String coordinatorUsername = id.getUtilizador();
 
-                        ICoordinator coordinator = (ICoordinator) CollectionUtils.find(coordinatorsList,
+                        Coordinator coordinator = (Coordinator) CollectionUtils.find(coordinatorsList,
                                 new Predicate() {
 
                                     public boolean evaluate(Object input) {
-                                        ICoordinator coordinatorTemp = (ICoordinator) input;
+                                        Coordinator coordinatorTemp = (Coordinator) input;
                                         if (coordinatorUsername.equals(coordinatorTemp.getTeacher()
                                                 .getPerson().getUsername())) {
                                             return true;

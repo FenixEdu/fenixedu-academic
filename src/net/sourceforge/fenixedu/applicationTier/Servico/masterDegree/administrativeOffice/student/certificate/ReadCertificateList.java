@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPrice;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.IPrice;
+import net.sourceforge.fenixedu.domain.Price;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,7 +38,7 @@ public class ReadCertificateList implements IService {
 		Iterator iterator = certificates.iterator();
 
 		while (iterator.hasNext()) {
-			IPrice price = (IPrice) iterator.next();
+			Price price = (Price) iterator.next();
 			result.add(InfoPrice.newInfoFromDoaim(price));
 		}
 		return result;

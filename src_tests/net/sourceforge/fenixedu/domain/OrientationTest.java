@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.IOrientation;
+import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.util.OrientationType;
 
 /**
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.OrientationType;
  */
 public class OrientationTest extends DomainTestBase {
 	
-	private ITeacher teacher;
+	private Teacher teacher;
 	
 	private InfoOrientation infoOrientationToCreate;
 	private InfoOrientation infoOrientationEdit;
@@ -49,7 +49,7 @@ public class OrientationTest extends DomainTestBase {
 			
 		}
 		
-		IOrientation newOrientation = DomainFactory.makeOrientation(teacher, infoOrientationToCreate);
+		Orientation newOrientation = DomainFactory.makeOrientation(teacher, infoOrientationToCreate);
 		
 		assertTrue("Failed to reference teacher!", newOrientation.hasTeacher());
 		assertEquals("Different teacher!", newOrientation.getTeacher(), teacher);
@@ -58,7 +58,7 @@ public class OrientationTest extends DomainTestBase {
 	
 	public void testEditOrientation() {
 		setUpEdit();
-		IOrientation orientationToEdit = DomainFactory.makeOrientation(teacher, infoOrientationToCreate);
+		Orientation orientationToEdit = DomainFactory.makeOrientation(teacher, infoOrientationToCreate);
 		
 		orientationToEdit.edit(infoOrientationEdit);
 		verifyOrientationAttributes(orientationToEdit, infoOrientationEdit);
@@ -66,7 +66,7 @@ public class OrientationTest extends DomainTestBase {
 	}
 
 
-	private void verifyOrientationAttributes(IOrientation orientation, InfoOrientation infoOrientation) {
+	private void verifyOrientationAttributes(Orientation orientation, InfoOrientation infoOrientation) {
 		assertEquals("Different orientationType!", orientation.getOrientationType(), infoOrientation.getOrientationType());
 		assertEquals("Different numberOfStudents!", orientation.getNumberOfStudents(), infoOrientation.getNumberOfStudents());
 		assertEquals("Different description!", orientation.getDescription(), infoOrientation.getDescription());

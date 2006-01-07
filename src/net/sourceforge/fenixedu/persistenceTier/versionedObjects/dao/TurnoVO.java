@@ -15,16 +15,16 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
@@ -36,12 +36,12 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 
 public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
 
-    public IShift readByNameAndExecutionCourse(String shiftName, Integer executionCourseOID)
+    public Shift readByNameAndExecutionCourse(String shiftName, Integer executionCourseOID)
             throws ExcepcaoPersistencia {
-        IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseOID);
-        List<IShift> shifts = executionCourse.getAssociatedShifts();
-        for (IShift shift : shifts) {
+        List<Shift> shifts = executionCourse.getAssociatedShifts();
+        for (Shift shift : shifts) {
             if (shift.getNome().equals(shiftName)) {
                 return shift;
             }
@@ -53,11 +53,11 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
     public List readByExecutionCourseAndType(Integer executionCourseOID, ShiftType type)
             throws ExcepcaoPersistencia {
 
-        IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseOID);
-        List<IShift> shifts = executionCourse.getAssociatedShifts();
-        List<IShift> result = new ArrayList();
-        for (IShift shift : shifts) {
+        List<Shift> shifts = executionCourse.getAssociatedShifts();
+        List<Shift> result = new ArrayList();
+        for (Shift shift : shifts) {
             if (shift.getTipo().equals(type)) {
                 result.add(shift);
             }
@@ -66,7 +66,7 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
     }
 
     public List readByExecutionCourse(Integer executionCourseOID) throws ExcepcaoPersistencia {
-        IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseOID);
         return executionCourse.getAssociatedShifts();
     }
@@ -74,21 +74,21 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
     public List readByExecutionPeriodAndExecutionDegreeAndCurricularYear(Integer executionPeriodOID,
             Integer executionDegreeOID, Integer curricularYearOID) throws ExcepcaoPersistencia {
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) readByOID(ExecutionPeriod.class,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) readByOID(ExecutionPeriod.class,
                 executionPeriodOID);
-        IExecutionDegree executionDegree = (IExecutionDegree) readByOID(ExecutionDegree.class,
+        ExecutionDegree executionDegree = (ExecutionDegree) readByOID(ExecutionDegree.class,
                 executionDegreeOID);
 
-        List<IShift> shifts = (List<IShift>) readAll(Shift.class);
+        List<Shift> shifts = (List<Shift>) readAll(Shift.class);
 
         List result = new ArrayList();
 
-        for (IShift shift : shifts) {
-            List<ICurricularCourse> curricularCourses = shift.getDisciplinaExecucao()
+        for (Shift shift : shifts) {
+            List<CurricularCourse> curricularCourses = shift.getDisciplinaExecucao()
                     .getAssociatedCurricularCourses();
-            for (ICurricularCourse curricularCourse : curricularCourses) {
-                List<ICurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
-                for (ICurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+            for (CurricularCourse curricularCourse : curricularCourses) {
+                List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getScopes();
+                for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
                     if (curricularCourseScope.getCurricularSemester().getCurricularYear()
                             .getIdInternal().equals(curricularYearOID)
                             && curricularCourseScope.getCurricularSemester().getSemester().equals(
@@ -110,23 +110,23 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
 
     public List readAvailableShiftsForClass(Integer schoolClassOID) throws ExcepcaoPersistencia {
 
-        ISchoolClass schoolClass = (ISchoolClass) readByOID(SchoolClass.class, schoolClassOID);
+        SchoolClass schoolClass = (SchoolClass) readByOID(SchoolClass.class, schoolClassOID);
 
         List result = new ArrayList();
 
-        IExecutionPeriod executionPeriod = schoolClass.getExecutionPeriod();
-        List<IExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
-        for (IExecutionCourse executionCourse : executionCourses) {
-            List<IShift> shifts = executionCourse.getAssociatedShifts();
-            for (IShift shift : shifts) {
-                List<ICurricularCourse> curricularCourses = shift.getDisciplinaExecucao()
+        ExecutionPeriod executionPeriod = schoolClass.getExecutionPeriod();
+        List<ExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
+        for (ExecutionCourse executionCourse : executionCourses) {
+            List<Shift> shifts = executionCourse.getAssociatedShifts();
+            for (Shift shift : shifts) {
+                List<CurricularCourse> curricularCourses = shift.getDisciplinaExecucao()
                         .getAssociatedCurricularCourses();
-                for (ICurricularCourse curricularCourse : curricularCourses) {
+                for (CurricularCourse curricularCourse : curricularCourses) {
                     if (curricularCourse.getDegreeCurricularPlan().getIdInternal().equals(
                             schoolClass.getExecutionDegree().getDegreeCurricularPlan().getIdInternal())) {
-                        List<ICurricularCourseScope> curricularCourseScopes = curricularCourse
+                        List<CurricularCourseScope> curricularCourseScopes = curricularCourse
                                 .getScopes();
-                        for (ICurricularCourseScope curricularCourseScope : curricularCourseScopes) {
+                        for (CurricularCourseScope curricularCourseScope : curricularCourseScopes) {
                             if (curricularCourseScope.getCurricularSemester().getCurricularYear()
                                     .getIdInternal().equals(schoolClass.getAnoCurricular())) {
                                 if (!result.contains(shift)) {
@@ -144,10 +144,10 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
         return result;
     }
 
-    public IShift readByLesson(Integer lessonOID) throws ExcepcaoPersistencia {
+    public Shift readByLesson(Integer lessonOID) throws ExcepcaoPersistencia {
 
         if (lessonOID != null) {
-            ILesson lesson = (ILesson) readByOID(Lesson.class, lessonOID);
+            Lesson lesson = (Lesson) readByOID(Lesson.class, lessonOID);
             return lesson.getShift();
         }
         return null;
@@ -155,15 +155,15 @@ public class TurnoVO extends VersionedObjectsBase implements ITurnoPersistente {
 
     public List readShiftsThatContainsStudentAttendsOnExecutionPeriod(Integer studentOID,
             Integer executionPeriodOID) throws ExcepcaoPersistencia {
-        IStudent student = (IStudent) readByOID(Student.class, studentOID);
+        Student student = (Student) readByOID(Student.class, studentOID);
 
-        List<IAttends> attends = student.getAssociatedAttends();
-        List<IShift> result = new ArrayList();
+        List<Attends> attends = student.getAssociatedAttends();
+        List<Shift> result = new ArrayList();
 
-        for (IAttends attend : attends) {
-            IExecutionCourse executionCourse = attend.getDisciplinaExecucao();
+        for (Attends attend : attends) {
+            ExecutionCourse executionCourse = attend.getDisciplinaExecucao();
             if (executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodOID)) {
-                List<IShift> shifts = executionCourse.getAssociatedShifts();
+                List<Shift> shifts = executionCourse.getAssociatedShifts();
                 System.out.println("ADICIONei turnos");
                 result.addAll(shifts);
             }

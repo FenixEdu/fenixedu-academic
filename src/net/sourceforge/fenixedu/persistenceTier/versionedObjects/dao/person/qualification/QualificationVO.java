@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.person.qua
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
@@ -24,8 +24,8 @@ public class QualificationVO extends VersionedObjectsBase implements
 	public List readQualificationsByPersonId(Integer personId)
 			throws ExcepcaoPersistencia {
 		
-		IPerson person = (IPerson) readByOID(Person.class, personId);	
-		List<IQualification> res = person.getAssociatedQualifications();
+		Person person = (Person) readByOID(Person.class, personId);	
+		List<Qualification> res = person.getAssociatedQualifications();
 		return res;
 		
 	}

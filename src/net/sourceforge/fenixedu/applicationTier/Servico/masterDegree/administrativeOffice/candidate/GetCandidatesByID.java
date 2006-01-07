@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,7 +33,7 @@ public class GetCandidatesByID implements IService {
 	public InfoMasterDegreeCandidate run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = null;
-		IMasterDegreeCandidate masterDegreeCandidate = null;
+		MasterDegreeCandidate masterDegreeCandidate = null;
 
 		if (candidateID == null) {
 			throw new NonExistingServiceException();
@@ -41,13 +41,13 @@ public class GetCandidatesByID implements IService {
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		masterDegreeCandidate = (IMasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate()
+		masterDegreeCandidate = (MasterDegreeCandidate) sp.getIPersistentMasterDegreeCandidate()
 				.readByOID(MasterDegreeCandidate.class, candidateID);
 
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
 				.newInfoFromDomain(masterDegreeCandidate);
 
-		final IExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+		final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
 		final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
 				.newInfoFromDomain(executionDegree);
 		infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
@@ -56,7 +56,7 @@ public class GetCandidatesByID implements IService {
 		List situations = new ArrayList();
 		while (situationIterator.hasNext()) {
 			InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
-					.newInfoFromDomain((ICandidateSituation) situationIterator.next());
+					.newInfoFromDomain((CandidateSituation) situationIterator.next());
 			situations.add(infoCandidateSituation);
 
 			// Check if this is the Active Situation

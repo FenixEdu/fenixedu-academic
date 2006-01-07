@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithAttendsAndInquiriesRegistries;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -45,13 +45,13 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 		
-		List<IAttends> attendsList =
+		List<Attends> attendsList =
 			persistentAttend.readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(degreeCurricularPlanId, executionPeriodId);
 		
 		//FIXME: It only concerns enrolled courses
 		List<InfoStudentWithAttendsAndInquiriesRegistries> res = new ArrayList<InfoStudentWithAttendsAndInquiriesRegistries>();
 		InfoStudentWithAttendsAndInquiriesRegistries currentStudent = null;
-		for(IAttends attends : attendsList) {
+		for(Attends attends : attendsList) {
 			
 			if((!onlyAttendsWithTeachers) || 
 					((!attends.getDisciplinaExecucao().getProfessorships().isEmpty()) || 
@@ -75,12 +75,12 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
 		return res;
 	}
 
-	private void copyStudentInquiriesRegistries(InfoStudentWithAttendsAndInquiriesRegistries currentStudent, IStudent aluno) {
+	private void copyStudentInquiriesRegistries(InfoStudentWithAttendsAndInquiriesRegistries currentStudent, Student aluno) {
 		
-		List<IInquiriesRegistry> inquiriesRegistries = aluno.getAssociatedInquiriesRegistries();
+		List<InquiriesRegistry> inquiriesRegistries = aluno.getAssociatedInquiriesRegistries();
 		List<InfoInquiriesRegistry> infoRegistries = new ArrayList<InfoInquiriesRegistry>(inquiriesRegistries.size());
 		
-		for(IInquiriesRegistry reg : inquiriesRegistries) {
+		for(InquiriesRegistry reg : inquiriesRegistries) {
 			try {
 				infoRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(reg));
 				

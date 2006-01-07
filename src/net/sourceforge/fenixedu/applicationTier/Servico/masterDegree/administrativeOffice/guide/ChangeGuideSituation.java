@@ -18,16 +18,16 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChang
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.GuideSituation;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -50,18 +50,18 @@ public class ChangeGuideSituation implements IService {
             ExcepcaoPersistencia {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IGuide guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
+        Guide guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
                 guideVersion);
 
         if (guide == null) {
             throw new ExcepcaoInexistente("Unknown Guide !!");
         }
 
-        IGuideSituation activeGuideSituation = (IGuideSituation) CollectionUtils.find(guide
+        GuideSituation activeGuideSituation = (GuideSituation) CollectionUtils.find(guide
                 .getGuideSituations(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IGuideSituation guideSituation = (IGuideSituation) arg0;
+                GuideSituation guideSituation = (GuideSituation) arg0;
                 return guideSituation.getState().equals(new State(State.ACTIVE));
             }
 
@@ -86,7 +86,7 @@ public class ChangeGuideSituation implements IService {
             // Create The New Situation
             activeGuideSituation.setState(new State(State.INACTIVE));
 
-            IGuideSituation newGuideSituation = DomainFactory.makeGuideSituation();
+            GuideSituation newGuideSituation = DomainFactory.makeGuideSituation();
 
             Calendar date = Calendar.getInstance();
             newGuideSituation.setDate(date.getTime());
@@ -99,7 +99,7 @@ public class ChangeGuideSituation implements IService {
                 guide.setPaymentType(PaymentType.valueOf(paymentType));
 
                 // For Transactions Creation
-                IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
+                PersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
                         guide.getPerson().getIdInternal());
                 if (personAccount == null) {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
@@ -108,26 +108,26 @@ public class ChangeGuideSituation implements IService {
                 IPersistentGratuitySituation persistentGratuitySituation = sp
                         .getIPersistentGratuitySituation();
 
-                IPerson employeePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
+                Person employeePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
                         userView.getUtilizador());
-                IPerson studentPerson = guide.getPerson();
-                IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(
+                Person studentPerson = guide.getPerson();
+                Student student = sp.getIPersistentStudent().readByPersonAndDegreeType(
                         studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
-                IExecutionDegree executionDegree = guide.getExecutionDegree();
+                ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                 // Iterate Guide Entries to create Transactions
-                for (IGuideEntry guideEntry : guide.getGuideEntries()) {
+                for (GuideEntry guideEntry : guide.getGuideEntries()) {
 
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
 
-                        IGratuitySituation gratuitySituation = persistentGratuitySituation
+                        GratuitySituation gratuitySituation = persistentGratuitySituation
                                 .readGratuitySituationByExecutionDegreeAndStudent(executionDegree
                                         .getIdInternal(), student.getIdInternal());
                         Double value = new Double(guideEntry.getPrice().doubleValue()
                                 * guideEntry.getQuantity().intValue());
 
-                        IPaymentTransaction paymentTransaction = DomainFactory.makeGratuityTransaction(
+                        PaymentTransaction paymentTransaction = DomainFactory.makeGratuityTransaction(
                                 value, new Timestamp(Calendar.getInstance().getTimeInMillis()),
                                 guideEntry.getDescription(), guide.getPaymentType(),
                                 TransactionType.GRATUITY_ADHOC_PAYMENT, Boolean.FALSE, employeePerson,
@@ -172,7 +172,7 @@ public class ChangeGuideSituation implements IService {
 
     }
 
-    private boolean verifyChangeValidation(IGuideSituation activeGuideSituation,
+    private boolean verifyChangeValidation(GuideSituation activeGuideSituation,
             GuideState situationOfGuide) {
         if (activeGuideSituation.equals(GuideState.ANNULLED))
             return false;

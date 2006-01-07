@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -67,7 +67,7 @@ public class EditTeacherInformationAuthorizationFilter extends AuthorizationByRo
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             Integer teacherId = teacher.getIdInternal();
 
             if (!infoServiceProviderRegime.getInfoTeacher().getIdInternal().equals(teacherId))

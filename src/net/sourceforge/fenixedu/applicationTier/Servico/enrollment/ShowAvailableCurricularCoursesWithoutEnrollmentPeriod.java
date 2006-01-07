@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranch;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2Enroll;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInCurricularCourses;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
@@ -50,10 +50,10 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 	public InfoStudentEnrollmentContext run(Integer executionDegreeId,
 			Integer studentCurricularPlanId, Integer studentNumber)
 			throws Exception {
-		IStudent student = getStudent(studentNumber);
+		Student student = getStudent(studentNumber);
 
 		if (student != null) {
-			IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
+			StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlan(student);
 
 			if (studentCurricularPlan != null) {
 				//					
@@ -77,10 +77,10 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 	 * @throws EnrolmentRuleServiceException
 	 */
 	protected InfoStudentEnrollmentContext getInfoStudentEnrollmentContext(
-			final IStudentCurricularPlan studentCurricularPlan)
+			final StudentCurricularPlan studentCurricularPlan)
 			throws ExcepcaoPersistencia, EnrolmentRuleServiceException {
 
-		final IExecutionPeriod executionPeriod = getExecutionPeriod(null);
+		final ExecutionPeriod executionPeriod = getExecutionPeriod(null);
 
 		InfoStudentEnrollmentContext infoStudentEnrolmentContext = new InfoStudentEnrollmentContext();
 
@@ -132,8 +132,8 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 	 * @return
 	 */
 	protected List getInfoCurricularCoursesToEnrollFromCurricularCourses(
-			final IStudentCurricularPlan studentCurricularPlan,
-			final IExecutionPeriod executionPeriod,
+			final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionPeriod executionPeriod,
 			List curricularCourses2Enroll) {
 		return (List) CollectionUtils.collect(curricularCourses2Enroll,
 				new Transformer() {
@@ -162,8 +162,8 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 	 * @return
 	 */
 	protected List getStudentEnrollmentsWithStateEnrolledInExecutionPeriod(
-			final IStudentCurricularPlan studentCurricularPlan,
-			final IExecutionPeriod executionPeriod) {
+			final StudentCurricularPlan studentCurricularPlan,
+			final ExecutionPeriod executionPeriod) {
 		return (List) CollectionUtils
 				.collect(
 						studentCurricularPlan
@@ -173,7 +173,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 							public Object transform(Object arg0) {
 
 								return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
-										.newInfoFromDomain((IEnrolment) arg0);
+										.newInfoFromDomain((Enrolment) arg0);
 							}
 						});
 	}
@@ -184,18 +184,18 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 	 * @throws ExcepcaoPersistencia
 	 * @throws OutOfCurricularCourseEnrolmentPeriod
 	 */
-	public static IEnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
-			IStudentCurricularPlan studentActiveCurricularPlan)
+	public static EnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
+			StudentCurricularPlan studentActiveCurricularPlan)
 			throws ExcepcaoPersistencia, OutOfCurricularCourseEnrolmentPeriod {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
 		IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport
 				.getIPersistentEnrolmentPeriod();
-		IEnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
+		EnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
 				.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
 						.getDegreeCurricularPlan().getIdInternal());
 		if (enrolmentPeriod == null) {
-			IEnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = enrolmentPeriodDAO
+			EnrolmentPeriodInCurricularCourses nextEnrolmentPeriod = enrolmentPeriodDAO
 					.readNextEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
 							.getDegreeCurricularPlan().getIdInternal());
 			Date startDate = null;
@@ -214,7 +214,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 	 * @return IStudent
 	 * @throws ExcepcaoPersistencia
 	 */
-	protected IStudent getStudent(Integer studentNumber)
+	protected Student getStudent(Integer studentNumber)
 			throws ExcepcaoPersistencia {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
@@ -230,7 +230,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 	 * @return IStudentCurricularPlan
 	 * @throws ExcepcaoPersistencia
 	 */
-	protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
+	protected StudentCurricularPlan getStudentCurricularPlan(Student student)
 			throws ExcepcaoPersistencia {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
@@ -241,10 +241,10 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
 				.getNumber(), student.getDegreeType());
 	}
 
-	protected IExecutionPeriod getExecutionPeriod(
-			IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+	protected ExecutionPeriod getExecutionPeriod(
+			ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
 
-		IExecutionPeriod executionPeriod2Return = executionPeriod;
+		ExecutionPeriod executionPeriod2Return = executionPeriod;
 
 		if (executionPeriod == null) {
 			ISuportePersistente daoFactory = PersistenceSupportFactory

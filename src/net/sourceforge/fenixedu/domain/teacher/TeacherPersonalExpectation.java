@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base {
@@ -12,15 +12,15 @@ public class TeacherPersonalExpectation extends TeacherPersonalExpectation_Base 
     }
 
     public TeacherPersonalExpectation(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation,
-            IExecutionYear executionYear) {
+            ExecutionYear executionYear) {
         setProperties(infoTeacherPersonalExpectation);
         setExecutionYear(executionYear);
     }
 
     public void edit(InfoTeacherPersonalExpectation infoTeacherPersonalExpectation) {
 
-        IExecutionYear executionYear = this.getExecutionYear();
-        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this.getTeacher()
+        ExecutionYear executionYear = this.getExecutionYear();
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this.getTeacher()
                 .getCurrentWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
                         executionYear);
 

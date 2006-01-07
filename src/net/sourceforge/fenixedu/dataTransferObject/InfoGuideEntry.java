@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
+import net.sourceforge.fenixedu.domain.GuideEntry;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -148,7 +148,7 @@ public class InfoGuideEntry extends InfoObject {
         quantity = integer;
     }
 
-    public void copyFromDomain(IGuideEntry guideEntry) {
+    public void copyFromDomain(GuideEntry guideEntry) {
         super.copyFromDomain(guideEntry);
         if (guideEntry != null) {
             setDescription(guideEntry.getDescription());
@@ -159,7 +159,7 @@ public class InfoGuideEntry extends InfoObject {
         }
     }
 
-    public static InfoGuideEntry newInfoFromDomain(IGuideEntry guideEntry) {
+    public static InfoGuideEntry newInfoFromDomain(GuideEntry guideEntry) {
         InfoGuideEntry infoGuideEntry = null;
         if (guideEntry != null) {
             infoGuideEntry = new InfoGuideEntry();
@@ -168,7 +168,7 @@ public class InfoGuideEntry extends InfoObject {
         return infoGuideEntry;
     }
 
-    public void copyToDomain(InfoGuideEntry infoGuideEntry, IGuideEntry guideEntry) {
+    public void copyToDomain(InfoGuideEntry infoGuideEntry, GuideEntry guideEntry) {
         super.copyToDomain(infoGuideEntry, guideEntry);
         guideEntry.setDescription(infoGuideEntry.getDescription());
         guideEntry.setDocumentType(infoGuideEntry.getDocumentType());

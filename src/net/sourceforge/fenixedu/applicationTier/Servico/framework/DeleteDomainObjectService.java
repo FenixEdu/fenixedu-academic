@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +22,7 @@ public abstract class DeleteDomainObjectService implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject persistentObject = getIPersistentObject(sp);
 
-		IDomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
+		DomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 
 		if ((domainObject == null) || !canDelete(domainObject, sp)) {
 			throw new NonExistingServiceException("The object does not exist");
@@ -36,13 +36,13 @@ public abstract class DeleteDomainObjectService implements IService {
 	 * @param domainObject
 	 * @param sp
 	 */
-	protected void doBeforeDelete(IDomainObject domainObject, ISuportePersistente sp) throws Exception {
+	protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente sp) throws Exception {
 	}
 
 	/**
 	 * @param domainObject
 	 */
-	protected void doAfterDelete(IDomainObject domainObject, ISuportePersistente sp) {
+	protected void doAfterDelete(DomainObject domainObject, ISuportePersistente sp) {
 
 	}
 
@@ -52,7 +52,7 @@ public abstract class DeleteDomainObjectService implements IService {
 	 * @param newDomainObject
 	 * @return
 	 */
-	protected boolean canDelete(IDomainObject newDomainObject, ISuportePersistente sp) {
+	protected boolean canDelete(DomainObject newDomainObject, ISuportePersistente sp) {
 		return true;
 	}
 
@@ -71,6 +71,6 @@ public abstract class DeleteDomainObjectService implements IService {
 	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
 			throws ExcepcaoPersistencia;
 
-	protected abstract void deleteDomainObject(IDomainObject domainObject);
+	protected abstract void deleteDomainObject(DomainObject domainObject);
 
 }

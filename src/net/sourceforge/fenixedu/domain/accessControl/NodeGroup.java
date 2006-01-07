@@ -8,9 +8,9 @@ public abstract class NodeGroup extends NodeGroup_Base {
         super();
     }
     
-    public void removePart(IUserGroup group)
+    public void removePart(UserGroup group)
     {
-        for (IUserGroup currentGroup : this.getParts()) {
+        for (UserGroup currentGroup : this.getParts()) {
             if (currentGroup.equals(group))
             {
               GroupComposition.remove(group, this);
@@ -26,7 +26,7 @@ public abstract class NodeGroup extends NodeGroup_Base {
     @Override
     public void delete()
     {
-    	for (IUserGroup part : this.getParts())
+    	for (UserGroup part : this.getParts())
 		{
 			GroupComposition.remove(part,this);
 		}    	

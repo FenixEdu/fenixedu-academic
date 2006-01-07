@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotEmptyServiceException;
 import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.IBuilding;
+import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -19,7 +19,7 @@ public class DeleteBuilding implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentBuilding persistentBuilding = persistentSupport.getIPersistentBuilding();
 
-        final IBuilding building = (IBuilding) persistentBuilding.readByOID(Building.class, buildingId);
+        final Building building = (Building) persistentBuilding.readByOID(Building.class, buildingId);
         if (!building.getRooms().isEmpty()) {
             throw new NotEmptyServiceException();
         }

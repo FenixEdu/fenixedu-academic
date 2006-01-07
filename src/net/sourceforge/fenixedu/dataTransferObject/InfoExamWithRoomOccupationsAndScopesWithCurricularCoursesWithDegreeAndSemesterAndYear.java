@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExam;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Exam;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -19,7 +19,7 @@ import org.apache.commons.collections.Transformer;
 public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
         extends InfoExamWithRoomOccupations {
 
-    public void copyFromDomain(IExam exam) {
+    public void copyFromDomain(Exam exam) {
         super.copyFromDomain(exam);
         if (exam != null) {
             setAssociatedCurricularCourseScope(copyICurricularCourseScope2InfoCurricularCourseScope(exam
@@ -34,14 +34,14 @@ public class InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegree
 
                     public Object transform(Object arg0) {
                         return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear
-                                .newInfoFromDomain((ICurricularCourseScope) arg0);
+                                .newInfoFromDomain((CurricularCourseScope) arg0);
                     }
                 });
 
         return associatedInfoCCScopes;
     }
 
-    public static InfoExam newInfoFromDomain(IExam exam) {
+    public static InfoExam newInfoFromDomain(Exam exam) {
         InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear infoExam = null;
         if (exam != null) {
             infoExam = new InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear();

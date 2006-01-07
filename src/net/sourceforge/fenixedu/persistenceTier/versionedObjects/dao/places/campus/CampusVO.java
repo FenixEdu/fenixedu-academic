@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Campus;
-import net.sourceforge.fenixedu.domain.ICampus;
+import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -21,14 +21,14 @@ public class CampusVO extends VersionedObjectsBase implements IPersistentCampus 
         return (List) readAll(Campus.class);
     }
 
-    public ICampus readByName(final String campusName) throws ExcepcaoPersistencia {
+    public Campus readByName(final String campusName) throws ExcepcaoPersistencia {
 
         Collection campusList = readAll(Campus.class);
 
-        return (ICampus) CollectionUtils.find(campusList, new Predicate() {
+        return (Campus) CollectionUtils.find(campusList, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                ICampus campus = (ICampus) arg0;
+                Campus campus = (Campus) arg0;
                 if (campus.getName().equals(campusName)) {
                     return true;
                 }

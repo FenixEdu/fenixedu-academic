@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,13 +30,13 @@ public class TeacherAttributeFinalDegreeWork implements IService {
 		IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
 				.getIPersistentFinalDegreeWork();
 
-		IGroupProposal groupProposal = (IGroupProposal) persistentFinalWork.readByOID(
+		GroupProposal groupProposal = (GroupProposal) persistentFinalWork.readByOID(
 				GroupProposal.class, selectedGroupProposalOID);
 		if (groupProposal != null) {
-			IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
-			IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+			Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
+			Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
 			if (proposal != null && group != null) {
-				IProposal proposalAttributedToGroup = persistentFinalWork
+				Proposal proposalAttributedToGroup = persistentFinalWork
 						.readFinalDegreeWorkAttributedToGroupByTeacher(group.getIdInternal());
 				if (proposalAttributedToGroup != null
 						&& !proposalAttributedToGroup.getIdInternal().equals(proposal.getIdInternal())) {
@@ -49,8 +49,8 @@ public class TeacherAttributeFinalDegreeWork implements IService {
 						|| !proposal.getGroupAttributedByTeacher().equals(group)) {
 					proposal.setGroupAttributedByTeacher(group);
 					for (int i = 0; i < group.getGroupProposals().size(); i++) {
-						IGroupProposal otherGroupProposal = group.getGroupProposals().get(i);
-						IProposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
+						GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+						Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
 						if (!otherProposal.getIdInternal().equals(proposal.getIdInternal())
 								&& group.equals(otherProposal.getGroupAttributedByTeacher())) {
 							persistentFinalWork.simpleLockWrite(otherProposal);

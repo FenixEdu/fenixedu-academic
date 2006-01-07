@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
+import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.util.projectsManagement.ExcelStyle;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -136,7 +136,7 @@ public class InfoProject extends DataTranferObject {
         return false;
     }
 
-    public void copyFromDomain(IProject project) {
+    public void copyFromDomain(Project project) {
         if (project != null) {
             setCoordination(project.getCoordination());
             setCoordinatorCode(project.getCoordinatorCode());
@@ -150,7 +150,7 @@ public class InfoProject extends DataTranferObject {
         }
     }
 
-    public static InfoProject newInfoFromDomain(IProject project) {
+    public static InfoProject newInfoFromDomain(Project project) {
         InfoProject infoProject = null;
         if (project != null) {
             infoProject = new InfoProject();

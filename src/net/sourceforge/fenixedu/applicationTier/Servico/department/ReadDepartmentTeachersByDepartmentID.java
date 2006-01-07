@@ -6,8 +6,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,14 +23,14 @@ public class ReadDepartmentTeachersByDepartmentID implements IService {
 
         List<InfoTeacher> result = new ArrayList<InfoTeacher>();
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IDepartment department = (IDepartment) sp.getIDepartamentoPersistente().readByOID(
+        Department department = (Department) sp.getIDepartamentoPersistente().readByOID(
                 Department.class, departmentID);
 
         List teachers = department.getCurrentTeachers();
 
         for (int i = 0; i < teachers.size(); i++) {
 
-            ITeacher teacher = (ITeacher) teachers.get(i);
+            Teacher teacher = (Teacher) teachers.get(i);
             result.add(InfoTeacher.newInfoFromDomain(teacher));
         }
 

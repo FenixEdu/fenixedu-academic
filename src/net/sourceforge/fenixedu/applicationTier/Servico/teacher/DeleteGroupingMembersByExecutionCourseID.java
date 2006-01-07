@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
@@ -38,13 +38,13 @@ public class DeleteGroupingMembersByExecutionCourseID implements IService {
 
         IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupingCode);
+        Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class, groupingCode);
         
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseCode);
        
         if (executionCourse == null) {
@@ -52,9 +52,9 @@ public class DeleteGroupingMembersByExecutionCourseID implements IService {
         }
 
         List executionCourseStudentNumbers = new ArrayList();
-        final List<IAttends> attends = executionCourse.getAttends();
-        for (final IAttends attend : attends) {
-            final IStudent student = attend.getAluno();
+        final List<Attends> attends = executionCourse.getAttends();
+        for (final Attends attend : attends) {
+            final Student student = attend.getAluno();
             executionCourseStudentNumbers.add(student.getNumber());
         }
 
@@ -62,12 +62,12 @@ public class DeleteGroupingMembersByExecutionCourseID implements IService {
         attendsElements.addAll(grouping.getAttends());
         Iterator iterator = attendsElements.iterator();
         while (iterator.hasNext()) {            
-            IAttends attend = (IAttends) iterator.next();            
+            Attends attend = (Attends) iterator.next();            
             if (executionCourseStudentNumbers.contains(attend.getAluno().getNumber())) {
                 boolean found = false;
                 Iterator iterStudentsGroups = grouping.getStudentGroups().iterator();
                 while (iterStudentsGroups.hasNext() && !found) {
-                    final IStudentGroup studentGroup = (IStudentGroup) iterStudentsGroups.next();
+                    final StudentGroup studentGroup = (StudentGroup) iterStudentsGroups.next();
                     if (studentGroup != null) {
                         studentGroup.removeAttends(attend);                                               
                         found = true;

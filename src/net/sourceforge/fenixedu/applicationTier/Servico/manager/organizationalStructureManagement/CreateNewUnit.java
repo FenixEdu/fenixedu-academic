@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,17 +31,17 @@ public class CreateNewUnit implements IService {
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        IUnit unit = null;
+        Unit unit = null;
         if (unitID == null) {
             unit = DomainFactory.makeUnit();
         } else {
-            unit = (IUnit) suportePersistente.getIPersistentObject().readByOID(Unit.class, unitID);
+            unit = (Unit) suportePersistente.getIPersistentObject().readByOID(Unit.class, unitID);
             if (unit == null) {
                 throw new FenixServiceException("error.noUnit");
             }
         }
 
-        IUnit parentUnit = setParentUnits(parentUnitID, suportePersistente, unit);
+        Unit parentUnit = setParentUnits(parentUnitID, suportePersistente, unit);
         Integer costCenterCode = null;
         if (unitCostCenter != null && !unitCostCenter.equals("")) {
             costCenterCode = (Integer.valueOf(unitCostCenter));
@@ -54,16 +54,16 @@ public class CreateNewUnit implements IService {
         setDegree(degreeID, suportePersistente, unit);
     }
 
-    private void setDegree(Integer degreeID, ISuportePersistente suportePersistente, IUnit unit)
+    private void setDegree(Integer degreeID, ISuportePersistente suportePersistente, Unit unit)
             throws ExcepcaoPersistencia {
 
-        IDegree degree = null;
+        Degree degree = null;
         if (degreeID != null
                 && unit.getType() != null
                 && (unit.getType().equals(UnitType.DEGREE) || unit.getType().equals(
                         UnitType.MASTER_DEGREE))) {
 
-            degree = (IDegree) suportePersistente.getIPersistentObject().readByOID(Degree.class,
+            degree = (Degree) suportePersistente.getIPersistentObject().readByOID(Degree.class,
                     degreeID);
 
             if ((degree.getTipoCurso().equals(DegreeType.DEGREE) && unit.getType().equals(
@@ -82,12 +82,12 @@ public class CreateNewUnit implements IService {
         }
     }
 
-    private void setDepartment(Integer departmentID, ISuportePersistente suportePersistente, IUnit unit)
+    private void setDepartment(Integer departmentID, ISuportePersistente suportePersistente, Unit unit)
             throws ExcepcaoPersistencia {
 
-        IDepartment department = null;
+        Department department = null;
         if (departmentID != null && unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)) {
-            department = (IDepartment) suportePersistente.getIPersistentObject().readByOID(
+            department = (Department) suportePersistente.getIPersistentObject().readByOID(
                     Department.class, departmentID);
             unit.setDepartment(department);
 
@@ -97,11 +97,11 @@ public class CreateNewUnit implements IService {
         }
     }
 
-    private IUnit setParentUnits(Integer parentUnitID, ISuportePersistente suportePersistente, IUnit unit)
+    private Unit setParentUnits(Integer parentUnitID, ISuportePersistente suportePersistente, Unit unit)
             throws ExcepcaoPersistencia {
-        IUnit parentUnit = null;
+        Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (IUnit) suportePersistente.getIPersistentObject().readByOID(Unit.class,
+            parentUnit = (Unit) suportePersistente.getIPersistentObject().readByOID(Unit.class,
                     parentUnitID);
             if (unit.getParentUnits().contains(parentUnit)) {
                 unit.removeParentUnits(parentUnit);

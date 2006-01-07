@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -20,7 +20,7 @@ import org.apache.ojb.broker.query.QueryByCriteria;
  */
 public class TestQuestionOJB extends PersistentObjectOJB implements IPersistentTestQuestion {
 
-    public List<ITestQuestion> readByTest(Integer testId) throws ExcepcaoPersistencia {
+    public List<TestQuestion> readByTest(Integer testId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTest", testId);
         QueryByCriteria queryCriteria = new QueryByCriteria(TestQuestion.class, criteria, false);
@@ -28,14 +28,14 @@ public class TestQuestionOJB extends PersistentObjectOJB implements IPersistentT
         return queryList(queryCriteria);
     }
 
-    public ITestQuestion readByTestAndQuestion(Integer testId, Integer questionId) throws ExcepcaoPersistencia {
+    public TestQuestion readByTestAndQuestion(Integer testId, Integer questionId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTest", testId);
         criteria.addEqualTo("keyQuestion", questionId);
-        return (ITestQuestion) queryObject(TestQuestion.class, criteria);
+        return (TestQuestion) queryObject(TestQuestion.class, criteria);
     }
 
-    public List<ITestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
+    public List<TestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyQuestion", questionId);
         return queryList(TestQuestion.class, criteria);

@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProposal;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,7 +36,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
+        Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
         InfoGroup infoGroup = null;
         if (group != null) {
             infoGroup = new InfoGroup();
@@ -47,12 +47,12 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                 infoGroup.setGroupStudents(new ArrayList());
 
                 for (int i = 0; i < group.getGroupStudents().size(); i++) {
-                    IGroupStudent groupStudent = group.getGroupStudents().get(i);
+                    GroupStudent groupStudent = group.getGroupStudents().get(i);
                     if (groupStudent != null) {
                         InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                         infoGroupStudent.setIdInternal(groupStudent.getIdInternal());
 
-                        IStudent student = groupStudent.getStudent();
+                        Student student = groupStudent.getStudent();
                         if (student != null) {
                             InfoStudent infoStudent = new InfoStudent();
                             infoStudent.setIdInternal(student.getIdInternal());
@@ -68,7 +68,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                         }
 
                         if (groupStudent.getFinalDegreeWorkProposalConfirmation() != null) {
-                            IProposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
+                            Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
 
                             if (proposal != null) {
                                 InfoProposal infoProposal = new InfoProposal();
@@ -84,21 +84,21 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
             if (group.getGroupProposals() != null) {
                 infoGroup.setGroupProposals(new ArrayList());
                 for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                    IGroupProposal groupProposal = group.getGroupProposals().get(i);
+                    GroupProposal groupProposal = group.getGroupProposals().get(i);
                     if (groupProposal != null) {
                         InfoGroupProposal infoGroupProposal = new InfoGroupProposal();
                         infoGroupProposal.setIdInternal(groupProposal.getIdInternal());
                         infoGroupProposal.setOrderOfPreference(groupProposal.getOrderOfPreference());
-                        IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
+                        Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
                         if (proposal != null) {
                             InfoProposal infoProposal = new InfoProposal();
                             infoProposal.setIdInternal(proposal.getIdInternal());
                             infoProposal.setProposalNumber(proposal.getProposalNumber());
                             infoProposal.setTitle(proposal.getTitle());
-                            ITeacher orientator = proposal.getOrientator();
+                            Teacher orientator = proposal.getOrientator();
                             if (orientator != null) {
                                 InfoTeacher infoTeacher = new InfoTeacher();
-                                IPerson person = orientator.getPerson();
+                                Person person = orientator.getPerson();
                                 if (person != null) {
                                     InfoPerson infoPerson = new InfoPerson();
                                     infoPerson.setNome(person.getNome());
@@ -106,10 +106,10 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                                 }
                                 infoProposal.setOrientator(infoTeacher);
                             }
-                            ITeacher coOrientator = proposal.getCoorientator();
+                            Teacher coOrientator = proposal.getCoorientator();
                             if (coOrientator != null) {
                                 InfoTeacher infoTeacher = new InfoTeacher();
-                                IPerson person = coOrientator.getPerson();
+                                Person person = coOrientator.getPerson();
                                 if (person != null) {
                                     InfoPerson infoPerson = new InfoPerson();
                                     infoPerson.setNome(person.getNome());
@@ -118,7 +118,7 @@ public class ReadFinalDegreeWorkStudentGroupByUsername implements IService {
                                 infoProposal.setCoorientator(infoTeacher);
                             }
                             infoProposal.setCompanionName(proposal.getCompanionName());
-                            IGroup attributedGroup = proposal.getGroupAttributedByTeacher();
+                            Group attributedGroup = proposal.getGroupAttributedByTeacher();
                             if (attributedGroup != null
                                     && attributedGroup.getIdInternal().equals(group.getIdInternal())) {
                                 infoProposal.setGroupAttributedByTeacher(infoGroup);

@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -34,7 +34,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular implemen
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-            ICurricularYear curricularYearFromDB = (ICurricularYear) sp.getIPersistentCurricularYear()
+            CurricularYear curricularYearFromDB = (CurricularYear) sp.getIPersistentCurricularYear()
                     .readByOID(CurricularYear.class, curricularYear);
 
             listDCDE = executionCourseDAO
@@ -45,7 +45,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular implemen
             Iterator iterator = listDCDE.iterator();
             listInfoDE = new ArrayList();
             while (iterator.hasNext()) {
-                IExecutionCourse elem = (IExecutionCourse) iterator.next();
+                ExecutionCourse elem = (ExecutionCourse) iterator.next();
 
                 listInfoDE.add(InfoExecutionCourse.newInfoFromDomain(elem));
 

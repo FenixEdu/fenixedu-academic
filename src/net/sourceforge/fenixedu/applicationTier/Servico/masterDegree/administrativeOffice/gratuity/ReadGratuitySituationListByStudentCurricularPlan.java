@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,7 +26,7 @@ public class ReadGratuitySituationListByStudentCurricularPlan implements IServic
 		ISuportePersistente sp = null;
 		List infoGratuitySituations = new ArrayList();
 		List gratuitySituations = null;
-		IGratuitySituation gratuitySituation = null;
+		GratuitySituation gratuitySituation = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -37,7 +37,7 @@ public class ReadGratuitySituationListByStudentCurricularPlan implements IServic
 
 		InfoGratuitySituation infoGratuitySituation = null;
 		for (Iterator iter = gratuitySituations.iterator(); iter.hasNext();) {
-			gratuitySituation = (IGratuitySituation) iter.next();
+			gratuitySituation = (GratuitySituation) iter.next();
 
 			if (gratuitySituation != null) {
 				infoGratuitySituation = InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree

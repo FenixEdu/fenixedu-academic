@@ -11,8 +11,8 @@ import java.util.Date;
  */
 public class EnrolmentPeriodInClasses extends EnrolmentPeriodInClasses_Base {
 
-    public EnrolmentPeriodInClasses(final IDegreeCurricularPlan degreeCurricularPlan, 
-            final IExecutionPeriod executionPeriod, final Date startDate, final Date endDate) {
+    public EnrolmentPeriodInClasses(final DegreeCurricularPlan degreeCurricularPlan, 
+            final ExecutionPeriod executionPeriod, final Date startDate, final Date endDate) {
         setOjbConcreteClass(EnrolmentPeriodInClasses.class.getName());
         setDegreeCurricularPlan(degreeCurricularPlan);
         setExecutionPeriod(executionPeriod);

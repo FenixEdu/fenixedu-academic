@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -24,15 +24,15 @@ public class SaveTeachersBody implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
 
         final List<Integer> auxProfessorshipTeacherIDs = new ArrayList<Integer>(professorShipTeachersIds);
 
-        final List<IProfessorship> professorships = executionCourse.getProfessorships();
+        final List<Professorship> professorships = executionCourse.getProfessorships();
         for (int i = 0; i < professorships.size(); i++) {
-            final IProfessorship professorship = professorships.get(i);
-            final ITeacher teacher = professorship.getTeacher();
+            final Professorship professorship = professorships.get(i);
+            final Teacher teacher = professorship.getTeacher();
             final Integer teacherID = teacher.getIdInternal();
             if (auxProfessorshipTeacherIDs.contains(teacherID)) {
                 if (responsibleTeachersIds.contains(teacherID) && !professorship.getResponsibleFor()) {
@@ -49,7 +49,7 @@ public class SaveTeachersBody implements IService {
         }
 
         for (final Integer teacherID : auxProfessorshipTeacherIDs) {
-            final ITeacher teacher = (ITeacher) sp.getIPersistentObject().readByOID(Teacher.class,
+            final Teacher teacher = (Teacher) sp.getIPersistentObject().readByOID(Teacher.class,
                     teacherID);
             final Boolean isResponsible = Boolean.valueOf(responsibleTeachersIds.contains(teacherID));
             Professorship.create(isResponsible, executionCourse, teacher, null);

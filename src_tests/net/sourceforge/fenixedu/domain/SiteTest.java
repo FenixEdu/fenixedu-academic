@@ -9,9 +9,9 @@ import java.util.Date;
 
 public class SiteTest extends DomainTestBase {
 
-    private ISite site;
+    private Site site;
 
-    private ISection parentSection;
+    private Section parentSection;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -70,7 +70,7 @@ public class SiteTest extends DomainTestBase {
         final Date dateAfterCreation = Calendar.getInstance().getTime();
 
         assertEquals("Size unexpected!", 1, site.getAssociatedAnnouncementsCount());
-        IAnnouncement announcement = (IAnnouncement) site.getAssociatedAnnouncements().get(0);
+        Announcement announcement = (Announcement) site.getAssociatedAnnouncements().get(0);
 
         assertEquals("Different Announcement Title!", "Title", announcement.getTitle());
         assertEquals("Different Announcement Information!", "Information", announcement.getInformation());
@@ -88,7 +88,7 @@ public class SiteTest extends DomainTestBase {
     public void testCreateSection() {
         Date dateBeforeCreation;
         Date dateAfterCreation;
-        ISection section;
+        Section section;
 
         try {
             site.createSection(null, null, null);
@@ -118,7 +118,7 @@ public class SiteTest extends DomainTestBase {
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 2, site.getAssociatedSectionsCount());
-        section = (ISection) site.getAssociatedSections().get(0); // Last Inserted
+        section = (Section) site.getAssociatedSections().get(0); // Last Inserted
         assertEquals("Different Section Name!", "SectionNameLast", section.getName());
         assertNull("Expected Null ParentSection!", section.getSuperiorSection());
         assertEquals("Different ParentSection Order!", new Integer(0), parentSection.getSectionOrder());
@@ -139,7 +139,7 @@ public class SiteTest extends DomainTestBase {
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 3, site.getAssociatedSectionsCount());
-        section = (ISection) site.getAssociatedSections().get(0); // Last Inserted
+        section = (Section) site.getAssociatedSections().get(0); // Last Inserted
         assertEquals("Different Section Name!", "SectionNameBetween", section.getName());
         assertNull("Expected Null ParentSection!", section.getSuperiorSection());
         assertEquals("Different Section Order!", new Integer(1), section.getSectionOrder());
@@ -161,7 +161,7 @@ public class SiteTest extends DomainTestBase {
         sleep(1000);
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 4, site.getAssociatedSectionsCount());
-        section = (ISection) site.getAssociatedSections().get(0); // Last Inserted
+        section = (Section) site.getAssociatedSections().get(0); // Last Inserted
         assertEquals("Different Section Name!", "SectionNameStart", section.getName());
         assertNull("Expected Null ParentSection!", section.getSuperiorSection());
         assertEquals("Different Section Order!", new Integer(0), section.getSectionOrder());
@@ -186,7 +186,7 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 5, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 1, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
+        section = (Section) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameStart", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());
@@ -207,7 +207,7 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 6, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 2, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
+        section = (Section) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameLast", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());
@@ -231,7 +231,7 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 7, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 3, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
+        section = (Section) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameBetween", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());
@@ -256,7 +256,7 @@ public class SiteTest extends DomainTestBase {
         dateAfterCreation = Calendar.getInstance().getTime();
         assertEquals("Size unexpected!", 8, site.getAssociatedSectionsCount());
         assertEquals("Size unexpected!", 4, parentSection.getAssociatedSectionsCount());
-        section = (ISection) parentSection.getAssociatedSections().get(0); // Last
+        section = (Section) parentSection.getAssociatedSections().get(0); // Last
         // Inserted
         assertEquals("Different SubSection Name!", "SubSectionNameFirst", section.getName());
         assertEquals("Different ParentSection!", parentSection, section.getSuperiorSection());

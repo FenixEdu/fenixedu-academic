@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoRegistrationDeclaration;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -35,20 +35,20 @@ public class ReadInfoRegistrationDeclaration implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingStudentServiceException();
         }
 
-        IStudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        StudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
         if (scp == null) {
             throw new NonExistingActiveSCPServiceException();
         }
 
-        IExecutionYear executionYear = null;
+        ExecutionYear executionYear = null;
         if (scp.getEnrolments() != null) {
             for (Iterator iter = scp.getEnrolments().iterator(); iter.hasNext();) {
-                IEnrolment enrollment = (IEnrolment) iter.next();
+                Enrolment enrollment = (Enrolment) iter.next();
                 Calendar calendar = Calendar.getInstance();
                 Date actualDate = calendar.getTime();
                 Date beginDate = enrollment.getExecutionPeriod().getExecutionYear().getBeginDate();

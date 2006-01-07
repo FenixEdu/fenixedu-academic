@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTest;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,9 +22,9 @@ public class ReadTests implements IService {
 
     public List<InfoTest> run(Integer executionCourseId) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<ITest> tests = persistentSuport.getIPersistentTest().readByTestScope(ExecutionCourse.class.getName(), executionCourseId);
+        List<Test> tests = persistentSuport.getIPersistentTest().readByTestScope(ExecutionCourse.class.getName(), executionCourseId);
         List<InfoTest> infoTestList = new ArrayList<InfoTest>();
-        for (ITest test : tests) {
+        for (Test test : tests) {
             infoTestList.add(InfoTest.newInfoFromDomain(test));
         }
         return infoTestList;

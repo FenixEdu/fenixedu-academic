@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -21,9 +21,9 @@ public class InfoGuideWithGuideEntries extends InfoGuide {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(Dominio.IGuide)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGuide#copyFromDomain(Dominio.Guide)
      */
-    public void copyFromDomain(IGuide guide) {
+    public void copyFromDomain(Guide guide) {
         super.copyFromDomain(guide);
         if (guide != null) {
             setInfoGuideEntries(copyIGuideEntry2InfoGuide(guide.getGuideEntries()));
@@ -36,7 +36,7 @@ public class InfoGuideWithGuideEntries extends InfoGuide {
         infoGuideEntryList = (List) CollectionUtils.collect(guideEntries, new Transformer() {
 
             public Object transform(Object arg0) {
-                IGuideEntry guideEntry = (IGuideEntry) arg0;
+                GuideEntry guideEntry = (GuideEntry) arg0;
                 return InfoGuideEntry.newInfoFromDomain(guideEntry);
             }
         });
@@ -44,7 +44,7 @@ public class InfoGuideWithGuideEntries extends InfoGuide {
         return infoGuideEntryList;
     }
 
-    public static InfoGuide newInfoFromDomain(IGuide guide) {
+    public static InfoGuide newInfoFromDomain(Guide guide) {
         InfoGuideWithGuideEntries infoGuide = new InfoGuideWithGuideEntries();
         if (guide != null) {
             infoGuide = new InfoGuideWithGuideEntries();

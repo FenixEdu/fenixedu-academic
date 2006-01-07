@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingAs
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -33,9 +33,9 @@ public class ExecutionCourseSiteComponentService implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSite persistentSite = sp.getIPersistentSite();
 
-        final ISite site;
+        final Site site;
         if (infoSiteCode != null)
-            site = (ISite) persistentSite.readByOID(Site.class, infoSiteCode);
+            site = (Site) persistentSite.readByOID(Site.class, infoSiteCode);
         else
             site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 

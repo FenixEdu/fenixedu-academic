@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShifts;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,18 +39,18 @@ public class ReadGroupingShifts implements IService {
 
 		InfoSiteShifts infoSiteShifts = new InfoSiteShifts();
 		List infoShifts = new ArrayList();
-		IGrouping grouping = null;
+		Grouping grouping = null;
 		boolean result = false;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IStudentGroup studentGroup = null;
-		grouping = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class, groupingCode);
+		StudentGroup studentGroup = null;
+		grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class, groupingCode);
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}
 		if (studentGroupCode != null) {
 
-			studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
+			studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
 					studentGroupCode);
 
 			if (studentGroup == null) {
@@ -74,7 +74,7 @@ public class ReadGroupingShifts implements IService {
 			Iterator iterExecutionCourses = executionCourses.iterator();
 			List executionCourseShifts = new ArrayList();
 			while (iterExecutionCourses.hasNext()) {
-				IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
+				ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
 
 				List someShifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
 
@@ -87,7 +87,7 @@ public class ReadGroupingShifts implements IService {
 			} else {
 
 				for (int i = 0; i < shifts.size(); i++) {
-					IShift shift = (IShift) shifts.get(i);
+					Shift shift = (Shift) shifts.get(i);
 					result = strategy.checkNumberOfGroups(grouping, shift);
 
 					if (result) {

@@ -9,22 +9,22 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 
 public class SummaryTest extends DomainTestBase {
 
-    private IExecutionCourse executionCourse;
+    private ExecutionCourse executionCourse;
 
-    private ITeacher teacher;
+    private Teacher teacher;
 
-    private IProfessorship professorship;
+    private Professorship professorship;
 
-    private IShift shift;
+    private Shift shift;
 
-    private IRoom room;
+    private Room room;
 
-    private ISummary summary;
+    private Summary summary;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -71,7 +71,7 @@ public class SummaryTest extends DomainTestBase {
         Date summaryHour = summary.getSummaryHour();
 
         try {
-            IProfessorship professorshipTest = null;
+            Professorship professorshipTest = null;
             summary.edit("newTitle", "newSummaryText", 40, false, professorshipTest);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
@@ -81,7 +81,7 @@ public class SummaryTest extends DomainTestBase {
         }
 
         try {
-            ITeacher teacherTest = null;
+            Teacher teacherTest = null;
             summary.edit("newTitle", "newSummaryText", 40, false, teacherTest);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
@@ -161,7 +161,7 @@ public class SummaryTest extends DomainTestBase {
         assertEquals("Unexpected Shift Summary size!", 1, shift.getAssociatedSummariesCount());
 
         // Change Summary Shift
-        IShift alternativeShift = new Shift();
+        Shift alternativeShift = new Shift();
         alternativeShift.setIdInternal(2);
 
         dateBeforeEdition = Calendar.getInstance().getTime();
@@ -208,11 +208,11 @@ public class SummaryTest extends DomainTestBase {
         assertEquals("Unexpected size!", 0, shift.getAssociatedSummariesCount());
     }
 
-    private void checkIfSummaryAttributesAreCorrect(final ISummary summary, final String title, final String summaryText,
+    private void checkIfSummaryAttributesAreCorrect(final Summary summary, final String title, final String summaryText,
             final Integer studentsNumber, final Boolean isExtraLesson, final Date summaryDate,
-            final Date summaryHour, final IExecutionCourse executionCourse,
-            final IProfessorship professorship, final ITeacher teacher, final String teacherName,
-            final IShift shift, final IRoom room) {
+            final Date summaryHour, final ExecutionCourse executionCourse,
+            final Professorship professorship, final Teacher teacher, final String teacherName,
+            final Shift shift, final Room room) {
 
         assertEquals("Different Summary Title!", title, summary.getTitle());
         assertEquals("Different Summary Text!", summaryText, summary.getSummaryText());
@@ -228,7 +228,7 @@ public class SummaryTest extends DomainTestBase {
         assertTrue("Different Summary Hour!", summary.getSummaryHour().equals(summaryHour));
     }
 
-    private void checkSummaryModificationDate(final ISummary summary, final Date dateBeforeEdition, final Date dateAfterEdition) {
+    private void checkSummaryModificationDate(final Summary summary, final Date dateBeforeEdition, final Date dateAfterEdition) {
         assertTrue("Expected ModificationDate After an initial timestamp", summary.getLastModifiedDate()
                 .after(dateBeforeEdition));
         assertTrue("Expected ModificationDate Before an initial timestamp", summary

@@ -6,8 +6,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,11 +20,11 @@ public class ReadExportGroupingsByGrouping implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
 
-        final IGrouping grouping = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupingOID);
-        final List<IExportGrouping> exportGroupings = grouping.getExportGroupings();
+        final Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class, groupingOID);
+        final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
 
         final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());
-        for (final IExportGrouping exportGrouping : exportGroupings) {
+        for (final ExportGrouping exportGrouping : exportGroupings) {
             final InfoExportGrouping infoExportGrouping = new InfoExportGrouping();
             infoExportGrouping.setIdInternal(exportGrouping.getIdInternal());
             infoExportGrouping.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exportGrouping.getExecutionCourse()));

@@ -8,24 +8,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IItem;
-import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Item;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ExecutionCourseUtils {
 
-    public static void copySectionsAndItems(ISite siteFrom, ISite siteTo) throws DomainException {
+    public static void copySectionsAndItems(Site siteFrom, Site siteTo) throws DomainException {
 
         if (siteFrom.getAssociatedSectionsCount() > 0) {
             Iterator associatedSections = siteFrom.getAssociatedSectionsIterator();
             while (associatedSections.hasNext()) {
-                ISection sectionFrom = (ISection) associatedSections.next();
+                Section sectionFrom = (Section) associatedSections.next();
                 if (sectionFrom.getSuperiorSection() == null) {
-                    ISection sectionTo = siteTo.createSection(sectionFrom.getName(), null, sectionFrom
+                    Section sectionTo = siteTo.createSection(sectionFrom.getName(), null, sectionFrom
                             .getSectionOrder());
                     copyItemsFrom(sectionFrom, sectionTo);
                     copySubSectionsAndItemsFrom(sectionFrom, sectionTo, siteTo);
@@ -34,14 +34,14 @@ public class ExecutionCourseUtils {
         }
     }
 
-    private static void copySubSectionsAndItemsFrom(ISection sectionFrom, ISection sectionTo,
-            ISite siteTo) throws DomainException {
+    private static void copySubSectionsAndItemsFrom(Section sectionFrom, Section sectionTo,
+            Site siteTo) throws DomainException {
         if (sectionFrom.getAssociatedSectionsCount() > 0) {
             Iterator associatedSections = sectionFrom.getAssociatedSectionsIterator();
             while (associatedSections.hasNext()) {
-                ISection subSectionFrom = (ISection) associatedSections.next();
+                Section subSectionFrom = (Section) associatedSections.next();
                 if (subSectionFrom.getSuperiorSection() != null) {
-                    ISection subSectionTo = siteTo.createSection(subSectionFrom.getName(), sectionTo,
+                    Section subSectionTo = siteTo.createSection(subSectionFrom.getName(), sectionTo,
                             subSectionFrom.getSectionOrder());
                     copyItemsFrom(subSectionFrom, subSectionTo);
                     copySubSectionsAndItemsFrom(subSectionFrom, subSectionTo, siteTo);
@@ -50,36 +50,36 @@ public class ExecutionCourseUtils {
         }
     }
 
-    private static void copyItemsFrom(ISection sectionFrom, ISection sectionTo) throws DomainException {
+    private static void copyItemsFrom(Section sectionFrom, Section sectionTo) throws DomainException {
         if (sectionFrom.getAssociatedItemsCount() > 0) {
             Iterator associatedItems = sectionFrom.getAssociatedItemsIterator();
             while (associatedItems.hasNext()) {
-                IItem item = (IItem) associatedItems.next();
+                Item item = (Item) associatedItems.next();
                 sectionTo.insertItem(item.getName(), item.getInformation(), item.getUrgent(), item
                         .getItemOrder());
             }
         }
     }
 
-    public static void deleteSectionsAndItemsIfExistFrom(ISite siteTo) throws DomainException {
+    public static void deleteSectionsAndItemsIfExistFrom(Site siteTo) throws DomainException {
         if (siteTo.getAssociatedSectionsCount() > 0) {                   
-            final List<ISection> associatedSections = new ArrayList();
+            final List<Section> associatedSections = new ArrayList();
             associatedSections.addAll(siteTo.getAssociatedSections());
-            for(final ISection section : associatedSections){
+            for(final Section section : associatedSections){
             	section.delete();
             }
         }
     }
 
-    public static List<IBibliographicReference> copyBibliographicReference(final IExecutionCourse executionCourseFrom,
-            IExecutionCourse executionCourseTo) {
-        final List<IBibliographicReference> notCopiedBibliographicReferences = new ArrayList();
+    public static List<BibliographicReference> copyBibliographicReference(final ExecutionCourse executionCourseFrom,
+            ExecutionCourse executionCourseTo) {
+        final List<BibliographicReference> notCopiedBibliographicReferences = new ArrayList();
         
         if (executionCourseFrom.getAssociatedBibliographicReferencesCount() > 0) {
             Iterator bibliographicReferences = executionCourseFrom
                     .getAssociatedBibliographicReferencesIterator();
             while (bibliographicReferences.hasNext()) {
-                IBibliographicReference bibliographicReference = (IBibliographicReference) bibliographicReferences
+                BibliographicReference bibliographicReference = (BibliographicReference) bibliographicReferences
                         .next();
                 if (canAddBibliographicReferenceTo(executionCourseTo, bibliographicReference)) {
                     executionCourseTo.createBibliographicReference(bibliographicReference.getTitle(),
@@ -94,12 +94,12 @@ public class ExecutionCourseUtils {
         return notCopiedBibliographicReferences;
     }
 
-    private static boolean canAddBibliographicReferenceTo(final IExecutionCourse executionCourse,
-            final IBibliographicReference bibliographicReferenceToAdd) {
+    private static boolean canAddBibliographicReferenceTo(final ExecutionCourse executionCourse,
+            final BibliographicReference bibliographicReferenceToAdd) {
         final Iterator associatedBibliographicReferences = executionCourse
                 .getAssociatedBibliographicReferencesIterator();
         while (associatedBibliographicReferences.hasNext()) {
-            IBibliographicReference bibliographicReference = (IBibliographicReference) associatedBibliographicReferences
+            BibliographicReference bibliographicReference = (BibliographicReference) associatedBibliographicReferences
                     .next();
             if (bibliographicReference.getTitle().equals(bibliographicReferenceToAdd.getTitle())) {
                 return false;
@@ -108,11 +108,11 @@ public class ExecutionCourseUtils {
         return true;
     }
 
-    public static void copyEvaluationMethod(final IExecutionCourse executionCourseFrom,
-            IExecutionCourse executionCourseTo) {
+    public static void copyEvaluationMethod(final ExecutionCourse executionCourseFrom,
+            ExecutionCourse executionCourseTo) {
         if (executionCourseFrom.getEvaluationMethod() != null) {
-            final IEvaluationMethod evaluationMethodFrom = executionCourseFrom.getEvaluationMethod();
-            final IEvaluationMethod evaluationMethodTo = executionCourseTo.getEvaluationMethod();
+            final EvaluationMethod evaluationMethodFrom = executionCourseFrom.getEvaluationMethod();
+            final EvaluationMethod evaluationMethodTo = executionCourseTo.getEvaluationMethod();
             if (evaluationMethodTo == null) {
                 executionCourseTo.createEvaluationMethod(evaluationMethodFrom.getEvaluationElements(),
                         evaluationMethodFrom.getEvaluationElementsEn());

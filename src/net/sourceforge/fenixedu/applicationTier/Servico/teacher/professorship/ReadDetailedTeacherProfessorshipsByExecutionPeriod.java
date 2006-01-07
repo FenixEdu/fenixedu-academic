@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -39,7 +39,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends
         if (executionPeriodOID == null) {
             IPersistentExecutionPeriod executionPeriodDAO = suportePersistente
                     .getIPersistentExecutionPeriod();
-            IExecutionPeriod executionPeriod = executionPeriod = executionPeriodDAO
+            ExecutionPeriod executionPeriod = executionPeriod = executionPeriodDAO
                     .readActualExecutionPeriod();
             executionPeriodOID = executionPeriod.getIdInternal();
         }
@@ -47,11 +47,11 @@ public class ReadDetailedTeacherProfessorshipsByExecutionPeriod extends
         List professorships = persistentProfessorship.readByTeacherAndExecutionPeriod(teacherOID,
                 executionPeriodOID);
                 
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherOID);
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherOID);
         
-        final List<IProfessorship> responsibleForsAux = teacher.responsibleFors();
+        final List<Professorship> responsibleForsAux = teacher.responsibleFors();
         final List responsibleFors = new ArrayList();        
-        for(IProfessorship professorship : responsibleForsAux){
+        for(Professorship professorship : responsibleForsAux){
             if(professorship.getExecutionCourse().getExecutionPeriod().getIdInternal().equals(executionPeriodOID))
                 responsibleFors.add(professorship);
         }                      

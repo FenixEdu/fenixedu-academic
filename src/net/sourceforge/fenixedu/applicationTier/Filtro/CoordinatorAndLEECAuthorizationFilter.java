@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -77,10 +77,10 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
         try {
         	sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             
            	IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            ICoordinator coordinator = persistentCoordinator
+            Coordinator coordinator = persistentCoordinator
                     .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), (Integer) argumentos[0]);
             if (coordinator != null && coordinator.getExecutionDegree() != null
                     && coordinator.getExecutionDegree().getDegreeCurricularPlan() != null

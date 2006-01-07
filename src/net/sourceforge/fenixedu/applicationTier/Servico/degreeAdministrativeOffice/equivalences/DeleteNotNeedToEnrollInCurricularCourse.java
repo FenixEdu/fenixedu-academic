@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,7 +24,7 @@ public class DeleteNotNeedToEnrollInCurricularCourse implements IService {
         IPersistentNotNeedToEnrollInCurricularCourse persistentNotNeedToEnrollInCurricularCourse = sp
                 .getIPersistentNotNeedToEnrollInCurricularCourse();
 
-        INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (INotNeedToEnrollInCurricularCourse) 
+        NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) 
             persistentNotNeedToEnrollInCurricularCourse.readByOID(NotNeedToEnrollInCurricularCourse.class,
                     notNeedToEnrollInCurricularCourseID);
       

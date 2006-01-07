@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
@@ -49,30 +49,30 @@ public class EditWrittenEvaluation implements IService {
                 .getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
-        final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) persistentObject.readByOID(
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(
                 WrittenEvaluation.class, writtenEvaluationOID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
-        final List<IExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
+        final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(
                 persistentSupport, executionCourseIDs);
-        final List<ICurricularCourseScope> curricularCourseScopeToAssociate = readCurricularCourseScopes(
+        final List<CurricularCourseScope> curricularCourseScopeToAssociate = readCurricularCourseScopes(
                 persistentSupport, curricularCourseScopeIDs);
 
-        List<IRoom> roomsToAssociate = null; 
-        IOccupationPeriod period = null; 
+        List<Room> roomsToAssociate = null; 
+        OccupationPeriod period = null; 
         if (roomIDs != null) {
             roomsToAssociate = readRooms(persistentSupport, roomIDs);
             period = readPeriod(persistentSupport, writtenEvaluation, writtenEvaluationDate); 
         }
 
         if (examSeason != null) {
-            ((IExam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, 
+            ((Exam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, 
             		writtenEvaluationEndTime, executionCoursesToAssociate,
                     curricularCourseScopeToAssociate, roomsToAssociate, period, examSeason);
         } else if (writtenTestDescription != null) {
-            ((IWrittenTest) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, 
+            ((WrittenTest) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, 
             		writtenEvaluationEndTime, executionCoursesToAssociate,
             		curricularCourseScopeToAssociate, roomsToAssociate,
                     period, writtenTestDescription);
@@ -81,10 +81,10 @@ public class EditWrittenEvaluation implements IService {
         }
     }
 
-    private IOccupationPeriod readPeriod(final ISuportePersistente persistentSupport,
-            final IWrittenEvaluation writtenEvaluation, final Date writtenEvaluationDate)
+    private OccupationPeriod readPeriod(final ISuportePersistente persistentSupport,
+            final WrittenEvaluation writtenEvaluation, final Date writtenEvaluationDate)
             throws ExcepcaoPersistencia {
-        IOccupationPeriod period = null;
+        OccupationPeriod period = null;
         if (!writtenEvaluation.getAssociatedRoomOccupation().isEmpty()) {
             period = writtenEvaluation.getAssociatedRoomOccupation().get(0).getPeriod();
             if (writtenEvaluation.getAssociatedRoomOccupation().containsAll(period.getRoomOccupations())) {
@@ -96,7 +96,7 @@ public class EditWrittenEvaluation implements IService {
         }
         if (period == null) {
             final IPersistentPeriod persistentPeriod = persistentSupport.getIPersistentPeriod();
-            period = (IOccupationPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
+            period = (OccupationPeriod) persistentPeriod.readByCalendarAndNextPeriod(writtenEvaluationDate, writtenEvaluationDate, null);
             if (period == null) {
                 period = DomainFactory.makeOccupationPeriod(writtenEvaluationDate, writtenEvaluationDate);
             }
@@ -104,13 +104,13 @@ public class EditWrittenEvaluation implements IService {
         return period;
     }
 
-    private List<IRoom> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
+    private List<Room> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final List<IRoom> result = new ArrayList<IRoom>();
+        final List<Room> result = new ArrayList<Room>();
         final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         for (final String roomID : roomIDs) {
-            final IRoom room = (IRoom) persistentRoom.readByOID(Room.class, Integer.valueOf(roomID));
+            final Room room = (Room) persistentRoom.readByOID(Room.class, Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -119,18 +119,18 @@ public class EditWrittenEvaluation implements IService {
         return result;
     }
 
-    private List<ICurricularCourseScope> readCurricularCourseScopes(
+    private List<CurricularCourseScope> readCurricularCourseScopes(
             final ISuportePersistente persistentSupport, final List<String> curricularCourseScopeIDs)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         if (curricularCourseScopeIDs.isEmpty()) {
             throw new FenixServiceException("error.InvalidCurricularCourseScope");
         }
-        final List<ICurricularCourseScope> result = new ArrayList<ICurricularCourseScope>();
+        final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
         final IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
         for (final String curricularCourseScopeID : curricularCourseScopeIDs) {
-            final ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope
+            final CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope
                     .readByOID(CurricularCourseScope.class, Integer.valueOf(curricularCourseScopeID));
             if (curricularCourseScope == null) {
                 throw new FenixServiceException("error.InvalidCurricularCourseScope");
@@ -140,13 +140,13 @@ public class EditWrittenEvaluation implements IService {
         return result;
     }
 
-    private List<IExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
+    private List<ExecutionCourse> readExecutionCourses(final ISuportePersistente persistentSupport,
             final List<String> executionCourseIDs) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (executionCourseIDs.isEmpty()) {
             throw new FenixServiceException("error.invalidExecutionCourse");
         }
-        final List<IExecutionCourse> result = new ArrayList<IExecutionCourse>();
+        final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
         for (final String executionCourseID : executionCourseIDs) {

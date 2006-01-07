@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.department.CourseStatisticsDTO;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -23,7 +23,7 @@ public abstract class ComputeCourseStatistics implements IService {
     }
 
     protected void createCourseStatistics(CourseStatisticsDTO courseStatistics,
-            List<IEnrolmentEvaluation> evaluations) {
+            List<EnrolmentEvaluation> evaluations) {
         int firstEnrolledCount = 0;
         int firstApprovedCount = 0;
         List<IGrade> firstApprovedGrades = new ArrayList<IGrade>();
@@ -36,7 +36,7 @@ public abstract class ComputeCourseStatistics implements IService {
         int totalApprovedCount = 0;
         List<IGrade> totalApprovedGrades = new ArrayList<IGrade>();
 
-        for (IEnrolmentEvaluation evaluation : evaluations) {
+        for (EnrolmentEvaluation evaluation : evaluations) {
             totalEnrolledCount++;
 
             if (evaluation.getEnrolment().isFirstTime()) {

@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -63,14 +63,14 @@ public class CreateReimbursementGuide implements IService {
 
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuide guide = (IGuide) ps.getIPersistentGuide().readByOID(Guide.class, guideId, true);
+        Guide guide = (Guide) ps.getIPersistentGuide().readByOID(Guide.class, guideId, true);
 
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException(
                     "error.exception.masterDegree.invalidGuideSituation");
         }
 
-        IReimbursementGuide reimbursementGuide = DomainFactory.makeReimbursementGuide();
+        ReimbursementGuide reimbursementGuide = DomainFactory.makeReimbursementGuide();
 
         for (InfoReimbursementGuideEntry infoReimbursementGuideEntry : (List<InfoReimbursementGuideEntry>) infoReimbursementGuideEntries) {
 
@@ -79,7 +79,7 @@ public class CreateReimbursementGuide implements IService {
                 throw new RequiredJustificationServiceException(
                         "error.exception.masterDegree.requiredJustification");
 
-            IGuideEntry guideEntry = (IGuideEntry) ps.getIPersistentGuideEntry().readByOID(
+            GuideEntry guideEntry = (GuideEntry) ps.getIPersistentGuideEntry().readByOID(
                     GuideEntry.class, infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false)
                 throw new InvalidReimbursementValueServiceException(
@@ -92,7 +92,7 @@ public class CreateReimbursementGuide implements IService {
             }
 
             // create new reimbursement entry
-            IReimbursementGuideEntry newReimbursementGuideEntry = DomainFactory.makeReimbursementGuideEntry();
+            ReimbursementGuideEntry newReimbursementGuideEntry = DomainFactory.makeReimbursementGuideEntry();
             newReimbursementGuideEntry.setGuideEntry(guideEntry);
             newReimbursementGuideEntry.setJustification(infoReimbursementGuideEntry.getJustification());
             newReimbursementGuideEntry.setReimbursementGuide(reimbursementGuide);
@@ -108,11 +108,11 @@ public class CreateReimbursementGuide implements IService {
         reimbursementGuide.setGuide(guide);
 
         // read employee
-        IPerson person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-        IEmployee employee = ps.getIPersistentEmployee().readByPerson(person);
+        Person person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Employee employee = ps.getIPersistentEmployee().readByPerson(person);
 
         // reimbursement Guide Situation
-        IReimbursementGuideSituation reimbursementGuideSituation = DomainFactory.makeReimbursementGuideSituation();
+        ReimbursementGuideSituation reimbursementGuideSituation = DomainFactory.makeReimbursementGuideSituation();
         reimbursementGuideSituation.setEmployee(employee);
         reimbursementGuideSituation.setModificationDate(Calendar.getInstance());
         reimbursementGuideSituation.setOfficialDate(Calendar.getInstance());
@@ -133,7 +133,7 @@ public class CreateReimbursementGuide implements IService {
      *         equal than their guide entry
      */
     private boolean checkReimbursementGuideEntriesSum(
-            InfoReimbursementGuideEntry newReimbursementGuideEntry, IGuideEntry guideEntry) {
+            InfoReimbursementGuideEntry newReimbursementGuideEntry, GuideEntry guideEntry) {
 
         Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());
@@ -147,7 +147,7 @@ public class CreateReimbursementGuide implements IService {
 
         Iterator it = reimbursementGuideEntries.iterator();
         while (it.hasNext()) {
-            IReimbursementGuideEntry reimbursementGuideEntry = (IReimbursementGuideEntry) it.next();
+            ReimbursementGuideEntry reimbursementGuideEntry = (ReimbursementGuideEntry) it.next();
             if (reimbursementGuideEntry.getReimbursementGuide().getActiveReimbursementGuideSituation()
                     .getReimbursementGuideState().equals(ReimbursementGuideState.PAYED)) {
                 sum = new Double(sum.doubleValue() + reimbursementGuideEntry.getValue().doubleValue());

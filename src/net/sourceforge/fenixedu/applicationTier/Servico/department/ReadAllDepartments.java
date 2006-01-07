@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,7 +29,7 @@ public class ReadAllDepartments implements IService {
         Iterator iter = departments.iterator();
         List infoDepartments = new ArrayList();
         while (iter.hasNext()) {
-            IDepartment department = (IDepartment) iter.next();
+            Department department = (Department) iter.next();
             InfoDepartment infoDepartment = InfoDepartment.newInfoFromDomain(department);
             infoDepartments.add(infoDepartment);
         }

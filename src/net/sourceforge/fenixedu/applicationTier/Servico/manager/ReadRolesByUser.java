@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,14 +29,14 @@ public class ReadRolesByUser implements IService {
 		List result = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+		Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
 		if (person == null) {
 			throw new FenixServiceException("error.noUsername");
 		}
 
 		result = (List) CollectionUtils.collect(person.getPersonRoles(), new Transformer() {
 			public Object transform(Object arg0) {
-				return InfoRole.newInfoFromDomain((IRole) arg0);
+				return InfoRole.newInfoFromDomain((Role) arg0);
 			}
 		});
 

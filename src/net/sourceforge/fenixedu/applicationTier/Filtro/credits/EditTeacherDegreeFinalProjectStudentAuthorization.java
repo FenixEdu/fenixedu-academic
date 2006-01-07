@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -31,9 +31,9 @@ public class EditTeacherDegreeFinalProjectStudentAuthorization extends
         InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent = (InfoTeacherDegreeFinalProjectStudent) arguments[1];
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-        ITeacher teacher;
+        Teacher teacher;
         try {
-            teacher = (ITeacher) teacherDAO.readByOID(Teacher.class,
+            teacher = (Teacher) teacherDAO.readByOID(Teacher.class,
                     infoTeacherDegreeFinalProjectStudent.getInfoTeacher().getIdInternal());
         } catch (ExcepcaoPersistencia e) {
             return null;

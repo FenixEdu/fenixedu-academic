@@ -11,7 +11,7 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -41,7 +41,7 @@ public class WriteEnrollmentsList implements IService {
 
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
-        IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), degreeType);
         if (studentCurricularPlan == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");

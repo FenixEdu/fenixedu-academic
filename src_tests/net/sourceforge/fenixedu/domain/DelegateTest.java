@@ -1,23 +1,23 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 
 public class DelegateTest extends DomainTestBase {
 
-	IDelegate delegateToDelete = null;
+	Delegate delegateToDelete = null;
 
 	private void setUpDelete() {
 		delegateToDelete = new Delegate();
 		delegateToDelete.setIdInternal(1);
 		
-		IExecutionYear executionYear = new ExecutionYear();
+		ExecutionYear executionYear = new ExecutionYear();
 		executionYear.addDelegate(delegateToDelete);
 		
-		IStudent student  = new Student();
+		Student student  = new Student();
 		student.addDelegate(delegateToDelete);
 		
-		IDegree degree = new Degree();
+		Degree degree = new Degree();
 		degree.addDelegate(delegateToDelete);
 	}
 		
@@ -30,7 +30,7 @@ public class DelegateTest extends DomainTestBase {
 		assertCorrectDeletion(delegateToDelete);
 	}
 	
-	protected static void assertCorrectDeletion(IDelegate delegate) {
+	protected static void assertCorrectDeletion(Delegate delegate) {
 		assertFalse("Deleted Delegate should not have Degree", delegate.hasDegree());
 		assertFalse("Deleted Delegate should not have Student", delegate.hasStudent());
 		assertFalse("Deleted Delegate should not have ExecutionYear", delegate.hasExecutionYear());

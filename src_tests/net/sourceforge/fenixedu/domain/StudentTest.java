@@ -8,18 +8,18 @@ import net.sourceforge.fenixedu.util.StudentType;
 
 public class StudentTest extends DomainTestBase {
 
-	private IPerson person = null;
+	private Person person = null;
 	private Integer studentNumber = null;
-	private IStudentKind studentKind = null;
+	private StudentKind studentKind = null;
 	private StudentState studentState = null;
 	private Boolean payedTuition = null;
 	private Boolean enrolmentForbidden = null;
 	private EntryPhase entryPhase = null;
 	private DegreeType degreeType = null;
 		
-	private IStudent studentWithActiveStudentCurricularPlan = null;
-	private IStudent studentWithoutActiveStudentCurricularPlan = null;
-	private IStudentCurricularPlan activeStudentCurricularPlan = null;
+	private Student studentWithActiveStudentCurricularPlan = null;
+	private Student studentWithoutActiveStudentCurricularPlan = null;
+	private StudentCurricularPlan activeStudentCurricularPlan = null;
 	
 	private void setUpForNewStudentCase() {
 		person = new Person();
@@ -37,7 +37,7 @@ public class StudentTest extends DomainTestBase {
 		
 		setUpForNewStudentCase();
 		
-		IStudent student = new Student(person, studentNumber, studentKind, studentState, 
+		Student student = new Student(person, studentNumber, studentKind, studentState, 
 				payedTuition, enrolmentForbidden, entryPhase, degreeType);
 		
 		assertEquals("Failed to assign Person", student.getPerson(),person);
@@ -55,11 +55,11 @@ public class StudentTest extends DomainTestBase {
 		
 		setUpGetActiveStudentCurricularPlan();
 		
-		IStudentCurricularPlan activeSCP = studentWithActiveStudentCurricularPlan.getActiveStudentCurricularPlan();
+		StudentCurricularPlan activeSCP = studentWithActiveStudentCurricularPlan.getActiveStudentCurricularPlan();
 		assertEquals("Returned StudentCurricularPlan does not match expected", activeSCP, activeStudentCurricularPlan);
 		assertEquals("Returned StudentCurricularPlan is not ACTIVE", activeSCP.getCurrentState(),StudentCurricularPlanState.ACTIVE);
 		
-		IStudentCurricularPlan someSCP = studentWithoutActiveStudentCurricularPlan.getActiveStudentCurricularPlan();
+		StudentCurricularPlan someSCP = studentWithoutActiveStudentCurricularPlan.getActiveStudentCurricularPlan();
 		assertNull("Should not have returned a StudentCurricularPlan", someSCP);
 	}
 
@@ -70,7 +70,7 @@ public class StudentTest extends DomainTestBase {
 		activeStudentCurricularPlan = new StudentCurricularPlan();
 		activeStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.ACTIVE);
 		
-		IStudentCurricularPlan someSCP = new StudentCurricularPlan();
+		StudentCurricularPlan someSCP = new StudentCurricularPlan();
 		someSCP.setCurrentState(StudentCurricularPlanState.CONCLUDED);
 		
 		studentWithActiveStudentCurricularPlan.addStudentCurricularPlans(activeStudentCurricularPlan);

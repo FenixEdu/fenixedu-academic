@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.student;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IDislocatedStudent;
+import net.sourceforge.fenixedu.domain.DislocatedStudent;
 
 /**
  * @author Ricardo Rodrigues
@@ -38,7 +38,7 @@ public class InfoDislocatedStudent extends InfoObject {
         this.infoStudent = infoStudent;
     }
 
-    public void copyFromDomain(IDislocatedStudent dislocatedStudent) {
+    public void copyFromDomain(DislocatedStudent dislocatedStudent) {
         super.copyFromDomain(dislocatedStudent);
         if (dislocatedStudent != null) {
             setInfoStudent(InfoStudent.newInfoFromDomain(dislocatedStudent.getStudent()));
@@ -46,7 +46,7 @@ public class InfoDislocatedStudent extends InfoObject {
         }
     }
 
-    public static InfoDislocatedStudent newInfoFromDomain(IDislocatedStudent dislocatedStudent) {
+    public static InfoDislocatedStudent newInfoFromDomain(DislocatedStudent dislocatedStudent) {
         InfoDislocatedStudent infoDislocatedStudent = null;
         if (dislocatedStudent != null) {
             infoDislocatedStudent = new InfoDislocatedStudent();

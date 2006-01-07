@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,12 +30,12 @@ public class EditCourseInformation implements IService {
         final IPersistentCourseReport persistentCourseReport = persistentSupport
                 .getIPersistentCourseReport();
 
-        final ICourseReport courseReport;
+        final CourseReport courseReport;
         if (courseReportID != 0) {
-            courseReport = (ICourseReport) persistentCourseReport.readByOID(CourseReport.class, courseReportID);
+            courseReport = (CourseReport) persistentCourseReport.readByOID(CourseReport.class, courseReportID);
         } else {
             final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-            final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoCourseReport.getInfoExecutionCourse().getIdInternal());
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoCourseReport.getInfoExecutionCourse().getIdInternal());
 
             courseReport = executionCourse.createCourseReport(newReport);
         }

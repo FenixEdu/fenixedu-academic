@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.transactions;
 
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -32,8 +32,8 @@ public class GratuityTransaction extends GratuityTransaction_Base {
 	public GratuityTransaction(Double value, Timestamp transactionDate,
 			String remarks, PaymentType paymentType,
 			TransactionType transactionType, Boolean wasInternalBalance,
-			IPerson responsiblePerson, IPersonAccount personAccount,
-			IGuideEntry guideEntry, IGratuitySituation gratuitySituation) {
+			Person responsiblePerson, PersonAccount personAccount,
+			GuideEntry guideEntry, GratuitySituation gratuitySituation) {
         setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);

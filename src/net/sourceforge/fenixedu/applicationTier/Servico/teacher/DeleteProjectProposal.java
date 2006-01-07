@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
@@ -48,10 +48,10 @@ public class DeleteProjectProposal implements IService {
         IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-        IPerson withdrawalPerson = persistentTeacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class, groupPropertiesCode);
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseCode);
-        IExecutionCourse startExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, objectCode);
+        Person withdrawalPerson = persistentTeacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
+        Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class, groupPropertiesCode);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseCode);
+        ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, objectCode);
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");
@@ -60,7 +60,7 @@ public class DeleteProjectProposal implements IService {
             throw new InvalidArgumentsServiceException("error.noExecutionCourse");
         }
 
-        IExportGrouping groupingExecutionCourse = persistentExportGrouping
+        ExportGrouping groupingExecutionCourse = persistentExportGrouping
                 .readBy(groupProperties.getIdInternal(), executionCourse.getIdInternal());
 
         if (groupingExecutionCourse == null) {
@@ -79,7 +79,7 @@ public class DeleteProjectProposal implements IService {
 
         while (iterGroupPropertiesExecutionCourseList.hasNext()) {
 
-            IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iterGroupPropertiesExecutionCourseList
+            ExportGrouping groupPropertiesExecutionCourseAux = (ExportGrouping) iterGroupPropertiesExecutionCourseList
                     .next();
             if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
                     || groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
@@ -88,8 +88,8 @@ public class DeleteProjectProposal implements IService {
 
                 Iterator iterProfessorship = professorships.iterator();
                 while (iterProfessorship.hasNext()) {
-                    IProfessorship professorship = (IProfessorship) iterProfessorship.next();
-                    ITeacher teacher = professorship.getTeacher();
+                    Professorship professorship = (Professorship) iterProfessorship.next();
+                    Teacher teacher = professorship.getTeacher();
 
                     if (!(teacher.getPerson()).equals(withdrawalPerson)
                             && !group.contains(teacher.getPerson())) {
@@ -103,8 +103,8 @@ public class DeleteProjectProposal implements IService {
 
         Iterator iterProfessorshipsAux = professorshipsAux.iterator();
         while (iterProfessorshipsAux.hasNext()) {
-            IProfessorship professorshipAux = (IProfessorship) iterProfessorshipsAux.next();
-            ITeacher teacherAux = professorshipAux.getTeacher();
+            Professorship professorshipAux = (Professorship) iterProfessorshipsAux.next();
+            Teacher teacherAux = professorshipAux.getTeacher();
             if (!(teacherAux.getPerson()).equals(withdrawalPerson)
                     && !group.contains(teacherAux.getPerson())) {
                 group.add(teacherAux.getPerson());
@@ -112,10 +112,10 @@ public class DeleteProjectProposal implements IService {
         }
 
         // Create Advisory
-        IAdvisory advisory = createDeleteProjectProposalAdvisory(executionCourse, startExecutionCourse,
+        Advisory advisory = createDeleteProjectProposalAdvisory(executionCourse, startExecutionCourse,
                 withdrawalPerson, groupingExecutionCourse, groupProperties);
         for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-            final IPerson person = (IPerson) iterator.next();
+            final Person person = (Person) iterator.next();
             persistentSupport.getIPessoaPersistente().simpleLockWrite(person);
 
             person.getAdvisories().add(advisory);
@@ -125,10 +125,10 @@ public class DeleteProjectProposal implements IService {
         return true;
     }
 
-    private IAdvisory createDeleteProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,
-            IExecutionCourse startExecutionCourse, IPerson withdrawalPerson,
-            IExportGrouping groupPropertiesExecutionCourse, IGrouping grouping) {
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+    private Advisory createDeleteProjectProposalAdvisory(ExecutionCourse goalExecutionCourse,
+            ExecutionCourse startExecutionCourse, Person withdrawalPerson,
+            ExportGrouping groupPropertiesExecutionCourse, Grouping grouping) {
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (grouping.getEnrolmentEndDay() != null) {
             advisory.setExpires(grouping.getEnrolmentEndDay()

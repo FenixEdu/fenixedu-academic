@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -21,8 +21,8 @@ public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
         IPersistentDegreeCurricularPlan {
 
     public List readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
-        List<IDegreeCurricularPlan> result = new ArrayList<IDegreeCurricularPlan>();
-        for (IDegreeCurricularPlan dcp : (List<IDegreeCurricularPlan>) readAll(DegreeCurricularPlan.class)) {
+        List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        for (DegreeCurricularPlan dcp : (List<DegreeCurricularPlan>) readAll(DegreeCurricularPlan.class)) {
             if (dcp.getCurricularStage().equals(curricularStage)) {
                 result.add(dcp);
             }
@@ -31,8 +31,8 @@ public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
     }
 
     public List readFromNewDegreeStructure() throws ExcepcaoPersistencia {
-        List<IDegreeCurricularPlan> result = new ArrayList<IDegreeCurricularPlan>();
-        for (IDegreeCurricularPlan dcp : (List<IDegreeCurricularPlan>) readAll(DegreeCurricularPlan.class)) {
+        List<DegreeCurricularPlan> result = new ArrayList<DegreeCurricularPlan>();
+        for (DegreeCurricularPlan dcp : (List<DegreeCurricularPlan>) readAll(DegreeCurricularPlan.class)) {
             if (!dcp.getCurricularStage().equals(CurricularStage.OLD)) {
                 result.add(dcp);
             }
@@ -42,27 +42,27 @@ public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
     
     public List readByDegreeAndState(Integer degreeId, final DegreeCurricularPlanState state, final CurricularStage curricularStage)
             throws ExcepcaoPersistencia {
-        IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
+        Degree degree = (Degree) readByOID(Degree.class, degreeId);
         return (List) CollectionUtils.select(degree.getDegreeCurricularPlans(), new Predicate() {
             public boolean evaluate(Object o) {
-                IDegreeCurricularPlan dcp = (IDegreeCurricularPlan) o;
+                DegreeCurricularPlan dcp = (DegreeCurricularPlan) o;
                 return dcp.getState().equals(state) && dcp.getCurricularStage().equals(curricularStage);
             }
         });
     }
 
-    public IDegreeCurricularPlan readByNameAndDegree(final String name, Integer degreeId, final CurricularStage curricularStage)
+    public DegreeCurricularPlan readByNameAndDegree(final String name, Integer degreeId, final CurricularStage curricularStage)
         throws ExcepcaoPersistencia {
 
-        IDegree degree = (IDegree)readByOID(Degree.class,degreeId);
+        Degree degree = (Degree)readByOID(Degree.class,degreeId);
         List result = (List)CollectionUtils.select(degree.getDegreeCurricularPlans(),new Predicate () {
                 public boolean evaluate(Object o) {
-                    IDegreeCurricularPlan dcp = (IDegreeCurricularPlan) o;
+                    DegreeCurricularPlan dcp = (DegreeCurricularPlan) o;
                     return dcp.getName().equals(name) && dcp.getCurricularStage().equals(curricularStage);
                 }
             });
         
-        return (IDegreeCurricularPlan) result.get(0);
+        return (DegreeCurricularPlan) result.get(0);
     }
     
     public List readByDegreeTypeAndState(final DegreeType degreeType, final DegreeCurricularPlanState state) throws ExcepcaoPersistencia
@@ -70,7 +70,7 @@ public class DegreeCurricularPlanVO extends VersionedObjectsBase implements
         List degreeCurricularPlans = (List) readByCurricularStage(CurricularStage.OLD);
         return (List)CollectionUtils.select(degreeCurricularPlans,new Predicate () {
                 public boolean evaluate(Object o) {
-                    IDegreeCurricularPlan dcp = (IDegreeCurricularPlan)o; 
+                    DegreeCurricularPlan dcp = (DegreeCurricularPlan)o; 
                     return (dcp.getState().equals(state)) &&
                             (dcp.getDegree().getTipoCurso().equals(degreeType));
                 }

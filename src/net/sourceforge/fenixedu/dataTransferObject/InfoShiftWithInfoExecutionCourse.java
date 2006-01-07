@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Shift;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IShift;
  */
 public class InfoShiftWithInfoExecutionCourse extends InfoShift {
 
-    public void copyFromDomain(IShift shift) {
+    public void copyFromDomain(Shift shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
             setInfoDisciplinaExecucao(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(shift
@@ -20,7 +20,7 @@ public class InfoShiftWithInfoExecutionCourse extends InfoShift {
         }
     }
 
-    public static InfoShift newInfoFromDomain(IShift shift) {
+    public static InfoShift newInfoFromDomain(Shift shift) {
         InfoShiftWithInfoExecutionCourse infoShift = null;
         if (shift != null) {
             infoShift = new InfoShiftWithInfoExecutionCourse();

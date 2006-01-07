@@ -14,15 +14,15 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IContributor;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
+import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.GuideSituation;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -43,8 +43,8 @@ public class CreateGuideFromTransactions implements IService {
     public InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide,
             List transactionsIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-        IGuide guide = DomainFactory.makeGuide();
-        IGuideSituation guideSituation = null;
+        Guide guide = DomainFactory.makeGuide();
+        GuideSituation guideSituation = null;
 
         // Check the Guide Situation
         if (situationOfGuide.equals(GuideState.ANNULLED))
@@ -83,16 +83,16 @@ public class CreateGuideFromTransactions implements IService {
         }
 
         // Get the Execution Degree
-        IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanAndExecutionYear(
                         infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
                         infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
                                 .getSigla(),
                         infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(
                 infoGuide.getInfoContributor().getContributorNumber());
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(
+        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(
                 infoGuide.getInfoPerson().getUsername());
 
         guide.setExecutionDegree(executionDegree);
@@ -103,14 +103,14 @@ public class CreateGuideFromTransactions implements IService {
 
         // Write the new Entries of the Guide
         Iterator iterator = transactionsIDs.iterator();
-        IPaymentTransaction transaction = null;
+        PaymentTransaction transaction = null;
         Integer transactionId = null;
-        IGuideEntry guideEntry = null;
+        GuideEntry guideEntry = null;
         double guideTotal = 0;
 
         while (iterator.hasNext()) {
             transactionId = (Integer) iterator.next();
-            transaction = (IPaymentTransaction) sp.getIPersistentTransaction().readByOID(
+            transaction = (PaymentTransaction) sp.getIPersistentTransaction().readByOID(
                     Transaction.class, transactionId, true);
 
             if (transaction == null) {
@@ -119,9 +119,9 @@ public class CreateGuideFromTransactions implements IService {
 
             guideEntry = DomainFactory.makeGuideEntry();
 
-            if (transaction instanceof IGratuityTransaction) {
+            if (transaction instanceof GratuityTransaction) {
                 guideEntry.setDocumentType(DocumentType.GRATUITY);
-            } else if (transaction instanceof IInsuranceTransaction) {
+            } else if (transaction instanceof InsuranceTransaction) {
                 guideEntry.setDocumentType(DocumentType.INSURANCE);
             }
 

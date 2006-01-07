@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -19,7 +19,7 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
 
         if (!userView.hasRoleType(RoleType.TIME_TABLE_MANAGER)) {
             final Object[] arguments = getServiceCallArguments(request);
-            final IWrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
+            final WrittenEvaluation writtenEvaluation = readWrittenEvaluation(arguments);
 
             if (writtenEvaluation.getAssociatedRoomOccupation().size() > 0) {
                 throw new NotAuthorizedFilterException("written.evaluation.has.alocated.rooms");
@@ -27,11 +27,11 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
         }
     }
 
-    private IWrittenEvaluation readWrittenEvaluation(final Object[] arguments) throws ExcepcaoPersistencia {
+    private WrittenEvaluation readWrittenEvaluation(final Object[] arguments) throws ExcepcaoPersistencia {
         final Integer writtenEvaluationID = getWrittenEvaluationID(arguments);
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-        return (IWrittenEvaluation) persistentObject.readByOID(WrittenEvaluation.class, writtenEvaluationID);
+        return (WrittenEvaluation) persistentObject.readByOID(WrittenEvaluation.class, writtenEvaluationID);
     }
 
     private Integer getWrittenEvaluationID(final Object[] arguments) {

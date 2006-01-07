@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -15,7 +15,7 @@ public class ReadPersonByID implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
 		
-		IPerson person = (IPerson) persistentPerson.readByOID(Person.class, idInternal);
+		Person person = (Person) persistentPerson.readByOID(Person.class, idInternal);
 		
 		InfoPerson infoPerson = null;
 		

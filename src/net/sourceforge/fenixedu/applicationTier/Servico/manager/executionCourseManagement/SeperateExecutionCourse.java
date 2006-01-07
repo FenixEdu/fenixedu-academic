@@ -7,17 +7,17 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,8 +37,8 @@ public class SeperateExecutionCourse implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = sp.getIPersistentObject();
 
-        final IExecutionCourse originExecutionCourse = (IExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, originExecutionCourseOid);
-        IExecutionCourse destinationExecutionCourse = (IExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, destinationExecutionCourseId);
+        final ExecutionCourse originExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, originExecutionCourseOid);
+        ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, destinationExecutionCourseId);
         if (destinationExecutionCourse == null) {
             destinationExecutionCourse = createNewExecutionCourse(persistentObject, originExecutionCourse);
             destinationExecutionCourse.createSite();
@@ -58,21 +58,21 @@ public class SeperateExecutionCourse implements IService {
         associateGroupings(originExecutionCourse, destinationExecutionCourse);
     }
 
-    private void transferCurricularCourses(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse, 
+    private void transferCurricularCourses(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse, 
             final Integer[] curricularCourseIdsToTransfer) {
         for (final Integer curricularCourseID : curricularCourseIdsToTransfer) {
-            final ICurricularCourse curricularCourse = (ICurricularCourse) findDomainObjectByID(
+            final CurricularCourse curricularCourse = (CurricularCourse) findDomainObjectByID(
                     originExecutionCourse.getAssociatedCurricularCourses(), curricularCourseID);
             destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
             originExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
         }
     }
 
-    private void transferAttends(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse) {
-        final List<ICurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
+    private void transferAttends(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
+        final List<CurricularCourse> curricularCourses = destinationExecutionCourse.getAssociatedCurricularCourses();
         for (int i = 0; i < originExecutionCourse.getAttends().size(); i++) {
-            final IAttends attends = originExecutionCourse.getAttends().get(i);
-            final IEnrolment enrolment = attends.getEnrolment();
+            final Attends attends = originExecutionCourse.getAttends().get(i);
+            final Enrolment enrolment = attends.getEnrolment();
             if (enrolment != null && curricularCourses.contains(enrolment.getCurricularCourse())) {
                 attends.setDisciplinaExecucao(destinationExecutionCourse);
                 i--;
@@ -80,16 +80,16 @@ public class SeperateExecutionCourse implements IService {
         }
     }
 
-    private void transferShifts(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse, 
+    private void transferShifts(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse, 
             final Integer[] shiftIdsToTransfer) {
         for (final Integer shiftId : shiftIdsToTransfer) {
-            final IShift shift = (IShift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);
+            final Shift shift = (Shift) findDomainObjectByID(originExecutionCourse.getAssociatedShifts(), shiftId);
             shift.setDisciplinaExecucao(destinationExecutionCourse);
         }
     }
 
-    private IDomainObject findDomainObjectByID(final List domainObjects, final Integer id) {
-        for (final IDomainObject domainObject : (List<IDomainObject>) domainObjects) {
+    private DomainObject findDomainObjectByID(final List domainObjects, final Integer id) {
+        for (final DomainObject domainObject : (List<DomainObject>) domainObjects) {
             if (domainObject.getIdInternal().equals(id)) {
                 return domainObject;
             }
@@ -97,10 +97,10 @@ public class SeperateExecutionCourse implements IService {
         return null;
     }
 
-    private void fixStudentShiftEnrolements(final IExecutionCourse executionCourse) {
-        for (final IShift shift : executionCourse.getAssociatedShifts()) {
+    private void fixStudentShiftEnrolements(final ExecutionCourse executionCourse) {
+        for (final Shift shift : executionCourse.getAssociatedShifts()) {
             for (int i = 0; i < shift.getStudents().size(); i++) {
-                final IStudent student = shift.getStudents().get(i);
+                final Student student = shift.getStudents().get(i);
                 if (!student.attends(executionCourse)) {
                     shift.removeStudents(student);
                 }
@@ -108,9 +108,9 @@ public class SeperateExecutionCourse implements IService {
         }
     }
 
-    private void associateGroupings(final IExecutionCourse originExecutionCourse, final IExecutionCourse destinationExecutionCourse) {
-        for (final IGrouping grouping : originExecutionCourse.getGroupings()) {
-            for (final IStudentGroup studentGroup : grouping.getStudentGroups()) {
+    private void associateGroupings(final ExecutionCourse originExecutionCourse, final ExecutionCourse destinationExecutionCourse) {
+        for (final Grouping grouping : originExecutionCourse.getGroupings()) {
+            for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
                 studentGroup.getAttends().clear();
                 studentGroup.delete();
             }
@@ -118,9 +118,9 @@ public class SeperateExecutionCourse implements IService {
         }
     }
 
-    private IExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,
-            IExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
-        IExecutionCourse destinationExecutionCourse = DomainFactory.makeExecutionCourse();
+    private ExecutionCourse createNewExecutionCourse(IPersistentObject persistentObject,
+            ExecutionCourse originExecutionCourse) throws ExcepcaoPersistencia {
+        ExecutionCourse destinationExecutionCourse = DomainFactory.makeExecutionCourse();
         destinationExecutionCourse.setComment("");
         destinationExecutionCourse.setExecutionPeriod(originExecutionCourse.getExecutionPeriod());
         destinationExecutionCourse.setLabHours(originExecutionCourse.getLabHours());
@@ -129,8 +129,8 @@ public class SeperateExecutionCourse implements IService {
         destinationExecutionCourse.setSigla(originExecutionCourse.getSigla() + System.currentTimeMillis());
 
         for (int i = 0; i < originExecutionCourse.getProfessorships().size(); i++) {
-            IProfessorship professorship = originExecutionCourse.getProfessorships().get(i);
-            IProfessorship newProfessorship = DomainFactory.makeProfessorship();
+            Professorship professorship = originExecutionCourse.getProfessorships().get(i);
+            Professorship newProfessorship = DomainFactory.makeProfessorship();
             newProfessorship.setExecutionCourse(destinationExecutionCourse);
             newProfessorship.setTeacher(professorship.getTeacher());
             newProfessorship.setResponsibleFor(professorship.getResponsibleFor());
@@ -146,7 +146,7 @@ public class SeperateExecutionCourse implements IService {
     }
 
     private String getUniqueExecutionCourseCode(final String executionCourseName,
-            final IExecutionPeriod executionPeriod, final String originalExecutionCourseCode)
+            final ExecutionPeriod executionPeriod, final String originalExecutionCourseCode)
             throws ExcepcaoPersistencia {
         Set executionCourseCodes = getExecutionCourseCodes(executionPeriod);
 
@@ -163,11 +163,11 @@ public class SeperateExecutionCourse implements IService {
         return destinationExecutionCourseCode;
     }
 
-    private Set getExecutionCourseCodes(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    private Set getExecutionCourseCodes(ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         List executionCourses = executionPeriod.getAssociatedExecutionCourses();
         return new HashSet(CollectionUtils.collect(executionCourses, new Transformer() {
             public Object transform(Object arg0) {
-                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                ExecutionCourse executionCourse = (ExecutionCourse) arg0;
                 return executionCourse.getSigla().toUpperCase();
             }
         }));

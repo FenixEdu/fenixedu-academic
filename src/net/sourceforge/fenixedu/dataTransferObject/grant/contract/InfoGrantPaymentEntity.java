@@ -3,17 +3,11 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import java.lang.reflect.Proxy;
-
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantProject;
-
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author pica
@@ -102,19 +96,14 @@ public abstract class InfoGrantPaymentEntity extends InfoObject {
         this.infoResponsibleTeacher = infoResponsibleTeacher;
     }
 
-    public static InfoGrantPaymentEntity newInfoFromDomain(IGrantPaymentEntity grantPaymentEntity) {
+    public static InfoGrantPaymentEntity newInfoFromDomain(GrantPaymentEntity grantPaymentEntity) {
         if (grantPaymentEntity != null) {
-
-            if (grantPaymentEntity instanceof Proxy) {
-                grantPaymentEntity = (IGrantPaymentEntity) ProxyHelper.getRealObject(grantPaymentEntity);
-            }
-
-            if (grantPaymentEntity instanceof IGrantProject) {
+            if (grantPaymentEntity instanceof GrantProject) {
                 return InfoGrantProjectWithTeacherAndCostCenter
-                        .newInfoFromDomain((IGrantProject) grantPaymentEntity);
-            } else if (grantPaymentEntity instanceof IGrantCostCenter) {
+                        .newInfoFromDomain((GrantProject) grantPaymentEntity);
+            } else if (grantPaymentEntity instanceof GrantCostCenter) {
                 return InfoGrantCostCenterWithTeacher
-                        .newInfoFromDomain((IGrantCostCenter) grantPaymentEntity);
+                        .newInfoFromDomain((GrantCostCenter) grantPaymentEntity);
             }
         }
         return null;

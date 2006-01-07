@@ -9,8 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Person;
 
 /**
  * @author João Mota
@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.domain.IPerson;
  */
 public class InfoPersonWithAdvisories extends InfoPerson {
 
-    public void copyFromDomain(IPerson person) {
+    public void copyFromDomain(Person person) {
         super.copyFromDomain(person);
         if (person != null && person.getAdvisories() != null) {
 
             Date currentDate = Calendar.getInstance().getTime();
             List<InfoAdvisory> list = new ArrayList<InfoAdvisory>();                       
-            for (IAdvisory advisory : person.getAdvisories()) {
+            for (Advisory advisory : person.getAdvisories()) {
                 if(advisory.getExpires().after(currentDate)){
                     list.add(InfoAdvisory.newInfoFromDomain(advisory));
                 }
@@ -33,7 +33,7 @@ public class InfoPersonWithAdvisories extends InfoPerson {
         }
     }
 
-    public static InfoPerson newInfoFromDomain(IPerson person) {
+    public static InfoPerson newInfoFromDomain(Person person) {
         InfoPersonWithAdvisories infoPerson = null;
         if (person != null) {
             infoPerson = new InfoPersonWithAdvisories();

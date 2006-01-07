@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,7 +24,7 @@ public class ReadExecutionYear implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
-        IExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
+        ExecutionYear executionYear = executionYearDAO.readExecutionYearByName(year);
 
         if (executionYear != null) {
             return InfoExecutionYear.newInfoFromDomain(executionYear);

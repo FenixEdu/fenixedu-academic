@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEmployeeWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
-import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.IStrategyHorarios;
 import net.sourceforge.fenixedu.domain.IStrategyJustificacoes;
 import net.sourceforge.fenixedu.domain.Justificacao;
@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.domain.ParamJustificacao;
 import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
 import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -146,7 +146,7 @@ public class ExtraWorkSheet implements IService {
 			throws Exception {
 		List infoExtraWorkList = null;
 		List extraWorkList = null;
-		IEmployee employee = null;
+		Employee employee = null;
 		ISuportePersistente sp;
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -169,7 +169,7 @@ public class ExtraWorkSheet implements IService {
 		if (extraWorkList != null && extraWorkList.size() > 0) {
 			infoExtraWorkList = (List) CollectionUtils.collect(extraWorkList, new Transformer() {
 				public Object transform(Object arg0) {
-					IExtraWork extraWork = (IExtraWork) arg0;
+					ExtraWork extraWork = (ExtraWork) arg0;
 					return InfoExtraWork.newInfoFromDomain(extraWork);
 				}
 			});
@@ -208,7 +208,7 @@ public class ExtraWorkSheet implements IService {
 	// extraWork(extraWorkListPerDay, calendario, persistentExtraWork);
 	private void extraWork(List extraWorkListPerDay, Calendar calendario,
 			IPersistentExtraWork persistentExtraWork) throws Exception {
-		IExtraWork extraWork = new ExtraWork();
+		ExtraWork extraWork = new ExtraWork();
 		extraWork.setDay(calendario.getTime());
 		if (((Long) _listaSaldos.get(0)).longValue() > 0) {
 			extraWork.setBeginHour(calculateBeginExtraWork());
@@ -222,7 +222,7 @@ public class ExtraWorkSheet implements IService {
 			extraWork.setMealSubsidy(new Integer(((Long) _listaSaldos.get(12)).intValue()));
 
 			// verify if already exists authorization
-			IExtraWork extraWorkAuthorization = persistentExtraWork.readExtraWorkByDay(extraWork
+			ExtraWork extraWorkAuthorization = persistentExtraWork.readExtraWorkByDay(extraWork
 					.getDay());
 			if (extraWorkAuthorization != null) {
 				extraWork.setIdInternal(extraWorkAuthorization.getIdInternal());

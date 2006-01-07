@@ -6,10 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -33,18 +33,18 @@ public class UnEnrollStudentInGroup implements IService {
         IPersistentStudentGroup persistentStudentGroup = persistentSuport.getIPersistentStudentGroup();
         IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
 
-        IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
                 StudentGroup.class, studentGroupCode);
 
         if (studentGroup == null) {
             throw new InvalidSituationServiceException();
         }
 
-        IStudent student = persistentStudent.readByUsername(userName);
+        Student student = persistentStudent.readByUsername(userName);
 
-        IGrouping groupProperties = studentGroup.getGrouping();
+        Grouping groupProperties = studentGroup.getGrouping();
 
-        IAttends attend = groupProperties.getStudentAttend(student);
+        Attends attend = groupProperties.getStudentAttend(student);
 
         if (attend == null) {
             throw new NotAuthorizedException();

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
@@ -24,17 +24,17 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class GratuitySituationVO extends VersionedObjectsBase implements IPersistentGratuitySituation {
 
-	public IGratuitySituation readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+	public GratuitySituation readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
 			final Integer studentCurricularPlanID, final Integer gratuityValuesID)
 			throws ExcepcaoPersistencia {
 
-		final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
+		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readByOID(
 				StudentCurricularPlan.class, studentCurricularPlanID);
 
-		final List<IGratuitySituation> gratuitySituationsFromCurricularPlan = studentCurricularPlan
+		final List<GratuitySituation> gratuitySituationsFromCurricularPlan = studentCurricularPlan
 				.getGratuitySituations();
 
-		for (IGratuitySituation gratuitySituation : gratuitySituationsFromCurricularPlan) {
+		for (GratuitySituation gratuitySituation : gratuitySituationsFromCurricularPlan) {
 			if (gratuitySituation.getGratuityValues().getIdInternal().equals(gratuityValuesID)) {
 				return gratuitySituation;
 			}
@@ -46,33 +46,33 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 	public List readGratuitySituationsByDegreeCurricularPlan(final Integer degreeCurricularPlanID)
 			throws ExcepcaoPersistencia {
 
-		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
 				DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-		final List<IStudentCurricularPlan> studentCurricularPlans = degreeCurricularPlan
+		final List<StudentCurricularPlan> studentCurricularPlans = degreeCurricularPlan
 				.getStudentCurricularPlans();
-		final List<IGratuitySituation> result = new ArrayList();
+		final List<GratuitySituation> result = new ArrayList();
 
-		for (final IStudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+		for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 			result.addAll(studentCurricularPlan.getGratuitySituations());
 		}
 
 		return result;
 	}
 
-	public IGratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
+	public GratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
 			final Integer executionDegreeID, final Integer studentID) throws ExcepcaoPersistencia {
 
-		final List<IStudentCurricularPlan> studentCurricularPlans = ((IStudent) readByOID(Student.class,
+		final List<StudentCurricularPlan> studentCurricularPlans = ((Student) readByOID(Student.class,
 				studentID)).getStudentCurricularPlans();
-		for (final IStudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
-			List<IGratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+		for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+			List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
             
             if(gratuitySituations == null){
                 continue;
             }
             
-			for (final IGratuitySituation gratuitySituation : gratuitySituations) {
+			for (final GratuitySituation gratuitySituation : gratuitySituations) {
 				if (gratuitySituation.getGratuityValues().getExecutionDegree().getIdInternal().equals(
 						executionDegreeID)) {
 					return gratuitySituation;
@@ -82,19 +82,19 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 		return null;
 	}
 
-	public IGratuitySituation readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
+	public GratuitySituation readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
 			final Integer studentCurricularPlanID, final Integer gratuityValuesID,
 			GratuitySituationType gratuitySituationType) throws ExcepcaoPersistencia {
 
-		final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) readByOID(
+		final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) readByOID(
 				StudentCurricularPlan.class, studentCurricularPlanID);
 
-		final List<IGratuitySituation> gratuitySituationsFromCurricularPlan = studentCurricularPlan
+		final List<GratuitySituation> gratuitySituationsFromCurricularPlan = studentCurricularPlan
 				.getGratuitySituations();
 
 		if (gratuitySituationType != null) {
 
-			for (final IGratuitySituation gratuitySituation : gratuitySituationsFromCurricularPlan) {
+			for (final GratuitySituation gratuitySituation : gratuitySituationsFromCurricularPlan) {
 				if (gratuitySituation.getGratuityValues().getIdInternal().equals(gratuityValuesID)) {
 					switch (gratuitySituationType) {
 
@@ -119,7 +119,7 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 				}
 			}
 		} else {
-			for (final IGratuitySituation gratuitySituation : gratuitySituationsFromCurricularPlan) {
+			for (final GratuitySituation gratuitySituation : gratuitySituationsFromCurricularPlan) {
 				if (gratuitySituation.getGratuityValues().getIdInternal().equals(gratuityValuesID)) {
 					return gratuitySituation;
 				}
@@ -131,7 +131,7 @@ public class GratuitySituationVO extends VersionedObjectsBase implements IPersis
 
 	public List readGratuitySituatuionListByStudentCurricularPlan(Integer studentCurricularPlanID)
 			throws ExcepcaoPersistencia {
-		return ((IStudentCurricularPlan) readByOID(StudentCurricularPlan.class, studentCurricularPlanID))
+		return ((StudentCurricularPlan) readByOID(StudentCurricularPlan.class, studentCurricularPlanID))
 				.getGratuitySituations();
 	}
 }

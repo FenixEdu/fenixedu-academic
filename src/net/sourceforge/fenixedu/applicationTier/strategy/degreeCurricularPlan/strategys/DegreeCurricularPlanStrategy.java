@@ -4,11 +4,11 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IEnrolmentInExtraCurricularCourse;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,17 +23,17 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 
 public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrategy {
 
-    private IDegreeCurricularPlan degreeCurricularPlan = null;
+    private DegreeCurricularPlan degreeCurricularPlan = null;
 
-    public DegreeCurricularPlanStrategy(IDegreeCurricularPlan degreeCurricularPlan) {
+    public DegreeCurricularPlanStrategy(DegreeCurricularPlan degreeCurricularPlan) {
         this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
-    public IDegreeCurricularPlan getDegreeCurricularPlan() {
+    public DegreeCurricularPlan getDegreeCurricularPlan() {
         return degreeCurricularPlan;
     }
 
-    public void setDegreeCurricularPlan(IDegreeCurricularPlan degreeCurricularPlan) {
+    public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
         this.degreeCurricularPlan = degreeCurricularPlan;
     }
 
@@ -68,19 +68,19 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
 
     }
 
-    public Double calculateStudentRegularAverage(IStudentCurricularPlan studentCurricularPlan)
+    public Double calculateStudentRegularAverage(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
         float marks = 0;
         int numberOfCourses = 0;
 
-        for (IEnrolment enrolment : studentCurricularPlan.getEnrolments()) {
+        for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.P_TYPE_COURSE))) {
-                if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
+                if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
 
-                    IEnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
+                    EnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
 
                     try {
                         Integer enrolmentMark = Integer.valueOf(evaluation.getGrade());
@@ -104,19 +104,19 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
         return NumberUtils.formatNumber(new Double(marks / numberOfCourses), 1);
     }
 
-    public Double calculateStudentWeightedAverage(IStudentCurricularPlan studentCurricularPlan)
+    public Double calculateStudentWeightedAverage(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia {
         float marks = 0;
         float numberOfWeigths = 0;
 
-        for (IEnrolment enrolment : studentCurricularPlan.getEnrolments()) {
+        for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
 
             if ((enrolment.getEnrollmentState().equals(EnrollmentState.APROVED))
                     && (!enrolment.getCurricularCourse().getType().equals(
                             CurricularCourseType.P_TYPE_COURSE))) {
-                if (!(enrolment instanceof IEnrolmentInExtraCurricularCourse)) {
+                if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
 
-                    IEnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
+                    EnrolmentEvaluation evaluation = Collections.max(enrolment.getEvaluations());
 
                     try {
                         int enrolmentMark = Integer.valueOf(evaluation.getGrade());
@@ -141,7 +141,7 @@ public class DegreeCurricularPlanStrategy implements IDegreeCurricularPlanStrate
         return NumberUtils.formatNumber(new Double(marks / numberOfWeigths), 1);
     }
 
-    public void calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan,
+    public void calculateStudentAverage(StudentCurricularPlan studentCurricularPlan,
             InfoFinalResult infoFinalResult) throws ExcepcaoPersistencia {
 
         // Degrees that use the Mixed Average (Average between Simple and

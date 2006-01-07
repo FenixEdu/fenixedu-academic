@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,7 +27,7 @@ public class EditDegreeCurricularPlan implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IDegreeCurricularPlan dcpToEdit = (IDegreeCurricularPlan) persistentSupport
+        final DegreeCurricularPlan dcpToEdit = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         infoDcp.getIdInternal());
         if (dcpToEdit == null) {
@@ -35,16 +35,16 @@ public class EditDegreeCurricularPlan implements IService {
         }
 
         // assert unique pair name/degree
-        final List<IDegreeCurricularPlan> dcps = (List<IDegreeCurricularPlan>) persistentSupport
+        final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
-        for (IDegreeCurricularPlan dcp : dcps) {
+        for (DegreeCurricularPlan dcp : dcps) {
             if (dcp.getDegree().getIdInternal().equals(infoDcp.getInfoDegree().getIdInternal())
                     && dcp.getName().equalsIgnoreCase(infoDcp.getName())) {
                 throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
             }
         }
 
-        final IDegree degree = dcpToEdit.getDegree();
+        final Degree degree = dcpToEdit.getDegree();
         if (degree == null) {
             throw new FenixServiceException("message.nonExistingDegree");
         }

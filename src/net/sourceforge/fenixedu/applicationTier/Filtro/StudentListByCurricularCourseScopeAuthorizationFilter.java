@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
@@ -78,13 +78,13 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
 
         Integer curricularCourseScopeID = (Integer) arguments[1];
 
-        ICurricularCourseScope curricularCourseScope = null;
+        CurricularCourseScope curricularCourseScope = null;
 
         // Read The DegreeCurricularPlan
         try {
             IPersistentCurricularCourseScope persistentCurricularCourseScope = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCurricularCourseScope();
 
-            curricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOID(
+            curricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope.readByOID(
                     CurricularCourseScope.class, curricularCourseScopeID);
         } catch (Exception e) {
             return false;
@@ -123,20 +123,20 @@ public class StudentListByCurricularCourseScopeAuthorizationFilter extends Filtr
                 // ALWAYS the same
                 //modified by Tânia Pousão
                 List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCoordinator()
-                        .readCoordinatorsByExecutionDegree(((IExecutionDegree) executionDegrees.get(0)).getIdInternal());
+                        .readCoordinatorsByExecutionDegree(((ExecutionDegree) executionDegrees.get(0)).getIdInternal());
                 if (coodinatorsList == null) {
                     return false;
                 }
                 ListIterator listIterator = coodinatorsList.listIterator();
                 while (listIterator.hasNext()) {
-                    ICoordinator coordinator = (ICoordinator) listIterator.next();
+                    Coordinator coordinator = (Coordinator) listIterator.next();
 
                     if (id.getUtilizador().equals(coordinator.getTeacher().getPerson().getUsername())) {
                         return true;
                     }
                 }
 
-                //                teacher = ((IExecutionDegree)
+                //                teacher = ((ExecutionDegree)
                 // executionDegrees.get(0)).getCoordinator();
                 //
                 //                if (teacher == null)

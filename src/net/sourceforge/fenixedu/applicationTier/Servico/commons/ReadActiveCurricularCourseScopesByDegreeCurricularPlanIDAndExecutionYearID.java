@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,7 +23,7 @@ public class ReadActiveCurricularCourseScopesByDegreeCurricularPlanIDAndExecutio
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+        ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
                 ExecutionYear.class, executionYearID);
 
         return sp.getIPersistentCurricularCourseScope()

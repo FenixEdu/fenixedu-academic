@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
-import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
+import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
+import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -37,18 +37,18 @@ public class InfoSeminaryWithEquivalencies extends InfoSeminary {
         equivalencies = list;
     }
 
-    public void copyFromDomain(ISeminary seminary) {
+    public void copyFromDomain(Seminary seminary) {
         super.copyFromDomain(seminary);
         if (seminary != null) {
             for (Iterator iter = seminary.getEquivalenciesIterator(); iter.hasNext();) {
                 this.equivalencies = new LinkedList();
-                this.equivalencies.add((ICourseEquivalency)iter.next());
+                this.equivalencies.add((CourseEquivalency)iter.next());
                 
             }
         }
     }
 
-    public static InfoSeminaryWithEquivalencies newInfoFromDomain(ISeminary seminary) {
+    public static InfoSeminaryWithEquivalencies newInfoFromDomain(Seminary seminary) {
         InfoSeminaryWithEquivalencies infoSeminary = null;
         if (seminary != null) {
             infoSeminary = new InfoSeminaryWithEquivalencies();

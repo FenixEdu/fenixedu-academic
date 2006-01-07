@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.ShiftType;
 /**
  * @author João Fialho & Rita Ferreira
@@ -58,11 +58,11 @@ public class InfoTeacherWithRemainingClassTypes extends InfoTeacher {
 	public InfoTeacherWithRemainingClassTypes() {
 	}
 
-	public void copyFromDomain(ITeacher teacher) {
+	public void copyFromDomain(Teacher teacher) {
 		super.copyFromDomain(teacher);
 	}
 	
-    public static InfoTeacherWithRemainingClassTypes newInfoFromDomain(ITeacher teacher) {
+    public static InfoTeacherWithRemainingClassTypes newInfoFromDomain(Teacher teacher) {
         InfoTeacherWithRemainingClassTypes infoTeacher = null;
         if (teacher != null) {
             infoTeacher = new InfoTeacherWithRemainingClassTypes();

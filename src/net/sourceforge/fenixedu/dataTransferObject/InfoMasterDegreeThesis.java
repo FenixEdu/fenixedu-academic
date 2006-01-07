@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -43,7 +43,7 @@ public class InfoMasterDegreeThesis extends InfoObject {
         return result;
     }
 
-    public static InfoMasterDegreeThesis newInfoFromDomain(IMasterDegreeThesis masterDegreeThesis) {
+    public static InfoMasterDegreeThesis newInfoFromDomain(MasterDegreeThesis masterDegreeThesis) {
         InfoMasterDegreeThesis infoMasterDegreeThesis = null;
         if (masterDegreeThesis != null) {
             infoMasterDegreeThesis = new InfoMasterDegreeThesis();
@@ -52,7 +52,7 @@ public class InfoMasterDegreeThesis extends InfoObject {
         return infoMasterDegreeThesis;
     }
 
-    public void copyFromDomain(IMasterDegreeThesis masterDegreeThesis) {
+    public void copyFromDomain(MasterDegreeThesis masterDegreeThesis) {
         super.copyFromDomain(masterDegreeThesis);
         if (masterDegreeThesis != null) {
             setInfoStudentCurricularPlan(InfoStudentCurricularPlanWithInfoStudentAndDegree

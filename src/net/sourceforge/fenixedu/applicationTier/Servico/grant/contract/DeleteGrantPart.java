@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,9 +36,9 @@ public class DeleteGrantPart extends DeleteDomainObjectService {
     }
 
     /* (non-Javadoc)
-	 * @see net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService#deleteDomainObject(net.sourceforge.fenixedu.domain.IDomainObject)
+	 * @see net.sourceforge.fenixedu.applicationTier.Servico.framework.DeleteDomainObjectService#deleteDomainObject(net.sourceforge.fenixedu.domain.DomainObject)
 	 */
-	protected void deleteDomainObject(IDomainObject domainObject) {
+	protected void deleteDomainObject(DomainObject domainObject) {
 		try{
 	      ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 	      IPersistentObject persistentObject = getIPersistentObject(sp);

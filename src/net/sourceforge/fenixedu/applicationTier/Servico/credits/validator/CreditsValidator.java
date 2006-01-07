@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -106,12 +106,12 @@ public abstract class CreditsValidator {
      * @throws ExcepcaoPersistencia 
      */
     public static void validatePeriod(Integer teacherId, Integer executionPeriodId,
-            IShiftProfessorship shiftProfessorship) throws OverlappingPeriodException,
+            ShiftProfessorship shiftProfessorship) throws OverlappingPeriodException,
             FenixServiceException, ExcepcaoPersistencia {
         if (shiftProfessorship.getPercentage().doubleValue() == 100) {
             Iterator iterator = shiftProfessorship.getShift().getAssociatedLessons().iterator();
             while (iterator.hasNext()) {
-                ILesson lesson = (ILesson) iterator.next();
+                Lesson lesson = (Lesson) iterator.next();
                 validatePeriod(teacherId, executionPeriodId, lesson.getDiaSemana(), new Date(lesson
                         .getInicio().getTimeInMillis()), new Date(lesson.getFim().getTimeInMillis()),
                         PeriodType.LESSON_PERIOD);

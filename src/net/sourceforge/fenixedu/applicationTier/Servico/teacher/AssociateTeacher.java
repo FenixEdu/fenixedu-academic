@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -38,12 +38,12 @@ public class AssociateTeacher implements IService {
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-            ITeacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
+            Teacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
             if (iTeacher == null) {
                 throw new InvalidArgumentsServiceException();
             }
 
-            IExecutionCourse iExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            ExecutionCourse iExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, infoExecutionCourseCode);
 
             if (lectures(iTeacher, iExecutionCourse.getProfessorships())) {
@@ -58,11 +58,11 @@ public class AssociateTeacher implements IService {
         return true;
     }
 
-    protected boolean lectures(final ITeacher teacher, final List professorships) {
+    protected boolean lectures(final Teacher teacher, final List professorships) {
         return CollectionUtils.find(professorships, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IProfessorship professorship = (IProfessorship) arg0;
+                Professorship professorship = (Professorship) arg0;
                 return professorship.getTeacher().getIdInternal().equals(teacher.getIdInternal());
             }}) != null;
     }

@@ -9,11 +9,11 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan";
@@ -40,7 +40,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             return;
         }
 
-        final IDegreeCurricularPlan dcp = (IDegreeCurricularPlan) this.getAttributes().get("dcp");
+        final DegreeCurricularPlan dcp = (DegreeCurricularPlan) this.getAttributes().get("dcp");
         if (!dcp.getCurricularStage().equals(CurricularStage.OLD)) {
             final Boolean onlyStructure = this.getBooleanAttribute("onlyStructure");
             this.toEdit = this.getBooleanAttribute("toEdit");
@@ -66,7 +66,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
     }
 
-    private void encodeByYears(FacesContext facesContext, IDegreeCurricularPlan dcp) throws IOException {
+    private void encodeByYears(FacesContext facesContext, DegreeCurricularPlan dcp) throws IOException {
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
         
@@ -79,9 +79,9 @@ public class UIDegreeCurricularPlan extends UIInput {
             maxYears = 5;
         }
         
-        List<ICurricularCourse> dcpCurricularCourses = dcp.getDcpCurricularCourses();
+        List<CurricularCourse> dcpCurricularCourses = dcp.getDcpCurricularCourses();
         for (int year = 1; year <= maxYears; year++) {
-            List<ICurricularCourse> anualCurricularCourses = collectCurrentYearCurricularCoursesBySemester(year, 0, dcpCurricularCourses);
+            List<CurricularCourse> anualCurricularCourses = collectCurrentYearCurricularCoursesBySemester(year, 0, dcpCurricularCourses);
             if (!anualCurricularCourses.isEmpty()) {
                 encodeSemesterTable(year, 0, anualCurricularCourses);    
             }
@@ -91,11 +91,11 @@ public class UIDegreeCurricularPlan extends UIInput {
         
     }
 
-    private List<ICurricularCourse> collectCurrentYearCurricularCoursesBySemester(int year, int semester, List<ICurricularCourse> dcpCurricularCourses) {
-        List<ICurricularCourse> currentYearCurricularCoursesBySemester = new ArrayList<ICurricularCourse>();
+    private List<CurricularCourse> collectCurrentYearCurricularCoursesBySemester(int year, int semester, List<CurricularCourse> dcpCurricularCourses) {
+        List<CurricularCourse> currentYearCurricularCoursesBySemester = new ArrayList<CurricularCourse>();
         
-        for (ICurricularCourse cc : dcpCurricularCourses) {
-            for (IContext ccContext : cc.getDegreeModuleContexts()) {
+        for (CurricularCourse cc : dcpCurricularCourses) {
+            for (Context ccContext : cc.getDegreeModuleContexts()) {
                 if (ccContext.getCurricularSemester().getCurricularYear().getYear().equals(year)) {
                     if (ccContext.getCurricularSemester().getSemester().equals(semester)) {
                         currentYearCurricularCoursesBySemester.add(cc);    
@@ -106,7 +106,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         return currentYearCurricularCoursesBySemester;
     }
 
-    private void encodeSemesterTable(int year, int semester, List<ICurricularCourse> currentSemesterCurricularCourses) throws IOException {
+    private void encodeSemesterTable(int year, int semester, List<CurricularCourse> currentSemesterCurricularCourses) throws IOException {
         writer.startElement("table", this);
         writer.writeAttribute("class", "style2", null);
         encodeHeader(year, semester);
@@ -155,11 +155,11 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.endElement("th");
     }
     
-    private double encodeCurricularCourses(int semester, List<ICurricularCourse> currentYearCurricularCourses) throws IOException {
+    private double encodeCurricularCourses(int semester, List<CurricularCourse> currentYearCurricularCourses) throws IOException {
         double totalCredits = 0.0;
         
-        for (ICurricularCourse cc : currentYearCurricularCourses) {
-            for (IContext ccContext : cc.getDegreeModuleContexts()) {
+        for (CurricularCourse cc : currentYearCurricularCourses) {
+            for (Context ccContext : cc.getDegreeModuleContexts()) {
                 if (ccContext.getCurricularSemester().getSemester().equals(semester)) {
                     totalCredits += cc.computeEctsCredits();
                     new UICurricularCourse(cc, this.toEdit, ccContext).encodeBegin(facesContext);   

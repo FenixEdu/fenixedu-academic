@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.EditDomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,14 +37,14 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
             IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             boolean isNew = (infoExternalActivity.getIdInternal() == null)
                     || (infoExternalActivity.getIdInternal().equals(new Integer(0)));
             if (isNew)
                 return true;
 
-            IExternalActivity externalActivity = (IExternalActivity) persistentExternalActivity
+            ExternalActivity externalActivity = (ExternalActivity) persistentExternalActivity
                     .readByOID(ExternalActivity.class, infoExternalActivity.getIdInternal());
 
             return externalActivity.getTeacher().equals(teacher);

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -200,7 +200,7 @@ public class InfoWebSiteSection extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(final IWebSiteSection webSiteSection) {
+    public void copyFromDomain(final WebSiteSection webSiteSection) {
         super.copyFromDomain(webSiteSection);
         if (webSiteSection != null) {
             setExcerptSize(webSiteSection.getExcerptSize());
@@ -214,7 +214,7 @@ public class InfoWebSiteSection extends InfoObject {
         }
     }
 
-    public static InfoWebSiteSection newInfoFromDomain(final IWebSiteSection webSiteSection) {
+    public static InfoWebSiteSection newInfoFromDomain(final WebSiteSection webSiteSection) {
         if (webSiteSection != null) {
             final InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
             infoWebSiteSection.copyFromDomain(webSiteSection);

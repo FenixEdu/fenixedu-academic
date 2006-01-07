@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,15 +24,15 @@ public class UpdateAndReadGratuitySituationsByStudentNumber implements IService 
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        List<IStudentCurricularPlan> studentCurricularPlansList = sp
+        List<StudentCurricularPlan> studentCurricularPlansList = sp
                 .getIStudentCurricularPlanPersistente().readAllFromStudent(studentNumber.intValue());
 
         List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();
 
-        for (IStudentCurricularPlan studentCurricularPlan : studentCurricularPlansList) {
+        for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlansList) {
 
-            List<IGratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
-            for (IGratuitySituation gratuitySituation : gratuitySituations) {
+            List<GratuitySituation> gratuitySituations = studentCurricularPlan.getGratuitySituations();
+            for (GratuitySituation gratuitySituation : gratuitySituations) {
                 gratuitySituation.updateValues();
                 
                 infoGratuitySituationsList.add(InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree

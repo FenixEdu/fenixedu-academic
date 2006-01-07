@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -33,7 +33,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
 
         // Read The ExecutionCourse
 
-        IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+        ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, executionCourseID);
 
         // For all associated Curricular Courses read the Scopes
@@ -41,9 +41,9 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
         infoCurricularCourses = new ArrayList();
         Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
         while (iterator.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+            CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
 
-            IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
                     .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
                             curricularCourse.getIdInternal(), executionPeriod.getBeginDate(),
@@ -58,7 +58,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
 
                 infoCurricularCourse.getInfoScopes().add(
                         InfoCurricularCourseScopeWithBranchAndSemesterAndYear
-                                .newInfoFromDomain((ICurricularCourseScope) scopeIterator.next()));
+                                .newInfoFromDomain((CurricularCourseScope) scopeIterator.next()));
             }
             infoCurricularCourses.add(infoCurricularCourse);
         }

@@ -36,24 +36,24 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseInformat
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationInformation;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurriculum;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
@@ -87,7 +87,7 @@ public class ReadCourseInformation implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
 
         InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();
@@ -99,7 +99,7 @@ public class ReadCourseInformation implements IService {
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
         IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
-        IEvaluationMethod evaluationMethod = persistentEvaluationMethod
+        EvaluationMethod evaluationMethod = persistentEvaluationMethod
                 .readByIdExecutionCourse(executionCourse.getIdInternal());
         if (evaluationMethod == null) {
             InfoEvaluationMethod infoEvaluationMethod = new InfoEvaluationMethod();
@@ -144,7 +144,7 @@ public class ReadCourseInformation implements IService {
         infoSiteCourseInformation.setNumberOfLabLessons(getNumberOfLessons(infoLessons,
                 ShiftType.LABORATORIAL.name(), sp));
         IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
-        ICourseReport courseReport = persistentCourseReport
+        CourseReport courseReport = persistentCourseReport
                 .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
 
         if (courseReport == null) {
@@ -161,7 +161,7 @@ public class ReadCourseInformation implements IService {
         infoSiteCourseInformation.setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
 
         IPersistentSite persistentSite = sp.getIPersistentSite();
-        ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
+        Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
 
         siteView.setComponent(infoSiteCourseInformation);
         ISiteComponent commonComponent = new InfoSiteCommon();
@@ -174,10 +174,10 @@ public class ReadCourseInformation implements IService {
     }
 
     private List removeDuplicates(List responsiblesFor) {
-        List<IProfessorship> result = new ArrayList<IProfessorship>();
+        List<Professorship> result = new ArrayList<Professorship>();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
-            IProfessorship responsibleFor = (IProfessorship) iter.next();
+            Professorship responsibleFor = (Professorship) iter.next();
             if (!result.contains(responsibleFor))
                 result.add(responsibleFor);
         }
@@ -190,12 +190,12 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationInformation(IExecutionPeriod executionPeriod,
+    private List getInfoSiteEvaluationInformation(ExecutionPeriod executionPeriod,
             List curricularCourses, ISuportePersistente sp) throws ExcepcaoPersistencia {
         List infoSiteEvalutationInformations = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
             List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
@@ -226,13 +226,13 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoSiteEvaluationsHistory(final IExecutionPeriod executionPeriodToTest,
-            ICurricularCourse curricularCourse, ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private List getInfoSiteEvaluationsHistory(final ExecutionPeriod executionPeriodToTest,
+            CurricularCourse curricularCourse, ISuportePersistente sp) throws ExcepcaoPersistencia {
 
         List infoSiteEvaluationsHistory = new ArrayList();
 
-        SortedSet<IExecutionPeriod> executionPeriods = new TreeSet(new Comparator<IExecutionPeriod>() {
-            public int compare(IExecutionPeriod executionPeriod1, IExecutionPeriod executionPeriod2) {
+        SortedSet<ExecutionPeriod> executionPeriods = new TreeSet(new Comparator<ExecutionPeriod>() {
+            public int compare(ExecutionPeriod executionPeriod1, ExecutionPeriod executionPeriod2) {
                 return executionPeriod1.getExecutionYear().getYear().compareTo(
                         executionPeriod2.getExecutionYear().getYear());
             }
@@ -240,8 +240,8 @@ public class ReadCourseInformation implements IService {
 
         for (Iterator executionCourseIter = curricularCourse.getAssociatedExecutionCourses().iterator(); executionCourseIter
                 .hasNext();) {
-            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseIter.next();
-            IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+            ExecutionCourse executionCourse = (ExecutionCourse) executionCourseIter.next();
+            ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 
             // filter the executionPeriods by semester;
             // also, information regarding execution years after the course's
@@ -254,7 +254,7 @@ public class ReadCourseInformation implements IService {
 
         Iterator iter = executionPeriods.iterator();
         while (iter.hasNext()) {
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
 
@@ -279,7 +279,7 @@ public class ReadCourseInformation implements IService {
         int approved = 0;
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iter.next();
+            Enrolment enrolment = (Enrolment) iter.next();
             EnrollmentState enrollmentState = enrolment.getEnrollmentState();
             if (enrollmentState.equals(EnrollmentState.APROVED)) {
                 approved++;
@@ -297,7 +297,7 @@ public class ReadCourseInformation implements IService {
         int evaluated = 0;
         Iterator iter = enrolments.iterator();
         while (iter.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iter.next();
+            Enrolment enrolment = (Enrolment) iter.next();
             EnrollmentState enrollmentState = enrolment.getEnrollmentState();
             if (enrollmentState.equals(EnrollmentState.APROVED)
                     || enrollmentState.equals(EnrollmentState.NOT_APROVED)) {
@@ -312,7 +312,7 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getEnrolled(IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse,
+    private List getEnrolled(ExecutionPeriod executionPeriod, CurricularCourse curricularCourse,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
         List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse
@@ -332,9 +332,9 @@ public class ReadCourseInformation implements IService {
         responsiblesFor = removeDuplicates(responsiblesFor);
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
-            IProfessorship responsibleFor = (IProfessorship) iter.next();
-            ITeacher teacher = responsibleFor.getTeacher();
-            IDepartment department = teacher.getCurrentWorkingDepartment();
+            Professorship responsibleFor = (Professorship) iter.next();
+            Teacher teacher = responsibleFor.getTeacher();
+            Department department = teacher.getCurrentWorkingDepartment();
 
             infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
         }
@@ -364,15 +364,15 @@ public class ReadCourseInformation implements IService {
         if (lessonsOfType != null && !lessonsOfType.isEmpty()) {
 
             Iterator iter = lessonsOfType.iterator();
-            IShift shift = null;
+            Shift shift = null;
 
             List temp = new ArrayList();
             while (iter.hasNext()) {
                 // List shifts;
-                // IShift shift2;
+                // Shift shift2;
 
                 InfoLesson infoLesson = (InfoLesson) iter.next();
-                ILesson lesson = (ILesson) persistentLesson.readByOID(Lesson.class, infoLesson
+                Lesson lesson = (Lesson) persistentLesson.readByOID(Lesson.class, infoLesson
                         .getIdInternal());
 
                 // shifts = persistentShift.readByLesson(lesson);
@@ -381,8 +381,8 @@ public class ReadCourseInformation implements IService {
                 // if (shifts != null && !shifts.isEmpty()) {
                 if (shift != null) {
 
-                    // IShift aux = (IShift) shifts.get(0);
-                    // IShift aux = (IShift) shift2;
+                    // Shift aux = (Shift) shifts.get(0);
+                    // Shift aux = (Shift) shift2;
                     /*
                      * if (shift == null) { //shift = aux; shift = shift2; } if
                      * (shift == aux) {
@@ -448,7 +448,7 @@ public class ReadCourseInformation implements IService {
      * @param sp
      * @return
      */
-    private List getInfoBibliographicReferences(IExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoBibliographicReferences(ExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentBibliographicReference persistentBibliographicReference = sp
                 .getIPersistentBibliographicReference();
@@ -458,7 +458,7 @@ public class ReadCourseInformation implements IService {
         List infoBibliographicReferences = new ArrayList();
         Iterator iter = bibliographicReferences.iterator();
         while (iter.hasNext()) {
-            IBibliographicReference bibliographicReference = (IBibliographicReference) iter.next();
+            BibliographicReference bibliographicReference = (BibliographicReference) iter.next();
 
             infoBibliographicReferences.add(InfoBibliographicReference
                     .newInfoFromDomain(bibliographicReference));
@@ -466,7 +466,7 @@ public class ReadCourseInformation implements IService {
         return infoBibliographicReferences;
     }
 
-    private List getInfoLecturingTeachers(IExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoLecturingTeachers(ExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse
@@ -475,8 +475,8 @@ public class ReadCourseInformation implements IService {
         List infoLecturingTeachers = new ArrayList();
         Iterator iter = professorShips.iterator();
         while (iter.hasNext()) {
-            IProfessorship professorship = (IProfessorship) iter.next();
-            ITeacher teacher = professorship.getTeacher();
+            Professorship professorship = (Professorship) iter.next();
+            Teacher teacher = professorship.getTeacher();
 
             infoLecturingTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
@@ -490,13 +490,13 @@ public class ReadCourseInformation implements IService {
         List infoCurriculums = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
             List infoScopes = getInfoScopes(curricularCourse.getScopes(), sp);
             infoCurricularCourse.setInfoScopes(infoScopes);
-            ICurriculum curriculum = persistentCurriculum
+            Curriculum curriculum = persistentCurriculum
                     .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
             InfoCurriculum infoCurriculum = null;
             if (curriculum == null) {
@@ -521,8 +521,8 @@ public class ReadCourseInformation implements IService {
         List infoResponsibleTeachers = new ArrayList();
         Iterator iter = responsiblesFor.iterator();
         while (iter.hasNext()) {
-            IProfessorship responsibleFor = (IProfessorship) iter.next();
-            ITeacher teacher = responsibleFor.getTeacher();
+            Professorship responsibleFor = (Professorship) iter.next();
+            Teacher teacher = responsibleFor.getTeacher();
 
             infoResponsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
@@ -538,7 +538,7 @@ public class ReadCourseInformation implements IService {
         List infoCurricularCourses = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+            CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
             List curricularCourseScopes = curricularCourse.getScopes();
             List infoScopes = getInfoScopes(curricularCourseScopes, sp);
@@ -559,7 +559,7 @@ public class ReadCourseInformation implements IService {
         List infoScopes = new ArrayList();
         Iterator iter = scopes.iterator();
         while (iter.hasNext()) {
-            ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) iter.next();
+            CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iter.next();
 
             InfoCurricularCourseScope infoCurricularCourseScope = InfoCurricularCourseScopeWithBranchAndSemesterAndYear
                     .newInfoFromDomain(curricularCourseScope);
@@ -574,13 +574,13 @@ public class ReadCourseInformation implements IService {
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private List getInfoLessons(IExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoLessons(ExecutionCourse executionCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         List lessons = new ArrayList();
 
         List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
         for (int i = 0; i < shifts.size(); i++) {
-            IShift shift = (IShift) shifts.get(i);
+            Shift shift = (Shift) shifts.get(i);
             List aulasTemp = shift.getAssociatedLessons();
 
             lessons.addAll(aulasTemp);
@@ -589,10 +589,10 @@ public class ReadCourseInformation implements IService {
         List infoLessons = new ArrayList();
         Iterator iter = lessons.iterator();
         while (iter.hasNext()) {
-            ILesson lesson = (ILesson) iter.next();
+            Lesson lesson = (Lesson) iter.next();
 
             InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
-            IShift shift = lesson.getShift();
+            Shift shift = lesson.getShift();
             InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoLesson.setInfoShift(infoShift);
 

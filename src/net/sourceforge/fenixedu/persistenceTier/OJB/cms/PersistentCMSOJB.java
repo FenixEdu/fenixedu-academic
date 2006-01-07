@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.cms.Cms;
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
@@ -30,7 +30,7 @@ public class PersistentCMSOJB extends PersistentObjectOJB implements IPersistent
 
 	private static Properties properties;
 
-	public ICms readFenixCMS() throws ExcepcaoPersistencia
+	public Cms readFenixCMS() throws ExcepcaoPersistencia
 	{
 		String fenixCMSName = PersistentCMSOJB.defaultFenixCMSName;
 		if (PersistentCMSOJB.properties == null)
@@ -56,13 +56,13 @@ public class PersistentCMSOJB extends PersistentObjectOJB implements IPersistent
 
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", fenixCMSName);
-		return (ICms) queryObject(Cms.class, criteria);
+		return (Cms) queryObject(Cms.class, criteria);
 	}
 
-	public ICms readCmsByName(String name) throws ExcepcaoPersistencia
+	public Cms readCmsByName(String name) throws ExcepcaoPersistencia
 	{
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("name", name);
-		return (ICms) queryObject(Cms.class, criteria);
+		return (Cms) queryObject(Cms.class, criteria);
 	}
 }

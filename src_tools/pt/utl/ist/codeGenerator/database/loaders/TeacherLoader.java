@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -45,7 +45,7 @@ public class TeacherLoader extends PersonLoader {
         persistentSupport.iniciarTransaccao();
 
         final IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
-        final IRole teacherRole = persistentRole.readByRoleType(RoleType.TEACHER);
+        final Role teacherRole = persistentRole.readByRoleType(RoleType.TEACHER);
 
 		final HSSFSheet sheet = workbook.getSheet(sheetname);
 		for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
@@ -78,8 +78,8 @@ public class TeacherLoader extends PersonLoader {
         int counter = 0;
 
         final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        final List<ITeacher> teachers = (List<ITeacher>) persistentTeacher.readAll(Teacher.class);
-        for (final ITeacher teacher : teachers) {
+        final List<Teacher> teachers = (List<Teacher>) persistentTeacher.readAll(Teacher.class);
+        for (final Teacher teacher : teachers) {
             final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 
             PersonLoader.dump(row, teacher.getPerson());

@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPart;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,7 +36,7 @@ public class ReadAllGrantPartsByGrantSubsidy implements IService {
 		if (grantParts != null) {
 			result = (List) CollectionUtils.collect(grantParts, new Transformer() {
 				public Object transform(Object o) {
-					IGrantPart grantPart = (IGrantPart) o;
+					GrantPart grantPart = (GrantPart) o;
 					return InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity
 							.newInfoFromDomain(grantPart);
 				}

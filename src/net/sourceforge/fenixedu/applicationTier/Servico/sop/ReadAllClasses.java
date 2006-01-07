@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClassesComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -38,7 +38,7 @@ public class ReadAllClasses implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
 				ExecutionPeriod.class, keyExecutionPeriod);
 
 		ITurmaPersistente persistentClass = sp.getITurmaPersistente();
@@ -47,7 +47,7 @@ public class ReadAllClasses implements IService {
 		infoClasses = new ArrayList();
 		Iterator iter = classes.iterator();
 		while (iter.hasNext()) {
-			ISchoolClass dClass = (ISchoolClass) iter.next();
+			SchoolClass dClass = (SchoolClass) iter.next();
 			InfoClass infoClass = InfoClass.newInfoFromDomain(dClass);
 			infoClasses.add(infoClass);
 		}

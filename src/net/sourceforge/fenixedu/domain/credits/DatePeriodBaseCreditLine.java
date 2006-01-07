@@ -3,14 +3,14 @@
  */
 package net.sourceforge.fenixedu.domain.credits;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 
 /**
  * @author jpvl
  */
 public abstract class DatePeriodBaseCreditLine extends DatePeriodBaseCreditLine_Base {
 
-    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
         return (getEnd().after(executionPeriod.getBeginDate()) && getStart().before(executionPeriod
                 .getEndDate()));
     }

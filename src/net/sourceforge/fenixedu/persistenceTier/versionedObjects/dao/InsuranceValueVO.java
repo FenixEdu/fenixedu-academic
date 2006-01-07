@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IInsuranceValue;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class InsuranceValueVO extends VersionedObjectsBase implements IPersistentInsuranceValue {
 
-	public IInsuranceValue readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia {
+	public InsuranceValue readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia {
 
-		IExecutionYear executionYear = (IExecutionYear) readByOID(ExecutionYear.class, executionYearID);
+		ExecutionYear executionYear = (ExecutionYear) readByOID(ExecutionYear.class, executionYearID);
 
 		if (executionYear == null) {
 			return null;

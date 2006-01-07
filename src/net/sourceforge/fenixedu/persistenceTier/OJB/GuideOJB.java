@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
@@ -29,20 +29,20 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         Iterator iterator = readIteratorByCriteria(Guide.class, criteria, "number", false);
 
         if (iterator.hasNext()) {
-            guideNumber = ((IGuide) iterator.next()).getNumber();
+            guideNumber = ((Guide) iterator.next()).getNumber();
         }
 
         return new Integer(guideNumber.intValue() + 1);
 
     }
 
-    public IGuide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version)
+    public Guide readByNumberAndYearAndVersion(Integer number, Integer year, Integer version)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("number", number);
         crit.addEqualTo("year", year);
         crit.addEqualTo("version", version);
-        return (IGuide) queryObject(Guide.class, crit);
+        return (Guide) queryObject(Guide.class, crit);
 
     }
 
@@ -71,7 +71,7 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         return result;
     }
 
-    public IGuide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia {
+    public Guide readLatestVersion(Integer year, Integer number) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         QueryByCriteria query = new QueryByCriteria(Guide.class, criteria);
         query.addOrderByDescending("version");
@@ -82,7 +82,7 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
         List result = queryList(Guide.class, criteria);
 
         if (result.size() != 0) {
-            return (IGuide) result.get(0);
+            return (Guide) result.get(0);
         }
 
         return null;

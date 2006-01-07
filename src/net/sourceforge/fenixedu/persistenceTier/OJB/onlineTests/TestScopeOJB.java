@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 
-import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -19,10 +19,10 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class TestScopeOJB extends PersistentObjectOJB implements IPersistentTestScope {
 
-    public ITestScope readByDomainObject(String className, Integer idInternal) throws ExcepcaoPersistencia {
+    public TestScope readByDomainObject(String className, Integer idInternal) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("className", className);
         criteria.addEqualTo("keyClass", idInternal);
-        return (ITestScope) queryObject(TestScope.class, criteria);
+        return (TestScope) queryObject(TestScope.class, criteria);
     }
 }

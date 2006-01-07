@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,8 +21,8 @@ public class EditGuideInformationInManager implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
-        IExecutionDegree cursoExecucao = sp.getIPersistentExecutionDegree()
+        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
+        ExecutionDegree cursoExecucao = sp.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID, executionYear);
 
         guide.setPaymentType(PaymentType.valueOf(newPaymentType));

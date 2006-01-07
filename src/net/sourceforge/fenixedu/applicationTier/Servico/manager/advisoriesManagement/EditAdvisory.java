@@ -9,7 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.IAdvisory;
+import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,7 +22,7 @@ public class EditAdvisory implements IService {
      
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 
-        IAdvisory advisory = (IAdvisory) suportePersistente.getIPersistentObject().readByOID(Advisory.class, advisoryID);
+        Advisory advisory = (Advisory) suportePersistente.getIPersistentObject().readByOID(Advisory.class, advisoryID);
         
         if(advisory == null){                  
             throw new FenixServiceException("error.no.advisory");            

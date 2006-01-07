@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -34,12 +34,12 @@ public class EstablishFinalDegreeWorkStudentGroup implements IService {
                 .getIPersistentExecutionDegree();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        IGroup group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
+        Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
         if (group == null) {
             group = DomainFactory.makeGroup();
-            IStudent student = persistentStudent.readByUsername(username);
+            Student student = persistentStudent.readByUsername(username);
             if (student != null) {
-                IGroupStudent groupStudent = DomainFactory.makeGroupStudent();
+                GroupStudent groupStudent = DomainFactory.makeGroupStudent();
                 groupStudent.setStudent(student);
                 groupStudent.setFinalDegreeDegreeWorkGroup(group);
             } else {
@@ -59,7 +59,7 @@ public class EstablishFinalDegreeWorkStudentGroup implements IService {
 
         if (group.getExecutionDegree() == null
                 || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID)) {
-            IExecutionDegree executionDegree = (IExecutionDegree) cursoExecucaoPersistente.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) cursoExecucaoPersistente.readByOID(
                     ExecutionDegree.class, executionDegreeOID);
             if (executionDegree != null) {
                 group.setExecutionDegree(executionDegree);

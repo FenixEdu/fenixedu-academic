@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -41,18 +41,18 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
         if (executionYearID == null) {
             IPersistentExecutionYear persistentExecutionYear = suportePersistente
                     .getIPersistentExecutionYear();
-            IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+            ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
             executionYearID = executionYear.getIdInternal();
         }
 
         List professorships = persistentProfessorship.readByTeacherAndExecutionYear(teacherID,
                 executionYearID);
                                
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherID);
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
         
-        final List<IProfessorship> responsibleForsAux = teacher.responsibleFors();
+        final List<Professorship> responsibleForsAux = teacher.responsibleFors();
         final List responsibleFors = new ArrayList();        
-        for(IProfessorship professorship : responsibleForsAux){
+        for(Professorship professorship : responsibleForsAux){
             if(professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear().getIdInternal().equals(executionYearID))
                 responsibleFors.add(professorship);
         }                

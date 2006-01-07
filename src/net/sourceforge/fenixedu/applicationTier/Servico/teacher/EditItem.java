@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -24,12 +24,12 @@ public class EditItem implements IService {
 	 */
 	public Boolean run(Integer infoExecutionCourseCode, Integer itemCode, InfoItem newInfoItem)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		IItem item = null;
+		Item item = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentItem persistentItem = sp.getIPersistentItem();
 
-		item = (IItem) persistentItem.readByOID(Item.class, itemCode);
+		item = (Item) persistentItem.readByOID(Item.class, itemCode);
 
 		if (item == null) {
 			throw new ExistingServiceException();

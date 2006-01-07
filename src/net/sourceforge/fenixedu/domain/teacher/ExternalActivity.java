@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -19,7 +19,7 @@ public class ExternalActivity extends ExternalActivity_Base {
 		super();
 	}
 	
-	public ExternalActivity(ITeacher teacher, InfoExternalActivity infoExternalActivity) {
+	public ExternalActivity(Teacher teacher, InfoExternalActivity infoExternalActivity) {
 		if(teacher == null)
 			throw new DomainException("The teacher should not be null!");
 

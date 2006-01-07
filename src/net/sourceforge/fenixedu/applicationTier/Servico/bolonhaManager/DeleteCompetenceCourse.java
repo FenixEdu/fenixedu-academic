@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -14,7 +14,7 @@ public class DeleteCompetenceCourse implements IService {
 
     public void run(Integer competenceCourseID) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentSupport
+        CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
                 .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse != null) {
             competenceCourse.delete();

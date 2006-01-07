@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 
 /**
@@ -83,7 +83,7 @@ public class InfoTestQuestion extends InfoObject implements Comparable {
         return result;
     }
 
-    public void copyFromDomain(ITestQuestion testQuestion) {
+    public void copyFromDomain(TestQuestion testQuestion) {
         super.copyFromDomain(testQuestion);
         if (testQuestion != null) {
             setTestQuestionOrder(testQuestion.getTestQuestionOrder());
@@ -92,7 +92,7 @@ public class InfoTestQuestion extends InfoObject implements Comparable {
         }
     }
 
-    public static InfoTestQuestion newInfoFromDomain(ITestQuestion testQuestion) {
+    public static InfoTestQuestion newInfoFromDomain(TestQuestion testQuestion) {
         InfoTestQuestion infoTestQuestion = null;
         if (testQuestion != null) {
             infoTestQuestion = new InfoTestQuestion();

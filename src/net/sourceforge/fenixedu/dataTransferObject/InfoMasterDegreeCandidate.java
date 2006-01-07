@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 
 /*
@@ -332,7 +332,7 @@ public class InfoMasterDegreeCandidate extends InfoObject {
         this.coursesToAssist = coursesToAssist;
     }
 
-    public void copyFromDomain(IMasterDegreeCandidate masterDegreeCandidate) {
+    public void copyFromDomain(MasterDegreeCandidate masterDegreeCandidate) {
         super.copyFromDomain(masterDegreeCandidate);
         if (masterDegreeCandidate != null) {
             setAverage(masterDegreeCandidate.getAverage());
@@ -357,7 +357,7 @@ public class InfoMasterDegreeCandidate extends InfoObject {
     }
 
     public static InfoMasterDegreeCandidate newInfoFromDomain(
-            IMasterDegreeCandidate masterDegreeCandidate) {
+            MasterDegreeCandidate masterDegreeCandidate) {
         InfoMasterDegreeCandidate infoMasterDegreeCandidate = null;
         if (masterDegreeCandidate != null) {
             infoMasterDegreeCandidate = new InfoMasterDegreeCandidate();

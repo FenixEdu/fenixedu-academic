@@ -9,8 +9,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,13 +28,13 @@ public class RemoverTurno implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-        final IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
+        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
         if (shift == null) {
             return Boolean.FALSE;
         }
-        final ISchoolClass schoolClass = (ISchoolClass) CollectionUtils.find(shift.getAssociatedClasses(), new Predicate() {
+        final SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(shift.getAssociatedClasses(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                final ISchoolClass schoolClass = (ISchoolClass) arg0;
+                final SchoolClass schoolClass = (SchoolClass) arg0;
                 return schoolClass.getIdInternal().equals(infoClass.getIdInternal());
             }
         });

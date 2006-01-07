@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 
@@ -20,7 +20,7 @@ import org.apache.ojb.broker.query.Criteria;
 public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         IPersistentCurricularCourseScope {
 
-    public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
 			Integer curricularCourseId, Integer curricularSemesterId, Integer branchId)
     		throws ExcepcaoPersistencia {
 
@@ -28,11 +28,11 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("curricularCourseKey", curricularCourseId);
         criteria.addEqualTo("curricularSemesterKey", curricularSemesterId);
         criteria.addEqualTo("branchKey", branchId);
-        return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
+        return (CurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
     }
 
-    public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+    public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
 			Integer curricularCourseId, Integer curricularSemesterId, Integer branchId,
 			Calendar endDate) throws ExcepcaoPersistencia {
 
@@ -45,7 +45,7 @@ public class CurricularCourseScopeOJB extends PersistentObjectOJB implements
         } else {
             criteria.addEqualTo("end", endDate.getTime());
         }
-        return (ICurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
+        return (CurricularCourseScope) queryObject(CurricularCourseScope.class, criteria);
 
     }
 

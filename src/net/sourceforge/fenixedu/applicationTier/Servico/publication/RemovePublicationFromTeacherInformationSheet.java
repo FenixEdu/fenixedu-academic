@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -19,8 +19,8 @@ public class RemovePublicationFromTeacherInformationSheet implements IService {
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         IPersistentPublication persistentPublication = sp.getIPersistentPublication();
 
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherId);
-        IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class, publicationId);
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherId);
+        Publication publication = (Publication) persistentPublication.readByOID(Publication.class, publicationId);
         
         teacher.removeFromTeacherInformationSheet(publication);
     }

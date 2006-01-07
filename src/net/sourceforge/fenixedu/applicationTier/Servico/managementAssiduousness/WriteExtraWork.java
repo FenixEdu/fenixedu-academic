@@ -6,10 +6,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkWithAll;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,25 +29,25 @@ public class WriteExtraWork implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-        IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
+        Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
 
         // Read employee logged
         final IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
-        IEmployee employeeWho = null;
+        Employee employeeWho = null;
         if (personWho != null) {
             employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
         }
-        IEmployee employee = employeeDAO.readByNumber(employeeNumber);
+        Employee employee = employeeDAO.readByNumber(employeeNumber);
         if (employee == null) {
             // TODO
         }
 
         final IPersistentExtraWork extraWorkDAO = sp.getIPersistentExtraWork();
-        List<IExtraWork> extraWorkList = new ArrayList<IExtraWork>();
+        List<ExtraWork> extraWorkList = new ArrayList<ExtraWork>();
         for (InfoExtraWork infoExtraWork : infoExtraWorkList) {
-            IExtraWork extraWork = null;
+            ExtraWork extraWork = null;
             if (infoExtraWork.getIdInternal() != null && infoExtraWork.getIdInternal().intValue() > 0) {
-                extraWork = (IExtraWork) extraWorkDAO.readByOID(ExtraWork.class, infoExtraWork
+                extraWork = (ExtraWork) extraWorkDAO.readByOID(ExtraWork.class, infoExtraWork
                         .getIdInternal());
             }
             if (extraWork == null) {

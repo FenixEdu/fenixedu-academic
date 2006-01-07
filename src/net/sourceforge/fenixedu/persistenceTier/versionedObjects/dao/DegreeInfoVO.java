@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
@@ -19,19 +19,19 @@ public class DegreeInfoVO extends VersionedObjectsBase implements IPersistentDeg
      /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.IDegree,
-     *      Dominio.IExecutionYear)
+     * @see ServidorPersistente.IPersistentDegreeInfo#readDegreeInfoByDegreeAndExecutionYear(Dominio.Degree,
+     *      Dominio.ExecutionYear)
      */
     public List readDegreeInfoByDegreeAndExecutionYear(Integer degreeId, final Date beginDate, final Date endDate)
             throws ExcepcaoPersistencia {
         
-        final IDegree deg = (IDegree)readByOID(Degree.class,degreeId);
+        final Degree deg = (Degree)readByOID(Degree.class,degreeId);
         List degreeInfos = deg.getDegreeInfos();
         
         degreeInfos = (List)CollectionUtils.select(degreeInfos,new Predicate ()
                 {
                     public boolean evaluate(Object o) {
-                        IDegreeInfo degreeInfo = (IDegreeInfo)o;
+                        DegreeInfo degreeInfo = (DegreeInfo)o;
                         
                         return (beginDate.before(degreeInfo.getLastModificationDate()) &&
                                 endDate.after(degreeInfo.getLastModificationDate()));
@@ -45,7 +45,7 @@ public class DegreeInfoVO extends VersionedObjectsBase implements IPersistentDeg
     	  List degreeInfos = (List)CollectionUtils.select(degrees,new Predicate ()
                   {
                       public boolean evaluate(Object o) {
-                          IDegree degree = (IDegree)o;
+                          Degree degree = (Degree)o;
                           
                           return (degree.getTipoCurso().equals(degreeType.getName()));
                       }

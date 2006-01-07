@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestionWithInfoQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,13 +31,13 @@ public class ReadTest implements IService {
     public InfoTest run(Integer executionCourseId, Integer testId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
         List<InfoTestQuestion> infoTestQuestions = new ArrayList<InfoTestQuestion>();
         ParseQuestion parse = new ParseQuestion();
-        for (ITestQuestion testQuestion : test.getTestQuestions()) {
+        for (TestQuestion testQuestion : test.getTestQuestions()) {
             InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion.newInfoFromDomain(testQuestion);
             try {
                 infoTestQuestion.setQuestion(parse.parseQuestion(infoTestQuestion.getQuestion().getXmlFile(), infoTestQuestion.getQuestion(),
@@ -59,7 +59,7 @@ public class ReadTest implements IService {
 
     public InfoTest run(Integer executionCourseId, Integer testId) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }

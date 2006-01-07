@@ -6,33 +6,33 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 
 public class DegreeTest extends DomainTestBase {
 
-	private IDegree degreeToCreate;
+	private Degree degreeToCreate;
 	private String newName;
 	private String newNameEn;
 	private String newSigla;
 	private DegreeType newDegreeType;
 	private String newConcreteClassForDegreeCurricularPlans;
 	
-	private IDegree degreeToEditWithDegreeInfo;
-	private IDegree degreeToEditWithoutDegreeInfo;
+	private Degree degreeToEditWithDegreeInfo;
+	private Degree degreeToEditWithoutDegreeInfo;
 	
-	private IDegree degreeToDelete;
-	private IDegree degreeNotToDelete;
-	private List<IDelegate> delegatesToDelete;
-	private List<IOldInquiriesCoursesRes> oldInquiriesCoursesResToDelete;
-	private List<IOldInquiriesTeachersRes> oldInquiriesTeachersResToDelete;
-	private List<IOldInquiriesSummary> oldInquiriesSummaryToDelete;
+	private Degree degreeToDelete;
+	private Degree degreeNotToDelete;
+	private List<Delegate> delegatesToDelete;
+	private List<OldInquiriesCoursesRes> oldInquiriesCoursesResToDelete;
+	private List<OldInquiriesTeachersRes> oldInquiriesTeachersResToDelete;
+	private List<OldInquiriesSummary> oldInquiriesSummaryToDelete;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -54,55 +54,55 @@ public class DegreeTest extends DomainTestBase {
 		degreeToDelete = new Degree();
 		degreeNotToDelete = new Degree();
 		
-		IDegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
+		DegreeCurricularPlan dcp1 = new DegreeCurricularPlan();
 		degreeNotToDelete.addDegreeCurricularPlans(dcp1);
 		
-		IDegreeInfo di1 = new DegreeInfo();
+		DegreeInfo di1 = new DegreeInfo();
 		degreeToDelete.addDegreeInfos(di1);
 		
-		IDegreeInfo di2 = new DegreeInfo();
+		DegreeInfo di2 = new DegreeInfo();
 		degreeNotToDelete.addDegreeInfos(di2);
 		
-		IExecutionPeriod ep1 = new ExecutionPeriod();
-		IExecutionYear ey1 = new ExecutionYear();
+		ExecutionPeriod ep1 = new ExecutionPeriod();
+		ExecutionYear ey1 = new ExecutionYear();
 		
-		IStudent student1 = new Student();
-		ITeacher teacher1 = new Teacher();
-		IDelegate d1 = new Delegate();
+		Student student1 = new Student();
+		Teacher teacher1 = new Teacher();
+		Delegate d1 = new Delegate();
 		d1.setStudent(student1);
 		d1.setExecutionYear(ey1);
 		degreeToDelete.addDelegate(d1);
 		delegatesToDelete.add(d1);
 		
-		IDelegate d2 = new Delegate();
+		Delegate d2 = new Delegate();
 		d2.setStudent(student1);
 		d2.setExecutionYear(ey1);
 		degreeNotToDelete.addDelegate(d2);
 		
-		IOldInquiriesCoursesRes oicr1 = new OldInquiriesCoursesRes();
+		OldInquiriesCoursesRes oicr1 = new OldInquiriesCoursesRes();
 		oicr1.setExecutionPeriod(ep1);
 		
-		IOldInquiriesCoursesRes oicr2 = new OldInquiriesCoursesRes();
+		OldInquiriesCoursesRes oicr2 = new OldInquiriesCoursesRes();
 		oicr2.setExecutionPeriod(ep1);
 		degreeToDelete.addAssociatedOldInquiriesCoursesRes(oicr1);
 		oldInquiriesCoursesResToDelete.add(oicr1);
 		degreeNotToDelete.addAssociatedOldInquiriesCoursesRes(oicr2);
 		
-		IOldInquiriesTeachersRes oitr1 = new OldInquiriesTeachersRes();
+		OldInquiriesTeachersRes oitr1 = new OldInquiriesTeachersRes();
 		oitr1.setExecutionPeriod(ep1);
 		oitr1.setTeacher(teacher1);
 		
-		IOldInquiriesTeachersRes oitr2 = new OldInquiriesTeachersRes();
+		OldInquiriesTeachersRes oitr2 = new OldInquiriesTeachersRes();
 		oitr2.setExecutionPeriod(ep1);
 		oitr2.setTeacher(teacher1);
 		degreeToDelete.addAssociatedOldInquiriesTeachersRes(oitr1);
 		oldInquiriesTeachersResToDelete.add(oitr1);
 		degreeNotToDelete.addAssociatedOldInquiriesTeachersRes(oitr2);
 		
-		IOldInquiriesSummary ois1 = new OldInquiriesSummary();
+		OldInquiriesSummary ois1 = new OldInquiriesSummary();
 		ois1.setExecutionPeriod(ep1);
 		
-		IOldInquiriesSummary ois2 = new OldInquiriesSummary();
+		OldInquiriesSummary ois2 = new OldInquiriesSummary();
 		ois2.setExecutionPeriod(ep1);
 		degreeToDelete.addAssociatedOldInquiriesSummaries(ois1);
 		oldInquiriesSummaryToDelete.add(ois1);
@@ -160,19 +160,19 @@ public class DegreeTest extends DomainTestBase {
 		assertFalse("Failed to dereference OldInquiriesSummary", degreeToDelete.hasAnyAssociatedOldInquiriesSummaries());
 		assertFalse("Deleted Degree should not have DegreeCurricularPlans", degreeToDelete.hasAnyDegreeCurricularPlans());
 		
-		for (IDelegate delegate : delegatesToDelete) {
+		for (Delegate delegate : delegatesToDelete) {
 			DelegateTest.assertCorrectDeletion(delegate);
 		}
 		
-		for (IOldInquiriesCoursesRes oicr : oldInquiriesCoursesResToDelete) {
+		for (OldInquiriesCoursesRes oicr : oldInquiriesCoursesResToDelete) {
 			OldInquiriesCoursesResTest.assertCorrectDeletion(oicr);
 		}
 		
-		for (IOldInquiriesTeachersRes oitr : oldInquiriesTeachersResToDelete) {
+		for (OldInquiriesTeachersRes oitr : oldInquiriesTeachersResToDelete) {
 			OldInquiriesTeachersResTest.assertCorrectDeletion(oitr);
 		}
 		
-		for (IOldInquiriesSummary ois : oldInquiriesSummaryToDelete) {
+		for (OldInquiriesSummary ois : oldInquiriesSummaryToDelete) {
 			OldInquiriesSummaryTest.assertCorrectDeletion(ois);
 		}
 		
@@ -191,26 +191,26 @@ public class DegreeTest extends DomainTestBase {
 		assertTrue("Should not have dereferenced DegreeCurricularPlans", degreeNotToDelete.hasAnyDegreeCurricularPlans());
 		assertTrue("Should not have dereferenced DegreeInfos", degreeNotToDelete.hasAnyDegreeInfos());
 		
-		for (IDelegate delegate : degreeNotToDelete.getDelegate()) {
+		for (Delegate delegate : degreeNotToDelete.getDelegate()) {
 			assertTrue("Should not have dereferenced Delegate from ExecutionYear", delegate.hasExecutionYear());
 			assertTrue("Should not have dereferenced Delegate from Student", delegate.hasStudent());
 		}
 		
-		for (IOldInquiriesCoursesRes oicr : degreeNotToDelete.getAssociatedOldInquiriesCoursesRes()) {
+		for (OldInquiriesCoursesRes oicr : degreeNotToDelete.getAssociatedOldInquiriesCoursesRes()) {
 			assertTrue ("Should not have dereferenced OldInquiriesCoursesRes from ExecutionPeriod", oicr.hasExecutionPeriod());
 		}
 		
-		for (IOldInquiriesTeachersRes oitr : degreeNotToDelete.getAssociatedOldInquiriesTeachersRes()) {
+		for (OldInquiriesTeachersRes oitr : degreeNotToDelete.getAssociatedOldInquiriesTeachersRes()) {
 			assertTrue ("Should not have dereferenced OldInquiriesTeachersRes from ExecutionPeriod", oitr.hasExecutionPeriod());
 			assertTrue ("Should not have dereferenced OldInquiriesTeachersRes from Teacher", oitr.hasTeacher());
 		}
 		
-		for (IOldInquiriesSummary ois : degreeNotToDelete.getAssociatedOldInquiriesSummaries()) {
+		for (OldInquiriesSummary ois : degreeNotToDelete.getAssociatedOldInquiriesSummaries()) {
 			assertTrue ("Should not have dereferenced OldInquiriesSummary from ExecutionPeriod", ois.hasExecutionPeriod());
 		}
 	}
 	
-	private void assertCorrectInitialization(String errorMessagePrefix, IDegree degree, String name, String nameEn, String code, DegreeType type) {
+	private void assertCorrectInitialization(String errorMessagePrefix, Degree degree, String name, String nameEn, String code, DegreeType type) {
 		assertTrue(errorMessagePrefix + ": name", degree.getNome().equals(name));
 		assertTrue(errorMessagePrefix + ": nameEn", degree.getNameEn().equals(nameEn));
 		assertTrue(errorMessagePrefix + ": code", degree.getSigla().equals(code));

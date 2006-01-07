@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.Date;
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -19,7 +19,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseStudentsGroup_B
 
 		public Object transform(Object arg0)
 		{
-			IAttends attend = (IAttends) arg0;
+			Attends attend = (Attends) arg0;
 			return attend.getAluno().getPerson();
 		}		
 	}
@@ -37,7 +37,7 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseStudentsGroup_B
 	}
 
 	@Override
-	public Iterator<IPerson> getElementsIterator()
+	public Iterator<Person> getElementsIterator()
 	{
 		return new TransformIterator(this.getExecutionCourse().getAttendsIterator(),new AttendPersonTransformer());
 		

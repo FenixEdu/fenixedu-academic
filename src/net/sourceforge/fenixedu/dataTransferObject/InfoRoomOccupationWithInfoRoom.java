@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 
 /**
  * @author Tânia Pousão
@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
 public class InfoRoomOccupationWithInfoRoom extends InfoRoomOccupation {
 
     @Override
-    public void copyFromDomain(IRoomOccupation roomOccupation) {
+    public void copyFromDomain(RoomOccupation roomOccupation) {
         super.copyFromDomain(roomOccupation);
         if (roomOccupation != null) {
             setInfoRoom(InfoRoom.newInfoFromDomain(roomOccupation.getRoom()));
         }
     }
 
-    public static InfoRoomOccupation newInfoFromDomain(IRoomOccupation roomOccupation) {
+    public static InfoRoomOccupation newInfoFromDomain(RoomOccupation roomOccupation) {
         InfoRoomOccupationWithInfoRoom infoRoomOccupation = null;
         if (roomOccupation != null) {
             infoRoomOccupation = new InfoRoomOccupationWithInfoRoom();

@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -19,7 +19,7 @@ public class EditWrittenEvaluationEnrolmentPeriod implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) persistentSupport
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
                 .getIPersistentEvaluation().readByOID(WrittenEvaluation.class, writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");

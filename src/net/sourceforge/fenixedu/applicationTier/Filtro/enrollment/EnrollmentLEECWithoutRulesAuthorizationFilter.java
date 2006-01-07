@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -89,7 +89,7 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
                 IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-                IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         DEGREE_TYPE);
                 if (student != null) {
                     isNonMaster = true; //non master student
@@ -111,7 +111,7 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
                 IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                         .getIStudentCurricularPlanPersistente();
 
-                IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
+                StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                         .readActiveByStudentNumberAndDegreeType(studentNumber, DEGREE_TYPE);
                 if (studentCurricularPlan != null
                         && studentCurricularPlan.getDegreeCurricularPlan() != null

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlanAndDegree;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,7 +26,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeType implements ISe
     public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IStudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+        final StudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
                 .readActiveByStudentNumberAndDegreeType(studentNumber, degreeType);
 
         if (studentCurricularPlan != null) {

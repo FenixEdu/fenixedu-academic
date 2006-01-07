@@ -5,8 +5,8 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -21,20 +21,20 @@ public class CreateCandidateSituation implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        final MasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
                 .readByExecutionDegreeAndPerson(executionDegreeID, personID);
         if (masterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Master Degree Candidate");
         }
 
-        for (ICandidateSituation candidateSituation : masterDegreeCandidate.getSituations()) {
+        for (CandidateSituation candidateSituation : masterDegreeCandidate.getSituations()) {
             if (candidateSituation.getValidation().equals(new State(State.ACTIVE))) {
                 candidateSituation.setValidation(new State(State.INACTIVE));
             }
         }
 
         // Create the New Candidate Situation
-        ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+        CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
         Calendar calendar = Calendar.getInstance();
         candidateSituation.setDate(calendar.getTime());
         candidateSituation.setSituation(newSituation);

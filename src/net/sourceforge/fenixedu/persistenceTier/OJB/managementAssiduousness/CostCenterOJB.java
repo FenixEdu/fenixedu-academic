@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness;
 
 import net.sourceforge.fenixedu.domain.CostCenter;
-import net.sourceforge.fenixedu.domain.ICostCenter;
+import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
@@ -15,10 +15,10 @@ public class CostCenterOJB extends PersistentObjectOJB implements IPersistentCos
         return new Integer(count(CostCenter.class, criteria));
     }
 
-    public ICostCenter readCostCenterByCode(String code) throws ExcepcaoPersistencia {
+    public CostCenter readCostCenterByCode(String code) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("code", code);
-        return (ICostCenter) queryObject(CostCenter.class, criteria);
+        return (CostCenter) queryObject(CostCenter.class, criteria);
     }
 
 }

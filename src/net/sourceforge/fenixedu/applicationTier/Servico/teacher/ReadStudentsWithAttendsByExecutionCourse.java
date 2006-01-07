@@ -26,19 +26,19 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
@@ -61,23 +61,23 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
     // doesnt allow an empty list
-    private IStudentCurricularPlan GetLastCurricularPlan(List cps) {
+    private StudentCurricularPlan GetLastCurricularPlan(List cps) {
         Iterator i = cps.iterator();
-        IStudentCurricularPlan lastCP = (IStudentCurricularPlan) cps.get(0);
+        StudentCurricularPlan lastCP = (StudentCurricularPlan) cps.get(0);
 
         while (i.hasNext()) {
-            IStudentCurricularPlan cp = (IStudentCurricularPlan) i.next();
+            StudentCurricularPlan cp = (StudentCurricularPlan) i.next();
             if (cp.getStartDate().after(lastCP.getStartDate()))
                 lastCP = cp;
         }
         return lastCP;
     }
 
-    private IStudentCurricularPlan GetActiveCurricularPlan(List cps) {
+    private StudentCurricularPlan GetActiveCurricularPlan(List cps) {
         Iterator i = cps.iterator();
 
         while (i.hasNext()) {
-            IStudentCurricularPlan cp = (IStudentCurricularPlan) i.next();
+            StudentCurricularPlan cp = (StudentCurricularPlan) i.next();
             if (cp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE))
                 return cp;
         }
@@ -86,11 +86,11 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
     public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters,
             List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
-        ISite site = null;
+        Site site = null;
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, executionCourseCode);
         InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                 .newInfoFromDomain(executionCourse);
@@ -117,12 +117,12 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
 
             Predicate pCourses = new Predicate() {
                 public boolean evaluate(Object o) {
-                    IAttends attendance = (IAttends) o;
+                    Attends attendance = (Attends) o;
 
                     List scps = attendance.getAluno().getStudentCurricularPlans();
 
                     if (scps != null && !scps.isEmpty()) {
-                        IStudentCurricularPlan lastSCP = getStudentCurricularPlanFromAttends(attendance);
+                        StudentCurricularPlan lastSCP = getStudentCurricularPlanFromAttends(attendance);
 
                         final Integer lastDCPId = lastSCP.getDegreeCurricularPlan().getIdInternal();
 
@@ -150,7 +150,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             List newAttends = new ArrayList();
             Iterator attendsIterator = attends.iterator();
             while (attendsIterator.hasNext()) {
-                IAttends attendacy = (IAttends) attendsIterator.next();
+                Attends attendacy = (Attends) attendsIterator.next();
 
                 // improvement student (he/she is enrolled)
                 if (improvementFilter
@@ -185,15 +185,15 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             while (shiftIterator.hasNext()) {
 
                 Integer shiftId = (Integer) shiftIterator.next();
-                final IShift turno = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftId);
+                final Shift turno = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, shiftId);
 
                 Iterator attendsIterator = attends.iterator();
 
                 while (attendsIterator.hasNext()) {
-                    IAttends attendance = (IAttends) attendsIterator.next();
+                    Attends attendance = (Attends) attendsIterator.next();
 
                     // if an attendance is related to a Shift
-                    IStudent student = attendance.getAluno();
+                    Student student = attendance.getAluno();
 
                     if (turno.getStudents().contains(student)) {
                         collectedAttends.add(attendance);
@@ -213,7 +213,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         final Map<Integer, InfoShift> clonedShifts = new HashMap<Integer, InfoShift>();
 
         while (it.hasNext()) {
-            IAttends iFrequenta = (IAttends) it.next();
+            Attends iFrequenta = (Attends) it.next();
 
             InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups infoComposition = new InfoCompositionOfAttendAndDegreeCurricularPlanAndShiftsAndStudentGroups();
 
@@ -239,8 +239,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         		infoFrequenta.getInfoEnrolment().setEnrolmentEvaluationType(enrollmentEvaluationType);
             }
 
-            IStudentCurricularPlan studentCurricularPlan = getStudentCurricularPlanFromAttends(iFrequenta);
-            IDegreeCurricularPlan degreeCP = studentCurricularPlan.getDegreeCurricularPlan();
+            StudentCurricularPlan studentCurricularPlan = getStudentCurricularPlanFromAttends(iFrequenta);
+            DegreeCurricularPlan degreeCP = studentCurricularPlan.getDegreeCurricularPlan();
             InfoDegreeCurricularPlan infoDCP = InfoDegreeCurricularPlanWithDegree
                     .newInfoFromDomain(degreeCP);
 
@@ -252,7 +252,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
             Map infoStudentGroups = getInfoStudentGroupsByAttends(studentGroupsMap, iFrequenta);
             infoComposition.setInfoStudentGroups(infoStudentGroups);
 
-            IEnrolment enrollment = iFrequenta.getEnrolment();
+            Enrolment enrollment = iFrequenta.getEnrolment();
             int numberOfEnrollments = 0;
 
             if (enrollment != null) {
@@ -307,14 +307,14 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return siteView;
     }
 
-    private int countAllEnrolmentsForSameStudent(IStudentCurricularPlan studentCurricularPlan,
+    private int countAllEnrolmentsForSameStudent(StudentCurricularPlan studentCurricularPlan,
             String curricularCourseName) {
         int count = 0;
-        IDegree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
-        for (IStudentCurricularPlan scp : studentCurricularPlan.getStudent().getStudentCurricularPlans()) {
+        Degree degree = studentCurricularPlan.getDegreeCurricularPlan().getDegree();
+        for (StudentCurricularPlan scp : studentCurricularPlan.getStudent().getStudentCurricularPlans()) {
             if (scp.getDegreeCurricularPlan().getDegree() == degree) {
-                for (IEnrolment enrolment : scp.getEnrolments()) {
-                    ICurricularCourse course = enrolment.getCurricularCourse();
+                for (Enrolment enrolment : scp.getEnrolments()) {
+                    CurricularCourse course = enrolment.getCurricularCourse();
                     if (course != null) {
                         String name = course.getName();
                         if ((name == curricularCourseName)
@@ -329,7 +329,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
     }
 
     private TeacherAdministrationSiteView createSiteView(
-            InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, ISite site)
+            InfoForReadStudentsWithAttendsByExecutionCourse infoSiteStudents, Site site)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         TeacherAdministrationSiteComponentBuilder componentBuilder = new TeacherAdministrationSiteComponentBuilder();
@@ -341,7 +341,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return siteView;
     }
 
-    IStudentCurricularPlan getStudentCurricularPlanFromAttends(IAttends attendance) {
+    StudentCurricularPlan getStudentCurricularPlanFromAttends(Attends attendance) {
         if (attendance.getEnrolment() == null)
             return GetActiveCurricularPlan(attendance.getAluno().getStudentCurricularPlans());
         return attendance.getEnrolment().getStudentCurricularPlan();
@@ -353,8 +353,8 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         Iterator attendsIterator = attends.iterator();
 
         while (attendsIterator.hasNext()) {
-            IAttends attendance = (IAttends) attendsIterator.next();
-            IDegreeCurricularPlan dcp = getStudentCurricularPlanFromAttends(attendance)
+            Attends attendance = (Attends) attendsIterator.next();
+            DegreeCurricularPlan dcp = getStudentCurricularPlanFromAttends(attendance)
                     .getDegreeCurricularPlan();
 
             if (!degreeCurricularPlans.contains(dcp))
@@ -363,17 +363,17 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return degreeCurricularPlans;
     }
 
-    private Map getShiftsByAttends(final List shifts, final IAttends attend,
+    private Map getShiftsByAttends(final List shifts, final Attends attend,
             final ISuportePersistente sp, final Map<Integer, InfoShift> clonedShifts)
             throws ExcepcaoPersistencia {
         final Map result = new HashMap();
 
         for (final Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-            final IShift shift = (IShift) iterator.next();
+            final Shift shift = (Shift) iterator.next();
 
             boolean studentInShift = false;
-            List<IStudent> students = shift.getStudents();
-            for (IStudent student : students) {
+            List<Student> students = shift.getStudents();
+            for (Student student : students) {
                 if (student == attend.getAluno()) {
                     studentInShift = true;
                     break;
@@ -393,7 +393,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return result;
     }
 
-    private List getClassTypesFromExecutionCourse(IExecutionCourse executionCourse) {
+    private List getClassTypesFromExecutionCourse(ExecutionCourse executionCourse) {
         List classTypes = new ArrayList();
         if (executionCourse.getTheoreticalHours().doubleValue() > 0)
             classTypes.add(ShiftType.TEORICA);
@@ -414,7 +414,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List result = new ArrayList();
 
         for (Iterator shIterator = shifts.iterator(); shIterator.hasNext();) {
-            IShift sh = (IShift) shIterator.next();
+            Shift sh = (Shift) shIterator.next();
             result.add(InfoShiftWithInfoExecutionCourseAndInfoLessons.newInfoFromDomain(sh));
         }
 
@@ -425,7 +425,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List result = new ArrayList();
 
         for (Iterator dcpIterator = degreeCPs.iterator(); dcpIterator.hasNext();) {
-            IDegreeCurricularPlan dcp = (IDegreeCurricularPlan) dcpIterator.next();
+            DegreeCurricularPlan dcp = (DegreeCurricularPlan) dcpIterator.next();
 
             result.add(InfoDegreeCurricularPlanWithDegree.newInfoFromDomain(dcp));
         }
@@ -437,7 +437,7 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         List result = new ArrayList();
 
         for (Iterator gpIterator = groupProperties.iterator(); gpIterator.hasNext();) {
-            IGrouping gp = (IGrouping) gpIterator.next();
+            Grouping gp = (Grouping) gpIterator.next();
             InfoGrouping infoGP = InfoGrouping.newInfoFromDomain(gp);
             result.add(infoGP);
         }
@@ -454,16 +454,16 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         Iterator gpIt = groupPropertiesList.iterator();
         while (gpIt.hasNext()) {
             allStudentsGroups
-                    .addAll(((IGrouping) gpIt.next()).getStudentGroups());
+                    .addAll(((Grouping) gpIt.next()).getStudentGroups());
         }
 
         for (Iterator sgIterator = allStudentsGroups.iterator(); sgIterator.hasNext();) {
-            IStudentGroup sg = (IStudentGroup) sgIterator.next();
+            StudentGroup sg = (StudentGroup) sgIterator.next();
             List groupAttends = sg.getAttends();
             List attendsList = (List) CollectionUtils.collect(groupAttends, new Transformer() {
 
                 public Object transform(Object input) {                    
-                    IAttends attendacy = (IAttends) input;
+                    Attends attendacy = (Attends) input;
                     return attendacy;
                 }
             });
@@ -474,13 +474,13 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return result;
     }
 
-    private Map getInfoStudentGroupsByAttends(Map studentsGroupsAttendsListMap, IAttends attends) {
+    private Map getInfoStudentGroupsByAttends(Map studentsGroupsAttendsListMap, Attends attends) {
         Map result = new HashMap();
 
         Collection studentsGroups = studentsGroupsAttendsListMap.keySet();
 
         for (Iterator groupsIterator = studentsGroups.iterator(); groupsIterator.hasNext();) {
-            IStudentGroup sg = (IStudentGroup) groupsIterator.next();
+            StudentGroup sg = (StudentGroup) groupsIterator.next();
 
             List attendsList = (List) studentsGroupsAttendsListMap.get(sg);
 
@@ -494,10 +494,10 @@ public class ReadStudentsWithAttendsByExecutionCourse implements IService {
         return result;
     }
     
-    private boolean hasSpecialSeasonEnrolmentEvaluation(final List<IEnrolmentEvaluation> evaluations) {
+    private boolean hasSpecialSeasonEnrolmentEvaluation(final List<EnrolmentEvaluation> evaluations) {
     	return CollectionUtils.exists(evaluations, new Predicate() {
 			public boolean evaluate(Object arg0) {
-				IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+				EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
 				return enrolmentEvaluation.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.SPECIAL_SEASON);
 			}
     	});

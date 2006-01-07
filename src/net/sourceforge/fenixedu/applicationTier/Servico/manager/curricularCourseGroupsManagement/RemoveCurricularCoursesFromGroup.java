@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.curricularCours
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -29,13 +29,13 @@ public class RemoveCurricularCoursesFromGroup implements IService {
 				.getIPersistentCurricularCourse();
 		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
 				.getIPersistentCurricularCourseGroup();
-		ICurricularCourseGroup curricularCourseGroup = (ICurricularCourseGroup) persistentCurricularCourseGroup
+		CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup
 				.readByOID(CurricularCourseGroup.class, groupId, true);
 
 		curricularCourseGroup.getCurricularCourses().clear();
 		for (int i = 0; i < courseIds.length; i++) {
 			Integer courseId = courseIds[i];
-			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse
 					.readByOID(CurricularCourse.class, courseId);
 			curricularCourseGroup.addCurricularCourses(curricularCourse);
 		}

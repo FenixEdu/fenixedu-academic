@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 /**
@@ -21,7 +21,7 @@ public interface IPersistentEnrollment extends IPersistentObject {
     public List readEnrolmentsByStudentCurricularPlanAndEnrolmentState(Integer studentCurricularPlanID,
             EnrollmentState enrollmentState) throws ExcepcaoPersistencia;
 
-    public IEnrolment readEnrolmentByStudentNumberAndCurricularCourse(
+    public Enrolment readEnrolmentByStudentNumberAndCurricularCourse(
             Integer studentNumber, Integer curricularCourseId, String year)
             throws ExcepcaoPersistencia;
     
@@ -35,7 +35,7 @@ public interface IPersistentEnrollment extends IPersistentObject {
             Integer studentCurricularPlanId, Integer curricularCourseId,
             Integer executionPeriodId) throws ExcepcaoPersistencia;
 
-    public IEnrolment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
+    public Enrolment readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
             Integer studentCurricularPlanId, Integer curricularCourseId,
             Integer executionPeriodId) throws ExcepcaoPersistencia;
 

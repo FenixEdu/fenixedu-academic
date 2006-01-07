@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
+import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 
 /**
  * 
@@ -86,11 +86,11 @@ public class InfoCandidateEnrolment extends InfoObject {
         this.infoCurricularCourse = infoCurricularCourse;
     }
 
-    public void copyFromDomain(ICandidateEnrolment candidateEnrolment) {
+    public void copyFromDomain(CandidateEnrolment candidateEnrolment) {
         super.copyFromDomain(candidateEnrolment);
     }
 
-    public static InfoCandidateEnrolment newInfoFromDomain(ICandidateEnrolment candidateEnrolment) {
+    public static InfoCandidateEnrolment newInfoFromDomain(CandidateEnrolment candidateEnrolment) {
         InfoCandidateEnrolment infoCandidateEnrolment = null;
         if (candidateEnrolment != null) {
             infoCandidateEnrolment = new InfoCandidateEnrolment();

@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -41,14 +41,14 @@ public class ReadExecutionCourseProjects implements IService {
 		InfoSiteProjects infoSiteProjects = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+		ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
 				.readByOID(ExecutionCourse.class, executionCourseCode);
 
 		List executionCourseProjects = new ArrayList();
 		List groupPropertiesExecutionCourseList = executionCourse.getExportGroupings();
 		Iterator iterGroupPropertiesExecutionCourseList = groupPropertiesExecutionCourseList.iterator();
 		while (iterGroupPropertiesExecutionCourseList.hasNext()) {
-			IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterGroupPropertiesExecutionCourseList
+			ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterGroupPropertiesExecutionCourseList
 					.next();
 			if (groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1
 					|| groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 2) {
@@ -63,7 +63,7 @@ public class ReadExecutionCourseProjects implements IService {
 			Iterator iterator = executionCourseProjects.iterator();
 
 			while (iterator.hasNext()) {
-				IGrouping groupProperties = (IGrouping) iterator.next();
+				Grouping groupProperties = (Grouping) iterator.next();
 
 				InfoGrouping infoGroupProperties = InfoGrouping.newInfoFromDomain(groupProperties);
 				infoGroupPropertiesList.add(infoGroupProperties);

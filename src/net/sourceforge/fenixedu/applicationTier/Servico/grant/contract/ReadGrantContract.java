@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,9 +33,9 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 		return sp.getIPersistentGrantContract();
 	}
 
-	protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
+	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
 		return InfoGrantContractWithGrantOwnerAndGrantType
-				.newInfoFromDomain((IGrantContract) domainObject);
+				.newInfoFromDomain((GrantContract) domainObject);
 	}
 
 	protected Class getDomainObjectClass() {
@@ -49,7 +49,7 @@ public class ReadGrantContract extends ReadDomainObjectService implements IServi
 		InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
 
 		// get the GrantOrientationTeacher for the contract
-		IGrantOrientationTeacher orientationTeacher = pgot.readActualGrantOrientationTeacherByContract(
+		GrantOrientationTeacher orientationTeacher = pgot.readActualGrantOrientationTeacherByContract(
 				infoGrantContract.getIdInternal(), new Integer(0));
 		InfoGrantOrientationTeacher infoOrientationTeacher = InfoGrantOrientationTeacherWithTeacherAndGrantContract
 				.newInfoFromDomain(orientationTeacher);

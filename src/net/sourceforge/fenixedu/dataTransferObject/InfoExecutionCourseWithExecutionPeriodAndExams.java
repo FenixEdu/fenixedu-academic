@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
  * @author Tânia Pousão
@@ -19,14 +19,14 @@ import net.sourceforge.fenixedu.domain.IExecutionCourse;
 public class InfoExecutionCourseWithExecutionPeriodAndExams extends
         InfoExecutionCourseWithExecutionPeriod {
 
-    public void copyFromDomain(IExecutionCourse executionCourse) {
+    public void copyFromDomain(ExecutionCourse executionCourse) {
         super.copyFromDomain(executionCourse);
         if (executionCourse != null) {
-            List<IExam> associatedExams = new ArrayList();
-            List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
-            for(IEvaluation evaluation : associatedEvaluations){
-                if (evaluation instanceof IExam){
-                    associatedExams.add((IExam) evaluation);
+            List<Exam> associatedExams = new ArrayList();
+            List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+            for(Evaluation evaluation : associatedEvaluations){
+                if (evaluation instanceof Exam){
+                    associatedExams.add((Exam) evaluation);
                 }
             }
             setAssociatedInfoExams(copyIExam2InfoExam(associatedExams));
@@ -41,14 +41,14 @@ public class InfoExecutionCourseWithExecutionPeriodAndExams extends
         List associatedInfoExams = new ArrayList(associatedExams.size());
         for (Iterator iterator = associatedExams.iterator(); iterator.hasNext(); ) {
             Object object = iterator.next();
-            if (object != null && object instanceof IExam) {
-                associatedInfoExams.add(InfoExam.newInfoFromDomain((IExam) object));
+            if (object != null && object instanceof Exam) {
+                associatedInfoExams.add(InfoExam.newInfoFromDomain((Exam) object));
             }
         }
         return associatedInfoExams;
     }
 
-    public static InfoExecutionCourse newInfoFromDomain(IExecutionCourse executionCourse) {
+    public static InfoExecutionCourse newInfoFromDomain(ExecutionCourse executionCourse) {
         InfoExecutionCourseWithExecutionPeriodAndExams infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourseWithExecutionPeriodAndExams();

@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -20,15 +20,15 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
  */
 public class OldInquiriesCoursesResVO extends VersionedObjectsBase implements IPersistentOldInquiriesCoursesRes {
 
-    public IOldInquiriesCoursesRes readByExecutionPeriodAndDegreeIdAndCourseCode(
+    public OldInquiriesCoursesRes readByExecutionPeriodAndDegreeIdAndCourseCode(
             Integer executionPeriodId, Integer degreeId, String courseCode)
     		throws ExcepcaoPersistencia {
         
 		
-		IDegree degree = (IDegree) readByOID(Degree.class, degreeId);
-		List<IOldInquiriesCoursesRes> inquiriesCoursesRes = degree.getAssociatedOldInquiriesCoursesRes();
+		Degree degree = (Degree) readByOID(Degree.class, degreeId);
+		List<OldInquiriesCoursesRes> inquiriesCoursesRes = degree.getAssociatedOldInquiriesCoursesRes();
 		
-		for(IOldInquiriesCoursesRes ioicr : inquiriesCoursesRes) {
+		for(OldInquiriesCoursesRes ioicr : inquiriesCoursesRes) {
 			if(ioicr.getExecutionPeriod().getIdInternal().equals(executionPeriodId) &&
 					ioicr.getCourseCode().equalsIgnoreCase(courseCode)) {
 				return ioicr;

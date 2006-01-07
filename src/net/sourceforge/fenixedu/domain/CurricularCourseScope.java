@@ -12,7 +12,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 
 	public CurricularCourseScope() {}
 	
-	public CurricularCourseScope(IBranch branch, ICurricularCourse curricularCourse, ICurricularSemester curricularSemester,
+	public CurricularCourseScope(Branch branch, CurricularCourse curricularCourse, CurricularSemester curricularSemester,
 								 Calendar beginDate, Calendar endDate, String Annotation){
 		
         // check that there isn't another scope active with the same curricular course, branch and semester
@@ -104,7 +104,7 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	}
 	
 	
-	public void edit(IBranch branch, ICurricularSemester curricularSemester,
+	public void edit(Branch branch, CurricularSemester curricularSemester,
 			 Calendar beginDate, Calendar endDate, String Annotation) {
    	
 		setBranch(branch);

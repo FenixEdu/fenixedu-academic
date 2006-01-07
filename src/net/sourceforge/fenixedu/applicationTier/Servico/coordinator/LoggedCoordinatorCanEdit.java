@@ -4,11 +4,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -44,21 +44,21 @@ public class LoggedCoordinatorCanEdit implements IService {
             throw new FenixServiceException("nullUsername");
         }
 
-        ITeacher teacher = persistentTeacher.readTeacherByUsername(username);
+        Teacher teacher = persistentTeacher.readTeacherByUsername(username);
 
-        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeCode);
 
-        IExecutionYear executionYear = executionDegree.getExecutionYear();
+        ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseCode);
 
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }
 
-        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+        Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
                 teacher.getIdInternal(), executionDegree.getIdInternal());
 
         // if user is coordinator and is the current coordinator and

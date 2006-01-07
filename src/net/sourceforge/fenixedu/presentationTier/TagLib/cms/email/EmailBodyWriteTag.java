@@ -15,7 +15,7 @@ import javax.mail.MessagingException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 
 import org.apache.struts.Globals;
 import org.apache.struts.taglib.TagUtils;
@@ -29,7 +29,7 @@ public class EmailBodyWriteTag extends TagSupport
 {
 	protected String locale = Globals.LOCALE_KEY;;
 
-	protected IMailMessage message;
+	protected MailMessage message;
 
 	protected String bundle;
 	
@@ -107,7 +107,7 @@ public class EmailBodyWriteTag extends TagSupport
 		}
 		else
 		{
-			this.message = (IMailMessage) value;
+			this.message = (MailMessage) value;
 		}
 		// Convert value to the String with some formatting
 		try

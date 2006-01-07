@@ -24,24 +24,24 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -57,17 +57,17 @@ import sun.text.Normalizer;
 
 public class FunctionsManagementBackingBean extends FenixBackingBean {
 
-    public List<IPerson> personsList, allPersonsList;
+    public List<Person> personsList, allPersonsList;
 
-    public List<IFunction> inherentFunctions;
+    public List<Function> inherentFunctions;
 
-    public List<IPersonFunction> activeFunctions, inactiveFunctions;
+    public List<PersonFunction> activeFunctions, inactiveFunctions;
 
     public Integer page, personID, unitID, functionID, numberOfFunctions, personFunctionID;
 
     public Integer executionPeriod, duration, disabledVar, personNumber;
 
-    public IUnit unit;
+    public Unit unit;
 
     public Double credits;
 
@@ -79,9 +79,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public HtmlInputHidden functionIDHidden, personFunctionIDHidden, executionPeriodHidden,
             durationHidden;
 
-    public IFunction function;
+    public Function function;
 
-    public IPersonFunction personFunction;
+    public PersonFunction personFunction;
 
     public FunctionsManagementBackingBean() {
         getParametersFromLinks();
@@ -216,7 +216,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private void activeFunctionsClear() throws FenixFilterException, FenixServiceException {
         this.activeFunctions.remove(this.getPersonFunction());        
-        Iterator<IFunction> iter = this.inherentFunctions.iterator();
+        Iterator<Function> iter = this.inherentFunctions.iterator();
         while(iter.hasNext()){                      
             if(iter.next().getParentInherentFunction().equals(this.getPersonFunction().getFunction())){
                 iter.remove();
@@ -224,11 +224,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public List<IPersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
+    public List<PersonFunction> getActiveFunctions() throws FenixFilterException, FenixServiceException {
         if (this.activeFunctions == null) {
-            IPerson person = this.getPerson();
-            List<IPersonFunction> activeFunctions = person.getActiveFunctions();
-            this.activeFunctions = new ArrayList<IPersonFunction>();
+            Person person = this.getPerson();
+            List<PersonFunction> activeFunctions = person.getActiveFunctions();
+            this.activeFunctions = new ArrayList<PersonFunction>();
 
             addValidFunctions(activeFunctions, this.activeFunctions);
             Collections.sort(this.activeFunctions, new BeanComparator("endDate"));
@@ -236,13 +236,13 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return this.activeFunctions;
     }
 
-    public List<IPersonFunction> getInactiveFunctions() throws FenixFilterException,
+    public List<PersonFunction> getInactiveFunctions() throws FenixFilterException,
             FenixServiceException {
 
         if (this.inactiveFunctions == null) {
-            IPerson person = this.getPerson();
-            List<IPersonFunction> inactiveFunctions = person.getInactiveFunctions();
-            this.inactiveFunctions = new ArrayList<IPersonFunction>();
+            Person person = this.getPerson();
+            List<PersonFunction> inactiveFunctions = person.getInactiveFunctions();
+            this.inactiveFunctions = new ArrayList<PersonFunction>();
 
             addValidFunctions(inactiveFunctions, this.inactiveFunctions);
             Collections.sort(this.inactiveFunctions, new BeanComparator("endDate"));
@@ -250,9 +250,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return this.inactiveFunctions;
     }
 
-    private void addValidFunctions(List<IPersonFunction> functions, List<IPersonFunction> functions_) {
-        for (IPersonFunction person_function : functions) {
-            IUnit unit = person_function.getFunction().getUnit();
+    private void addValidFunctions(List<PersonFunction> functions, List<PersonFunction> functions_) {
+        for (PersonFunction person_function : functions) {
+            Unit unit = person_function.getFunction().getUnit();
             if (unit.getParentUnits().isEmpty()) {
                 if (unit.equals(this.getEmployeeDepartmentUnit())) {
                     functions_.add(person_function);
@@ -265,9 +265,9 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private boolean addPersonFunction(List<IUnit> parentUnits, IUnit employeeUnit) {
+    private boolean addPersonFunction(List<Unit> parentUnits, Unit employeeUnit) {
         boolean found = false;
-        for (IUnit unit : parentUnits) {
+        for (Unit unit : parentUnits) {
             if (unit.equals(employeeUnit)) {
                 return true;
             } else {
@@ -301,7 +301,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public String searchPersonByName() throws FenixFilterException, FenixServiceException {
 
         if (allPersonsList == null) {
-            allPersonsList = new ArrayList<IPerson>();
+            allPersonsList = new ArrayList<Person>();
         }
         allPersonsList = getAllValidPersonsByName();
 
@@ -323,8 +323,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    private List<IPerson> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
-        List<IPerson> allPersons = getAllPersonsToSearch(RoleType.PERSON);
+    private List<Person> getAllValidPersonsByName() throws FenixServiceException, FenixFilterException {
+        List<Person> allPersons = getAllPersonsToSearch(RoleType.PERSON);
         String[] nameWords = personName.split(" ");
         normalizeName(nameWords);
         allPersons = getValidPersons(nameWords, allPersons);
@@ -332,23 +332,23 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return allPersons;
     }
 
-    private List<IPerson> getAllPersonsToSearch(RoleType roleType) throws FenixServiceException,
+    private List<Person> getAllPersonsToSearch(RoleType roleType) throws FenixServiceException,
             FenixFilterException {
         final Object[] argsToRead = { roleType };
-        IRole role = (IRole) ServiceUtils.executeService(null, "ReadRoleByRoleType", argsToRead);
-        List<IPerson> allPersons = new ArrayList<IPerson>();
-        allPersons.addAll((List<IPerson>) role.getAssociatedPersons());
+        Role role = (Role) ServiceUtils.executeService(null, "ReadRoleByRoleType", argsToRead);
+        List<Person> allPersons = new ArrayList<Person>();
+        allPersons.addAll((List<Person>) role.getAssociatedPersons());
         return allPersons;
     }
 
-    private List<IPerson> getAllPersonsToSearchByClass() throws FenixServiceException,
+    private List<Person> getAllPersonsToSearchByClass() throws FenixServiceException,
             FenixFilterException {
-        List<IPerson> allPersons = new ArrayList<IPerson>();
+        List<Person> allPersons = new ArrayList<Person>();
         RoleType personTypeAux = RoleType.valueOf(personType);
         if (personTypeAux.equals(RoleType.EMPLOYEE)) {
-            List<IEmployee> allEmployees = new ArrayList<IEmployee>();
+            List<Employee> allEmployees = new ArrayList<Employee>();
             allEmployees.addAll(readAllDomainObjects(Employee.class));
-            for (IEmployee employee : allEmployees) {
+            for (Employee employee : allEmployees) {
                 if (employee.getEmployeeNumber().equals(personNumber)) {
                     if (!employee.getPerson().hasRole(RoleType.TEACHER)) {
                         allPersons.add(employee.getPerson());
@@ -357,27 +357,27 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 }
             }
         } else if (personTypeAux.equals(RoleType.TEACHER)) {
-            List<ITeacher> allTeachers = new ArrayList<ITeacher>();
+            List<Teacher> allTeachers = new ArrayList<Teacher>();
             allTeachers.addAll(readAllDomainObjects(Teacher.class));
-            for (ITeacher teacher : allTeachers) {
+            for (Teacher teacher : allTeachers) {
                 if (teacher.getTeacherNumber().equals(personNumber)) {
                     allPersons.add(teacher.getPerson());
                     return allPersons;
                 }
             }
         } else if (personTypeAux.equals(RoleType.STUDENT)) {
-            List<IStudent> allStudents = new ArrayList<IStudent>();
+            List<Student> allStudents = new ArrayList<Student>();
             allStudents.addAll(readAllDomainObjects(Student.class));
-            for (IStudent student : allStudents) {
+            for (Student student : allStudents) {
                 if (student.getNumber().equals(personNumber)) {
                     allPersons.add(student.getPerson());
                     return allPersons;
                 }
             }
         } else if (personTypeAux.equals(RoleType.GRANT_OWNER)) {
-            List<IGrantOwner> allGrantOwner = new ArrayList<IGrantOwner>();
+            List<GrantOwner> allGrantOwner = new ArrayList<GrantOwner>();
             allGrantOwner.addAll(readAllDomainObjects(GrantOwner.class));
-            for (IGrantOwner grantOwner : allGrantOwner) {
+            for (GrantOwner grantOwner : allGrantOwner) {
                 if (grantOwner.getNumber().equals(personNumber)) {
                     allPersons.add(grantOwner.getPerson());
                     return allPersons;
@@ -398,18 +398,18 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return "";
     }
 
-    public List<IPerson> getPersonsList() throws FenixFilterException, FenixServiceException {
+    public List<Person> getPersonsList() throws FenixFilterException, FenixServiceException {
         if (this.personsList == null) {
-            this.personsList = new ArrayList<IPerson>();
+            this.personsList = new ArrayList<Person>();
         }
         return this.personsList;
     }
 
-    private List<IPerson> getValidPersons(String[] nameWords, List<IPerson> allPersons) {
+    private List<Person> getValidPersons(String[] nameWords, List<Person> allPersons) {
 
-        List<IPerson> persons = new ArrayList();
+        List<Person> persons = new ArrayList();
 
-        for (IPerson person : allPersons) {
+        for (Person person : allPersons) {
             if (verifyNameEquality(nameWords, person)) {
                 persons.add(person);
             }
@@ -417,7 +417,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return persons;
     }
 
-    private boolean verifyNameEquality(String[] nameWords, IPerson person) {
+    private boolean verifyNameEquality(String[] nameWords, Person person) {
 
         if (nameWords == null) {
             return true;
@@ -478,7 +478,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getValidFunctions() throws FenixFilterException, FenixServiceException {
         List<SelectItem> list = new ArrayList<SelectItem>();
         SelectItem selectItem = null;
-        for (IFunction function : this.getUnit().getFunctions()) {
+        for (Function function : this.getUnit().getFunctions()) {
             if (!function.isInherentFunction()
                     && ((this.getPersonFunction() != null && function.equals(this.getPersonFunction()
                             .getFunction())) || (this.getPersonFunction() == null && function
@@ -510,11 +510,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
-        List<IExecutionYear> allExecutionYears = readAllDomainObjects(ExecutionYear.class);
+        List<ExecutionYear> allExecutionYears = readAllDomainObjects(ExecutionYear.class);
         List<SelectItem> list = new ArrayList<SelectItem>();
         String[] year = null;
 
-        for (IExecutionYear executionYear : allExecutionYears) {
+        for (ExecutionYear executionYear : allExecutionYears) {
             year = executionYear.getYear().split("/");
             if (Integer.valueOf(year[0].trim()) >= 2005) {
                 newSelectItem(executionYear, list);
@@ -524,8 +524,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return list;
     }
 
-    private void newSelectItem(IExecutionYear executionYear, List<SelectItem> list) {
-        for (IExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+    private void newSelectItem(ExecutionYear executionYear, List<SelectItem> list) {
+        for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
             SelectItem selectItem = new SelectItem();
             selectItem.setValue(executionPeriod.getIdInternal());
             selectItem.setLabel(executionYear.getYear() + " - " + executionPeriod.getSemester()
@@ -547,14 +547,14 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    private void getUnitsList(IUnit parentUnit, int index, StringBuffer buffer) {
+    private void getUnitsList(Unit parentUnit, int index, StringBuffer buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(
                 personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
                 parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getSubUnits()) {
+        for (Unit subUnit : parentUnit.getSubUnits()) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, index + 1, buffer);
             }
@@ -563,14 +563,14 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         buffer.append("</ul>");
     }
 
-    public IUnit getEmployeeDepartmentUnit() {
+    public Unit getEmployeeDepartmentUnit() {
 
         IUserView userView = getUserView();
-        IEmployee personEmployee = userView.getPerson().getEmployee();
-        IUnit departmentUnit = null;
+        Employee personEmployee = userView.getPerson().getEmployee();
+        Unit departmentUnit = null;
 
         if (personEmployee != null) {
-            IDepartment department = personEmployee.getCurrentDepartmentWorkingPlace();
+            Department department = personEmployee.getCurrentDepartmentWorkingPlace();
             if (department != null) {
                 departmentUnit = department.getUnit();
             }
@@ -579,10 +579,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return departmentUnit;
     }
 
-    public IPerson getPerson() throws FenixFilterException, FenixServiceException {
+    public Person getPerson() throws FenixFilterException, FenixServiceException {
 
         final Object[] argsToRead = { Person.class, this.getPersonID() };
-        return (IPerson) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
+        return (Person) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
     }
 
     private void normalizeName(String[] nameWords) {
@@ -600,7 +600,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return getAllPersonsList().size();
     }
 
-    public List<IPerson> getAllPersonsList() throws FenixFilterException, FenixServiceException {
+    public List<Person> getAllPersonsList() throws FenixFilterException, FenixServiceException {
         if (allPersonsList == null) {
             if (this.page != null) {
                 if (this.personName != null) {
@@ -609,13 +609,13 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                     searchPersonByNumber();
                 }
             } else {
-                allPersonsList = new ArrayList<IPerson>();
+                allPersonsList = new ArrayList<Person>();
             }
         }
         return allPersonsList;
     }
 
-    public void setAllPersonsList(List<IPerson> allPersonsList) {
+    public void setAllPersonsList(List<Person> allPersonsList) {
         this.allPersonsList = allPersonsList;
     }
 
@@ -634,11 +634,11 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return page;
     }
 
-    public IUnit getUnit() throws FenixFilterException, FenixServiceException {
+    public Unit getUnit() throws FenixFilterException, FenixServiceException {
 
         if (this.unit == null && this.getUnitID() != null) {
             final Object[] argsToRead = { Unit.class, this.getUnitID() };
-            this.unit = (IUnit) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
+            this.unit = (Unit) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
 
         } else if (this.unit == null && this.getPersonFunctionID() != null) {
             this.unit = this.getPersonFunction().getFunction().getUnit();
@@ -685,10 +685,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.unitIDHidden = unitIDHidden;
     }
 
-    public IFunction getFunction() throws FenixFilterException, FenixServiceException {
+    public Function getFunction() throws FenixFilterException, FenixServiceException {
         if (this.function == null && this.getFunctionID() != null) {
             final Object[] argsToRead = { Function.class, this.getFunctionID() };
-            this.function = (IFunction) ServiceUtils
+            this.function = (Function) ServiceUtils
                     .executeService(null, "ReadDomainObject", argsToRead);
 
         } else if (this.function == null && this.getPersonFunctionID() != null) {
@@ -697,7 +697,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return this.function;
     }
 
-    public void setFunction(IFunction function) {
+    public void setFunction(Function function) {
         this.function = function;
     }
 
@@ -733,7 +733,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) readDomainObject(
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(
                     ExecutionPeriod.class, this.executionPeriod);
 
             this.beginDate = (executionPeriod != null) ? DateFormatUtil.format("dd/MM/yyyy",
@@ -777,17 +777,17 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.endDateHidden == null || this.endDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) readDomainObject(
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(
                     ExecutionPeriod.class, this.executionPeriod);
 
-            IExecutionPeriod executionPeriodWithDuration = getDurationEndDate(executionPeriod);
+            ExecutionPeriod executionPeriodWithDuration = getDurationEndDate(executionPeriod);
             this.endDate = DateFormatUtil.format("dd/MM/yyyy", executionPeriodWithDuration.getEndDate());
         }
         return this.endDate;
     }
 
-    private IExecutionPeriod getDurationEndDate(IExecutionPeriod executionPeriod) {
-        IExecutionPeriod finalExecutionPeriod = executionPeriod;
+    private ExecutionPeriod getDurationEndDate(ExecutionPeriod executionPeriod) {
+        ExecutionPeriod finalExecutionPeriod = executionPeriod;
         if (this.getDurationHidden() != null && this.durationHidden.getValue() != null
                 && !this.durationHidden.getValue().equals("")) {
             Integer duration = Integer.valueOf(this.durationHidden.getValue().toString());
@@ -806,7 +806,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.endDate = endDate;
     }
 
-    public void setUnit(IUnit unit) {
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 
@@ -818,7 +818,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.page = page;
     }
 
-    public void setPersonsList(List<IPerson> personsList) {
+    public void setPersonsList(List<Person> personsList) {
         this.personsList = personsList;
     }
 
@@ -912,16 +912,16 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.personFunctionID = personFunctionID;
     }
 
-    public IPersonFunction getPersonFunction() throws FenixFilterException, FenixServiceException {
+    public PersonFunction getPersonFunction() throws FenixFilterException, FenixServiceException {
         if (this.personFunction == null) {
             final Object[] argsToRead = { PersonFunction.class, this.getPersonFunctionID() };
-            this.personFunction = (IPersonFunction) ServiceUtils.executeService(null,
+            this.personFunction = (PersonFunction) ServiceUtils.executeService(null,
                     "ReadDomainObject", argsToRead);
         }
         return personFunction;
     }
 
-    public void setPersonFunction(IPersonFunction person_Function) {
+    public void setPersonFunction(PersonFunction person_Function) {
         this.personFunction = person_Function;
     }
 
@@ -940,25 +940,25 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         this.personFunctionIDHidden = personFunctionIDHidden;
     }
 
-    public List<IFunction> getInherentFunctions() throws FenixFilterException, FenixServiceException {
+    public List<Function> getInherentFunctions() throws FenixFilterException, FenixServiceException {
         if (this.inherentFunctions == null) {
-            this.inherentFunctions = new ArrayList<IFunction>();
-            for (IPersonFunction personFunction : this.getActiveFunctions()) {
+            this.inherentFunctions = new ArrayList<Function>();
+            for (PersonFunction personFunction : this.getActiveFunctions()) {
                 this.inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
             }
         }
         return inherentFunctions;
     }
 
-    public void setInherentFunctions(List<IFunction> inherentFunctions) {
+    public void setInherentFunctions(List<Function> inherentFunctions) {
         this.inherentFunctions = inherentFunctions;
     }
 
-    public void setActiveFunctions(List<IPersonFunction> activeFunctions) {
+    public void setActiveFunctions(List<PersonFunction> activeFunctions) {
         this.activeFunctions = activeFunctions;
     }
 
-    public void setInactiveFunctions(List<IPersonFunction> inactiveFunctions) {
+    public void setInactiveFunctions(List<PersonFunction> inactiveFunctions) {
         this.inactiveFunctions = inactiveFunctions;
     }
 
@@ -974,8 +974,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     private Integer getCurrentExecutionPeriodID() throws FenixFilterException, FenixServiceException {
-        List<IExecutionPeriod> allExecutionPeriods = readAllDomainObjects(ExecutionPeriod.class);
-        for (IExecutionPeriod period : allExecutionPeriods) {
+        List<ExecutionPeriod> allExecutionPeriods = readAllDomainObjects(ExecutionPeriod.class);
+        for (ExecutionPeriod period : allExecutionPeriods) {
             if (period.getState().equals(PeriodState.CURRENT)) {
                 return period.getIdInternal();
             }

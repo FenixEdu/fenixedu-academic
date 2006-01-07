@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,7 +20,7 @@ public class DeleteSupportLesson implements IService {
     public void run(Integer supportLessonID) throws ExcepcaoPersistencia {
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ISupportLesson supportLesson = (ISupportLesson) persistentSupport.getIPersistentSupportLesson()
+        SupportLesson supportLesson = (SupportLesson) persistentSupport.getIPersistentSupportLesson()
                 .readByOID(SupportLesson.class, supportLessonID);
         supportLesson.delete();
     }

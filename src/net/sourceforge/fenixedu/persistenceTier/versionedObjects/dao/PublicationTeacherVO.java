@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationTeacher;
@@ -16,15 +16,15 @@ import org.apache.commons.collections.Predicate;
 
 public class PublicationTeacherVO extends VersionedObjectsBase implements IPersistentPublicationTeacher{
 
-    public IPublicationTeacher readByTeacherAndPublication(final ITeacher teacher,
-			final IPublication publication) throws ExcepcaoPersistencia{
+    public PublicationTeacher readByTeacherAndPublication(final Teacher teacher,
+			final Publication publication) throws ExcepcaoPersistencia{
 
-        final List<IPublicationTeacher> publicationTeachers = (List<IPublicationTeacher>) readAll(PublicationTeacher.class);
+        final List<PublicationTeacher> publicationTeachers = (List<PublicationTeacher>) readAll(PublicationTeacher.class);
 
-    	return (IPublicationTeacher)CollectionUtils.find(publicationTeachers,new Predicate() {
+    	return (PublicationTeacher)CollectionUtils.find(publicationTeachers,new Predicate() {
 
             public boolean evaluate(Object object) {
-                final IPublicationTeacher publicationTeacher = (IPublicationTeacher) object;
+                final PublicationTeacher publicationTeacher = (PublicationTeacher) object;
                 if (publicationTeacher.getTeacher().getIdInternal().equals(teacher.getIdInternal()) &&
                         publicationTeacher.getPublication().getIdInternal().equals(publication.getIdInternal())) {
                     return true;
@@ -36,15 +36,15 @@ public class PublicationTeacherVO extends VersionedObjectsBase implements IPersi
 
     }
     
-    public List readByTeacherAndPublicationArea(final ITeacher teacher, final PublicationArea publicationArea)
+    public List readByTeacherAndPublicationArea(final Teacher teacher, final PublicationArea publicationArea)
             throws ExcepcaoPersistencia{
 
-        final List<IPublicationTeacher> publicationTeachers = (List<IPublicationTeacher>) readAll(PublicationTeacher.class);
+        final List<PublicationTeacher> publicationTeachers = (List<PublicationTeacher>) readAll(PublicationTeacher.class);
 
-        return (List<IPublicationTeacher>)CollectionUtils.select(publicationTeachers,new Predicate() {
+        return (List<PublicationTeacher>)CollectionUtils.select(publicationTeachers,new Predicate() {
 
             public boolean evaluate(Object object) {
-                final IPublicationTeacher publicationTeacher = (IPublicationTeacher) object;
+                final PublicationTeacher publicationTeacher = (PublicationTeacher) object;
                 if (publicationTeacher.getTeacher().getIdInternal().equals(teacher.getIdInternal()) &&
                         publicationTeacher.getPublicationArea().equals(publicationArea)) {
                     return true;

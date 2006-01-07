@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,7 +39,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
         if (finalDegreeWorkProposals != null) {
             finalDegreeWorkProposalHeaders = new ArrayList();
             for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
+                Proposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
 
                 if (proposal != null) {
                     FinalDegreeWorkProposalHeader finalDegreeWorkProposalHeader = new FinalDegreeWorkProposalHeader();
@@ -67,7 +67,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
                     if (proposal.getBranches() != null) {
                         finalDegreeWorkProposalHeader.setBranches(new ArrayList());
                         for (int j = 0; j < proposal.getBranches().size(); j++) {
-                            IBranch branch = proposal.getBranches().get(j);
+                            Branch branch = proposal.getBranches().get(j);
 
                             if (branch != null) {
                                 InfoBranch infoBranch = new InfoBranch();
@@ -83,7 +83,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
                         infoGroup.setGroupStudents(new ArrayList());
                         for (int j = 0; j < proposal.getGroupAttributedByTeacher().getGroupStudents()
                                 .size(); j++) {
-                            IGroupStudent groupStudent = proposal
+                            GroupStudent groupStudent = proposal
                                     .getGroupAttributedByTeacher().getGroupStudents().get(j);
                             InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                             InfoStudent infoStudent = new InfoStudent();
@@ -101,7 +101,7 @@ public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
                         InfoGroup infoGroup = new InfoGroup();
                         infoGroup.setGroupStudents(new ArrayList());
                         for (int j = 0; j < proposal.getGroupAttributed().getGroupStudents().size(); j++) {
-                            IGroupStudent groupStudent = proposal.getGroupAttributed()
+                            GroupStudent groupStudent = proposal.getGroupAttributed()
                                     .getGroupStudents().get(j);
                             InfoGroupStudent infoGroupStudent = new InfoGroupStudent();
                             InfoStudent infoStudent = new InfoStudent();

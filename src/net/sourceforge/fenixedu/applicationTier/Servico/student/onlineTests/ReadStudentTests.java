@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentDistributedTests;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,12 +28,12 @@ public class ReadStudentTests implements IService {
     public Object run(String userName, Integer executionCourseId) throws ExcepcaoPersistencia {
         InfoSiteStudentDistributedTests infoSite = new InfoSiteStudentDistributedTests();
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
-        List<IDistributedTest> distributedTestList = persistentSuport.getIPersistentDistributedTest().readByStudentAndExecutionCourse(
+        Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+        List<DistributedTest> distributedTestList = persistentSuport.getIPersistentDistributedTest().readByStudentAndExecutionCourse(
                 student.getIdInternal(), executionCourseId);
         List<InfoDistributedTest> testToDoList = new ArrayList<InfoDistributedTest>();
         List<InfoDistributedTest> doneTestsList = new ArrayList<InfoDistributedTest>();
-        for (IDistributedTest distributedTest : distributedTestList) {
+        for (DistributedTest distributedTest : distributedTestList) {
             InfoDistributedTest infoDistributedTest = InfoDistributedTest.newInfoFromDomain(distributedTest);
             if (testsToDo(distributedTest)) {
                 if (!testToDoList.contains(infoDistributedTest))
@@ -48,7 +48,7 @@ public class ReadStudentTests implements IService {
         return infoSite;
     }
 
-    private boolean testsToDo(IDistributedTest distributedTest) {
+    private boolean testsToDo(DistributedTest distributedTest) {
         Calendar calendar = Calendar.getInstance();
         CalendarDateComparator dateComparator = new CalendarDateComparator();
         CalendarHourComparator hourComparator = new CalendarHourComparator();
@@ -70,7 +70,7 @@ public class ReadStudentTests implements IService {
         return false;
     }
 
-    private boolean doneTests(IDistributedTest distributedTest) {
+    private boolean doneTests(DistributedTest distributedTest) {
         Calendar calendar = Calendar.getInstance();
         CalendarDateComparator dateComparator = new CalendarDateComparator();
         CalendarHourComparator hourComparator = new CalendarHourComparator();

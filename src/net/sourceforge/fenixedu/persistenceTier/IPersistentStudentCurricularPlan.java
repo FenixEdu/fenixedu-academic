@@ -1,5 +1,5 @@
 /*
- * IStudentCurricularPlan.java
+ * StudentCurricularPlan.java
  * 
  * Created on 21 of December de 2002, 16:57
  */
@@ -12,17 +12,17 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
 public interface IPersistentStudentCurricularPlan extends IPersistentObject {
 
-    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
+    public StudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
             DegreeType degreeType) throws ExcepcaoPersistencia;
 
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
+    public StudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     /**
@@ -31,7 +31,7 @@ public interface IPersistentStudentCurricularPlan extends IPersistentObject {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
+    public StudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
             DegreeType degreeType) throws ExcepcaoPersistencia;
 
     /**

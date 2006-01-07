@@ -8,7 +8,7 @@ public class Mark extends Mark_Base {
     	setOjbConcreteClass(this.getClass().getName());
     }
 
-    public Mark(final IAttends attends, final IEvaluation evaluation, final String mark) {
+    public Mark(final Attends attends, final Evaluation evaluation, final String mark) {
         setAttend(attends);
         setEvaluation(evaluation);
         setMark(mark);

@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -15,21 +15,21 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class WebSiteItemOJB extends PersistentObjectOJB implements IPersistentWebSiteItem {
 
-    public IWebSiteItem readByWebSiteSectionAndName(IWebSiteSection webSiteSection, String title)
+    public WebSiteItem readByWebSiteSectionAndName(WebSiteSection webSiteSection, String title)
             throws ExcepcaoPersistencia {
-        IWebSiteItem item = null;
+        WebSiteItem item = null;
         if (webSiteSection != null && title != null) {
             Criteria criteria = new Criteria();
 
             criteria.addEqualTo("webSiteSection.name", webSiteSection.getName());
             criteria.addEqualTo("title", title);
 
-            item = (IWebSiteItem) queryObject(WebSiteItem.class, criteria);
+            item = (WebSiteItem) queryObject(WebSiteItem.class, criteria);
         }
         return item;
     }
 
-    public List readAllWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection)
+    public List readAllWebSiteItemsByWebSiteSection(WebSiteSection webSiteSection)
             throws ExcepcaoPersistencia {
         List items = null;
         if (webSiteSection != null) {
@@ -43,7 +43,7 @@ public class WebSiteItemOJB extends PersistentObjectOJB implements IPersistentWe
         return items;
     }
 
-    public List readPublishedWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection)
+    public List readPublishedWebSiteItemsByWebSiteSection(WebSiteSection webSiteSection)
             throws ExcepcaoPersistencia {
         List items = null;
         if (webSiteSection != null) {
@@ -58,7 +58,7 @@ public class WebSiteItemOJB extends PersistentObjectOJB implements IPersistentWe
         return items;
     }
 
-    public void delete(IWebSiteItem item) throws ExcepcaoPersistencia {
+    public void delete(WebSiteItem item) throws ExcepcaoPersistencia {
         super.delete(item);
     }
 

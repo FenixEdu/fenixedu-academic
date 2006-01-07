@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 /**
  * @author Fernanda Quitério Created on 23/Jul/2004
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
 public class InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear extends
         InfoCurricularCourseScopeWithBranchAndSemesterAndYear {
 
-    public void copyFromDomain(ICurricularCourseScope curricularCourseScope) {
+    public void copyFromDomain(CurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);
         if (curricularCourseScope != null) {
             setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(curricularCourseScope
@@ -18,7 +18,7 @@ public class InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAn
     }
 
     public static InfoCurricularCourseScope newInfoFromDomain(
-            ICurricularCourseScope curricularCourseScope) {
+            CurricularCourseScope curricularCourseScope) {
         InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear infoCurricularCourseScope = null;
         if (curricularCourseScope != null) {
             infoCurricularCourseScope = new InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear();

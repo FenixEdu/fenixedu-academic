@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularC
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -41,15 +41,15 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IService {
             ExcepcaoPersistencia {
 
         List infoCurricularCourseList = new ArrayList();
-        ISite site = null;
+        Site site = null;
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) executionCourseDAO.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) executionCourseDAO.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
             for (int i = 0; i < executionCourse.getAssociatedCurricularCourses().size(); i++) {
-                ICurricularCourse curricularCourse = executionCourse
+                CurricularCourse curricularCourse = executionCourse
                         .getAssociatedCurricularCourses().get(i);
 
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
@@ -57,7 +57,7 @@ public class ReadCurricularCourseListByExecutionCourseCode implements IService {
                         .getScopes(), new Transformer() {
 
                     public Object transform(Object arg0) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
                         return InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
                     }
                 }));

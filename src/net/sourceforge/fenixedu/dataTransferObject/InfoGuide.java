@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 
@@ -327,9 +327,9 @@ public class InfoGuide extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IGuide guide) {
+    public void copyFromDomain(Guide guide) {
         super.copyFromDomain(guide);
         if (guide != null) {
             setCreationDate(guide.getCreationDate());
@@ -344,7 +344,7 @@ public class InfoGuide extends InfoObject {
         }
     }
 
-    public static InfoGuide newInfoFromDomain(IGuide guide) {
+    public static InfoGuide newInfoFromDomain(Guide guide) {
         InfoGuide infoGuide = null;
         if (guide != null) {
             infoGuide = new InfoGuide();

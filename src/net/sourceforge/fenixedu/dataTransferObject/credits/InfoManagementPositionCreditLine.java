@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
+import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 
 /**
  * @author jpvl
@@ -38,7 +38,7 @@ public class InfoManagementPositionCreditLine extends InfoDatePeriodBaseCreditLi
         this.credits = credits;
     }
 
-    public static InfoManagementPositionCreditLine newInfoFromDomain(IManagementPositionCreditLine managementPositionCreditLine) {
+    public static InfoManagementPositionCreditLine newInfoFromDomain(ManagementPositionCreditLine managementPositionCreditLine) {
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(managementPositionCreditLine.getTeacher());
 
         InfoManagementPositionCreditLine infoCreditLine = new InfoManagementPositionCreditLine();

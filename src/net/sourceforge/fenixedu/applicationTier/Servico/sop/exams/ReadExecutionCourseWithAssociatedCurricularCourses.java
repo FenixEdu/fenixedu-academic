@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeAndScopes;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,7 +35,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCourses implements IServ
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
@@ -47,7 +47,7 @@ public class ReadExecutionCourseWithAssociatedCurricularCourses implements IServ
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
         infoExecutionCourse.setAssociatedInfoCurricularCourses(infoCurricularCourses);
 
-        for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegreeAndScopes
                     .newInfoFromDomain(curricularCourse);
 

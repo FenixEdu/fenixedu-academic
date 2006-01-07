@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -57,7 +57,7 @@ public class ReadExamsMapByRooms implements IService {
             infoRoomExamsMap.setStartSeason2(null);
             infoRoomExamsMap.setEndSeason2(endSeason2);
 
-            final List<IExam> exams = persistentSupport.getIPersistentExam()
+            final List<Exam> exams = persistentSupport.getIPersistentExam()
                     .readByRoomAndExecutionPeriod(infoRoom.getNome(), infoExecutionPeriod.getName(),
                             infoExecutionPeriod.getInfoExecutionYear().getYear());
             infoRoomExamsMap.setExams(getInfoExams(exams));
@@ -67,9 +67,9 @@ public class ReadExamsMapByRooms implements IService {
         return infoRoomExamMapList;
     }
 
-    private List<InfoExam> getInfoExams(List<IExam> exams) {
+    private List<InfoExam> getInfoExams(List<Exam> exams) {
         final List<InfoExam> result = new ArrayList<InfoExam>(exams.size());
-        for (final IExam exam : exams) {
+        for (final Exam exam : exams) {
             InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
             // Use one execution course
             infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(exam
@@ -82,13 +82,13 @@ public class ReadExamsMapByRooms implements IService {
     private InfoPeriod calculateExamsSeason(final ISuportePersistente persistentSupport,
             final String year, final int semester) throws ExcepcaoPersistencia {
 
-        final List<IExecutionDegree> executionDegreesList = persistentSupport
+        final List<ExecutionDegree> executionDegreesList = persistentSupport
                 .getIPersistentExecutionDegree().readByExecutionYear(year);
 
         Calendar startSeason1 = null, endSeason2 = null;
         Calendar startExams, endExams;
 
-        for (final IExecutionDegree executionDegree : executionDegreesList) {
+        for (final ExecutionDegree executionDegree : executionDegreesList) {
             if (semester == 1) {
                 startExams = executionDegree.getPeriodExamsFirstSemester().getStartDate();
                 endExams = executionDegree.getPeriodExamsFirstSemester().getEndDateOfComposite();

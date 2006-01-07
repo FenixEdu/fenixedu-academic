@@ -6,7 +6,7 @@ public class DegreeCurricularPlanMembersGroup extends DegreeCurricularPlanMember
         super();
     }
 
-    public DegreeCurricularPlanMembersGroup(IPerson creator, IDegreeCurricularPlan degreeCurricularPlan) {
+    public DegreeCurricularPlanMembersGroup(Person creator, DegreeCurricularPlan degreeCurricularPlan) {
         super();
         setCreator(creator);
         setDegreeCurricularPlan(degreeCurricularPlan);

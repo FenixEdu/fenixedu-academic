@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentSiteExams;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -47,26 +47,26 @@ public class ReadExamsByStudent implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentWrittenEvaluationEnrolment writtenEvaluationEnrolmentDAO = sp.getIPersistentWrittenEvaluationEnrolment();
-        IStudent student = sp.getIPersistentStudent().readByUsername(username);
+        Student student = sp.getIPersistentStudent().readByUsername(username);
 
         if (student != null) {
             List examsStudentRooms = writtenEvaluationEnrolmentDAO.readByStudentOID(student.getIdInternal());
             Iterator iter = examsStudentRooms.iterator();
-            List<IExam> examsEnrolled = new ArrayList<IExam>();
+            List<Exam> examsEnrolled = new ArrayList<Exam>();
 
             while (iter.hasNext()) {
-                IWrittenEvaluationEnrolment writtenEvaluationEnrolment = (IWrittenEvaluationEnrolment) iter.next();
+                WrittenEvaluationEnrolment writtenEvaluationEnrolment = (WrittenEvaluationEnrolment) iter.next();
 
                 InfoWrittenEvaluationEnrolment infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolment();
                 infoWrittenEvaluationEnrolment.setIdInternal(writtenEvaluationEnrolment.getIdInternal());
-                InfoExam infoExam = InfoExam.newInfoFromDomain((IExam)writtenEvaluationEnrolment.getWrittenEvaluation());
+                InfoExam infoExam = InfoExam.newInfoFromDomain((Exam)writtenEvaluationEnrolment.getWrittenEvaluation());
                 infoWrittenEvaluationEnrolment.setInfoExam(infoExam);
                 infoWrittenEvaluationEnrolment.getInfoExam().setInfoExecutionCourses(
                         (List) CollectionUtils.collect(writtenEvaluationEnrolment.getWrittenEvaluation()
                                 .getAssociatedExecutionCourses(), new Transformer() {
 
                             public Object transform(Object arg0) {
-                                return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
+                                return InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) arg0);
                             }
                         }));
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent());
@@ -76,7 +76,7 @@ public class ReadExamsByStudent implements IService {
                     infoWrittenEvaluationEnrolment.setInfoRoom(infoRoom);
                 }
                 infoWrittenEvaluationEnrolmentList.add(infoWrittenEvaluationEnrolment);
-                examsEnrolled.add((IExam) writtenEvaluationEnrolment.getWrittenEvaluation());
+                examsEnrolled.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
             }
 
             List attends = sp.getIFrequentaPersistente().readByStudentNumber(student.getNumber(),
@@ -84,7 +84,7 @@ public class ReadExamsByStudent implements IService {
 
             Iterator examsToEnrollIterator = attends.iterator();
             while (examsToEnrollIterator.hasNext()) {
-                examsToEnroll.addAll(((IAttends) examsToEnrollIterator.next()).getDisciplinaExecucao()
+                examsToEnroll.addAll(((Attends) examsToEnrollIterator.next()).getDisciplinaExecucao()
                         .getAssociatedEvaluations());
             }
 
@@ -93,14 +93,9 @@ public class ReadExamsByStudent implements IService {
             Iterator iter3 = examsToEnroll.iterator();
             while (iter3.hasNext()) {
 
-                IEvaluation evaluation = (IEvaluation) iter3.next();
-
-                if (evaluation instanceof Proxy) {
-                    evaluation = (IEvaluation) ProxyHelper.getRealObject(evaluation);
-                }
-
-                if (evaluation instanceof IExam) {
-                    IExam exam = (IExam) evaluation;
+                Evaluation evaluation = (Evaluation) iter3.next();
+                if (evaluation instanceof Exam) {
+                    Exam exam = (Exam) evaluation;
 
                     if (isInDate(exam)) {
                         InfoExam infoExam = InfoExam.newInfoFromDomain(exam);
@@ -108,7 +103,7 @@ public class ReadExamsByStudent implements IService {
                                 .getAssociatedExecutionCourses(), new Transformer() {
 
                             public Object transform(Object arg0) {
-                                return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
+                                return InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) arg0);
                             }
                         }));
 
@@ -126,7 +121,7 @@ public class ReadExamsByStudent implements IService {
 
     }
 
-    private boolean isInDate(IExam exam) {
+    private boolean isInDate(Exam exam) {
         if (exam.getEnrollmentBeginDay() == null || exam.getEnrollmentEndDay() == null
                 || exam.getEnrollmentBeginTime() == null || exam.getEnrollmentEndTime() == null) {
             return false;

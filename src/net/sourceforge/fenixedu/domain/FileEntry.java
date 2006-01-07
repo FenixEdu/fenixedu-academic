@@ -14,7 +14,7 @@ public class FileEntry extends FileEntry_Base {
         super();
     }
     
-    public FileEntry(ContentType contentType, ByteArray content, IPerson person) {
+    public FileEntry(ContentType contentType, ByteArray content, Person person) {
         super();
         setContentType(contentType);
         setContent(content);

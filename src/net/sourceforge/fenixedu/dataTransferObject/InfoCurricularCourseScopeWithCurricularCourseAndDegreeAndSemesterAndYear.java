@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 /**
  * @author Tânia Pousão
@@ -16,9 +16,9 @@ public class InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAn
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope#copyFromDomain(Dominio.ICurricularCourseScope)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope#copyFromDomain(Dominio.CurricularCourseScope)
      */
-    public void copyFromDomain(ICurricularCourseScope curricularCourseScope) {
+    public void copyFromDomain(CurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);
         if (curricularCourseScope != null) {
             setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree
@@ -27,7 +27,7 @@ public class InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAn
     }
 
     public static InfoCurricularCourseScope newInfoFromDomain(
-            ICurricularCourseScope curricularCourseScope) {
+            CurricularCourseScope curricularCourseScope) {
         InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear infoCurricularCourseScope = null;
         if (curricularCourseScope != null) {
             infoCurricularCourseScope = new InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndSemesterAndYear();

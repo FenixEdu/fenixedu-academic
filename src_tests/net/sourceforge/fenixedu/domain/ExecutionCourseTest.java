@@ -10,22 +10,22 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 
 public class ExecutionCourseTest extends DomainTestBase {
 
-    private IExecutionCourse executionCourse;
-	private IExecutionCourse executionCourseToReadFrom = null;
-	private IStudent thisStudent = null;
-	private IAttends attendsForThisStudent = null;
-    private IShift shift;
-    private IRoom room;
-    private ITeacher teacher;
-    private IProfessorship professorship;
+    private ExecutionCourse executionCourse;
+	private ExecutionCourse executionCourseToReadFrom = null;
+	private Student thisStudent = null;
+	private Attends attendsForThisStudent = null;
+    private Shift shift;
+    private Room room;
+    private Teacher teacher;
+    private Professorship professorship;
     
-    /*ICurricularCourse curricularCourse;
-    IExecutionPeriod executionPeriod;*/
+    /*CurricularCourse curricularCourse;
+    ExecutionPeriod executionPeriod;*/
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -63,64 +63,64 @@ public class ExecutionCourseTest extends DomainTestBase {
 		attendsForThisStudent.setAluno(thisStudent);
 		executionCourseToReadFrom.addAttends(attendsForThisStudent);
 		
-		IAttends otherAttends1 = new Attends();
+		Attends otherAttends1 = new Attends();
 		otherAttends1.setAluno(new Student());
 		executionCourseToReadFrom.addAttends(otherAttends1);
 		
-		IAttends otherAttends2 = new Attends();
+		Attends otherAttends2 = new Attends();
 		otherAttends2.setAluno(new Student());
 		executionCourseToReadFrom.addAttends(otherAttends2);
 	}
     
     private void setUpGetActiveEnrollmentEvaluations() {
         /* Setup curricular course */
-        ICurricularCourse curricularCourse = new CurricularCourse();
+        CurricularCourse curricularCourse = new CurricularCourse();
         
         executionCourse.addAssociatedCurricularCourses(curricularCourse);
         curricularCourse.addAssociatedExecutionCourses(executionCourse);
         
         /* Setup execution period */
-        IExecutionPeriod executionPeriod = new ExecutionPeriod();
+        ExecutionPeriod executionPeriod = new ExecutionPeriod();
         
         executionCourse.setExecutionPeriod(executionPeriod);
         
         /* Setup enrollments */
-        IEnrolment annuledEnrollment = new Enrolment();
+        Enrolment annuledEnrollment = new Enrolment();
         annuledEnrollment.setEnrollmentState(EnrollmentState.ANNULED);
 
-        IEnrolment numericApprovedEnrollment = new Enrolment();
+        Enrolment numericApprovedEnrollment = new Enrolment();
         numericApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
         
-        IEnrolment apApprovedEnrollment = new Enrolment();
+        Enrolment apApprovedEnrollment = new Enrolment();
         apApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
 
-        IEnrolment reprovedEnrollment = new Enrolment();
+        Enrolment reprovedEnrollment = new Enrolment();
         reprovedEnrollment.setEnrollmentState(EnrollmentState.NOT_APROVED);
         
-        IEnrolment notEvaluatedEnrollment = new Enrolment();
+        Enrolment notEvaluatedEnrollment = new Enrolment();
         notEvaluatedEnrollment.setEnrollmentState(EnrollmentState.NOT_EVALUATED);
         
         /* Setup enrollment evaluations */
-        IEnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
         numericFirstEnrolmentEvaluation.setGrade("10");
         
-        IEnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
         numericSecondEnrolmentEvaluation.setGrade("11");
         
         numericFirstEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         
-        IEnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
         apFirstEnrolmentEvaluation.setGrade("AP");
         
         apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
         
-        IEnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
         reprovedEnrollmentEvaluation.setGrade("RE");
         
         reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
         
-        IEnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
         notEvaluatedEnrollmentEvaluation.setGrade("NA");
         
         notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
@@ -296,13 +296,13 @@ public class ExecutionCourseTest extends DomainTestBase {
     }
 
     public void testCreateSummary() {
-        ISummary summary;
+        Summary summary;
         Date summaryDate;
         Date summaryHour;
         Date dateBeforeCreation;
         Date dateAfterCreation;
         try {
-            IProfessorship professorshipTest = null;
+            Professorship professorshipTest = null;
             executionCourse.createSummary("title", "summaryText", 20, true, professorshipTest);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
@@ -311,7 +311,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         }
 
         try {
-            ITeacher teacherTest = null;
+            Teacher teacherTest = null;
             executionCourse.createSummary("title", "summaryText", 20, true, teacherTest);
             fail("Expected NullPointerException!");
         } catch (NullPointerException e) {
@@ -405,7 +405,7 @@ public class ExecutionCourseTest extends DomainTestBase {
     }
     
     public void testGetAttendsByStudent() {
-		IAttends attends = executionCourseToReadFrom.getAttendsByStudent(thisStudent);
+		Attends attends = executionCourseToReadFrom.getAttendsByStudent(thisStudent);
 		
 		assertEquals(attends,attendsForThisStudent);
 	}
@@ -427,11 +427,11 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertEquals("Different ExecutionCourse Comment!", comment, executionCourse.getComment());
     }
 
-    private void checkIfSummaryAttributesAreCorrect(final ISummary summary, final String title,
+    private void checkIfSummaryAttributesAreCorrect(final Summary summary, final String title,
             final String summaryText, final Integer studentsNumber, final Boolean isExtraLesson,
-            final Date summaryDate, final Date summaryHour, final IExecutionCourse executionCourse,
-            final IProfessorship professorship, final ITeacher teacher, final String teacherName,
-            final IShift shift, final IRoom room) {
+            final Date summaryDate, final Date summaryHour, final ExecutionCourse executionCourse,
+            final Professorship professorship, final Teacher teacher, final String teacherName,
+            final Shift shift, final Room room) {
 
         assertEquals("Different Summary Title!", title, summary.getTitle());
         assertEquals("Different Summary Text!", summaryText, summary.getSummaryText());
@@ -447,7 +447,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertTrue("Different Summary Hour!", summary.getSummaryHour().equals(summaryHour));
     }
 
-    private void checkSummaryModificationDate(final ISummary summary, final Date dateBeforeEdition,
+    private void checkSummaryModificationDate(final Summary summary, final Date dateBeforeEdition,
             final Date dateAfterEdition) {
         assertTrue("Expected ModificationDate After an initial timestamp", summary.getLastModifiedDate()
                 .after(dateBeforeEdition));

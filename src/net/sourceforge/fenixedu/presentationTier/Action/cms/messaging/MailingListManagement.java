@@ -17,11 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailConversation;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -51,13 +51,13 @@ public class MailingListManagement extends FenixDispatchAction
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer groupID = new Integer((String) request.getParameter("groupId"));
 		mailingListForm.set("groupID", groupID);
-		IUserGroup group = null;
+		UserGroup group = null;
 		try
 		{
-			IPerson person = this.getLoggedPerson(request);
-			for (Iterator<IUserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+			Person person = this.getLoggedPerson(request);
+			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
 			{
-				IUserGroup currentGroup = iter.next();
+				UserGroup currentGroup = iter.next();
 				if (currentGroup.getIdInternal().equals(groupID))
 				{
 					group = currentGroup;
@@ -85,10 +85,10 @@ public class MailingListManagement extends FenixDispatchAction
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
-		IMailingList mailingListToView = null;
+		MailingList mailingListToView = null;
 		try
 		{
-			mailingListToView = (IMailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class, mailingListID});
+			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class, mailingListID});
 		}
 		catch (Exception e)
 		{
@@ -109,16 +109,16 @@ public class MailingListManagement extends FenixDispatchAction
 		String description = (String) addGroupForm.get("description");
 		String address = (String) addGroupForm.get("address");
 		Integer groupId = (Integer) addGroupForm.get("groupID");
-		IMailingList mailingList = null;
+		MailingList mailingList = null;
 
 		try
 		{
-			IPerson person = this.getLoggedPerson(request);
-			Collection<IUserGroup> mailingListUserGroups = new ArrayList<IUserGroup>();
+			Person person = this.getLoggedPerson(request);
+			Collection<UserGroup> mailingListUserGroups = new ArrayList<UserGroup>();
 
-			for (Iterator<IUserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
 			{
-				IUserGroup group = iter.next();
+				UserGroup group = iter.next();
 				if (group.getIdInternal().equals(groupId))
 				{
 					mailingListUserGroups.add(group);
@@ -127,7 +127,7 @@ public class MailingListManagement extends FenixDispatchAction
 			}
 			Object writeArgs[] =
 			{ name, description, address, aliases, mailingListUserGroups,true,true, person };
-			mailingList = (IMailingList) ServiceUtils.executeService(userView, "WriteMailingList", writeArgs);
+			mailingList = (MailingList) ServiceUtils.executeService(userView, "WriteMailingList", writeArgs);
 		}
 		catch (Exception e)
 		{
@@ -146,10 +146,10 @@ public class MailingListManagement extends FenixDispatchAction
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer mailingListID = (Integer) mailingListForm.get("mailingListID");
 		Boolean threaded = (Boolean) mailingListForm.get("threaded");
-		IMailingList mailingListToView = null;
+		MailingList mailingListToView = null;
 		try
 		{
-			mailingListToView = (IMailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
+			mailingListToView = (MailingList) ServiceManagerServiceFactory.executeService(userView, "ReadDomainObject", new Object[] {MailingList.class,mailingListID});
 		}
 		catch (Exception e)
 		{
@@ -183,16 +183,16 @@ public class MailingListManagement extends FenixDispatchAction
 			{
 				zos.putNextEntry(new ZipEntry(entryName + ".txt"));
 			}
-			for (Iterator<IMailConversation> conversationsIterator = mailingListToView.getMailConversationsIterator(); conversationsIterator.hasNext();)
+			for (Iterator<MailConversation> conversationsIterator = mailingListToView.getMailConversationsIterator(); conversationsIterator.hasNext();)
 			{
-				IMailConversation currentConversation = conversationsIterator.next();
+				MailConversation currentConversation = conversationsIterator.next();
 				if (threaded.booleanValue())
 				{
 					zos.putNextEntry(new ZipEntry(currentConversation.getSubject() + "|"+currentConversation.getIdInternal()+"|.txt"));
 				}
-				for (Iterator<IMailMessage> messagesIterator = currentConversation.getMailMessagesIterator(); messagesIterator.hasNext();)
+				for (Iterator<MailMessage> messagesIterator = currentConversation.getMailMessagesIterator(); messagesIterator.hasNext();)
 				{
-					IMailMessage currentMessage = messagesIterator.next();
+					MailMessage currentMessage = messagesIterator.next();
 					zos.write(currentMessage.getBody().getBytes());
 				}
 				if (threaded.booleanValue())

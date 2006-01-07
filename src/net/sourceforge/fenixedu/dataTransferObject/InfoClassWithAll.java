@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 
 /**
  * @author Fernanda Quitério Created on 9/Ago/2004
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ISchoolClass;
  */
 public class InfoClassWithAll extends InfoClassWithInfoExecutionDegree {
 
-    public void copyFromDomain(ISchoolClass turma) {
+    public void copyFromDomain(SchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
             setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(turma
@@ -16,7 +16,7 @@ public class InfoClassWithAll extends InfoClassWithInfoExecutionDegree {
         }
     }
 
-    public static InfoClass newInfoFromDomain(ISchoolClass turma) {
+    public static InfoClass newInfoFromDomain(SchoolClass turma) {
         InfoClassWithAll infoClass = null;
         if (turma != null) {
             infoClass = new InfoClassWithAll();

@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -33,21 +33,21 @@ public class ReadStudentTest implements IService {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IStudent student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+        Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
-        IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<IStudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+        List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 student.getIdInternal(), distributedTest.getIdInternal());
         if (studentTestQuestionList.size() == 0)
             throw new InvalidArgumentsServiceException();
 
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             InfoStudentTestQuestion infoStudentTestQuestion;
             ParseQuestion parse = new ParseQuestion();
             try {
@@ -63,7 +63,7 @@ public class ReadStudentTest implements IService {
             infoStudentTestQuestionList.add(infoStudentTestQuestion);
         }
         if (log.booleanValue()) {
-            IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+            StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
             studentTestLog.setDistributedTest(distributedTest);
             studentTestLog.setStudent(student);
             studentTestLog.setDate(Calendar.getInstance().getTime());

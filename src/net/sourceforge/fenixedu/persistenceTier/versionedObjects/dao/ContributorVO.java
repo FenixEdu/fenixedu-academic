@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Contributor;
-import net.sourceforge.fenixedu.domain.IContributor;
+import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentContributor;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class ContributorVO extends VersionedObjectsBase implements
 		IPersistentContributor {
 
-	public IContributor readByContributorNumber(Integer contributorNumber)
+	public Contributor readByContributorNumber(Integer contributorNumber)
 			throws ExcepcaoPersistencia {
 
-		List<IContributor> contributors = readAll();
-		for (IContributor contributor : contributors) {
+		List<Contributor> contributors = readAll();
+		for (Contributor contributor : contributors) {
 			if (contributor.getContributorNumber().equals(contributorNumber)) {
 				return contributor;
 			}

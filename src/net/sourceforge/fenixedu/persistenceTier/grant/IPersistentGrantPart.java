@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.grant;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPart;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -13,6 +13,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 public interface IPersistentGrantPart extends IPersistentObject {
     public List readAllGrantPartsByGrantSubsidy(Integer grantSubsidyId) throws ExcepcaoPersistencia;
 
-    public IGrantPart readGrantPartByUnique(Integer grantSubsidyId, Integer paymentEntityId)
+    public GrantPart readGrantPartByUnique(Integer grantSubsidyId, Integer paymentEntityId)
             throws ExcepcaoPersistencia;
 }

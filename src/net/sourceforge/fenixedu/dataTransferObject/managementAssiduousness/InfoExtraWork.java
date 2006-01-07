@@ -9,7 +9,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWork;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 
 /**
  * @author Tânia Pousão
@@ -413,7 +413,7 @@ public class InfoExtraWork extends InfoObject {
         setRemuneration(Boolean.FALSE);
     }
 
-    public void copyFromDomain(IExtraWork extraWork) {
+    public void copyFromDomain(ExtraWork extraWork) {
         super.copyFromDomain(extraWork);
         if (extraWork != null) {
             setBeginHour(extraWork.getBeginHour());
@@ -441,7 +441,7 @@ public class InfoExtraWork extends InfoObject {
         }
     }
 
-    public static InfoExtraWork newInfoFromDomain(IExtraWork extraWork) {
+    public static InfoExtraWork newInfoFromDomain(ExtraWork extraWork) {
         InfoExtraWork infoExtraWork = null;
         if (extraWork != null) {
             infoExtraWork = new InfoExtraWork();
@@ -450,7 +450,7 @@ public class InfoExtraWork extends InfoObject {
         return infoExtraWork;
     }
 
-    public void copyToDomain(InfoExtraWork infoExtraWork, IExtraWork extraWork) {
+    public void copyToDomain(InfoExtraWork infoExtraWork, ExtraWork extraWork) {
         super.copyToDomain(infoExtraWork, extraWork);
         extraWork.setDay(infoExtraWork.getDay());
         extraWork.setBeginHour(infoExtraWork.getBeginHour());

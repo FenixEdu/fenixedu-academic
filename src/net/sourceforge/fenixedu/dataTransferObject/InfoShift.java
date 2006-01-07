@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 
 public class InfoShift extends InfoObject {
@@ -184,7 +184,7 @@ public class InfoShift extends InfoObject {
         this.percentage = percentage;
     }
 
-    public void copyFromDomain(IShift shift) {
+    public void copyFromDomain(Shift shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
             setNome(shift.getNome());
@@ -193,7 +193,7 @@ public class InfoShift extends InfoObject {
         }
     }
 
-    public static InfoShift newInfoFromDomain(IShift shift) {
+    public static InfoShift newInfoFromDomain(Shift shift) {
         InfoShift infoShift = null;
         if (shift != null) {
             infoShift = new InfoShift();

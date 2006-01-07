@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 
@@ -86,7 +86,7 @@ public class UIAutoComplete extends UIInput {
         Class clazz;
         try {
             clazz = Class.forName(className);
-            IDomainObject domainObject = (IDomainObject) ServiceUtils.executeService(userView,
+            DomainObject domainObject = (DomainObject) ServiceUtils.executeService(userView,
                     "ReadDomainObject", new Object[] { clazz, idInternal });
 
             return BeanUtils.getProperty(domainObject, labelField);
@@ -242,7 +242,7 @@ public class UIAutoComplete extends UIInput {
 
             try {
                 Class clazz = Class.forName(className);
-                IDomainObject domainObject = (IDomainObject) ServiceUtils.executeService(
+                DomainObject domainObject = (DomainObject) ServiceUtils.executeService(
                         getUserView(context), "ReadDomainObject", new Object[] { clazz, newValue });
 
                 String correctLabelForIdInternal = BeanUtils.getProperty(domainObject, labelField);

@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
@@ -23,24 +23,24 @@ public class TutorOJB extends PersistentObjectOJB implements IPersistentTutor {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentTutor#readTutorByTeacherAndStudent(Dominio.ITeacher,
-     *      Dominio.IStudent)
+     * @see ServidorPersistente.IPersistentTutor#readTutorByTeacherAndStudent(Dominio.Teacher,
+     *      Dominio.Student)
      */
-    public ITutor readTutorByTeacherAndStudent(ITeacher teacher, IStudent student)
+    public Tutor readTutorByTeacherAndStudent(Teacher teacher, Student student)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("teacher.idInternal", teacher.getIdInternal());
         criteria.addEqualTo("student.idInternal", student.getIdInternal());
 
-        return (ITutor) queryObject(Tutor.class, criteria);
+        return (Tutor) queryObject(Tutor.class, criteria);
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentTutor#readTeachersByStudent(Dominio.IStudent)
+     * @see ServidorPersistente.IPersistentTutor#readTeachersByStudent(Dominio.Student)
      */
-    public ITutor readTeachersByStudent(IStudent student) throws ExcepcaoPersistencia {
+    public Tutor readTeachersByStudent(Student student) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         if (student != null && student.getIdInternal() != null) {
             criteria.addEqualTo("student.idInternal", student.getIdInternal());
@@ -48,13 +48,13 @@ public class TutorOJB extends PersistentObjectOJB implements IPersistentTutor {
         if (student != null && student.getNumber() != null) {
             criteria.addEqualTo("student.number", student.getNumber());
         }
-        return (ITutor) queryObject(Tutor.class, criteria);
+        return (Tutor) queryObject(Tutor.class, criteria);
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.IPersistentTutor#readStudentsByTeacher(Dominio.ITeacher)
+     * @see ServidorPersistente.IPersistentTutor#readStudentsByTeacher(Dominio.Teacher)
      */
     public List readStudentsByTeacher(Integer teacherId, Integer teacherNumber) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();

@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,7 +36,7 @@ public class ReadInfoExecutionCourseByOID implements IService {
 			throw new FenixServiceException("nullId");
 		}
 
-		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
 				ExecutionCourse.class, executionCourseOID);
 
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -45,7 +45,7 @@ public class ReadInfoExecutionCourseByOID implements IService {
 
 		CollectionUtils.collect(curricularCourses, new Transformer() {
 			public Object transform(Object input) {
-				ICurricularCourse curricularCourse = (ICurricularCourse) input;
+				CurricularCourse curricularCourse = (CurricularCourse) input;
 
 				return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
 			}

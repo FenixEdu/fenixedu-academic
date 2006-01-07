@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -29,7 +29,7 @@ abstract public class ManageWebSiteItem implements IService {
 
 	// infoItem with an infoSection
 
-	protected void checkData(InfoWebSiteItem infoWebSiteItem, IWebSiteSection webSiteSection)
+	protected void checkData(InfoWebSiteItem infoWebSiteItem, WebSiteSection webSiteSection)
 			throws FenixServiceException {
 		if (webSiteSection.getWhatToSort().equals("ITEM_BEGIN_DAY")) {
 			if (infoWebSiteItem.getItemBeginDayCalendar() == null) {
@@ -67,8 +67,8 @@ abstract public class ManageWebSiteItem implements IService {
 
 	protected void fillWebSiteItemForDB(InfoWebSiteItem infoWebSiteItem, String user,
 			IPessoaPersistente persistentPerson, IPersistentWebSiteSection persistentWebSiteSection,
-			IWebSiteSection webSiteSection, IWebSiteItem webSiteItem) throws FenixServiceException, ExcepcaoPersistencia {
-		IPerson person = persistentPerson.lerPessoaPorUsername(user);
+			WebSiteSection webSiteSection, WebSiteItem webSiteItem) throws FenixServiceException, ExcepcaoPersistencia {
+		Person person = persistentPerson.lerPessoaPorUsername(user);
 		webSiteItem.setEditor(person);
 
 		// treat author of item

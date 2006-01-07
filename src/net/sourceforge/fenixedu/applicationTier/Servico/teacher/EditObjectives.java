@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurriculum;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -35,7 +35,7 @@ public class EditObjectives implements IService {
         IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
         
         // Person who change all information        
-        IPerson person = persistentPerson.lerPessoaPorUsername(username);
+        Person person = persistentPerson.lerPessoaPorUsername(username);
         if (person == null) {
             throw new NonExistingServiceException("noPerson");
         }
@@ -50,14 +50,14 @@ public class EditObjectives implements IService {
             throw new FenixServiceException("nullCurricularCourseCode");
         }
 
-        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, infoCurricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
         }
 
         // Curriculum       
-        ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
+        Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
                 .getIdInternal());
 
         if (curriculum == null) {                    
@@ -65,7 +65,7 @@ public class EditObjectives implements IService {
         }
 
         IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        IExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
+        ExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
 
         if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())
                 && !curriculum.getLastModificationDate().after(currentExecutionYear.getEndDate())) {
@@ -82,7 +82,7 @@ public class EditObjectives implements IService {
            
         } else {
           
-            ICurriculum newCurriculum;
+            Curriculum newCurriculum;
 
             newCurriculum = curricularCourse.insertCurriculum(curriculum.getProgram(), curriculum
                     .getProgramEn(), infoCurriculumNew.getOperacionalObjectives(), infoCurriculumNew

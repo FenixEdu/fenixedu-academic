@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -45,28 +45,28 @@ public class ReadClassesByStudentID implements IService {
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
-        final IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
+        final Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
         
-        List<IExecutionCourse> executionCourses = new ArrayList();
+        List<ExecutionCourse> executionCourses = new ArrayList();
         for (Iterator iter = student.getAssociatedAttends().iterator(); iter.hasNext();) {
-            IAttends attends = (IAttends) iter.next();
+            Attends attends = (Attends) iter.next();
             if(attends.getDisciplinaExecucao().getExecutionPeriod().equals(currentExecutionPeriod)){
                 executionCourses.add(attends.getDisciplinaExecucao());
             }
         }
 
         List remainingExecutionCourses = new ArrayList(executionCourses);
-        IStudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
+        StudentCurricularPlan scp = student.getActiveStudentCurricularPlan();
         
-        Set<ISchoolClass> allSchooClasses = new HashSet();
-        Set<ISchoolClass> selectedSchoolClasses = new HashSet();
-        for (IExecutionCourse executionCourse : executionCourses) {
-            List<IShift> shifts = executionCourse.getAssociatedShifts();
-            for (IShift shift : shifts) {
-                List<ISchoolClass> schoolClasses = shift.getAssociatedClasses();
-                for (ISchoolClass schoolClass : schoolClasses) {
+        Set<SchoolClass> allSchooClasses = new HashSet();
+        Set<SchoolClass> selectedSchoolClasses = new HashSet();
+        for (ExecutionCourse executionCourse : executionCourses) {
+            List<Shift> shifts = executionCourse.getAssociatedShifts();
+            for (Shift shift : shifts) {
+                List<SchoolClass> schoolClasses = shift.getAssociatedClasses();
+                for (SchoolClass schoolClass : schoolClasses) {
                     if(schoolClass.getExecutionDegree().getDegreeCurricularPlan().equals(scp.getDegreeCurricularPlan())){
                         selectedSchoolClasses.add(schoolClass);
                         remainingExecutionCourses.remove(executionCourse);
@@ -87,8 +87,8 @@ public class ReadClassesByStudentID implements IService {
             CollectionUtils.filter(classList, new Predicate(){
 
                 public boolean evaluate(Object arg0) {
-                    ISchoolClass schoolClass = (ISchoolClass) arg0;
-                    for (IShift shift : schoolClass.getAssociatedShifts()) {
+                    SchoolClass schoolClass = (SchoolClass) arg0;
+                    for (Shift shift : schoolClass.getAssociatedShifts()) {
                         if(shift.getDisciplinaExecucao().getIdInternal().equals(executionCourseID)){
                             return true;
                         }
@@ -102,7 +102,7 @@ public class ReadClassesByStudentID implements IService {
         List infoClassList = (List) CollectionUtils.collect(classList, new Transformer() {
 
             public Object transform(Object arg0) {
-                ISchoolClass schoolClass = (ISchoolClass) arg0;
+                SchoolClass schoolClass = (SchoolClass) arg0;
                 return InfoClass.newInfoFromDomain(schoolClass);
             }
         });

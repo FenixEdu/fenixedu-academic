@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IPersonAccount;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -20,7 +20,7 @@ public class InfoPersonAccount extends InfoObject {
     public InfoPersonAccount() {
     }
 
-    public static InfoPersonAccount copyFromDomain(IPersonAccount personAccount) {
+    public static InfoPersonAccount copyFromDomain(PersonAccount personAccount) {
         InfoPersonAccount infoPersonAccount = new InfoPersonAccount();
 
         infoPersonAccount.setIdInternal(personAccount.getIdInternal());

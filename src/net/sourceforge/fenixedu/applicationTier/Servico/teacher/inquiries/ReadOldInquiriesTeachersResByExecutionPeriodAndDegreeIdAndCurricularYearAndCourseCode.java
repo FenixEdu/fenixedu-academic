@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,7 +54,7 @@ public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricula
 			public Object transform(Object oldInquiriesTeachersRes) {
 				InfoOldInquiriesTeachersRes ioits = new InfoOldInquiriesTeachersRes();
 				try {
-					ioits.copyFromDomain((IOldInquiriesTeachersRes) oldInquiriesTeachersRes);
+					ioits.copyFromDomain((OldInquiriesTeachersRes) oldInquiriesTeachersRes);
 
 				} catch (Exception ex) {
 				}

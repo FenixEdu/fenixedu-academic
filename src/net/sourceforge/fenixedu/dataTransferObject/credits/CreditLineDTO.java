@@ -3,8 +3,8 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 /**
  * @author Ricardo Rodrigues
@@ -33,9 +33,9 @@ public class CreditLineDTO {
 
     private int mandatoryLessonHours = 0;
 
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
 
-    public CreditLineDTO(IExecutionPeriod executionPeriod, ITeacherService teacherService,
+    public CreditLineDTO(ExecutionPeriod executionPeriod, TeacherService teacherService,
             double managementCredits, double exemptionCredits, int lessonHours) {
         setExecutionPeriod(executionPeriod);
         if (teacherService != null) {
@@ -123,11 +123,11 @@ public class CreditLineDTO {
         this.pastServiceCredits = pastServiceCredits;
     }
 
-    public IExecutionPeriod getExecutionPeriod() {
+    public ExecutionPeriod getExecutionPeriod() {
         return executionPeriod;
     }
 
-    public void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public void setExecutionPeriod(ExecutionPeriod executionPeriod) {
         this.executionPeriod = executionPeriod;
     }
 

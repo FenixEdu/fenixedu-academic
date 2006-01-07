@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -48,7 +48,7 @@ public class StudentLoader extends PersonLoader {
         persistentSupport.iniciarTransaccao();
 
         final IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
-        final IRole studentRole = persistentRole.readByRoleType(RoleType.STUDENT);
+        final Role studentRole = persistentRole.readByRoleType(RoleType.STUDENT);
 
 		final HSSFSheet sheet = workbook.getSheet(sheetname);
 		for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
@@ -87,8 +87,8 @@ public class StudentLoader extends PersonLoader {
         int counter = 0;
 
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final List<IStudent> students = (List<IStudent>) persistentStudent.readAll(Student.class);
-        for (final IStudent student : students) {
+        final List<Student> students = (List<Student>) persistentStudent.readAll(Student.class);
+        for (final Student student : students) {
             final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 
             PersonLoader.dump(row, student.getPerson());

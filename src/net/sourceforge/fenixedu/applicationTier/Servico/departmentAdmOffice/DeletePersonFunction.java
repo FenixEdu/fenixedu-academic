@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -18,7 +18,7 @@ public class DeletePersonFunction implements IService {
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         
-        IPersonFunction person_Function = (IPersonFunction) suportePersistente.getIPersistentObject()
+        PersonFunction person_Function = (PersonFunction) suportePersistente.getIPersistentObject()
                 .readByOID(PersonFunction.class, personFunctionID);
 
         person_Function.delete();

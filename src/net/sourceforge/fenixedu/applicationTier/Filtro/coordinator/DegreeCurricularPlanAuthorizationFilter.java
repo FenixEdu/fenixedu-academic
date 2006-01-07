@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,10 +26,10 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final ITeacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
+        final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
                 id.getUtilizador());
 
-        for (final ICoordinator coordinator : teacher.getCoordinators()) {
+        for (final Coordinator coordinator : teacher.getCoordinators()) {
             if (coordinator.getExecutionDegree().getDegreeCurricularPlan().getIdInternal().equals(
                     degreeCurricularPlanID)) {
                 return true;

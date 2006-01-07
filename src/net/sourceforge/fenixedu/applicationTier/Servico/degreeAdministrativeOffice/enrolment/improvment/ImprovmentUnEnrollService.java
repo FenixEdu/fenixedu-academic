@@ -8,7 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -31,7 +31,7 @@ public class ImprovmentUnEnrollService implements IService {
 		
 		for (Integer enrolmentId : enrolmentsIds) {
             
-            IEnrolment enrolment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,enrolmentId);
+            Enrolment enrolment = (Enrolment) persistentEnrollment.readByOID(Enrolment.class,enrolmentId);
             if (enrolment == null) {
                 throw new InvalidArgumentsServiceException();
             }

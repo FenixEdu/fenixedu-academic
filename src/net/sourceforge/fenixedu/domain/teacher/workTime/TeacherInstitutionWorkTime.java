@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.teacher.workTime;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
 
@@ -19,7 +19,7 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
         return timePeriod.hours().doubleValue();
     }
 
-    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
         return this.getExecutionPeriod().equals(executionPeriod);
     }
 

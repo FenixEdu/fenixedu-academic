@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -61,14 +61,14 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         IUserView userView = SessionUtils.getUserView(request);
         
         final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(
                 userView, "ReadDomainExecutionPeriodByOID",
                 new Object[] { executionPeriodID });
         
         Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
-        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-        ITeacher teacher = null;
-        for (IDepartment department : manageableDepartments) {
+        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Teacher teacher = null;
+        for (Department department : manageableDepartments) {
             teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
                     executionPeriod.getEndDate());
             if (teacher != null) {
@@ -81,12 +81,12 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         }        
         request.setAttribute("teacher", teacher);
 
-        List<IProfessorship> professorships = teacher
+        List<Professorship> professorships = teacher
                 .getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
         List<ProfessorshipDTO> professorshipDTOs = (List<ProfessorshipDTO>) CollectionUtils.collect(
                 professorships, new Transformer() {
                     public Object transform(Object arg0) {
-                        IProfessorship professorship = (IProfessorship) arg0;
+                        Professorship professorship = (Professorship) arg0;
                         return new ProfessorshipDTO(professorship);
                     }
                 });
@@ -105,7 +105,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
 
-        IProfessorship professorship = (IProfessorship) ServiceUtils.executeService(SessionUtils
+        Professorship professorship = (Professorship) ServiceUtils.executeService(SessionUtils
                 .getUserView(request), "ReadDomainProfessorshipByOID", new Object[] { professorshipID });
 
         ComparatorChain comparatorChain = new ComparatorChain();
@@ -130,9 +130,9 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
         DynaActionForm supportLessonForm = (DynaActionForm) form;
         Integer supportLesssonID = (Integer) supportLessonForm.get("supportLessonID");
 
-        IProfessorship professorship = null;
+        Professorship professorship = null;
         if (supportLesssonID != null && supportLesssonID != 0) {
-            ISupportLesson supportLesson = (ISupportLesson) ServiceUtils.executeService(SessionUtils
+            SupportLesson supportLesson = (SupportLesson) ServiceUtils.executeService(SessionUtils
                     .getUserView(request), "ReadDomainSupportLessonByOID",
                     new Object[] { supportLesssonID });
 
@@ -162,7 +162,7 @@ public class ManageTeacherSupportLessonsDispatchAction extends FenixDispatchActi
             professorship = supportLesson.getProfessorship();
         } else {
             Integer professorshipID = (Integer) supportLessonForm.get("professorshipID");
-            professorship = (IProfessorship) ServiceUtils.executeService(SessionUtils
+            professorship = (Professorship) ServiceUtils.executeService(SessionUtils
                     .getUserView(request), "ReadDomainProfessorshipByOID",
                     new Object[] { professorshipID });
         }

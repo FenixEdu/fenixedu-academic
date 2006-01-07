@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesCourse;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRoom;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesTeacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 import org.apache.commons.lang.NullArgumentException;
 
@@ -24,25 +24,25 @@ import org.apache.commons.lang.NullArgumentException;
  */
 public class InquiriesTest extends DomainTestBase {
 	
-	private IExecutionCourse executionCourse;
-	private IExecutionDegree executionDegreeStudent;
-	private IExecutionDegree executionDegreeCourse;
-	private IExecutionPeriod executionPeriod;
-	private ISchoolClass schoolClass;
+	private ExecutionCourse executionCourse;
+	private ExecutionDegree executionDegreeStudent;
+	private ExecutionDegree executionDegreeCourse;
+	private ExecutionPeriod executionPeriod;
+	private SchoolClass schoolClass;
 	
 	private InfoInquiriesCourse infoInquiriesCourse;
 	
-	private IInquiriesCourse inquiriesCourse;
+	private InquiriesCourse inquiriesCourse;
 	
-	private INonAffiliatedTeacher nonAffiliatedTeacher;
-	private ITeacher teacher;
+	private NonAffiliatedTeacher nonAffiliatedTeacher;
+	private Teacher teacher;
 	
 	private InfoInquiriesTeacher infoInquiriesTeacher;
 	
 	private InfoInquiriesRoom infoInquiriesRoom;
-	private IRoom room;
+	private Room room;
 	
-	private IStudent student;
+	private Student student;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -187,7 +187,7 @@ public class InquiriesTest extends DomainTestBase {
 		
 		//TEACHER
 		try {
-			inquiriesCourse.createInquiriesTeacher((ITeacher)null, ShiftType.LABORATORIAL, infoInquiriesTeacher);
+			inquiriesCourse.createInquiriesTeacher((Teacher)null, ShiftType.LABORATORIAL, infoInquiriesTeacher);
 			fail("Should have thrown a DomainException");
 
 		} catch(DomainException nae) {
@@ -205,7 +205,7 @@ public class InquiriesTest extends DomainTestBase {
 		inquiriesCourse.createInquiriesTeacher(teacher, ShiftType.TEORICA, infoInquiriesTeacher);
 		assertEquals("Failed to reference inquiriesTeacher!", inquiriesCourse.getAssociatedInquiriesTeachersCount(), 1);
 		
-		IInquiriesTeacher inquiriesTeacher = inquiriesCourse.getAssociatedInquiriesTeachers().get(0);
+		InquiriesTeacher inquiriesTeacher = inquiriesCourse.getAssociatedInquiriesTeachers().get(0);
 		assertEquals("Unexpected value for studentAssiduity!",
 				inquiriesTeacher.getStudentAssiduity(), infoInquiriesTeacher.getStudentAssiduity());
 		assertEquals("Unexpected value for teacherAssiduity!",
@@ -284,7 +284,7 @@ public class InquiriesTest extends DomainTestBase {
 		inquiriesCourse.createInquiriesRoom(room, infoInquiriesRoom);
 		assertEquals("Failed to reference inquiriesRoom!", inquiriesCourse.getAssociatedInquiriesRoomsCount(), 1);
 
-		IInquiriesRoom inquiriesRoom = inquiriesCourse.getAssociatedInquiriesRooms().get(0);
+		InquiriesRoom inquiriesRoom = inquiriesCourse.getAssociatedInquiriesRooms().get(0);
 
 		assertEquals("Unexpected value for SpaceAdequation!",
 				inquiriesRoom.getSpaceAdequation(), infoInquiriesRoom.getSpaceAdequation());
@@ -324,7 +324,7 @@ public class InquiriesTest extends DomainTestBase {
 			
 		}
 		
-		IInquiriesRegistry inquiriesRegistry = DomainFactory.makeInquiriesRegistry(executionCourse, executionPeriod, student);
+		InquiriesRegistry inquiriesRegistry = DomainFactory.makeInquiriesRegistry(executionCourse, executionPeriod, student);
 		
 		assertTrue("Failed to reference executionCourse!", inquiriesRegistry.hasExecutionCourse());
 		assertTrue("Failed to reference executionPeriod!", inquiriesRegistry.hasExecutionPeriod());

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.student;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -33,7 +33,7 @@ public class StudentIsUserFilter extends Filtro {
         
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IStudent student = (IStudent) persistentSupport.getIPersistentStudent().readByOID(Student.class,
+        Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
                 studentId);
         if (student == null || userView == null
                 || !userView.getUtilizador().equals(student.getPerson().getUsername())) {

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWebSite;
+import net.sourceforge.fenixedu.domain.WebSite;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -66,14 +66,14 @@ public class InfoWebSite extends InfoObject {
         this.sections = sections;
     }
 
-    public void copyFromDomain(final IWebSite webSite) {
+    public void copyFromDomain(final WebSite webSite) {
         super.copyFromDomain(webSite);
         if (webSite != null) {
             setName(webSite.getName());
         }
     }
 
-    public static InfoWebSite newInfoFromDomain(final IWebSite webSite) {
+    public static InfoWebSite newInfoFromDomain(final WebSite webSite) {
         if (webSite != null) {
             final InfoWebSite infoWebSite = new InfoWebSite();
             infoWebSite.copyFromDomain(webSite);

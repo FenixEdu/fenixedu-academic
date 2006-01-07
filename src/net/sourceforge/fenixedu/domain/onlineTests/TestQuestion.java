@@ -19,17 +19,17 @@ public class TestQuestion extends TestQuestion_Base {
     }
 
     private void organizeTestQuestionsOrder(Integer newOrder, Integer oldOrder) {
-        List<ITestQuestion> testQuestions = getTest().getTestQuestions();
+        List<TestQuestion> testQuestions = getTest().getTestQuestions();
         int diffOrder = newOrder.intValue() - oldOrder.intValue();
         if (diffOrder != 0) {
             if (diffOrder > 0) {
-                for (ITestQuestion testQuestion : testQuestions) {
+                for (TestQuestion testQuestion : testQuestions) {
                     if (testQuestion.getTestQuestionOrder().compareTo(newOrder) <= 0 && testQuestion.getTestQuestionOrder().compareTo(oldOrder) > 0) {
                         testQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder() - 1);
                     }
                 }
             } else {
-                for (ITestQuestion testQuestion : testQuestions) {
+                for (TestQuestion testQuestion : testQuestions) {
                     if (testQuestion.getTestQuestionOrder().compareTo(newOrder) >= 0 && testQuestion.getTestQuestionOrder().compareTo(oldOrder) < 0) {
                         testQuestion.setTestQuestionOrder(testQuestion.getTestQuestionOrder() + 1);
                     }

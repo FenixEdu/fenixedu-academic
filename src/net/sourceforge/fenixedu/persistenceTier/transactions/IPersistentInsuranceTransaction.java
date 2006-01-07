@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 public interface IPersistentInsuranceTransaction extends IPersistentObject {
 
     /*
-     * public IInsuranceTransaction readByExecutionYearAndStudent(
-     * IExecutionYear executionYear, IStudent student) throws
+     * public InsuranceTransaction readByExecutionYearAndStudent(
+     * ExecutionYear executionYear, Student student) throws
      * ExcepcaoPersistencia;
      */
 

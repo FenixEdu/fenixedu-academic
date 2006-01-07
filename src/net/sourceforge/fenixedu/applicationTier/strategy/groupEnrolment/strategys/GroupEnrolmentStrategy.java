@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 
-    public boolean checkNumberOfGroups(IGrouping grouping, IShift shift) {
+    public boolean checkNumberOfGroups(Grouping grouping, Shift shift) {
 
         if (grouping.getGroupMaximumNumber() == null) {
             return true;
@@ -38,7 +38,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return false;
     }
 
-    public boolean checkEnrolmentDate(IGrouping grouping, Calendar actualDate) {
+    public boolean checkEnrolmentDate(Grouping grouping, Calendar actualDate) {
         Long actualDateInMills = new Long(actualDate.getTimeInMillis());
         Long enrolmentBeginDayInMills = null;
         Long enrolmentEndDayInMills = null;
@@ -69,7 +69,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return false;
     }
 
-    public boolean checkShiftType(IGrouping grouping, IShift shift) {
+    public boolean checkShiftType(Grouping grouping, Shift shift) {
         if (shift != null) {
             return shift.getTipo().equals(grouping.getShiftType());
         } else {
@@ -77,10 +77,10 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         }
     }
 
-    public List checkShiftsType(IGrouping grouping, List shifts) {
+    public List checkShiftsType(Grouping grouping, List shifts) {
         List result = new ArrayList();
         if (grouping.getShiftType() != null) {
-            for (final IShift shift : (List<IShift>) shifts) {
+            for (final Shift shift : (List<Shift>) shifts) {
                 if (shift.getTipo().equals(grouping.getShiftType())) {
                     result.add(shift);
                 }
@@ -89,15 +89,15 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return result;
     }
 
-    public boolean checkAlreadyEnroled(IGrouping grouping, String studentUsername) {
+    public boolean checkAlreadyEnroled(Grouping grouping, String studentUsername) {
 
-        final IAttends studentAttend = grouping.getStudentAttend(studentUsername);
+        final Attends studentAttend = grouping.getStudentAttend(studentUsername);
 
         if (studentAttend != null) {
-            List<IStudentGroup> groupingStudentGroups = grouping.getStudentGroups();
-            for (final IStudentGroup studentGroup : groupingStudentGroups) {
-                List<IAttends> studentGroupAttends = studentGroup.getAttends();
-                for (final IAttends attend : studentGroupAttends) {
+            List<StudentGroup> groupingStudentGroups = grouping.getStudentGroups();
+            for (final StudentGroup studentGroup : groupingStudentGroups) {
+                List<Attends> studentGroupAttends = studentGroup.getAttends();
+                for (final Attends attend : studentGroupAttends) {
                     if (attend == studentAttend) {
                         return true;
                     }
@@ -107,14 +107,14 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return false;
     }
 
-    public boolean checkNotEnroledInGroup(IGrouping grouping, IStudentGroup studentGroup,
+    public boolean checkNotEnroledInGroup(Grouping grouping, StudentGroup studentGroup,
             String studentUsername) throws ExcepcaoPersistencia {
 
-        final IAttends studentAttend = grouping.getStudentAttend(studentUsername);
+        final Attends studentAttend = grouping.getStudentAttend(studentUsername);
 
         if (studentAttend != null) {
-            List<IAttends> studentGroupAttends = studentGroup.getAttends();
-            for (final IAttends attend : studentGroupAttends) {
+            List<Attends> studentGroupAttends = studentGroup.getAttends();
+            for (final Attends attend : studentGroupAttends) {
                 if (attend == studentAttend) {
                     return false;
                 }
@@ -123,7 +123,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return true;
     }
 
-    public boolean checkPossibleToEnrolInExistingGroup(IGrouping grouping, IStudentGroup studentGroup) {
+    public boolean checkPossibleToEnrolInExistingGroup(Grouping grouping, StudentGroup studentGroup) {
 
         final int numberOfElements = studentGroup.getAttendsCount();
         final Integer maximumCapacity = grouping.getMaximumCapacity();
@@ -135,7 +135,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return false;
     }
    
-    public boolean checkIfStudentGroupIsEmpty(IAttends attend, IStudentGroup studentGroup) {
+    public boolean checkIfStudentGroupIsEmpty(Attends attend, StudentGroup studentGroup) {
 
         final List allStudentGroupAttends = studentGroup.getAttends();
         if (allStudentGroupAttends.size() == 1 && allStudentGroupAttends.contains(attend)) {
@@ -144,14 +144,14 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return false;
     }
 
-    public boolean checkStudentInGrouping(IGrouping grouping, String username)
+    public boolean checkStudentInGrouping(Grouping grouping, String username)
             throws ExcepcaoPersistencia {
 
-        final IAttends attend = grouping.getStudentAttend(username);          
+        final Attends attend = grouping.getStudentAttend(username);          
         return attend != null;
     }
 
-    public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, IGrouping grouping) {
+    public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, Grouping grouping) {
         for (final String studentUsername : studentUsernames) {
             if (grouping.getStudentAttend(studentUsername) == null) {
                 return false;
@@ -160,14 +160,14 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
         return true;
     }
 
-    public boolean checkHasShift(IGrouping grouping) {
+    public boolean checkHasShift(Grouping grouping) {
         return grouping.getShiftType() != null;
     }
 
-    public abstract Integer enrolmentPolicyNewGroup(IGrouping grouping, int numberOfStudentsToEnrole,
-            IShift shift);
+    public abstract Integer enrolmentPolicyNewGroup(Grouping grouping, int numberOfStudentsToEnrole,
+            Shift shift);
 
-    public abstract boolean checkNumberOfGroupElements(IGrouping grouping, IStudentGroup studentGroup)
+    public abstract boolean checkNumberOfGroupElements(Grouping grouping, StudentGroup studentGroup)
             throws ExcepcaoPersistencia;
 
 }

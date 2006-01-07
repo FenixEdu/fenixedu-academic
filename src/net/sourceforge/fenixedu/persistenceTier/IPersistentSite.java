@@ -11,10 +11,10 @@ package net.sourceforge.fenixedu.persistenceTier;
  * @author ars
  */
 
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 
 public interface IPersistentSite extends IPersistentObject {
 
-    public ISite readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia;
+    public Site readByExecutionCourse(Integer executionCourseID) throws ExcepcaoPersistencia;
 
 }

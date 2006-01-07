@@ -10,25 +10,25 @@ import java.util.Map.Entry;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -119,36 +119,36 @@ public class InitializeExecutionPeriod {
     	final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
     	final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
-        final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(semester, executionYear);
-        final IExecutionPeriod newExecutionPeriod = executionPeriod.getNextExecutionPeriod().getNextExecutionPeriod();
+        final ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(semester, executionYear);
+        final ExecutionPeriod newExecutionPeriod = executionPeriod.getNextExecutionPeriod().getNextExecutionPeriod();
 
         logger.info(StringAppender.append("Initializing period [semester ", newExecutionPeriod
                 .getSemester().toString(), ", ", newExecutionPeriod.getExecutionYear().getYear(),
                 "] from period [semester ", executionPeriod.getSemester().toString(), ", ",
                 executionPeriod.getExecutionYear().getYear(), "]."));
 
-        final Map<IExecutionDegree, IExecutionDegree> executionDegreeMap = constructExecutionDegreeCorrespondenceMap(executionPeriod, newExecutionPeriod);
-        final Map<ISchoolClass, ISchoolClass> schoolClassMap = createSchoolClasses(executionDegreeMap, newExecutionPeriod);
+        final Map<ExecutionDegree, ExecutionDegree> executionDegreeMap = constructExecutionDegreeCorrespondenceMap(executionPeriod, newExecutionPeriod);
+        final Map<SchoolClass, SchoolClass> schoolClassMap = createSchoolClasses(executionDegreeMap, newExecutionPeriod);
         createExecutionCourses(curricularCourseCodes, schoolClassMap, executionPeriod, newExecutionPeriod);
     }
 
-    private static void createExecutionCourses(final Set<String> curricularCourseCodes, final Map<ISchoolClass, ISchoolClass> schoolClassMap,
-    		final IExecutionPeriod executionPeriod, final IExecutionPeriod newExecutionPeriod) {
-    	for (final IExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+    private static void createExecutionCourses(final Set<String> curricularCourseCodes, final Map<SchoolClass, SchoolClass> schoolClassMap,
+    		final ExecutionPeriod executionPeriod, final ExecutionPeriod newExecutionPeriod) {
+    	for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
     		if (keepAggregate(curricularCourseCodes, executionCourse.getAssociatedCurricularCourses())) {
-                final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod, executionCourse);
-                final List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
-                for (final ICurricularCourse curricularCourse : curricularCourses) {
+                final ExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod, executionCourse);
+                final List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                for (final CurricularCourse curricularCourse : curricularCourses) {
                     addCurricularCourse(newExecutionCourse, curricularCourse);
                 }
                 if (!newExecutionCourse.getAssociatedCurricularCourses().isEmpty()) {
                     createSchedule(schoolClassMap, newExecutionCourse, executionCourse);
                 }
             } else {
-                final List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+                final List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
                 int i = 0;
-                for (final ICurricularCourse curricularCourse : curricularCourses) {
-                    final IExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod, executionCourse);
+                for (final CurricularCourse curricularCourse : curricularCourses) {
+                    final ExecutionCourse newExecutionCourse = createExecutionCourse(newExecutionPeriod, executionCourse);
                     newExecutionCourse.setSigla(executionCourse.getSigla() + "_" + i++);
                     addCurricularCourse(newExecutionCourse, curricularCourse);
                 }
@@ -156,16 +156,16 @@ public class InitializeExecutionPeriod {
     	}
 	}
 
-	private static Map<ISchoolClass, ISchoolClass> createSchoolClasses(final Map<IExecutionDegree, IExecutionDegree> executionDegreeMap,
-    		final IExecutionPeriod newEecutionPeriod) {
-    	final Map<ISchoolClass, ISchoolClass> schoolClassMap = new HashMap<ISchoolClass, ISchoolClass>();
-    	for (final Entry<IExecutionDegree, IExecutionDegree> entry : executionDegreeMap.entrySet()) {
-    		final IExecutionDegree executionDegree = entry.getKey();
-    		final IDegree degree = executionDegree.getDegreeCurricularPlan().getDegree();
+	private static Map<SchoolClass, SchoolClass> createSchoolClasses(final Map<ExecutionDegree, ExecutionDegree> executionDegreeMap,
+    		final ExecutionPeriod newEecutionPeriod) {
+    	final Map<SchoolClass, SchoolClass> schoolClassMap = new HashMap<SchoolClass, SchoolClass>();
+    	for (final Entry<ExecutionDegree, ExecutionDegree> entry : executionDegreeMap.entrySet()) {
+    		final ExecutionDegree executionDegree = entry.getKey();
+    		final Degree degree = executionDegree.getDegreeCurricularPlan().getDegree();
     		if (DEGREE_TYPES_TO_CREATE.contains(degree.getTipoCurso())) {
-    			for (final ISchoolClass schoolClass : executionDegree.getSchoolClasses()) {
+    			for (final SchoolClass schoolClass : executionDegree.getSchoolClasses()) {
     				if (schoolClass.getExecutionPeriod().getSemester().equals(newEecutionPeriod.getSemester())) {
-    					final ISchoolClass newSchoolClass = new SchoolClass();
+    					final SchoolClass newSchoolClass = new SchoolClass();
     					newSchoolClass.setAnoCurricular(schoolClass.getAnoCurricular());
     					newSchoolClass.setExecutionDegree(entry.getValue());
     					newSchoolClass.setExecutionPeriod(newEecutionPeriod);
@@ -179,12 +179,12 @@ public class InitializeExecutionPeriod {
     	return schoolClassMap;
     }
 
-	private static Map<IExecutionDegree, IExecutionDegree> constructExecutionDegreeCorrespondenceMap(
-    		final IExecutionPeriod executionPeriod, final IExecutionPeriod newExecutionPeriod) {
-    	final Map<IExecutionDegree, IExecutionDegree> executionDegreeMap = new HashMap<IExecutionDegree, IExecutionDegree>();
-    	for (final IExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
-    		final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-    		final IExecutionDegree correspondingExecutionDegree = findExecutionDegree(
+	private static Map<ExecutionDegree, ExecutionDegree> constructExecutionDegreeCorrespondenceMap(
+    		final ExecutionPeriod executionPeriod, final ExecutionPeriod newExecutionPeriod) {
+    	final Map<ExecutionDegree, ExecutionDegree> executionDegreeMap = new HashMap<ExecutionDegree, ExecutionDegree>();
+    	for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+    		final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+    		final ExecutionDegree correspondingExecutionDegree = findExecutionDegree(
     				newExecutionPeriod.getExecutionYear().getExecutionDegrees(), degreeCurricularPlan);
     		if (correspondingExecutionDegree != null) {
     			executionDegreeMap.put(executionDegree, correspondingExecutionDegree);
@@ -193,9 +193,9 @@ public class InitializeExecutionPeriod {
 		return executionDegreeMap;
 	}
 
-	private static IExecutionDegree findExecutionDegree(
-			final List<IExecutionDegree> executionDegrees, final IDegreeCurricularPlan degreeCurricularPlan) {
-		for (final IExecutionDegree executionDegree : executionDegrees) {
+	private static ExecutionDegree findExecutionDegree(
+			final List<ExecutionDegree> executionDegrees, final DegreeCurricularPlan degreeCurricularPlan) {
+		for (final ExecutionDegree executionDegree : executionDegrees) {
 			if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
 				return executionDegree;
 			}
@@ -203,8 +203,8 @@ public class InitializeExecutionPeriod {
 		return null;
 	}
 
-    private static boolean keepAggregate(final Set<String> curricularCourseCodes, final List<ICurricularCourse> curricularCourses) {
-        for (final ICurricularCourse curricularCourse : curricularCourses) {
+    private static boolean keepAggregate(final Set<String> curricularCourseCodes, final List<CurricularCourse> curricularCourses) {
+        for (final CurricularCourse curricularCourse : curricularCourses) {
             if (curricularCourseCodes.contains(curricularCourse.getCode())) {
                 return false;
             }
@@ -212,12 +212,12 @@ public class InitializeExecutionPeriod {
         return true;
     }
 
-    private static IExecutionCourse createExecutionCourse(final IExecutionPeriod newExecutionPeriod,
-            final IExecutionCourse executionCourse) {
-        final IExecutionCourse newExecutionCourse = new ExecutionCourse();
+    private static ExecutionCourse createExecutionCourse(final ExecutionPeriod newExecutionPeriod,
+            final ExecutionCourse executionCourse) {
+        final ExecutionCourse newExecutionCourse = new ExecutionCourse();
 
-        for (final IBibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferences()) {
-        	final IBibliographicReference newBibliographicReference = new BibliographicReference();
+        for (final BibliographicReference bibliographicReference : executionCourse.getAssociatedBibliographicReferences()) {
+        	final BibliographicReference newBibliographicReference = new BibliographicReference();
         	newBibliographicReference.setAuthors(bibliographicReference.getAuthors());
         	newBibliographicReference.setExecutionCourse(newExecutionCourse);
         	newBibliographicReference.setOptional(bibliographicReference.getOptional());
@@ -229,9 +229,9 @@ public class InitializeExecutionPeriod {
         newExecutionCourse.setComment(new String());
         newExecutionCourse.setCourseReport(null);
 
-        final IEvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
+        final EvaluationMethod evaluationMethod = executionCourse.getEvaluationMethod();
         if (evaluationMethod != null) {
-        	final IEvaluationMethod newEvaluationMethod = new EvaluationMethod();
+        	final EvaluationMethod newEvaluationMethod = new EvaluationMethod();
         	newEvaluationMethod.setEvaluationElements(evaluationMethod.getEvaluationElements());
         	newEvaluationMethod.setEvaluationElementsEn(evaluationMethod.getEvaluationElementsEn());
         	newEvaluationMethod.setExecutionCourse(newExecutionCourse);
@@ -249,26 +249,26 @@ public class InitializeExecutionPeriod {
         return newExecutionCourse;
     }
 
-    private static void addCurricularCourse(final IExecutionCourse executionCourse, final ICurricularCourse curricularCourse) {
-    	final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-    	final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-    	final IDegree degree = degreeCurricularPlan.getDegree();
+    private static void addCurricularCourse(final ExecutionCourse executionCourse, final CurricularCourse curricularCourse) {
+    	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    	final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+    	final Degree degree = degreeCurricularPlan.getDegree();
         if (DEGREE_TYPES_TO_CREATE.contains(degree.getTipoCurso())
         		&& !curricularCourse.getActiveScopesInExecutionPeriodAndSemester(executionPeriod).isEmpty()) {
         	curricularCourse.getAssociatedExecutionCourses().add(executionCourse);
         }
     }
 
-    private static void createSchedule(final Map<ISchoolClass, ISchoolClass> schoolClassMap, 
-    		final IExecutionCourse newExecutionCourse, final IExecutionCourse executionCourse) {
-        for (final IShift shift : executionCourse.getAssociatedShifts()) {
+    private static void createSchedule(final Map<SchoolClass, SchoolClass> schoolClassMap, 
+    		final ExecutionCourse newExecutionCourse, final ExecutionCourse executionCourse) {
+        for (final Shift shift : executionCourse.getAssociatedShifts()) {
             createShift(schoolClassMap, shift, newExecutionCourse);
         }
     }
 
-    private static void createShift(final Map<ISchoolClass, ISchoolClass> schoolClassMap, 
-    		final IShift shift, final IExecutionCourse executionCourse) {
-        final IShift newShift = new Shift();
+    private static void createShift(final Map<SchoolClass, SchoolClass> schoolClassMap, 
+    		final Shift shift, final ExecutionCourse executionCourse) {
+        final Shift newShift = new Shift();
 
         newShift.setAvailabilityFinal(shift.getLotacao());
         newShift.setDisciplinaExecucao(executionCourse);
@@ -276,35 +276,35 @@ public class InitializeExecutionPeriod {
         newShift.setNome(shift.getNome());
         newShift.setTipo(shift.getTipo());
 
-        for (final ISchoolClass schoolClass : shift.getAssociatedClasses()) {
-            final ISchoolClass newSchoolClass = schoolClassMap.get(schoolClass);
+        for (final SchoolClass schoolClass : shift.getAssociatedClasses()) {
+            final SchoolClass newSchoolClass = schoolClassMap.get(schoolClass);
             addSchoolClass(newShift, newSchoolClass, schoolClass);
         }
 
         if (!newShift.getAssociatedClasses().isEmpty()) {
-            for (final ILesson lesson : shift.getAssociatedLessons()) {
+            for (final Lesson lesson : shift.getAssociatedLessons()) {
                 createLesson(lesson, newShift);
             }
         }
     }
 
-    private static void addSchoolClass(final IShift shift, final ISchoolClass newSchoolClass, final ISchoolClass schoolClass) {
+    private static void addSchoolClass(final Shift shift, final SchoolClass newSchoolClass, final SchoolClass schoolClass) {
         if (newSchoolClass != null) {
             newSchoolClass.getAssociatedShifts().add(shift);
         } else {
-        	final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
-        	final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        	final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+        	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
         	logger.warn("No new class found for: " + schoolClass.getNome() + " year: " + schoolClass.getAnoCurricular()
         			+ " degree: " + degreeCurricularPlan.getName());
         }
     }
 
-    private static void createLesson(final ILesson lesson, final IShift newShift) {
-    	final IExecutionCourse executionCourse = newShift.getDisciplinaExecucao();
-    	final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-    	final IRoom room = lesson.getSala();
+    private static void createLesson(final Lesson lesson, final Shift newShift) {
+    	final ExecutionCourse executionCourse = newShift.getDisciplinaExecucao();
+    	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    	final Room room = lesson.getSala();
 
-        final ILesson newLesson = new Lesson();
+        final Lesson newLesson = new Lesson();
         newLesson.setDiaSemana(lesson.getDiaSemana());;
         newLesson.setExecutionPeriod(executionPeriod);
         newLesson.setFim(lesson.getFim());
@@ -316,11 +316,11 @@ public class InitializeExecutionPeriod {
         createRoomOccupation(lesson.getRoomOccupation(), newLesson);
     }
 
-    private static IRoomOccupation createRoomOccupation(final IRoomOccupation roomOccupation, final ILesson lesson) {
-    	final IRoom room = roomOccupation.getRoom();
-    	final IOccupationPeriod period = getPeriod(lesson);
+    private static RoomOccupation createRoomOccupation(final RoomOccupation roomOccupation, final Lesson lesson) {
+    	final Room room = roomOccupation.getRoom();
+    	final OccupationPeriod period = getPeriod(lesson);
 
-        final IRoomOccupation newRoomOccupation = new RoomOccupation();
+        final RoomOccupation newRoomOccupation = new RoomOccupation();
         newRoomOccupation.setDayOfWeek(roomOccupation.getDayOfWeek());
         newRoomOccupation.setEndTime(roomOccupation.getEndTime());
         newRoomOccupation.setFrequency(roomOccupation.getFrequency());
@@ -334,9 +334,9 @@ public class InitializeExecutionPeriod {
         return newRoomOccupation;
     }
 
-    private static IOccupationPeriod getPeriod(final ILesson lesson) {
-        final ISchoolClass schoolClass = lesson.getShift().getAssociatedClasses().get(0);
-        final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+    private static OccupationPeriod getPeriod(final Lesson lesson) {
+        final SchoolClass schoolClass = lesson.getShift().getAssociatedClasses().get(0);
+        final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
 
         if (schoolClass.getExecutionPeriod().getSemester().intValue() == 1) {
             return executionDegree.getPeriodLessonsFirstSemester();

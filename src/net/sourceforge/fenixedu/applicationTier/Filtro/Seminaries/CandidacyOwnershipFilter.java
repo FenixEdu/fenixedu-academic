@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.Seminaries;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
@@ -39,9 +39,9 @@ public class CandidacyOwnershipFilter extends Filtro {
         IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
                 .getIPersistentSeminaryCandidacy();
         //
-        IStudent student = persistenceSupport.getIPersistentStudent().readByUsername(
+        Student student = persistenceSupport.getIPersistentStudent().readByUsername(
                 getRemoteUser(request).getUtilizador());
-        ICandidacy candidacy = (ICandidacy) persistentCandidacy.readByOID(Candidacy.class, candidacyID);
+        Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class, candidacyID);
         //
         if ((candidacy != null)
                 && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()

@@ -6,8 +6,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
@@ -26,11 +26,11 @@ public class ReadCompetenceCoursesByDepartment implements IService{
 		List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
 		if(departmentID != null) {
 			IPersistentDepartment persistentDepartment = suportePersistente.getIDepartamentoPersistente();
-			IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class, departmentID);
+			Department department = (Department) persistentDepartment.readByOID(Department.class, departmentID);
 			if(department == null) {
 				throw new NotExistingServiceException("error.manager.noDepartment");
 			}
-			for (ICompetenceCourse competenceCourse : department.getCompetenceCourses()) {
+			for (CompetenceCourse competenceCourse : department.getCompetenceCourses()) {
                 if (competenceCourse.getCurricularStage().equals(CurricularStage.OLD)) {
                     result.add(InfoCompetenceCourse.newInfoFromDomain(competenceCourse));    
                 }
@@ -39,17 +39,17 @@ public class ReadCompetenceCoursesByDepartment implements IService{
 		else {
 			//read competence course with no associated department
 			IPersistentCompetenceCourse persistentCompetenceCourse = suportePersistente.getIPersistentCompetenceCourse();
-			List<ICompetenceCourse> allCompetenceCourses = (List<ICompetenceCourse>) persistentCompetenceCourse.readByCurricularStage(CurricularStage.OLD);
-			List<ICompetenceCourse> noDeptCompetenceCourse = (List<ICompetenceCourse>) CollectionUtils.select(allCompetenceCourses, new Predicate() {
+			List<CompetenceCourse> allCompetenceCourses = (List<CompetenceCourse>) persistentCompetenceCourse.readByCurricularStage(CurricularStage.OLD);
+			List<CompetenceCourse> noDeptCompetenceCourse = (List<CompetenceCourse>) CollectionUtils.select(allCompetenceCourses, new Predicate() {
 
 				public boolean evaluate(Object arg0) {
-					ICompetenceCourse competenceCourse = (ICompetenceCourse) arg0;
+					CompetenceCourse competenceCourse = (CompetenceCourse) arg0;
 					return !competenceCourse.hasAnyDepartments();
 				}
 				
 			});
 			
-			for (ICompetenceCourse course : noDeptCompetenceCourse) {
+			for (CompetenceCourse course : noDeptCompetenceCourse) {
 				result.add(InfoCompetenceCourse.newInfoFromDomain(course));
 			}
 		}

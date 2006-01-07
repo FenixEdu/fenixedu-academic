@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -15,16 +15,16 @@ import net.sourceforge.fenixedu.domain.IExternalPerson;
  *  
  */
 public interface IPersistentExternalPerson extends IPersistentObject {
-    public IExternalPerson readByUsername(String username) throws ExcepcaoPersistencia;
+    public ExternalPerson readByUsername(String username) throws ExcepcaoPersistencia;
 
     public List readByName(String name) throws ExcepcaoPersistencia;
 
-    public IExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
+    public ExternalPerson readByNameAndAddressAndInstitutionID(String name, String address,
             Integer institutionID) throws ExcepcaoPersistencia;
 
     public List readByInstitution(Integer institutionID) throws ExcepcaoPersistencia;
 
     public String readLastDocumentIdNumber() throws ExcepcaoPersistencia;
     
-    public Collection<IExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) throws ExcepcaoPersistencia;
+    public Collection<ExternalPerson> readByIDs(Collection<Integer> externalPersonsIDs) throws ExcepcaoPersistencia;
 }

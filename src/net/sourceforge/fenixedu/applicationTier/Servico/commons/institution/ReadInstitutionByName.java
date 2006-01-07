@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -14,7 +14,7 @@ public class ReadInstitutionByName implements IService {
         InfoInstitution infoInstitution = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IInstitution institution = sp.getIPersistentInstitution().readByName(institutionName);
+        Institution institution = sp.getIPersistentInstitution().readByName(institutionName);
 
         if (institution != null) {
             infoInstitution = new InfoInstitution();

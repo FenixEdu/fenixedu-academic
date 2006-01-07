@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,12 +28,12 @@ public void run(final Integer studentNumber, final DegreeType degreeType,
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
     
-        final IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
+        final Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {
             throw new NonExistingServiceException("exception.student.does.not.exist");
         }
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 		if (degreeCurricularPlan == null) {
 			throw new NonExistingServiceException("exception.degree.curricular.plan.does.not.exist");

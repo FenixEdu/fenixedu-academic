@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 
 /**
  * @author João Mota
@@ -19,6 +19,6 @@ public interface IPersistentWrittenEvaluationEnrolment extends IPersistentObject
 
     public List readByStudentOID(Integer studentOID) throws ExcepcaoPersistencia;
 
-    public IWrittenEvaluationEnrolment readBy(Integer examOID, Integer studentOID) throws ExcepcaoPersistencia;
+    public WrittenEvaluationEnrolment readBy(Integer examOID, Integer studentOID) throws ExcepcaoPersistencia;
 
 }

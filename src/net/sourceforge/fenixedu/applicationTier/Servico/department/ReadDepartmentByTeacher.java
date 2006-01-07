@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -24,9 +24,9 @@ public class ReadDepartmentByTeacher implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();       
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, infoTeacher.getIdInternal());
         
-        IDepartment department = teacher.getCurrentWorkingDepartment();
+        Department department = teacher.getCurrentWorkingDepartment();
         return InfoDepartment.newInfoFromDomain(department);
     }
 }

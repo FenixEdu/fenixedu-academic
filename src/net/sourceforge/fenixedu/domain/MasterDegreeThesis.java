@@ -25,10 +25,10 @@ public class MasterDegreeThesis extends MasterDegreeThesis_Base {
         return result;
     }
 
-    public IMasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
-        IMasterDegreeProofVersion activeMasterDegreeProofVersion = null;
+    public MasterDegreeProofVersion getActiveMasterDegreeProofVersion() {
+        MasterDegreeProofVersion activeMasterDegreeProofVersion = null;
 
-        for (IMasterDegreeProofVersion candidateMasterDegreeProofVersion : this
+        for (MasterDegreeProofVersion candidateMasterDegreeProofVersion : this
                 .getMasterDegreeProofVersions()) {
             if (candidateMasterDegreeProofVersion.getCurrentState().getState() == State.ACTIVE) {
                 activeMasterDegreeProofVersion = candidateMasterDegreeProofVersion;

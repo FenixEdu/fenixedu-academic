@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.Invalid
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantCostCenter;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,7 +40,7 @@ public class CreateOrEditGrantContract implements IService {
                 .getIPersistentGrantOrientationTeacher();
         IPersistentGrantCostCenter pGrantCostCenter = sp.getIPersistentGrantCostCenter();
 
-        final IGrantContract grantContract;
+        final GrantContract grantContract;
         if (infoGrantContract.getContractNumber() == null) {
 
             // set the contract number!
@@ -55,18 +55,18 @@ public class CreateOrEditGrantContract implements IService {
                     .getContractNumber(), infoGrantContract.getGrantOwnerInfo().getIdInternal());
         }
 
-        IGrantOwner grantOwner = (IGrantOwner) pGrantOwner.readByOID(GrantOwner.class, infoGrantContract
+        GrantOwner grantOwner = (GrantOwner) pGrantOwner.readByOID(GrantOwner.class, infoGrantContract
                 .getGrantOwnerInfo().getIdInternal());
 
         grantContract.setGrantOwner(grantOwner);
 
-        IGrantType grantType = pGrantType.readGrantTypeBySigla(infoGrantContract.getGrantTypeInfo()
+        GrantType grantType = pGrantType.readGrantTypeBySigla(infoGrantContract.getGrantTypeInfo()
                 .getSigla());
         if (grantType == null)
             throw new GrantTypeNotFoundException();
         grantContract.setGrantType(grantType);
 
-        IGrantOrientationTeacher grantOrientationTeacher = (IGrantOrientationTeacher) pGrantOrientationTeacher
+        GrantOrientationTeacher grantOrientationTeacher = (GrantOrientationTeacher) pGrantOrientationTeacher
                 .readByOID(GrantOrientationTeacher.class, infoGrantContract
                         .getGrantOrientationTeacherInfo().getIdInternal());
 
@@ -82,7 +82,7 @@ public class CreateOrEditGrantContract implements IService {
                         .getGrantOrientationTeacherInfo(), grantContract);
             } else {
 
-                final ITeacher teacher = pTeacher
+                final Teacher teacher = pTeacher
                         .readByNumber(infoGrantContract.getGrantOrientationTeacherInfo()
                                 .getOrientationTeacherInfo().getTeacherNumber());
 
@@ -96,7 +96,7 @@ public class CreateOrEditGrantContract implements IService {
 
         if (infoGrantContract.getGrantCostCenterInfo() != null
                 && infoGrantContract.getGrantCostCenterInfo().getNumber() != null) {
-            IGrantCostCenter grantCostCenter = pGrantCostCenter
+            GrantCostCenter grantCostCenter = pGrantCostCenter
                     .readGrantCostCenterByNumber(infoGrantContract.getGrantCostCenterInfo().getNumber());
             if (grantCostCenter == null)
                 throw new InvalidGrantPaymentEntityException();
@@ -111,16 +111,16 @@ public class CreateOrEditGrantContract implements IService {
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
     }
 
-    private IGrantOrientationTeacher createNewGrantOrientationTeacher(ISuportePersistente sp,
-            InfoGrantOrientationTeacher grantOrientationTeacherInfo, IGrantContract grantContract)
+    private GrantOrientationTeacher createNewGrantOrientationTeacher(ISuportePersistente sp,
+            InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
 
-        final ITeacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo
+        final Teacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo
                 .getOrientationTeacherInfo().getTeacherNumber());
 
-        final IGrantOrientationTeacher newGrantOrientationTeacher;
+        final GrantOrientationTeacher newGrantOrientationTeacher;
         if (teacher == null)
             throw new GrantOrientationTeacherNotFoundException();
 

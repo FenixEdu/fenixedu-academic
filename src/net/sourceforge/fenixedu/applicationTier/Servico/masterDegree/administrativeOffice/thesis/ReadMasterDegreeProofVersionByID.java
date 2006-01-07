@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +22,7 @@ public class ReadMasterDegreeProofVersionByID implements IService {
             ExcepcaoPersistencia {
         
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) sp
+        MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) sp
                 .getIPersistentMasterDegreeProofVersion().readByOID(MasterDegreeProofVersion.class,
                         masterDegreeProofVersionID);
 

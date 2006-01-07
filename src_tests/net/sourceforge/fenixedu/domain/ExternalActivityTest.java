@@ -10,7 +10,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -22,13 +22,13 @@ public class ExternalActivityTest extends DomainTestBase {
     String activity = "activity";
     String activity2 = "activity2";
     
-	ITeacher teacher;
+	Teacher teacher;
 	
 	InfoExternalActivity infoExternalActivityToCreate;
 	InfoExternalActivity infoExternalActivityToEdit;
 
-	IExternalActivity externalActivityToDelete;
-	IExternalActivity externalActivityToEdit;
+	ExternalActivity externalActivityToDelete;
+	ExternalActivity externalActivityToEdit;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -37,7 +37,7 @@ public class ExternalActivityTest extends DomainTestBase {
 		infoExternalActivityToCreate.setActivity(activity);
 	}
 
-	private void initializeExternalActivity(IExternalActivity externalActivity) {
+	private void initializeExternalActivity(ExternalActivity externalActivity) {
 		externalActivity.setActivity(activity);
 	}
 	
@@ -63,7 +63,7 @@ public class ExternalActivityTest extends DomainTestBase {
 			
 		}
 
-		IExternalActivity newExternalActivity =  DomainFactory.makeExternalActivity(teacher, infoExternalActivityToCreate);
+		ExternalActivity newExternalActivity =  DomainFactory.makeExternalActivity(teacher, infoExternalActivityToCreate);
 		assertTrue("Failed to reference teacher!", newExternalActivity.hasTeacher());
 		verifyExternalActivityAttributes(newExternalActivity, infoExternalActivityToCreate);
 	}
@@ -91,7 +91,7 @@ public class ExternalActivityTest extends DomainTestBase {
 
 	}
 
-	private void verifyExternalActivityAttributes(IExternalActivity externalActivity, InfoExternalActivity infoExternalActivity) {
+	private void verifyExternalActivityAttributes(ExternalActivity externalActivity, InfoExternalActivity infoExternalActivity) {
 		assertEquals("Different activity!", externalActivity.getActivity(), infoExternalActivity.getActivity());
 	}
 

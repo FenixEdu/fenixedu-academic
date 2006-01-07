@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 
 /**
  * @author Barbosa
@@ -130,7 +130,7 @@ public class InfoGrantType extends InfoObject {
     /**
      * @param GrantType
      */
-    public void copyFromDomain(IGrantType grantType) {
+    public void copyFromDomain(GrantType grantType) {
         super.copyFromDomain(grantType);
         if (grantType != null) {
             setName(grantType.getName());
@@ -147,7 +147,7 @@ public class InfoGrantType extends InfoObject {
      * @param GrantType
      * @return
      */
-    public static InfoGrantType newInfoFromDomain(IGrantType grantType) {
+    public static InfoGrantType newInfoFromDomain(GrantType grantType) {
         InfoGrantType infoGrantType = null;
         if (grantType != null) {
             infoGrantType = new InfoGrantType();
@@ -156,7 +156,7 @@ public class InfoGrantType extends InfoObject {
         return infoGrantType;
     }
 
-    public void copyToDomain(InfoGrantType infoGrantType, IGrantType grantType) {
+    public void copyToDomain(InfoGrantType infoGrantType, GrantType grantType) {
         super.copyToDomain(infoGrantType, grantType);
 
         grantType.setName(infoGrantType.getName());

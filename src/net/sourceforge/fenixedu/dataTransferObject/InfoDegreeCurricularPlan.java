@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.util.MarkType;
 
@@ -288,7 +288,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
         }
     }
 
-    public void copyFromDomain(IDegreeCurricularPlan plan) {
+    public void copyFromDomain(DegreeCurricularPlan plan) {
         super.copyFromDomain(plan);
         if (plan != null) {
             setName(plan.getName());
@@ -311,7 +311,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
      * @param plan
      * @return
      */
-    public static InfoDegreeCurricularPlan newInfoFromDomain(IDegreeCurricularPlan plan) {
+    public static InfoDegreeCurricularPlan newInfoFromDomain(DegreeCurricularPlan plan) {
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
         if (plan != null) {
             infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
@@ -321,7 +321,7 @@ public class InfoDegreeCurricularPlan extends InfoObject implements Comparable {
     }
 
     public void copyToDomain(InfoDegreeCurricularPlan infoDegreeCurricularPlan,
-            IDegreeCurricularPlan degreeCurricularPlan) {
+            DegreeCurricularPlan degreeCurricularPlan) {
         super.copyToDomain(infoDegreeCurricularPlan, degreeCurricularPlan);
         degreeCurricularPlan.setName(infoDegreeCurricularPlan.getName());
         degreeCurricularPlan.setState(infoDegreeCurricularPlan.getState());

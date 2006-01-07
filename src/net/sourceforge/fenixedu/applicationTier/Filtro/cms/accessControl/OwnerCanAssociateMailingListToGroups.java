@@ -21,9 +21,9 @@ public class OwnerCanAssociateMailingListToGroups extends CmsAccessControlFilter
 
 	public void execute(ServiceRequest arg0, ServiceResponse arg1, FilterParameters arg2) throws FilterException, Exception
 	{
-//		Collection<IUserGroup> groups = (Collection<IUserGroup>)arg0.getServiceParameters().getParameter(4);
-//		IPerson owner = (IPerson) arg0.getServiceParameters().getParameter(7);
-//		for (IUserGroup group : groups)
+//		Collection<UserGroup> groups = (Collection<UserGroup>)arg0.getServiceParameters().getParameter(4);
+//		Person owner = (Person) arg0.getServiceParameters().getParameter(7);
+//		for (UserGroup group : groups)
 //		{
 //			if (!group.getOwners().contains(owner))
 //			{

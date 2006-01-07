@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,8 +26,8 @@ public class ReadProfessorshipByOID extends ReadDomainObjectService {
         return sp.getIPersistentProfessorship();
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoProfessorshipWithAll.newInfoFromDomain((IProfessorship) domainObject);
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoProfessorshipWithAll.newInfoFromDomain((Professorship) domainObject);
     }
 
 }

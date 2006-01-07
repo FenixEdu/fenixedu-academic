@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoInquiryStatistics;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionWithAll;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -49,18 +49,18 @@ public class ReadInquiryStatistics implements IService {
 		InfoSiteInquiryStatistics infoSiteInquiryStatistics = new InfoSiteInquiryStatistics();
 		List infoInquiryStatisticsList = new ArrayList();
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+		DistributedTest distributedTest = (DistributedTest) persistentSuport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)
 			throw new InvalidArgumentsServiceException();
 		infoSiteInquiryStatistics.setExecutionCourse(InfoExecutionCourse
-				.newInfoFromDomain((IExecutionCourse) distributedTest.getTestScope().getDomainObject()));
+				.newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
 		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
 				.getIPersistentStudentTestQuestion();
 
-		List<IStudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion
+		List<StudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion
 				.readStudentTestQuestionsByDistributedTest(distributedTest);
-		for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+		for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
 			InfoInquiryStatistics infoInquiryStatistics = new InfoInquiryStatistics();
 
 			InfoStudentTestQuestion infoStudentTestQuestion;

@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.student.IStudentPersonalDataAuthorization;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -35,14 +35,14 @@ public class ReadActualPersonalDataAuthorizationAnswer implements IService {
         IPersistentStudentPersonalDataAuthorization persistentStudentPersonalDataAuthorization = sp
                 .getIPersistentStudentPersonalDataAuthorization();
 
-        IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentID);
-        IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
+        ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
         List allStudentPersonalDataAuthorizationAnswers = (List) persistentStudentPersonalDataAuthorization
                 .readAll(StudentPersonalDataAuthorization.class);
 
         if (allStudentPersonalDataAuthorizationAnswers != null) {
             for (Iterator iter = allStudentPersonalDataAuthorizationAnswers.iterator(); iter.hasNext();) {
-                IStudentPersonalDataAuthorization spda = (StudentPersonalDataAuthorization) iter.next();
+                StudentPersonalDataAuthorization spda = (StudentPersonalDataAuthorization) iter.next();
                 if (spda.getStudent().equals(student) && spda.getExecutionYear().equals(executionYear)) {
                     return spda.getAnswer();
                 }

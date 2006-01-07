@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -45,7 +45,7 @@ public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID implements ISe
 			public Object transform(Object oldInquiriesSummary) {
 				InfoOldInquiriesSummary iois = new InfoOldInquiriesSummary();
 				try {
-					iois.copyFromDomain((IOldInquiriesSummary) oldInquiriesSummary);
+					iois.copyFromDomain((OldInquiriesSummary) oldInquiriesSummary);
 
 				} catch (Exception ex) {
 				}

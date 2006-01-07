@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.sms.ISentSms;
+import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 
 /**
@@ -117,7 +117,7 @@ public class InfoSentSms extends InfoObject {
         this.sendDate = sendDate;
     }
 
-    public static InfoSentSms copyFromDomain(ISentSms sentSms) {
+    public static InfoSentSms copyFromDomain(SentSms sentSms) {
         InfoSentSms infoSentSms = null;
         if (sentSms != null) {
             infoSentSms = new InfoSentSms();

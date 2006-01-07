@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -25,8 +25,8 @@ public class ChangeStudentsShift implements IService {
         ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        IShift oldShift = (IShift) persistentShift.readByOID(Shift.class, oldShiftId);
-        IShift newShift = (IShift) persistentShift.readByOID(Shift.class, newShiftId);
+        Shift oldShift = (Shift) persistentShift.readByOID(Shift.class, oldShiftId);
+        Shift newShift = (Shift) persistentShift.readByOID(Shift.class, newShiftId);
 
         if (oldShift == null || newShift == null || !oldShift.getTipo().equals(newShift.getTipo())
                 || !oldShift.getDisciplinaExecucao().getIdInternal().equals(newShift.getDisciplinaExecucao().getIdInternal())) {
@@ -37,14 +37,14 @@ public class ChangeStudentsShift implements IService {
         List<String> emptyList = new ArrayList<String>();
         List<String> toMails = new ArrayList<String>();
 
-        final List<IStudent> oldStudents = oldShift.getStudents();
-        final List<IStudent> newStudents = newShift.getStudents();
+        final List<Student> oldStudents = oldShift.getStudents();
+        final List<Student> newStudents = newShift.getStudents();
         while (!oldStudents.isEmpty()) {
-            final IStudent student = oldStudents.get(0);
+            final Student student = oldStudents.get(0);
             if (!newStudents.contains(student)) {
                 newStudents.add(student);
 
-                IPerson person = student.getPerson();
+                Person person = student.getPerson();
                 if (person.getEmail() != null && person.getEmail().length() > 0) {
                     toMails.add(person.getEmail());
                 }
@@ -54,7 +54,7 @@ public class ChangeStudentsShift implements IService {
         }
 
             
-        IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
         sendMail.run(emptyList, emptyList, toMails, person.getNome(), person.getEmail(), 
                 "Alteração de turnos",
                 "Devido a alterações nos horários, a sua reserva no turno "

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IGratuityValues;
+import net.sourceforge.fenixedu.domain.GratuityValues;
 
 /**
  * @author Tânia Pousão
@@ -15,9 +15,9 @@ public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValue
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues#copyFromDomain(Dominio.IGratuityValues)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues#copyFromDomain(Dominio.GratuityValues)
      */
-    public void copyFromDomain(IGratuityValues gratuityValues) {
+    public void copyFromDomain(GratuityValues gratuityValues) {
         super.copyFromDomain(gratuityValues);
         if (gratuityValues != null) {
             setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
@@ -25,7 +25,7 @@ public class InfoGratuityValuesWithInfoExecutionDegree extends InfoGratuityValue
         }
     }
 
-    public static InfoGratuityValues newInfoFromDomain(IGratuityValues gratuityValues) {
+    public static InfoGratuityValues newInfoFromDomain(GratuityValues gratuityValues) {
         InfoGratuityValuesWithInfoExecutionDegree infoGratuityValues = null;
         if (gratuityValues != null) {
             infoGratuityValues = new InfoGratuityValuesWithInfoExecutionDegree();

@@ -4,21 +4,21 @@
 package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 
 /**
  * @author Susana Fernandes
  */
 public class InfoStudentTestQuestionWithAll extends InfoStudentTestQuestionWithInfoQuestionAndInfoDistributedTest {
 
-    public void copyFromDomain(IStudentTestQuestion studentTestQuestion) {
+    public void copyFromDomain(StudentTestQuestion studentTestQuestion) {
         super.copyFromDomain(studentTestQuestion);
         if (studentTestQuestion != null) {
             setStudent(InfoStudentWithInfoPerson.newInfoFromDomain(studentTestQuestion.getStudent()));
         }
     }
 
-    public static InfoStudentTestQuestion newInfoFromDomain(IStudentTestQuestion studentTestQuestion) {
+    public static InfoStudentTestQuestion newInfoFromDomain(StudentTestQuestion studentTestQuestion) {
         InfoStudentTestQuestionWithAll infoStudentTestQuestion = null;
         if (studentTestQuestion != null) {
             infoStudentTestQuestion = new InfoStudentTestQuestionWithAll();

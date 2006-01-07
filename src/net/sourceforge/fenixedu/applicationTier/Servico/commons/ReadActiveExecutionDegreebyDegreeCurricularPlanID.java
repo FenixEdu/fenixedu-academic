@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -44,7 +44,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
                 .getIPersistentExecutionDegree();
 
         // degree curricular plan
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
@@ -58,7 +58,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
         }
 
         // decide which is the execution year which we want to edit
-        final IExecutionDegree executionDegree = getActiveExecutionYear(executionDegrees);
+        final ExecutionDegree executionDegree = getActiveExecutionYear(executionDegrees);
         if (executionDegree != null) {
             final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlanAndInfoCampus
                     .newInfoFromDomain(executionDegree);
@@ -67,17 +67,17 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
                 final List infoCoordinatorList = new ArrayList();
                 for (final Iterator iterator = executionDegree.getCoordinatorsList().iterator(); iterator
                         .hasNext();) {
-                    final ICoordinator coordinator = (ICoordinator) iterator.next();
+                    final Coordinator coordinator = (Coordinator) iterator.next();
                     final InfoCoordinator infoCoordinator = new InfoCoordinator();
                     infoCoordinatorList.add(infoCoordinator);
                     infoCoordinator.setIdInternal(coordinator.getIdInternal());
 
-                    final ITeacher teacher = coordinator.getTeacher();
+                    final Teacher teacher = coordinator.getTeacher();
                     final InfoTeacher infoTeacher = new InfoTeacher();
                     infoCoordinator.setInfoTeacher(infoTeacher);
                     infoTeacher.setIdInternal(teacher.getIdInternal());
 
-                    final IPerson person = teacher.getPerson();
+                    final Person person = teacher.getPerson();
                     final InfoPerson infoPerson = new InfoPerson();
                     infoTeacher.setInfoPerson(infoPerson);
                     infoPerson.setIdInternal(person.getIdInternal());
@@ -113,21 +113,21 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
      *            a list of infoexecution degrees sorted by beginDate
      */
 
-    private IExecutionDegree getActiveExecutionYear(List executionDegreeList) {
+    private ExecutionDegree getActiveExecutionYear(List executionDegreeList) {
         Date todayDate = new Date();
         int i;
         for (i = 0; i < executionDegreeList.size(); i++) {
             // if the first is in the future, the rest is also
-            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 1)
+            if ((ExecutionDegreeDuringDate(todayDate, (ExecutionDegree) executionDegreeList.get(i)) == 1)
                     && (i == 0))
-                return (IExecutionDegree) executionDegreeList.get(i);
+                return (ExecutionDegree) executionDegreeList.get(i);
             // if the last is in the past, there is no editable executionDegree
-            if ((ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 1)
+            if ((ExecutionDegreeDuringDate(todayDate, (ExecutionDegree) executionDegreeList.get(i)) == 1)
                     && (i == executionDegreeList.size() - 1))
                 return null;
 
-            if (ExecutionDegreeDuringDate(todayDate, (IExecutionDegree) executionDegreeList.get(i)) == 0)
-                return (IExecutionDegree) executionDegreeList.get(i);
+            if (ExecutionDegreeDuringDate(todayDate, (ExecutionDegree) executionDegreeList.get(i)) == 0)
+                return (ExecutionDegree) executionDegreeList.get(i);
         }
         return null;
     }
@@ -137,7 +137,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IServi
      *         active 1 if it is in the future
      */
 
-    private int ExecutionDegreeDuringDate(Date date, IExecutionDegree info) {
+    private int ExecutionDegreeDuringDate(Date date, ExecutionDegree info) {
         if (date.after(info.getExecutionYear().getEndDate()))
             return -1;
         if ((date.after(info.getExecutionYear().getBeginDate()))

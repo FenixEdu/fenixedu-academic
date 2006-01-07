@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
+import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.util.ProviderRegimeType;
 
 /**
@@ -74,9 +74,9 @@ public class InfoServiceProviderRegime extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IServiceProviderRegime serviceProviderRegime) {
+    public void copyFromDomain(ServiceProviderRegime serviceProviderRegime) {
         super.copyFromDomain(serviceProviderRegime);
         if (serviceProviderRegime != null) {
             setLastModificationDate(serviceProviderRegime.getLastModificationDate());
@@ -85,7 +85,7 @@ public class InfoServiceProviderRegime extends InfoObject {
     }
 
     public static InfoServiceProviderRegime newInfoFromDomain(
-            IServiceProviderRegime serviceProviderRegime) {
+            ServiceProviderRegime serviceProviderRegime) {
         InfoServiceProviderRegime infoServiceProviderRegime = null;
         if (serviceProviderRegime != null) {
             infoServiceProviderRegime = new InfoServiceProviderRegime();

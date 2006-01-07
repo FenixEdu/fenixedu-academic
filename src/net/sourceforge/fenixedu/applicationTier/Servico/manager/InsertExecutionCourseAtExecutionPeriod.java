@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -25,15 +25,15 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class InsertExecutionCourseAtExecutionPeriod implements IService {
 
     public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {
-        IExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
-        IExecutionPeriod executionPeriod = null;
-        IExecutionCourse existentExecutionCourse = null;
+        ExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
+        ExecutionPeriod executionPeriod = null;
+        ExecutionCourse existentExecutionCourse = null;
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
                     .getIPersistentExecutionPeriod();
-            executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+            executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                     ExecutionPeriod.class, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             if (executionPeriod == null) {

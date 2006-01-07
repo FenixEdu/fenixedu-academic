@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +22,7 @@ public class FixSibsEntryByID implements IService {
 		IPersistentSibsPaymentFileEntry persistentSibsPaymentFileEntry = sp
 				.getIPersistentSibsPaymentFileEntry();
 
-		ISibsPaymentFileEntry sibsPaymentFileEntry = (ISibsPaymentFileEntry) persistentSibsPaymentFileEntry
+		SibsPaymentFileEntry sibsPaymentFileEntry = (SibsPaymentFileEntry) persistentSibsPaymentFileEntry
 				.readByOID(SibsPaymentFileEntry.class, sibsEntryId, true);
 
 		if (sibsPaymentFileEntry == null) {

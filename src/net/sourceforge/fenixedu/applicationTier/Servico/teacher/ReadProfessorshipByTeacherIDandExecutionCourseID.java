@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsAbstractService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class ReadProfessorshipByTeacherIDandExecutionCourseID extends
             IPersistentProfessorship persistentProfessorship = persistentSuport
                     .getIPersistentProfessorship();
 
-            IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
+            Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
                     teacherID, executionCourseID);
             InfoProfessorship infoProfessorship = InfoProfessorship.newInfoFromDomain(professorship);
 

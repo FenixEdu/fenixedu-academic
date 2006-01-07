@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public class InfoUnit extends InfoObject {
 
@@ -41,18 +41,18 @@ public class InfoUnit extends InfoObject {
         this.superiorUnitsNames = superiorUnitsNames;
     }
 
-    public void copyFromDomain(IUnit unit) {
+    public void copyFromDomain(Unit unit) {
         super.copyFromDomain(unit);
         if (unit != null) {            
             setCostCenterCode(unit.getCostCenterCode().toString());
             setName(unit.getName());
-            IUnit unitBase = unit;
+            Unit unitBase = unit;
             getParentUnitsNames(unit, unitBase);
         }
     }
 
   
-    private void getParentUnitsNames(IUnit unit, IUnit unitBase) {
+    private void getParentUnitsNames(Unit unit, Unit unitBase) {
         
         List superiorUnits = new ArrayList();
         String unitName = unitBase.getName();                
@@ -66,7 +66,7 @@ public class InfoUnit extends InfoObject {
         else{
             StringBuffer buffer = new StringBuffer();
             int size = unit.getTopUnits().size(), i = 0;
-            for (IUnit unit2 : unit.getTopUnits()) {
+            for (Unit unit2 : unit.getTopUnits()) {
                 buffer.append(unit2.getName());
                 i++;
                 if(i < size){
@@ -84,7 +84,7 @@ public class InfoUnit extends InfoObject {
         }                
     }
 
-    public static InfoUnit newInfoFromDomain(IUnit unit) {
+    public static InfoUnit newInfoFromDomain(Unit unit) {
         InfoUnit infoUnit = null;
         if (unit != null) {
             infoUnit = new InfoUnit();

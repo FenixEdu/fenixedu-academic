@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.teacher;
 
-import net.sourceforge.fenixedu.domain.teacher.IOrientation;
+import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.util.OrientationType;
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.util.OrientationType;
  *  
  */
 public interface IPersistentOrientation extends IPersistentObject {
-    public IOrientation readByTeacherIdAndOrientationType(Integer teacherId, OrientationType orientationType)
+    public Orientation readByTeacherIdAndOrientationType(Integer teacherId, OrientationType orientationType)
             throws ExcepcaoPersistencia;
 
 }

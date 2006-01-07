@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteCareers;
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,7 +27,7 @@ public class ReadCareers implements IService {
     public SiteView run(CareerType careerType, String user) throws ExcepcaoPersistencia {
         
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ITeacher teacher = persistentSuport.getIPersistentTeacher().readTeacherByUsername(user);
+        final Teacher teacher = persistentSuport.getIPersistentTeacher().readTeacherByUsername(user);
         
         final InfoSiteCareers bodyComponent = new InfoSiteCareers();
         bodyComponent.setInfoCareers(getInfoCareers(teacher, careerType));
@@ -40,14 +40,14 @@ public class ReadCareers implements IService {
         return siteView;
     }
 
-    private List getInfoCareers(ITeacher teacher, CareerType careerType)
+    private List getInfoCareers(Teacher teacher, CareerType careerType)
             throws ExcepcaoPersistencia {
 
         final List<InfoCareer> oldestCareers = new ArrayList();
         final List<InfoCareer> newestCareers = new ArrayList();
 
-        final List<ICareer> careers = teacher.getAssociatedCareers();
-        for (final ICareer career : careers) {
+        final List<Career> careers = teacher.getAssociatedCareers();
+        for (final Career career : careers) {
             boolean addCareer = false;
             if (careerType == null
                     || (careerType.equals(CareerType.PROFESSIONAL) && career.getOjbConcreteClass()

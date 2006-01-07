@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGratuityValues;
+import net.sourceforge.fenixedu.domain.GratuityValues;
 
 /**
  * @author Fernanda Quitério 10/Jan/2004
@@ -244,7 +244,7 @@ public class InfoGratuityValues extends InfoObject {
         this.startPayment = startPayment;
     }
 
-    public void copyFromDomain(IGratuityValues gratuityValues) {
+    public void copyFromDomain(GratuityValues gratuityValues) {
         super.copyFromDomain(gratuityValues);
         if (gratuityValues != null) {
             setAnualValue(gratuityValues.getAnualValue());
@@ -259,7 +259,7 @@ public class InfoGratuityValues extends InfoObject {
         }
     }
 
-    public static InfoGratuityValues newInfoFromDomain(IGratuityValues gratuityValues) {
+    public static InfoGratuityValues newInfoFromDomain(GratuityValues gratuityValues) {
         InfoGratuityValues infoGratuityValues = null;
         if (gratuityValues != null) {
             infoGratuityValues = new InfoGratuityValues();

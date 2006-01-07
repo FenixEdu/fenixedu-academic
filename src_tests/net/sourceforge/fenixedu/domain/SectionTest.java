@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class SectionTest extends DomainTestBase {
 
-    ISection section, section2, section3, section4, section5, section6;
-    ISite site;
-    IItem item, item2;
+    Section section, section2, section3, section4, section5, section6;
+    Site site;
+    Item item, item2;
        
     protected void setUp() throws Exception {
         super.setUp();

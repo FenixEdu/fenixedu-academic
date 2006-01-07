@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -35,7 +35,7 @@ public class UserGroupsManagement extends FenixDispatchAction
 	public ActionForward prepare(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
-		IPerson person = this.getLoggedPerson(request);
+		Person person = this.getLoggedPerson(request);
 		request.setAttribute("person", person);
 		return mapping.findForward("showPersonUserGroups");
 	}
@@ -70,12 +70,12 @@ public class UserGroupsManagement extends FenixDispatchAction
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 			FenixFilterException, FenixServiceException
 	{
-		IPerson person = this.getLoggedPerson(request);
+		Person person = this.getLoggedPerson(request);
 		Integer groupId = new Integer((String) request.getParameter("groupId"));
-		IUserGroup groupToShow = null;
-		for (Iterator<IUserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+		UserGroup groupToShow = null;
+		for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
 		{
-			IUserGroup group = (IUserGroup) iter.next();
+			UserGroup group = (UserGroup) iter.next();
 
 			if (group.getIdInternal().equals(groupId))
 			{

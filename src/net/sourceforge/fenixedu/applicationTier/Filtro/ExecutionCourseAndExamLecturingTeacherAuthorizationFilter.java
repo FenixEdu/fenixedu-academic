@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -73,8 +73,8 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             }
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IProfessorship professorship = null;
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Professorship professorship = null;
             if (teacher != null) {
                 IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
@@ -89,7 +89,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
     private boolean examBelongsExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
-        IExecutionCourse executionCourse = null;
+        ExecutionCourse executionCourse = null;
 
         if (argumentos == null) {
             return false;
@@ -100,10 +100,10 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
 
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
 
@@ -116,7 +116,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             }
 
             if (executionCourse != null && examId != null) {
-                for (IEvaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {
+                for (Evaluation associatedEvaluation : executionCourse.getAssociatedEvaluations()) {
                     if (associatedEvaluation.getIdInternal().equals(examId)) {
                         return true;
                     }

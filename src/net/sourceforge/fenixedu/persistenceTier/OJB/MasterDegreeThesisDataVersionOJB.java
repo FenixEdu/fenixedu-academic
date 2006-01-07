@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
@@ -22,7 +22,7 @@ import org.apache.ojb.broker.query.Criteria;
 public class MasterDegreeThesisDataVersionOJB extends PersistentObjectOJB
 		implements IPersistentMasterDegreeThesisDataVersion {
 
-	public IMasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
+	public MasterDegreeThesisDataVersion readActiveByStudentCurricularPlan(
 			Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 
@@ -30,19 +30,19 @@ public class MasterDegreeThesisDataVersionOJB extends PersistentObjectOJB
 				"masterDegreeThesis.studentCurricularPlan.idInternal",
 				studentCurricularPlanId);
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
+		MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) queryObject(
 				MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeThesisDataVersion;
 	}
 
-	public IMasterDegreeThesisDataVersion readActiveByDissertationTitle(
+	public MasterDegreeThesisDataVersion readActiveByDissertationTitle(
 			String dissertationTitle) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 
 		criteria.addEqualTo("dissertationTitle", dissertationTitle);
 		criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-		IMasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) queryObject(
+		MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) queryObject(
 				MasterDegreeThesisDataVersion.class, criteria);
 
 		return storedMasterDegreeThesisDataVersion;

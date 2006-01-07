@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,12 +31,12 @@ public class RoomSiteComponentServiceByExecutionPeriodID implements IService {
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day, Integer executionPeriodID) throws Exception {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
         return (executionPeriod != null) ? runService(bodyComponent, roomKey, day, executionPeriod) : RoomSiteComponentService.run(bodyComponent, roomKey, day);
     }
 
     public static Object runService(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day,
-            IExecutionPeriod executionPeriod) throws Exception {
+            ExecutionPeriod executionPeriod) throws Exception {
         SiteView siteView = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -44,8 +44,8 @@ public class RoomSiteComponentServiceByExecutionPeriodID implements IService {
         // IPersistentExecutionPeriod persistentExecutionPeriod =
         // sp.getIPersistentExecutionPeriod();
 
-        IRoom room = persistentRoom.readByName(roomKey.getNomeSala());
-        // IExecutionPeriod executionPeriod = (IExecutionPeriod)
+        Room room = persistentRoom.readByName(roomKey.getNomeSala());
+        // ExecutionPeriod executionPeriod = (ExecutionPeriod)
         // persistentExecutionPeriod
         // .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);
         // if (executionPeriod == null) {

@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
+import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 
 /**
  * @author Nuno Correia
@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.student.IResidenceCandidacies;
  */
 public class InfoResidenceCandidacyWithStudent extends InfoResidenceCandidacy {
 
-    public void copyFromDomain(IResidenceCandidacies residenceCandidacy) {
+    public void copyFromDomain(ResidenceCandidacies residenceCandidacy) {
         super.copyFromDomain(residenceCandidacy);
         if (residenceCandidacy != null) {
             setInfoStudent(InfoStudent.newInfoFromDomain(residenceCandidacy.getStudent()));
         }
     }
 
-    public static InfoResidenceCandidacy newInfoFromDomain(IResidenceCandidacies residenceCandidacy) {
+    public static InfoResidenceCandidacy newInfoFromDomain(ResidenceCandidacies residenceCandidacy) {
         InfoResidenceCandidacyWithStudent infoResidenceCandidacy = null;
         if (residenceCandidacy != null) {
             infoResidenceCandidacy = new InfoResidenceCandidacyWithStudent();

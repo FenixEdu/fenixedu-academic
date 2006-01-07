@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
 
 /**
  * @author João Mota
@@ -95,7 +95,7 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         evaluationElementsEn = string;
     }
 
-    public void copyFromDomain(IEvaluationMethod evaluationMethod) {
+    public void copyFromDomain(EvaluationMethod evaluationMethod) {
         super.copyFromDomain(evaluationMethod);
         if (evaluationMethod != null) {
             setEvaluationElements(evaluationMethod.getEvaluationElements());
@@ -103,7 +103,7 @@ public class InfoEvaluationMethod extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoEvaluationMethod newInfoFromDomain(IEvaluationMethod evaluationMethod) {
+    public static InfoEvaluationMethod newInfoFromDomain(EvaluationMethod evaluationMethod) {
         InfoEvaluationMethod infoEvaluationMethod = null;
         if (evaluationMethod != null) {
             infoEvaluationMethod = new InfoEvaluationMethod();

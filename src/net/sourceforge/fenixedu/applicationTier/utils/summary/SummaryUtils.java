@@ -10,14 +10,14 @@ import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
  */
 public class SummaryUtils {
 
-    public static boolean verifyValidDateSummary(ILesson lesson, Calendar summaryDate, Calendar summaryHour) {
+    public static boolean verifyValidDateSummary(Lesson lesson, Calendar summaryDate, Calendar summaryHour) {
         Calendar dateAndHourSummary = Calendar.getInstance();
         dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
         dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
@@ -65,11 +65,11 @@ public class SummaryUtils {
 
     }
 
-    public static ILesson findlesson(IShift shift, InfoSummary infoSummary) {
+    public static Lesson findlesson(Shift shift, InfoSummary infoSummary) {
         if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
             ListIterator iterator = shift.getAssociatedLessons().listIterator();
             while (iterator.hasNext()) {
-                ILesson lesson = (ILesson) iterator.next();
+                Lesson lesson = (Lesson) iterator.next();
                 if (lesson.getIdInternal().equals(infoSummary.getLessonIdSelected())) {
                     return lesson;
                 }
@@ -78,12 +78,12 @@ public class SummaryUtils {
         return null;
     }
     
-    public static ITeacher getTeacher(final ISuportePersistente persistentSupport,
+    public static Teacher getTeacher(final ISuportePersistente persistentSupport,
             final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
         if (infoSummary.getInfoTeacher() != null
                 && infoSummary.getInfoTeacher().getTeacherNumber() != null) {
             final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-            final ITeacher teacher = persistentTeacher.readByNumber(infoSummary.getInfoTeacher()
+            final Teacher teacher = persistentTeacher.readByNumber(infoSummary.getInfoTeacher()
                     .getTeacherNumber());
             if (teacher == null) {
                 throw new FenixServiceException("error.summary.no.teacher");
@@ -93,13 +93,13 @@ public class SummaryUtils {
         return null;
     }
 
-    public static IProfessorship getProfessorship(final ISuportePersistente persistentSupport,
+    public static Professorship getProfessorship(final ISuportePersistente persistentSupport,
             final InfoSummary infoSummary) throws FenixServiceException, ExcepcaoPersistencia {
         if (infoSummary.getInfoProfessorship() != null
                 && infoSummary.getInfoProfessorship().getIdInternal() != null) {
             final IPersistentProfessorship persistentProfessorship = persistentSupport
                     .getIPersistentProfessorship();
-            final IProfessorship professorship = (IProfessorship) persistentProfessorship.readByOID(
+            final Professorship professorship = (Professorship) persistentProfessorship.readByOID(
                     Professorship.class, infoSummary.getInfoProfessorship().getIdInternal());
             if (professorship == null) {
                 throw new FenixServiceException("error.summary.no.teacher");
@@ -109,15 +109,15 @@ public class SummaryUtils {
         return null;
     }
 
-    public static IShift getShift(final ISuportePersistente persistentSupport, final ISummary summary,
+    public static Shift getShift(final ISuportePersistente persistentSupport, final Summary summary,
             final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
         
-        IShift shift = null;
+        Shift shift = null;
         if (summary != null && summary.getShift().getIdInternal().equals(infoSummary.getInfoShift().getIdInternal())) {
             shift = summary.getShift();
         } else {
             final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-            shift = (IShift) persistentShift.readByOID(Shift.class, infoSummary.getInfoShift()
+            shift = (Shift) persistentShift.readByOID(Shift.class, infoSummary.getInfoShift()
                     .getIdInternal());
         }
         if (shift == null) {
@@ -126,20 +126,20 @@ public class SummaryUtils {
         return shift;
     }
 
-    public static IRoom getRoom(final ISuportePersistente persistentSupport, final ISummary summary,
-            final IShift shift, InfoSummary infoSummary) throws ExcepcaoPersistencia,
+    public static Room getRoom(final ISuportePersistente persistentSupport, final Summary summary,
+            final Shift shift, InfoSummary infoSummary) throws ExcepcaoPersistencia,
             FenixServiceException {
-        IRoom room = null;
+        Room room = null;
         if (infoSummary.getIsExtraLesson()) {
             if (summary != null && summary.getRoom().getIdInternal().equals(infoSummary.getInfoRoom().getIdInternal())) {
                 room = summary.getRoom();
             } else {
                 final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-                room = (IRoom) persistentRoom.readByOID(Room.class, infoSummary.getInfoRoom()
+                room = (Room) persistentRoom.readByOID(Room.class, infoSummary.getInfoRoom()
                         .getIdInternal());
             }
         } else {
-            ILesson lesson = findlesson(shift, infoSummary);
+            Lesson lesson = findlesson(shift, infoSummary);
             if (lesson == null) {
                 throw new FenixServiceException("error.summary.no.shift");
             }

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.WriteCmsConfiguration;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.WriteCmsConfiguration.CmsConfiguration;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -111,7 +111,7 @@ public class CmsConfigurationManagement extends FenixDispatchAction
 
 			Object[] args = new Object[]
 			{ CmsConfigurationManagement.fenixCmsName };
-			ICms cms = (ICms) ServiceUtils.executeService(userView, "ReadCmsByName", args);
+			Cms cms = (Cms) ServiceUtils.executeService(userView, "ReadCmsByName", args);
 			if (cms != null)
 			{
 				configurationForm.set("smtpServerAddress", cms.getConfiguration().getSmtpServerAddressToUse());

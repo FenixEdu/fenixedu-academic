@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.dataTransferObject.publication;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.publication.IAttribute;
-import net.sourceforge.fenixedu.domain.publication.IPublicationSubtype;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.Attribute;
+import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 
 public class InfoPublicationTypeWithAttributesAndSubtypes extends InfoPublicationType {
 
@@ -13,29 +13,29 @@ public class InfoPublicationTypeWithAttributesAndSubtypes extends InfoPublicatio
         super();
     }
 
-    public void copyFromDomain(IPublicationType pubType) {
+    public void copyFromDomain(PublicationType pubType) {
         super.copyFromDomain(pubType);
         if (pubType != null) {
             
 	        attributes = new ArrayList();
             
-            for (IAttribute attribute : (List<IAttribute>)pubType.getRequiredAttributes()) {
+            for (Attribute attribute : (List<Attribute>)pubType.getRequiredAttributes()) {
                 attributes.add(InfoAttribute.newInfoFromDomain(attribute));
             }
             
-            for (IAttribute attribute : (List<IAttribute>)pubType.getNonRequiredAttributes()) {
+            for (Attribute attribute : (List<Attribute>)pubType.getNonRequiredAttributes()) {
                 attributes.add(InfoAttribute.newInfoFromDomain(attribute));
             }
             
 	        subtypes = new ArrayList();
             
-            for (IPublicationSubtype publicationSubtype : pubType.getSubtypes()) {
+            for (PublicationSubtype publicationSubtype : pubType.getSubtypes()) {
                 subtypes.add(InfoPublicationSubtype.newInfoFromDomain(publicationSubtype));
             }
         }
     }
     
-    public static InfoPublicationType newInfoFromDomain(IPublicationType pubtype) {
+    public static InfoPublicationType newInfoFromDomain(PublicationType pubtype) {
         InfoPublicationTypeWithAttributesAndSubtypes iptype = new InfoPublicationTypeWithAttributesAndSubtypes();
         iptype.copyFromDomain(pubtype);
         return iptype;

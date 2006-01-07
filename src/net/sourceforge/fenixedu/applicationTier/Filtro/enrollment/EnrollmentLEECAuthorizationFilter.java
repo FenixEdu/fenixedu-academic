@@ -10,11 +10,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
@@ -63,7 +63,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
             //verify if the student making the enrollment is a LEEC degree
             // student
             if (roles.contains(RoleType.STUDENT)) {
-                IStudent student = readStudent(id, sp);
+                Student student = readStudent(id, sp);
                 if (student == null) {
                     return "noAuthorization";
                 }
@@ -75,7 +75,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                     return "noAuthorization";
 
                 }
-                ITutor tutor = verifyStudentWithTutor(student, sp);
+                Tutor tutor = verifyStudentWithTutor(student, sp);
                 if (tutor != null) {
                     return new String("error.enrollment.student.withTutor+"
                             + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -89,7 +89,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
                 //verify if the coodinator is of the LEEC degree
                 if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
-                    ITeacher teacher = readTeacher(id, sp);
+                    Teacher teacher = readTeacher(id, sp);
                     if (teacher == null) {
                         return "noAuthorization";
                     }
@@ -98,12 +98,12 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                         return "noAuthorization";
                     }
                 } else if (roles.contains(RoleType.TEACHER)) {
-                    ITeacher teacher = readTeacher(id, sp);
+                    Teacher teacher = readTeacher(id, sp);
                     if (teacher == null) {
                         return "noAuthorization";
                     }
 
-                    IStudent student = readStudent(arguments, sp);
+                    Student student = readStudent(arguments, sp);
                     if (student == null) {
                         return "noAuthorization";
                     }
@@ -115,14 +115,14 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
                 } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                         || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                    IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments,
+                    StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments,
                             sp);
 
                     if (studentCurricularPlan.getStudent() == null) {
                         return "noAuthorization";
                     }
                     if (insideEnrollmentPeriod(studentCurricularPlan, sp)) {
-                        ITutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent(), sp);
+                        Tutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent(), sp);
                         if (tutor != null) {
                             return new String("error.enrollment.student.withTutor+"
                                     + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -143,7 +143,7 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
 
     private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IStudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
+        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
         if (studentCurricularPlan == null) {
             return false;
         }
@@ -157,11 +157,11 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         return DEGREE_LEEC_CODE.equals(degreeCode);
     }
 
-    private boolean verifyCoordinatorLEEC(ITeacher teacher, Object[] arguments, ISuportePersistente sp)
+    private boolean verifyCoordinatorLEEC(Teacher teacher, Object[] arguments, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+        Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
                 teacher.getIdInternal(), (Integer) arguments[0]);
         if (coordinator == null) {
             return false;

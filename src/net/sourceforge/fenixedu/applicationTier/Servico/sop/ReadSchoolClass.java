@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -23,7 +23,7 @@ public class ReadSchoolClass implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
-		ISchoolClass schoolClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class,
+		SchoolClass schoolClass = (SchoolClass) persistentSchoolClass.readByOID(SchoolClass.class,
 				infoSchoolClass.getIdInternal());
 		if (schoolClass != null) {
 			result = InfoClass.newInfoFromDomain(schoolClass);

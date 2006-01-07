@@ -1,19 +1,19 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesSummary;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 
 public class OldInquiriesSummaryTest extends DomainTestBase {
 	
-	private IOldInquiriesSummary oldOISToDelete = null;
+	private OldInquiriesSummary oldOISToDelete = null;
 	
 	private void setUpDelete() {
 		oldOISToDelete = new OldInquiriesSummary();
 		
-		IExecutionPeriod executionPeriod = new ExecutionPeriod();
+		ExecutionPeriod executionPeriod = new ExecutionPeriod();
 		executionPeriod.addAssociatedOldInquiriesSummaries(oldOISToDelete);
 		
-		IDegree degree = new Degree();
+		Degree degree = new Degree();
 		degree.addAssociatedOldInquiriesSummaries(oldOISToDelete);
 	}
 		
@@ -26,7 +26,7 @@ public class OldInquiriesSummaryTest extends DomainTestBase {
 		assertCorrectDeletion(oldOISToDelete);
 	}
 	
-	protected static void assertCorrectDeletion(IOldInquiriesSummary ois) {
+	protected static void assertCorrectDeletion(OldInquiriesSummary ois) {
 		assertFalse("Deleted OldInquiriesSummary should not have ExecutionPeriod", ois.hasExecutionPeriod());
 		assertFalse("Deleted OldInquiriesSummary should not have Degree", ois.hasDegree());
 	}

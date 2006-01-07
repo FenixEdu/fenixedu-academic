@@ -5,12 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.domain.exceptions.EnrolmentRuleDomainException;
@@ -21,15 +21,15 @@ import org.apache.commons.collections.Predicate;
 
 public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 
-	private IStudentCurricularPlan studentCurricularPlan = null;
-	private IExecutionPeriod executionPeriod = null;
+	private StudentCurricularPlan studentCurricularPlan = null;
+	private ExecutionPeriod executionPeriod = null;
 	
-	private ICurricularCourse fgesCourse = null;
-	private ICurricularCourse projectoCourse = null;
+	private CurricularCourse fgesCourse = null;
+	private CurricularCourse projectoCourse = null;
 	private boolean isFGESaproved = false;
 	private boolean projectoEnrolmentAllowed = false;
 	
-	public SpecificLEFTEnrolmentRule(IStudentCurricularPlan studentCurricularPlan, IExecutionPeriod executionPeriod) {
+	public SpecificLEFTEnrolmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
 		setExecutionPeriod(executionPeriod);
 		setStudentCurricularPlan(studentCurricularPlan);
 	}
@@ -38,7 +38,7 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	public List apply(List curricularCoursesToBeEnrolledIn)
 			throws EnrolmentRuleDomainException {
 		
-		List<ICurricularCourse> result = null;
+		List<CurricularCourse> result = null;
 		
 		if(studentCurricularPlan.getBranch() != null) {
 			fgesCourse = studentCurricularPlan.getDegreeCurricularPlan().getCurricularCourseByCode("AX2");
@@ -63,9 +63,9 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	}
 
 
-	private List filter(final List<ICurricularCourse> curricularCoursesFromOptionalGroups,
+	private List filter(final List<CurricularCourse> curricularCoursesFromOptionalGroups,
 			List<CurricularCourse2Enroll> curricularCoursesToBeEnrolledIn) {
-		final List<ICurricularCourse> commonCurricularCourses = getCommonCurricularCourses();
+		final List<CurricularCourse> commonCurricularCourses = getCommonCurricularCourses();
 
 		List result = (List) CollectionUtils.select(
 				curricularCoursesToBeEnrolledIn, new Predicate() {
@@ -106,17 +106,17 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	}
 
 
-	private List<ICurricularCourse> getCommonCurricularCourses() {
-		List<IBranch> commonAreas = studentCurricularPlan.getDegreeCurricularPlan().getCommonAreas();
-		List<ICurricularCourse> curricularCourses = new ArrayList<ICurricularCourse>();
-		for (IBranch branch : commonAreas) {
+	private List<CurricularCourse> getCommonCurricularCourses() {
+		List<Branch> commonAreas = studentCurricularPlan.getDegreeCurricularPlan().getCommonAreas();
+		List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+		for (Branch branch : commonAreas) {
 			curricularCourses.addAll(studentCurricularPlan.getDegreeCurricularPlan().getCurricularCoursesFromArea(branch, AreaType.BASE));
 		}
 		
-		List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
-		for (ICurricularCourse course : curricularCourses) {
-			List<ICurricularCourseScope> scopes = course.getScopes();
-			for (ICurricularCourseScope curricularCourseScope : scopes) {
+		List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+		for (CurricularCourse course : curricularCourses) {
+			List<CurricularCourseScope> scopes = course.getScopes();
+			for (CurricularCourseScope curricularCourseScope : scopes) {
 				if(curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR) && curricularCourseScope.isActive(executionPeriod.getBeginDate())) {
 					result.add(course);
 					break;
@@ -128,20 +128,20 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 
 
 
-	private List<ICurricularCourse> getGroupBCurricularCourses() {
-		ICurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionPeriod.getSemester(), "B");
+	private List<CurricularCourse> getGroupBCurricularCourses() {
+		CurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionPeriod.getSemester(), "B");
 		return curricularCourseGroup.getCurricularCourses();
 	}
 	
-	private List<ICurricularCourse> getGroupACurricularCourses() {
-		ICurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionPeriod.getSemester(), "A");
+	private List<CurricularCourse> getGroupACurricularCourses() {
+		CurricularCourseGroup curricularCourseGroup = getOptionalCurricularCoursesGroupBySemesterAndCode(executionPeriod.getSemester(), "A");
 		return curricularCourseGroup.getCurricularCourses();
 	}
 
 	private Integer countGroupAAprovedOrEnroledCourses() {
 		Integer count = 0;
-		List<ICurricularCourse> curricularCourses = getGroupACurricularCourses();
-		for (ICurricularCourse curricularCourse : curricularCourses) {
+		List<CurricularCourse> curricularCourses = getGroupACurricularCourses();
+		for (CurricularCourse curricularCourse : curricularCourses) {
 			if(studentCurricularPlan.isCurricularCourseApproved(curricularCourse) || studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, getExecutionPeriod())) {
 				count++;
 			}
@@ -151,8 +151,8 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	
 	private Integer countGroupBAprovedOrEnroledCourses() {
 		Integer count = 0;
-		List<ICurricularCourse> curricularCourses = getGroupBCurricularCourses();
-		for (ICurricularCourse curricularCourse : curricularCourses) {
+		List<CurricularCourse> curricularCourses = getGroupBCurricularCourses();
+		for (CurricularCourse curricularCourse : curricularCourses) {
 			if(studentCurricularPlan.isCurricularCourseApproved(curricularCourse) || studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, getExecutionPeriod())) {
 				count++;
 			}
@@ -161,9 +161,9 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	}
 
 
-	private List<ICurricularCourse> getFisicaOptionalCourses() {
+	private List<CurricularCourse> getFisicaOptionalCourses() {
 		//FIXME : só funca para o 1º Semestre
-		List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
+		List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 		
 		Integer groupA = countGroupAAprovedOrEnroledCourses();
 		Integer groupB = countGroupBAprovedOrEnroledCourses();
@@ -196,9 +196,9 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 		return result;
 	}
 	
-	private List<ICurricularCourse> getEngenhariaOptionalCourses() {
+	private List<CurricularCourse> getEngenhariaOptionalCourses() {
 		//FIXME : só funca para o 1º Semestre
-		List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
+		List<CurricularCourse> result = new ArrayList<CurricularCourse>();
 		
 		Integer groupA = countGroupAAprovedOrEnroledCourses();
 		Integer groupB = countGroupBAprovedOrEnroledCourses();
@@ -234,7 +234,7 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 
 
 	private List removeOptionalCourses(List curricularCoursesToBeEnrolledIn) {
-		final List<ICurricularCourse> curricularCourses = getAllOptionalCurricularCoursesBySemester(executionPeriod.getSemester());
+		final List<CurricularCourse> curricularCourses = getAllOptionalCurricularCoursesBySemester(executionPeriod.getSemester());
         List result = (List) CollectionUtils.select(curricularCoursesToBeEnrolledIn, new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -247,21 +247,21 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	}
 
 
-	private List<ICurricularCourse> getAllOptionalCurricularCoursesBySemester(Integer semester) {
-		Set<ICurricularCourse> result = new HashSet<ICurricularCourse>();
-		List<ICurricularCourseGroup> allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
-		for (ICurricularCourseGroup curricularCourseGroup : allOptionalCurricularCourseGroups) {
+	private List<CurricularCourse> getAllOptionalCurricularCoursesBySemester(Integer semester) {
+		Set<CurricularCourse> result = new HashSet<CurricularCourse>();
+		List<CurricularCourseGroup> allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
+		for (CurricularCourseGroup curricularCourseGroup : allOptionalCurricularCourseGroups) {
 			if(curricularCourseGroup.getName().indexOf(semester.toString()) != -1) {
-				List<ICurricularCourse> curricularCourses = curricularCourseGroup.getCurricularCourses();
+				List<CurricularCourse> curricularCourses = curricularCourseGroup.getCurricularCourses();
 				result.addAll(curricularCourses);
 			}
 		}
 		return null;
 	}
 	
-	private ICurricularCourseGroup getOptionalCurricularCoursesGroupBySemesterAndCode(Integer semester, String code) {
-		List<ICurricularCourseGroup> allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
-		for (ICurricularCourseGroup curricularCourseGroup : allOptionalCurricularCourseGroups) {
+	private CurricularCourseGroup getOptionalCurricularCoursesGroupBySemesterAndCode(Integer semester, String code) {
+		List<CurricularCourseGroup> allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
+		for (CurricularCourseGroup curricularCourseGroup : allOptionalCurricularCourseGroups) {
 			if((curricularCourseGroup.getName().indexOf(semester.toString()) != -1) && (curricularCourseGroup.getName().indexOf(code) != -1)) {
 				return curricularCourseGroup;
 			}
@@ -270,18 +270,18 @@ public class SpecificLEFTEnrolmentRule implements IEnrollmentRule {
 	}
 
 
-	private IExecutionPeriod getExecutionPeriod() {
+	private ExecutionPeriod getExecutionPeriod() {
 		return executionPeriod;
 	}
 
 
-	private void setExecutionPeriod(IExecutionPeriod executionPeriod) {
+	private void setExecutionPeriod(ExecutionPeriod executionPeriod) {
 		this.executionPeriod = executionPeriod;
 	}
 
 
 	private void setStudentCurricularPlan(
-			IStudentCurricularPlan studentCurricularPlan) {
+			StudentCurricularPlan studentCurricularPlan) {
 		this.studentCurricularPlan = studentCurricularPlan;
 	}
 

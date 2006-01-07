@@ -23,13 +23,13 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternal
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalIdentificationInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalPersonInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoStudentExternalInformation;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -53,11 +53,11 @@ public class ReadStudentExternalInformation implements IService {
 		Collection result = new ArrayList();
 		IPessoaPersistente persistentPerson = PersistenceSupportFactory
 				.getDefaultPersistenceSupport().getIPessoaPersistente();
-		IPerson person = persistentPerson.lerPessoaPorUsername(username);
+		Person person = persistentPerson.lerPessoaPorUsername(username);
 		Collection students = person.getStudents();
 		for (Iterator iter = students.iterator(); iter.hasNext();) {
 			InfoStudentExternalInformation info = new InfoStudentExternalInformation();
-			IStudent student = (IStudent) iter.next();
+			Student student = (Student) iter.next();
 
 			info.setPerson(this.buildExternalPersonInfo(person));
 			info.setDegree(this.buildExternalDegreeCurricularPlanInfo(student));
@@ -72,7 +72,7 @@ public class ReadStudentExternalInformation implements IService {
 		return result;
 	}
 
-	private Collection buildAvailableRemainingCourses(final IStudent student) {
+	private Collection buildAvailableRemainingCourses(final Student student) {
 
 		Collection allCourses = student.getActiveStudentCurricularPlan().getDegreeCurricularPlan().getCurricularCourses();
 		Collection available = CollectionUtils.select(allCourses,
@@ -80,8 +80,8 @@ public class ReadStudentExternalInformation implements IService {
 					public boolean evaluate(Object arg0) {
 						boolean availableToEnroll = true;
 						boolean atLeastOnOpenScope = false;
-						ICurricularCourse course = (ICurricularCourse) arg0;
-						for (ICurricularCourseScope scope : course.getScopes()) {
+						CurricularCourse course = (CurricularCourse) arg0;
+						for (CurricularCourseScope scope : course.getScopes()) {
 							atLeastOnOpenScope |= scope.isActive()
 									.booleanValue();
 						}
@@ -99,7 +99,7 @@ public class ReadStudentExternalInformation implements IService {
 		Collection availableInfos = CollectionUtils.collect(available,
 				new Transformer() {
 					public Object transform(Object arg0) {
-						ICurricularCourse course = (ICurricularCourse) arg0;
+						CurricularCourse course = (CurricularCourse) arg0;
 						InfoExternalCurricularCourseInfo info = InfoExternalCurricularCourseInfo
 								.newFromDomain(course);
 						return info;
@@ -117,14 +117,14 @@ public class ReadStudentExternalInformation implements IService {
 	 * @throws FenixServiceException
 	 * @throws ExcepcaoPersistencia 
 	 */
-	private Collection buildExternalEnrollmentsInfo(IStudent student)
+	private Collection buildExternalEnrollmentsInfo(Student student)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		Collection enrollments = new ArrayList();
 		Collection curricularPlans = student.getStudentCurricularPlans();
 		for (Iterator iter = curricularPlans.iterator(); iter.hasNext();) {
-			IStudentCurricularPlan curricularPlan = (IStudentCurricularPlan) iter.next();
+			StudentCurricularPlan curricularPlan = (StudentCurricularPlan) iter.next();
 			for (Iterator iterEnrolments = curricularPlan.getEnrolments().iterator(); iterEnrolments.hasNext();) {
-				IEnrolment enrollment = (IEnrolment) iterEnrolments.next();
+				Enrolment enrollment = (Enrolment) iterEnrolments.next();
 				if (enrollment.getEnrollmentState().equals(
 						EnrollmentState.APROVED)) {
 					InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo
@@ -147,9 +147,9 @@ public class ReadStudentExternalInformation implements IService {
 	 * @return
 	 */
 	private InfoExternalDegreeCurricularPlanInfo buildExternalDegreeCurricularPlanInfo(
-			IStudent student) {
+			Student student) {
 		InfoExternalDegreeCurricularPlanInfo info = new InfoExternalDegreeCurricularPlanInfo();
-		IDegreeCurricularPlan degreeCurricularPlan = student
+		DegreeCurricularPlan degreeCurricularPlan = student
 				.getActiveStudentCurricularPlan().getDegreeCurricularPlan();
 
 		info.setName(degreeCurricularPlan.getName());
@@ -160,7 +160,7 @@ public class ReadStudentExternalInformation implements IService {
 		Collection courses = student.getActiveStudentCurricularPlan()
 				.getDegreeCurricularPlan().getCurricularCourses();
 		for (Iterator iter = courses.iterator(); iter.hasNext();) {
-			ICurricularCourse curricularCourse = (ICurricularCourse) iter
+			CurricularCourse curricularCourse = (CurricularCourse) iter
 					.next();
 			info.addCourse(InfoExternalCurricularCourseInfo
 					.newFromDomain(curricularCourse));
@@ -174,7 +174,7 @@ public class ReadStudentExternalInformation implements IService {
 	 * @return
 	 */
 	private InfoExternalDegreeBranchInfo buildExternalDegreeBranchInfo(
-			IStudent student) {
+			Student student) {
 		InfoExternalDegreeBranchInfo info = new InfoExternalDegreeBranchInfo();
 		if (student.getActiveStudentCurricularPlan().getBranch() != null) {
 			info.setName(student.getActiveStudentCurricularPlan().getBranch()
@@ -190,7 +190,7 @@ public class ReadStudentExternalInformation implements IService {
 	 * @param infoPerson
 	 * @return
 	 */
-	private InfoExternalPersonInfo buildExternalPersonInfo(IPerson person) {
+	private InfoExternalPersonInfo buildExternalPersonInfo(Person person) {
 		InfoExternalPersonInfo info = new InfoExternalPersonInfo();
 		info.setAddress(this.buildInfoExternalAdressInfo(person));
 		info.setBirthday(person.getNascimento().toString());
@@ -212,7 +212,7 @@ public class ReadStudentExternalInformation implements IService {
 	 * @return
 	 */
 	private InfoExternalIdentificationInfo buildExternalIdentificationInfo(
-			IPerson person) {
+			Person person) {
 		InfoExternalIdentificationInfo info = new InfoExternalIdentificationInfo();
 		info.setDocumentType(person.getIdDocumentType().toString());
 		info.setNumber(person.getNumeroDocumentoIdentificacao());
@@ -238,7 +238,7 @@ public class ReadStudentExternalInformation implements IService {
 	 * @return
 	 */
 	private InfoExternalCitizenshipInfo builsExternalCitizenshipInfo(
-			IPerson person) {
+			Person person) {
 		InfoExternalCitizenshipInfo info = new InfoExternalCitizenshipInfo();
 		info.setArea(person.getFreguesiaNaturalidade());
 		info.setCounty(person.getConcelhoNaturalidade());
@@ -250,7 +250,7 @@ public class ReadStudentExternalInformation implements IService {
 	 * @param infoPerson
 	 * @return
 	 */
-	private InfoExternalAdressInfo buildInfoExternalAdressInfo(IPerson person) {
+	private InfoExternalAdressInfo buildInfoExternalAdressInfo(Person person) {
 		InfoExternalAdressInfo info = new InfoExternalAdressInfo();
 		info.setPostalCode(person.getCodigoPostal());
 		info.setStreet(person.getMorada());

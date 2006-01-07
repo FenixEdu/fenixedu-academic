@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
+import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
@@ -15,10 +15,10 @@ public class ManagementPositionCreditLineVO extends VersionedObjectsBase impleme
     public List readByTeacherAndExecutionPeriod(Integer teacherId, Date executionPeriodBeginDate,
             Date executionPeriodEndDate) throws ExcepcaoPersistencia {
 
-        List<IManagementPositionCreditLine> mpCreditLines = (List<IManagementPositionCreditLine>) readAll(ManagementPositionCreditLine.class);
-        List<IManagementPositionCreditLine> result = null;
+        List<ManagementPositionCreditLine> mpCreditLines = (List<ManagementPositionCreditLine>) readAll(ManagementPositionCreditLine.class);
+        List<ManagementPositionCreditLine> result = null;
 
-        for (IManagementPositionCreditLine line : mpCreditLines) {
+        for (ManagementPositionCreditLine line : mpCreditLines) {
             if (line.getTeacher().getIdInternal().equals(teacherId)
                     && line.getEnd().getTime() > executionPeriodBeginDate.getTime()
                     && line.getStart().getTime() < executionPeriodEndDate.getTime()) {
@@ -30,10 +30,10 @@ public class ManagementPositionCreditLineVO extends VersionedObjectsBase impleme
     }
 
     public List readByTeacher(Integer teacherId) throws ExcepcaoPersistencia {
-        List<IManagementPositionCreditLine> mpCreditLines = (List<IManagementPositionCreditLine>) readAll(ManagementPositionCreditLine.class);
-        List<IManagementPositionCreditLine> result = null;
+        List<ManagementPositionCreditLine> mpCreditLines = (List<ManagementPositionCreditLine>) readAll(ManagementPositionCreditLine.class);
+        List<ManagementPositionCreditLine> result = null;
 
-        for (IManagementPositionCreditLine line : mpCreditLines) {
+        for (ManagementPositionCreditLine line : mpCreditLines) {
             if (line.getTeacher().getIdInternal().equals(teacherId)) {
                 result.add(line);
             }

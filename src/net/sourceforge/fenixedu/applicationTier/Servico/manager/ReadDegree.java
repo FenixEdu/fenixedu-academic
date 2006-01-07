@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,7 +24,7 @@ public class ReadDegree implements IService {
     public InfoDegree run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IDegree degree = (IDegree)sp.getICursoPersistente().readByOID(Degree.class,idInternal);
+		Degree degree = (Degree)sp.getICursoPersistente().readByOID(Degree.class,idInternal);
 
 		if (degree == null) {
             throw new NonExistingServiceException();

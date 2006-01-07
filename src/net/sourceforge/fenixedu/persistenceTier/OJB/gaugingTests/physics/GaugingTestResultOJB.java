@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics;
 
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
-import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
+import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 
@@ -22,10 +22,10 @@ public class GaugingTestResultOJB extends PersistentObjectOJB implements IPersis
         super();
     }
 
-    public IGaugingTestResult readByStudent(IStudent student) throws ExcepcaoPersistencia {
+    public GaugingTestResult readByStudent(Student student) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.idInternal", student.getIdInternal());
-        return (IGaugingTestResult) queryObject(GaugingTestResult.class, crit);
+        return (GaugingTestResult) queryObject(GaugingTestResult.class, crit);
     }
 
 }

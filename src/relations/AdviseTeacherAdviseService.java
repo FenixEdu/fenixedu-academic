@@ -1,14 +1,14 @@
 package relations;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 
 public class AdviseTeacherAdviseService extends AdviseTeacherAdviseService_Base {
 
-    public static void add(net.sourceforge.fenixedu.domain.teacher.IAdvise advise,
-            net.sourceforge.fenixedu.domain.teacher.ITeacherAdviseService teacherAdviseServices) {
+    public static void add(net.sourceforge.fenixedu.domain.teacher.Advise advise,
+            net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService teacherAdviseServices) {
         AdviseTeacherAdviseService_Base.add(advise, teacherAdviseServices);
 
-        IExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
+        ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
                 .getExecutionPeriod();
         if (executionPeriod.getEndDate().after(advise.getEndExecutionPeriod().getEndDate())) {
             advise.setEndExecutionPeriod(executionPeriod);
@@ -18,10 +18,10 @@ public class AdviseTeacherAdviseService extends AdviseTeacherAdviseService_Base 
         }
     }
 
-    public static void remove(net.sourceforge.fenixedu.domain.teacher.IAdvise advise,
-            net.sourceforge.fenixedu.domain.teacher.ITeacherAdviseService teacherAdviseServices) {
+    public static void remove(net.sourceforge.fenixedu.domain.teacher.Advise advise,
+            net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService teacherAdviseServices) {
 
-        IExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService().getExecutionPeriod();
+        ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService().getExecutionPeriod();
         AdviseTeacherAdviseService_Base.remove(advise, teacherAdviseServices);
                 
         if (advise.getTeacherAdviseServices() == null || advise.getTeacherAdviseServices().isEmpty()) {

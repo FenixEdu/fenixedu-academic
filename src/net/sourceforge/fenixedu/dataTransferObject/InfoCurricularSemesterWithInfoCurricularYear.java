@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 
 /**
  * @author Tânia Pousão
@@ -15,9 +15,9 @@ public class InfoCurricularSemesterWithInfoCurricularYear extends InfoCurricular
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester#copyFromDomain(Dominio.ICurricularSemester)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCurricularSemester#copyFromDomain(Dominio.CurricularSemester)
      */
-    public void copyFromDomain(ICurricularSemester curricularSemester) {
+    public void copyFromDomain(CurricularSemester curricularSemester) {
         super.copyFromDomain(curricularSemester);
         if (curricularSemester != null) {
             setInfoCurricularYear(InfoCurricularYear.newInfoFromDomain(curricularSemester
@@ -25,7 +25,7 @@ public class InfoCurricularSemesterWithInfoCurricularYear extends InfoCurricular
         }
     }
 
-    public static InfoCurricularSemester newInfoFromDomain(ICurricularSemester curricularSemester) {
+    public static InfoCurricularSemester newInfoFromDomain(CurricularSemester curricularSemester) {
         InfoCurricularSemesterWithInfoCurricularYear infoCurricularSemester = null;
         if (curricularSemester != null) {
             infoCurricularSemester = new InfoCurricularSemesterWithInfoCurricularYear();

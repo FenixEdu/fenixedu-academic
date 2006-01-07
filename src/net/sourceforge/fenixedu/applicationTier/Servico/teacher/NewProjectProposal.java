@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -54,14 +54,14 @@ public class NewProjectProposal implements IService {
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
       
-        IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(
+        Grouping groupProperties = (Grouping) persistentGroupProperties.readByOID(
                 Grouping.class, groupPropertiesId);
-        IExecutionCourse goalExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse goalExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, goalExecutionCourseId);
-        IExecutionCourse startExecutionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, objectCode);
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        IPerson senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername).getPerson();
+        Person senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");
@@ -79,7 +79,7 @@ public class NewProjectProposal implements IService {
         List listaRelation = groupProperties.getExportGroupings();
         Iterator iterRelation = listaRelation.iterator();
         while (iterRelation.hasNext()) {
-            IExportGrouping groupPropertiesExecutionCourse = (IExportGrouping) iterRelation
+            ExportGrouping groupPropertiesExecutionCourse = (ExportGrouping) iterRelation
                     .next();
             if (groupPropertiesExecutionCourse.getExecutionCourse().equals(goalExecutionCourse)
                     && groupPropertiesExecutionCourse.getProposalState().getState().intValue() == 1) {
@@ -97,7 +97,7 @@ public class NewProjectProposal implements IService {
 
         boolean acceptProposal = false;
 
-        IExportGrouping groupPropertiesExecutionCourse = DomainFactory.makeExportGrouping(
+        ExportGrouping groupPropertiesExecutionCourse = DomainFactory.makeExportGrouping(
                 groupProperties, goalExecutionCourse);
         groupPropertiesExecutionCourse.setProposalState(new ProposalState(new Integer(3)));
         groupPropertiesExecutionCourse.setSenderPerson(senderPerson);
@@ -111,8 +111,8 @@ public class NewProjectProposal implements IService {
         List professorships = goalExecutionCourse.getProfessorships();
         Iterator iterProfessorship = professorships.iterator();
         while (iterProfessorship.hasNext()) {
-            IProfessorship professorship = (IProfessorship) iterProfessorship.next();
-            ITeacher teacher = professorship.getTeacher();
+            Professorship professorship = (Professorship) iterProfessorship.next();
+            Teacher teacher = professorship.getTeacher();
             if (!(teacher.getPerson()).equals(senderPerson)) {
 
                 group.add(teacher.getPerson());
@@ -125,10 +125,10 @@ public class NewProjectProposal implements IService {
 
         // Create Advisory
         if (acceptProposal == false) {
-            IAdvisory advisory = createNewProjectProposalAdvisory(goalExecutionCourse,
+            Advisory advisory = createNewProjectProposalAdvisory(goalExecutionCourse,
                     startExecutionCourse, groupProperties, senderPerson);
             for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-                final IPerson person = (IPerson) iterator.next();
+                final Person person = (Person) iterator.next();
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
                 person.getAdvisories().add(advisory);
@@ -141,9 +141,9 @@ public class NewProjectProposal implements IService {
         List professorshipsAux = startExecutionCourse.getProfessorships();
         Iterator iterProfessorshipAux = professorshipsAux.iterator();
         while (iterProfessorshipAux.hasNext()) {
-            IProfessorship professorshipAux = (IProfessorship) iterProfessorshipAux.next();
-            ITeacher teacherAux = professorshipAux.getTeacher();
-            IPerson pessoa = teacherAux.getPerson();
+            Professorship professorshipAux = (Professorship) iterProfessorshipAux.next();
+            Teacher teacherAux = professorshipAux.getTeacher();
+            Person pessoa = teacherAux.getPerson();
             if (!(pessoa.equals(senderPerson))) {
                 groupAux.add(pessoa);
                 if (!allOtherProfessors.contains(pessoa)) {
@@ -162,22 +162,22 @@ public class NewProjectProposal implements IService {
             Iterator iterAttends = groupPropertiesExecutionCourse.getGrouping().getAttends().iterator();
                         
             while (iterAttends.hasNext()) {
-                IAttends attend = (IAttends) iterAttends.next();
+                Attends attend = (Attends) iterAttends.next();
                 groupingStudentNumbers.add(attend.getAluno().getNumber());
             }
             
             Iterator iterAttends2 = persistentAttend.readByExecutionCourse(goalExecutionCourse.getIdInternal()).iterator();
             while (iterAttends2.hasNext()) {
-                IAttends attend = (IAttends) iterAttends2.next();
+                Attends attend = (Attends) iterAttends2.next();
                 if (!groupingStudentNumbers.contains(attend.getAluno().getNumber())) {
                     groupPropertiesExecutionCourse.getGrouping().addAttends(attend);                    
                 }
             }
 
-            IAdvisory advisoryAux = createNewProjectProposalAcceptedAdvisory(goalExecutionCourse,
+            Advisory advisoryAux = createNewProjectProposalAcceptedAdvisory(goalExecutionCourse,
                     startExecutionCourse, groupProperties, senderPerson);
             for (final Iterator iterator = allOtherProfessors.iterator(); iterator.hasNext();) {
-                final IPerson person = (IPerson) iterator.next();
+                final Person person = (Person) iterator.next();
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
                 person.getAdvisories().add(advisoryAux);
@@ -185,10 +185,10 @@ public class NewProjectProposal implements IService {
             }
 
         } else {
-            IAdvisory advisoryAux = createNewProjectProposalAdvisoryAux(goalExecutionCourse,
+            Advisory advisoryAux = createNewProjectProposalAdvisoryAux(goalExecutionCourse,
                     startExecutionCourse, groupProperties, senderPerson);
             for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
-                final IPerson person = (IPerson) iterator.next();
+                final Person person = (Person) iterator.next();
                 sp.getIPessoaPersistente().simpleLockWrite(person);
 
                 person.getAdvisories().add(advisoryAux);
@@ -199,9 +199,9 @@ public class NewProjectProposal implements IService {
         return result;
     }
 
-    private IAdvisory createNewProjectProposalAdvisory(IExecutionCourse goalExecutionCourse,
-            IExecutionCourse startExecutionCourse, IGrouping groupProperties, IPerson senderPerson) {
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+    private Advisory createNewProjectProposalAdvisory(ExecutionCourse goalExecutionCourse,
+            ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
             advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());
@@ -224,9 +224,9 @@ public class NewProjectProposal implements IService {
         return advisory;
     }
 
-    private IAdvisory createNewProjectProposalAdvisoryAux(IExecutionCourse goalExecutionCourse,
-            IExecutionCourse startExecutionCourse, IGrouping groupProperties, IPerson senderPerson) {
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+    private Advisory createNewProjectProposalAdvisoryAux(ExecutionCourse goalExecutionCourse,
+            ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
             advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());
@@ -248,9 +248,9 @@ public class NewProjectProposal implements IService {
         return advisory;
     }
 
-    private IAdvisory createNewProjectProposalAcceptedAdvisory(IExecutionCourse goalExecutionCourse,
-            IExecutionCourse startExecutionCourse, IGrouping groupProperties, IPerson senderPerson) {
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+    private Advisory createNewProjectProposalAcceptedAdvisory(ExecutionCourse goalExecutionCourse,
+            ExecutionCourse startExecutionCourse, Grouping groupProperties, Person senderPerson) {
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
         if (groupProperties.getEnrolmentEndDay() != null) {
             advisory.setExpires(groupProperties.getEnrolmentEndDay().getTime());

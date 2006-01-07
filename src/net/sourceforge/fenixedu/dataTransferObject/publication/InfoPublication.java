@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.publication.IAuthorship;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,7 +28,7 @@ public class InfoPublication extends PublicationDTO {
     
     private InfoPublicationType infoPublicationType;
 	
-	public static InfoPublication newInfoFromDomain(IPublication publication) {
+	public static InfoPublication newInfoFromDomain(Publication publication) {
         InfoPublication infoPublication = null;
         if (publication != null) {
             infoPublication = new InfoPublication();
@@ -37,7 +37,7 @@ public class InfoPublication extends PublicationDTO {
         return infoPublication;
     }
 
-    public void copyFromDomain(IPublication publication) {
+    public void copyFromDomain(Publication publication) {
         
         super.copyFromDomain(publication);
         if (publication != null) {
@@ -89,14 +89,14 @@ public class InfoPublication extends PublicationDTO {
             List authorsList = (List)CollectionUtils.collect(unsortedAuthorsList,
                     new Transformer() {
                         public Object transform(Object object) {
-                            IAuthorship publicationAuthor = (IAuthorship) object;
+                            Authorship publicationAuthor = (Authorship) object;
                             return publicationAuthor.getAuthor();
             }});
             //tranform the authors list into an infoAuthors list
             Iterator it1 = authorsList.iterator();
             List infoAuthorsList = new ArrayList();        
             while (it1.hasNext()){
-                IPerson author = (IPerson) it1.next();
+                Person author = (Person) it1.next();
                 InfoAuthor infoAuthor = new InfoAuthor();
                 infoAuthor.copyFromDomain(author);
                 infoAuthorsList.add(infoAuthor);
@@ -106,7 +106,7 @@ public class InfoPublication extends PublicationDTO {
 
             List teachers = (List) CollectionUtils.collect(publication.getPublicationTeachers(), new Transformer() {
                 public Object transform(Object object) {
-                    IPublicationTeacher publicationTeacher = (IPublicationTeacher) object;
+                    PublicationTeacher publicationTeacher = (PublicationTeacher) object;
                     return publicationTeacher.getTeacher();
                 }
             });
@@ -116,7 +116,7 @@ public class InfoPublication extends PublicationDTO {
             Iterator it2 = teachers.iterator();
             List infoTeachersList = new ArrayList();        
             while (it2.hasNext()){
-                ITeacher teacher = (ITeacher) it2.next();
+                Teacher teacher = (Teacher) it2.next();
                 InfoTeacher infoTeacher = new InfoTeacher();
                 infoTeacher.copyFromDomain(teacher);
                 infoTeachersList.add(infoTeacher);
@@ -126,7 +126,7 @@ public class InfoPublication extends PublicationDTO {
         }
     }	
 
-    public void copyToDomain(InfoPublication infoPublication, IPublication publication){
+    public void copyToDomain(InfoPublication infoPublication, Publication publication){
         super.copyToDomain(infoPublication,publication);
         
         if (infoPublication != null && publication != null) {
@@ -190,7 +190,7 @@ public class InfoPublication extends PublicationDTO {
             InfoAuthor infoAuthor = (InfoAuthor) it.next();
             
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPerson author = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,infoAuthor.getInfoPessoa().getIdInternal());
+            Person author = (Person) sp.getIPessoaPersistente().readByOID(Person.class,infoAuthor.getInfoPessoa().getIdInternal());
             
             infoAuthor.copyToDomain(infoAuthor, author);
             authorsList.add(author);

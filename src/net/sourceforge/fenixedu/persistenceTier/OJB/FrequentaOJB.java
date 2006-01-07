@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
@@ -36,13 +36,13 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return queryList(Attends.class, crit);
     }
 
-    public IAttends readByAlunoAndDisciplinaExecucao(Integer studentID, Integer executionCourseID)
+    public Attends readByAlunoAndDisciplinaExecucao(Integer studentID, Integer executionCourseID)
             throws ExcepcaoPersistencia {
 
         Criteria crit = new Criteria();
         crit.addEqualTo("aluno.idInternal", studentID);
         crit.addEqualTo("chaveDisciplinaExecucao", executionCourseID);
-        return (IAttends) queryObject(Attends.class, crit);
+        return (Attends) queryObject(Attends.class, crit);
 
     }
 
@@ -76,7 +76,7 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return queryList(Attends.class, crit);
     }
 
-    public Integer countStudentsAttendingExecutionCourse(IExecutionCourse executionCourse) {
+    public Integer countStudentsAttendingExecutionCourse(ExecutionCourse executionCourse) {
         PersistenceBroker pb = getCurrentPersistenceBroker();
         Criteria criteria = new Criteria();
         criteria.addEqualTo("disciplinaExecucao.idInternal", executionCourse.getIdInternal());
@@ -84,9 +84,9 @@ public class FrequentaOJB extends PersistentObjectOJB implements IFrequentaPersi
         return new Integer(pb.getCount(queryCriteria));
     }
 
-    public IAttends readByEnrolment(IEnrolment enrolment) throws ExcepcaoPersistencia {
+    public Attends readByEnrolment(Enrolment enrolment) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("enrolment.idInternal", enrolment.getIdInternal());
-        return (IAttends) queryObject(Attends.class, crit);
+        return (Attends) queryObject(Attends.class, crit);
     }
 }

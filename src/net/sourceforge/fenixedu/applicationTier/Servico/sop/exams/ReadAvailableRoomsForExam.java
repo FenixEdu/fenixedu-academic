@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,7 +26,7 @@ public class ReadAvailableRoomsForExam implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
         final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-        final List<IRoom> rooms;
+        final List<Room> rooms;
         if (normalCapacity != null) {
             rooms = persistentRoom.readByNormalCapacity(normalCapacity);
         } else if (withLabs.booleanValue()) {
@@ -36,7 +36,7 @@ public class ReadAvailableRoomsForExam implements IService {
         }
 
         final List<InfoRoom> availableInfoRooms = new ArrayList<InfoRoom>();
-        for (final IRoom room : rooms) {
+        for (final Room room : rooms) {
             if (room.getNome().equals("QA")) {
                 System.out.println();
             }
@@ -49,11 +49,11 @@ public class ReadAvailableRoomsForExam implements IService {
         return availableInfoRooms;
     }
 
-    private boolean isOccupied(final IRoom room, final Calendar periodStart, final Calendar periodEnd,
+    private boolean isOccupied(final Room room, final Calendar periodStart, final Calendar periodEnd,
             final Calendar startTime, final Calendar endTime, final DiaSemana dayOfWeek,
             Integer frequency, Integer weekOfStart, Integer roomOccupationToRemoveId) {
-        final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
-        for (final IRoomOccupation roomOccupation : roomOccupations) {
+        final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
+        for (final RoomOccupation roomOccupation : roomOccupations) {
             if (!roomOccupation.getIdInternal().equals(roomOccupationToRemoveId)) {
                 boolean isOccupied = roomOccupation.roomOccupationForDateAndTime(periodStart,
                         periodEnd, startTime, endTime, dayOfWeek, frequency, weekOfStart);

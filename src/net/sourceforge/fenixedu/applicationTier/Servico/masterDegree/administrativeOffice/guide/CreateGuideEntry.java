@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,9 +23,9 @@ public class CreateGuideEntry implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
+        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
 
-        IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
+        GuideEntry guideEntry = DomainFactory.makeGuideEntry();
 
         guideEntry.setDescription(description);
         guideEntry.setDocumentType(documentType);

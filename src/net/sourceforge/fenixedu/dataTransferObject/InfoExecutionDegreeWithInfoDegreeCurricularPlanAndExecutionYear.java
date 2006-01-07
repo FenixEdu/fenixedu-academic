@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 /**
  * @author João Mota
@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
  */
 public class InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear extends InfoExecutionDegreeWithInfoDegreeCurricularPlan {
 
-    public void copyFromDomain(IExecutionDegree executionDegree) {
+    public void copyFromDomain(ExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setInfoExecutionYear(InfoExecutionYear.newInfoFromDomain(executionDegree.getExecutionYear()));
         }
     }
 
-    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(ExecutionDegree executionDegree) {
         InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegreeWithInfoDegreeCurricularPlanAndExecutionYear();

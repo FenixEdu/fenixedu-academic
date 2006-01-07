@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -71,7 +71,7 @@ public class InfoExternalDegreeCurricularPlanInfo
         this.name = name;
     }
     
-    public static InfoExternalDegreeCurricularPlanInfo newFromDegreeCurricularPlan(IDegreeCurricularPlan curricularPlan)
+    public static InfoExternalDegreeCurricularPlanInfo newFromDegreeCurricularPlan(DegreeCurricularPlan curricularPlan)
     {
         InfoExternalDegreeCurricularPlanInfo externalDegreeInfo = new InfoExternalDegreeCurricularPlanInfo();
         externalDegreeInfo.setName(curricularPlan.getName());

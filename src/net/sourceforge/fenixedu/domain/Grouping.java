@@ -67,9 +67,9 @@ public class Grouping extends Grouping_Base {
         return result;
     }
 
-    public List<IExecutionCourse> getExecutionCourses() {
+    public List<ExecutionCourse> getExecutionCourses() {
         final List result = new ArrayList();
-        for (final IExportGrouping exportGrouping : this.getExportGroupings()) {
+        for (final ExportGrouping exportGrouping : this.getExportGroupings()) {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
                 result.add(exportGrouping.getExecutionCourse());
@@ -79,8 +79,8 @@ public class Grouping extends Grouping_Base {
     }
 
     public List getStudentGroupsWithoutShift() {
-        final List<IStudentGroup> result = new ArrayList();
-        for (final IStudentGroup studentGroup : this.getStudentGroups()) {
+        final List<StudentGroup> result = new ArrayList();
+        for (final StudentGroup studentGroup : this.getStudentGroups()) {
             if (studentGroup.getShift() == null) {
                 result.add(studentGroup);
             }
@@ -90,7 +90,7 @@ public class Grouping extends Grouping_Base {
 
     public List getStudentGroupsWithShift() {
         final List result = new ArrayList();
-        for (final IStudentGroup studentGroup : this.getStudentGroups()) {
+        for (final StudentGroup studentGroup : this.getStudentGroups()) {
             if (studentGroup.getShift() != null) {
                 result.add(studentGroup);
             }
@@ -100,10 +100,10 @@ public class Grouping extends Grouping_Base {
 
     public Integer getNumberOfStudentsNotInGrouping() {
         int numberOfStudents = 0;
-        for (final IExportGrouping exportGrouping : this.getExportGroupings()) {
+        for (final ExportGrouping exportGrouping : this.getExportGroupings()) {
             if (exportGrouping.getProposalState().getState() == ProposalState.ACEITE
                     || exportGrouping.getProposalState().getState() == ProposalState.CRIADOR) {
-                for (final IAttends attend : exportGrouping.getExecutionCourse().getAttends()) {
+                for (final Attends attend : exportGrouping.getExecutionCourse().getAttends()) {
                     if (!this.getAttends().contains(attend)) {
                         numberOfStudents++;
                     }
@@ -113,7 +113,7 @@ public class Grouping extends Grouping_Base {
         return Integer.valueOf(numberOfStudents);
     }
 
-    public void checkShiftCapacity(IShift shift) {
+    public void checkShiftCapacity(Shift shift) {
         List shiftStudentGroups = this.readAllStudentGroupsBy(shift);
         Integer groupMaximumNumber = this.getGroupMaximumNumber();
         if (shiftStudentGroups != null && groupMaximumNumber != null
@@ -126,8 +126,8 @@ public class Grouping extends Grouping_Base {
         return this.getAttends().size();
     }
 
-    public IAttends getStudentAttend(IStudent student) {
-        for (final IAttends attend : this.getAttends()) {
+    public Attends getStudentAttend(Student student) {
+        for (final Attends attend : this.getAttends()) {
             if (attend.getAluno() == student) {
                 return attend;
             }
@@ -135,8 +135,8 @@ public class Grouping extends Grouping_Base {
         return null;
     }
 
-    public IAttends getStudentAttend(String studentUsername) {
-        for (final IAttends attend : this.getAttends()) {
+    public Attends getStudentAttend(String studentUsername) {
+        for (final Attends attend : this.getAttends()) {
             if (attend.getAluno().getPerson().getUsername().equals(studentUsername)) {
                 return attend;
             }
@@ -144,8 +144,8 @@ public class Grouping extends Grouping_Base {
         return null;
     }
 
-    public IStudentGroup readStudentGroupBy(Integer studentGroupNumber) {
-        for (final IStudentGroup studentGroup : this.getStudentGroups()) {
+    public StudentGroup readStudentGroupBy(Integer studentGroupNumber) {
+        for (final StudentGroup studentGroup : this.getStudentGroups()) {
             if (studentGroup.getGroupNumber().equals(studentGroupNumber)) {
                 return studentGroup;
             }
@@ -153,9 +153,9 @@ public class Grouping extends Grouping_Base {
         return null;
     }
 
-    public List<IStudentGroup> readAllStudentGroupsBy(IShift shift) {
-        final List<IStudentGroup> result = new ArrayList<IStudentGroup>();
-        for (final IStudentGroup studentGroup : this.getStudentGroups()) {
+    public List<StudentGroup> readAllStudentGroupsBy(Shift shift) {
+        final List<StudentGroup> result = new ArrayList<StudentGroup>();
+        for (final StudentGroup studentGroup : this.getStudentGroups()) {
             if (studentGroup.getShift() == shift) {
                 result.add(studentGroup);
             }
@@ -163,10 +163,10 @@ public class Grouping extends Grouping_Base {
         return result;
     }
 
-    public static IGrouping create(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
+    public static Grouping create(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
             EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber,
             Integer idealCapacity, Integer maximumCapacity, Integer minimumCapacity,
-            String projectDescription, ShiftType shiftType, IExecutionCourse executionCourse) {
+            String projectDescription, ShiftType shiftType, ExecutionCourse executionCourse) {
 
         if (goupingName == null || enrolmentBeginDay == null || enrolmentEndDay == null
                 || enrolmentGroupPolicyType == null) {
@@ -175,7 +175,7 @@ public class Grouping extends Grouping_Base {
 
         checkIfGroupingAlreadyExistInExecutionCourse(goupingName, executionCourse);
 
-        IGrouping grouping = new Grouping();
+        Grouping grouping = new Grouping();
         grouping.setName(goupingName);
         grouping.setEnrolmentBeginDayDate(enrolmentBeginDay);
         grouping.setEnrolmentEndDayDate(enrolmentEndDay);
@@ -187,7 +187,7 @@ public class Grouping extends Grouping_Base {
         grouping.setProjectDescription(projectDescription);
         grouping.setShiftType(shiftType);
 
-        IExportGrouping exportGrouping = new ExportGrouping(grouping, executionCourse);
+        ExportGrouping exportGrouping = new ExportGrouping(grouping, executionCourse);
         exportGrouping.setProposalState(new ProposalState(ProposalState.CRIADOR));
 
         addGroupingToAttends(grouping, executionCourse.getAttends());
@@ -195,14 +195,14 @@ public class Grouping extends Grouping_Base {
         return grouping;
     }
 
-    private static void addGroupingToAttends(final IGrouping grouping, final List<IAttends> attends) {
-        for (final IAttends attend : attends) {
+    private static void addGroupingToAttends(final Grouping grouping, final List<Attends> attends) {
+        for (final Attends attend : attends) {
             attend.addGroupings(grouping);
         }
     }
 
     private static void checkIfGroupingAlreadyExistInExecutionCourse(final String goupingName,
-            final IExecutionCourse executionCourse) {
+            final ExecutionCourse executionCourse) {
         if (executionCourse.getGroupingByName(goupingName) != null) {
             throw new DomainException("error.exception.existing.groupProperties");
         }
@@ -238,7 +238,7 @@ public class Grouping extends Grouping_Base {
 
     private void checkIfGroupingAlreadyExists(String groupingName) {
         if (!this.getName().equals(groupingName)) {
-            for (final IExecutionCourse executionCourse : this.getExecutionCourses()) {
+            for (final ExecutionCourse executionCourse : this.getExecutionCourses()) {
                 if (executionCourse.getGroupingByName(groupingName) != null) {
                     throw new DomainException(this.getClass().getName(), "error.exception.existing.groupProperties");
                 }
@@ -246,13 +246,13 @@ public class Grouping extends Grouping_Base {
         }
     }
 
-    private void unEnrollStudentGroups(List<IStudentGroup> studentGroups) {
-        for (final IStudentGroup studentGroup : studentGroups) {
+    private void unEnrollStudentGroups(List<StudentGroup> studentGroups) {
+        for (final StudentGroup studentGroup : studentGroups) {
             studentGroup.setShift(null);
         }
     }
 
-    public void createStudentGroup(IShift shift, Integer groupNumber, List<IStudent> students) {
+    public void createStudentGroup(Shift shift, Integer groupNumber, List<Student> students) {
 
         if (groupNumber == null || students == null)
             throw new NullPointerException();
@@ -263,22 +263,22 @@ public class Grouping extends Grouping_Base {
       
         checkForStudentsInStudentGroupsAndGrouping(students);
 
-        IStudentGroup newStudentGroup = null;
+        StudentGroup newStudentGroup = null;
         if (shift != null)
             newStudentGroup = new StudentGroup(groupNumber, this, shift);
         else
             newStudentGroup = new StudentGroup(groupNumber, this);
 
-        for (IStudent student : students) {
-            IAttends attend = getStudentAttend(student);
+        for (Student student : students) {
+            Attends attend = getStudentAttend(student);
             newStudentGroup.addAttends(attend);
         }
     }   
 
-    private void checkForStudentsInStudentGroupsAndGrouping(List<IStudent> students) {
-        for (IStudent student : students) {
-            IAttends attend = getStudentAttend(student);
-            for (final IStudentGroup studentGroup : this.getStudentGroups()) {
+    private void checkForStudentsInStudentGroupsAndGrouping(List<Student> students) {
+        for (Student student : students) {
+            Attends attend = getStudentAttend(student);
+            for (final StudentGroup studentGroup : this.getStudentGroups()) {
                 if (studentGroup.getAttends().contains(attend))
                     throw new DomainException(this.getClass().getName(), "errors.existing.studentEnrolment");                
                 else if(!this.getAttends().contains(attend))
@@ -293,18 +293,18 @@ public class Grouping extends Grouping_Base {
             throw new DomainException(this.getClass().getName(), "");
         }
 
-        List<IAttends> attends = this.getAttends();
-        List<IAttends> attendsAux = new ArrayList();
+        List<Attends> attends = this.getAttends();
+        List<Attends> attendsAux = new ArrayList();
         attendsAux.addAll(attends);
-        for (IAttends attend : attendsAux) {
+        for (Attends attend : attendsAux) {
             attend.removeGroupings(this);
         }
 
         List exportGroupings = this.getExportGroupings();
-        List<IExportGrouping> exportGroupingsAux = new ArrayList();
+        List<ExportGrouping> exportGroupingsAux = new ArrayList();
         exportGroupingsAux.addAll(exportGroupings);
-        for (IExportGrouping exportGrouping : exportGroupingsAux) {
-            IExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
+        for (ExportGrouping exportGrouping : exportGroupingsAux) {
+            ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
             executionCourse.removeExportGroupings(exportGrouping);
             exportGrouping.delete();
         }
@@ -314,7 +314,7 @@ public class Grouping extends Grouping_Base {
 
     public int findMaxGroupNumber() {
         int max = 0;
-        for (final IStudentGroup studentGroup : getStudentGroups()) {
+        for (final StudentGroup studentGroup : getStudentGroups()) {
             max = Math.max(max, studentGroup.getGroupNumber().intValue());
         }
         return max;

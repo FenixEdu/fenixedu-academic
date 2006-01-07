@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStat
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.gesdis.IStudentCourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -53,16 +53,16 @@ public class ReadStudentCourseReport implements IService {
 				.getIPersistentStudentCourseReport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, objectId);
-		IStudentCourseReport studentCourseReport = persistentStudentCourseReport
+		StudentCourseReport studentCourseReport = persistentStudentCourseReport
 				.readByCurricularCourse(curricularCourse);
 
 		List infoScopes = (List) CollectionUtils.collect(curricularCourse.getScopes(),
 				new Transformer() {
 
 					public Object transform(Object arg0) {
-						ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+						CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
 						return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
 								.newInfoFromDomain(curricularCourseScope);
 					}
@@ -84,8 +84,8 @@ public class ReadStudentCourseReport implements IService {
 		}
 
 		InfoSiteStudentCourseReport infoSiteStudentCourseReport = new InfoSiteStudentCourseReport();
-		IExecutionPeriod actualPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-		IExecutionPeriod executionPeriod = actualPeriod.getPreviousExecutionPeriod();
+		ExecutionPeriod actualPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		ExecutionPeriod executionPeriod = actualPeriod.getPreviousExecutionPeriod();
 
 		List infoSiteEvaluationHistory = getInfoSiteEvaluationsHistory(executionPeriod,
 				curricularCourse, sp);
@@ -107,7 +107,7 @@ public class ReadStudentCourseReport implements IService {
 	 * @return
 	 */
 	private InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics(
-			IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse, ISuportePersistente sp)
+			ExecutionPeriod executionPeriod, CurricularCourse curricularCourse, ISuportePersistente sp)
 			throws ExcepcaoPersistencia {
 
 		InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
@@ -127,13 +127,13 @@ public class ReadStudentCourseReport implements IService {
 	 * @param sp
 	 * @return
 	 */
-	private List getInfoSiteEvaluationsHistory(IExecutionPeriod executionPeriodToTest,
-			ICurricularCourse curricularCourse, ISuportePersistente sp) throws ExcepcaoPersistencia {
+	private List getInfoSiteEvaluationsHistory(ExecutionPeriod executionPeriodToTest,
+			CurricularCourse curricularCourse, ISuportePersistente sp) throws ExcepcaoPersistencia {
 		List infoSiteEvaluationsHistory = new ArrayList();
 		List executionPeriods = (List) CollectionUtils.collect(curricularCourse
 				.getAssociatedExecutionCourses(), new Transformer() {
 			public Object transform(Object arg0) {
-				IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+				ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 				return executionCourse.getExecutionPeriod();
 			}
 
@@ -141,10 +141,10 @@ public class ReadStudentCourseReport implements IService {
 		// filter the executionPeriods by semester
 		// also, information regarding execution years after the course's
 		// execution year must not be shown
-		final IExecutionPeriod historyExecutionPeriod = executionPeriodToTest;
+		final ExecutionPeriod historyExecutionPeriod = executionPeriodToTest;
 		executionPeriods = (List) CollectionUtils.select(executionPeriods, new Predicate() {
 			public boolean evaluate(Object arg0) {
-				IExecutionPeriod executionPeriod = (IExecutionPeriod) arg0;
+				ExecutionPeriod executionPeriod = (ExecutionPeriod) arg0;
 				return (executionPeriod.getSemester().equals(historyExecutionPeriod.getSemester()) && executionPeriod
 						.getExecutionYear().getBeginDate().before(
 								historyExecutionPeriod.getExecutionYear().getBeginDate()));
@@ -152,15 +152,15 @@ public class ReadStudentCourseReport implements IService {
 		});
 		Collections.sort(executionPeriods, new Comparator() {
 			public int compare(Object o1, Object o2) {
-				IExecutionPeriod executionPeriod1 = (IExecutionPeriod) o1;
-				IExecutionPeriod executionPeriod2 = (IExecutionPeriod) o2;
+				ExecutionPeriod executionPeriod1 = (ExecutionPeriod) o1;
+				ExecutionPeriod executionPeriod2 = (ExecutionPeriod) o2;
 				return executionPeriod1.getExecutionYear().getYear().compareTo(
 						executionPeriod2.getExecutionYear().getYear());
 			}
 		});
 		Iterator iter = executionPeriods.iterator();
 		while (iter.hasNext()) {
-			IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
+			ExecutionPeriod executionPeriod = (ExecutionPeriod) iter.next();
 
 			InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
 			infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod
@@ -184,7 +184,7 @@ public class ReadStudentCourseReport implements IService {
 		int approved = 0;
 		Iterator iter = enrolments.iterator();
 		while (iter.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iter.next();
+			Enrolment enrolment = (Enrolment) iter.next();
 			EnrollmentState enrollmentState = enrolment.getEnrollmentState();
 			if (enrollmentState.equals(EnrollmentState.APROVED)) {
 				approved++;
@@ -202,7 +202,7 @@ public class ReadStudentCourseReport implements IService {
 		int evaluated = 0;
 		Iterator iter = enrolments.iterator();
 		while (iter.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iter.next();
+			Enrolment enrolment = (Enrolment) iter.next();
 			EnrollmentState enrollmentState = enrolment.getEnrollmentState();
 			if (enrollmentState.equals(EnrollmentState.APROVED)
 					|| enrollmentState.equals(EnrollmentState.NOT_APROVED)) {
@@ -217,7 +217,7 @@ public class ReadStudentCourseReport implements IService {
 	 * @param sp
 	 * @return
 	 */
-	private List getEnrolled(IExecutionPeriod executionPeriod, ICurricularCourse curricularCourse,
+	private List getEnrolled(ExecutionPeriod executionPeriod, CurricularCourse curricularCourse,
 			ISuportePersistente sp) throws ExcepcaoPersistencia {
 		IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
 		List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse

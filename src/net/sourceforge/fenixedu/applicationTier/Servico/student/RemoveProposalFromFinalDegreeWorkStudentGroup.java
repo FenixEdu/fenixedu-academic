@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,12 +32,12 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
-        IGroupProposal groupProposal = (IGroupProposal) CollectionUtils.find(group.getGroupProposals(),
+        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        GroupProposal groupProposal = (GroupProposal) CollectionUtils.find(group.getGroupProposals(),
                 new PREDICATE_FIND_BY_ID(groupProposalOID));
         if (groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {
-                IGroupProposal otherGroupProposal = group.getGroupProposals().get(i);
+                GroupProposal otherGroupProposal = group.getGroupProposals().get(i);
                 if (!groupProposal.equals(otherGroupProposal)
                         && groupProposal.getOrderOfPreference().intValue() < otherGroupProposal
                                 .getOrderOfPreference().intValue()) {
@@ -59,7 +59,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService {
         Integer groupProposalID;
 
         public boolean evaluate(Object arg0) {
-            IGroupProposal groupProposal = (IGroupProposal) arg0;
+            GroupProposal groupProposal = (GroupProposal) arg0;
             return groupProposalID.equals(groupProposal.getIdInternal());
         }
 

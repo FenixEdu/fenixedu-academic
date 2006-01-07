@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,7 +34,7 @@ public class ReadRoomsWithNoExamsInDayAndBeginning implements IService {
 
         List occupiedRooms = new ArrayList();
         for (int i = 0; i < exams.size(); i++) {
-            List examRooms = ((IExam) exams.get(i)).getAssociatedRooms();
+            List examRooms = ((Exam) exams.get(i)).getAssociatedRooms();
             if (examRooms != null && examRooms.size() > 0) {
                 for (int r = 0; r < examRooms.size(); r++) {
                     occupiedRooms.add(examRooms.get(r));
@@ -45,7 +45,7 @@ public class ReadRoomsWithNoExamsInDayAndBeginning implements IService {
         List availableInfoRooms = new ArrayList();
         List availableRooms = (ArrayList) CollectionUtils.subtract(allRooms, occupiedRooms);
         for (int i = 0; i < availableRooms.size(); i++) {
-            IRoom room = (IRoom) availableRooms.get(i);
+            Room room = (Room) availableRooms.get(i);
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             availableInfoRooms.add(infoRoom);
         }

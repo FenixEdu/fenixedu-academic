@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTestAdvisory;
@@ -24,23 +24,23 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class DistributedTestAdvisoryOJB extends PersistentObjectOJB implements IPersistentDistributedTestAdvisory {
 
-    public void updateDistributedTestAdvisoryDates(IDistributedTest distributedTest, Date newExpiresDate) throws ExcepcaoPersistencia {
+    public void updateDistributedTestAdvisoryDates(DistributedTest distributedTest, Date newExpiresDate) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-        List<IDistributedTestAdvisory> result = queryList(DistributedTestAdvisory.class, criteria);
-        for (IDistributedTestAdvisory distributedTestAdvisory : result) {
+        List<DistributedTestAdvisory> result = queryList(DistributedTestAdvisory.class, criteria);
+        for (DistributedTestAdvisory distributedTestAdvisory : result) {
             simpleLockWrite(distributedTestAdvisory.getAdvisory());
             distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
         }
     }
 
-    public void deleteByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public void deleteByDistributedTest(DistributedTest distributedTest) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
-        List<IDistributedTestAdvisory> result = queryList(DistributedTestAdvisory.class, criteria);
+        List<DistributedTestAdvisory> result = queryList(DistributedTestAdvisory.class, criteria);
         Calendar expiresDate = Calendar.getInstance();
         expiresDate.add(Calendar.DAY_OF_MONTH, -1);
-        for (IDistributedTestAdvisory distributedTestAdvisory : result) {
+        for (DistributedTestAdvisory distributedTestAdvisory : result) {
             simpleLockWrite(distributedTestAdvisory.getAdvisory());
             distributedTestAdvisory.getAdvisory().setExpires(expiresDate.getTime());
             delete(distributedTestAdvisory);

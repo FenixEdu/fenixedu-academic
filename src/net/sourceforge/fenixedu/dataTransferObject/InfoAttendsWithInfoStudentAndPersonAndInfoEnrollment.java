@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.Attends;
 
 /**
  * @author André Fernandes / João Brito
@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.IAttends;
 public class InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment extends
         InfoFrequentaWithInfoStudentAndPerson
 {
-    public void copyFromDomain(IAttends frequenta) {
+    public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
         if (frequenta != null) {
             setInfoEnrolment(InfoEnrolmentWithExecutionPeriodAndYearAndEvaluationType.newInfoFromDomain(frequenta.getEnrolment()));
         }
     }
 
-    public static InfoFrequenta newInfoFromDomain(IAttends attend) {
+    public static InfoFrequenta newInfoFromDomain(Attends attend) {
         InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment infoAttend = null;
         if (attend != null) {
             infoAttend = new InfoAttendsWithInfoStudentAndPersonAndInfoEnrollment();

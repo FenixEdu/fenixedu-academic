@@ -2,23 +2,23 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 
 /**
  * @author Fernanda Quitério 23/09/2003
  *  
  */
 public interface IPersistentWebSiteItem extends IPersistentObject {
-    public IWebSiteItem readByWebSiteSectionAndName(IWebSiteSection webSiteSection, String name)
+    public WebSiteItem readByWebSiteSectionAndName(WebSiteSection webSiteSection, String name)
             throws ExcepcaoPersistencia;
 
-    public List readAllWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection)
+    public List readAllWebSiteItemsByWebSiteSection(WebSiteSection webSiteSection)
             throws ExcepcaoPersistencia;
 
-    public List readPublishedWebSiteItemsByWebSiteSection(IWebSiteSection webSiteSection)
+    public List readPublishedWebSiteItemsByWebSiteSection(WebSiteSection webSiteSection)
             throws ExcepcaoPersistencia;
 
-    public void delete(IWebSiteItem webSiteItem) throws ExcepcaoPersistencia;
+    public void delete(WebSiteItem webSiteItem) throws ExcepcaoPersistencia;
 
 }

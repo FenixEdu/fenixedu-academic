@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularSemester;
 
@@ -20,12 +20,12 @@ public class CurricularSemesterOJB extends PersistentObjectOJB implements IPersi
     public CurricularSemesterOJB() {
     }
 
-    public ICurricularSemester readCurricularSemesterBySemesterAndCurricularYear(Integer semester,
+    public CurricularSemester readCurricularSemesterBySemesterAndCurricularYear(Integer semester,
             Integer year) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("semester", semester);
         crit.addEqualTo("curricularYear.year", year);
-        return (ICurricularSemester) queryObject(CurricularSemester.class, crit);
+        return (CurricularSemester) queryObject(CurricularSemester.class, crit);
 
     }
 

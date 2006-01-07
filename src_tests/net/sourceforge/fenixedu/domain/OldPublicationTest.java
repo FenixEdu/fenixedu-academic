@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
-import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
+import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 
@@ -22,10 +22,10 @@ public class OldPublicationTest extends DomainTestBase {
 	String publication2 = "publication2";
     OldPublicationType oldPublicationType2 = OldPublicationType.CIENTIFIC;
 	
-    ITeacher teacher;
+    Teacher teacher;
 
-	IOldPublication oldPublicationToDelete;
-	IOldPublication oldPublicationToEdit;
+	OldPublication oldPublicationToDelete;
+	OldPublication oldPublicationToEdit;
 	
 	InfoOldPublication infoOldPublication;
 	
@@ -36,7 +36,7 @@ public class OldPublicationTest extends DomainTestBase {
 		teacher = new Teacher();
 	}
 	
-	private void initializeOldPublication(IOldPublication oldPublication) {
+	private void initializeOldPublication(OldPublication oldPublication) {
 		oldPublication.setPublication(publication);
 		oldPublication.setOldPublicationType(oldPublicationType);
 		
@@ -90,7 +90,7 @@ public class OldPublicationTest extends DomainTestBase {
 	
 	}
 	
-	private void verifyOldPublication(IOldPublication oldPublication) {
+	private void verifyOldPublication(OldPublication oldPublication) {
 		assertEquals("Different publication!", oldPublication.getPublication(), publication);
 		assertEquals("Different oldPublicationType!", oldPublication.getOldPublicationType(), oldPublicationType);
 	}

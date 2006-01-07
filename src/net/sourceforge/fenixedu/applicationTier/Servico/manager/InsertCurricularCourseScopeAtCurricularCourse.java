@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -28,8 +28,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
 
     public void run(InfoCurricularCourseScope infoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
-        IBranch branch = null;
-        ICurricularSemester curricularSemester = null;
+        Branch branch = null;
+        CurricularSemester curricularSemester = null;
         try {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentCurricularSemester persistentCurricularSemester = persistentSuport.getIPersistentCurricularSemester();
@@ -38,21 +38,21 @@ public class InsertCurricularCourseScopeAtCurricularCourse implements IService {
 
 			
 			
-            curricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOID(
+            curricularSemester = (CurricularSemester) persistentCurricularSemester.readByOID(
                     CurricularSemester.class, infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
             if (curricularSemester == null)
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
          
 			
             
-			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 					CurricularCourse.class, infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal());
             if (curricularCourse == null)
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
 			
 			
-            branch = (IBranch) persistentBranch.readByOID(
+            branch = (Branch) persistentBranch.readByOID(
 					Branch.class, infoCurricularCourseScope.getInfoBranch().getIdInternal());
             if (branch == null)
                 throw new NonExistingServiceException("message.non.existing.branch", null);

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentInquiriesRegistry extends IPersistentObject {
 
-	public List<IInquiriesRegistry> readByStudentId(Integer studentId)
+	public List<InquiriesRegistry> readByStudentId(Integer studentId)
 	throws ExcepcaoPersistencia;
 	
-	public List<IInquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
+	public List<InquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
 	throws ExcepcaoPersistencia;
 
 

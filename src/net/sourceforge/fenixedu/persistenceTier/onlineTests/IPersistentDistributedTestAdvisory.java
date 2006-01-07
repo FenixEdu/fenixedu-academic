@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.onlineTests;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentDistributedTestAdvisory extends IPersistentObject {
 
-    public void updateDistributedTestAdvisoryDates(IDistributedTest distributedTest, Date newExpiresDate) throws ExcepcaoPersistencia;
+    public void updateDistributedTestAdvisoryDates(DistributedTest distributedTest, Date newExpiresDate) throws ExcepcaoPersistencia;
 
-    public abstract void deleteByDistributedTest(IDistributedTest distributedTest) throws ExcepcaoPersistencia;
+    public abstract void deleteByDistributedTest(DistributedTest distributedTest) throws ExcepcaoPersistencia;
 }

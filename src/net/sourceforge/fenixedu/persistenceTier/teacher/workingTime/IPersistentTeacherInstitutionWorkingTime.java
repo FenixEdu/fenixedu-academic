@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.persistenceTier.teacher.workingTime;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.util.DiaSemana;
  */
 public interface IPersistentTeacherInstitutionWorkingTime extends IPersistentObject {
 
-    ITeacherInstitutionWorkTime readByUnique(ITeacherInstitutionWorkTime teacherInstitutionWorkTime)
+    TeacherInstitutionWorkTime readByUnique(TeacherInstitutionWorkTime teacherInstitutionWorkTime)
             throws ExcepcaoPersistencia;
 
-    List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+    List readByTeacherAndExecutionPeriod(Teacher teacher, ExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia;
 
     /**
@@ -39,6 +39,6 @@ public interface IPersistentTeacherInstitutionWorkingTime extends IPersistentObj
      * @param executionPeriod
      * @return
      */
-    List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
+    List readByExecutionPeriod(ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia;
 
 }

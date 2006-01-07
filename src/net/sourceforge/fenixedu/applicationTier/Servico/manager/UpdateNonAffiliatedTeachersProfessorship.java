@@ -5,8 +5,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,14 +20,14 @@ public class UpdateNonAffiliatedTeachersProfessorship implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentObject().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentObject().readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
         for (final Integer nonAffiliatedTeachersId : nonAffiliatedTeachersIds) {
-            final INonAffiliatedTeacher nonAffiliatedTeacher = (INonAffiliatedTeacher) sp
+            final NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) sp
                     .getIPersistentObject().readByOID(NonAffiliatedTeacher.class,
                             nonAffiliatedTeachersId);
             executionCourse.removeNonAffiliatedTeachers(nonAffiliatedTeacher);

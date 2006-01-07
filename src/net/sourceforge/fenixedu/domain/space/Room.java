@@ -2,15 +2,15 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class Room extends Room_Base {
 
-	public void createRoomOccupation(IOccupationPeriod period, Calendar startTime, Calendar endTime,
-			DiaSemana dayOfWeek, Integer frequency, Integer week, IWrittenEvaluation writtenEvaluation) {
+	public void createRoomOccupation(OccupationPeriod period, Calendar startTime, Calendar endTime,
+			DiaSemana dayOfWeek, Integer frequency, Integer week, WrittenEvaluation writtenEvaluation) {
 		boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);
 		if (!isFree) {
 			throw new DomainException("error.roomOccupied");
@@ -32,9 +32,9 @@ public class Room extends Room_Base {
         }
 	}
 
-    private boolean isFree(IOccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
+    private boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             Integer frequency, Integer week) {
-        for (final IRoomOccupation roomOccupation : getRoomOccupations()) {
+        for (final RoomOccupation roomOccupation : getRoomOccupations()) {
             if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
                     frequency, week, this)) {
                 return false;

@@ -5,8 +5,8 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -30,9 +30,9 @@ public class CreateTeacherExpectationDefinitionPeriod implements IService {
         IPersistentExecutionYear persistentExecutionYear = persistenceSupport
                 .getIPersistentExecutionYear();
 
-        IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
+        Department department = (Department) persistentDepartment.readByOID(Department.class,
                 departmentID);
-        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                 ExecutionYear.class, executionYearID);
 
         department.createTeacherExpectationDefinitionPeriod(executionYear, startDate, endDate);

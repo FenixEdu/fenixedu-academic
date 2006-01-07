@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.mast
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFile;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 
@@ -39,10 +39,10 @@ public class SibsPaymentFileUtils {
      *         InvalidSibsPaymentFileFormatServiceException
      */
 
-    public static ISibsPaymentFile buildPaymentFile(String filename, List fileEntries)
+    public static SibsPaymentFile buildPaymentFile(String filename, List fileEntries)
             throws InvalidSibsPaymentFileFormatServiceException {
 
-        ISibsPaymentFile sibsFile = DomainFactory.makeSibsPaymentFile(filename);
+        SibsPaymentFile sibsFile = DomainFactory.makeSibsPaymentFile(filename);
         List sibsFileEntries = new ArrayList();
         String line = null;
 
@@ -121,9 +121,9 @@ public class SibsPaymentFileUtils {
         Collections.sort(sibsFileEntries, new Comparator() {
 
             public int compare(Object leftObject, Object rightObject) {
-                int leftStudentNumber = ((ISibsPaymentFileEntry) leftObject).getStudentNumber()
+                int leftStudentNumber = ((SibsPaymentFileEntry) leftObject).getStudentNumber()
                         .intValue();
-                int rightStudentNumber = ((ISibsPaymentFileEntry) rightObject).getStudentNumber()
+                int rightStudentNumber = ((SibsPaymentFileEntry) rightObject).getStudentNumber()
                         .intValue();
                 if (leftStudentNumber > rightStudentNumber) {
                     return 1;

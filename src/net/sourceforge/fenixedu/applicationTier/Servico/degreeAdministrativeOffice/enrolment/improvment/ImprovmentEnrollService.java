@@ -9,11 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -35,17 +35,17 @@ public class ImprovmentEnrollService implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+        Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                 DegreeType.DEGREE);
         if (student == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
-        IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
+        Person pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
 
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        final IExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
+        final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
                 .readActualExecutionPeriod();
 
         if (pessoa == null) {
@@ -53,7 +53,7 @@ public class ImprovmentEnrollService implements IService {
         }
 
         IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-        IEmployee employee = persistentEmployee.readByPerson(pessoa);
+        Employee employee = persistentEmployee.readByPerson(pessoa);
         ;
 
         if (employee == null) {
@@ -65,7 +65,7 @@ public class ImprovmentEnrollService implements IService {
         Iterator iterator = enrolmentsIds.iterator();
         while (iterator.hasNext()) {
             Integer enrolmentId = (Integer) iterator.next();
-            IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class,
+            Enrolment enrollment = (Enrolment) persistentEnrollment.readByOID(Enrolment.class,
                     enrolmentId);
             if (enrollment == null) {
                 throw new InvalidArgumentsServiceException();

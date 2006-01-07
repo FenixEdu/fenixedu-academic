@@ -16,21 +16,21 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
-import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.IBuilding;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
@@ -126,15 +126,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRoomIDs;
     }
 
-    private Collection<IRoom> allRooms = null;
-    private Collection<IRoom> getAllRooms() throws FenixFilterException, FenixServiceException {
+    private Collection<Room> allRooms = null;
+    private Collection<Room> getAllRooms() throws FenixFilterException, FenixServiceException {
         if (allRooms == null) {
-            allRooms = (Collection<IRoom>) ServiceUtils.executeService(getUserView(), "ReadAllDomainObjects", new Object[] { Room.class });
+            allRooms = (Collection<Room>) ServiceUtils.executeService(getUserView(), "ReadAllDomainObjects", new Object[] { Room.class });
         }
         return allRooms;
     }
 
-    private Collection<IRoom> searchRooms() throws FenixFilterException, FenixServiceException {
+    private Collection<Room> searchRooms() throws FenixFilterException, FenixServiceException {
         final String name = getName();
         final Integer building = (getBuilding() != null && getBuilding().length() > 0) ? Integer
                 .valueOf(getBuilding()) : null;
@@ -148,9 +148,9 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
                 .valueOf(getExamCapacity())
                 : null;
 
-        final Collection<IRoom> rooms = getAllRooms();
-        final Collection<IRoom> selectedRooms = new ArrayList<IRoom>();
-        for (final IRoom room : rooms) {
+        final Collection<Room> rooms = getAllRooms();
+        final Collection<Room> selectedRooms = new ArrayList<Room>();
+        for (final Room room : rooms) {
             boolean matchesCriteria = true;
             if (name != null && name.length() > 0 && !room.getNome().equalsIgnoreCase(name)) {
                 matchesCriteria = false;
@@ -174,24 +174,24 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRooms;
     }
 
-    public Collection<IRoom> getRooms() throws FenixFilterException, FenixServiceException {
+    public Collection<Room> getRooms() throws FenixFilterException, FenixServiceException {
         return (getRequestParameter("submittedForm") != null) ? searchRooms() : null;
     }
 
-    public Collection<IRoom> getRoomsToDisplayMap() throws FenixFilterException, FenixServiceException {
+    public Collection<Room> getRoomsToDisplayMap() throws FenixFilterException, FenixServiceException {
         final Set<Integer> selectedRoomIDs = getSelectedRoomIDs();
         if (selectedRoomIDs != null) {
             return filterRooms(getAllRooms(), selectedRoomIDs);
         } else {
-            final Collection<IRoom> rooms = getRooms();
+            final Collection<Room> rooms = getRooms();
             return (rooms != null && rooms.size() == 1) ? getRooms() : null;
         }
     }
 
-    private Collection<IRoom> filterRooms(final Collection<IRoom> allRooms,
+    private Collection<Room> filterRooms(final Collection<Room> allRooms,
             final Set<Integer> selectedRoomIDs) {
-        final Collection<IRoom> rooms = new ArrayList<IRoom>(selectedRoomIDs.size());
-        for (final IRoom room : allRooms) {
+        final Collection<Room> rooms = new ArrayList<Room>(selectedRoomIDs.size());
+        for (final Room room : allRooms) {
             if (selectedRoomIDs.contains(room.getIdInternal())) {
                 rooms.add(room);
             }
@@ -199,15 +199,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return rooms;
     }
 
-    public Collection<IBuilding> getBuildings() throws FenixFilterException, FenixServiceException {
-        return (Collection<IBuilding>) readAllDomainObjects(Building.class);
+    public Collection<Building> getBuildings() throws FenixFilterException, FenixServiceException {
+        return (Collection<Building>) readAllDomainObjects(Building.class);
     }
 
     public Collection<SelectItem> getBuildingSelectItems() throws FenixFilterException,
             FenixServiceException {
-        final Collection<IBuilding> buildings = getBuildings();
+        final Collection<Building> buildings = getBuildings();
         final Collection<SelectItem> buildingSelectItems = new ArrayList<SelectItem>();
-        for (final IBuilding building : buildings) {
+        for (final Building building : buildings) {
             buildingSelectItems.add(new SelectItem(building.getIdInternal().toString(), building.getName()));
         }
         return buildingSelectItems;
@@ -225,36 +225,36 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return roomTypeSelectItems;
     }
 
-    public IExecutionPeriod getExecutionPeriod() throws FenixFilterException, FenixServiceException {
+    public ExecutionPeriod getExecutionPeriod() throws FenixFilterException, FenixServiceException {
         final Integer executionPeriodID = getExecutionPeriodOID();
         return (executionPeriodID != null) ?
-                (IExecutionPeriod) readDomainObject(ExecutionPeriod.class, executionPeriodID) : null;
+                (ExecutionPeriod) readDomainObject(ExecutionPeriod.class, executionPeriodID) : null;
     }
 
     public Date getCalendarBegin() throws FenixFilterException, FenixServiceException {
-        final IExecutionPeriod executionPeriod = getExecutionPeriod();
+        final ExecutionPeriod executionPeriod = getExecutionPeriod();
         return executionPeriod.getBeginDate();
     }
 
     public Date getCalendarEnd() throws FenixFilterException, FenixServiceException {
-        final IExecutionPeriod executionPeriod = getExecutionPeriod();
+        final ExecutionPeriod executionPeriod = getExecutionPeriod();
         return executionPeriod.getEndDate();
     }
 
-    public Map<IRoom, List<CalendarLink>> getWrittenEvaluationCalendarLinks()
+    public Map<Room, List<CalendarLink>> getWrittenEvaluationCalendarLinks()
             throws FenixFilterException, FenixServiceException {
-        final Collection<IRoom> rooms = getRoomsToDisplayMap();
+        final Collection<Room> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
-            final Map<IRoom, List<CalendarLink>> calendarLinksMap = new HashMap<IRoom, List<CalendarLink>>();
+            final Map<Room, List<CalendarLink>> calendarLinksMap = new HashMap<Room, List<CalendarLink>>();
             // final Collection<List<CalendarLink>>
             // collectionOfCalendarLinkLists = new
             // ArrayList<List<CalendarLink>>();
-            for (final IRoom room : rooms) {
+            for (final Room room : rooms) {
                 final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
-                for (final IRoomOccupation roomOccupation : room.getRoomOccupations()) {
-                    final IWrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
+                for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
+                    final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
                     if (writtenEvaluation != null) {
-                        final IExecutionCourse executionCourse = writtenEvaluation
+                        final ExecutionCourse executionCourse = writtenEvaluation
                                 .getAssociatedExecutionCourses().get(0);
 
                         final CalendarLink calendarLink = new CalendarLink();
@@ -276,17 +276,17 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         }
     }
 
-    public List<Entry<IRoom, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList() throws FenixFilterException, FenixServiceException {
-        final Map<IRoom, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
-        return (calendarLinks != null) ? new ArrayList<Entry<IRoom, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
+    public List<Entry<Room, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList() throws FenixFilterException, FenixServiceException {
+        final Map<Room, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
+        return (calendarLinks != null) ? new ArrayList<Entry<Room, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
     }
 
-    private Map<String, String> constructLinkParameters(final IExecutionCourse executionCourse,
-            final IWrittenEvaluation writtenEvaluation) {
-    	final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-    	final IExecutionDegree executionDegree = findExecutionDegree(executionCourse);
-    	final ICurricularSemester curricularSemester = findCurricularSemester(executionCourse);
-    	final ICurricularYear curricularYear = curricularSemester.getCurricularYear();
+    private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,
+            final WrittenEvaluation writtenEvaluation) {
+    	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    	final ExecutionDegree executionDegree = findExecutionDegree(executionCourse);
+    	final CurricularSemester curricularSemester = findCurricularSemester(executionCourse);
+    	final CurricularYear curricularYear = curricularSemester.getCurricularYear();
 
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
@@ -299,13 +299,13 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return linkParameters;
     }
 
-	private IExecutionDegree findExecutionDegree(final IExecutionCourse executionCourse) {
-    	final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-    	final IExecutionYear executionYear = executionPeriod.getExecutionYear();
+	private ExecutionDegree findExecutionDegree(final ExecutionCourse executionCourse) {
+    	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    	final ExecutionYear executionYear = executionPeriod.getExecutionYear();
 
-    	for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-    		final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-    		for (final IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+    	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+    		final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+    		for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
     			if (executionDegree.getExecutionYear() == executionYear) {
     				return executionDegree;
     			}
@@ -314,13 +314,13 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     	return null;
 	}
 
-    private ICurricularSemester findCurricularSemester(final IExecutionCourse executionCourse) {
-    	final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+    private CurricularSemester findCurricularSemester(final ExecutionCourse executionCourse) {
+    	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
 
-    	for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-    		final List<ICurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod);
+    	for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+    		final List<CurricularCourseScope> curricularCourseScopes = curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod);
     		if (!curricularCourseScopes.isEmpty()) {
-    			final ICurricularCourseScope curricularCourseScope = curricularCourseScopes.get(0);
+    			final CurricularCourseScope curricularCourseScope = curricularCourseScopes.get(0);
     			return curricularCourseScope.getCurricularSemester();
     		}
     	}
@@ -328,7 +328,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	}
 
 	private String constructEvaluationCalendarPresentarionString(
-            final IWrittenEvaluation writtenEvaluation, final IExecutionCourse executionCourse) {
+            final WrittenEvaluation writtenEvaluation, final ExecutionCourse executionCourse) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (writtenEvaluation instanceof WrittenTest) {
             stringBuilder.append(messages.getMessage("label.evaluation.shortname.test"));

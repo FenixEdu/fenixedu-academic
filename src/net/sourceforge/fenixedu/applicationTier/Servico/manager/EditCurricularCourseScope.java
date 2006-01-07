@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
@@ -24,9 +24,9 @@ public class EditCurricularCourseScope implements IService {
 
     public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ICurricularCourseScope oldCurricularCourseScope = null;
-        ICurricularSemester newCurricularSemester = null;
-        IBranch newBranch = null;
+        CurricularCourseScope oldCurricularCourseScope = null;
+        CurricularSemester newCurricularSemester = null;
+        Branch newBranch = null;
 
         try {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -35,7 +35,7 @@ public class EditCurricularCourseScope implements IService {
             IPersistentCurricularCourseScope persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
 
             Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
-            newBranch = (IBranch) persistentBranch.readByOID(Branch.class, branchId);
+            newBranch = (Branch) persistentBranch.readByOID(Branch.class, branchId);
 
             if (newBranch == null) {
                 throw new NonExistingServiceException("message.non.existing.branch", null);
@@ -43,7 +43,7 @@ public class EditCurricularCourseScope implements IService {
 
 			
             Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
-            newCurricularSemester = (ICurricularSemester) persistentCurricularSemester.readByOID(
+            newCurricularSemester = (CurricularSemester) persistentCurricularSemester.readByOID(
                     CurricularSemester.class, curricularSemesterId);
 
             if (newCurricularSemester == null) {
@@ -51,7 +51,7 @@ public class EditCurricularCourseScope implements IService {
             }
 
 			
-            oldCurricularCourseScope = (ICurricularCourseScope) persistentCurricularCourseScope.readByOID(
+            oldCurricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope.readByOID(
 					CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal(), true);
 
             if (oldCurricularCourseScope == null) {

@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -108,7 +108,7 @@ public class InfoClass extends InfoObject {
         this.infoExecutionPeriod = infoExecutionPeriod;
     }
 
-    public void copyFromDomain(ISchoolClass turma) {
+    public void copyFromDomain(SchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
             setNome(turma.getNome());
@@ -116,7 +116,7 @@ public class InfoClass extends InfoObject {
         }
     }
 
-    public static InfoClass newInfoFromDomain(ISchoolClass turma) {
+    public static InfoClass newInfoFromDomain(SchoolClass turma) {
         InfoClass infoClass = null;
         if (turma != null) {
             infoClass = new InfoClass();

@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -45,7 +45,7 @@ public class ReadNonAffiliatedTeachersByName implements IService {
         List infoNonAffiliatedTeachers = new ArrayList(nonAffiliatedTeachers.size());
 
         for (Iterator iter = nonAffiliatedTeachers.iterator(); iter.hasNext();) {
-            INonAffiliatedTeacher nonAffiliatedTeacher = (INonAffiliatedTeacher) iter.next();
+            NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) iter.next();
             InfoNonAffiliatedTeacher infoNonAffiliatedTeacher = new InfoNonAffiliatedTeacher();
             infoNonAffiliatedTeacher.copyFromDomain(nonAffiliatedTeacher);
             infoNonAffiliatedTeachers.add(infoNonAffiliatedTeacher);

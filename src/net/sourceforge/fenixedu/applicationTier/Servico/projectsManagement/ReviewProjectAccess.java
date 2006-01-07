@@ -5,11 +5,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonRole;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonRole;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,17 +31,17 @@ public class ReviewProjectAccess implements IService {
     public void run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
-        IRole role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
+        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Role role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, false) == 0) {
-            ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+            Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
             if (teacher == null) {
-                IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
+                Employee employee = sp.getIPersistentEmployee().readByPerson(person);
                 if (employee != null) {
                     IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
                     if ((persistentSuportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
                         persistentProjectAccess.deleteByPersonAndCC(person, false);
-                        IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
+                        PersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
                         if (personRole != null)
                             sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
                     }
@@ -52,14 +52,14 @@ public class ReviewProjectAccess implements IService {
 
         role = sp.getIPersistentRole().readByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, true) == 0) {
-            ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+            Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
             if (teacher == null) {
-                IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
+                Employee employee = sp.getIPersistentEmployee().readByPerson(person);
                 if (employee != null) {
                     IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
                     if ((persistentSuportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
                         persistentProjectAccess.deleteByPersonAndCC(person, true);
-                        IPersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
+                        PersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
                         if (personRole != null)
                             sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
                     }

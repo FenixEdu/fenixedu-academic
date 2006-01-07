@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -38,8 +38,8 @@ public class ReadStudentLessons implements IService {
         final List infoLessons = new ArrayList(lessons.size());
 
         for (final Iterator iterator = lessons.iterator(); iterator.hasNext(); ) {
-            final ILesson lesson = (ILesson) iterator.next();
-            final IShift shift = lesson.getShift();
+            final Lesson lesson = (Lesson) iterator.next();
+            final Shift shift = lesson.getShift();
 
             final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);

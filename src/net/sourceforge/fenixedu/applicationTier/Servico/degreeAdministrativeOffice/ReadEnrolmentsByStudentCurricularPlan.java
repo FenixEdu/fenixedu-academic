@@ -7,9 +7,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithExecutionPeriodAndYearAndEvaluationTypeAndCurricularCourseAndDegreeCurricularPlanAndDegreeAndEvaluations;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -23,15 +23,15 @@ public class ReadEnrolmentsByStudentCurricularPlan implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 
-        final IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
+        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
         final List<InfoEnrolment> infoEnrolments;
         if (studentCurricularPlan != null) {
-            final List<IEnrolment> enrolments = studentCurricularPlan.getEnrolments();
+            final List<Enrolment> enrolments = studentCurricularPlan.getEnrolments();
             infoEnrolments = new ArrayList<InfoEnrolment>(enrolments.size());
-            for (final IEnrolment enrolment : enrolments) {
+            for (final Enrolment enrolment : enrolments) {
                 final InfoEnrolment infoEnrolment = InfoEnrolmentWithExecutionPeriodAndYearAndEvaluationTypeAndCurricularCourseAndDegreeCurricularPlanAndDegreeAndEvaluations.newInfoFromDomain(enrolment);
 
-                final IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) Collections.max(enrolment.getEvaluations());
+                final EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) Collections.max(enrolment.getEvaluations());
                 infoEnrolment.setInfoEnrolmentEvaluation(InfoEnrolmentEvaluation.newInfoFromDomain(enrolmentEvaluation));
 
                 infoEnrolments.add(infoEnrolment);

@@ -5,7 +5,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
 
 /**
  * @author João Mota
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.IEvaluationMethod;
  */
 public interface IPersistentEvaluationMethod extends IPersistentObject {
 
-    public IEvaluationMethod readByIdExecutionCourse(Integer executionCourseOID)
+    public EvaluationMethod readByIdExecutionCourse(Integer executionCourseOID)
             throws ExcepcaoPersistencia;
 
 }

@@ -23,11 +23,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,11 +43,11 @@ public class ChangeApplicationInfo implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class,
                         newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
 
-        IMasterDegreeCandidate existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        MasterDegreeCandidate existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
                 .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
                         newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
                         newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao(),
@@ -59,13 +59,13 @@ public class ChangeApplicationInfo implements IService {
 
         // Change Personal Information
         if (isNewPerson) {
-            ICountry country = null;
+            Country country = null;
             if ((infoPerson.getInfoPais() != null)) {
                 country = sp.getIPersistentCountry().readCountryByNationality(
                         infoPerson.getInfoPais().getNationality());
             }
             
-            IPerson person = existingMasterDegreeCandidate.getPerson();
+            Person person = existingMasterDegreeCandidate.getPerson();
             person.edit(infoPerson, country);
             
         } else {
@@ -83,11 +83,11 @@ public class ChangeApplicationInfo implements IService {
         existingMasterDegreeCandidate.setSpecializationArea(newMasterDegreeCandidate
                 .getSpecializationArea());
 
-        ICandidateSituation oldCandidateSituation = existingMasterDegreeCandidate
+        CandidateSituation oldCandidateSituation = existingMasterDegreeCandidate
                 .getActiveCandidateSituation();
         oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
-        ICandidateSituation activeCandidateSituation = DomainFactory.makeCandidateSituation();
+        CandidateSituation activeCandidateSituation = DomainFactory.makeCandidateSituation();
         sp.getIPersistentCandidateSituation().simpleLockWrite(activeCandidateSituation);
         activeCandidateSituation.setDate(Calendar.getInstance().getTime());
         activeCandidateSituation.setSituation(SituationName.PENDENT_COM_DADOS_OBJ);

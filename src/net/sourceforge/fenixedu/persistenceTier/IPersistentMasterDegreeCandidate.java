@@ -14,7 +14,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.SituationName;
@@ -45,7 +45,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @return IMasterDegreeCandidate
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IMasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
+	public MasterDegreeCandidate readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
 			String idDocumentNumber, IDDocumentType idDocumentType, Integer executionDegreeID,
 			Specialization specialization) throws ExcepcaoPersistencia;
 
@@ -70,7 +70,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @return IMasterDegreeCandidate
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IMasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
+	public MasterDegreeCandidate readByNumberAndExecutionDegreeAndSpecialization(Integer number,
 			Integer executionDegreeID, Specialization specialization) throws ExcepcaoPersistencia;
 
 	/**
@@ -79,7 +79,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @return IMasterDegreeCandidate
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IMasterDegreeCandidate readByExecutionDegreeAndPerson(Integer executionDegreeID,
+	public MasterDegreeCandidate readByExecutionDegreeAndPerson(Integer executionDegreeID,
 			Integer personID) throws ExcepcaoPersistencia;
 
 	/**
@@ -89,7 +89,7 @@ public interface IPersistentMasterDegreeCandidate extends IPersistentObject {
 	 * @return IMasterDegreeCandidate
 	 * @throws ExcepcaoPersistencia
 	 */
-	public IMasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
+	public MasterDegreeCandidate readByExecutionDegreeAndPersonAndNumber(Integer executionDegreeID,
 			Integer personID, Integer number) throws ExcepcaoPersistencia;
 
 	/**

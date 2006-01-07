@@ -4,12 +4,12 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IScientificArea;
+import net.sourceforge.fenixedu.domain.ScientificArea;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
 public interface IPersistentScientificArea extends IPersistentObject {
-	public IScientificArea readByName(String name) throws ExcepcaoPersistencia;
+	public ScientificArea readByName(String name) throws ExcepcaoPersistencia;
 }

@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -39,8 +39,8 @@ public class SearchGrantOwner implements IService {
 		List grantOwnerList = new ArrayList();
 		List personList = new ArrayList();
 		List infoGrantOwnerList = new ArrayList();
-		IGrantOwner grantOwner = null;
-		IPerson person = null;
+		GrantOwner grantOwner = null;
+		Person person = null;
 
 		persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		persistentPerson = persistentSupport.getIPessoaPersistente();
@@ -88,7 +88,7 @@ public class SearchGrantOwner implements IService {
 			// Get all the grantOwners associated with each person in list
 			for (int i = 0; i < personList.size(); i++) {
 				InfoGrantOwner infoGrantOwner = new InfoGrantOwner();
-				IPerson newPerson = (IPerson) personList.get(i);
+				Person newPerson = (Person) personList.get(i);
 				grantOwner = persistentGrantOwner.readGrantOwnerByPerson(newPerson.getIdInternal());
 				if (grantOwner != null)
 					// The person is a GrantOwner
@@ -102,7 +102,7 @@ public class SearchGrantOwner implements IService {
 		} else if ((grantOwnerList.size() > 0) && onlyGrantOwner.booleanValue()) {
 			for (int i = 0; i < grantOwnerList.size(); i++) {
 				InfoGrantOwner infoGrantOwner = InfoGrantOwnerWithPerson
-						.newInfoFromDomain((IGrantOwner) grantOwnerList.get(i));
+						.newInfoFromDomain((GrantOwner) grantOwnerList.get(i));
 				infoGrantOwnerList.add(infoGrantOwner);
 			}
 		}

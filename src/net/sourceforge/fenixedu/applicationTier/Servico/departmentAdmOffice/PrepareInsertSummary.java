@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -58,14 +58,14 @@ public class PrepareInsertSummary implements IService {
 
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
         }
 
         IPersistentSite persistentSite = sp.getIPersistentSite();
-        ISite site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
+        Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
         if (site == null) {
             throw new FenixServiceException("no.site");
         }
@@ -77,12 +77,12 @@ public class PrepareInsertSummary implements IService {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                 public Object transform(Object arg0) {
-                    final IShift turno = (IShift) arg0;
+                    final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
                     infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
                     for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
                             .hasNext();) {
-                        final ILesson lesson = (ILesson) iterator.next();
+                        final Lesson lesson = (Lesson) iterator.next();
                         final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                         final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
                         infoLesson.setInfoSala(infoRoom);
@@ -103,7 +103,7 @@ public class PrepareInsertSummary implements IService {
             infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
 
                 public Object transform(Object arg0) {
-                    IRoom room = (IRoom) arg0;
+                    Room room = (Room) arg0;
                     return InfoRoom.newInfoFromDomain(room);
                 }
             });
@@ -112,10 +112,10 @@ public class PrepareInsertSummary implements IService {
 
         //teacher logged
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
         Integer professorshipSelect = null;
         if (teacher != null) {
-            IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
+            Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
                     teacher.getIdInternal(), executionCourse.getIdInternal());
             if (professorship != null) {
                 professorshipSelect = professorship.getIdInternal();

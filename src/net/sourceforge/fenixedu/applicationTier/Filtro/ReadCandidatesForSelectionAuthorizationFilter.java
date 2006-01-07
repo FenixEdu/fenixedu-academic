@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -82,12 +82,12 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
 
         Integer executionDegreeID = (Integer) arguments[0];
 
-        IExecutionDegree executionDegree = null;
+        ExecutionDegree executionDegree = null;
 
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = (IExecutionDegree) PersistenceSupportFactory.getDefaultPersistenceSupport()
+            executionDegree = (ExecutionDegree) PersistenceSupportFactory.getDefaultPersistenceSupport()
                     .getIPersistentExecutionDegree().readByOID(ExecutionDegree.class, executionDegreeID);
 
         } catch (Exception e) {
@@ -127,7 +127,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
                 }
                 ListIterator listIterator = coodinatorsList.listIterator();
                 while (listIterator.hasNext()) {
-                    ICoordinator coordinator = (ICoordinator) listIterator.next();
+                    Coordinator coordinator = (Coordinator) listIterator.next();
 
                     if (id.getUtilizador().equals(coordinator.getTeacher().getPerson().getUsername())) {
                         return true;

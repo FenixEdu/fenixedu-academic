@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.Curriculum;
 
 /**
  * @author João Mota
@@ -216,7 +216,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
         this.infoPersonWhoAltered = infoPersonWhoAltered;
     }
 
-    public void copyFromDomain(ICurriculum curriculum) {
+    public void copyFromDomain(Curriculum curriculum) {
         super.copyFromDomain(curriculum);
         if (curriculum != null) {
             setGeneralObjectives(curriculum.getGeneralObjectives());
@@ -229,7 +229,7 @@ public class InfoCurriculum extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoCurriculum newInfoFromDomain(ICurriculum curriculum) {
+    public static InfoCurriculum newInfoFromDomain(Curriculum curriculum) {
         InfoCurriculum infoCurriculum = null;
         if (curriculum != null) {
             infoCurriculum = new InfoCurriculum();

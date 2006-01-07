@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyWithCaseStudyChoices;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,7 +32,7 @@ public class GetCandidacyById implements IService {
 				.getDefaultPersistenceSupport();
 		IPersistentSeminaryCandidacy persistentSeminaryCandidacy = persistenceSupport
 				.getIPersistentSeminaryCandidacy();
-		ICandidacy candidacy = (ICandidacy) persistentSeminaryCandidacy.readByOID(Candidacy.class, id);
+		Candidacy candidacy = (Candidacy) persistentSeminaryCandidacy.readByOID(Candidacy.class, id);
 		infoCandidacy = InfoCandidacyWithCaseStudyChoices.newInfoFromDomain(candidacy);
 
 		return infoCandidacy;

@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
@@ -122,7 +122,7 @@ public class InfoRoomOccupation extends InfoObject {
     }
 
 
-    public void copyFromDomain(IRoomOccupation roomOccupation) {
+    public void copyFromDomain(RoomOccupation roomOccupation) {
         super.copyFromDomain(roomOccupation);
         if (roomOccupation != null) {
             setDayOfWeek(roomOccupation.getDayOfWeek());
@@ -132,7 +132,7 @@ public class InfoRoomOccupation extends InfoObject {
         }
     }
 
-    public static InfoRoomOccupation newInfoFromDomain(IRoomOccupation roomOccupation) {
+    public static InfoRoomOccupation newInfoFromDomain(RoomOccupation roomOccupation) {
         InfoRoomOccupation infoRoomOccupation = null;
         if (roomOccupation != null) {
             infoRoomOccupation = new InfoRoomOccupation();

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import relations.RoleUserGroupHook;
 public class RoleGroup extends RoleGroup_Base {
     
@@ -17,7 +17,7 @@ public class RoleGroup extends RoleGroup_Base {
 	}
 
 	@Override
-	public Iterator<IPerson> getElementsIterator()
+	public Iterator<Person> getElementsIterator()
 	{
 		return this.getRole().getAssociatedPersons().iterator();		
 	}

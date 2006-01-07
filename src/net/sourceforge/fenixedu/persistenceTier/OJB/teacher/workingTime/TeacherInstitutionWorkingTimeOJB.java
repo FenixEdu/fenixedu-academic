@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher.workingTime;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -27,26 +27,26 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readByUnique(Dominio.teacher.workTime.ITeacherInstitutionWorkTime)
+     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readByUnique(Dominio.teacher.workTime.TeacherInstitutionWorkTime)
      */
-    public ITeacherInstitutionWorkTime readByUnique(
-            ITeacherInstitutionWorkTime teacherInstitutionWorkTime) throws ExcepcaoPersistencia {
+    public TeacherInstitutionWorkTime readByUnique(
+            TeacherInstitutionWorkTime teacherInstitutionWorkTime) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("startTime", teacherInstitutionWorkTime.getStartTime());
         criteria.addEqualTo("keyTeacher", teacherInstitutionWorkTime.getTeacher().getIdInternal());
         criteria.addEqualTo("keyExecutionPeriod", teacherInstitutionWorkTime.getExecutionPeriod()
                 .getIdInternal());
         criteria.addEqualTo("weekDay", teacherInstitutionWorkTime.getWeekDay());
-        return (ITeacherInstitutionWorkTime) queryObject(TeacherInstitutionWorkTime.class, criteria);
+        return (TeacherInstitutionWorkTime) queryObject(TeacherInstitutionWorkTime.class, criteria);
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readByTeacherAndExecutionPeriod(Dominio.ITeacher,
-     *      Dominio.IExecutionPeriod)
+     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readByTeacherAndExecutionPeriod(Dominio.Teacher,
+     *      Dominio.ExecutionPeriod)
      */
-    public List readByTeacherAndExecutionPeriod(ITeacher teacher, IExecutionPeriod executionPeriod)
+    public List readByTeacherAndExecutionPeriod(Teacher teacher, ExecutionPeriod executionPeriod)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyTeacher", teacher.getIdInternal());
@@ -57,8 +57,8 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readOverlappingPeriod(Dominio.ITeacher,
-     *      Dominio.IExecutionPeriod, Util.DiaSemana, java.util.Date,
+     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readOverlappingPeriod(Dominio.Teacher,
+     *      Dominio.ExecutionPeriod, Util.DiaSemana, java.util.Date,
      *      java.util.Date)
      */
     public List readOverlappingPeriod(Integer teacherId, Integer executionPeriodId,
@@ -94,9 +94,9 @@ public class TeacherInstitutionWorkingTimeOJB extends PersistentObjectOJB implem
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readByExecutionPeriod(Dominio.IExecutionPeriod)
+     * @see ServidorPersistente.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime#readByExecutionPeriod(Dominio.ExecutionPeriod)
      */
-    public List readByExecutionPeriod(IExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+    public List readByExecutionPeriod(ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionPeriod.idInternal", executionPeriod.getIdInternal());
         return queryList(TeacherInstitutionWorkTime.class, criteria);

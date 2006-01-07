@@ -2,13 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.GuideEntry;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,24 +26,24 @@ public class DeleteGuideEntryAndPaymentTransactionInManager implements IService 
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuideEntry guideEntry = (IGuideEntry) sp.getIPersistentGuideEntry().readByOID(GuideEntry.class,
+        GuideEntry guideEntry = (GuideEntry) sp.getIPersistentGuideEntry().readByOID(GuideEntry.class,
                 guideEntryID);
 
         if (!guideEntry.getReimbursementGuideEntries().isEmpty()) {
             throw new InvalidChangeServiceException();
         }
 
-        IPaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
-        IGuide guide = guideEntry.getGuide();
+        PaymentTransaction paymentTransaction = guideEntry.getPaymentTransaction();
+        Guide guide = guideEntry.getGuide();
 
         double guideEntryValue = guideEntry.getPrice() * guideEntry.getQuantity();
 
         if (paymentTransaction != null) {
 
-            if (paymentTransaction instanceof IGratuityTransaction) {
+            if (paymentTransaction instanceof GratuityTransaction) {
 
-                IGratuityTransaction gratuityTransaction = (IGratuityTransaction) paymentTransaction;
-                IGratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
+                GratuityTransaction gratuityTransaction = (GratuityTransaction) paymentTransaction;
+                GratuitySituation gratuitySituation = gratuityTransaction.getGratuitySituation();
 
                 gratuitySituation.setRemainingValue(gratuitySituation.getRemainingValue()
                         + guideEntryValue);
@@ -61,7 +61,7 @@ public class DeleteGuideEntryAndPaymentTransactionInManager implements IService 
         }
 
         if (guideEntry.getReimbursementGuideEntries() != null) {
-            for (IReimbursementGuideEntry reimbursementGuideEntry : guideEntry
+            for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
                     .getReimbursementGuideEntries()) {
 
                 reimbursementGuideEntry.removeGuideEntry();

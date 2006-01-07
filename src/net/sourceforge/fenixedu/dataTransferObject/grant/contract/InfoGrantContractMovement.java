@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -87,7 +87,7 @@ public class InfoGrantContractMovement extends InfoObject {
     /**
      * @param GrantMovement
      */
-    public void copyFromDomain(IGrantContractMovement grantMovement) {
+    public void copyFromDomain(GrantContractMovement grantMovement) {
         super.copyFromDomain(grantMovement);
         if (grantMovement != null) {
             setLocation(grantMovement.getLocation());
@@ -100,7 +100,7 @@ public class InfoGrantContractMovement extends InfoObject {
      * @param GrantMovement
      * @return
      */
-    public static InfoGrantContractMovement newInfoFromDomain(IGrantContractMovement grantMovement) {
+    public static InfoGrantContractMovement newInfoFromDomain(GrantContractMovement grantMovement) {
         InfoGrantContractMovement infoGrantMovement = null;
         if (grantMovement != null) {
             infoGrantMovement = new InfoGrantContractMovement();
@@ -114,7 +114,7 @@ public class InfoGrantContractMovement extends InfoObject {
      * @throws ExcepcaoPersistencia
      */
     public void copyToDomain(InfoGrantContractMovement infoGrantContractMovement,
-            IGrantContractMovement grantContractMovement) throws ExcepcaoPersistencia {
+            GrantContractMovement grantContractMovement) throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantContractMovement, grantContractMovement);
 
         grantContractMovement.setLocation(infoGrantContractMovement.getLocation());

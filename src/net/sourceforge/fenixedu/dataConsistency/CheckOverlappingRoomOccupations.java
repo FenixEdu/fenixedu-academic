@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -58,33 +58,33 @@ public class CheckOverlappingRoomOccupations {
     }
 
     private static void check() throws ExcepcaoPersistencia {
-        final List<IRoom> rooms = (List<IRoom>) persistentObject.readAll(Room.class);
-        for (final IRoom room : rooms) {
+        final List<Room> rooms = (List<Room>) persistentObject.readAll(Room.class);
+        for (final Room room : rooms) {
             checkRoom(room);
         }
     }
 
-    private static void checkRoom(final IRoom room) {
-        final Set<IRoomOccupation> sortedRoomOccupations = sortedRoomOccupations(room);
+    private static void checkRoom(final Room room) {
+        final Set<RoomOccupation> sortedRoomOccupations = sortedRoomOccupations(room);
 
         if (sortedRoomOccupations.size() > 1) {
-            IRoomOccupation roomOccupation1 = null;
-            IRoomOccupation roomOccupation2 = null;
+            RoomOccupation roomOccupation1 = null;
+            RoomOccupation roomOccupation2 = null;
             for (final Iterator iterator = sortedRoomOccupations.iterator(); iterator.hasNext();) {
                 if (roomOccupation2 == null) {
-                    roomOccupation2 = (IRoomOccupation) iterator.next();
+                    roomOccupation2 = (RoomOccupation) iterator.next();
                 } else {
                     roomOccupation2 = roomOccupation1;
                 }
-                roomOccupation1 = (IRoomOccupation) iterator.next();
+                roomOccupation1 = (RoomOccupation) iterator.next();
 
                 checkRoomOccupations(roomOccupation2, roomOccupation1);
             }
         }
     }
 
-    private static void checkRoomOccupations(final IRoomOccupation roomOccupation1,
-            final IRoomOccupation roomOccupation2) {
+    private static void checkRoomOccupations(final RoomOccupation roomOccupation1,
+            final RoomOccupation roomOccupation2) {
         if (roomOccupation1.getDayOfWeek().getDiaSemana().equals(
                 roomOccupation2.getDayOfWeek().getDiaSemana())) {
             if (roomOccupation1.getPeriod().intersectPeriods(roomOccupation2.getPeriod())) {
@@ -96,8 +96,8 @@ public class CheckOverlappingRoomOccupations {
         }
     }
 
-    private static String roomOccupationComparationString(final IRoomOccupation roomOccupation1,
-            final IRoomOccupation roomOccupation2) {
+    private static String roomOccupationComparationString(final RoomOccupation roomOccupation1,
+            final RoomOccupation roomOccupation2) {
         return StringAppender.append(roomOccupation1.getRoom().getNome(), " ", roomOccupation1
                 .getDayOfWeek().getDiaSemana().toString(), "ª ", dateFormat.format(roomOccupation1
                 .getPeriod().getStart()), "-", dateFormat.format(roomOccupation1.getPeriod().getEnd()),
@@ -109,9 +109,9 @@ public class CheckOverlappingRoomOccupations {
                         .format(roomOccupation2.getEndTimeDate()));
     }
 
-    private static Set<IRoomOccupation> sortedRoomOccupations(final IRoom room) {
+    private static Set<RoomOccupation> sortedRoomOccupations(final Room room) {
         final Comparator comparator = roomOccupationComparator();
-        final Set<IRoomOccupation> sortedRoomOccupations = new TreeSet<IRoomOccupation>(comparator);
+        final Set<RoomOccupation> sortedRoomOccupations = new TreeSet<RoomOccupation>(comparator);
         sortedRoomOccupations.addAll(room.getRoomOccupations());
         return sortedRoomOccupations;
     }

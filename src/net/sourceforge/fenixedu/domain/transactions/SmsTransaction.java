@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.domain.transactions;
 
 import java.sql.Timestamp;
 
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -27,8 +27,8 @@ public class SmsTransaction extends SmsTransaction_Base {
 	public SmsTransaction(Double value, Timestamp transactionDate,
 			String remarks, PaymentType paymentType,
 			TransactionType transactionType, Boolean wasInternalBalance,
-			IPerson responsiblePerson, IPersonAccount personAccount,
-			IGuideEntry guideEntry) {
+			Person responsiblePerson, PersonAccount personAccount,
+			GuideEntry guideEntry) {
         setOjbConcreteClass(getClass().getName());
 		setValue(value);
 		setTransactionDate(transactionDate);

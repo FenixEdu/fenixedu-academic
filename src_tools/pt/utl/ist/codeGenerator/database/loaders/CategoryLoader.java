@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -67,8 +67,8 @@ public class CategoryLoader extends BaseLoader {
         persistentSupport.iniciarTransaccao();
 
         final IPersistentCategory persistentCategory = persistentSupport.getIPersistentCategory();
-        final List<ICategory> categories = (List<ICategory>) persistentCategory.readAll(Category.class);
-        for (final ICategory category : categories) {
+        final List<Category> categories = (List<Category>) persistentCategory.readAll(Category.class);
+        for (final Category category : categories) {
             final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
             final HSSFCell longNameCell = row.createCell((short) 0);
             final HSSFCell codeCell = row.createCell((short) 1);

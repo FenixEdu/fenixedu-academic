@@ -8,9 +8,9 @@ package net.sourceforge.fenixedu.accessControl;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
-import net.sourceforge.fenixedu.domain.cms.IContent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.cms.Content;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -29,7 +29,7 @@ public class AccessControl
 			super();
 		}
 
-		public IllegalDataAccessException(String msg, IPerson person)
+		public IllegalDataAccessException(String msg, Person person)
 		{
 			super(msg);
 		}
@@ -47,13 +47,13 @@ public class AccessControl
 		AccessControl.userView.set(userView);
 	}
 
-	public static void check(DomainObject c, IUserGroup group)
+	public static void check(DomainObject c, UserGroup group)
 	{
-		IPerson requester = AccessControl.getUserView().getPerson();
+		Person requester = AccessControl.getUserView().getPerson();
 		boolean result = false;
 		
-        if (c instanceof IContent) {
-            result = ((IContent)c).getOwners().contains(requester);
+        if (c instanceof Content) {
+            result = ((Content)c).getOwners().contains(requester);
         }
 		result |= (group!=null && group.isMember(requester));
 		

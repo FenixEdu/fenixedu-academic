@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
@@ -51,23 +51,23 @@ public class RejectNewProjectProposal implements IService {
 		IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-		IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentGroupProperties.readByOID(Grouping.class,
 				groupPropertiesId);
 
 		if (groupProperties == null) {
 			throw new NotAuthorizedException();
 		}
 
-		IExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(
+		ExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(
 				groupPropertiesId, executionCourseId);
 
 		if (groupPropertiesExecutionCourse == null) {
 			throw new ExistingServiceException();
 		}
 
-		IPerson receiverPerson = persistentTeacher.readTeacherByUsername(rejectorUserName).getPerson();
+		Person receiverPerson = persistentTeacher.readTeacherByUsername(rejectorUserName).getPerson();
 
-		IExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
+		ExecutionCourse executionCourse = groupPropertiesExecutionCourse.getExecutionCourse();
 		groupPropertiesExecutionCourse.setReceiverPerson(receiverPerson);
 		groupPropertiesExecutionCourse.getProposalState().setState(3);
 		executionCourse.removeExportGroupings(groupPropertiesExecutionCourse);
@@ -83,7 +83,7 @@ public class RejectNewProjectProposal implements IService {
 
 		while (iterGroupPropertiesExecutionCourseList.hasNext()) {
 
-			IExportGrouping groupPropertiesExecutionCourseAux = (IExportGrouping) iterGroupPropertiesExecutionCourseList
+			ExportGrouping groupPropertiesExecutionCourseAux = (ExportGrouping) iterGroupPropertiesExecutionCourseList
 					.next();
 			if (groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 1
 					|| groupPropertiesExecutionCourseAux.getProposalState().getState().intValue() == 2) {
@@ -93,8 +93,8 @@ public class RejectNewProjectProposal implements IService {
 
 				Iterator iterProfessorship = professorships.iterator();
 				while (iterProfessorship.hasNext()) {
-					IProfessorship professorship = (IProfessorship) iterProfessorship.next();
-					ITeacher teacher = professorship.getTeacher();
+					Professorship professorship = (Professorship) iterProfessorship.next();
+					Teacher teacher = professorship.getTeacher();
 
 					if (!(teacher.getPerson()).equals(receiverPerson)
 							&& !group.contains(teacher.getPerson())) {
@@ -108,21 +108,21 @@ public class RejectNewProjectProposal implements IService {
 
 		Iterator iterProfessorshipsAux = professorshipsAux.iterator();
 		while (iterProfessorshipsAux.hasNext()) {
-			IProfessorship professorshipAux = (IProfessorship) iterProfessorshipsAux.next();
-			ITeacher teacherAux = professorshipAux.getTeacher();
+			Professorship professorshipAux = (Professorship) iterProfessorshipsAux.next();
+			Teacher teacherAux = professorshipAux.getTeacher();
 			if (!(teacherAux.getPerson()).equals(receiverPerson)
 					&& !group.contains(teacherAux.getPerson())) {
 				group.add(teacherAux.getPerson());
 			}
 		}
 
-		IPerson senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
+		Person senderPerson = groupPropertiesExecutionCourse.getSenderPerson();
 
 		// Create Advisory
-		IAdvisory advisory = createRejectAdvisory(executionCourse, senderPerson, receiverPerson,
+		Advisory advisory = createRejectAdvisory(executionCourse, senderPerson, receiverPerson,
 				groupPropertiesExecutionCourse);
 		for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
-			final IPerson person = (IPerson) iterator.next();
+			final Person person = (Person) iterator.next();
 			sp.getIPessoaPersistente().simpleLockWrite(person);
 
 			person.getAdvisories().add(advisory);
@@ -134,9 +134,9 @@ public class RejectNewProjectProposal implements IService {
 		return result;
 	}
 
-	private IAdvisory createRejectAdvisory(IExecutionCourse executionCourse, IPerson senderPerson,
-			IPerson receiverPerson, IExportGrouping groupPropertiesExecutionCourse) {
-		IAdvisory advisory = DomainFactory.makeAdvisory();
+	private Advisory createRejectAdvisory(ExecutionCourse executionCourse, Person senderPerson,
+			Person receiverPerson, ExportGrouping groupPropertiesExecutionCourse) {
+		Advisory advisory = DomainFactory.makeAdvisory();
 		advisory.setCreated(new Date(Calendar.getInstance().getTimeInMillis()));
 		if (groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay() != null) {
 			advisory.setExpires(groupPropertiesExecutionCourse.getGrouping().getEnrolmentEndDay()

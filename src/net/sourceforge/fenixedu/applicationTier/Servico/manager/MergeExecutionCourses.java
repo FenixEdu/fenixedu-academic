@@ -15,25 +15,25 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAnnouncement;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IEvaluationMethod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IFinalEvaluation;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.Announcement;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.EvaluationMethod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.FinalEvaluation;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -68,13 +68,13 @@ public class MergeExecutionCourses implements IService {
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourseFrom = (IExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentExecutionCourse
                 .readByOID(ExecutionCourse.class, executionCourseSourceId);
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final IExecutionCourse executionCourseTo = (IExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentExecutionCourse
                 .readByOID(ExecutionCourse.class, executionCourseDestinationId, true);
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
@@ -105,7 +105,7 @@ public class MergeExecutionCourses implements IService {
     }
 
     private boolean isMergeAllowed(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
+            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
 
         boolean distributedTestAuthorization = false;
 
@@ -127,54 +127,54 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void removeEvaluationMethod(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
+            final ExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
        
-        final IEvaluationMethod evaluationMethod = executionCourseFrom.getEvaluationMethod();
+        final EvaluationMethod evaluationMethod = executionCourseFrom.getEvaluationMethod();
         if (evaluationMethod != null) {
             evaluationMethod.delete();
         }
     }
 
     private void copySummaries(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
+            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
-        final List<ISummary> associatedSummaries = new ArrayList();
+        final List<Summary> associatedSummaries = new ArrayList();
         associatedSummaries.addAll(executionCourseFrom.getAssociatedSummaries());
-        for (final ISummary summary : associatedSummaries) {
+        for (final Summary summary : associatedSummaries) {
             summary.setExecutionCourse(executionCourseTo);
         }
     }
 
     private void removeCourseReport(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
+            final ExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
         
-        final ICourseReport courseReport = executionCourseFrom.getCourseReport();
+        final CourseReport courseReport = executionCourseFrom.getCourseReport();
         if (courseReport != null) {
             courseReport.delete();
         }
     }
 
-    private void copyGroupPropertiesExecutionCourse(final IExecutionCourse executionCourseFrom,
-            final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
-        final List<IExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList();
+    private void copyGroupPropertiesExecutionCourse(final ExecutionCourse executionCourseFrom,
+            final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
+        final List<ExportGrouping> associatedGroupPropertiesExecutionCourse = new ArrayList();
         associatedGroupPropertiesExecutionCourse.addAll(executionCourseFrom
                 .getExportGroupings());
 
-        for (final IExportGrouping groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
+        for (final ExportGrouping groupPropertiesExecutionCourse : associatedGroupPropertiesExecutionCourse) {
             groupPropertiesExecutionCourse.setExecutionCourse(executionCourseTo);
         }
     }
 
     private void removeEvaluations(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia,
+            final ExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {
-        final List<IEvaluation> associatedEvaluations = new ArrayList();
+        final List<Evaluation> associatedEvaluations = new ArrayList();
         associatedEvaluations.addAll(executionCourseFrom.getAssociatedEvaluations());
 
         final IPersistentEvaluation persistentEvaluation = persistentSupport.getIPersistentEvaluation();
-        for (final IEvaluation evaluation : associatedEvaluations) {
-            if (evaluation instanceof IFinalEvaluation) {
-                if (((IFinalEvaluation) evaluation).deleteFrom(executionCourseFrom)) {
+        for (final Evaluation evaluation : associatedEvaluations) {
+            if (evaluation instanceof FinalEvaluation) {
+                if (((FinalEvaluation) evaluation).deleteFrom(executionCourseFrom)) {
                     persistentEvaluation.deleteByOID(Evaluation.class, evaluation.getIdInternal());
                 }
             } else {
@@ -185,46 +185,46 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void copyBibliographicReference(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
+            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
 
-        final List<IBibliographicReference> notCopiedBibliographicReferences = ExecutionCourseUtils
+        final List<BibliographicReference> notCopiedBibliographicReferences = ExecutionCourseUtils
                 .copyBibliographicReference(executionCourseFrom, executionCourseTo);
         removeBibliographicReferences(persistentSupport, notCopiedBibliographicReferences);
     }
 
     private void removeBibliographicReferences(final ISuportePersistente persistentSupport,
-            final List<IBibliographicReference> notCopiedBibliographicReferences)
+            final List<BibliographicReference> notCopiedBibliographicReferences)
             throws ExcepcaoPersistencia {
         
-        for (final IBibliographicReference bibliographicReference : notCopiedBibliographicReferences) {
+        for (final BibliographicReference bibliographicReference : notCopiedBibliographicReferences) {
             bibliographicReference.delete();
         }
     }
 
-    private void copyShifts(final IExecutionCourse executionCourseFrom,
-            final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
+    private void copyShifts(final ExecutionCourse executionCourseFrom,
+            final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
 
-        final List<IShift> associatedShifts = new ArrayList();
+        final List<Shift> associatedShifts = new ArrayList();
         associatedShifts.addAll(executionCourseFrom.getAssociatedShifts());
 
-        for (final IShift shift : associatedShifts) {
+        for (final Shift shift : associatedShifts) {
             shift.setDisciplinaExecucao(executionCourseTo);
         }
     }
 
-    private void copyAttends(final IExecutionCourse executionCourseFrom,
-            final IExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
+    private void copyAttends(final ExecutionCourse executionCourseFrom,
+            final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
 
         final Iterator associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
         final Map alreadyAttendingDestination = new HashMap();
         while (associatedAttendsFromDestination.hasNext()) {
-            IAttends attend = (IAttends) associatedAttendsFromDestination.next();
+            Attends attend = (Attends) associatedAttendsFromDestination.next();
             alreadyAttendingDestination.put(attend.getAluno().getNumber().toString(), attend);
         }
-        final List<IAttends> associatedAttendsFromSource = new ArrayList();
+        final List<Attends> associatedAttendsFromSource = new ArrayList();
         associatedAttendsFromSource.addAll(executionCourseFrom.getAttends());
-        for (final IAttends attend : associatedAttendsFromSource) {
+        for (final Attends attend : associatedAttendsFromSource) {
             if (!alreadyAttendingDestination.containsKey(attend.getAluno().getNumber().toString())) {
                 attend.setDisciplinaExecucao(executionCourseTo);
             }
@@ -232,10 +232,10 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void copySite(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
+            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
 
-        final ISite sourceSite = executionCourseFrom.getSite();
+        final Site sourceSite = executionCourseFrom.getSite();
         if (sourceSite != null) {
             copySiteAnnouncements(executionCourseFrom.getSite(), executionCourseTo.getSite());
             copySiteSections(executionCourseFrom.getSite(), executionCourseTo.getSite());
@@ -246,37 +246,37 @@ public class MergeExecutionCourses implements IService {
         }
     }
 
-    private void copySiteSections(final ISite siteFrom, final ISite siteTo) throws ExcepcaoPersistencia {
+    private void copySiteSections(final Site siteFrom, final Site siteTo) throws ExcepcaoPersistencia {
         if (siteTo != null) {
-            final List<ISection> associatedSections = new ArrayList();
+            final List<Section> associatedSections = new ArrayList();
             associatedSections.addAll(siteFrom.getAssociatedSections());
 
-            for (final ISection section : associatedSections) {
+            for (final Section section : associatedSections) {
                 section.setSite(siteTo);
             }
         }
     }
 
-    private void copySiteAnnouncements(final ISite siteFrom, final ISite siteTo)
+    private void copySiteAnnouncements(final Site siteFrom, final Site siteTo)
             throws ExcepcaoPersistencia {
 
         if (siteTo != null) {
-            final List<IAnnouncement> associatedAnnouncements = new ArrayList();
+            final List<Announcement> associatedAnnouncements = new ArrayList();
             associatedAnnouncements.addAll(siteFrom.getAssociatedAnnouncements());
 
-            for (final IAnnouncement announcement : associatedAnnouncements) {
+            for (final Announcement announcement : associatedAnnouncements) {
                 announcement.setSite(siteTo);
             }
         }
     }
 
     private void copyProfessorships(final ISuportePersistente persistentSupport,
-            final IExecutionCourse executionCourseFrom, final IExecutionCourse executionCourseTo)
+            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> sourceExecutionCourseProfessorships = new ArrayList();
+        final List<Professorship> sourceExecutionCourseProfessorships = new ArrayList();
         sourceExecutionCourseProfessorships.addAll(executionCourseFrom.getProfessorships());
-        for (final IProfessorship professorship : sourceExecutionCourseProfessorships) {
+        for (final Professorship professorship : sourceExecutionCourseProfessorships) {
             if (canAddProfessorshipTo(executionCourseTo, professorship)) {
                 professorship.setExecutionCourse(executionCourseTo);
             } else {
@@ -285,11 +285,11 @@ public class MergeExecutionCourses implements IService {
         }
     }
 
-    private boolean canAddProfessorshipTo(final IExecutionCourse executionCourse,
-            final IProfessorship professorshipToAdd) {
+    private boolean canAddProfessorshipTo(final ExecutionCourse executionCourse,
+            final Professorship professorshipToAdd) {
         final Iterator associatedProfessorships = executionCourse.getProfessorshipsIterator();
         while (associatedProfessorships.hasNext()) {
-            IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
+            Professorship professorship = (Professorship) associatedProfessorships.next();
             if (professorship.getTeacher().equals(professorshipToAdd.getTeacher())) {
                 return false;
             }
@@ -298,7 +298,7 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void removeProfessorship(final ISuportePersistente persistentSupport,
-            final IProfessorship professorship) throws ExcepcaoPersistencia {
+            final Professorship professorship) throws ExcepcaoPersistencia {
 
         deleteShiftProfessorships(persistentSupport, professorship);
         deleteSupportLessons(persistentSupport, professorship);
@@ -306,34 +306,34 @@ public class MergeExecutionCourses implements IService {
         deleteProfessorship(persistentSupport, professorship);
     }
 
-    private void dereferenceSummariesFrom(final IProfessorship professorship) {
+    private void dereferenceSummariesFrom(final Professorship professorship) {
         final Iterator associatedSummaries = professorship.getAssociatedSummariesIterator();
         while (associatedSummaries.hasNext()) {
-            ISummary summary = (ISummary) associatedSummaries.next();
+            Summary summary = (Summary) associatedSummaries.next();
             summary.setProfessorship(null);
         }
     }
 
     private void deleteSupportLessons(final ISuportePersistente persistentSupport,
-            final IProfessorship professorship) throws ExcepcaoPersistencia {
+            final Professorship professorship) throws ExcepcaoPersistencia {
         final IPersistentSupportLesson persistentSupportLesson = persistentSupport
                 .getIPersistentSupportLesson();
         final Iterator associatedSupportLessons = professorship.getSupportLessonsIterator();
         while (associatedSupportLessons.hasNext()) {
-            ISupportLesson supportLesson = (ISupportLesson) associatedSupportLessons.next();
+            SupportLesson supportLesson = (SupportLesson) associatedSupportLessons.next();
             supportLesson.setProfessorship(null);
             persistentSupportLesson.deleteByOID(SupportLesson.class, supportLesson.getIdInternal());
         }
     }
 
     private void deleteShiftProfessorships(final ISuportePersistente persistentSupport,
-            final IProfessorship professorship) throws ExcepcaoPersistencia {
+            final Professorship professorship) throws ExcepcaoPersistencia {
         final IPersistentShiftProfessorship persistentShiftProfessorship = persistentSupport
                 .getIPersistentShiftProfessorship();
         final Iterator associatedShifProfessorships = professorship
                 .getAssociatedShiftProfessorshipIterator();
         while (associatedShifProfessorships.hasNext()) {
-            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) associatedShifProfessorships
+            ShiftProfessorship shiftProfessorship = (ShiftProfessorship) associatedShifProfessorships
                     .next();
             shiftProfessorship.setProfessorship(null);
             shiftProfessorship.setShift(null);
@@ -343,7 +343,7 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void deleteProfessorship(final ISuportePersistente persistentSupport,
-            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {                
+            final Professorship professorshipToDelete) throws ExcepcaoPersistencia {                
         professorshipToDelete.delete();
     }
 

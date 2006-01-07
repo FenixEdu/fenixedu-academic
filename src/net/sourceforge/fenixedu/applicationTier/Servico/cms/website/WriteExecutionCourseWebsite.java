@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.website;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
-import net.sourceforge.fenixedu.domain.cms.website.IExecutionCourseWebsite;
+import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import relations.CmsContents;
@@ -42,7 +42,7 @@ public class WriteExecutionCourseWebsite extends CmsService
 		private String name;
 		private String description;
 		private Integer executionCourseID;
-		private IPerson person;
+		private Person person;
 		
 		public String getDescription()
 		{
@@ -68,22 +68,22 @@ public class WriteExecutionCourseWebsite extends CmsService
 		{
 			this.name = name;
 		}
-		public IPerson getPerson()
+		public Person getPerson()
 		{
 			return person;
 		}
-		public void setPerson(IPerson person)
+		public void setPerson(Person person)
 		{
 			this.person = person;
 		}
 	}
-	public IExecutionCourseWebsite run (WriteExecutionCourseWebsiteParameters parameters) throws ExcepcaoPersistencia, ExecutionCourseAlreadyHasWebsiteException
+	public ExecutionCourseWebsite run (WriteExecutionCourseWebsiteParameters parameters) throws ExcepcaoPersistencia, ExecutionCourseAlreadyHasWebsiteException
 	{
-		IExecutionCourseWebsite website = new ExecutionCourseWebsite();
+		ExecutionCourseWebsite website = new ExecutionCourseWebsite();
 		website.setName(parameters.getName());
 		website.setDescription(parameters.getDescription());
 		
-		IExecutionCourse executionCourse = (IExecutionCourse) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().readByOID(ExecutionCourse.class,parameters.getExecutionCourseID());
+		ExecutionCourse executionCourse = (ExecutionCourse) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().readByOID(ExecutionCourse.class,parameters.getExecutionCourseID());
 		if (executionCourse.getExecutionCourseWebsite()!=null)
 		{
 			throw new ExecutionCourseAlreadyHasWebsiteException("The selected execution course already have a website");
@@ -96,7 +96,7 @@ public class WriteExecutionCourseWebsite extends CmsService
 		return website;
 	}
 
-	private void updateRootObjectReferences(IExecutionCourseWebsite website) throws ExcepcaoPersistencia
+	private void updateRootObjectReferences(ExecutionCourseWebsite website) throws ExcepcaoPersistencia
 	{
 		CmsContents.add(this.readFenixCMS(),website);
 		CmsUsers.add(this.readFenixCMS(),website.getCreator());

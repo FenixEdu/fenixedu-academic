@@ -30,7 +30,7 @@ public class Curriculum extends Curriculum_Base {
 
     public void edit(String generalObjectives, String operacionalObjectives, String program,
             String generalObjectivesEn, String operacionalObjectivesEn, String programEn,
-            String language, IPerson person) {
+            String language, Person person) {
 
         if (language == null) {
 

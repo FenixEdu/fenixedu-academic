@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.precedences;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 
 /**
@@ -13,7 +13,7 @@ public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse exten
         super();
     }
 	
-	public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse(Integer number, IPrecedence precedence, ICurricularCourse precedentCurricularCourse) {
+	public RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse(Integer number, Precedence precedence, CurricularCourse precedentCurricularCourse) {
 		super();
 		
 		setPrecedence(precedence);
@@ -21,7 +21,7 @@ public class RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse exten
 	}
 
     public CurricularCourseEnrollmentType evaluate(PrecedenceContext precedenceContext) {
-        ICurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
+        CurricularCourse curricularCourse = this.getPrecedentCurricularCourse();
         CurricularCourseEnrollmentType result1 = null;
         CurricularCourseEnrollmentType result2 = null;
 

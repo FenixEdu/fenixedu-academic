@@ -8,13 +8,13 @@ package net.sourceforge.fenixedu.persistenceTier.grant;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 public interface IPersistentGrantContract extends IPersistentObject {
 
-    public IGrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,
+    public GrantContract readGrantContractByNumberAndGrantOwner(Integer grantContractNumber,
             Integer grantOwnerId) throws ExcepcaoPersistencia;
 
     public List readAllContractsByGrantOwner(Integer grantOwnerId) throws ExcepcaoPersistencia;

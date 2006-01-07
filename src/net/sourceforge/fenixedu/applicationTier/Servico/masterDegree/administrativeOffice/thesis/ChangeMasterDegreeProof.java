@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.De
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesis;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.masterDegree.MasterDegreeClassification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -39,11 +39,11 @@ public class ChangeMasterDegreeProof implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
-        IMasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis()
+        MasterDegreeThesis storedMasterDegreeThesis = sp.getIPersistentMasterDegreeThesis()
                 .readByStudentCurricularPlan(studentCurricularPlanID);
         if (storedMasterDegreeThesis == null) {
             throw new NonExistingServiceException(
@@ -60,7 +60,7 @@ public class ChangeMasterDegreeProof implements IService {
                     "error.exception.masterDegree.scholarshipNotFinished");
         }
 
-        IMasterDegreeProofVersion storedMasterDegreeProofVersion = sp
+        MasterDegreeProofVersion storedMasterDegreeProofVersion = sp
                 .getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(
                         studentCurricularPlan);
         if (storedMasterDegreeProofVersion != null) {
@@ -68,12 +68,12 @@ public class ChangeMasterDegreeProof implements IService {
             storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
         }
 
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-        IEmployee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
+        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Employee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
 
-        List<ITeacher> teacherJuries = (List<ITeacher>) sp.getIPersistentTeacher().readByNumbers(
+        List<Teacher> teacherJuries = (List<Teacher>) sp.getIPersistentTeacher().readByNumbers(
                 teacherJuriesNumbers);
-        List<IExternalPerson> externalJuries = (List<IExternalPerson>) sp.getIPersistentExternalPerson()
+        List<ExternalPerson> externalJuries = (List<ExternalPerson>) sp.getIPersistentExternalPerson()
                 .readByIDs(externalJuriesIDs);
 
         DomainFactory.makeMasterDegreeProofVersion(

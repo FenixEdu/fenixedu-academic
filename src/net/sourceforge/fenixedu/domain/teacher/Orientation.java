@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -20,7 +20,7 @@ public class Orientation extends Orientation_Base {
 		super();
 	}
 	
-	public Orientation(ITeacher teacher, InfoOrientation infoOrientation) {
+	public Orientation(Teacher teacher, InfoOrientation infoOrientation) {
 		if(teacher == null)
 			throw new DomainException("The teacher should not be null!");
 		

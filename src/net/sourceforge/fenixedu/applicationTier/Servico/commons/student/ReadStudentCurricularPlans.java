@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -46,7 +46,7 @@ public class ReadStudentCurricularPlans implements IService {
         // For now only Master Degree Students can view their Curriculum
 
         while (iterator.hasNext()) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
             result.add(InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree
                     .newInfoFromDomain(studentCurricularPlan));

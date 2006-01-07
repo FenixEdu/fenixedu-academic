@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 
 
 /**
@@ -89,7 +89,7 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
         this.year = year;
     }
 
-    public void copyFromDomain(ISibsPaymentFileEntry sibsPaymentFileEntry) {
+    public void copyFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
 
         setPayedValue(sibsPaymentFileEntry.getPayedValue());
         setPaymentStatus(sibsPaymentFileEntry.getPaymentStatus());
@@ -103,7 +103,7 @@ public class InfoSibsPaymentFileEntry extends InfoObject {
 
     }
 
-    public static InfoSibsPaymentFileEntry newInfoFromDomain(ISibsPaymentFileEntry sibsPaymentFileEntry) {
+    public static InfoSibsPaymentFileEntry newInfoFromDomain(SibsPaymentFileEntry sibsPaymentFileEntry) {
         InfoSibsPaymentFileEntry infoSibsPaymentFileEntry = null;
 
         if (sibsPaymentFileEntry != null) {

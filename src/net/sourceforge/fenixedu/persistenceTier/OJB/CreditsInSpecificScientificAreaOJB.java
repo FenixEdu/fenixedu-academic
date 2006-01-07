@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
-import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
+import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
 
@@ -12,13 +12,13 @@ public class CreditsInSpecificScientificAreaOJB extends PersistentObjectOJB impl
     public CreditsInSpecificScientificAreaOJB() {
     }
 
-    public ICreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
+    public CreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
             Integer studentCurricularPlanKey, Integer enrolmentKey,
             Integer scientificAreaKey) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlanKey);
         criteria.addEqualTo("enrolment.idInternal", enrolmentKey);
         criteria.addEqualTo("scientificArea.idInternal", scientificAreaKey);
-        return (ICreditsInScientificArea) queryObject(CreditsInScientificArea.class, criteria);
+        return (CreditsInScientificArea) queryObject(CreditsInScientificArea.class, criteria);
     }
 }

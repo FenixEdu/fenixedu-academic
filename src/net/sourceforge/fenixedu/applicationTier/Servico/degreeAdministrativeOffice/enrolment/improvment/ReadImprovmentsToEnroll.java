@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoEx
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoImprovmentEnrolmentContext;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -50,19 +50,19 @@ public class ReadImprovmentsToEnroll implements IService {
 
         // Read Execution Periods
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod actualExecPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+        ExecutionPeriod actualExecPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
         if (actualExecPeriod == null) {
             throw new InvalidArgumentsServiceException("error.executionPeriod.notExist");
         }
 
-        IExecutionPeriod previousExecPeriod = actualExecPeriod.getPreviousExecutionPeriod();
-        IExecutionPeriod beforePreviousExecPeriod = previousExecPeriod.getPreviousExecutionPeriod();
-        IExecutionPeriod beforeBeforePreviousExecPeriod = beforePreviousExecPeriod
+        ExecutionPeriod previousExecPeriod = actualExecPeriod.getPreviousExecutionPeriod();
+        ExecutionPeriod beforePreviousExecPeriod = previousExecPeriod.getPreviousExecutionPeriod();
+        ExecutionPeriod beforeBeforePreviousExecPeriod = beforePreviousExecPeriod
                 .getPreviousExecutionPeriod();
 
         // Read Student
-        IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
+        Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
                 DegreeType.DEGREE);
 
         if (student == null) {
@@ -72,9 +72,9 @@ public class ReadImprovmentsToEnroll implements IService {
         // Read Aproved Enrolments by Execution OccupationPeriod
         List studentCurricularPlans = student.getStudentCurricularPlans();
 
-        Iterator<IStudentCurricularPlan> iterator = studentCurricularPlans.iterator();
+        Iterator<StudentCurricularPlan> iterator = studentCurricularPlans.iterator();
         while (iterator.hasNext()) {
-            IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
             if (previousExecPeriod != null) {
                 previousExecPeriodAprovedEnrol.addAll(studentCurricularPlan
@@ -130,14 +130,14 @@ public class ReadImprovmentsToEnroll implements IService {
     }
 
     private void removeFromBeforeBeforePreviousPeriod(List beforeBeforePreviousExecPeriodAprovedEnrol,
-            final IExecutionPeriod previousExecPeriod) {
+            final ExecutionPeriod previousExecPeriod) {
         CollectionUtils.filter(beforeBeforePreviousExecPeriodAprovedEnrol, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IEnrolment enrolment = (IEnrolment) arg0;
+                Enrolment enrolment = (Enrolment) arg0;
                 List executionCourses = enrolment.getCurricularCourse().getAssociatedExecutionCourses();
                 for (Iterator iterator = executionCourses.iterator(); iterator.hasNext();) {
-                    IExecutionCourse executionCourse = (IExecutionCourse) iterator.next();
+                    ExecutionCourse executionCourse = (ExecutionCourse) iterator.next();
                     if (executionCourse.getExecutionPeriod().equals(previousExecPeriod)) {
                         return false;
                     }
@@ -155,15 +155,15 @@ public class ReadImprovmentsToEnroll implements IService {
      * @return
      */
     private List removeImprovedEnrolmentAndGetImprovmentsOfCurrentPeriod(
-            IExecutionPeriod actualExecPeriod, List enrolments) {
+            ExecutionPeriod actualExecPeriod, List enrolments) {
         List improvments = (List) CollectionUtils.select(enrolments, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IEnrolment enrollment = (IEnrolment) arg0;
+                Enrolment enrollment = (Enrolment) arg0;
                 if (CollectionUtils.find(enrollment.getEvaluations(), new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+                        EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
                         if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
                                 EnrolmentEvaluationType.IMPROVEMENT))
                             return true;
@@ -180,12 +180,12 @@ public class ReadImprovmentsToEnroll implements IService {
         return (List) CollectionUtils.select(improvments, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IEnrolment enrollment = (IEnrolment) arg0;
-                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) CollectionUtils.find(
+                Enrolment enrollment = (Enrolment) arg0;
+                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) CollectionUtils.find(
                         enrollment.getEvaluations(), new Predicate() {
 
                             public boolean evaluate(Object arg0) {
-                                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+                                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
                                 if (enrolmentEvaluation.getEnrolmentEvaluationType().equals(
                                         EnrolmentEvaluationType.IMPROVEMENT))
                                     return true;
@@ -210,8 +210,8 @@ public class ReadImprovmentsToEnroll implements IService {
      * @param alreadyImprovedEnrolmentsInCurrentExecutionPeriod
      * @return
      */
-    private InfoImprovmentEnrolmentContext buildResult(IStudent student,
-            IExecutionPeriod actualExecPeriod, List res,
+    private InfoImprovmentEnrolmentContext buildResult(Student student,
+            ExecutionPeriod actualExecPeriod, List res,
             List alreadyImprovedEnrolmentsInCurrentExecutionPeriod) {
         InfoImprovmentEnrolmentContext improvmentEnrolmentContext = new InfoImprovmentEnrolmentContext();
         improvmentEnrolmentContext.setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(student));
@@ -222,7 +222,7 @@ public class ReadImprovmentsToEnroll implements IService {
                 new Transformer() {
 
                     public Object transform(Object arg0) {
-                        IEnrolment enrollment = (IEnrolment) arg0;
+                        Enrolment enrollment = (Enrolment) arg0;
                         return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
                                 .newInfoFromDomain(enrollment);
                     }
@@ -233,7 +233,7 @@ public class ReadImprovmentsToEnroll implements IService {
                 alreadyImprovedEnrolmentsInCurrentExecutionPeriod, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        IEnrolment enrollment = (IEnrolment) arg0;
+                        Enrolment enrollment = (Enrolment) arg0;
                         return InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear
                                 .newInfoFromDomain(enrollment);
                     }
@@ -246,7 +246,7 @@ public class ReadImprovmentsToEnroll implements IService {
     private void removeEquivalenceEnrolment(List enrolments) {
         CollectionUtils.filter(enrolments, new Predicate() {
             public boolean evaluate(Object obj) {
-                IEnrolment enrollment = (IEnrolment) obj;
+                Enrolment enrollment = (Enrolment) obj;
                 if (enrollment.getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.EQUIVALENCE))
                     return false;
                 return true;
@@ -255,25 +255,25 @@ public class ReadImprovmentsToEnroll implements IService {
     }
 
     private List removeNotInCurrentExecutionPeriod(List enrolments,
-            final IExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
+            final ExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
                 .getIPersistentCurricularCourseScope();
         List res = new ArrayList();
         Iterator iterator = enrolments.iterator();
         while (iterator.hasNext()) {
-            IEnrolment enrolment = (IEnrolment) iterator.next();
+            Enrolment enrolment = (Enrolment) iterator.next();
 
             List scopes = persistentCurricularCourseScope
                     .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(enrolment
                             .getCurricularCourse().getIdInternal(), currentExecutionPeriod
                             .getBeginDate(), currentExecutionPeriod.getEndDate());
             if (scopes != null && !scopes.isEmpty()) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) CollectionUtils
+                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) CollectionUtils
                         .find(scopes, new Predicate() {
 
                             public boolean evaluate(Object arg0) {
-                                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
                                 if (curricularCourseScope.getCurricularSemester().getSemester().equals(
                                         currentExecutionPeriod.getSemester())
                                         && (curricularCourseScope.getEndDate() == null || (curricularCourseScope

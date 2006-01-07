@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 
 /**
  * @author Leonor Almeida
@@ -95,9 +95,9 @@ public class InfoCategory extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(ICategory category) {
+    public void copyFromDomain(Category category) {
         super.copyFromDomain(category);
         if (category != null) {
             setCanBeExecutionCourseResponsible(category.getCanBeExecutionCourseResponsible());
@@ -107,7 +107,7 @@ public class InfoCategory extends InfoObject {
         }
     }
 
-    public static InfoCategory newInfoFromDomain(ICategory category) {
+    public static InfoCategory newInfoFromDomain(Category category) {
         InfoCategory infoCategory = null;
         if (category != null) {
             infoCategory = new InfoCategory();

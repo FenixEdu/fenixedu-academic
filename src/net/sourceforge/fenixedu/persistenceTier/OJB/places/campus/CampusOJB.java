@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.places.campus;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Campus;
-import net.sourceforge.fenixedu.domain.ICampus;
+import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
@@ -20,12 +20,12 @@ public class CampusOJB extends PersistentObjectOJB implements IPersistentCampus 
         return queryList(Campus.class, criteria);
     }
 
-    public ICampus readByName(String campusName) throws ExcepcaoPersistencia {
+    public Campus readByName(String campusName) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", campusName);
 
-        return (ICampus) queryObject(Campus.class, criteria);
+        return (Campus) queryObject(Campus.class, criteria);
 
     }
 

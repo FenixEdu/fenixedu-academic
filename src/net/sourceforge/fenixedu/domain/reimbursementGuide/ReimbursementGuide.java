@@ -50,11 +50,11 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
         return result;
     }
 
-    public IReimbursementGuideSituation getActiveReimbursementGuideSituation() {
-        return (IReimbursementGuideSituation) CollectionUtils.find(getReimbursementGuideSituations(),
+    public ReimbursementGuideSituation getActiveReimbursementGuideSituation() {
+        return (ReimbursementGuideSituation) CollectionUtils.find(getReimbursementGuideSituations(),
                 new Predicate() {
                     public boolean evaluate(Object obj) {
-                        IReimbursementGuideSituation situation = (IReimbursementGuideSituation) obj;
+                        ReimbursementGuideSituation situation = (ReimbursementGuideSituation) obj;
                         return situation.getState().equals(new State(State.ACTIVE));
                     }
                 });

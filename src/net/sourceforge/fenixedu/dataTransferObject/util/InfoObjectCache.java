@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.ojb.broker.Identity;
 
@@ -30,7 +30,7 @@ public class InfoObjectCache {
         return key;
     }
 
-    public static String getKey(IDomainObject domainObject) {
+    public static String getKey(DomainObject domainObject) {
         String key = domainObject.getClass().getName() + domainObject.getIdInternal();
         return key;
     }

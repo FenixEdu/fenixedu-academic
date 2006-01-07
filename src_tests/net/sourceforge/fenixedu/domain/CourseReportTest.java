@@ -8,12 +8,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 
 public class CourseReportTest extends DomainTestBase {
 
-    private ICourseReport courseReport;
-    private IExecutionCourse executionCourse;
+    private CourseReport courseReport;
+    private ExecutionCourse executionCourse;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -56,7 +56,7 @@ public class CourseReportTest extends DomainTestBase {
         assertNull("Expected Null ExecutionCourse in CourseReport!", courseReport.getExecutionCourse());
     }
     
-    private void checkIfCourseReportAttributesAreCorrect(final String report, final IExecutionCourse executionCourse) {
+    private void checkIfCourseReportAttributesAreCorrect(final String report, final ExecutionCourse executionCourse) {
         assertEquals("Different Report in CourseReport!", report, courseReport.getReport());
         assertEquals("Different ExecutionCourse in CourseReport!", courseReport.getExecutionCourse(), executionCourse);
         

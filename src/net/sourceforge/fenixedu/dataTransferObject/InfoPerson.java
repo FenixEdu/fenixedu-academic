@@ -12,11 +12,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonRole;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonRole;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -827,7 +827,7 @@ public class InfoPerson extends InfoObject {
         this.infoExternalPerson = infoExternalPerson;
     }
 
-    public void copyFromDomain(IPerson person) {
+    public void copyFromDomain(Person person) {
         super.copyFromDomain(person);
         if (person != null) {
             setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
@@ -914,12 +914,12 @@ public class InfoPerson extends InfoObject {
 
                 List<InfoStudentCurricularPlan> infoStudentList = new ArrayList<InfoStudentCurricularPlan>();
 
-                for (IStudent student : person.getStudents()) {
+                for (Student student : person.getStudents()) {
 
                     InfoStudent infoStudent = new InfoStudent();
                     InfoStudentCurricularPlan infoStudentCurricularPlan = new InfoStudentCurricularPlan();
                     InfoDegree infoDegree = new InfoDegree();
-                    for (IStudentCurricularPlan studentCurricularPlan : student
+                    for (StudentCurricularPlan studentCurricularPlan : student
                             .getStudentCurricularPlans()) {
 
                         if ((!studentCurricularPlan.getCurrentState().equals(
@@ -960,13 +960,13 @@ public class InfoPerson extends InfoObject {
 
     }
     
-    private List getImportantRoles(IPerson person, List mainRoles) {        
+    private List getImportantRoles(Person person, List mainRoles) {        
         
         if(person.getAssociatedPersonRolesCount() != 0){
             
             boolean teacher = false, employee = false;
         
-            for(IPersonRole personRole : person.getAssociatedPersonRoles()){                    
+            for(PersonRole personRole : person.getAssociatedPersonRoles()){                    
                 RoleType roleType = personRole.getRole().getRoleType();
                 
                 if(roleType.equals(RoleType.TEACHER)){                        
@@ -991,7 +991,7 @@ public class InfoPerson extends InfoObject {
         return mainRoles;
     }
 
-    public static InfoPerson newInfoFromDomain(IPerson person) {
+    public static InfoPerson newInfoFromDomain(Person person) {
         InfoPerson infoPerson = null;
         if (person != null) {
             infoPerson = new InfoPerson();
@@ -1000,11 +1000,11 @@ public class InfoPerson extends InfoObject {
         return infoPerson;
     }
 
-    public void copyToDomain(InfoPerson infoPerson, IPerson person) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoPerson infoPerson, Person person) throws ExcepcaoPersistencia {
         super.copyToDomain(infoPerson, person);
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
+        Country country = (Country) sp.getIPersistentCountry().readByOID(Country.class,
                 infoPerson.getInfoPais().getIdInternal());
         person.setPais(country);
 

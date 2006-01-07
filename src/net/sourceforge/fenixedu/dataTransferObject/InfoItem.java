@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
@@ -199,7 +199,7 @@ public class InfoItem extends InfoObject implements Comparable {
         setLinks(infoLinks);
     }
 
-    public void copyFromDomain(IItem item) {
+    public void copyFromDomain(Item item) {
         super.copyFromDomain(item);
         if (item != null) {
             setInformation(item.getInformation());
@@ -213,7 +213,7 @@ public class InfoItem extends InfoObject implements Comparable {
      * @param item
      * @return
      */
-    public static InfoItem newInfoFromDomain(IItem item) {
+    public static InfoItem newInfoFromDomain(Item item) {
         InfoItem infoItem = null;
         if (item != null) {
             infoItem = new InfoItem();

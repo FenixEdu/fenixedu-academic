@@ -3,9 +3,9 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -16,12 +16,12 @@ import org.apache.commons.collections.Predicate;
  */
 
 public class MaximumNumberOfCurricularCoursesEnrollmentRule implements IEnrollmentRule {
-    private IStudentCurricularPlan studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
-    private IExecutionPeriod executionPeriod;
+    private ExecutionPeriod executionPeriod;
 
-    public MaximumNumberOfCurricularCoursesEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public MaximumNumberOfCurricularCoursesEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         this.studentCurricularPlan = studentCurricularPlan;
         this.executionPeriod = executionPeriod;
     }
@@ -35,7 +35,7 @@ public class MaximumNumberOfCurricularCoursesEnrollmentRule implements IEnrollme
         int size = allStudentEnrolledEnrollments.size();
 
         for (int i = 0; i < size; i++) {
-            IEnrolment enrollment = (IEnrolment) allStudentEnrolledEnrollments.get(i);
+            Enrolment enrollment = (Enrolment) allStudentEnrolledEnrollments.get(i);
             numberOfEnrolledCurricularCourses += enrollment.getCurricularCourse().getEnrollmentWeigth()
                     .intValue();
         }

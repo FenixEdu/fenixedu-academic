@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -36,24 +36,24 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics i
             throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDepartment persistentDepartment = sp.getIDepartamentoPersistente();
-        IDepartment department = (IDepartment) persistentDepartment.readByOID(Department.class,
+        Department department = (Department) persistentDepartment.readByOID(Department.class,
                 departementID);
         IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                 ExecutionYear.class, executionYearID);
 
-        List<ICompetenceCourse> competenceCourses = department
+        List<CompetenceCourse> competenceCourses = department
                 .getCompetenceCoursesByExecutionYear(executionYear);
 
-        List<ICompetenceCourse> sortedCompetenceCourses = new ArrayList<ICompetenceCourse>();
+        List<CompetenceCourse> sortedCompetenceCourses = new ArrayList<CompetenceCourse>();
         sortedCompetenceCourses.addAll(competenceCourses);
 
         Collections.sort(sortedCompetenceCourses, new BeanComparator("name"));
 
         List<CompetenceCourseStatisticsDTO> results = new ArrayList<CompetenceCourseStatisticsDTO>();
 
-        for (ICompetenceCourse competenceCourse : sortedCompetenceCourses) {
-            List<IEnrolmentEvaluation> evaluations = competenceCourse
+        for (CompetenceCourse competenceCourse : sortedCompetenceCourses) {
+            List<EnrolmentEvaluation> evaluations = competenceCourse
                     .getActiveEnrollmentEvaluations(executionYear);
 
             CompetenceCourseStatisticsDTO competenceCourseStatistics = new CompetenceCourseStatisticsDTO();

@@ -7,11 +7,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithAll;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,7 +27,7 @@ public class EditGratuitySituationById implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IGratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
+        final GratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
                 .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
                         infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(),
                         infoGratuitySituation.getInfoGratuityValues().getIdInternal());
@@ -36,7 +36,7 @@ public class EditGratuitySituationById implements IService {
         }
 
         // set employee who made register
-        final IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(
+        final Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(
                 infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
         if (person != null) {
             gratuitySituation.setEmployee(person.getEmployee());
@@ -55,7 +55,7 @@ public class EditGratuitySituationById implements IService {
     }
 
     private void updateRemainingValue(InfoGratuitySituation infoGratuitySituation,
-            final IGratuitySituation gratuitySituation) {
+            final GratuitySituation gratuitySituation) {
         double exemptionValue = gratuitySituation.getTotalValue()
                 * (infoGratuitySituation.getExemptionPercentage() / 100.0);
 
@@ -66,16 +66,16 @@ public class EditGratuitySituationById implements IService {
         double newRemainingValue = gratuitySituation.getTotalValue() - exemptionValue;
         double payedValue = 0;
         double reimbursedValue = 0;
-        for (IGratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
+        for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
             payedValue += gratuityTransaction.getValue();
 
             if (gratuityTransaction.getGuideEntry() != null) {
 
-                List<IReimbursementGuideEntry> reimbursementGuideEntries = gratuityTransaction
+                List<ReimbursementGuideEntry> reimbursementGuideEntries = gratuityTransaction
                         .getGuideEntry().getReimbursementGuideEntries();
                 if (reimbursementGuideEntries != null) {
 
-                    for (IReimbursementGuideEntry reimbursementGuideEntry : reimbursementGuideEntries) {
+                    for (ReimbursementGuideEntry reimbursementGuideEntry : reimbursementGuideEntries) {
                         
                         if (reimbursementGuideEntry.getReimbursementGuide()
                                 .getActiveReimbursementGuideSituation().getReimbursementGuideState()

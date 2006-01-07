@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,7 +37,7 @@ public class GetAllCasesStudy implements IService {
 		List cases = persistentCaseStudy.readAll();
 
 		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-			ICaseStudy caseStudy = (ICaseStudy) iterator.next();
+			CaseStudy caseStudy = (CaseStudy) iterator.next();
 
 			infoCases.add(InfoCaseStudy.newInfoFromDomain(caseStudy));
 		}

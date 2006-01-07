@@ -3,7 +3,7 @@
 */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -17,11 +17,11 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadDomainSupportLessonByOID implements IService {
 
-    public ISupportLesson run(Integer supportLessonID) throws ExcepcaoPersistencia{
+    public SupportLesson run(Integer supportLessonID) throws ExcepcaoPersistencia{
         
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-        return (ISupportLesson) persistentSupport.getIPersistentSupportLesson().readByOID(
+        return (SupportLesson) persistentSupport.getIPersistentSupportLesson().readByOID(
                 SupportLesson.class, supportLessonID);
     }
 }

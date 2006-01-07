@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -20,10 +20,10 @@ public class ReadExternalPersonByID implements IService {
 
     public Object run(Integer externalPersonID) throws FenixServiceException, ExcepcaoPersistencia {
         InfoExternalPerson infoExternalPerson = null;
-        IExternalPerson externalPerson = null;
+        ExternalPerson externalPerson = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        externalPerson = (IExternalPerson) sp.getIPersistentExternalPerson().readByOID(
+        externalPerson = (ExternalPerson) sp.getIPersistentExternalPerson().readByOID(
                 ExternalPerson.class, externalPersonID);
 
         if (externalPerson == null)

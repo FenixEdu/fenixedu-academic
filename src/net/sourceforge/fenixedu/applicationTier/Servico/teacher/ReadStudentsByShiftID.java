@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -18,9 +18,9 @@ public class ReadStudentsByShiftID implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final List infoStudents = new LinkedList();
-        final IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftID);
-        final List<IStudent> students = shift.getStudents();
-        for (final IStudent student : students) {
+        final Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, shiftID);
+        final List<Student> students = shift.getStudents();
+        for (final Student student : students) {
             infoStudents.add(InfoStudent.newInfoFromDomain(student));
         }
 

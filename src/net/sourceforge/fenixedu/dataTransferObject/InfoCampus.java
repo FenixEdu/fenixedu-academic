@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICampus;
+import net.sourceforge.fenixedu.domain.Campus;
 
 /**
  * @author Tânia Pousão Create on 10/Nov/2003
@@ -50,14 +50,14 @@ public class InfoCampus extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(ICampus campus) {
+    public void copyFromDomain(Campus campus) {
         super.copyFromDomain(campus);
         if (campus != null) {
             setName(campus.getName());
         }
     }
 
-    public static InfoCampus newInfoFromDomain(ICampus campus) {
+    public static InfoCampus newInfoFromDomain(Campus campus) {
         InfoCampus infoCampus = null;
         if (campus != null) {
             infoCampus = new InfoCampus();

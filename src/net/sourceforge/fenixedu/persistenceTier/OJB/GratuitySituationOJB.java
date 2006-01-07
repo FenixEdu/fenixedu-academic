@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
@@ -19,13 +19,13 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class GratuitySituationOJB extends PersistentObjectOJB implements IPersistentGratuitySituation {
 
-	public IGratuitySituation readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+	public GratuitySituation readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
 			Integer studentCurricularPlanID, Integer gratuityValuesID) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("studentCurricularPlan.idInternal", studentCurricularPlanID);
 		criteria.addEqualTo("gratuityValues.idInternal", gratuityValuesID);
 
-		return (IGratuitySituation) queryObject(GratuitySituation.class, criteria);
+		return (GratuitySituation) queryObject(GratuitySituation.class, criteria);
 	}
 
 	public List readGratuitySituationsByDegreeCurricularPlan(Integer degreeCurricularPlanID)
@@ -37,16 +37,16 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
 		return queryList(GratuitySituation.class, criteria);
 	}
 
-	public IGratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
+	public GratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
 			Integer executionDegreeID, Integer studentID) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("gratuityValues.executionDegree.idInternal", executionDegreeID);
 		criteria.addEqualTo("studentCurricularPlan.student.idInternal", studentID);
 
-		return (IGratuitySituation) queryObject(GratuitySituation.class, criteria);
+		return (GratuitySituation) queryObject(GratuitySituation.class, criteria);
 	}
 
-	public IGratuitySituation readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
+	public GratuitySituation readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
 			Integer studentCurricularPlanID, Integer gratuityValuesID,
 			GratuitySituationType gratuitySituationType) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
@@ -74,7 +74,7 @@ public class GratuitySituationOJB extends PersistentObjectOJB implements IPersis
 			}
 		}
 
-		return (IGratuitySituation) queryObject(GratuitySituation.class, criteria);
+		return (GratuitySituation) queryObject(GratuitySituation.class, criteria);
 	}
 
 	public List readGratuitySituatuionListByStudentCurricularPlan(Integer studentCurricularPlanID)

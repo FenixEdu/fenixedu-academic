@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms;
 
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias;
+import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -21,11 +21,11 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class MailAdressAliasVO extends VersionedObjectsBase implements IPersistentMailAddressAlias
 {
 
-	public IMailAddressAlias readByAddress(String name)
+	public MailAddressAlias readByAddress(String name)
 	{
-		Collection<IMailAddressAlias> aliases = readAll(MailAddressAlias.class);
-		IMailAddressAlias result = null;
-		for (IMailAddressAlias alias : aliases)
+		Collection<MailAddressAlias> aliases = readAll(MailAddressAlias.class);
+		MailAddressAlias result = null;
+		for (MailAddressAlias alias : aliases)
 		{
 			if (name.equals(alias.getAddress()))
 			{

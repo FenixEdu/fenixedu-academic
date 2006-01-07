@@ -9,11 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
@@ -26,7 +26,7 @@ public class Person extends Person_Base {
      * BUSINESS SERVICES *
      **************************************************************************/
 
-    public Person(InfoPerson personToCreate, ICountry country) {
+    public Person(InfoPerson personToCreate, Country country) {
 
         if (personToCreate.getIdInternal() != null) {
             throw new DomainException("error.person.existentPerson");
@@ -71,16 +71,16 @@ public class Person extends Person_Base {
         setIsPassInKerberos(Boolean.FALSE);
     }
 
-    public void edit(InfoPerson personToEdit, ICountry country) {
+    public void edit(InfoPerson personToEdit, Country country) {
         setProperties(personToEdit);
         if (country != null) {
             setPais(country);
         }
     }
 
-    public void update(InfoPerson updatedPersonalData, ICountry country) {
+    public void update(InfoPerson updatedPersonalData, Country country) {
         updateProperties(updatedPersonalData);
-        setPais((ICountry) valueToUpdate(getPais(), country));
+        setPais((Country) valueToUpdate(getPais(), country));
     }
 
     public void editPersonalContactInformation(InfoPerson personToEdit) {
@@ -103,8 +103,8 @@ public class Person extends Person_Base {
         setEmail(email);
     }
 
-    public static boolean checkIfUsernameExists(String username, List<IPerson> persons) {
-        for (IPerson person : persons) {
+    public static boolean checkIfUsernameExists(String username, List<Person> persons) {
+        for (Person person : persons) {
             if (username.equals(person.getUsername())) {
                 return true;
             }
@@ -112,7 +112,7 @@ public class Person extends Person_Base {
         return false;
     }
 
-    public void changeUsername(String newUsername, List<IPerson> persons) {
+    public void changeUsername(String newUsername, List<Person> persons) {
         if (newUsername == null || newUsername.equals("")) {
             throw new DomainException("error.person.nullOrEmptyUsername");
         }
@@ -165,9 +165,9 @@ public class Person extends Person_Base {
         this.setIstUsername(UsernameUtils.updateIstUsername(this));
     }
 
-    public IRole getPersonRole(RoleType roleType) {
+    public Role getPersonRole(RoleType roleType) {
 
-        for (IRole role : this.getPersonRoles()) {
+        for (Role role : this.getPersonRoles()) {
             if (role.getRoleType().equals(roleType)) {
                 return role;
             }
@@ -176,7 +176,7 @@ public class Person extends Person_Base {
     }
 
     public Boolean hasRole(final RoleType roleType) {
-        for (final IRole role : this.getPersonRoles()) {
+        for (final Role role : this.getPersonRoles()) {
             if (role.getRoleType() == roleType) {
                 return true;
             }
@@ -184,8 +184,8 @@ public class Person extends Person_Base {
         return false;
     }
 
-    public IStudent getStudentByType(DegreeType degreeType) {
-        for (IStudent student : this.getStudents()) {
+    public Student getStudentByType(DegreeType degreeType) {
+        for (Student student : this.getStudents()) {
             if (student.getDegreeType().equals(degreeType)){
                 return student;
             }
@@ -399,7 +399,7 @@ public class Person extends Person_Base {
             String morada, String localidade, String codigoPostal, String localidadeCodigoPostal,
             String freguesiaMorada, String concelhoMorada, String distritoMorada, String telefone,
             String telemovel, String email, String enderecoWeb, String numContribuinte,
-            String profissao, String username, String password, ICountry pais, String codigoFiscal) {
+            String profissao, String username, String password, Country pais, String codigoFiscal) {
         this.setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
         this.setIdDocumentType(tipoDocumentoIdentificacao);
         this.setLocalEmissaoDocumentoIdentificacao(localEmissaoDocumentoIdentificacao);
@@ -455,28 +455,28 @@ public class Person extends Person_Base {
     }
 
     public void removeRoleByType(final RoleType roleType) {
-        final IRole role = getPersonRole(roleType);
+        final Role role = getPersonRole(roleType);
         if (role != null) {
             removePersonRoles(role);
         }
     }
 
-    public void indicatePrivledges(final List<IRole> roles) {
+    public void indicatePrivledges(final List<Role> roles) {
         for (int i = 0; i < getPersonRolesCount(); i++) {
-            final IRole role = getPersonRoles().get(i);
+            final Role role = getPersonRoles().get(i);
             if (!roles.contains(role)) {
                 removePersonRoles(role);
             }
         }
 
-        for (final IRole role : roles) {
+        for (final Role role : roles) {
             if (!hasPersonRoles(role)) {
                 addPersonRoles(role);
             }
         }
     }
 
-    public Iterator<IUserGroup> getUserGroupsIterator()
+    public Iterator<UserGroup> getUserGroupsIterator()
     {
     	return this.getOwnedGroupsIterator();
     }
@@ -484,7 +484,7 @@ public class Person extends Person_Base {
 	public int getUserGroupsCount()
 	{
 		int groupsCount = 0;
-		Iterator<IUserGroup> iterator = this.getUserGroupsIterator();
+		Iterator<UserGroup> iterator = this.getUserGroupsIterator();
 		while (iterator.hasNext())
 		{
 			iterator.next();
@@ -493,11 +493,11 @@ public class Person extends Person_Base {
 		return groupsCount;
 	}
 	
-    public List<IPersonFunction> getActiveFunctions() {
+    public List<PersonFunction> getActiveFunctions() {
 
-        List<IPersonFunction> activeFunctions = new ArrayList<IPersonFunction>();
+        List<PersonFunction> activeFunctions = new ArrayList<PersonFunction>();
 
-        for (IPersonFunction personFunction : this.getPersonFunctions()) {
+        for (PersonFunction personFunction : this.getPersonFunctions()) {
             if (personFunction.isActive(Calendar.getInstance().getTime())) {
                 activeFunctions.add(personFunction);
             }
@@ -505,11 +505,11 @@ public class Person extends Person_Base {
         return activeFunctions;
     }
 
-    public List<IPersonFunction> getInactiveFunctions() {
+    public List<PersonFunction> getInactiveFunctions() {
 
-        List<IPersonFunction> inactiveFunctions = new ArrayList<IPersonFunction>();
+        List<PersonFunction> inactiveFunctions = new ArrayList<PersonFunction>();
 
-        for (IPersonFunction personFunction : this.getPersonFunctions()) {
+        for (PersonFunction personFunction : this.getPersonFunctions()) {
            if (!personFunction.isActive(Calendar.getInstance().getTime())) {
                 inactiveFunctions.add(personFunction);
             }
@@ -517,18 +517,18 @@ public class Person extends Person_Base {
         return inactiveFunctions;
     }
 
-    public List<IFunction> getActiveInherentFunctions(){
+    public List<Function> getActiveInherentFunctions(){
 
-        List<IFunction> inherentFunctions = new ArrayList<IFunction>();
-        for (IPersonFunction personFunction : this.getActiveFunctions()) {
+        List<Function> inherentFunctions = new ArrayList<Function>();
+        for (PersonFunction personFunction : this.getActiveFunctions()) {
             inherentFunctions.addAll(personFunction.getFunction().getInherentFunctions());
         }
         return inherentFunctions;
     }
 
-    public boolean containsActiveFunction(IFunction function) {
+    public boolean containsActiveFunction(Function function) {
 
-        for (IPersonFunction person_Function : this.getActiveFunctions()) {
+        for (PersonFunction person_Function : this.getActiveFunctions()) {
             if (person_Function.getFunction().equals(function)) {
                 return true;
             }
@@ -536,11 +536,11 @@ public class Person extends Person_Base {
         return false;
     }
     
-    public List<IPersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
+    public List<PersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
 
-        List<IPersonFunction> result = new ArrayList<IPersonFunction>();
+        List<PersonFunction> result = new ArrayList<PersonFunction>();
         
-        for (IPersonFunction personFunction : getPersonFunctions()) {
+        for (PersonFunction personFunction : getPersonFunctions()) {
             if (personFunction.belongsToPeriod(beginDate, endDate)) {
                 result.add(personFunction);
             }

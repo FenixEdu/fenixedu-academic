@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,13 +21,13 @@ public class ReadCurricularCourseEquivalenciesByDegreeCurricularPlan implements 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
         		.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
         if (degreeCurricularPlan != null) {
-        	final List<ICurricularCourseEquivalence> curricularCourseEquivalencies = degreeCurricularPlan.getCurricularCourseEquivalences();
+        	final List<CurricularCourseEquivalence> curricularCourseEquivalencies = degreeCurricularPlan.getCurricularCourseEquivalences();
         	final List<InfoCurricularCourseEquivalence> infoCurricularCourseEquivalencies = 
         			new ArrayList<InfoCurricularCourseEquivalence>(curricularCourseEquivalencies.size());
-        	for (final ICurricularCourseEquivalence curricularCourseEquivalence : curricularCourseEquivalencies) {
+        	for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourseEquivalencies) {
         		infoCurricularCourseEquivalencies.add(InfoCurricularCourseEquivalence.newInfoFromDomain(curricularCourseEquivalence));
         	}
         	return infoCurricularCourseEquivalencies;

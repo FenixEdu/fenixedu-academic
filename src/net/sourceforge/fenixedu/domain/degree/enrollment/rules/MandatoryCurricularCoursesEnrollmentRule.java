@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 
 /**
  * @author Nuno Correia
@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
  */
 
 public class MandatoryCurricularCoursesEnrollmentRule implements IEnrollmentRule {
-    public MandatoryCurricularCoursesEnrollmentRule(IStudentCurricularPlan studentCurricularPlan) {
+    public MandatoryCurricularCoursesEnrollmentRule(StudentCurricularPlan studentCurricularPlan) {
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) {
         List mandatoryCurricularCourses = new ArrayList();
 
         for (int iter = 0; iter < curricularCoursesToBeEnrolledIn.size(); iter++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesToBeEnrolledIn
+            CurricularCourse curricularCourse = (CurricularCourse) curricularCoursesToBeEnrolledIn
                     .get(iter);
             if (curricularCourse.getMandatoryEnrollment().booleanValue()) {
                 mandatoryCurricularCourses.add(curricularCourse);

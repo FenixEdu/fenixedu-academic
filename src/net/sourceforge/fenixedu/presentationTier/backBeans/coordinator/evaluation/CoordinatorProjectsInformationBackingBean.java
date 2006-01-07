@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProject;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -23,9 +23,9 @@ public class CoordinatorProjectsInformationBackingBean extends
         CoordinatorEvaluationManagementBackingBean {
 
     private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/ApplicationResources");
-    private List<IExecutionCourse> executionCoursesWithProjects;
-    private List<IExecutionCourse> executionCoursesWithoutProjects;
-    private Map<Integer, List<IProject>> projects = new HashMap();
+    private List<ExecutionCourse> executionCoursesWithProjects;
+    private List<ExecutionCourse> executionCoursesWithoutProjects;
+    private Map<Integer, List<Project>> projects = new HashMap();
     private List<CalendarLink> projectsCalendarLink;
 
     private void filterExecutionCourses() {
@@ -34,8 +34,8 @@ public class CoordinatorProjectsInformationBackingBean extends
             this.executionCoursesWithoutProjects = new ArrayList();
             Collections.sort(getExecutionCourses(), new BeanComparator("sigla"));
             projects.clear();
-            for (final IExecutionCourse executionCourse : getExecutionCourses()) {
-                final List<IProject> associatedProjects = executionCourse.getAssociatedProjects();
+            for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+                final List<Project> associatedProjects = executionCourse.getAssociatedProjects();
                 if (!executionCourse.getAssociatedProjects().isEmpty()) {
                     Collections.sort(associatedProjects, new BeanComparator("begin"));
                     this.executionCoursesWithProjects.add(executionCourse);
@@ -52,8 +52,8 @@ public class CoordinatorProjectsInformationBackingBean extends
             this.projectsCalendarLink = new ArrayList();
             StringBuffer linkLabel;
             final DateFormat sdf = new SimpleDateFormat("HH:mm");            
-            for (final IExecutionCourse executionCourse : this.getExecutionCoursesWithProjects()) {
-                for (final IProject project : executionCourse.getAssociatedProjects()) {
+            for (final ExecutionCourse executionCourse : this.getExecutionCoursesWithProjects()) {
+                for (final Project project : executionCourse.getAssociatedProjects()) {
                     final CalendarLink calendarLinkBegin = new CalendarLink();
                     calendarLinkBegin.setObjectOccurrence(project.getBegin());
                     linkLabel = new StringBuffer(20);
@@ -87,17 +87,17 @@ public class CoordinatorProjectsInformationBackingBean extends
         return this.projectsCalendarLink;
     }
 
-    public List<IExecutionCourse> getExecutionCoursesWithProjects() {
+    public List<ExecutionCourse> getExecutionCoursesWithProjects() {
         filterExecutionCourses();
         return this.executionCoursesWithProjects;
     }
 
-    public List<IExecutionCourse> getExecutionCoursesWithoutProjects() {
+    public List<ExecutionCourse> getExecutionCoursesWithoutProjects() {
         filterExecutionCourses();
         return this.executionCoursesWithoutProjects;
     }
 
-    public Map<Integer, List<IProject>> getProjects() {
+    public Map<Integer, List<Project>> getProjects() {
         return this.projects;
     }
 

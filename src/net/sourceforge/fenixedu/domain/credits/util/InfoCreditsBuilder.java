@@ -6,24 +6,24 @@ package net.sourceforge.fenixedu.domain.credits.util;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.credits.IDatePeriodBaseCreditLine;
-import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
-import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.credits.DatePeriodBaseCreditLine;
+import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public abstract class InfoCreditsBuilder {
 
-    public static InfoCredits build(final ITeacher teacher, final IExecutionPeriod executionPeriod) {
+    public static InfoCredits build(final Teacher teacher, final ExecutionPeriod executionPeriod) {
         InfoCredits infoCredits = new InfoCredits();
         calculateDegreeAndMasterDegree(teacher, executionPeriod, infoCredits);
         calculateDegreeFinalProjectStudents(teacher, executionPeriod, infoCredits);
@@ -35,7 +35,7 @@ public abstract class InfoCreditsBuilder {
         boolean exists = CollectionUtils.exists(list, new Predicate() {
 
             public boolean evaluate(Object input) {
-                IDatePeriodBaseCreditLine creditLine = (IDatePeriodBaseCreditLine) input;
+                DatePeriodBaseCreditLine creditLine = (DatePeriodBaseCreditLine) input;
                 return creditLine.belongsToExecutionPeriod(executionPeriod);
             }
         });
@@ -45,7 +45,7 @@ public abstract class InfoCreditsBuilder {
         exists = CollectionUtils.exists(list, new Predicate() {
 
             public boolean evaluate(Object input) {
-                ITeacherServiceExemption serviceExemption = (ITeacherServiceExemption) input;
+                TeacherServiceExemption serviceExemption = (TeacherServiceExemption) input;
                 return serviceExemption.belongsToPeriod(executionPeriod.getBeginDate(), executionPeriod.getEndDate());
             }
         });
@@ -58,12 +58,12 @@ public abstract class InfoCreditsBuilder {
      * @param executionPeriod
      * @param infoCredits
      */
-    private static void calculateOtherCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod,
+    private static void calculateOtherCreditLine(Teacher teacher, ExecutionPeriod executionPeriod,
             InfoCredits infoCredits) {
         double credits = 0;
         List list = teacher.getOtherTypeCreditLines();
         for (int i = 0; i < list.size(); i++) {
-            IOtherTypeCreditLine creditLine = (IOtherTypeCreditLine) list.get(i);
+            OtherTypeCreditLine creditLine = (OtherTypeCreditLine) list.get(i);
             if (creditLine.getExecutionPeriod().equals(executionPeriod)) {
                 credits += creditLine.getCredits().doubleValue();
             }
@@ -76,12 +76,12 @@ public abstract class InfoCreditsBuilder {
      * @param executionPeriod
      * @param infoCredits
      */
-    private static void calculeInstitutionWorkingTime(ITeacher teacher,
-            IExecutionPeriod executionPeriod, InfoCredits infoCredits) {
+    private static void calculeInstitutionWorkingTime(Teacher teacher,
+            ExecutionPeriod executionPeriod, InfoCredits infoCredits) {
         List list = teacher.getInstitutionWorkTimePeriods();
         double credits = 0;
         for (int i = 0; i < list.size(); i++) {
-            ITeacherInstitutionWorkTime workTime = (ITeacherInstitutionWorkTime) list.get(i);
+            TeacherInstitutionWorkTime workTime = (TeacherInstitutionWorkTime) list.get(i);
             if (workTime.getExecutionPeriod().equals(executionPeriod)) {
                 credits += workTime.hours();
             }
@@ -93,12 +93,12 @@ public abstract class InfoCreditsBuilder {
      * @param teacher
      * @param executionPeriod2
      */
-    private static void calculateDegreeFinalProjectStudents(ITeacher teacher,
-            IExecutionPeriod executionPeriod, InfoCredits infoCredits) {
+    private static void calculateDegreeFinalProjectStudents(Teacher teacher,
+            ExecutionPeriod executionPeriod, InfoCredits infoCredits) {
         List students = teacher.getDegreeFinalProjectStudents();
         double credits = 0;
         for (int i = 0; i < students.size(); i++) {
-            ITeacherDegreeFinalProjectStudent student = (ITeacherDegreeFinalProjectStudent) students
+            TeacherDegreeFinalProjectStudent student = (TeacherDegreeFinalProjectStudent) students
                     .get(i);
             if (student.getExecutionPeriod().equals(executionPeriod)) {
                 credits += student.getPercentage().doubleValue() / 100;
@@ -112,20 +112,20 @@ public abstract class InfoCreditsBuilder {
      * @param executionPeriod2
      * @param infoCredits
      */
-    private static void calculateDegreeAndMasterDegree(ITeacher teacher,
-            IExecutionPeriod executionPeriod, InfoCredits infoCredits) {
+    private static void calculateDegreeAndMasterDegree(Teacher teacher,
+            ExecutionPeriod executionPeriod, InfoCredits infoCredits) {
         List professorships = teacher.getProfessorships();
         double masterDegreeCredits = 0;
         double degreeCredits = 0;
         double supportLessonsCredits = 0;
         for (int i = 0; i < professorships.size(); i++) {
-            IProfessorship professorship = (IProfessorship) professorships.get(i);
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            Professorship professorship = (Professorship) professorships.get(i);
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                 if (!executionCourse.isMasterDegreeOnly()) {
                     List shiftProfessorships = professorship.getAssociatedShiftProfessorship();
                     for (int j = 0; j < shiftProfessorships.size(); j++) {
-                        IShiftProfessorship shiftProfessorship = (IShiftProfessorship) shiftProfessorships
+                        ShiftProfessorship shiftProfessorship = (ShiftProfessorship) shiftProfessorships
                                 .get(j);
                         degreeCredits += shiftProfessorship.getShift().hours()
                                 * (shiftProfessorship.getPercentage().doubleValue() / 100);
@@ -138,7 +138,7 @@ public abstract class InfoCreditsBuilder {
                 }
                 List supportLessons = professorship.getSupportLessons();
                 for (int j = 0; j < supportLessons.size(); j++) {
-                    ISupportLesson supportLesson = (ISupportLesson) supportLessons.get(j);
+                    SupportLesson supportLesson = (SupportLesson) supportLessons.get(j);
                     supportLessonsCredits += supportLesson.hours();
                 }
             }

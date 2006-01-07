@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProfessorship;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
@@ -28,25 +28,25 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            IDomainObject domainObject) throws ExcepcaoPersistencia {
+            DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoObject;
-        IShiftProfessorship shiftProfessorship = (IShiftProfessorship) domainObject;
+        ShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;
 
         shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
         IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
         IPersistentShiftProfessorship persistentShift = sp.getIPersistentShiftProfessorship();
 
-        IProfessorship professorship = (IProfessorship) persistentProfessorship.readByOID(Professorship.class,
+        Professorship professorship = (Professorship) persistentProfessorship.readByOID(Professorship.class,
                 infoShiftProfessorship.getInfoProfessorship().getIdInternal());
         shiftProfessorship.setProfessorship(professorship);
 
-        IShift shift = (IShift) persistentShift.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
+        Shift shift = (Shift) persistentShift.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
                 .getIdInternal());
         shiftProfessorship.setShift(shift);
     }
 
     @Override
-    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+    protected DomainObject createNewDomainObject(InfoObject infoObject) {
         return DomainFactory.makeShiftProfessorship();
     }
 
@@ -60,9 +60,9 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
         return sp.getIPersistentShiftProfessorship();
     }
 
-    protected IDomainObject readObjectByUnique(IDomainObject domainObject, ISuportePersistente sp)
+    protected DomainObject readObjectByUnique(DomainObject domainObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IProfessorship professorship = (IProfessorship) domainObject;
+        Professorship professorship = (Professorship) domainObject;
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
         professorship = professorshipDAO.readByTeacherAndExecutionCourse(professorship.getTeacher()
                 .getIdInternal(), professorship.getExecutionCourse().getIdInternal());

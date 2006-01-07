@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -30,9 +30,9 @@ public class EditSupportLessonAuthorization extends AbstractTeacherDepartmentAut
         InfoSupportLesson supportLesson = (InfoSupportLesson) arguments[1];
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
 
-        IProfessorship professorship;
+        Professorship professorship;
         try {
-            professorship = (IProfessorship) professorshipDAO.readByOID(Professorship.class,
+            professorship = (Professorship) professorshipDAO.readByOID(Professorship.class,
                     supportLesson.getInfoProfessorship().getIdInternal());
         } catch (ExcepcaoPersistencia e) {
             return null;

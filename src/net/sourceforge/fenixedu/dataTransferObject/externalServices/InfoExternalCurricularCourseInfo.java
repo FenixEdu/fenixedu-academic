@@ -9,8 +9,8 @@ package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -83,12 +83,12 @@ public class InfoExternalCurricularCourseInfo
         this.name = name;
     }
 
-    static public InfoExternalCurricularCourseInfo newFromDomain(ICurricularCourse course)
+    static public InfoExternalCurricularCourseInfo newFromDomain(CurricularCourse course)
     {
         Integer year = null;
         for (Iterator iter = course.getScopes().iterator(); iter.hasNext();)
         {
-            ICurricularCourseScope element = (ICurricularCourseScope) iter.next();
+            CurricularCourseScope element = (CurricularCourseScope) iter.next();
             int currentYear = element.getCurricularSemester().getCurricularYear().getYear().intValue();
             if (year == null || currentYear < year.intValue())
                 year = currentYear;

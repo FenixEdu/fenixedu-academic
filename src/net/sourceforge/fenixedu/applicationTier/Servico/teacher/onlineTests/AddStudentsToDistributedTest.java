@@ -14,15 +14,15 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -46,23 +46,23 @@ public class AddStudentsToDistributedTest implements IService {
         this.contextPath = contextPath.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
-        IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId, true);
+        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId, true);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
-        List<IStudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+        List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
                 .readStudentTestQuestionsByDistributedTest(distributedTest);
-        for (IStudentTestQuestion studentTestQuestionExample : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestionExample : studentTestQuestionList) {
 
-            List<IQuestion> questionList = new ArrayList<IQuestion>();
+            List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             for (int j = 0; j < infoStudentList.size(); j++) {
-                IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class,
+                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class,
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
                 if (persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student.getIdInternal(), distributedTestId)
                         .isEmpty()) {
-                    IStudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
+                    StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                     studentTestQuestion.setStudent(student);
                     studentTestQuestion.setDistributedTest(distributedTest);
                     studentTestQuestion.setTestQuestionOrder(studentTestQuestionExample.getTestQuestionOrder());
@@ -73,7 +73,7 @@ public class AddStudentsToDistributedTest implements IService {
 
                     if (questionList.size() == 0)
                         questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
-                    IQuestion question = getStudentQuestion(questionList);
+                    Question question = getStudentQuestion(questionList);
                     if (question == null) {
                         throw new InvalidArgumentsServiceException();
                     }
@@ -84,17 +84,17 @@ public class AddStudentsToDistributedTest implements IService {
             }
         }
         // create advisory for new students
-        IAdvisory advisory = createTestAdvisory(distributedTest);
+        Advisory advisory = createTestAdvisory(distributedTest);
 
-        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
 
         return advisory.getIdInternal();
     }
 
-    private IQuestion getStudentQuestion(List<IQuestion> questions) {
-        IQuestion question = null;
+    private Question getStudentQuestion(List<Question> questions) {
+        Question question = null;
         if (questions.size() != 0) {
             Random r = new Random();
             int questionIndex = r.nextInt(questions.size());
@@ -103,12 +103,12 @@ public class AddStudentsToDistributedTest implements IService {
         return question;
     }
 
-    private IAdvisory createTestAdvisory(IDistributedTest distributedTest) {
+    private Advisory createTestAdvisory(DistributedTest distributedTest) {
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
+        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((ExecutionCourse) distributedTest
                 .getTestScope().getDomainObject()).getNome() }));
         
         advisory.setSubject(distributedTest.getTitle());

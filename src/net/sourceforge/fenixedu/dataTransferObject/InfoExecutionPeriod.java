@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.io.Serializable;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 /**
@@ -208,7 +208,7 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
         this.previousInfoExecutionPeriod = previousInfoExecutionPeriod;
     }
 
-    public void copyFromDomain(IExecutionPeriod period) {
+    public void copyFromDomain(ExecutionPeriod period) {
         super.copyFromDomain(period);
         if (period != null) {
             setName(period.getName());
@@ -226,7 +226,7 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
      * @param period
      * @return
      */
-    public static InfoExecutionPeriod newInfoFromDomain(IExecutionPeriod period) {
+    public static InfoExecutionPeriod newInfoFromDomain(ExecutionPeriod period) {
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (period != null) {
             infoExecutionPeriod = new InfoExecutionPeriod();
@@ -237,7 +237,7 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
         return infoExecutionPeriod;
     }
 
-    public void copyToDomain(InfoExecutionPeriod infoExecutionPeriod, IExecutionPeriod executionPeriod) {
+    public void copyToDomain(InfoExecutionPeriod infoExecutionPeriod, ExecutionPeriod executionPeriod) {
         super.copyToDomain(infoExecutionPeriod, executionPeriod);
         executionPeriod.setBeginDate(infoExecutionPeriod.getBeginDate());
         executionPeriod.setEndDate(infoExecutionPeriod.getEndDate());

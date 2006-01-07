@@ -4,9 +4,9 @@
 
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -20,7 +20,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
     public AtomicGroupEnrolmentStrategy() {
     }
 
-    public Integer enrolmentPolicyNewGroup(IGrouping grouping, int numberOfStudentsToEnrole, IShift shift) {
+    public Integer enrolmentPolicyNewGroup(Grouping grouping, int numberOfStudentsToEnrole, Shift shift) {
 
         if (checkNumberOfGroups(grouping, shift)) {
             Integer maximumCapacity = grouping.getMaximumCapacity();
@@ -43,7 +43,7 @@ public class AtomicGroupEnrolmentStrategy extends GroupEnrolmentStrategy impleme
         return Integer.valueOf(1);
     }
 
-    public boolean checkNumberOfGroupElements(IGrouping grouping, IStudentGroup studentGroup) throws ExcepcaoPersistencia {
+    public boolean checkNumberOfGroupElements(Grouping grouping, StudentGroup studentGroup) throws ExcepcaoPersistencia {
 
         boolean result = false;
         final Integer minimumCapacity = grouping.getMinimumCapacity();

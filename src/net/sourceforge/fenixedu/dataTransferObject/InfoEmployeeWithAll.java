@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.Employee;
 
 /**
  * @author Fernanda Quitério Created on 6/Set/2004
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.IEmployee;
  */
 public class InfoEmployeeWithAll extends InfoEmployee {
 
-    public void copyFromDomain(IEmployee employee) {
+    public void copyFromDomain(Employee employee) {
         super.copyFromDomain(employee);
         if (employee != null) {
             setPerson(InfoPerson.newInfoFromDomain(employee.getPerson()));
@@ -17,7 +17,7 @@ public class InfoEmployeeWithAll extends InfoEmployee {
         }
     }
 
-    public static InfoEmployee newInfoFromDomain(IEmployee employee) {
+    public static InfoEmployee newInfoFromDomain(Employee employee) {
         InfoEmployeeWithAll infoEmployeeWithAll = null;
         if (employee != null) {
             infoEmployeeWithAll = new InfoEmployeeWithAll();

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -26,7 +26,7 @@ public class ReadBranch implements IService {
     public InfoBranch run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IBranch branch = (IBranch) sp.getIPersistentBranch().readByOID(Branch.class, idInternal);
+		Branch branch = (Branch) sp.getIPersistentBranch().readByOID(Branch.class, idInternal);
 
         if (branch == null) {
             throw new NonExistingServiceException();

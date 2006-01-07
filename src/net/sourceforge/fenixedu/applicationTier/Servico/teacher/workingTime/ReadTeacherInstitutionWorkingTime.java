@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCateg
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.TeacherInstitutionWorkingTimeDTO;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -44,14 +44,14 @@ public class ReadTeacherInstitutionWorkingTime implements IService {
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
 
-        IExecutionPeriod executionPeriod = null;
+        ExecutionPeriod executionPeriod = null;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
@@ -63,7 +63,7 @@ public class ReadTeacherInstitutionWorkingTime implements IService {
                 teacherInstitutionWorkTimeList, new Transformer() {
 
                     public Object transform(Object input) {
-                        ITeacherInstitutionWorkTime teacherInstitutionWorkTime = (ITeacherInstitutionWorkTime) input;
+                        TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) input;
                         InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = InfoTeacherInstitutionWorkTime
                                 .newInfoFromDomain(teacherInstitutionWorkTime);
                         return infoTeacherInstitutionWorkTime;

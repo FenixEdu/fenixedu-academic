@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,7 +24,7 @@ public class ReadDepartmentByOID implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
 
-        IDepartment department = (IDepartment) departmentDAO.readByOID(Department.class, oid);
+        Department department = (Department) departmentDAO.readByOID(Department.class, oid);
         infoDepartment = InfoDepartment.newInfoFromDomain(department);
 
         return infoDepartment;

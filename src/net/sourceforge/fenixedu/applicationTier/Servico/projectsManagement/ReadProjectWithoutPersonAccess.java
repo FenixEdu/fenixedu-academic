@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
+import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,9 +29,9 @@ public class ReadProjectWithoutPersonAccess implements IService {
         Integer coordinatorId = new Integer(userNumber);
         List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(newUserName, coordinatorId, true);
         IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
-        List<IProject> projectList = persistentSuportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
+        List<Project> projectList = persistentSuportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
         List<InfoProject> infoProjects = new ArrayList<InfoProject>();
-        for (IProject project : projectList) {
+        for (Project project : projectList) {
             infoProjects.add(InfoProject.newInfoFromDomain(project));
         }
         return infoProjects;

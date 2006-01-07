@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.IModality;
+import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -24,10 +24,10 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class ModalityOJB extends PersistentObjectOJB implements IPersistentSeminaryModality {
 
-    public IModality readByName(String name) throws ExcepcaoPersistencia {
+    public Modality readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
-        return (IModality) super.queryObject(Modality.class, criteria);
+        return (Modality) super.queryObject(Modality.class, criteria);
     }
 
     public List readAll() throws ExcepcaoPersistencia {

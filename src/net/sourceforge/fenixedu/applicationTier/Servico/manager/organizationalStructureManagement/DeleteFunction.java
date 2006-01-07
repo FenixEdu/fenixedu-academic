@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -18,7 +18,7 @@ public class DeleteFunction implements IService {
         
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-        IFunction function = (IFunction) suportePersistente.getIPersistentObject().readByOID(Function.class, functionID);
+        Function function = (Function) suportePersistente.getIPersistentObject().readByOID(Function.class, functionID);
         if(function == null){
             throw new FenixServiceException("error.noFunction");
         }

@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,7 +21,7 @@ public class ReadStudentByNumberAndAllDegreeTypes implements IService {
 
         InfoStudent infoStudent = null;
 
-        IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+        Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
                 DegreeType.DEGREE);
 
         if (student == null) {

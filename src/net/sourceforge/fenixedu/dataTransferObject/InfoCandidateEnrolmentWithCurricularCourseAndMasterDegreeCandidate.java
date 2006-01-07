@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
+import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 
 /**
  * @author Luis Cruz
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
  */
 public class InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidate extends InfoCandidateEnrolment {
 
-    public void copyFromDomain(ICandidateEnrolment candidateEnrolment) {
+    public void copyFromDomain(CandidateEnrolment candidateEnrolment) {
         super.copyFromDomain(candidateEnrolment);
         if (candidateEnrolment != null) {
             setInfoCurricularCourse(InfoCurricularCourse.newInfoFromDomain(candidateEnrolment.getCurricularCourse()));
@@ -16,7 +16,7 @@ public class InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidate 
         }
     }
 
-    public static InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidate newInfoFromDomain(ICandidateEnrolment candidateEnrolment) {
+    public static InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidate newInfoFromDomain(CandidateEnrolment candidateEnrolment) {
         InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidate infoCandidateEnrolment = null;
         if (candidateEnrolment != null) {
             infoCandidateEnrolment = new InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidate();

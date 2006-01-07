@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -19,7 +19,7 @@ public class ReadDegreeByOID implements IService {
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ICursoPersistente persistentDegree = suportePersistente.getICursoPersistente();
 
-        IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
+        Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
 
         InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
         return infoDegree;

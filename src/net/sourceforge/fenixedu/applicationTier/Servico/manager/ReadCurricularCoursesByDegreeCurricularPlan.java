@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -26,13 +26,13 @@ public class ReadCurricularCoursesByDegreeCurricularPlan implements IService {
     public List run(final Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistenceSupport
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistenceSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         idDegreeCurricularPlan);
 
-        final List<ICurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+        final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
         final List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>(curricularCourses.size());
-        for (final ICurricularCourse curricularCourse : curricularCourses) {
+        for (final CurricularCourse curricularCourse : curricularCourses) {
             infoCurricularCourses.add(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
         }
         return infoCurricularCourses;

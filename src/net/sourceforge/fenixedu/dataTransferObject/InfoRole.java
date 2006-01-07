@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
@@ -112,7 +112,7 @@ public class InfoRole extends InfoObject implements Comparable {
         return this.roleType.hashCode();
     }
 
-    public void copyFromDomain(final IRole role) {
+    public void copyFromDomain(final Role role) {
         super.copyFromDomain(role);
         if (role != null) {
             setPage(role.getPage());
@@ -122,7 +122,7 @@ public class InfoRole extends InfoObject implements Comparable {
         }
     }
 
-    public static InfoRole newInfoFromDomain(final IRole role) {
+    public static InfoRole newInfoFromDomain(final Role role) {
         if (role != null) {
             final InfoRole infoRole = new InfoRole();
             infoRole.copyFromDomain(role);

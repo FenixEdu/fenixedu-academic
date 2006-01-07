@@ -16,8 +16,8 @@ public class DegreeCurricularPlanLEA extends DegreeCurricularPlanLEA_Base {
         setOjbConcreteClass(getClass().getName());
     }
 
-    public List getListOfEnrollmentRules(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public List getListOfEnrollmentRules(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
 
         List result = new ArrayList();
         result.addAll(super.getListOfEnrollmentRules(studentCurricularPlan, executionPeriod));

@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.faces.model.SelectItem;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.MarkType;
@@ -66,7 +66,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
     }
 
     public String getPersonDepartmentName() {
-        IEmployee employee = getUserView().getPerson().getEmployee();
+        Employee employee = getUserView().getPerson().getEmployee();
         return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
                 .getCurrentDepartmentWorkingPlace().getRealName() : "";
     }

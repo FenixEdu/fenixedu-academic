@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -24,10 +24,10 @@ public class ReadNotClosedExecutionYears implements IService {
         
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        List<IExecutionYear> executionYears = persistentExecutionYear.readNotClosedExecutionYears();
+        List<ExecutionYear> executionYears = persistentExecutionYear.readNotClosedExecutionYears();
 
         if (executionYears != null) {
-            for (IExecutionYear executionYear : executionYears) {
+            for (ExecutionYear executionYear : executionYears) {
                 result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
             }
         }

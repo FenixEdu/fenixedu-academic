@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -37,7 +37,7 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 		final List executionDegrees = readExecutionDegrees(infoExecutionYear, sp, executionDegreeDAO);
 
 		for (final Iterator iterator = executionDegrees.iterator(); iterator.hasNext();) {
-			final IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
+			final ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
 			final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYear
 					.newInfoFromDomain(executionDegree);
 			if (executionDegree.getDegreeCurricularPlan() != null) {
@@ -62,7 +62,7 @@ public class ReadExecutionDegreesByExecutionYear implements IService {
 			throws ExcepcaoPersistencia {
 		if (infoExecutionYear == null) {
 			final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			final IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+			final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 			return executionDegreeDAO.readByExecutionYear(executionYear.getYear());
 		}
 		return executionDegreeDAO.readByExecutionYear(infoExecutionYear.getYear());

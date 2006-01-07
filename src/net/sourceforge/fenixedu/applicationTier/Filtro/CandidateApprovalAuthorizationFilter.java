@@ -8,9 +8,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -70,7 +70,7 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.COORDINATOR);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
 
-            ITeacher teacher = null;
+            Teacher teacher = null;
             // Read The ExecutionDegree
             try {
 
@@ -80,12 +80,12 @@ public class CandidateApprovalAuthorizationFilter extends Filtro {
 
                 for (int i = 0; i < ids.length; i++) {
 
-                    IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                             .getIPersistentMasterDegreeCandidate().readByOID(
                                     MasterDegreeCandidate.class, new Integer(ids[i]));
 
                     //modified by Tânia Pousão
-                    ICoordinator coordinator = sp.getIPersistentCoordinator()
+                    Coordinator coordinator = sp.getIPersistentCoordinator()
                             .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
                                     masterDegreeCandidate.getExecutionDegree().getIdInternal());
                     if (coordinator == null) {

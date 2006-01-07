@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Tutor;
 
 /**
  * @author Tânia Pousão
@@ -45,7 +45,7 @@ public class InfoTutor extends InfoObject {
         this.infoTeacher = infoTeacher;
     }
 
-    public static InfoTutor newInfoFromDomain(ITutor tutor) {
+    public static InfoTutor newInfoFromDomain(Tutor tutor) {
         InfoTutor infoTutor = null;
         if (tutor != null) {
             infoTutor = new InfoTutor();

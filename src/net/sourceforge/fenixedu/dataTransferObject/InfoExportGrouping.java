@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IExportGrouping;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
 
 /**
  * @author joaosa & rmalo
@@ -92,9 +92,9 @@ public class InfoExportGrouping extends InfoObject{
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IExportGrouping groupingExecutionCourse) {
+    public void copyFromDomain(ExportGrouping groupingExecutionCourse) {
         super.copyFromDomain(groupingExecutionCourse);
         InfoGrouping infoGroupProperties = new InfoGrouping();
         InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
@@ -104,7 +104,7 @@ public class InfoExportGrouping extends InfoObject{
         this.setInfoExecutionCourse(infoExecutionCourse);
     }
     
-    public static InfoExportGrouping newInfoFromDomain(IExportGrouping groupingExecutionCourse) {
+    public static InfoExportGrouping newInfoFromDomain(ExportGrouping groupingExecutionCourse) {
         InfoExportGrouping infoGroupPropertiesExecutionCourse = null;
         if(groupingExecutionCourse != null) {
             infoGroupPropertiesExecutionCourse = new InfoExportGrouping();

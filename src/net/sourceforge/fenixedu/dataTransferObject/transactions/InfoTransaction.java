@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonAccount;
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
-import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
-import net.sourceforge.fenixedu.domain.transactions.ITransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
+import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
+import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 
@@ -37,16 +37,16 @@ public abstract class InfoTransaction extends InfoObject {
     public InfoTransaction() {
     }
 
-    public static InfoTransaction newInfoFromDomain(ITransaction transaction) {
+    public static InfoTransaction newInfoFromDomain(Transaction transaction) {
 
         InfoTransaction infoTransaction = null;
 
-        if (transaction instanceof IPaymentTransaction) {
+        if (transaction instanceof PaymentTransaction) {
             infoTransaction = InfoPaymentTransaction
-                    .newInfoFromDomain((IPaymentTransaction) transaction);
-        } else if (transaction instanceof IReimbursementTransaction) {
+                    .newInfoFromDomain((PaymentTransaction) transaction);
+        } else if (transaction instanceof ReimbursementTransaction) {
             infoTransaction = InfoReimbursementTransaction
-                    .newInfoFromDomain((IReimbursementTransaction) transaction);
+                    .newInfoFromDomain((ReimbursementTransaction) transaction);
         }
 
         return infoTransaction;
@@ -57,7 +57,7 @@ public abstract class InfoTransaction extends InfoObject {
      * @param infoTransaction
      * @param transaction
      */
-    protected void copyFromDomain(ITransaction transaction) {
+    protected void copyFromDomain(Transaction transaction) {
         super.copyFromDomain(transaction);
         this.paymentType = transaction.getPaymentType();
         this.remarks = transaction.getRemarks();

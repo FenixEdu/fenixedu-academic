@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class ReadCandidatesForSelection implements IService {
 
 		IPersistentExecutionDegree executionDegreeDAO = sp
 				.getIPersistentExecutionDegree();
-		IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO
+		ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO
 				.readByOID(ExecutionDegree.class, executionDegreeID);
 
 		resultTemp = sp.getIPersistentCandidateSituation()
@@ -46,7 +46,7 @@ public class ReadCandidatesForSelection implements IService {
 		Iterator candidateIterator = resultTemp.iterator();
 		List result = new ArrayList();
 		while (candidateIterator.hasNext()) {
-			ICandidateSituation candidateSituation = (ICandidateSituation) candidateIterator
+			CandidateSituation candidateSituation = (CandidateSituation) candidateIterator
 					.next();
 			result.add(InfoMasterDegreeCandidateWithInfoPerson
 					.newInfoFromDomain(candidateSituation

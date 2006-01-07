@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -46,12 +46,12 @@ public class ReadBibliographicReference implements IService {
 					.getIPersistentBibliographicReference();
 			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
-			IExecutionYear executionYear = persistentExecutionYear
+			ExecutionYear executionYear = persistentExecutionYear
 					.readExecutionYearByName(infoExecutionCourse.getInfoExecutionPeriod()
 							.getInfoExecutionYear().getYear());
-			IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+			ExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
 					infoExecutionCourse.getInfoExecutionPeriod().getName(), executionYear.getYear());
-			IExecutionCourse executionCourse = persistentExecutionCourse
+			ExecutionCourse executionCourse = persistentExecutionCourse
 					.readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
 							executionPeriod.getIdInternal());
 			references = persistentBibliographicReference.readBibliographicReference(executionCourse
@@ -60,7 +60,7 @@ public class ReadBibliographicReference implements IService {
 			Iterator iterator = references.iterator();
 			infoBibRefs = new ArrayList();
 			while (iterator.hasNext()) {
-				IBibliographicReference bibRef = (IBibliographicReference) iterator.next();
+				BibliographicReference bibRef = (BibliographicReference) iterator.next();
 
 				if (optional != null) {
 					if (bibRef.getOptional().equals(optional)) {

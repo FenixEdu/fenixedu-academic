@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IExecutionPeriod;
  */
 public class InfoExecutionPeriodWithInfoExecutionYear extends InfoExecutionPeriod {
 
-    public void copyFromDomain(IExecutionPeriod executionPeriod) {
+    public void copyFromDomain(ExecutionPeriod executionPeriod) {
         super.copyFromDomain(executionPeriod);
         if (executionPeriod != null) {
             setInfoExecutionYear(InfoExecutionYear.newInfoFromDomain(executionPeriod.getExecutionYear()));
@@ -23,7 +23,7 @@ public class InfoExecutionPeriodWithInfoExecutionYear extends InfoExecutionPerio
      * @param period
      * @return
      */
-    public static InfoExecutionPeriodWithInfoExecutionYear newInfoFromDomain(IExecutionPeriod period) {
+    public static InfoExecutionPeriodWithInfoExecutionYear newInfoFromDomain(ExecutionPeriod period) {
         InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = null;
 
         if (period != null) {

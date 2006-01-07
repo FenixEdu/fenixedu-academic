@@ -12,18 +12,18 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 
 public class CurricularCourseTest extends DomainTestBase {
 
-    ICurricularCourse curricularCourse;
-    ICurriculum curriculum;
+    CurricularCourse curricularCourse;
+    Curriculum curriculum;
 	
-	private ICurricularCourse curricularCourseToReadFrom = null;
+	private CurricularCourse curricularCourseToReadFrom = null;
 	private List executionCoursesToBeRead = null;
-	private IExecutionPeriod executionPeriod = null;
+	private ExecutionPeriod executionPeriod = null;
     
     /* ALterações jpmsi e lmam */
-    private IExecutionPeriod executionPeriodToUse1 = null;
-    private IExecutionPeriod executionPeriodToUse2 = null;
-    private IExecutionYear executionYear = null;
-    private ICurricularCourse curricularCourse2 = null;
+    private ExecutionPeriod executionPeriodToUse1 = null;
+    private ExecutionPeriod executionPeriodToUse2 = null;
+    private ExecutionYear executionYear = null;
+    private CurricularCourse curricularCourse2 = null;
     
         
     protected void setUp() throws Exception {
@@ -40,23 +40,23 @@ public class CurricularCourseTest extends DomainTestBase {
 		executionPeriod = new ExecutionPeriod();
 		executionCoursesToBeRead = new ArrayList();
 		
-		IExecutionPeriod otherExecutionPeriod = new ExecutionPeriod(); 
+		ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod(); 
 		
-		IExecutionCourse ec1 = new ExecutionCourse();
+		ExecutionCourse ec1 = new ExecutionCourse();
 		ec1.setExecutionPeriod(executionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec1);
 		executionCoursesToBeRead.add(ec1);
 		
-		IExecutionCourse ec2 = new ExecutionCourse();
+		ExecutionCourse ec2 = new ExecutionCourse();
 		ec2.setExecutionPeriod(executionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec2);
 		executionCoursesToBeRead.add(ec2);
 		
-		IExecutionCourse ec3 = new ExecutionCourse();
+		ExecutionCourse ec3 = new ExecutionCourse();
 		ec3.setExecutionPeriod(otherExecutionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec3);
 		
-		IExecutionCourse ec4 = new ExecutionCourse();
+		ExecutionCourse ec4 = new ExecutionCourse();
 		ec4.setExecutionPeriod(otherExecutionPeriod);
 		curricularCourseToReadFrom.addAssociatedExecutionCourses(ec4);
 		
@@ -73,50 +73,50 @@ public class CurricularCourseTest extends DomainTestBase {
         executionPeriodToUse2.setExecutionYear(executionYear);
 
         /* Setup enrollments */
-        IEnrolment annuledEnrollment = new Enrolment();
+        Enrolment annuledEnrollment = new Enrolment();
         annuledEnrollment.setEnrollmentState(EnrollmentState.ANNULED);
 
-        IEnrolment numericApprovedEnrollment = new Enrolment();
+        Enrolment numericApprovedEnrollment = new Enrolment();
         numericApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
         
-        IEnrolment apApprovedEnrollment = new Enrolment();
+        Enrolment apApprovedEnrollment = new Enrolment();
         apApprovedEnrollment.setEnrollmentState(EnrollmentState.APROVED);
 
-        IEnrolment reprovedEnrollment = new Enrolment();
+        Enrolment reprovedEnrollment = new Enrolment();
         reprovedEnrollment.setEnrollmentState(EnrollmentState.NOT_APROVED);
         
-        IEnrolment notEvaluatedEnrollment = new Enrolment();
+        Enrolment notEvaluatedEnrollment = new Enrolment();
         notEvaluatedEnrollment.setEnrollmentState(EnrollmentState.NOT_EVALUATED);
 
-        IEnrolment otherExecutionPeriodEnrollment = new Enrolment();
+        Enrolment otherExecutionPeriodEnrollment = new Enrolment();
         otherExecutionPeriodEnrollment.setEnrollmentState(EnrollmentState.APROVED);
         
         /* Setup enrollment evaluations */
-        IEnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation numericFirstEnrolmentEvaluation = new EnrolmentEvaluation();
         numericFirstEnrolmentEvaluation.setGrade("10");
         
-        IEnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation numericSecondEnrolmentEvaluation = new EnrolmentEvaluation();
         numericSecondEnrolmentEvaluation.setGrade("11");
         
         numericFirstEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         numericSecondEnrolmentEvaluation.setEnrolment(numericApprovedEnrollment);
         
-        IEnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation apFirstEnrolmentEvaluation = new EnrolmentEvaluation();
         apFirstEnrolmentEvaluation.setGrade("AP");
         
         apFirstEnrolmentEvaluation.setEnrolment(apApprovedEnrollment);
         
-        IEnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation reprovedEnrollmentEvaluation = new EnrolmentEvaluation();
         reprovedEnrollmentEvaluation.setGrade("RE");
         
         reprovedEnrollmentEvaluation.setEnrolment(reprovedEnrollment);
         
-        IEnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation notEvaluatedEnrollmentEvaluation = new EnrolmentEvaluation();
         notEvaluatedEnrollmentEvaluation.setGrade("NA");
         
         notEvaluatedEnrollmentEvaluation.setEnrolment(notEvaluatedEnrollment);
         
-        IEnrolmentEvaluation otherExecutionPeriodEnrollmentEvaluation = new EnrolmentEvaluation();
+        EnrolmentEvaluation otherExecutionPeriodEnrollmentEvaluation = new EnrolmentEvaluation();
         otherExecutionPeriodEnrollmentEvaluation.setGrade("12");
         
         otherExecutionPeriodEnrollmentEvaluation.setEnrolment(otherExecutionPeriodEnrollment);
@@ -128,7 +128,7 @@ public class CurricularCourseTest extends DomainTestBase {
         reprovedEnrollment.setExecutionPeriod(executionPeriodToUse1);
         notEvaluatedEnrollment.setExecutionPeriod(executionPeriodToUse1);
         
-        IExecutionPeriod someExecutionPeriod = new ExecutionPeriod();
+        ExecutionPeriod someExecutionPeriod = new ExecutionPeriod();
         someExecutionPeriod.setExecutionYear(new ExecutionYear());
         otherExecutionPeriodEnrollment.setExecutionPeriod(someExecutionPeriod);
         

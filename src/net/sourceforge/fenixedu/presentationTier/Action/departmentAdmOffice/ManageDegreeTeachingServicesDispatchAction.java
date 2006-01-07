@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipDTO;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.IDegreeTeachingService;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -61,13 +61,13 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         IUserView userView = SessionUtils.getUserView(request);
 
         final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(
                 userView, "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });
 
         Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
-        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-        ITeacher teacher = null;
-        for (IDepartment department : manageableDepartments) {
+        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Teacher teacher = null;
+        for (Department department : manageableDepartments) {
             teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
                     executionPeriod.getEndDate());
             if(teacher != null){
@@ -80,14 +80,14 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
         }
 
         request.setAttribute("teacher", teacher);
-        List<IProfessorship> professorships = teacher
+        List<Professorship> professorships = teacher
                 .getDegreeProfessorshipsByExecutionPeriod(executionPeriod);
 
         List<ProfessorshipDTO> professorshipDTOs = (List<ProfessorshipDTO>) CollectionUtils.collect(
                 professorships, new Transformer() {
 
                     public Object transform(Object arg0) {
-                        IProfessorship professorship = (IProfessorship) arg0;
+                        Professorship professorship = (Professorship) arg0;
                         return new ProfessorshipDTO(professorship);
                     }
                 });
@@ -107,19 +107,19 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
 
         Integer professorshipID = (Integer) dynaForm.get("professorshipID");
 
-        IProfessorship professorship = (IProfessorship) ServiceUtils.executeService(SessionUtils
+        Professorship professorship = (Professorship) ServiceUtils.executeService(SessionUtils
                 .getUserView(request), "ReadDomainProfessorshipByOID", new Object[] { professorshipID });
 
         List<TeachingServicePercentage> teachingServicePercentages = new ArrayList();
         HashMap teacherPercentageMap = new HashMap();
         for (Iterator iter = professorship.getExecutionCourse().getAssociatedShiftsIterator(); iter
                 .hasNext();) {
-            IShift shift = (IShift) iter.next();
+            Shift shift = (Shift) iter.next();
             Double availablePercentage = shift.getAvailableShiftPercentageForTeacher(professorship
                     .getTeacher());
             teachingServicePercentages.add(new TeachingServicePercentage(shift, availablePercentage));
             for (Iterator iterator = shift.getDegreeTeachingServices().iterator(); iterator.hasNext();) {
-                IDegreeTeachingService degreeTeachingService = (IDegreeTeachingService) iterator.next();
+                DegreeTeachingService degreeTeachingService = (DegreeTeachingService) iterator.next();
                 if (professorship == degreeTeachingService.getProfessorship()) {
                     teacherPercentageMap.put(shift.getIdInternal().toString(), degreeTeachingService
                             .getPercentage());
@@ -201,11 +201,11 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
 
     public class TeachingServicePercentage {
 
-        IShift shift;
+        Shift shift;
 
         Double availablePercentage;
 
-        public TeachingServicePercentage(IShift shift, Double availablePercentage) {
+        public TeachingServicePercentage(Shift shift, Double availablePercentage) {
             setShift(shift);
             setAvailablePercentage(availablePercentage);
         }
@@ -218,11 +218,11 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
             this.availablePercentage = availablePercentage;
         }
 
-        public IShift getShift() {
+        public Shift getShift() {
             return shift;
         }
 
-        public void setShift(IShift shift) {
+        public void setShift(Shift shift) {
             this.shift = shift;
         }
     }

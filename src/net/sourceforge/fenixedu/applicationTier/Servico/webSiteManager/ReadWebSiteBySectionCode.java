@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -41,8 +41,8 @@ public class ReadWebSiteBySectionCode implements IService {
         IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
         IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
 
-        IWebSiteSection webSiteSection;
-        webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+        WebSiteSection webSiteSection;
+        webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
                 webSiteSectionCode);
 
         if (webSiteSection == null) {
@@ -52,13 +52,13 @@ public class ReadWebSiteBySectionCode implements IService {
         List webSiteSections = persistentWebSiteSection.readByWebSite(webSiteSection.getWebSite());
         Iterator iterSections = webSiteSections.iterator();
         while (iterSections.hasNext()) {
-            IWebSiteSection section = (IWebSiteSection) iterSections.next();
+            WebSiteSection section = (WebSiteSection) iterSections.next();
             InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(section);
 
             List webSiteItems = persistentWebSiteItem.readAllWebSiteItemsByWebSiteSection(section);
             infoWebSiteItems = (List) CollectionUtils.collect(webSiteItems, new Transformer() {
                 public Object transform(Object arg0) {
-                    IWebSiteItem webSiteItem = (IWebSiteItem) arg0;
+                    WebSiteItem webSiteItem = (WebSiteItem) arg0;
                     InfoWebSiteItem infoWebSiteItem = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
                     return infoWebSiteItem;
                 }

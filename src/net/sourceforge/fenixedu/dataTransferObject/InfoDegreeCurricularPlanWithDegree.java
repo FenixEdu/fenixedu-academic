@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
  */
 public class InfoDegreeCurricularPlanWithDegree extends InfoDegreeCurricularPlan {
 
-    public void copyFromDomain(IDegreeCurricularPlan plan) {
+    public void copyFromDomain(DegreeCurricularPlan plan) {
         super.copyFromDomain(plan);
         if (plan != null) {
             setInfoDegree(InfoDegree.newInfoFromDomain(plan.getDegree()));
@@ -23,7 +23,7 @@ public class InfoDegreeCurricularPlanWithDegree extends InfoDegreeCurricularPlan
      * @param plan
      * @return
      */
-    public static InfoDegreeCurricularPlan newInfoFromDomain(IDegreeCurricularPlan plan) {
+    public static InfoDegreeCurricularPlan newInfoFromDomain(DegreeCurricularPlan plan) {
         InfoDegreeCurricularPlanWithDegree infoDegreeCurricularPlan = null;
         if (plan != null) {
             infoDegreeCurricularPlan = new InfoDegreeCurricularPlanWithDegree();

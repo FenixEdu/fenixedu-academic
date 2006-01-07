@@ -11,9 +11,9 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoMoneyCostCenter;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IMoneyCostCenter;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -39,10 +39,10 @@ public class UpdateAllMoneyCostCenterByYear implements IService {
             sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // Read employee logged
-            IEmployee employeeWho = null;
+            Employee employeeWho = null;
 
             IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-            IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
+            Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
             if (personWho != null) {
                 IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
                 employeeWho = employeeDAO.readByPerson(personWho
@@ -58,7 +58,7 @@ public class UpdateAllMoneyCostCenterByYear implements IService {
                 while (iterator.hasNext()) {
                     InfoMoneyCostCenter infoMoneyCostCenter = (InfoMoneyCostCenter) iterator.next();
 
-                    IMoneyCostCenter moneyCostCenter = (IMoneyCostCenter) moneyCostCenterDAO.readByOID(MoneyCostCenter.class, infoMoneyCostCenter.getIdInternal(), true);
+                    MoneyCostCenter moneyCostCenter = (MoneyCostCenter) moneyCostCenterDAO.readByOID(MoneyCostCenter.class, infoMoneyCostCenter.getIdInternal(), true);
                     Calendar now = Calendar.getInstance();
                     moneyCostCenter.setWhen(now.getTime());
                     moneyCostCenter.setWhoEmployee(employeeWho);

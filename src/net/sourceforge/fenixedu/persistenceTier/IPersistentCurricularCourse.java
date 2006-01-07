@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 /**
@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public interface IPersistentCurricularCourse extends IPersistentObject {
 
-    public List<ICurricularCourse> readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia;    
+    public List<CurricularCourse> readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia;    
     
     public List readCurricularCoursesByDegreeCurricularPlan(String name, String degreeName, String degreeSigla)
             throws ExcepcaoPersistencia;
 	
-    public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
+    public CurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
             Integer degreeCurricularPlanId, String name, String code) throws ExcepcaoPersistencia;
 
     public List readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(

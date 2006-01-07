@@ -44,7 +44,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     
     public double getTotalEctsCredits() {
         double result = 0;
-        for (final ICompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
+        for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
             result += competenceCourseLoad.getEctsCredits().doubleValue();
         }
         return result;

@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class CurriculumTest extends DomainTestBase {
 
-    ICurriculum curriculum;
-    IPerson person, person2;
-    ICurricularCourse curricularCourse;
+    Curriculum curriculum;
+    Person person, person2;
+    CurricularCourse curricularCourse;
         
     protected void setUp() throws Exception {
         super.setUp();

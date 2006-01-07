@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,7 +21,7 @@ public class CreateAnnouncement implements IService {
                 .getDefaultPersistenceSupport();
         final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
-        final ISite site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
+        final Site site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
         if (site == null)
             throw new InvalidArgumentsServiceException();
 

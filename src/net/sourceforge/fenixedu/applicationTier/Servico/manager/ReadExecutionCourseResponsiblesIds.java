@@ -8,8 +8,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,13 +28,13 @@ public class ReadExecutionCourseResponsiblesIds implements IService {
                 .getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = suportePersistente.getIPersistentExecutionCourse();
         
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
         
-        List<IProfessorship> responsibles = executionCourse.responsibleFors();
+        List<Professorship> responsibles = executionCourse.responsibleFors();
 
         List<Integer> responsibleIDs = new ArrayList<Integer>();
         if (responsibles != null) {
-            for (IProfessorship responsibleFor : responsibles) {
+            for (Professorship responsibleFor : responsibles) {
                 responsibleIDs.add(responsibleFor.getTeacher().getIdInternal());
             }
         }

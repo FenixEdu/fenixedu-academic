@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -107,7 +107,7 @@ public class SearchAuthorPublicationAction extends FenixDispatchAction {
 
         List infoAuthors = (List) CollectionUtils.collect(authors, new Transformer() {
             public Object transform(Object o) {
-                IPerson author = (IPerson) o;
+                Person author = (Person) o;
                 InfoPerson infoPerson = new InfoPerson();
                 infoPerson.copyFromDomain(author);
                 return infoPerson;

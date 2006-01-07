@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -44,16 +44,16 @@ public class ReadAvailableClassesForShift implements IService {
 
         ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-        IShift shift = (IShift) shiftDAO.readByOID(Shift.class, shiftOID);
+        Shift shift = (Shift) shiftDAO.readByOID(Shift.class, shiftOID);
 
         List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
         List scopes = new ArrayList();
         for (int i = 0; i < curricularCourses.size(); i++) {
-            ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourses.get(i);
+            CurricularCourse curricularCourse = (CurricularCourse) curricularCourses.get(i);
             scopes.addAll(curricularCourse.getScopes());
         }
 
-        IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+        ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 
         ITurmaPersistente classDAO = sp.getITurmaPersistente();
         List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod()
@@ -62,22 +62,22 @@ public class ReadAvailableClassesForShift implements IService {
         infoClasses = new ArrayList();
         Iterator iter = classes.iterator();
         while (iter.hasNext()) {
-            ISchoolClass classImpl = (ISchoolClass) iter.next();
+            SchoolClass classImpl = (SchoolClass) iter.next();
             if (!shift.getAssociatedClasses().contains(classImpl) && containsScope(scopes, classImpl)) {
                 final InfoClass infoClass = InfoClass.newInfoFromDomain(classImpl);
 
-                final IExecutionDegree executionDegree = classImpl.getExecutionDegree();
+                final ExecutionDegree executionDegree = classImpl.getExecutionDegree();
                 final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                         .newInfoFromDomain(executionDegree);
                 infoClass.setInfoExecutionDegree(infoExecutionDegree);
 
-                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree
+                final DegreeCurricularPlan degreeCurricularPlan = executionDegree
                         .getDegreeCurricularPlan();
                 final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
                         .newInfoFromDomain(degreeCurricularPlan);
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-                final IDegree degree = degreeCurricularPlan.getDegree();
+                final Degree degree = degreeCurricularPlan.getDegree();
                 final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 
@@ -93,9 +93,9 @@ public class ReadAvailableClassesForShift implements IService {
      * @param classImpl
      * @return
      */
-    private boolean containsScope(List scopes, ISchoolClass classImpl) {
+    private boolean containsScope(List scopes, SchoolClass classImpl) {
         for (int i = 0; i < scopes.size(); i++) {
-            ICurricularCourseScope scope = (ICurricularCourseScope) scopes.get(i);
+            CurricularCourseScope scope = (CurricularCourseScope) scopes.get(i);
 
             if (scope.getCurricularCourse().getDegreeCurricularPlan().equals(
                     classImpl.getExecutionDegree().getDegreeCurricularPlan())

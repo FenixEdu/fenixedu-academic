@@ -11,11 +11,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoD
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurriculum;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,13 +35,13 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-        final ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        final CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
         }
 
-        final ICurriculum curriculum = curricularCourse.findLatestCurriculum();
+        final Curriculum curriculum = curricularCourse.findLatestCurriculum();
         final InfoCurriculum infoCurriculum = (curriculum != null) ? InfoCurriculum.newInfoFromDomain(curriculum) : new InfoCurriculum();
         infoCurriculum.setInfoCurricularCourse(InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse));
 
@@ -54,10 +54,10 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
         return infoCurriculum;
     }
 
-    private List buildExecutionCourses(final ICurricularCourse curricularCourse) {
+    private List buildExecutionCourses(final CurricularCourse curricularCourse) {
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
-        for (final IExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-            final IExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
+        for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+            final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
             if (executionPeriod.getState().equals(PeriodState.OPEN)
                     || executionPeriod.getState().equals(PeriodState.CURRENT)) {
                 final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
@@ -68,9 +68,9 @@ public class ReadCurriculumByCurricularCourseCode implements IService {
         return infoExecutionCourses;
     }
 
-    private List<InfoCurricularCourseScope> buildActiveScopes(final ICurricularCourse curricularCourse) {
+    private List<InfoCurricularCourseScope> buildActiveScopes(final CurricularCourse curricularCourse) {
         final List<InfoCurricularCourseScope> activeInfoCurricularCourseScopes = new ArrayList<InfoCurricularCourseScope>();
-        for (final ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+        for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
             if (curricularCourseScope.isActive()) {
                 activeInfoCurricularCourseScopes.add(InfoCurricularCourseScopeWithBranchAndSemesterAndYear.newInfoFromDomain(curricularCourseScope));
             }

@@ -12,11 +12,11 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 
 public interface IPersistentItem extends IPersistentObject {
 
-    public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionCourseYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia;
+    public Item readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionCourseYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia;
 
-    public List<IItem> readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia;
+    public List<Item> readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia;
 }

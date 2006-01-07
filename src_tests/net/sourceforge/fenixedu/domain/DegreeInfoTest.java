@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.domain;
 
 public class DegreeInfoTest extends DomainTestBase {
 
-	private IDegreeInfo degreeInfoWithDegree;
-	private IDegreeInfo degreeInfoSimple;
+	private DegreeInfo degreeInfoWithDegree;
+	private DegreeInfo degreeInfoSimple;
 	
-	private IDegreeInfo degreeInfoToDelete = null;
+	private DegreeInfo degreeInfoToDelete = null;
 
 	private void setUpDelete() {
 		degreeInfoToDelete = new DegreeInfo();

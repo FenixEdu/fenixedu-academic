@@ -8,8 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -19,16 +19,16 @@ import org.apache.commons.collections.Predicate;
 public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 		IPersistentCurricularCourseScope {
 
-	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
+	public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranch(
 			Integer curricularCourseId, final Integer curricularSemesterId,
 			final Integer branchId) throws ExcepcaoPersistencia {
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
+		CurricularCourse curricularCourse = (CurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
 		if (curricularCourse != null) {
-			List<ICurricularCourseScope> scopes = curricularCourse.getScopes();
-			return (ICurricularCourseScope)CollectionUtils.find(scopes,new Predicate(){
+			List<CurricularCourseScope> scopes = curricularCourse.getScopes();
+			return (CurricularCourseScope)CollectionUtils.find(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					return ((ccs.getCurricularSemester().getIdInternal().equals(curricularSemesterId)) &&
 							(ccs.getBranch().getIdInternal().equals(branchId)));
 				}
@@ -37,15 +37,15 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 		return null;
 	}
 	
-	public ICurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
+	public CurricularCourseScope readCurricularCourseScopeByCurricularCourseAndCurricularSemesterAndBranchAndEndDate(
 			Integer curricularCourseId, final Integer curricularSemesterId,
 			final Integer branchId, final Calendar endDate) throws ExcepcaoPersistencia {
-		ICurricularCourse curricularCourse = (ICurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
+		CurricularCourse curricularCourse = (CurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
 		if (curricularCourse != null) {
-			List<ICurricularCourseScope> scopes = curricularCourse.getScopes();
-			return (ICurricularCourseScope)CollectionUtils.find(scopes,new Predicate(){
+			List<CurricularCourseScope> scopes = curricularCourse.getScopes();
+			return (CurricularCourseScope)CollectionUtils.find(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					boolean compliesToDateRestriction =	(endDate == null && ccs.getEndDate() == null) || 
 												(endDate != null && endDate.equals(ccs.getEndDate()));
 					
@@ -60,12 +60,12 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 
 	public List readActiveCurricularCourseScopesByCurricularCourse(
 			Integer curricularCourseId) throws ExcepcaoPersistencia {
-		ICurricularCourse curricularCourse = (ICurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
+		CurricularCourse curricularCourse = (CurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
 		if (curricularCourse != null) {
-			List<ICurricularCourseScope> scopes = curricularCourse.getScopes();
+			List<CurricularCourseScope> scopes = curricularCourse.getScopes();
 			return (List)CollectionUtils.select(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					return (ccs.getEndDate() == null);
 				}
 			});
@@ -76,12 +76,12 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 	public List readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
 			Integer curricularCourseId, final Date beginDate, final Date endDate)
 			throws ExcepcaoPersistencia {
-		ICurricularCourse curricularCourse = (ICurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
+		CurricularCourse curricularCourse = (CurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
 		if (curricularCourse != null) {
-			List<ICurricularCourseScope> scopes = curricularCourse.getScopes();
+			List<CurricularCourseScope> scopes = curricularCourse.getScopes();
 			List result = (List)CollectionUtils.select(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					
 					return isCurricularCourseScopeInTimeSpan(ccs,beginDate,endDate);
 				}
@@ -95,10 +95,10 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 			final Integer degreeCurricularPlanId, final Date beginDate, final Date endDate)
 			throws ExcepcaoPersistencia {
 
-		List<ICurricularCourseScope> scopes = (List<ICurricularCourseScope>) readAll(CurricularCourseScope.class);
+		List<CurricularCourseScope> scopes = (List<CurricularCourseScope>) readAll(CurricularCourseScope.class);
 		return (List)CollectionUtils.select(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					
 					return ccs.getCurricularCourse().getDegreeCurricularPlan().getIdInternal().
 								equals(degreeCurricularPlanId) &&
@@ -110,12 +110,12 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 	public List readCurricularCourseScopesByCurricularCourseInExecutionYear(
 			Integer curricularCourseId, final Date beginDate, final Date endDate)
 			throws ExcepcaoPersistencia {
-		ICurricularCourse curricularCourse = (ICurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
+		CurricularCourse curricularCourse = (CurricularCourse) readByOID(CurricularCourse.class,curricularCourseId);
 		if (curricularCourse != null) {
-			List<ICurricularCourseScope> scopes = curricularCourse.getScopes();
+			List<CurricularCourseScope> scopes = curricularCourse.getScopes();
 			return (List)CollectionUtils.select(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					
 					return isCurricularCourseScopeInTimeSpan(ccs,beginDate,endDate);
 				}
@@ -128,10 +128,10 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 			final Integer degreeCurricularPlanId, final Integer curricularYear,
 			final Date beginDate, final Date endDate) throws ExcepcaoPersistencia {
 
-		List<ICurricularCourseScope> scopes = (List<ICurricularCourseScope>) readAll(CurricularCourseScope.class);
+		List<CurricularCourseScope> scopes = (List<CurricularCourseScope>) readAll(CurricularCourseScope.class);
 		return (List)CollectionUtils.select(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					
 					return	ccs.getCurricularCourse().getDegreeCurricularPlan().getIdInternal().
 								equals(degreeCurricularPlanId) &&
@@ -145,10 +145,10 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 
 	public List readActiveCurricularCourseScopesByDegreeCurricularPlanId(
 			final Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
-		List<ICurricularCourseScope> scopes = (List<ICurricularCourseScope>) readAll(CurricularCourseScope.class);
+		List<CurricularCourseScope> scopes = (List<CurricularCourseScope>) readAll(CurricularCourseScope.class);
 		return (List)CollectionUtils.select(scopes,new Predicate(){
 				public boolean evaluate(Object o) {
-					ICurricularCourseScope ccs = (ICurricularCourseScope) o;
+					CurricularCourseScope ccs = (CurricularCourseScope) o;
 					
 					return ccs.getCurricularCourse().getDegreeCurricularPlan().getIdInternal().
 								equals(degreeCurricularPlanId) &&
@@ -157,7 +157,7 @@ public class CurricularCourseScopeVO extends VersionedObjectsBase implements
 			});
 	}
 	
-	private boolean isCurricularCourseScopeInTimeSpan(ICurricularCourseScope ccs, Date beginDate, Date endDate) {
+	private boolean isCurricularCourseScopeInTimeSpan(CurricularCourseScope ccs, Date beginDate, Date endDate) {
 		return ccs.getBegin().before(endDate) && (ccs.getEndDate() == null || (ccs.getEnd().after(beginDate)));
 	}
 }

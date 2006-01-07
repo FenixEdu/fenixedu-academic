@@ -8,10 +8,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -57,18 +57,18 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
             IPersistentFinalDegreeWork persistentFinalDegreeWork = sp.getIPersistentFinalDegreeWork();
 
-            IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+            Proposal proposal = (Proposal) persistentFinalDegreeWork.readByOID(Proposal.class,
                     objectId);
             if (proposal == null) {
                 return false;
             }
-            IExecutionDegree executionDegree = proposal.getExecutionDegree();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            ExecutionDegree executionDegree = proposal.getExecutionDegree();
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             List coordinators = executionDegree.getCoordinatorsList();
             if (coordinators != null && teacher != null) {
                 for (int i = 0; i < coordinators.size(); i++) {
-                    ICoordinator coordinator = (ICoordinator) coordinators.get(i);
+                    Coordinator coordinator = (Coordinator) coordinators.get(i);
                     if (coordinator != null && teacher.equals(coordinator.getTeacher())) {
                         return true;
                     }

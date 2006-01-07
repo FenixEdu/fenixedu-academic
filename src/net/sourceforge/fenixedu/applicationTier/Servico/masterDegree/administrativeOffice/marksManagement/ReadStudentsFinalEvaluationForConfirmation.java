@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteEnrolmentEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -58,7 +58,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, curricularCourseCode);
 
 		List enrolments = null;
@@ -72,9 +72,9 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
 		List enrolmentEvaluations = new ArrayList();
 		Iterator iterEnrolment = enrolments.listIterator();
 		while (iterEnrolment.hasNext()) {
-			IEnrolment enrolment = (IEnrolment) iterEnrolment.next();
+			Enrolment enrolment = (Enrolment) iterEnrolment.next();
 			List allEnrolmentEvaluations = enrolment.getEvaluations();
-			IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) allEnrolmentEvaluations
+			EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) allEnrolmentEvaluations
 					.get(allEnrolmentEvaluations.size() - 1);
 			enrolmentEvaluations.add(enrolmentEvaluation);
 		}
@@ -100,15 +100,15 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
 			// responsible for all evaluations
 			// for this
 			// curricularCourseScope
-			IPerson person = ((IEnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
+			Person person = ((EnrolmentEvaluation) temporaryEnrolmentEvaluations.get(0))
 					.getPersonResponsibleForGrade();
-			ITeacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
+			Teacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
 			infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
 
 			// transform evaluations in databeans
 			ListIterator iter = temporaryEnrolmentEvaluations.listIterator();
 			while (iter.hasNext()) {
-				IEnrolmentEvaluation elem = (IEnrolmentEvaluation) iter.next();
+				EnrolmentEvaluation elem = (EnrolmentEvaluation) iter.next();
 				InfoEnrolmentEvaluation infoEnrolmentEvaluation = InfoEnrolmentEvaluationWithResponsibleForGrade
 						.newInfoFromDomain(elem);
 
@@ -121,7 +121,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
 		if (infoEnrolmentEvaluations.size() == 0) {
 			throw new NonExistingServiceException();
 		}
-		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 		infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
 		InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation = new InfoSiteEnrolmentEvaluation();
@@ -142,7 +142,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
 		List temporaryEnrolmentEvaluations = (List) CollectionUtils.select(enrolmentEvaluations,
 				new Predicate() {
 					public boolean evaluate(Object arg0) {
-						IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) arg0;
+						EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) arg0;
 						if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(
 								EnrolmentEvaluationState.TEMPORARY_OBJ))
 							return true;
@@ -158,7 +158,7 @@ public class ReadStudentsFinalEvaluationForConfirmation implements IService {
 				temporaryEnrolmentEvaluations, new Predicate() {
 					public boolean evaluate(Object input) {
 						// see if there are evaluations without grade
-						IEnrolmentEvaluation enrolmentEvaluationInput = (IEnrolmentEvaluation) input;
+						EnrolmentEvaluation enrolmentEvaluationInput = (EnrolmentEvaluation) input;
 						if (enrolmentEvaluationInput.getGrade() == null
 								|| enrolmentEvaluationInput.getGrade().length() == 0)
 							return true;

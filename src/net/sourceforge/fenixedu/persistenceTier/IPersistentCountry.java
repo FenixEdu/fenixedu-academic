@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICountry;
+import net.sourceforge.fenixedu.domain.Country;
 
 /**
  * 
@@ -11,11 +11,11 @@ import net.sourceforge.fenixedu.domain.ICountry;
 
 public interface IPersistentCountry extends IPersistentObject {
 
-    public ICountry readCountryByName(String name) throws ExcepcaoPersistencia;
+    public Country readCountryByName(String name) throws ExcepcaoPersistencia;
 
-    public ICountry readCountryByNationality(String nationality) throws ExcepcaoPersistencia;
+    public Country readCountryByNationality(String nationality) throws ExcepcaoPersistencia;
 
-    public ICountry readCountryByCode(String code) throws ExcepcaoPersistencia;
+    public Country readCountryByCode(String code) throws ExcepcaoPersistencia;
 
     public List readAllCountrys() throws ExcepcaoPersistencia;
 

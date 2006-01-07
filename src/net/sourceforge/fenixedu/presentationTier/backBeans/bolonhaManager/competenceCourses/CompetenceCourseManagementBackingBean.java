@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -31,9 +31,9 @@ import org.apache.commons.beanutils.BeanComparator;
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     private Integer competenceCourseID = null;
-    private IUnit competenceCourseGroupUnit = null;
-    private List<IUnit> scientificAreaUnits = null;
-    private ICompetenceCourse competenceCourse = null;        
+    private Unit competenceCourseGroupUnit = null;
+    private List<Unit> scientificAreaUnits = null;
+    private CompetenceCourse competenceCourse = null;        
     // Competence-Course-Information
     private String name;
     private String nameEn;
@@ -53,15 +53,15 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return getAndHoldStringParameter("action");
     }
     
-    public IDepartment getPersonDepartment() {
-        final IEmployee employee = getUserView().getPerson().getEmployee();
+    public Department getPersonDepartment() {
+        final Employee employee = getUserView().getPerson().getEmployee();
         return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
                 .getCurrentDepartmentWorkingPlace() : null;
     }
     
-    public List<IUnit> getScientificAreaUnits() {
+    public List<Unit> getScientificAreaUnits() {
         if (scientificAreaUnits == null) {
-            final IDepartment department = getPersonDepartment();
+            final Department department = getPersonDepartment();
             scientificAreaUnits = (department != null) ? department.getUnit().getScientificAreaUnits() : null;
         }
         return scientificAreaUnits;
@@ -71,9 +71,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return getAndHoldIntegerParameter("competenceCourseGroupUnitID");        
     }
     
-    public IUnit getCompetenceCourseGroupUnit() throws FenixFilterException, FenixServiceException {
+    public Unit getCompetenceCourseGroupUnit() throws FenixFilterException, FenixServiceException {
         if (competenceCourseGroupUnit == null && getCompetenceCourseGroupUnitID() != null) {
-            competenceCourseGroupUnit = (IUnit) readDomainObject(Unit.class, getCompetenceCourseGroupUnitID());
+            competenceCourseGroupUnit = (Unit) readDomainObject(Unit.class, getCompetenceCourseGroupUnitID());
         }
         return competenceCourseGroupUnit;
     }
@@ -189,7 +189,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     private List<CourseLoad> getExistingCourseLoads() throws FenixFilterException, FenixServiceException {
         final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(getCompetenceCourse().getCompetenceCourseLoads().size());        
-        for (final ICompetenceCourseLoad competenceCourseLoad : getCompetenceCourse().getCompetenceCourseLoads()) {
+        for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourse().getCompetenceCourseLoads()) {
             courseLoads.add(new CourseLoad("edit", competenceCourseLoad));
         }
         Collections.sort(courseLoads, new BeanComparator("order"));
@@ -263,14 +263,14 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.competenceCourseID = competenceCourseID;
     }
     
-    public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
+    public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
         if (competenceCourse == null && getCompetenceCourseID() != null) {
-            competenceCourse = (ICompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
+            competenceCourse = (CompetenceCourse) readDomainObject(CompetenceCourse.class, getCompetenceCourseID()); 
         }
         return competenceCourse;
     }
     
-    public void setCompetenceCourse(ICompetenceCourse competenceCourse) {
+    public void setCompetenceCourse(CompetenceCourse competenceCourse) {
         this.competenceCourse = competenceCourse;
     }
     
@@ -351,8 +351,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.stage = stage;
     }
     
-    public List<ICompetenceCourseLoad> getSortedCompetenceCourseLoads() throws FenixFilterException, FenixServiceException {
-        final List<ICompetenceCourseLoad> result = new ArrayList<ICompetenceCourseLoad>();
+    public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() throws FenixFilterException, FenixServiceException {
+        final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>();
         if (getCompetenceCourse() != null) {
             result.addAll(getCompetenceCourse().getCompetenceCourseLoads());
             Collections.sort(result, new BeanComparator("order"));
@@ -364,7 +364,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             final Object args[] = { getName(), getNameEn(), getAcronym(), getBasic(),
                     RegimeType.valueOf(getRegime()), getCompetenceCourseGroupUnitID() };
-            final ICompetenceCourse competenceCourse = (ICompetenceCourse) ServiceUtils.executeService(
+            final CompetenceCourse competenceCourse = (CompetenceCourse) ServiceUtils.executeService(
                     getUserView(), "CreateCompetenceCourse", args);
             setCompetenceCourse(competenceCourse);
             return "setCompetenceCourseLoad";

@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.domain.cms;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import relations.CmsUsers;
 import relations.ContentCreation;
 import relations.ContentHierarchy;
@@ -37,14 +37,14 @@ public abstract class Content extends Content_Base implements Comparable<Content
 
 	public void delete()
 	{
-		for (IBin parent : this.getParents())
+		for (Bin parent : this.getParents())
 		{
 			ContentHierarchy.remove(this, parent);
 		}
 
 		ContentCreation.remove(this.getCreator(), this);
 
-		for (IPerson owner : this.getOwners())
+		for (Person owner : this.getOwners())
 		{
 			ContentOwnership.remove(owner, this);
 			if (owner.getCreatedContents().size() == 0 && owner.getOwnedContents().size() == 0)
@@ -57,7 +57,7 @@ public abstract class Content extends Content_Base implements Comparable<Content
 	}
 
 	@Override
-	public void setCreator(IPerson creator)
+	public void setCreator(Person creator)
 	{
 		{
 			if (this.getCreator() == null)

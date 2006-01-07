@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IProject;
+import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +22,7 @@ public class EditProject implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IProject project = (IProject) persistentSupport.getIPersistentEvaluation().readByOID(
+        final Project project = (Project) persistentSupport.getIPersistentEvaluation().readByOID(
                 Project.class, projectID);
         if (project == null) {
             throw new FenixServiceException("error.noEvaluation");

@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -60,7 +60,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
     // noAuthorization se algum prob
     private String curricularPlanOwner(IUserView id, Object[] arguments)
 	{
-	    IStudentCurricularPlan studentCurricularPlan;
+	    StudentCurricularPlan studentCurricularPlan;
 	    StudentCurricularPlanIDDomainType scpId = (StudentCurricularPlanIDDomainType)arguments[1];
 	    Integer studentCurricularPlanID;
 	    
@@ -76,7 +76,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
 	        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
 	                .getIStudentCurricularPlanPersistente();
 	
-	        studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
+	        studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
 	                StudentCurricularPlan.class, studentCurricularPlanID);
 	        if (studentCurricularPlan == null)
 	        {

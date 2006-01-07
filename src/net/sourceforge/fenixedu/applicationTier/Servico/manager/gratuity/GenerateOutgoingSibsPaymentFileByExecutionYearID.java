@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.mast
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsuranceNotDefinedServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IInsuranceValue;
-import net.sourceforge.fenixedu.domain.IPaymentPhase;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.InsuranceValue;
+import net.sourceforge.fenixedu.domain.PaymentPhase;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -66,7 +66,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
 				ExecutionYear.class, executionYearID);
 
 		IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
@@ -74,7 +74,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 		IPersistentInsuranceTransaction insuranceTransactionDAO = sp
 				.getIPersistentInsuranceTransaction();
 
-		IInsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
+		InsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
 				executionYear.getIdInternal());
 
 		if (insuranceValue == null) {
@@ -97,18 +97,18 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 		// add lines gratuity
 		for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 
-			IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
+			ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
 
-			IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+			DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
 			List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
 			// add insurance lines
 			for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
 
-				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
-				IStudent student = studentCurricularPlan.getStudent();
+				Student student = studentCurricularPlan.getStudent();
 
 				if (studentsWithInsuranceChecked.containsKey(student.getIdInternal())) {
 					continue;
@@ -142,7 +142,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
 			for (Iterator iterator = gratuitySituationList.iterator(); iterator.hasNext();) {
 
-				IGratuitySituation gratuitySituation = (IGratuitySituation) iterator.next();
+				GratuitySituation gratuitySituation = (GratuitySituation) iterator.next();
 
 				// if
 				// (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
@@ -167,7 +167,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @param outgoingSibsPaymentFile
 	 * @throws FileNotCreatedServiceException
 	 */
-	private void writeOutgoingSibsPaymentFile(IExecutionYear executionYear,
+	private void writeOutgoingSibsPaymentFile(ExecutionYear executionYear,
 			StringBuffer outgoingSibsPaymentFile) throws FileNotCreatedServiceException {
 		String year = executionYear.getYear().replace('/', '-');
 		try {
@@ -236,7 +236,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @throws InsufficientSibsPaymentPhaseCodesServiceException
 	 */
 	private int addGratuityLines(StringBuffer outgoingSibsPaymentFile,
-			IGratuitySituation gratuitySituation, String shortYear)
+			GratuitySituation gratuitySituation, String shortYear)
 			throws InsufficientSibsPaymentPhaseCodesServiceException {
 
 		int totalLinesAdded = 0;
@@ -264,7 +264,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 			return totalLinesAdded;
 		}
 
-		IStudentCurricularPlan studentCurricularPlan = gratuitySituation.getStudentCurricularPlan();
+		StudentCurricularPlan studentCurricularPlan = gratuitySituation.getStudentCurricularPlan();
 
 		// add total payment line
 		String sibsPaymentCode = determineTotalPaymentCode(studentCurricularPlan);
@@ -288,7 +288,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 
 		double totalValueInPhases = 0;
 		for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-			IPaymentPhase paymentPhase = (IPaymentPhase) iter.next();
+			PaymentPhase paymentPhase = (PaymentPhase) iter.next();
 			totalValueInPhases += paymentPhase.getValue().doubleValue();
 		}
 
@@ -308,7 +308,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 		double totalValueToDivideInPhases = scholarShipPartValue.doubleValue();
 
 		for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-			IPaymentPhase paymentPhase = (IPaymentPhase) iter.next();
+			PaymentPhase paymentPhase = (PaymentPhase) iter.next();
 
 			if (paymentPhase.getEndDate().before(Calendar.getInstance().getTime())) {
 				// end date for that phase already passed
@@ -456,7 +456,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 		return stringBuffer.toString();
 	}
 
-	private String determineTotalPaymentCode(IStudentCurricularPlan studentCurricularPlan) {
+	private String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
 
 		int sibsPaymentCode = 0;
 		Specialization specialization = studentCurricularPlan.getSpecialization();
@@ -484,7 +484,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @return
 	 */
 	private String determinePaymentPhaseCode(int paymentPhaseNumber,
-			IStudentCurricularPlan studentCurricularPlan, IGratuitySituation gratuitySituation)
+			StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
 			throws InsufficientSibsPaymentPhaseCodesServiceException {
 
 		int sibsPaymentCode = 0;

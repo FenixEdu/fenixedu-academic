@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.inquiries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -21,7 +21,7 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class InquiriesRegistryOJB extends PersistentObjectOJB implements IPersistentInquiriesRegistry {
 	
-	public List<IInquiriesRegistry> readByStudentId(Integer studentId)
+	public List<InquiriesRegistry> readByStudentId(Integer studentId)
 	throws ExcepcaoPersistencia {
     	Criteria criteria = new Criteria();
     	criteria.addEqualTo("keyStudent", studentId);
@@ -30,7 +30,7 @@ public class InquiriesRegistryOJB extends PersistentObjectOJB implements IPersis
 		
 	}
 
-	public List<IInquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
+	public List<InquiriesRegistry> readByExecutionPeriodId(Integer executionPeriodId)
 	throws ExcepcaoPersistencia {
     	Criteria criteria = new Criteria();
     	criteria.addEqualTo("keyExecutionPeriod", executionPeriodId);

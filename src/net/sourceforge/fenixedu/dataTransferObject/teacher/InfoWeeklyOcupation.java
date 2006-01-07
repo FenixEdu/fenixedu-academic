@@ -9,7 +9,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.IWeeklyOcupation;
+import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 
 /**
  * @author Leonor Almeida
@@ -151,9 +151,9 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IWeeklyOcupation weeklyOcupation) {
+    public void copyFromDomain(WeeklyOcupation weeklyOcupation) {
         super.copyFromDomain(weeklyOcupation);
         if (weeklyOcupation != null) {
             setLecture(weeklyOcupation.getLecture());
@@ -165,7 +165,7 @@ public class InfoWeeklyOcupation extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoWeeklyOcupation newInfoFromDomain(IWeeklyOcupation weeklyOcupation) {
+    public static InfoWeeklyOcupation newInfoFromDomain(WeeklyOcupation weeklyOcupation) {
         InfoWeeklyOcupation infoWeeklyOcupation = null;
         if (weeklyOcupation != null) {
             infoWeeklyOcupation = new InfoWeeklyOcupation();

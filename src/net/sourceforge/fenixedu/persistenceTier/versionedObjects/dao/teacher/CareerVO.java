@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,18 +27,18 @@ public class CareerVO extends VersionedObjectsBase implements IPersistentCareer 
 	public List readAllByTeacherIdAndCareerType(Integer teacherId,
 			CareerType careerType) throws ExcepcaoPersistencia {
 		
-		ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherId);
-		List<ICareer> careersList= new ArrayList<ICareer>();
+		Teacher teacher = (Teacher) readByOID(Teacher.class, teacherId);
+		List<Career> careersList= new ArrayList<Career>();
 		
 		if(careerType.equals(CareerType.PROFESSIONAL)) {
-			for(ICareer teachersCareer : teacher.getAssociatedCareers()) {
+			for(Career teachersCareer : teacher.getAssociatedCareers()) {
 				if(teachersCareer.getOjbConcreteClass().equals(ProfessionalCareer.class.getName())) {
 					careersList.add(teachersCareer);
 				}
 			}
 		}
 		else if(careerType.equals(CareerType.TEACHING)) {
-			for(ICareer teachersCareer : teacher.getAssociatedCareers()) {
+			for(Career teachersCareer : teacher.getAssociatedCareers()) {
 				if(teachersCareer.getOjbConcreteClass().equals(TeachingCareer.class.getName())) {
 					careersList.add(teachersCareer);
 				}

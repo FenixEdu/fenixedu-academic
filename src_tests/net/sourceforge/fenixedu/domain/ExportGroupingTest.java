@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class ExportGroupingTest extends DomainTestBase {
 
-    private IExportGrouping exportGrouping;
-    private IExecutionCourse executionCourse;
-    private IGrouping grouping;
+    private ExportGrouping exportGrouping;
+    private ExecutionCourse executionCourse;
+    private Grouping grouping;
 
     protected void setUp() throws Exception {
         super.setUp();

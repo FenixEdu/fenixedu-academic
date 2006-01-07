@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -37,11 +37,11 @@ public class ReadExecutionDegreesByExecutionYearId implements IService {
         IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
         IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-        IExecutionYear executionYear = null;
+        ExecutionYear executionYear = null;
         if (executionYearId == null) {
             executionYear = persistentExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = (IExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
+            executionYear = (ExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
                     executionYearId);
         }
 
@@ -52,19 +52,19 @@ public class ReadExecutionDegreesByExecutionYearId implements IService {
             infoExecutionDegreeList = new ArrayList();
 
             while (iterator.hasNext()) {
-                IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
+                ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
 
                 InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
                 InfoExecutionYear infoExecutionYear = InfoExecutionYear.newInfoFromDomain(executionDegree
                         .getExecutionYear());
                 infoExecutionDegree.setInfoExecutionYear(infoExecutionYear);
 
-                IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+                DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
                 InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan
                         .newInfoFromDomain(degreeCurricularPlan);
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-                IDegree degree = degreeCurricularPlan.getDegree();
+                Degree degree = degreeCurricularPlan.getDegree();
                 InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 

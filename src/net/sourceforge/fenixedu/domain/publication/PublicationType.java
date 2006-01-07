@@ -7,7 +7,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-public class PublicationType extends PublicationType_Base implements IPublicationType {
+public class PublicationType extends PublicationType_Base {
 
     public PublicationType() {
         super();
@@ -21,7 +21,7 @@ public class PublicationType extends PublicationType_Base implements IPublicatio
         CollectionUtils.filter(nonRequiredAttributes, new Predicate(){
 
             public boolean evaluate(Object arg0) {
-                IPublicationTypeAttribute publicationTypeAttribute = (IPublicationTypeAttribute) arg0;
+                PublicationTypeAttribute publicationTypeAttribute = (PublicationTypeAttribute) arg0;
                 if(!publicationTypeAttribute.getRequired().booleanValue())
                     return true;
                 return false;
@@ -31,7 +31,7 @@ public class PublicationType extends PublicationType_Base implements IPublicatio
         CollectionUtils.transform(nonRequiredAttributes, new Transformer(){
 
             public Object transform(Object arg0) {
-                IPublicationTypeAttribute publicationTypeAttribute = (IPublicationTypeAttribute) arg0;
+                PublicationTypeAttribute publicationTypeAttribute = (PublicationTypeAttribute) arg0;
                 return publicationTypeAttribute.getAttribute();
             }            
         });
@@ -46,7 +46,7 @@ public class PublicationType extends PublicationType_Base implements IPublicatio
         CollectionUtils.filter(requiredAttributes, new Predicate(){
 
             public boolean evaluate(Object arg0) {
-                IPublicationTypeAttribute publicationTypeAttribute = (IPublicationTypeAttribute) arg0;                
+                PublicationTypeAttribute publicationTypeAttribute = (PublicationTypeAttribute) arg0;                
                 if(publicationTypeAttribute.getRequired().booleanValue())
                     return true;
                 return false;
@@ -56,7 +56,7 @@ public class PublicationType extends PublicationType_Base implements IPublicatio
         CollectionUtils.transform(requiredAttributes, new Transformer(){
 
             public Object transform(Object arg0) {
-                IPublicationTypeAttribute publicationTypeAttribute = (IPublicationTypeAttribute) arg0;
+                PublicationTypeAttribute publicationTypeAttribute = (PublicationTypeAttribute) arg0;
                 return publicationTypeAttribute.getAttribute();
             }            
         });

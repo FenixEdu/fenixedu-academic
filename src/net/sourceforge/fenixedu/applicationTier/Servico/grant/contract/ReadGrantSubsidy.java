@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,8 +37,8 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
 		return sp.getIPersistentGrantSubsidy();
 	}
 
-	protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-		return InfoGrantSubsidyWithContract.newInfoFromDomain((IGrantSubsidy) domainObject);
+	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+		return InfoGrantSubsidyWithContract.newInfoFromDomain((GrantSubsidy) domainObject);
 	}
 
 	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
@@ -54,7 +54,7 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
 		IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
 
 		InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
-				.newInfoFromDomain((IGrantContract) pgc.readByOID(GrantContract.class, infoGrantSubsidy
+				.newInfoFromDomain((GrantContract) pgc.readByOID(GrantContract.class, infoGrantSubsidy
 						.getInfoGrantContract().getIdInternal()));
 
 		// this section of code is temporary!!!! (see above the reason)

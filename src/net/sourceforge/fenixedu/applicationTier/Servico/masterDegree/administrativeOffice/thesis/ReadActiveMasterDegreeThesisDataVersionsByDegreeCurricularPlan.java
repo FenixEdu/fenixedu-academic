@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,7 +37,7 @@ public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan impl
         CollectionUtils.transform(masterDegreeThesisDataVersions, new Transformer() {
 
             public Object transform(Object arg0) {
-                IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) arg0;
+                MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) arg0;
                 return InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis
                         .newInfoFromDomain(masterDegreeThesisDataVersion);
             }

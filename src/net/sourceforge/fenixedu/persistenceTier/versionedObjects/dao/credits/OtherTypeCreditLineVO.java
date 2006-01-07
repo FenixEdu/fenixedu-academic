@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
+import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
@@ -13,10 +13,10 @@ public class OtherTypeCreditLineVO extends VersionedObjectsBase implements IPers
     public List readByTeacherAndExecutionPeriod(Integer teacherId, Integer executionPeriodId)
             throws ExcepcaoPersistencia {
 
-        List<IOtherTypeCreditLine> otCreditLines = (List<IOtherTypeCreditLine>) readAll(OtherTypeCreditLine.class);
-        List<IOtherTypeCreditLine> result = null;
+        List<OtherTypeCreditLine> otCreditLines = (List<OtherTypeCreditLine>) readAll(OtherTypeCreditLine.class);
+        List<OtherTypeCreditLine> result = null;
 
-        for (IOtherTypeCreditLine line : otCreditLines) {
+        for (OtherTypeCreditLine line : otCreditLines) {
             if (line.getTeacher().getIdInternal().equals(teacherId)
                     && line.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
                 result.add(line);

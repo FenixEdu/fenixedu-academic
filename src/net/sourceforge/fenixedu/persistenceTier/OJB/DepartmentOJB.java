@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 
@@ -20,9 +20,9 @@ public class DepartmentOJB extends PersistentObjectOJB implements IPersistentDep
         return queryList(Department.class, crit);
     }
 
-    public IDepartment readByName(String name) throws ExcepcaoPersistencia{
+    public Department readByName(String name) throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);  
-        return (IDepartment) queryObject(Department.class, criteria);                
+        return (Department) queryObject(Department.class, criteria);                
     }
 }

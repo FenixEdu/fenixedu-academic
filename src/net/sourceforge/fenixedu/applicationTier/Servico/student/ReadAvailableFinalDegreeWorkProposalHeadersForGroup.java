@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,7 +35,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements ISer
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
 
         if (group != null && group.getExecutionDegree() != null) {
             List finalDegreeWorkProposals = persistentFinalDegreeWork
@@ -45,7 +45,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements ISer
             if (finalDegreeWorkProposals != null) {
                 finalDegreeWorkProposalHeaders = new ArrayList();
                 for (int i = 0; i < finalDegreeWorkProposals.size(); i++) {
-                    IProposal proposal = (IProposal) finalDegreeWorkProposals.get(i);
+                    Proposal proposal = (Proposal) finalDegreeWorkProposals.get(i);
 
                     if (proposal != null
                             && !CollectionUtils.exists(group.getGroupProposals(),
@@ -83,14 +83,14 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements ISer
 
     private class PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL implements Predicate {
 
-        IProposal proposal;
+        Proposal proposal;
 
         public boolean evaluate(Object arg0) {
-            IGroupProposal groupProposal = (IGroupProposal) arg0;
+            GroupProposal groupProposal = (GroupProposal) arg0;
             return proposal.equals(groupProposal.getFinalDegreeWorkProposal());
         }
 
-        public PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(IProposal proposal) {
+        public PREDICATE_FIND_GROUP_PROPOSAL_BY_PROPOSAL(Proposal proposal) {
             super();
             this.proposal = proposal;
         }

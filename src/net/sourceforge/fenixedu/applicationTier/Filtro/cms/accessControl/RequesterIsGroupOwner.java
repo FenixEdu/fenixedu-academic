@@ -22,7 +22,7 @@ public class RequesterIsGroupOwner extends CmsAccessControlFilter
 	public void execute(ServiceRequest request, ServiceResponse response, FilterParameters filterParameters) throws FilterException, Exception
 	{
 //		IUserView userView = (IUserView) request.getRequester();
-//		IUserGroup userGroup = (IUserGroup) request.getServiceParameters().getParameter(0);
+//		UserGroup userGroup = (UserGroup) request.getServiceParameters().getParameter(0);
 //		if (!userGroup.getOwners().contains(userView.getPerson()))
 //		{
 //			throw new RequesterNotAllowedToDelete("UserGroup");

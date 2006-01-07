@@ -5,12 +5,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,18 +25,18 @@ public class WrittenEvaluationRoomDistribution implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) persistentSupport
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
                 .getIPersistentEvaluation().readByOID(Exam.class, evaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
-        List<IStudent> studentsToDistribute;
+        List<Student> studentsToDistribute;
         if (distributeOnlyEnroledStudents) {
             studentsToDistribute = readEnroledStudentsInWrittenEvaluation(writtenEvaluation);
         } else {
             studentsToDistribute = readAllStudentsAttendingExecutionCourses(writtenEvaluation);
         }
-        final List<IRoom> selectedRooms = readRooms(writtenEvaluation, roomIDs);
+        final List<Room> selectedRooms = readRooms(writtenEvaluation, roomIDs);
         if (!selectedRooms.containsAll(writtenEvaluation.getAssociatedRooms())) {
             // if the selected rooms are different of the evaluation rooms
             // then the user probably selected repeated rooms
@@ -48,15 +48,15 @@ public class WrittenEvaluationRoomDistribution implements IService {
         }
     }
     
-    private List<IRoom> readRooms(final IWrittenEvaluation writtenEvaluation,
+    private List<Room> readRooms(final WrittenEvaluation writtenEvaluation,
             final List<Integer> roomIDs) throws ExcepcaoPersistencia {
         
         List<Integer> selectedRoomIDs = removeDuplicatedEntries(roomIDs);
-        final List<IRoom> writtenEvaluationRooms = writtenEvaluation.getAssociatedRooms();        
-        final List<IRoom> selectedRooms = new ArrayList<IRoom>(selectedRoomIDs.size());
+        final List<Room> writtenEvaluationRooms = writtenEvaluation.getAssociatedRooms();        
+        final List<Room> selectedRooms = new ArrayList<Room>(selectedRoomIDs.size());
         
         for (final Integer roomID : selectedRoomIDs) {
-            for (final IRoom room : writtenEvaluationRooms) {
+            for (final Room room : writtenEvaluationRooms) {
                 if (room.getIdInternal().equals(roomID)) {
                     selectedRooms.add(room);
                     break;
@@ -76,20 +76,20 @@ public class WrittenEvaluationRoomDistribution implements IService {
         return result;
     }
 
-    private List<IStudent> readEnroledStudentsInWrittenEvaluation(IWrittenEvaluation writtenEvaluation) {
-        final List<IStudent> result = new ArrayList<IStudent>(writtenEvaluation
+    private List<Student> readEnroledStudentsInWrittenEvaluation(WrittenEvaluation writtenEvaluation) {
+        final List<Student> result = new ArrayList<Student>(writtenEvaluation
                 .getWrittenEvaluationEnrolmentsCount());
-        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluation
                 .getWrittenEvaluationEnrolments()) {
             result.add(writtenEvaluationEnrolment.getStudent());
         }
         return result;
     }
 
-    private List<IStudent> readAllStudentsAttendingExecutionCourses(IWrittenEvaluation writtenEvaluation) {
-        final List<IStudent> result = new ArrayList<IStudent>();
-        for (final IExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
-            for (final IAttends attend : executionCourse.getAttends()) {
+    private List<Student> readAllStudentsAttendingExecutionCourses(WrittenEvaluation writtenEvaluation) {
+        final List<Student> result = new ArrayList<Student>();
+        for (final ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
+            for (final Attends attend : executionCourse.getAttends()) {
                 if (!result.contains(attend.getAluno())) {
                     result.add(attend.getAluno());
                 }
@@ -98,7 +98,7 @@ public class WrittenEvaluationRoomDistribution implements IService {
         return result;
     }
 
-    private void sendSMSToStudents(IWrittenEvaluation writtenEvaluation) {
+    private void sendSMSToStudents(WrittenEvaluation writtenEvaluation) {
         // TODO: Send SMS method: fill this method when we have sms
     }
 }

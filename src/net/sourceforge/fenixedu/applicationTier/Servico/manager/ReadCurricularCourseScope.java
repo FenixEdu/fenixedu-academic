@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,10 +24,10 @@ public class ReadCurricularCourseScope implements IService {
 	 * @throws ExcepcaoPersistencia 
 	 */
 	public InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
-		ICurricularCourseScope curricularCourseScope;
+		CurricularCourseScope curricularCourseScope;
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		curricularCourseScope = (ICurricularCourseScope) sp.getIPersistentCurricularCourseScope()
+		curricularCourseScope = (CurricularCourseScope) sp.getIPersistentCurricularCourseScope()
 				.readByOID(CurricularCourseScope.class, idInternal);
 
 		if (curricularCourseScope == null) {

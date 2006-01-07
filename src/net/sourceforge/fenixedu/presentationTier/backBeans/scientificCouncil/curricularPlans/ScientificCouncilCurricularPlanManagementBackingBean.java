@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -24,7 +24,7 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     
     private Integer degreeId;
     private Integer dcpId;
-    private IDegreeCurricularPlan dcp;
+    private DegreeCurricularPlan dcp;
     private String name;
     private Double ectsCredits;
     private String curricularStage;
@@ -42,11 +42,11 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
         this.dcpId = dcpId;
     }
 
-    public IDegreeCurricularPlan getDcp() throws FenixFilterException, FenixServiceException {
-        return (dcp == null) ? (dcp = (IDegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDcpId())) : dcp;
+    public DegreeCurricularPlan getDcp() throws FenixFilterException, FenixServiceException {
+        return (dcp == null) ? (dcp = (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDcpId())) : dcp;
     }
 
-    public void setDcp(IDegreeCurricularPlan dcp) {
+    public void setDcp(DegreeCurricularPlan dcp) {
         this.dcp = dcp;
     }
 

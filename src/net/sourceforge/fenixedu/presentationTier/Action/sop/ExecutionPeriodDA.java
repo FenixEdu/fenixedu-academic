@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -37,10 +37,10 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
-    private static final Comparator<IExecutionDegree> executionDegreeComparator = new Comparator<IExecutionDegree>() {
-        public int compare(IExecutionDegree executionDegree1, IExecutionDegree executionDegree2) {
-            final IDegree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
-            final IDegree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
+    private static final Comparator<ExecutionDegree> executionDegreeComparator = new Comparator<ExecutionDegree>() {
+        public int compare(ExecutionDegree executionDegree1, ExecutionDegree executionDegree2) {
+            final Degree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
+            final Degree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
 
             int degreeTypeComparison = degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
             return (degreeTypeComparison != 0) ? degreeTypeComparison : degree1.getNome().compareTo(degree2.getNome());
@@ -86,8 +86,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
         request.setAttribute(SessionConstants.LABELLIST_EXECUTIONPERIOD, executionPeriodsLabelValueList);
 
         final Object[] args = { ExecutionPeriod.class, selectedExecutionPeriod.getIdInternal() };
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
-        final List<IExecutionDegree> executionDegrees = new ArrayList<IExecutionDegree>(executionPeriod.getExecutionYear().getExecutionDegrees());
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        final List<ExecutionDegree> executionDegrees = new ArrayList<ExecutionDegree>(executionPeriod.getExecutionYear().getExecutionDegrees());
         Collections.sort(executionDegrees, executionDegreeComparator);
         request.setAttribute("executionPeriodDomainObject", executionPeriod);
         request.setAttribute("executionDegrees", executionDegrees);

@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -62,7 +62,7 @@ public class ReadAllRoomsExamsMap implements IService {
 
         for (int i = 0; i < rooms.size(); i++) {
 
-            IRoom room = (IRoom) rooms.get(i);
+            Room room = (Room) rooms.get(i);
 
             InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
 
@@ -85,8 +85,8 @@ public class ReadAllRoomsExamsMap implements IService {
 
     private Transformer TRANSFORM_EXAM_TO_INFOEXAM = new Transformer() {
         public Object transform(Object exam) {
-            InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear.newInfoFromDomain((IExam) exam);
-            infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(((IExam) exam).getAssociatedExecutionCourses().get(0)));
+            InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear.newInfoFromDomain((Exam) exam);
+            infoExam.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(((Exam) exam).getAssociatedExecutionCourses().get(0)));
             return infoExam;
         }
     };

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;
-import net.sourceforge.fenixedu.domain.IEnrolmentEquivalence;
+import net.sourceforge.fenixedu.domain.EnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 
@@ -14,9 +14,9 @@ import org.apache.ojb.broker.query.Criteria;
 public class EnrolmentEquivalenceOJB extends PersistentObjectOJB implements
         IPersistentEnrolmentEquivalence {
 
-    public IEnrolmentEquivalence readByEnrolment(Integer enrolmentId) throws ExcepcaoPersistencia {
+    public EnrolmentEquivalence readByEnrolment(Integer enrolmentId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("enrolment.idInternal", enrolmentId);
-        return (IEnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);
+        return (EnrolmentEquivalence) queryObject(EnrolmentEquivalence.class, criteria);
     }
 }

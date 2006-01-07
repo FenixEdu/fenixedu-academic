@@ -8,14 +8,14 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.Curriculum;
 
 public interface IPersistentCurriculum extends IPersistentObject {
 
-    public ICurriculum readCurriculumByCurricularCourse(Integer curricularCourseOID)
+    public Curriculum readCurriculumByCurricularCourse(Integer curricularCourseOID)
             throws ExcepcaoPersistencia;
 
-    public ICurriculum readCurriculumByCurricularCourseAndExecutionYear(
+    public Curriculum readCurriculumByCurricularCourseAndExecutionYear(
             Integer curricularCourseOID, Date executionYearEndDate)
             throws ExcepcaoPersistencia;
 }

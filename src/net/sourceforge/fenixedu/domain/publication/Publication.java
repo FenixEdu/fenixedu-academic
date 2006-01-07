@@ -6,14 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-public class Publication extends Publication_Base implements IPublication {
+public class Publication extends Publication_Base {
 
     public Publication() {
     } 
@@ -22,7 +22,7 @@ public class Publication extends Publication_Base implements IPublication {
      *                        BUSINESS SERVICES                         *
      ********************************************************************/
     
-    public Publication (PublicationDTO publicationDTO, IPublicationType publicationType, List<IPerson> authors) {
+    public Publication (PublicationDTO publicationDTO, PublicationType publicationType, List<Person> authors) {
         if( authors == null || authors.size() == 0)
             throw new DomainException("error.publication.createPublicationWithoutAuthors");
         setProperties(publicationDTO);
@@ -32,7 +32,7 @@ public class Publication extends Publication_Base implements IPublication {
         setAuthorships(authors);
     }
     
-    public void edit(PublicationDTO publicationDTO, IPublicationType publicationType, List<IPerson> authors) {
+    public void edit(PublicationDTO publicationDTO, PublicationType publicationType, List<Person> authors) {
         if( authors == null || authors.size() == 0)
             throw new DomainException("error.publication.editPublicationWithoutAuthors");
 
@@ -49,14 +49,14 @@ public class Publication extends Publication_Base implements IPublication {
     {
         removeType();
         
-        for (Iterator<IPublicationTeacher> iterator = getPublicationTeachersIterator(); iterator.hasNext(); ) {
-            IPublicationTeacher publicationTeacher = iterator.next();
+        for (Iterator<PublicationTeacher> iterator = getPublicationTeachersIterator(); iterator.hasNext(); ) {
+            PublicationTeacher publicationTeacher = iterator.next();
             iterator.remove();
             publicationTeacher.delete();
         }
         
-        for (Iterator<IAuthorship> iterator = getPublicationAuthorshipsIterator(); iterator.hasNext(); ) {
-            IAuthorship authorship = iterator.next();
+        for (Iterator<Authorship> iterator = getPublicationAuthorshipsIterator(); iterator.hasNext(); ) {
+            Authorship authorship = iterator.next();
             iterator.remove();
             authorship.delete();
         }
@@ -118,11 +118,11 @@ public class Publication extends Publication_Base implements IPublication {
         }
     }
     
-    private void setAuthorships(List<IPerson> authors) {
+    private void setAuthorships(List<Person> authors) {
         int i = 1;
         for (final Iterator iterator = authors.iterator(); iterator.hasNext(); i++) {
-            final IPerson author = (IPerson) iterator.next();
-            final IAuthorship authorship = new Authorship();
+            final Person author = (Person) iterator.next();
+            final Authorship authorship = new Authorship();
 
             authorship.setAuthor(author);
             authorship.setPublication(this);
@@ -132,8 +132,8 @@ public class Publication extends Publication_Base implements IPublication {
     
     private void removeAuthorships() {
 
-        for (Iterator<IAuthorship> iterator = getPublicationAuthorshipsIterator(); iterator.hasNext(); ) {
-            IAuthorship authorship = iterator.next();
+        for (Iterator<Authorship> iterator = getPublicationAuthorshipsIterator(); iterator.hasNext(); ) {
+            Authorship authorship = iterator.next();
             iterator.remove();
             authorship.delete();
         }
@@ -168,14 +168,14 @@ public class Publication extends Publication_Base implements IPublication {
         
         List authors = (List) CollectionUtils.collect(publicationAuthorships, new Transformer() {
             public Object transform(Object obj){
-                IAuthorship pa = (IAuthorship) obj;
+                Authorship pa = (Authorship) obj;
                 return pa.getAuthor();
             }
         });
         
         Iterator iteratorAuthors = authors.iterator();
         while (iteratorAuthors.hasNext()) {
-            IPerson author = (IPerson) iteratorAuthors.next();
+            Person author = (Person) iteratorAuthors.next();
 
             publication += author.getNome()+", ";
         }

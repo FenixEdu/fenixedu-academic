@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
@@ -42,7 +42,7 @@ public class InfoCandidateSituation extends InfoObject {
         setRemarks(remarks);
     }
 
-    public InfoCandidateSituation(ICandidateSituation candidateSituation) {
+    public InfoCandidateSituation(CandidateSituation candidateSituation) {
         setSituation(candidateSituation.getSituation());
         setDate(candidateSituation.getDate());
         setRemarks(candidateSituation.getRemarks());
@@ -123,7 +123,7 @@ public class InfoCandidateSituation extends InfoObject {
         this.validation = validation;
     }
 
-    public void copyFromDomain(ICandidateSituation candidateSituation) {
+    public void copyFromDomain(CandidateSituation candidateSituation) {
         super.copyFromDomain(candidateSituation);
         if (candidateSituation != null) {
             setDate(candidateSituation.getDate());
@@ -133,7 +133,7 @@ public class InfoCandidateSituation extends InfoObject {
         }
     }
 
-    public static InfoCandidateSituation newInfoFromDomain(ICandidateSituation candidateSituation) {
+    public static InfoCandidateSituation newInfoFromDomain(CandidateSituation candidateSituation) {
         InfoCandidateSituation infoCandidateSituation = null;
         if (candidateSituation != null) {
             infoCandidateSituation = new InfoCandidateSituation();

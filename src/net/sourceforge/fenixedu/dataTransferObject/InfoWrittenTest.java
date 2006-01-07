@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -26,7 +26,7 @@ public class InfoWrittenTest extends InfoWrittenEvaluation {
         this.description = description;
     }
     
-    public void copyFromDomain(IWrittenTest writtenTest) {
+    public void copyFromDomain(WrittenTest writtenTest) {
         super.copyFromDomain(writtenTest);
         if (writtenTest != null) {
             setDescription(writtenTest.getDescription());
@@ -34,7 +34,7 @@ public class InfoWrittenTest extends InfoWrittenEvaluation {
         }
     }
 
-    public static InfoWrittenTest newInfoFromDomain(IWrittenTest writtenTest) {
+    public static InfoWrittenTest newInfoFromDomain(WrittenTest writtenTest) {
         InfoWrittenTest infoWrittenTest = null;
         if (writtenTest != null) {
             infoWrittenTest = new InfoWrittenTest();

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 
@@ -19,13 +19,13 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class ExtraWorkResquestsOJB extends PersistentObjectOJB implements IPersistentExtraWorkRequests {
 
-    public IExtraWorkRequests readExtraWorkRequestByDay(Date day, Integer employeeID) throws Exception {
+    public ExtraWorkRequests readExtraWorkRequestByDay(Date day, Integer employeeID) throws Exception {
         Criteria criteria = new Criteria();
         criteria.addLessOrEqualThan("beginDate", day);
         criteria.addGreaterOrEqualThan("endDate", day);
         criteria.addEqualTo("employeeKey", employeeID);        
         
-        return (IExtraWorkRequests) queryObject(ExtraWorkRequests.class, criteria);
+        return (ExtraWorkRequests) queryObject(ExtraWorkRequests.class, criteria);
     }
 
     public List readExtraWorkRequestBetweenDays(Date beginDay, Date lastDay) throws Exception {

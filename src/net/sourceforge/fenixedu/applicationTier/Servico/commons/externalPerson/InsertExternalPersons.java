@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.Inse
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -17,13 +17,13 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class InsertExternalPersons implements IService {
 
-    public List<IExternalPerson> run(List<InfoExternalPerson> infoExternalPersons)
+    public List<ExternalPerson> run(List<InfoExternalPerson> infoExternalPersons)
             throws ExcepcaoPersistencia, ExistingServiceException {
 
-        List<IExternalPerson> externalPersons = new ArrayList<IExternalPerson>();
+        List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<IInstitution> institutions = (List<IInstitution>)sp.getIPersistentInstitution().readAll();
+        List<Institution> institutions = (List<Institution>)sp.getIPersistentInstitution().readAll();
 
         // generate new identification number
         String lastDocumentIdNumber = sp.getIPersistentExternalPerson().readLastDocumentIdNumber();
@@ -31,10 +31,10 @@ public class InsertExternalPersons implements IService {
 
         for (InfoExternalPerson infoExternalPerson : infoExternalPersons) {
 
-            IInstitution currentInstitution = null;
+            Institution currentInstitution = null;
 
             // retrieving existing work location
-            for (IInstitution institution : institutions) {
+            for (Institution institution : institutions) {
                 if (institution.getName().equals(infoExternalPerson.getInfoInstitution().getName())) {
                     currentInstitution = institution;
                     break;
@@ -52,7 +52,7 @@ public class InsertExternalPersons implements IService {
             String documentIDNumber = String.valueOf(++nextID);
 
             // creating a new ExternalPerson
-            IExternalPerson externalPerson = DomainFactory.makeExternalPerson(name, Gender.MALE, "", "",
+            ExternalPerson externalPerson = DomainFactory.makeExternalPerson(name, Gender.MALE, "", "",
                     "", "", "", documentIDNumber, currentInstitution);
 
             externalPersons.add(externalPerson);

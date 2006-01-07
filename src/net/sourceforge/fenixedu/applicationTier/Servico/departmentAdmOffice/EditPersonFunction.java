@@ -9,8 +9,8 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,14 +25,14 @@ public class EditPersonFunction implements IService {
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        IPersonFunction person_Function = (IPersonFunction) suportePersistente.getIPersistentObject()
+        PersonFunction person_Function = (PersonFunction) suportePersistente.getIPersistentObject()
                 .readByOID(PersonFunction.class, personFunctionID);
 
         if (person_Function == null) {
             throw new FenixServiceException("error.no.personFunction");
         }
 
-        IFunction function = (IFunction) suportePersistente.getIPersistentObject().readByOID(
+        Function function = (Function) suportePersistente.getIPersistentObject().readByOID(
                 Function.class, functionID);
 
         if (function == null) {

@@ -23,15 +23,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -44,13 +44,13 @@ public class CreateLesson implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) sp.getIPersistentExecutionPeriod()
                 .readByOID(
                         ExecutionPeriod.class,
                         infoLesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
                                 .getIdInternal());
 
-        final IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
+        final Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class,
                 infoShift.getIdInternal());
 
         InfoLessonServiceResult result = validTimeInterval(infoLesson);
@@ -62,7 +62,7 @@ public class CreateLesson implements IService {
             try {
                 InfoShiftServiceResult infoShiftServiceResult = valid(shift, infoLesson);
                 if (infoShiftServiceResult.isSUCESS()) {
-                    IRoomOccupation roomOccupation = DomainFactory.makeRoomOccupation();
+                    RoomOccupation roomOccupation = DomainFactory.makeRoomOccupation();
                     roomOccupation.setDayOfWeek(infoLesson.getInfoRoomOccupation().getDayOfWeek());
                     roomOccupation.setStartTime(infoLesson.getInfoRoomOccupation().getStartTime());
                     roomOccupation.setEndTime(infoLesson.getInfoRoomOccupation().getEndTime());
@@ -70,14 +70,14 @@ public class CreateLesson implements IService {
                     roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation()
                             .getWeekOfQuinzenalStart());
 
-                    final IRoom sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+                    final Room sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
                     roomOccupation.setRoom(sala);
 
-                    final IOccupationPeriod period = (IOccupationPeriod) sp.getIPersistentPeriod().readByOID(OccupationPeriod.class,
+                    final OccupationPeriod period = (OccupationPeriod) sp.getIPersistentPeriod().readByOID(OccupationPeriod.class,
                             infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
                     roomOccupation.setPeriod(period);
 
-                    ILesson aula2 = DomainFactory.makeLesson(infoLesson.getDiaSemana(), infoLesson
+                    Lesson aula2 = DomainFactory.makeLesson(infoLesson.getDiaSemana(), infoLesson
                             .getInicio(), infoLesson.getFim(), infoLesson.getTipo(), sala,
                             roomOccupation, shift);
 
@@ -102,10 +102,10 @@ public class CreateLesson implements IService {
     private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IRoom room = (IRoom) sp.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
-        final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
+        final Room room = (Room) sp.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
+        final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 
-        for (final IRoomOccupation roomOccupation : roomOccupations) {
+        for (final RoomOccupation roomOccupation : roomOccupations) {
             if (roomOccupation.roomOccupationForDateAndTime(
                     infoRoomOccupation.getInfoPeriod().getStartDate(),
                     infoRoomOccupation.getInfoPeriod().getEndDate(),
@@ -128,7 +128,7 @@ public class CreateLesson implements IService {
         return result;
     }
 
-    private InfoShiftServiceResult valid(IShift shift, InfoLesson infoLesson)
+    private InfoShiftServiceResult valid(Shift shift, InfoLesson infoLesson)
             throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
@@ -162,12 +162,12 @@ public class CreateLesson implements IService {
         return result;
     }
 
-    private double getTotalHoursOfShiftType(IShift shift) throws ExcepcaoPersistencia {
-        ILesson lesson = null;
+    private double getTotalHoursOfShiftType(Shift shift) throws ExcepcaoPersistencia {
+        Lesson lesson = null;
         double duration = 0;
         List associatedLessons = shift.getAssociatedLessons();
         for (int i = 0; i < associatedLessons.size(); i++) {
-            lesson = (ILesson) associatedLessons.get(i);
+            lesson = (Lesson) associatedLessons.get(i);
             try {
                 lesson.getIdInternal();
                 duration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
@@ -179,7 +179,7 @@ public class CreateLesson implements IService {
         return duration;
     }
 
-    private Integer getLessonDurationInMinutes(ILesson lesson) {
+    private Integer getLessonDurationInMinutes(Lesson lesson) {
         int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
         int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
         int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);

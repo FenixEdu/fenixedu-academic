@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -57,7 +57,7 @@ public class InfoExternalEnrollmentInfo
     {
         this.course = course;
     }
-    public static InfoExternalEnrollmentInfo newFromEnrollment(IEnrolment enrollment)
+    public static InfoExternalEnrollmentInfo newFromEnrollment(Enrolment enrollment)
     {
         InfoExternalEnrollmentInfo info = new InfoExternalEnrollmentInfo();
         info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(enrollment.getCurricularCourse()));
@@ -73,7 +73,7 @@ public class InfoExternalEnrollmentInfo
         Collection result = new ArrayList();
         for (Iterator iter = evaluations.iterator(); iter.hasNext();)
         {
-            IEnrolmentEvaluation evaluation = (IEnrolmentEvaluation) iter.next();
+            EnrolmentEvaluation evaluation = (EnrolmentEvaluation) iter.next();
             InfoExternalEvaluationInfo info = InfoExternalEvaluationInfo.newFromEvaluation(evaluation);
             result.add(info);
             

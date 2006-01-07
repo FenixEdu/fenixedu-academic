@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,10 +20,10 @@ public class ReadCourseByStudent implements IService {
 		InfoDegree infoDegree = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IStudent student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+		Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
 				degreeType);
 		if (student != null) {
-			IStudentCurricularPlan StudentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+			StudentCurricularPlan StudentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
 					.readActiveStudentCurricularPlan(number, degreeType);
 			if (StudentCurricularPlan != null) {
 				infoDegree = new InfoDegree(StudentCurricularPlan.getDegreeCurricularPlan().getDegree()

@@ -7,9 +7,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,18 +31,18 @@ public class ConfirmAttributionOfFinalDegreeWork implements IService {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork.readByOID(
+        GroupProposal groupProposal = (GroupProposal) persistentFinalDegreeWork.readByOID(
                 GroupProposal.class, selectedGroupProposalOID);
 
         if (groupProposal != null) {
-            IGroup groupAttributed = groupProposal.getFinalDegreeWorkProposal()
+            Group groupAttributed = groupProposal.getFinalDegreeWorkProposal()
                     .getGroupAttributedByTeacher();
 
             if (groupAttributed == null) {
                 throw new NoAttributionToConfirmException();
             }
 
-            IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
+            Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
             if (group != null) {
                 if (!group.getIdInternal().equals(groupAttributed.getIdInternal())) {
                     throw new NoAttributionToConfirmException();
@@ -51,7 +51,7 @@ public class ConfirmAttributionOfFinalDegreeWork implements IService {
                 List groupStudents = group.getGroupStudents();
                 if (groupStudents != null && !groupStudents.isEmpty()) {
                     for (int i = 0; i < groupStudents.size(); i++) {
-                        IGroupStudent groupStudent = (IGroupStudent) groupStudents.get(i);
+                        GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
                         if (groupStudent != null
                                 && groupStudent.getStudent().getPerson().getUsername().equals(username)) {
                             persistentFinalDegreeWork.simpleLockWrite(groupStudent);

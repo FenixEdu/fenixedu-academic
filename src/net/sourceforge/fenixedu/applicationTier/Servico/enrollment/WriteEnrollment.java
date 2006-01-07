@@ -4,10 +4,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
@@ -36,21 +36,21 @@ public class WriteEnrollment implements IService {
         IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
         IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
 
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) studentCurricularPlanDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-        ICurricularCourse curricularCourse = (ICurricularCourse) curricularCourseDAO.readByOID(CurricularCourse.class, curricularCourseID);
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) studentCurricularPlanDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+        CurricularCourse curricularCourse = (CurricularCourse) curricularCourseDAO.readByOID(CurricularCourse.class, curricularCourseID);
 
-        IExecutionPeriod executionPeriod = null;
+        ExecutionPeriod executionPeriod = null;
         if (executionPeriodID == null) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,executionPeriodID);
+            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,executionPeriodID);
         }
 
-		IEnrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
+		Enrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);
 
         if (enrollment == null) {
 
-            IEnrolment enrolmentToWrite;
+            Enrolment enrolmentToWrite;
             if (enrollmentClass == null || enrollmentClass.intValue() == 1 || enrollmentClass.intValue() == 0) {
                 enrolmentToWrite = DomainFactory.makeEnrolment();
             } else if (enrollmentClass.intValue() == 2) {

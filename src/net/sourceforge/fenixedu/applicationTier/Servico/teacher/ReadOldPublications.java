@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteOldPublications;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,7 +35,7 @@ public class ReadOldPublications implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-        ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+        Teacher teacher = persistentTeacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
         IPersistentOldPublication persistentOldPublication = persistentSuport
@@ -45,7 +45,7 @@ public class ReadOldPublications implements IService {
 
         List result = (List) CollectionUtils.collect(publications, new Transformer() {
             public Object transform(Object o) {
-                IOldPublication oldPublication = (IOldPublication) o;
+                OldPublication oldPublication = (OldPublication) o;
                 return InfoOldPublication.newInfoFromDomain(oldPublication);
             }
         });

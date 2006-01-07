@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICostCenter;
+import net.sourceforge.fenixedu.domain.CostCenter;
 
 /**
  * @author Tânia Pousão
@@ -68,9 +68,9 @@ public class InfoCostCenter extends InfoObject {
     
     
     /* (non-Javadoc)
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(ICostCenter costCenter) {
+    public void copyFromDomain(CostCenter costCenter) {
         super.copyFromDomain(costCenter);
         if(costCenter != null) {
             setCode(costCenter.getCode());
@@ -80,7 +80,7 @@ public class InfoCostCenter extends InfoObject {
         }
     }
     
-    public static InfoCostCenter newInfoFromDomain(ICostCenter costCenter) {
+    public static InfoCostCenter newInfoFromDomain(CostCenter costCenter) {
         InfoCostCenter infoCostCenter = null;
         if (costCenter != null) {
             infoCostCenter = new InfoCostCenter();

@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -40,19 +40,19 @@ public class InsertStudentsFinalEvaluation implements IService {
 
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
 
-			ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+			Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
 			if (teacher == null) {
 				throw new NonExistingServiceException();
 			}
 
-			IStudent student = (IStudent) persistentStudent.readByOID(Student.class,
+			Student student = (Student) persistentStudent.readByOID(Student.class,
 					infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan()
 							.getInfoStudent().getIdInternal());
 
 			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent()
 					.setNumber(student.getNumber());
 
-			IEnrolmentEvaluation enrolmentEvaluationFromDb = (IEnrolmentEvaluation) persistentEnrolmentEvaluation
+			EnrolmentEvaluation enrolmentEvaluationFromDb = (EnrolmentEvaluation) persistentEnrolmentEvaluation
 					.readByOID(EnrolmentEvaluation.class, infoEnrolmentEvaluation.getIdInternal());
 
 			try {

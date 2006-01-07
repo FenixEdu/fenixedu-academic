@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,10 +25,10 @@ public class ReadInstitutions implements IService {
 
         IPersistentInstitution persistentInstitution = PersistenceSupportFactory
                 .getDefaultPersistenceSupport().getIPersistentInstitution();
-        List<IInstitution> institutions = persistentInstitution.readAll();
+        List<Institution> institutions = persistentInstitution.readAll();
         List<InfoInstitution> infoInstitutions = new ArrayList();
 
-        for (IInstitution institution : institutions) {
+        for (Institution institution : institutions) {
             InfoInstitution infoInstitution = new InfoInstitution();
             infoInstitution.copyFromDomain(institution);
             infoInstitutions.add(infoInstitution);

@@ -5,26 +5,26 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.IAuthorship;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 
 public class AuthorshipTest extends DomainTestBase {
 
-    IPerson person1;
-    IPerson person2;
-    IPerson person3;
-    IPerson person4;
-    IPerson person5;
+    Person person1;
+    Person person2;
+    Person person3;
+    Person person4;
+    Person person5;
     
-    List<IPerson> authors;
+    List<Person> authors;
     
-    IPublication publication;
+    Publication publication;
     
-    IAuthorship authorship1;
-    IAuthorship authorship2;
-    IAuthorship authorship3;
-    IAuthorship authorship4;
+    Authorship authorship1;
+    Authorship authorship2;
+    Authorship authorship3;
+    Authorship authorship4;
     
     
     Integer order;
@@ -48,7 +48,7 @@ public class AuthorshipTest extends DomainTestBase {
         person5 = new Person();
         person5.setNome("Autor5");
         
-        authors = new ArrayList<IPerson>();
+        authors = new ArrayList<Person>();
         authors.add(person1);
         
         publication = new Publication();
@@ -77,7 +77,7 @@ public class AuthorshipTest extends DomainTestBase {
 
     public void testCreateAuthorship() {
     	try {
-	        IAuthorship authorship = new Authorship(publication, person5, 5);
+	        Authorship authorship = new Authorship(publication, person5, 5);
 	        
 	        assertEquals("Publication Expected", authorship.getPublication(), publication);
 	        assertEquals("Person Expected", authorship.getAuthor(), person5);

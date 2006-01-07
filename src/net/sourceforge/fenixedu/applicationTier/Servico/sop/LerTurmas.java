@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
@@ -37,10 +37,10 @@ public class LerTurmas implements IService {
 
         ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) sp.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-        IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         if (curricularYear != null) {
@@ -54,7 +54,7 @@ public class LerTurmas implements IService {
         Iterator iterator = classesList.iterator();
         infoClassesList = new ArrayList();
         while (iterator.hasNext()) {
-            ISchoolClass elem = (ISchoolClass) iterator.next();
+            SchoolClass elem = (SchoolClass) iterator.next();
 
             InfoClass infoClass = InfoClass.newInfoFromDomain(elem);
             infoClass.setInfoExecutionPeriod(infoExecutionPeriod);

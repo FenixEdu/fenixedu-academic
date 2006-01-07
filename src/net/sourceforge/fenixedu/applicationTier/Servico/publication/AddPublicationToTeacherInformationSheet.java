@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -17,10 +17,10 @@ public class AddPublicationToTeacherInformationSheet implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherId);
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherId);
 
         IPersistentPublication persistentPublication = sp.getIPersistentPublication();
-        IPublication publication = (IPublication) persistentPublication.readByOID(Publication.class,
+        Publication publication = (Publication) persistentPublication.readByOID(Publication.class,
                 publicationId);
         
         teacher.addToTeacherInformationSheet(publication,PublicationArea.getEnum(publicationArea));

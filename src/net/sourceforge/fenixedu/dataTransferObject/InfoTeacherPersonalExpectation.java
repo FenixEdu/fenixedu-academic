@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 
 /**
  * 
@@ -347,7 +347,7 @@ public class InfoTeacherPersonalExpectation extends InfoObject {
     }
 
     public static InfoTeacherPersonalExpectation newInfoFromDomain(
-            ITeacherPersonalExpectation teacherPersonalExpectation) {
+            TeacherPersonalExpectation teacherPersonalExpectation) {
         InfoTeacherPersonalExpectation infoTeacherPersonalExpectation = null;
         if (teacherPersonalExpectation != null) {
             infoTeacherPersonalExpectation = new InfoTeacherPersonalExpectation();
@@ -357,7 +357,7 @@ public class InfoTeacherPersonalExpectation extends InfoObject {
         return infoTeacherPersonalExpectation;
     }
 
-    public void copyFromDomain(ITeacherPersonalExpectation teacherPersonalExpectation) {
+    public void copyFromDomain(TeacherPersonalExpectation teacherPersonalExpectation) {
         if (teacherPersonalExpectation != null) {
             super.copyFromDomain(teacherPersonalExpectation);
             setBookPublications(teacherPersonalExpectation.getBookPublications());

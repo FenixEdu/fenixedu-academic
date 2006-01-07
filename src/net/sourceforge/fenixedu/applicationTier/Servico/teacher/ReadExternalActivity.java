@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.ReadDomainObjectService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
@@ -30,9 +30,9 @@ public class ReadExternalActivity extends ReadDomainObjectService {
         return persistentExternalActivity;
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
         InfoExternalActivity infoExternalActivity = InfoExternalActivity
-                .newInfoFromDomain((IExternalActivity) domainObject);
+                .newInfoFromDomain((ExternalActivity) domainObject);
         return infoExternalActivity;
     }
 

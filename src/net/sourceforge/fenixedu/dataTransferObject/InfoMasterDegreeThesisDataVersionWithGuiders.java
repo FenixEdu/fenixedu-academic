@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.GuiderType;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -61,7 +61,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
         return this.allGuiders;
     }
 
-    public void copyFromDomain(IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+    public void copyFromDomain(MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         super.copyFromDomain(masterDegreeThesisDataVersion);
         if (masterDegreeThesisDataVersion != null) {
             setInfoAssistentGuiders(copyTeachers(masterDegreeThesisDataVersion.getAssistentGuiders()));
@@ -83,7 +83,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
     private List copyExternalPersons(List externalPersons) {
         
         List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>(externalPersons.size());
-        for (IExternalPerson externalPerson : (List<IExternalPerson>)externalPersons) {
+        for (ExternalPerson externalPerson : (List<ExternalPerson>)externalPersons) {
             infoExternalPersons.add(InfoExternalPersonWithPersonAndWLocation.newInfoFromDomain(externalPerson));            
         }
         return infoExternalPersons;
@@ -97,14 +97,14 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
     private List copyTeachers(List teachers) {
         return (List) CollectionUtils.collect(teachers, new Transformer() {
             public Object transform(Object arg0) {
-                ITeacher teacher = (ITeacher) arg0;
+                Teacher teacher = (Teacher) arg0;
                 return InfoTeacherWithPerson.newInfoFromDomain(teacher);
             }
         });
     }
 
     public static InfoMasterDegreeThesisDataVersion newInfoFromDomain(
-            IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
+            MasterDegreeThesisDataVersion masterDegreeThesisDataVersion) {
         InfoMasterDegreeThesisDataVersionWithGuiders infoMasterDegreeThesisDataVersionWithGuiders = null;
         if (masterDegreeThesisDataVersion != null) {
             infoMasterDegreeThesisDataVersionWithGuiders = new InfoMasterDegreeThesisDataVersionWithGuiders();

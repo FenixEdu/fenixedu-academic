@@ -6,25 +6,25 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.publication.PublicationDTO;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.IAuthorship;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 
 public class PublicationTest extends DomainTestBase {
 
-    IPerson person1;
-    IPerson person2;
-    IPerson person3;
+    Person person1;
+    Person person2;
+    Person person3;
     
-    List<IPerson> authors;
+    List<Person> authors;
     
     PublicationDTO inexistentPublicationDTO;
     PublicationDTO existentPublicationDTO;
-    IPublication existentPublication;
-    IPublicationType publicationType;
-    IPublicationType newPublicationType;
+    Publication existentPublication;
+    PublicationType publicationType;
+    PublicationType newPublicationType;
     
     String conference = "conference";
     String country = "country";
@@ -80,7 +80,7 @@ public class PublicationTest extends DomainTestBase {
         person3 = new Person();
         person3.setNome("Autor3");
         
-        authors = new ArrayList<IPerson>();
+        authors = new ArrayList<Person>();
         authors.add(person1);
         authors.add(person2);
         authors.add(person3);
@@ -197,7 +197,7 @@ public class PublicationTest extends DomainTestBase {
         existentPublication.setYear(Integer.valueOf(year+1));
         existentPublication.setYear_end(Integer.valueOf(year_end+1));
         
-        IAuthorship authorship = new Authorship();
+        Authorship authorship = new Authorship();
         authorship.setAuthor(person1);
         authorship.setOrder(1);
         authorship.setPublication(existentPublication);
@@ -209,7 +209,7 @@ public class PublicationTest extends DomainTestBase {
         super.tearDown();
     }
     
-    private void assertPublicationContent(IPublication publication) {
+    private void assertPublicationContent(Publication publication) {
         assertEquals(publication.getConference(),conference);
         assertEquals(publication.getCountry(),country);
         assertEquals(publication.getCriticizedAuthor(),criticized_author);
@@ -248,12 +248,12 @@ public class PublicationTest extends DomainTestBase {
     }
 
     public void testCreatePublication() {
-        IPublication publication = new Publication(inexistentPublicationDTO, publicationType, authors);
+        Publication publication = new Publication(inexistentPublicationDTO, publicationType, authors);
         
         assertNotNull(publication);
         
-        List<IPerson> createdAuthors = new ArrayList<IPerson>(authors.size());
-        for(IAuthorship authorship : publication.getPublicationAuthorships()) {
+        List<Person> createdAuthors = new ArrayList<Person>(authors.size());
+        for(Authorship authorship : publication.getPublicationAuthorships()) {
             createdAuthors.add(authorship.getAuthor());
         }
         
@@ -276,7 +276,7 @@ public class PublicationTest extends DomainTestBase {
         }
         
         try {
-            List authors1 = new ArrayList<IAuthorship>();
+            List authors1 = new ArrayList<Authorship>();
             new Publication(inexistentPublicationDTO, publicationType, authors1);
             fail("The publication shouldn't have been created without authors");
         } catch (DomainException domainException) {
@@ -290,8 +290,8 @@ public class PublicationTest extends DomainTestBase {
         
         assertNotNull(existentPublication);
         
-        List<IPerson> createdAuthors = new ArrayList<IPerson>(authors.size());
-        for(IAuthorship authorship : existentPublication.getPublicationAuthorships()) {
+        List<Person> createdAuthors = new ArrayList<Person>(authors.size());
+        for(Authorship authorship : existentPublication.getPublicationAuthorships()) {
             createdAuthors.add(authorship.getAuthor());
         }
         
@@ -313,7 +313,7 @@ public class PublicationTest extends DomainTestBase {
         }
         
         try {
-            List authors1 = new ArrayList<IAuthorship>();
+            List authors1 = new ArrayList<Authorship>();
             existentPublication.edit(existentPublicationDTO, newPublicationType, authors1);
             fail("The publication shouldn't have been edited without authors");
         } catch (DomainException domainException) {

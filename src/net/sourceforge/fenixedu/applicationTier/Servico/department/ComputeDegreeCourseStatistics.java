@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -27,23 +27,23 @@ public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics imple
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentCompetenceCourse persistentCompetenceCourse = sp.getIPersistentCompetenceCourse();
-        ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentCompetenceCourse.readByOID(
+        CompetenceCourse competenceCourse = (CompetenceCourse) persistentCompetenceCourse.readByOID(
                 CompetenceCourse.class, competenceCourseId);
 
         IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                 ExecutionYear.class, executionYearId);
 
-        Map<IDegree, List<ICurricularCourse>> groupedCourses = competenceCourse
+        Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse
                 .getAssociatedCurricularCoursesGroupedByDegree();
 
         List<DegreeCourseStatisticsDTO> results = new ArrayList<DegreeCourseStatisticsDTO>();
 
-        for (IDegree degree : groupedCourses.keySet()) {
-            List<IEnrolmentEvaluation> evaluations = new ArrayList<IEnrolmentEvaluation>();
-            List<ICurricularCourse> curricularCourses = groupedCourses.get(degree);
+        for (Degree degree : groupedCourses.keySet()) {
+            List<EnrolmentEvaluation> evaluations = new ArrayList<EnrolmentEvaluation>();
+            List<CurricularCourse> curricularCourses = groupedCourses.get(degree);
 
-            for (ICurricularCourse curricularCourse : curricularCourses) {
+            for (CurricularCourse curricularCourse : curricularCourses) {
                 evaluations.addAll(curricularCourse.getActiveEnrollmentEvaluations(executionYear));
             }
 

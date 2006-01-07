@@ -7,9 +7,9 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -23,8 +23,8 @@ public class ExternalActivityVO extends VersionedObjectsBase implements
 
 	public List readByTeacherId(Integer teacherId) throws ExcepcaoPersistencia {
 
-		ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherId);	
-		List<IExternalActivity> res = teacher.getAssociatedExternalActivities();
+		Teacher teacher = (Teacher) readByOID(Teacher.class, teacherId);	
+		List<ExternalActivity> res = teacher.getAssociatedExternalActivities();
 		return res;
 
 	}

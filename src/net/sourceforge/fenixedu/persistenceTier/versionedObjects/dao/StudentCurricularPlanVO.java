@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -21,11 +21,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
         return (List) readAll(StudentCurricularPlan.class);
     }
 
-    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
+    public StudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
             DegreeType degreeType) throws ExcepcaoPersistencia {
 
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
-        for (IStudentCurricularPlan scp : studentCurricularPlans) {
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
+        for (StudentCurricularPlan scp : studentCurricularPlans) {
             if (scp.getStudent().getNumber().equals(number)
                     && scp.getStudent().getDegreeType().equals(degreeType)
                     && (scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE) || scp
@@ -36,11 +36,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
         return null;
     }
 
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
+    public StudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
             throws ExcepcaoPersistencia {
 
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
-        for (IStudentCurricularPlan scp : studentCurricularPlans) {
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
+        for (StudentCurricularPlan scp : studentCurricularPlans) {
             if (scp.getStudent().getPerson().getUsername().equals(username)
                     && scp.getStudent().getDegreeType().equals(degreeType)
                     && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE))
@@ -49,11 +49,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
         return null;
     }
 
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
+    public StudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
             DegreeType degreeType) throws ExcepcaoPersistencia {
 
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
-        for (IStudentCurricularPlan scp : studentCurricularPlans) {
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
+        for (StudentCurricularPlan scp : studentCurricularPlans) {
             if (scp.getStudent().getNumber().equals(studentNumber)
                     && scp.getStudent().getDegreeType().equals(degreeType)
                     && scp.getCurrentState().equals(StudentCurricularPlanState.ACTIVE))
@@ -63,11 +63,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
     }
 
     public List readAllFromStudent(final int studentNumber) throws ExcepcaoPersistencia {
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
         List result = (List) CollectionUtils.select(studentCurricularPlans, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
                 return scp.getStudent().getNumber().intValue() == studentNumber;
             }
         });
@@ -76,11 +76,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
     }
 
     public List readByUsername(final String username) throws ExcepcaoPersistencia {
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
         List result = (List) CollectionUtils.select(studentCurricularPlans, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
                 return scp.getStudent().getPerson().getUsername().equals(username);
             }
         });
@@ -90,11 +90,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
 
     public List readByStudentNumberAndDegreeType(final Integer number, final DegreeType degreeType)
             throws ExcepcaoPersistencia {
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
         List result = (List) CollectionUtils.select(studentCurricularPlans, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
                 return scp.getStudent().getNumber().equals(number)
                         && scp.getStudent().getDegreeType().equals(degreeType);
             }
@@ -106,11 +106,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
     public List readAllByStudentNumberAndSpecialization(final Integer studentNumber,
             final DegreeType degreeType, final Specialization specialization)
             throws ExcepcaoPersistencia {
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
         List finalList = (List) CollectionUtils.select(studentCurricularPlans, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
                 boolean result = scp.getStudent().getNumber().equals(studentNumber)
                         && scp.getStudent().getDegreeType().equals(degreeType)
                         && scp.getSpecialization().equals(specialization);
@@ -124,11 +124,11 @@ public class StudentCurricularPlanVO extends VersionedObjectsBase implements
     public List readAllByStudentNumberAndSpecializationAndState(final Integer studentNumber,
             final DegreeType degreeType, final Specialization specialization,
             final StudentCurricularPlanState state) throws ExcepcaoPersistencia {
-        List<IStudentCurricularPlan> studentCurricularPlans = readAll();
+        List<StudentCurricularPlan> studentCurricularPlans = readAll();
         List finalList = (List) CollectionUtils.select(studentCurricularPlans, new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IStudentCurricularPlan scp = (IStudentCurricularPlan) arg0;
+                StudentCurricularPlan scp = (StudentCurricularPlan) arg0;
                 boolean result = scp.getStudent().getNumber().equals(studentNumber)
                         && scp.getStudent().getDegreeType().equals(degreeType)
                         && scp.getSpecialization().equals(specialization)

@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationTypeWithAttributesAndSubtypes;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,10 +21,10 @@ public class ReadAllPublicationTypes implements IService {
 
         IPersistentPublicationType persistentPublicationType = persistentSuport
                 .getIPersistentPublicationType();
-        List<IPublicationType> publicationTypeList = (List<IPublicationType>) persistentPublicationType.readAll(PublicationType.class);
+        List<PublicationType> publicationTypeList = (List<PublicationType>) persistentPublicationType.readAll(PublicationType.class);
 
         List<InfoPublicationType> result = new ArrayList<InfoPublicationType>();
-        for (IPublicationType publicationType : publicationTypeList) {
+        for (PublicationType publicationType : publicationTypeList) {
         	result.add(InfoPublicationTypeWithAttributesAndSubtypes.newInfoFromDomain(publicationType));
 		}
 

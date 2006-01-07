@@ -9,8 +9,8 @@ package net.sourceforge.fenixedu.infrastructuralTier;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.messaging.ReadMailingListsWithOutgoingMails;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.stm.Transaction;
 import relations.MailingListQueueOutgoingMails;
@@ -42,9 +42,9 @@ public class MailSender
 		try
 		{
 			ReadMailingListsWithOutgoingMails service = new ReadMailingListsWithOutgoingMails();
-			Collection<IMailingList> mailingLists = service.run();
+			Collection<MailingList> mailingLists = service.run();
 			System.out.println("Ha " + mailingLists.size() + " queues para tratar");
-			for (IMailingList mailingList : mailingLists)
+			for (MailingList mailingList : mailingLists)
 			{
 				this.send(mailingList);
 
@@ -58,12 +58,12 @@ public class MailSender
 		}
 	}
 
-	public void send(IMailingList mailingList)
+	public void send(MailingList mailingList)
 	{
 		System.out.println("#######Vou começar a tratar as cenas (ml:" + mailingList.getName()
 				+ ")!!!!!!!!!!, sou o gajo que de facto envia");
 
-		for (IMailMessage message : mailingList.getQueue().getMessages())
+		for (MailMessage message : mailingList.getQueue().getMessages())
 		{
 			// enviar !!!!!!!!!! n esquecer do REPLY TO LIST se for o caso
 			MailingListQueueOutgoingMails.remove(mailingList.getQueue(), message);

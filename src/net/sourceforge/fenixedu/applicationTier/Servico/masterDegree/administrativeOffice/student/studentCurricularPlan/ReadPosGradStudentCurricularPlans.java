@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,7 +29,7 @@ public class ReadPosGradStudentCurricularPlans implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-		IStudent student = (IStudent) persistentStudent.readByOID(Student.class, studentId);
+		Student student = (Student) persistentStudent.readByOID(Student.class, studentId);
 
 		if (student == null) {
 			throw new InvalidArgumentsServiceException("invalidStudentId");
@@ -40,7 +40,7 @@ public class ReadPosGradStudentCurricularPlans implements IService {
 
 			Iterator iterator = resultTemp.iterator();
 			while (iterator.hasNext()) {
-				IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 				result
 						.add(InfoStudentCurricularPlanWithInfoStudentAndInfoBranchAndSecondaryBranchAndInfoDegreeCurricularPlan
 								.newInfoFromDomain(studentCurricularPlan));

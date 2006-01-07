@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.IBibliographicReference;
+import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,7 +25,7 @@ public class EditBibliographicReference implements IService {
         final IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
                 .getIPersistentBibliographicReference();
 
-        final IBibliographicReference bibliographicReference = (IBibliographicReference) persistentBibliographicReference
+        final BibliographicReference bibliographicReference = (BibliographicReference) persistentBibliographicReference
                 .readByOID(BibliographicReference.class, bibliographicReferenceID);
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();

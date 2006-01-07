@@ -7,8 +7,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -35,7 +35,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndType implements IService 
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = suportePersistente
                 .getIStudentCurricularPlanPersistente();
 
-        IStudentCurricularPlan scp = persistentStudentCurricularPlan
+        StudentCurricularPlan scp = persistentStudentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(studentNumber, degreeType);
 
         InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan infoSCP = 
@@ -45,7 +45,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndType implements IService 
                 .getCurricularCourses(), new Transformer() {
 
             public Object transform(Object arg0) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                CurricularCourse curricularCourse = (CurricularCourse) arg0;
                 return InfoCurricularCourse.newInfoFromDomain(curricularCourse);
             }
         });

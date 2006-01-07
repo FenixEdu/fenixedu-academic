@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,7 +36,7 @@ public class ReadReimbursementGuidesByGuide implements IService {
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // guide
-        IGuide guide = (IGuide) ps.getIPersistentGuide().readByOID(Guide.class, guideId);
+        Guide guide = (Guide) ps.getIPersistentGuide().readByOID(Guide.class, guideId);
 
         // reimbursement Guides
         List reimbursementGuides = guide.getReimbursementGuides();
@@ -47,7 +47,7 @@ public class ReadReimbursementGuidesByGuide implements IService {
         while (it.hasNext()) {
 
             infoReimbursementGuides.add(InfoReimbursementGuide
-                    .newInfoFromDomain((IReimbursementGuide) it.next()));
+                    .newInfoFromDomain((ReimbursementGuide) it.next()));
 
         }
 

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.domain.organizationalStructure;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 
 public class RulesRepository {
 
@@ -14,7 +14,7 @@ public class RulesRepository {
 // É DE NOTAR QUE NUM FUTURO PROXIMO (?) ESTA CLASSE DEIXARÁ DE EXISTIR PARA
 // DAR ORIGEM A UM MODELO DE REGRAS E EXCEPÇÕES APLICADO ÀS FUNÇÕES.
     
-    public static Boolean isElegible(IPerson person, IUnit unit, String functionName) {
+    public static Boolean isElegible(Person person, Unit unit, String functionName) {
         if (unit.getName().equals("Conselho Directivo")) {
             return isElegibleConselhoDirectivo(person, functionName);
         }
@@ -54,7 +54,7 @@ public class RulesRepository {
         return true;
     }
     
-    private static Boolean isElegibleConselhoDirectivo (IPerson person, String functionName) {
+    private static Boolean isElegibleConselhoDirectivo (Person person, String functionName) {
         // presidente
         if ( functionName.equals("Presidente do IST")) {
             return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
@@ -62,7 +62,7 @@ public class RulesRepository {
         return true;
     }
   
-    private static Boolean isElegibleAssembleiaRepresentantes (IPerson person, String functionName) {
+    private static Boolean isElegibleAssembleiaRepresentantes (Person person, String functionName) {
         if ( functionName.equals("Presidente") ) {
             return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
         }
@@ -84,7 +84,7 @@ public class RulesRepository {
         return true;
     }
 
-//    private static Boolean isElegibleConselhoCientifico (IPerson person, String functionName) {
+//    private static Boolean isElegibleConselhoCientifico (Person person, String functionName) {
 //        if (functionName.equals("Presidente-Adjunto para os assuntos científicos")) {
 //            return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
 //        }
@@ -97,7 +97,7 @@ public class RulesRepository {
 //        return true;
 //    }
 //    
-//    private static Boolean isElegibleConselhoPedagogico (IPerson person, String functionName) {
+//    private static Boolean isElegibleConselhoPedagogico (Person person, String functionName) {
 //        if (functionName.equals("Presidente-Adjunto para os assuntos pedagógicos")) {
 //            return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
 //        }
@@ -116,7 +116,7 @@ public class RulesRepository {
 //        return true;
 //    }
  
-    private static Boolean isElegibleConselhoAdministrativo (IPerson person, String functionName){
+    private static Boolean isElegibleConselhoAdministrativo (Person person, String functionName){
         if (functionName.equals("Presidente-Adjunto para os assuntos administrativos")) {
             return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
         }
@@ -132,21 +132,21 @@ public class RulesRepository {
         return true;
     }
  
-    private static Boolean isElegibleConselhoConsultivo (IPerson person, String functionName){
+    private static Boolean isElegibleConselhoConsultivo (Person person, String functionName){
         if (functionName.equals("Membro Não Docente")) {
             return !isTeacher(person);
         }
         return true;
     }
     
-    private static Boolean isElegibleCIIST (IPerson person, String functionName) {
+    private static Boolean isElegibleCIIST (Person person, String functionName) {
         if (functionName.equals("Presidente")) {
             return isTeacher(person);
         }
         return true;
     }
     
-    private static Boolean isElegibleDefaultDepartment (IPerson person, String functionName) {
+    private static Boolean isElegibleDefaultDepartment (Person person, String functionName) {
         if (functionName.equals("Presidente")) {
             return (isCatedraticTeacher(person) || isAssociatedTeacher(person));
         }
@@ -156,14 +156,14 @@ public class RulesRepository {
         return true;
     }
     
-    private static Boolean isElegibleDefaultSection (IPerson person, String functionName) {
+    private static Boolean isElegibleDefaultSection (Person person, String functionName) {
         if (functionName.equals("Coordenador") || functionName.equals("Docente")) {
             return  isTeacher(person);
         }
         return true;
     }
     
-    private static Boolean isElegibleAEIST (IPerson person, String functionName) {
+    private static Boolean isElegibleAEIST (Person person, String functionName) {
             if (functionName.equals("Presidente")) {
                 return isStudent(person);
             }
@@ -174,7 +174,7 @@ public class RulesRepository {
  *                AUXILIAR METHODS
  ************************************************************/
     
-    private static Boolean isCatedraticTeacher (IPerson person) {
+    private static Boolean isCatedraticTeacher (Person person) {
         if (person.getTeacher() != null 
             && 
             person.getTeacher().getCategory().getLongName().equals("PROFESSOR CATEDRATICO")) {
@@ -185,7 +185,7 @@ public class RulesRepository {
         }
     }
     
-    private static Boolean isAssociatedTeacher (IPerson person) {
+    private static Boolean isAssociatedTeacher (Person person) {
         if (person.getTeacher() != null 
             && 
             person.getTeacher().getCategory().getLongName().equals("PROFESSOR ASSOCIADO")) {
@@ -196,7 +196,7 @@ public class RulesRepository {
         }
     }
     
-    private static Boolean isStudent (IPerson person) {
+    private static Boolean isStudent (Person person) {
         if(person.getStudentsCount() != 0) {
             return true;
         } 
@@ -205,7 +205,7 @@ public class RulesRepository {
         }
     }
     
-    private static Boolean isTeacher (IPerson person) {
+    private static Boolean isTeacher (Person person) {
         if(person.getTeacher() != null
                 &&
            person.getTeacher().getCategory().getLongName().startsWith("PROFESSOR")) {
@@ -216,7 +216,7 @@ public class RulesRepository {
         }
     }
     
-    private static Boolean isEmployee (IPerson person) {
+    private static Boolean isEmployee (Person person) {
         if(person.getEmployee() != null) {
             return true;
         } 
@@ -225,7 +225,7 @@ public class RulesRepository {
         }
     }
     
-//    private static Boolean isAssistent (IPerson person) {
+//    private static Boolean isAssistent (Person person) {
 //        if(person.getTeacher() != null 
 //                &&
 //           person.getTeacher().getCategory().getLongName().contains("ASSISTENTE")) {

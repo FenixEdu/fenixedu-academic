@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.Precedence;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
@@ -15,25 +15,25 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 
 public class PrecedenceTest extends DomainTestBase {
 
-	private IPrecedence precedenceWithRestrictionDoneCurricularCourse;
-	private IPrecedence precedenceWithRestrictionDoneOrHasBeenEnroledInCurricularCourse;
-	private IPrecedence precedenceWithRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse;
-	private IPrecedence precedenceWithRestrictionHasEverBeenOrWillBeAbleToBeEnroledInCurricularCourse;
-	private IPrecedence precedenceWithRestrictionNotDoneCurricularCourse;
-	private IPrecedence precedenceWithRestrictionNotEnroledInCurricularCourse;
-	private IPrecedence precedenceWithRestrictionByNumberOfDoneCurricularCourses;
-	private IPrecedence precedenceWithRestrictionPeriodToAply;
+	private Precedence precedenceWithRestrictionDoneCurricularCourse;
+	private Precedence precedenceWithRestrictionDoneOrHasBeenEnroledInCurricularCourse;
+	private Precedence precedenceWithRestrictionHasEverBeenOrIsCurrentlyEnroledInCurricularCourse;
+	private Precedence precedenceWithRestrictionHasEverBeenOrWillBeAbleToBeEnroledInCurricularCourse;
+	private Precedence precedenceWithRestrictionNotDoneCurricularCourse;
+	private Precedence precedenceWithRestrictionNotEnroledInCurricularCourse;
+	private Precedence precedenceWithRestrictionByNumberOfDoneCurricularCourses;
+	private Precedence precedenceWithRestrictionPeriodToAply;
 	
-	private IPrecedence precedenceToDelete;
+	private Precedence precedenceToDelete;
 	
-	private IPrecedence destinationPrecedence;
-	private IPrecedence sourcePrecedence;
-	private IRestriction restrictionToMerge1;
-	private IRestriction restrictionToMerge2;
-	private IRestriction restrictionToMerge3;
+	private Precedence destinationPrecedence;
+	private Precedence sourcePrecedence;
+	private Restriction restrictionToMerge1;
+	private Restriction restrictionToMerge2;
+	private Restriction restrictionToMerge3;
 	
-	private ICurricularCourse curricularCourse;
-	private ICurricularCourse precedentCurricularCourse;
+	private CurricularCourse curricularCourse;
+	private CurricularCourse precedentCurricularCourse;
 	
 	private void setUpCreate() {
 		
@@ -46,8 +46,8 @@ public class PrecedenceTest extends DomainTestBase {
 		
 		precedenceToDelete = new Precedence();
 		
-		IRestriction restriction = new RestrictionByNumberOfDoneCurricularCourses();
-		IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse restrictionByCurricularCourse = new RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
+		Restriction restriction = new RestrictionByNumberOfDoneCurricularCourses();
+		RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse restrictionByCurricularCourse = new RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse();
 			
 		precedenceToDelete.addRestrictions(restriction);
 		precedenceToDelete.addRestrictions(restrictionByCurricularCourse);
@@ -111,7 +111,7 @@ public class PrecedenceTest extends DomainTestBase {
 		assertPrecedenceCorrectCreation(precedenceWithRestrictionPeriodToAply);		
 	}
 	
-	private void assertPrecedenceCorrectCreation(IPrecedence precedence) {
+	private void assertPrecedenceCorrectCreation(Precedence precedence) {
 		assertTrue("Creation failed: Precedence has no CurricularCourse", precedence.hasCurricularCourse());
 		assertTrue("Creation failed: Precedence has no Restrictions", precedence.hasAnyRestrictions());
 	}

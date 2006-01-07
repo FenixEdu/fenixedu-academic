@@ -8,9 +8,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
-import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -23,7 +23,7 @@ public class EditCompetenceCourseLoad implements IService {
         throws ExcepcaoPersistencia, FenixServiceException {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentSupport
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
                 .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
@@ -37,7 +37,7 @@ public class EditCompetenceCourseLoad implements IService {
                         .getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(), courseLoad
                         .getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder());
             } else {
-                final ICompetenceCourseLoad competenceCourseLoad = (ICompetenceCourseLoad) persistentSupport
+                final CompetenceCourseLoad competenceCourseLoad = (CompetenceCourseLoad) persistentSupport
                         .getIPersistentObject().readByOID(CompetenceCourseLoad.class,
                                 courseLoad.getIdentification());
                 if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {

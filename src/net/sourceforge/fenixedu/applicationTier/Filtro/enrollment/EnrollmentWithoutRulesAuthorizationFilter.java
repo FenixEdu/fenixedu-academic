@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByManyRolesFilter;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -106,7 +106,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
                 IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-                IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         degreeType);
                 if (student != null) {
                     isRightType = true; // right student curricular plan

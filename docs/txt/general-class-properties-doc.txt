@@ -14,7 +14,7 @@ da definição de carro como por exemplo as rodas, o motor, etc.
 ESTRUTURA:
 ==========
 Dominio.classProperties.GeneralClassProperty.java
-Dominio.classProperties.IGeneralClassProperty.java
+Dominio.classProperties.GeneralClassProperty.java
 
 Util.classProperties.GeneralClassPropertyName.java
 Util.classProperties.GeneralClassPropertyValue.java
@@ -26,7 +26,7 @@ UTILIZAÇÃO:
 ===========
 Por cada classe Dominio.*.<XPTO> à qual se quer adicionar este tipo de propriedades, deve-se criar:
 1. Uma nova classe de Dominio.classProperties.<XPTO>Property e respectiva interface que estendem
-   Dominio.classProperties.GeneralClassProperty.java e Dominio.classProperties.IGeneralClassProperty.java respectivamente.
+   Dominio.classProperties.GeneralClassProperty.java e Dominio.classProperties.GeneralClassProperty.java respectivamente.
    A classe Dominio.classProperties.<XPTO>Property deve implementar os metodos equals e toString e deve ainda implementar
    a referencia à class Dominio.*.<XPTO>.
 2. Uma collection de Dominio.classProperties.<XPTO>Property na classe Dominio.*.<XPTO>.
@@ -40,7 +40,7 @@ EXEMPLO:
 ========
 Foi adicionada uma destas propriedades à classe ExecutionCourse, desta forma foram criadas as seguintes classes:
 	Dominio.classProperties.ExecutionCourseProperty.java
-	Dominio.classProperties.IExecutionCourseProperty.java
+	Dominio.classProperties.ExecutionCourseProperty.java
 	Util.classProperties.ExecutionCoursePropertyName.java
 	Util.classProperties.ExecutionCoursePropertyValue.java
 A razão de ter adicionado uma destas propriedades a esta classe foi a necessidade de distinguir uma ExecutionCourse de "1ª fase"

@@ -10,11 +10,11 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -31,20 +31,20 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod im
 
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) ps.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) ps.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, executionPeriodID);
 
         Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionPeriod);
 
         for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
 
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) ps
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ps
                     .getIPersistentObject()
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-            List<ICurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+            List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-            for (ICurricularCourse curricularCourse : curricularCourses) {
+            for (CurricularCourse curricularCourse : curricularCourses) {
 
                 if (curricularCourse.getActiveScopesInExecutionPeriodAndSemester(executionPeriod).isEmpty()) {
                     continue;
@@ -52,8 +52,8 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod im
 
                 if (curricularCourse.getExecutionCoursesByExecutionPeriod(executionPeriod).isEmpty()) {
 
-                    IExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
-                    ISite site = DomainFactory.makeSite();
+                    ExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();
+                    Site site = DomainFactory.makeSite();
 
                     executionCourse.setSite(site);
                     executionCourse.setExecutionPeriod(executionPeriod);
@@ -93,12 +93,12 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod im
         return sigla;
     }
 
-    private Set<String> readExistingExecutionCoursesSiglas(IExecutionPeriod executionPeriod) {
+    private Set<String> readExistingExecutionCoursesSiglas(ExecutionPeriod executionPeriod) {
 
         Set<String> existingExecutionCoursesSiglas = new HashSet<String>(executionPeriod
                 .getAssociatedExecutionCoursesCount());
 
-        for (IExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+        for (ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
             existingExecutionCoursesSiglas.add(executionCourse.getSigla());
         }
 

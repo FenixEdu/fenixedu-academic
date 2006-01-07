@@ -4,14 +4,14 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.Attends;
 
 /**
  * @author Tânia Pousão 18/Jun/2004
  */
 public class InfoFrequentaWithAll extends InfoFrequenta {
 
-    public void copyFromDomain(IAttends frequenta) {
+    public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
         if (frequenta != null) {
             setAluno(InfoStudentWithInfoPerson.newInfoFromDomain(frequenta.getAluno()));
@@ -21,7 +21,7 @@ public class InfoFrequentaWithAll extends InfoFrequenta {
         }
     }
 
-    public static InfoFrequenta newInfoFromDomain(IAttends frequenta) {
+    public static InfoFrequenta newInfoFromDomain(Attends frequenta) {
         InfoFrequentaWithAll infoFrequenta = null;
         if (frequenta != null) {
             infoFrequenta = new InfoFrequentaWithAll();

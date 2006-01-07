@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.persistenceTier.publication;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.util.PublicationArea;
@@ -19,10 +19,10 @@ import net.sourceforge.fenixedu.util.PublicationArea;
  */
 public interface IPersistentPublicationTeacher extends IPersistentObject {
 
-    public IPublicationTeacher readByTeacherAndPublication(ITeacher teacher, IPublication publication)
+    public PublicationTeacher readByTeacherAndPublication(Teacher teacher, Publication publication)
             throws ExcepcaoPersistencia;
 
-    public List readByTeacherAndPublicationArea(ITeacher teacher, PublicationArea publicationArea)
+    public List readByTeacherAndPublicationArea(Teacher teacher, PublicationArea publicationArea)
             throws ExcepcaoPersistencia;
 
 }

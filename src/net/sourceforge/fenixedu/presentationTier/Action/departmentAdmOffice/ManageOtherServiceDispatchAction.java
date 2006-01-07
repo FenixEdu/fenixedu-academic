@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.IOtherService;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.OtherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -49,14 +49,14 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
         Integer teacherNumber = Integer.valueOf(otherServiceForm.getString("teacherNumber"));
 
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView,
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView,
                 "ReadDomainExecutionPeriodByOID", new Object[] { (Integer) otherServiceForm
                         .get("executionPeriodId") });
         request.setAttribute("executionPeriod", executionPeriod);
 
-        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-        ITeacher teacher = null;
-        for (IDepartment department : manageableDepartments) {
+        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Teacher teacher = null;
+        for (Department department : manageableDepartments) {
             teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
                     executionPeriod.getEndDate());
             if (teacher != null) {
@@ -70,7 +70,7 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
         request.setAttribute("teacher", teacher);
 
-        ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null && !teacherService.getOtherServices().isEmpty()) {
             request.setAttribute("otherServices", teacherService.getOtherServices());
         }
@@ -84,20 +84,20 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
         DynaActionForm otherServiceForm = (DynaActionForm) form;
 
-        IExecutionPeriod executionPeriod = null;
-        ITeacher teacher = null;
+        ExecutionPeriod executionPeriod = null;
+        Teacher teacher = null;
         Integer otherServiceID = (Integer) otherServiceForm.get("otherServiceID");
         if (otherServiceID == null || otherServiceID == 0) {
             Integer teacherID = (Integer) otherServiceForm.get("teacherId");
             Integer executionPeriodID = (Integer) otherServiceForm.get("executionPeriodId");
 
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
+            teacher = (Teacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
                     "ReadDomainTeacherByOID", new Object[] { teacherID });
-            executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(SessionUtils
+            executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(SessionUtils
                     .getUserView(request), "ReadDomainExecutionPeriodByOID",
                     new Object[] { executionPeriodID });
         } else {
-            IOtherService otherService = (IOtherService) ServiceUtils.executeService(SessionUtils
+            OtherService otherService = (OtherService) ServiceUtils.executeService(SessionUtils
                     .getUserView(request), "ReadOtherServiceByOID", new Object[] { otherServiceID });
             otherServiceForm.set("credits", String.valueOf(otherService.getCredits()));
             otherServiceForm.set("reason", otherService.getReason());

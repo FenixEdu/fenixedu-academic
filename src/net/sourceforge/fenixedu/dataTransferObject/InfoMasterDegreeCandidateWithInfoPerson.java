@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.ArrayList;
 
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.util.State;
  */
 public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCandidate {
 
-    public void copyFromDomain(IMasterDegreeCandidate masterDegreeCandidate) {
+    public void copyFromDomain(MasterDegreeCandidate masterDegreeCandidate) {
         super.copyFromDomain(masterDegreeCandidate);
         if (masterDegreeCandidate != null) {
             setInfoPerson(InfoPersonWithInfoCountry.newInfoFromDomain(masterDegreeCandidate.getPerson()));
@@ -28,7 +28,7 @@ public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCan
             setSituationList(new ArrayList<InfoCandidateSituation>(masterDegreeCandidate.getSituations()
                     .size()));
 
-            for (ICandidateSituation candidateSituation : masterDegreeCandidate
+            for (CandidateSituation candidateSituation : masterDegreeCandidate
                     .getSituations()) {
                 getSituationList().add(InfoCandidateSituation.newInfoFromDomain(candidateSituation));
 
@@ -42,7 +42,7 @@ public class InfoMasterDegreeCandidateWithInfoPerson extends InfoMasterDegreeCan
     }
 
     public static InfoMasterDegreeCandidate newInfoFromDomain(
-            IMasterDegreeCandidate masterDegreeCandidate) {
+            MasterDegreeCandidate masterDegreeCandidate) {
         InfoMasterDegreeCandidateWithInfoPerson infoMasterDegreeCandidateWithInfoPerson = null;
         if (masterDegreeCandidate != null) {
             infoMasterDegreeCandidateWithInfoPerson = new InfoMasterDegreeCandidateWithInfoPerson();

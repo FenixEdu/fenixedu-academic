@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -22,10 +22,10 @@ public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistent
         super();
     }
 
-    public IExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia {
+    public ExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("year", year);
-        return (IExecutionYear) queryObject(ExecutionYear.class, criteria);
+        return (ExecutionYear) queryObject(ExecutionYear.class, criteria);
     }
 
     public List readExecutionYearsInPeriod(Date start, Date end) throws ExcepcaoPersistencia{
@@ -36,10 +36,10 @@ public class ExecutionYearOJB extends PersistentObjectOJB implements IPersistent
         return queryList(ExecutionYear.class, criteria);        
     }
     
-    public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia {
+    public ExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("state", PeriodState.CURRENT);
-        return (IExecutionYear) queryObject(ExecutionYear.class, criteria);
+        return (ExecutionYear) queryObject(ExecutionYear.class, criteria);
     }
 
 

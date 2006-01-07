@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
 
 /**
@@ -250,7 +250,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
     }
 
 
-    public void copyFromDomain(IQualification qualification) {
+    public void copyFromDomain(Qualification qualification) {
         super.copyFromDomain(qualification);
         if (qualification != null) {
             setTitle(qualification.getTitle());
@@ -276,7 +276,7 @@ public class InfoQualification extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoQualification newInfoFromDomain(IQualification qualification) {
+    public static InfoQualification newInfoFromDomain(Qualification qualification) {
         InfoQualification infoQualification = null;
         if (qualification != null) {
             infoQualification = new InfoQualification();

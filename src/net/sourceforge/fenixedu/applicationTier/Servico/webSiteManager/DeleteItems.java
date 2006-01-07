@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IWebSiteItem;
+import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
@@ -26,7 +26,7 @@ public class DeleteItems implements IService {
 		while (iterItemsCode.hasNext()) {
 			Integer itemCode = (Integer) iterItemsCode.next();
 
-			IWebSiteItem webSiteItemAux = (IWebSiteItem) persistentWebSiteItem.readByOID(
+			WebSiteItem webSiteItemAux = (WebSiteItem) persistentWebSiteItem.readByOID(
 					WebSiteItem.class, itemCode, true);
 			if (webSiteItemAux != null) {
 				persistentWebSiteItem.delete(webSiteItemAux);

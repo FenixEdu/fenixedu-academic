@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -36,18 +36,18 @@ public class ChangeDegree implements IService {
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
         final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
-        final IPerson personEmployee = persistentPerson.lerPessoaPorUsername(employeeUsername);
-        final IEmployee employee = personEmployee.getEmployee();
+        final Person personEmployee = persistentPerson.lerPessoaPorUsername(employeeUsername);
+        final Employee employee = personEmployee.getEmployee();
 
-        final IStudentCurricularPlan currentActiveStudentCurricularPlan = persistentStudentCurricularPlan
+        final StudentCurricularPlan currentActiveStudentCurricularPlan = persistentStudentCurricularPlan
                 .readActiveStudentCurricularPlan(studentNumber, DegreeType.DEGREE);
         currentActiveStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.INCOMPLETE);
 
-        final IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        final ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeToChangeTo);
-        final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-        final IStudentCurricularPlan newActiveStudentCurricularPlan = degreeCurricularPlan.getNewStudentCurricularPlan();
+        final StudentCurricularPlan newActiveStudentCurricularPlan = degreeCurricularPlan.getNewStudentCurricularPlan();
         newActiveStudentCurricularPlan.setBranch(null);
         newActiveStudentCurricularPlan.setClassification(Double.valueOf(0));
         newActiveStudentCurricularPlan.setCompletedCourses(0);
@@ -65,8 +65,8 @@ public class ChangeDegree implements IService {
         newActiveStudentCurricularPlan.setStudent(currentActiveStudentCurricularPlan.getStudent());
         newActiveStudentCurricularPlan.setWhen(Calendar.getInstance().getTime());
 
-        final List<IEnrolment> enrolments = new ArrayList<IEnrolment>(currentActiveStudentCurricularPlan.getEnrolments());
-        for (final IEnrolment enrolment : enrolments) {
+        final List<Enrolment> enrolments = new ArrayList<Enrolment>(currentActiveStudentCurricularPlan.getEnrolments());
+        for (final Enrolment enrolment : enrolments) {
             final Integer enrolmentId = enrolment.getIdInternal();
 
             if (enrolementsToTransferIds.contains(enrolmentId)) {

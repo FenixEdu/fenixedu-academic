@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 
 /**
  * @author Susana Fernandes
@@ -106,7 +106,7 @@ public class InfoStudentTestLog extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(IStudentTestLog studentTestLog) {
+    public void copyFromDomain(StudentTestLog studentTestLog) {
         super.copyFromDomain(studentTestLog);
         if (studentTestLog != null) {
             setDate(studentTestLog.getDate());
@@ -115,7 +115,7 @@ public class InfoStudentTestLog extends InfoObject {
         }
     }
 
-    public static InfoStudentTestLog newInfoFromDomain(IStudentTestLog studentTestLog) {
+    public static InfoStudentTestLog newInfoFromDomain(StudentTestLog studentTestLog) {
         InfoStudentTestLog infoStudentTestLog = null;
         if (studentTestLog != null) {
             infoStudentTestLog = new InfoStudentTestLog();

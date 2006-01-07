@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.Summary;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ISummary;
  */
 public class InfoSummaryWithAll extends InfoSummary {
 
-    public void copyFromDomain(ISummary summary) {
+    public void copyFromDomain(Summary summary) {
         super.copyFromDomain(summary);
         if (summary != null) {
             setInfoExecutionCourse(InfoExecutionCourseWithExecutionPeriod.newInfoFromDomain(summary
@@ -25,7 +25,7 @@ public class InfoSummaryWithAll extends InfoSummary {
         }
     }
 
-    public static InfoSummary newInfoFromDomain(ISummary summary) {
+    public static InfoSummary newInfoFromDomain(Summary summary) {
         InfoSummaryWithAll infoSummary = null;
         if (summary != null) {
             infoSummary = new InfoSummaryWithAll();

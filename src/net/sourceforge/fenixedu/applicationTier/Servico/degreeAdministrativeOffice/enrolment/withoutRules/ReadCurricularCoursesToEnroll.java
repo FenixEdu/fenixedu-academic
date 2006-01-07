@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCour
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoCurricularCourse2EnrollWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
@@ -54,15 +54,15 @@ public class ReadCurricularCoursesToEnroll implements IService {
 
     private static final int MAX_CURRICULAR_SEMESTERS = 2;
 
-    protected List findCurricularCourses(List curricularCourses, IStudentCurricularPlan studentCurricularPlan,
-    		IExecutionPeriod executionPeriod) {
+    protected List findCurricularCourses(List curricularCourses, StudentCurricularPlan studentCurricularPlan,
+    		ExecutionPeriod executionPeriod) {
     	final List result = new ArrayList();
-    	for (final ICurricularCourse curricularCourse : (List<ICurricularCourse>) curricularCourses) {
+    	for (final CurricularCourse curricularCourse : (List<CurricularCourse>) curricularCourses) {
     		if (!studentCurricularPlan
                     .isCurricularCourseApprovedInCurrentOrPreviousPeriod(
-                            (ICurricularCourse) curricularCourse, executionPeriod)
+                            (CurricularCourse) curricularCourse, executionPeriod)
                     && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(
-                            (ICurricularCourse) curricularCourse, executionPeriod)) {
+                            (CurricularCourse) curricularCourse, executionPeriod)) {
     			result.add(curricularCourse);
     		}
     	}
@@ -78,13 +78,13 @@ public class ReadCurricularCoursesToEnroll implements IService {
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
                 .getIStudentCurricularPlanPersistente();
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
 
         if (infoStudent == null || infoStudent.getNumber() == null) {
             throw new FenixServiceException("error.student.curriculum.noCurricularPlans");
         }
-        final IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
+        final StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(infoStudent.getNumber(), degreeType);
 
         if (studentCurricularPlan == null) {
@@ -93,14 +93,14 @@ public class ReadCurricularCoursesToEnroll implements IService {
 
         // Execution Degree
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.degree.noData");
         }
 
         // Degree Curricular Plan
-        IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
         if (degreeCurricularPlan == null || degreeCurricularPlan.getCurricularCourses() == null) {
             throw new FenixServiceException("error.degree.noData");
@@ -124,12 +124,12 @@ public class ReadCurricularCoursesToEnroll implements IService {
                         public boolean evaluate(Object arg0) {
                             boolean result = false;
 
-                            ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                            CurricularCourse curricularCourse = (CurricularCourse) arg0;
                             List scopes = curricularCourse
                                     .getActiveScopesInExecutionPeriod(executionPeriod);
                             Iterator iter = scopes.iterator();
                             while (iter.hasNext() && !result) {
-                                ICurricularCourseScope scope = (ICurricularCourseScope) iter.next();
+                                CurricularCourseScope scope = (CurricularCourseScope) iter.next();
                                 if (curricularSemestersListFinal.contains(scope.getCurricularSemester()
                                         .getSemester())
                                         && curricularYearsListFinal.contains(scope
@@ -144,7 +144,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
             curricularCoursesFromDegreeCurricularPlan = (List) CollectionUtils.select(
                     curricularCoursesFromDegreeCurricularPlan, new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                            CurricularCourse curricularCourse = (CurricularCourse) arg0;
                             List scopes = curricularCourse
                                     .getActiveScopesInExecutionPeriod(executionPeriod);
                             if (scopes.isEmpty())
@@ -161,7 +161,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
                         CurricularCourse2Enroll curricularCourse2Enroll = null;
 
                         curricularCourse2Enroll = new CurricularCourse2Enroll();
-                        curricularCourse2Enroll.setCurricularCourse((ICurricularCourse) arg0);
+                        curricularCourse2Enroll.setCurricularCourse((CurricularCourse) arg0);
 
                         curricularCourse2Enroll
                                 .setEnrollmentType(CurricularCourseEnrollmentType.DEFINITIVE);
@@ -212,8 +212,8 @@ public class ReadCurricularCoursesToEnroll implements IService {
         return result;
     }
 
-    private InfoStudentEnrollmentContext buildResult(IStudentCurricularPlan studentCurricularPlan,
-            List curricularCoursesToChoose, IExecutionPeriod executionPeriod) {
+    private InfoStudentEnrollmentContext buildResult(StudentCurricularPlan studentCurricularPlan,
+            List curricularCoursesToChoose, ExecutionPeriod executionPeriod) {
         InfoStudentCurricularPlan infoStudentCurricularPlan = InfoStudentCurricularPlanWithInfoStudentAndDegree
                 .newInfoFromDomain(studentCurricularPlan);
 
@@ -254,7 +254,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
      * @return IStudent
      * @throws ExcepcaoPersistencia
      */
-    protected IStudent getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
+    protected Student getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
 
@@ -266,7 +266,7 @@ public class ReadCurricularCoursesToEnroll implements IService {
      * @return IStudentCurricularPlan
      * @throws ExcepcaoPersistencia
      */
-    protected IStudentCurricularPlan getStudentCurricularPlan(IStudent student)
+    protected StudentCurricularPlan getStudentCurricularPlan(Student student)
             throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport

@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice;
 
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
-import net.sourceforge.fenixedu.domain.ICurricularCourseEquivalence;
+import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -15,7 +15,7 @@ public class DeleteCurricularCourseEquivalency implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentCurricularCourseEquivalence persistentCurricularCourseEquivalence = persistentSupport.getIPersistentCurricularCourseEquivalence();
 
-        final ICurricularCourseEquivalence curricularCourseEquivalence = (ICurricularCourseEquivalence) persistentCurricularCourseEquivalence.readByOID(CurricularCourseEquivalence.class, curricularCourseEquivalencyID);
+        final CurricularCourseEquivalence curricularCourseEquivalence = (CurricularCourseEquivalence) persistentCurricularCourseEquivalence.readByOID(CurricularCourseEquivalence.class, curricularCourseEquivalencyID);
         curricularCourseEquivalence.delete();
     }
 

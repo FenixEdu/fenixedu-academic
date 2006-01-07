@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,7 +34,7 @@ public class ReadCategories implements IService {
 
 		List result = (List) CollectionUtils.collect(categories, new Transformer() {
 			public Object transform(Object input) {
-				ICategory category = (ICategory) input;
+				Category category = (Category) input;
 				return InfoCategory.newInfoFromDomain(category);
 			}
 		});

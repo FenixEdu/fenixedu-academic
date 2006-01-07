@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 
 /**
  * @author Pica
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
  */
 public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends InfoGrantOrientationTeacher {
 
-    public void copyFromDomain(IGrantOrientationTeacher grantOrientationTeacher) {
+    public void copyFromDomain(GrantOrientationTeacher grantOrientationTeacher) {
         super.copyFromDomain(grantOrientationTeacher);
         if (grantOrientationTeacher != null) {
 
@@ -25,7 +25,7 @@ public class InfoGrantOrientationTeacherWithTeacherAndGrantContract extends Info
     }
 
     public static InfoGrantOrientationTeacher newInfoFromDomain(
-            IGrantOrientationTeacher grantOrientationTeacher) {
+            GrantOrientationTeacher grantOrientationTeacher) {
         InfoGrantOrientationTeacherWithTeacherAndGrantContract infoGrantOrientationTeacherWithTeacherAndGrantContract = null;
         if (grantOrientationTeacher != null) {
             infoGrantOrientationTeacherWithTeacherAndGrantContract = new InfoGrantOrientationTeacherWithTeacherAndGrantContract();

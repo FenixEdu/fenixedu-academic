@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacherExpectationDefinitionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -112,15 +112,15 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     private HtmlInputHidden selectedExecutionYearIdHidden;
 
-    private List<IExecutionCourse> lecturedDegreeExecutionCourses;
+    private List<ExecutionCourse> lecturedDegreeExecutionCourses;
 
     private Map<Integer, String> lecturedDegreeExecutionCourseDegreeNames;
 
-    private List<IExecutionCourse> lecturedMasterDegreeExecutionCourses;
+    private List<ExecutionCourse> lecturedMasterDegreeExecutionCourses;
 
     private Map<Integer, String> lecturedMasterDegreeExecutionCourseDegreeNames;
 
-    private List<IProposal> finalDegreeWorks;
+    private List<Proposal> finalDegreeWorks;
 
     private InfoTeacher infoTeacher;
 
@@ -473,19 +473,19 @@ public class TeacherExpectationManagement extends FenixBackingBean {
             FenixServiceException {
 
         if (this.expectationDefinitionPeriodOpen == null) {
-            ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod(getSelectedExecutionYearID());
+            TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod(getSelectedExecutionYearID());
             this.expectationDefinitionPeriodOpen = teacherExpectationDefinitionPeriod.isPeriodOpen();
         }
 
         return expectationDefinitionPeriodOpen;
     }
 
-    private ITeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod(
+    private TeacherExpectationDefinitionPeriod getTeacherExpectationDefinitionPeriod(
             Integer executionYearID) throws FenixFilterException, FenixServiceException {
         Integer departmentID = this.getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                 .getIdInternal();
 
-        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (ITeacherExpectationDefinitionPeriod) ServiceUtils
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (TeacherExpectationDefinitionPeriod) ServiceUtils
                 .executeService(getUserView(),
                         "ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID",
                         new Object[] { departmentID, executionYearID });
@@ -497,7 +497,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         this.expectationDefinitionPeriodOpen = expectationDefinitionPeriodOpen;
     }
 
-    public List<IExecutionCourse> getLecturedDegreeExecutionCourses() throws FenixFilterException,
+    public List<ExecutionCourse> getLecturedDegreeExecutionCourses() throws FenixFilterException,
             FenixServiceException {
 
         if (this.lecturedDegreeExecutionCourses == null) {
@@ -512,7 +512,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         return lecturedDegreeExecutionCourseDegreeNames;
     }
 
-    public List<IExecutionCourse> getLecturedMasterDegreeExecutionCourses() throws FenixFilterException,
+    public List<ExecutionCourse> getLecturedMasterDegreeExecutionCourses() throws FenixFilterException,
             FenixServiceException {
 
         if (this.lecturedMasterDegreeExecutionCourses == null) {
@@ -526,11 +526,11 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         return lecturedMasterDegreeExecutionCourseDegreeNames;
     }
 
-    private List<IExecutionCourse> readLecturedExecutionCourses(DegreeType degreeType)
+    private List<ExecutionCourse> readLecturedExecutionCourses(DegreeType degreeType)
             throws FenixFilterException, FenixServiceException {
         InfoTeacher infoTeacher = getInfoTeacher();
 
-        List<IExecutionCourse> lecturedExecutionCourses = (List<IExecutionCourse>) ServiceUtils
+        List<ExecutionCourse> lecturedExecutionCourses = (List<ExecutionCourse>) ServiceUtils
                 .executeService(getUserView(),
                         "ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType",
                         new Object[] { infoTeacher.getIdInternal(), this.getSelectedExecutionYearID(),
@@ -540,10 +540,10 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     }
 
     private Map<Integer, String> computeExecutionCoursesDegreeAcronyms(
-            List<IExecutionCourse> executionCourses) {
+            List<ExecutionCourse> executionCourses) {
         Map<Integer, String> result = new HashMap<Integer, String>();
 
-        for (IExecutionCourse executionCourse : executionCourses) {
+        for (ExecutionCourse executionCourse : executionCourses) {
             String degreeAcronyns = computeDegreeAcronyms(executionCourse);
             result.put(executionCourse.getIdInternal(), degreeAcronyns);
         }
@@ -551,13 +551,13 @@ public class TeacherExpectationManagement extends FenixBackingBean {
         return result;
     }
 
-    private String computeDegreeAcronyms(IExecutionCourse executionCourse) {
+    private String computeDegreeAcronyms(ExecutionCourse executionCourse) {
         StringBuilder degreeAcronyms = new StringBuilder();
 
-        List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
         Set<String> processedAcronyns = new HashSet<String>();
 
-        for (ICurricularCourse curricularCourse : curricularCourses) {
+        for (CurricularCourse curricularCourse : curricularCourses) {
             String degreeAcronym = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
 
             if (!processedAcronyns.contains(degreeAcronym)) {
@@ -577,13 +577,13 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     public List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
 
-        List<ITeacherExpectationDefinitionPeriod> expectationDefinitionPeriodsForDepartment = getUserView()
+        List<TeacherExpectationDefinitionPeriod> expectationDefinitionPeriodsForDepartment = getUserView()
                 .getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
                 .getTeacherExpectationDefinitionPeriods();
 
-        List<IExecutionYear> executionYears = new ArrayList<IExecutionYear>();
+        List<ExecutionYear> executionYears = new ArrayList<ExecutionYear>();
 
-        for (ITeacherExpectationDefinitionPeriod expectationDefinitionPeriod : expectationDefinitionPeriodsForDepartment) {
+        for (TeacherExpectationDefinitionPeriod expectationDefinitionPeriod : expectationDefinitionPeriodsForDepartment) {
             executionYears.add(expectationDefinitionPeriod.getExecutionYear());
         }
 
@@ -594,7 +594,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        for (IExecutionYear executionYear : executionYears) {
+        for (ExecutionYear executionYear : executionYears) {
             result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
         }
 
@@ -608,7 +608,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
 
     }
 
-    public List<IProposal> getFinalDegreeWorks() throws FenixFilterException, FenixServiceException {
+    public List<Proposal> getFinalDegreeWorks() throws FenixFilterException, FenixServiceException {
 
         if (this.finalDegreeWorks == null) {
             loadFinalDegreeWorks();
@@ -620,7 +620,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
     private void loadFinalDegreeWorks() throws FenixFilterException, FenixServiceException {
         InfoTeacher infoTeacher = getInfoTeacher();
 
-        this.finalDegreeWorks = (List<IProposal>) ServiceUtils.executeService(getUserView(),
+        this.finalDegreeWorks = (List<Proposal>) ServiceUtils.executeService(getUserView(),
                 "ReadFinalDegreeWorksByTeacherIDAndExecutionYearID", new Object[] {
                         infoTeacher.getIdInternal(), this.getSelectedExecutionYearID() });
     }
@@ -889,7 +889,7 @@ public class TeacherExpectationManagement extends FenixBackingBean {
             FenixServiceException {
 
         Integer newExecutionYearID = (Integer) valueChangeEvent.getNewValue();
-        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod(newExecutionYearID);
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = getTeacherExpectationDefinitionPeriod(newExecutionYearID);
 
         this.setExpectationDefinitionPeriodOpen(teacherExpectationDefinitionPeriod.isPeriodOpen());
     }   

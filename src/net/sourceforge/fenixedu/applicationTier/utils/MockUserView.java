@@ -4,18 +4,18 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.ICandidateView;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 public class MockUserView implements IUserView {
 
-	final private IPerson person;
+	final private Person person;
 
 	final private String username;
 
 	final private Collection roles;
 
-	public MockUserView(final String username, final Collection roles, final IPerson person) {
+	public MockUserView(final String username, final Collection roles, final Person person) {
 		this.username = username;
 		this.roles = roles;
 		this.person = person;
@@ -44,7 +44,7 @@ public class MockUserView implements IUserView {
 	public void setCandidateView(ICandidateView candidateView) {
 	}
 
-	public IPerson getPerson() {
+	public Person getPerson() {
 		return person;
 	}
 	

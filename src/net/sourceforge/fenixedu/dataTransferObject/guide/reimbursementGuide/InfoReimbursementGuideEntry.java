@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideEntry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 
 /**
  * 
@@ -92,7 +92,7 @@ public class InfoReimbursementGuideEntry extends InfoObject {
         this.value = value;
     }
 
-    public void copyFromDomain(IReimbursementGuideEntry reimbursementGuideEntry) {
+    public void copyFromDomain(ReimbursementGuideEntry reimbursementGuideEntry) {
         super.copyFromDomain(reimbursementGuideEntry);
         if (reimbursementGuideEntry != null) {
             setInfoGuideEntry(InfoGuideEntry.newInfoFromDomain(reimbursementGuideEntry.getGuideEntry()));
@@ -103,7 +103,7 @@ public class InfoReimbursementGuideEntry extends InfoObject {
     }
 
     public static InfoReimbursementGuideEntry newInfoFromDomain(
-            IReimbursementGuideEntry reimbursementGuideEntry) {
+            ReimbursementGuideEntry reimbursementGuideEntry) {
         InfoReimbursementGuideEntry infoReimbursementGuideEntry = null;
         if (reimbursementGuideEntry != null) {
             infoReimbursementGuideEntry = new InfoReimbursementGuideEntry();

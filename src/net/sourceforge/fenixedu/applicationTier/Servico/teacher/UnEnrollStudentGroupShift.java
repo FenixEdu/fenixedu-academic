@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
@@ -37,7 +37,7 @@ public class UnEnrollStudentGroupShift implements IService {
 
 		persistentGrouping = persistentSupport.getIPersistentGrouping();
 
-		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -46,7 +46,7 @@ public class UnEnrollStudentGroupShift implements IService {
 
 		persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 
-		IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
@@ -58,7 +58,7 @@ public class UnEnrollStudentGroupShift implements IService {
 			throw new InvalidChangeServiceException();
 		}
 
-		IShift shift = null;
+		Shift shift = null;
 		persistentStudentGroup.simpleLockWrite(studentGroup);
 		studentGroup.setShift(shift);
 

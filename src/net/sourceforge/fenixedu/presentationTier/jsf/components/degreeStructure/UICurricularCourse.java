@@ -5,16 +5,16 @@ import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.degreeStructure.IContext;
-import net.sourceforge.fenixedu.domain.degreeStructure.IDegreeModule;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class UICurricularCourse extends UIDegreeModule {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
 
     public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
 
-    private IContext previousContext;
+    private Context previousContext;
     private boolean byYears;
     
     public UICurricularCourse() {
@@ -22,13 +22,13 @@ public class UICurricularCourse extends UIDegreeModule {
         this.byYears = false;
     }
 
-    public UICurricularCourse(IDegreeModule curricularCourse, Boolean toEdit, int depth, String tabs, IContext previousContext) {
+    public UICurricularCourse(DegreeModule curricularCourse, Boolean toEdit, int depth, String tabs, Context previousContext) {
         super(curricularCourse, toEdit, depth, tabs);
         this.previousContext = previousContext;
         this.byYears = false;
     }
 
-    public UICurricularCourse(ICurricularCourse curricularCourse, Boolean toEdit, IContext previousContext) {
+    public UICurricularCourse(CurricularCourse curricularCourse, Boolean toEdit, Context previousContext) {
         this.degreeModule = curricularCourse;
         this.toEdit = toEdit;
         this.previousContext = previousContext;
@@ -86,7 +86,7 @@ public class UICurricularCourse extends UIDegreeModule {
         
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
-        writer.append(((ICurricularCourse)this.degreeModule).computeEctsCredits().toString());
+        writer.append(((CurricularCourse)this.degreeModule).computeEctsCredits().toString());
         writer.endElement("td");
         
         if (this.toEdit) {

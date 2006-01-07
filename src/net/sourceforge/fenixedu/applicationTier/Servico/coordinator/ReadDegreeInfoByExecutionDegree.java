@@ -6,9 +6,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,7 +36,7 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
             //Execution degree
             IPersistentExecutionDegree cursoExecucaoPersistente = suportePersistente
                     .getIPersistentExecutionDegree();
-            IExecutionDegree executionDegree = (IExecutionDegree) cursoExecucaoPersistente.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) cursoExecucaoPersistente.readByOID(
                     ExecutionDegree.class, infoExecutionDegreeId);
 
             if (executionDegree == null) {
@@ -48,7 +48,7 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
             }
 
             //Degree
-            IDegree degree = executionDegree.getDegreeCurricularPlan().getDegree();
+            Degree degree = executionDegree.getDegreeCurricularPlan().getDegree();
 
             if (degree == null) {
                 throw new FenixServiceException("error.impossibleDegreeInfo");
@@ -59,7 +59,7 @@ public class ReadDegreeInfoByExecutionDegree implements IService {
 
             //Last information about this degree
             if (degreeInfoList != null && degreeInfoList.size() > 0) {
-                IDegreeInfo degreeInfo = (IDegreeInfo) Collections.max(degreeInfoList, new BeanComparator("lastModificationDate"));
+                DegreeInfo degreeInfo = (DegreeInfo) Collections.max(degreeInfoList, new BeanComparator("lastModificationDate"));
                 infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);
 
                 //return the degree info with the last modification date

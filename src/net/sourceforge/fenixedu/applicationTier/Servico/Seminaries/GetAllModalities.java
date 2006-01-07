@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
-import net.sourceforge.fenixedu.domain.Seminaries.IModality;
+import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,7 +37,7 @@ public class GetAllModalities implements IService {
 		List cases = persistentModality.readAll();
 
 		for (Iterator iterator = cases.iterator(); iterator.hasNext();) {
-			IModality modality = (IModality) iterator.next();
+			Modality modality = (Modality) iterator.next();
 
 			infoCases.add(InfoModality.newInfoFromDomain(modality));
 		}

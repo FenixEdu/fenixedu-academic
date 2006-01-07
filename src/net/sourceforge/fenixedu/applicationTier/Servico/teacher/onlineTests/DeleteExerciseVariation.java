@@ -11,10 +11,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -34,12 +34,12 @@ public class DeleteExerciseVariation implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        IQuestion question = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionCode);
+        Question question = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionCode);
         if (question == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        for (IStudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
+        for (StudentTestQuestion studentTestQuestion : question.getStudentTestsQuestions()) {
             if (compareDates(studentTestQuestion.getDistributedTest().getEndDate(), studentTestQuestion.getDistributedTest().getEndHour())) {
                 result.add(new LabelValueBean(studentTestQuestion.getDistributedTest().getTitle(), studentTestQuestion.getStudent().getNumber()
                         .toString()));
@@ -47,15 +47,15 @@ public class DeleteExerciseVariation implements IService {
         }
 
         if (result.size() == 0) {
-            IQuestion newQuestion = getNewQuestion(question);
-            for (ITestQuestion testQuestion : question.getTestQuestions()) {
+            Question newQuestion = getNewQuestion(question);
+            for (TestQuestion testQuestion : question.getTestQuestions()) {
                 if (newQuestion == null) {
                     testQuestion.getTest().deleteTestQuestion(testQuestion);
                 } else {
                     testQuestion.setQuestion(getNewQuestion(question));
                 }
             }
-            IMetadata metadata = question.getMetadata();
+            Metadata metadata = question.getMetadata();
             if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
                 question.delete();
                 if (persistentSuport.getIPersistentMetadata().getNumberOfQuestions(metadata) <= 1) {
@@ -91,10 +91,10 @@ public class DeleteExerciseVariation implements IService {
         return false;
     }
 
-    private IQuestion getNewQuestion(IQuestion oldQuestion) {
-        IMetadata metadata = oldQuestion.getMetadata();
+    private Question getNewQuestion(Question oldQuestion) {
+        Metadata metadata = oldQuestion.getMetadata();
         if (metadata.getVisibleQuestions().size() > 1) {
-            for (IQuestion question : metadata.getVisibleQuestions()) {
+            for (Question question : metadata.getVisibleQuestions()) {
                 if (question.equals(oldQuestion)) {
                     return question;
                 }

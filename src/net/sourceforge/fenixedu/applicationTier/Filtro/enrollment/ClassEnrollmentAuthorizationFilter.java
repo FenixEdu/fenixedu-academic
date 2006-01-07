@@ -11,8 +11,8 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriodInClasses;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -43,7 +43,7 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         IPersistentEnrolmentPeriod persistentEnrolmentPeriod = persistentSupport
                 .getIPersistentEnrolmentPeriod();
 
-        IStudentCurricularPlan studentCurricularPlan = null;
+        StudentCurricularPlan studentCurricularPlan = null;
 
         studentCurricularPlan = persistentStudentCurricularPlan.readActiveStudentCurricularPlan(id
                 .getUtilizador(), DegreeType.DEGREE);
@@ -54,7 +54,7 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
         }
 
         if (studentCurricularPlan != null) {
-            IEnrolmentPeriodInClasses enrolmentPeriodInClasses = persistentEnrolmentPeriod
+            EnrolmentPeriodInClasses enrolmentPeriodInClasses = persistentEnrolmentPeriod
                     .readCurrentClassesEnrollmentPeriodForDegreeCurricularPlan(studentCurricularPlan
                             .getDegreeCurricularPlan().getIdInternal());
             if (enrolmentPeriodInClasses == null || enrolmentPeriodInClasses.getStartDate() == null

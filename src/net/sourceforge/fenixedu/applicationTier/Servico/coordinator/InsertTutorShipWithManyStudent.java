@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -42,7 +42,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
 
             //execution degree
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-            IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                     ExecutionDegree.class, executionDegreeId);
             String degreeCode = null;
             if (executionDegree != null && executionDegree.getDegreeCurricularPlan() != null
@@ -52,7 +52,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
 
             //teacher
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+            Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
             if (teacher == null) {
                 throw new NonExistingServiceException("error.tutor.unExistTeacher");
             }
@@ -61,7 +61,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
             for (int i = studentNumberFirst.intValue(); i <= studentNumberSecond.intValue(); i++) {
                 IPersistentStudent persistentStudent = sp.getIPersistentStudent();
                 Integer studentNumber = new Integer(i);
-                IStudent student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
+                Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         DegreeType.DEGREE);
                 if (student == null) {
                     //student doesn't exists...
@@ -83,7 +83,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
                 }
 
                 IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-                ITutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
+                Tutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
                 if (tutor == null) {
                     tutor = DomainFactory.makeTutor();
                     tutor.setTeacher(teacher);

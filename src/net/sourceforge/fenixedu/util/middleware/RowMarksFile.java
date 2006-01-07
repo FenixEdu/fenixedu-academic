@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.util.middleware;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -61,7 +61,7 @@ public class RowMarksFile {
         setEnrollmentYear("");
     }
 
-    public RowMarksFile(IEnrolmentEvaluation enrolmentEvaluation) {
+    public RowMarksFile(EnrolmentEvaluation enrolmentEvaluation) {
         
         transform(enrolmentEvaluation);
         
@@ -89,7 +89,7 @@ public class RowMarksFile {
 
     }
 
-    public void transform(IEnrolmentEvaluation enrolmentEvaluation) {
+    public void transform(EnrolmentEvaluation enrolmentEvaluation) {
         Integer code = enrolmentEvaluation.getEnrolment().getStudentCurricularPlan()
                 .getDegreeCurricularPlan().getDegree().getIdInternal();
         if (code.intValue() == 51)
@@ -120,7 +120,7 @@ public class RowMarksFile {
      * @param enrolmentEvaluation
      * @return
      */
-    private Integer translateSeason(IEnrolmentEvaluation enrolmentEvaluation) {
+    private Integer translateSeason(EnrolmentEvaluation enrolmentEvaluation) {
         if(enrolmentEvaluation.isNormal())
             return new Integer(0);
         if(enrolmentEvaluation.isImprovment())
@@ -133,13 +133,13 @@ public class RowMarksFile {
      * @param executionYear
      * @return
      */
-    private String getExecutionYearYear(IExecutionYear executionYear) {
+    private String getExecutionYearYear(ExecutionYear executionYear) {
         String[] tokens = executionYear.getYear().split("/");
         return StringUtils.trim(tokens[0]);
     }
 
-    private IEmployee readEmployee(IPerson person) {
-        IEmployee employee = null;
+    private Employee readEmployee(Person person) {
+        Employee employee = null;
         IPersistentEmployee persistentEmployee;
         try {
             persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();

@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.ProfessorshipSupportLessonsDTO;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -36,7 +36,7 @@ public class ReadProfessorshipSupportLessons implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
-        IProfessorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId,
+        Professorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId,
                 executionCourseId);
 
         InfoProfessorship infoProfessorship = InfoProfessorshipWithAll.newInfoFromDomain(professorship);
@@ -47,7 +47,7 @@ public class ReadProfessorshipSupportLessons implements IService {
         List infoSupportLessons = (List) CollectionUtils.collect(supportLessons, new Transformer() {
 
             public Object transform(Object input) {
-                ISupportLesson supportLesson = (ISupportLesson) input;
+                SupportLesson supportLesson = (SupportLesson) input;
                 InfoSupportLesson infoSupportLesson = InfoSupportLesson.newInfoFromDomain(supportLesson);
                 return infoSupportLesson;
             }

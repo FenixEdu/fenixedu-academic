@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
@@ -245,7 +245,7 @@ public class InfoDistributedTest extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(IDistributedTest distributedTest) {
+    public void copyFromDomain(DistributedTest distributedTest) {
         super.copyFromDomain(distributedTest);
         if (distributedTest != null) {
             setTitle(distributedTest.getTitle());
@@ -261,7 +261,7 @@ public class InfoDistributedTest extends InfoObject {
         }
     }
 
-    public static InfoDistributedTest newInfoFromDomain(IDistributedTest distributedTest) {
+    public static InfoDistributedTest newInfoFromDomain(DistributedTest distributedTest) {
         InfoDistributedTest infoDistributedTest = null;
         if (distributedTest != null) {
             infoDistributedTest = new InfoDistributedTest();

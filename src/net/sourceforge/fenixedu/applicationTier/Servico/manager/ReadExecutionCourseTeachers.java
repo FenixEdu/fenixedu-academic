@@ -10,9 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,7 +32,7 @@ public class ReadExecutionCourseTeachers implements IService {
 
 		List professorShips = null;
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+		ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
 				.readByOID(ExecutionCourse.class, executionCourseId);
 		professorShips = executionCourse.getProfessorships();
 
@@ -41,10 +41,10 @@ public class ReadExecutionCourseTeachers implements IService {
 
 		List infoTeachers = new ArrayList();
 		Iterator iter = professorShips.iterator();
-		ITeacher teacher = null;
+		Teacher teacher = null;
 
 		while (iter.hasNext()) {
-			teacher = ((IProfessorship) iter.next()).getTeacher();
+			teacher = ((Professorship) iter.next()).getTeacher();
 			infoTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
 		}
 

@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -63,12 +63,12 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             }
             final ISuportePersistente persistentSupport = PersistenceSupportFactory
                     .getDefaultPersistenceSupport();
-            final IEvaluation evaluation = (IEvaluation) persistentSupport.getIPersistentEvaluation()
+            final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentEvaluation()
                     .readByOID(Evaluation.class, evaluationID);
 
             final String studentUsername = (String) args[0];
-            for (final IExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
-                for (final IAttends attend : executionCourse.getAttends()) {
+            for (final ExecutionCourse executionCourse : evaluation.getAssociatedExecutionCourses()) {
+                for (final Attends attend : executionCourse.getAttends()) {
                     if (attend.getAluno().getPerson().getUsername().equals(studentUsername)) {
                         return true;
                     }

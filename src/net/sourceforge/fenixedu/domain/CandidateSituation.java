@@ -24,7 +24,7 @@ public class CandidateSituation extends CandidateSituation_Base {
 	}
 
 	public CandidateSituation(Date date, String remarks, State validation,
-			IMasterDegreeCandidate masterDegreeCandidate,
+			MasterDegreeCandidate masterDegreeCandidate,
 			SituationName situation) {
 		setMasterDegreeCandidate(masterDegreeCandidate);
 		setSituation(situation);

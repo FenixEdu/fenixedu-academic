@@ -20,9 +20,9 @@ public class ExecutionDegree extends ExecutionDegree_Base {
 
     public boolean isFirstYear() {
 
-        List<IExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
+        List<ExecutionDegree> executionDegrees = this.getDegreeCurricularPlan().getExecutionDegrees();
 
-        IExecutionDegree firstExecutionDegree = (IExecutionDegree) Collections.min(executionDegrees,
+        ExecutionDegree firstExecutionDegree = (ExecutionDegree) Collections.min(executionDegrees,
                 new BeanComparator("executionYear.year"));
 
         if (firstExecutionDegree.equals(this)) {

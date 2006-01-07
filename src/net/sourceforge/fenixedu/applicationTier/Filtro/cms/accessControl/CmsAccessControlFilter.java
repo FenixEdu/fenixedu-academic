@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl;
 
-import net.sourceforge.fenixedu.domain.cms.ICms;
+import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.filterManager.IFilter;
@@ -18,7 +18,7 @@ import pt.utl.ist.berserk.logic.filterManager.IFilter;
  */
 public abstract class CmsAccessControlFilter implements IFilter
 {
-	protected ICms readFenixCMS() throws ExcepcaoPersistencia
+	protected Cms readFenixCMS() throws ExcepcaoPersistencia
 	{
 		return PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readFenixCMS();
 	}

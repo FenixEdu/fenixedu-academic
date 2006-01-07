@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.cms;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import relations.CmsContents;
 import relations.CmsUsers;
 
@@ -12,13 +12,13 @@ public class Cms extends Cms_Base {
     
     public void delete()
     {
-    	for (IContent content : this.getContents())
+    	for (Content content : this.getContents())
     	{
     		CmsContents.remove(this,content);
     		content.delete();
     	}
     	
-    	for (IPerson person : this.getUsers())
+    	for (Person person : this.getUsers())
 		{
 			CmsUsers.remove(this,person);
 		}

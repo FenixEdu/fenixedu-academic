@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -33,18 +33,18 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = null;
+        ExecutionPeriod executionPeriod = null;
 
         if (executionPeriodId == null) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (IExecutionPeriod) executionCourseDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) executionCourseDAO.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
 
         IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
 
-        IExecutionDegree executionDegree = (IExecutionDegree) executionDegreeDAO.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
         if (executionDegree == null) {
@@ -58,7 +58,7 @@ public class ReadExecutionCoursesByExecutionDegreeService implements IService {
         List infoExecutionCourseList = (List) CollectionUtils.collect(executionCourseList, new Transformer() {
 
             public Object transform(Object input) {
-                IExecutionCourse executionCourse = (IExecutionCourse) input;
+                ExecutionCourse executionCourse = (ExecutionCourse) input;
                 InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                         .newInfoFromDomain(executionCourse);
                 return infoExecutionCourse;

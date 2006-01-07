@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeAndScopes;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,11 +28,11 @@ public class ReadCurricularCoursesByDegree implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+        ExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
                 executionYearString);
 
         // Read degree
-        IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanNameAndExecutionYear(degreeName,
                         executionYear.getIdInternal());
 
@@ -43,7 +43,7 @@ public class ReadCurricularCoursesByDegree implements IService {
         }
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-        for (ICurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan()
+        for (CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan()
                 .getCurricularCourses()) {
             infoCurricularCourses.add(InfoCurricularCourseWithInfoDegreeAndScopes
                     .newInfoFromDomain(curricularCourse));
@@ -56,12 +56,12 @@ public class ReadCurricularCoursesByDegree implements IService {
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();
-        for (ICurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
+        for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
             infoCurricularCourses.add(InfoCurricularCourseWithInfoDegreeAndScopes
                     .newInfoFromDomain(curricularCourse));
         }

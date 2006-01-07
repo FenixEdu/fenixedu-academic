@@ -14,11 +14,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -44,15 +44,15 @@ public class ReadStudentsByCurricularCourse implements IService {
         final IPersistentSite persistentSite = sp.getIPersistentSite();
 
         List infoStudentList = null;
-        ICurricularCourse curricularCourse = null;
+        CurricularCourse curricularCourse = null;
 
-        final ISite site = persistentSite.readByExecutionCourse(executionCourseCode);
+        final Site site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         if (courseCode == null) {
             infoStudentList = getAllAttendingStudents(sp, site);
         } else {
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-            curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+            curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                     CurricularCourse.class, courseCode);
 
             infoStudentList = getCurricularCourseStudents(curricularCourse, sp);
@@ -63,7 +63,7 @@ public class ReadStudentsByCurricularCourse implements IService {
         return siteView;
     }
 
-    private List getCurricularCourseStudents(ICurricularCourse curricularCourse, ISuportePersistente sp)
+    private List getCurricularCourseStudents(CurricularCourse curricularCourse, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         List infoStudentList;
 
@@ -71,8 +71,8 @@ public class ReadStudentsByCurricularCourse implements IService {
 
         infoStudentList = (List) CollectionUtils.collect(enrolments, new Transformer() {
             public Object transform(Object input) {
-                IEnrolment enrolment = (IEnrolment) input;
-                IStudent student = enrolment.getStudentCurricularPlan().getStudent();
+                Enrolment enrolment = (Enrolment) input;
+                Student student = enrolment.getStudentCurricularPlan().getStudent();
 
                 InfoStudent infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
                 return infoStudent;
@@ -81,18 +81,18 @@ public class ReadStudentsByCurricularCourse implements IService {
         return infoStudentList;
     }
 
-    private List getAllAttendingStudents(final ISuportePersistente sp, final ISite site) throws ExcepcaoPersistencia {
-        final List<IAttends> attendList = site.getExecutionCourse().getAttends();
+    private List getAllAttendingStudents(final ISuportePersistente sp, final Site site) throws ExcepcaoPersistencia {
+        final List<Attends> attendList = site.getExecutionCourse().getAttends();
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        for (final IAttends attends : attendList) {
-            final IStudent student = attends.getAluno();
+        for (final Attends attends : attendList) {
+            final Student student = attends.getAluno();
             infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(student));
         }
         return infoStudentList;
     }
 
-    private TeacherAdministrationSiteView createSiteView(List infoStudentList, ISite site,
-            ICurricularCourse curricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
+    private TeacherAdministrationSiteView createSiteView(List infoStudentList, Site site,
+            CurricularCourse curricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteStudents infoSiteStudents = new InfoSiteStudents();
         infoSiteStudents.setStudents(infoStudentList);
 

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -22,9 +22,9 @@ import org.apache.commons.collections.Predicate;
  */
 public class LEMOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
 
-    private IStudentCurricularPlan studentCurricularPlan;
+    private StudentCurricularPlan studentCurricularPlan;
 
-    public LEMOptionalPairGroupsEnrollmentRule(IStudentCurricularPlan studentCurricularPlan) {
+    public LEMOptionalPairGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan) {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
@@ -35,18 +35,18 @@ public class LEMOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
         List optionalPairCurricularCourseGroups = (List) CollectionUtils.select(
                 allOptionalCurricularCourseGroups, new Predicate() {
                     public boolean evaluate(Object obj) {
-                        ICurricularCourseGroup ccg = (ICurricularCourseGroup) obj;
+                        CurricularCourseGroup ccg = (CurricularCourseGroup) obj;
                         return ccg.getName().endsWith("PD") || ccg.getName().endsWith("PR");
                     }
                 });
 
-        ICurricularCourseGroup optionalCurricularCourseGroup = null;        
+        CurricularCourseGroup optionalCurricularCourseGroup = null;        
         boolean oneDone = false;
 
         for (Iterator iter = optionalPairCurricularCourseGroups.iterator(); iter.hasNext();) {
-            ICurricularCourseGroup ccg = (ICurricularCourseGroup) iter.next();
+            CurricularCourseGroup ccg = (CurricularCourseGroup) iter.next();
             for (Iterator iterCCG = ccg.getCurricularCourses().iterator(); iterCCG.hasNext();) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iterCCG.next();
+                CurricularCourse curricularCourse = (CurricularCourse) iterCCG.next();
                 if (studentCurricularPlan.isCurricularCourseEnrolled(curricularCourse)
                         || studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
                     if (optionalCurricularCourseGroup == null){
@@ -64,7 +64,7 @@ public class LEMOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
 
         List curricularCoursesToEnrollToRemove = new ArrayList();
         for (int iter = 0; iter < optionalPairCurricularCourseGroups.size(); iter++) {
-            ICurricularCourseGroup ccg = (ICurricularCourseGroup) optionalPairCurricularCourseGroups
+            CurricularCourseGroup ccg = (CurricularCourseGroup) optionalPairCurricularCourseGroups
                     .get(iter);
 
             if (oneDone)
@@ -78,11 +78,11 @@ public class LEMOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
      * @param ccg
      * @return
      */
-    private List getCurricularCoursesToEnroll(ICurricularCourseGroup ccg) {
+    private List getCurricularCoursesToEnroll(CurricularCourseGroup ccg) {
         List curricularCoursesToEnroll = new ArrayList();
         int size = ccg.getCurricularCourses().size();
         for (int iter = 0; iter < size; iter++) {
-            ICurricularCourse cc = ccg.getCurricularCourses().get(iter);
+            CurricularCourse cc = ccg.getCurricularCourses().get(iter);
             curricularCoursesToEnroll.add(new CurricularCourse2Enroll(cc, null, null));
         }
         return curricularCoursesToEnroll;

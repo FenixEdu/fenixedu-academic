@@ -8,7 +8,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -46,7 +46,7 @@ public class FenixPropertyUtils extends PropertyUtils {
     }
 
     private static boolean notADomainObject(Object value) {
-        return !((value instanceof IDomainObject) || value instanceof InfoObject);
+        return !((value instanceof DomainObject) || value instanceof InfoObject);
     }
 
     public static boolean canBeCopied(String name) {

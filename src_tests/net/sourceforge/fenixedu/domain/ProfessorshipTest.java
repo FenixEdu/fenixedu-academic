@@ -8,18 +8,18 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
+import net.sourceforge.fenixedu.domain.teacher.Category;
 
 
 public class ProfessorshipTest extends DomainTestBase {
 
-    IExecutionCourse executionCourse;
-    ITeacher teacher,teacher2;
-    ICategory category;
-    IProfessorship professorship, professorship2;
-    ISummary summary;
-    IShiftProfessorship shiftProfessorship;
-    ISupportLesson supportLesson;
+    ExecutionCourse executionCourse;
+    Teacher teacher,teacher2;
+    Category category;
+    Professorship professorship, professorship2;
+    Summary summary;
+    ShiftProfessorship shiftProfessorship;
+    SupportLesson supportLesson;
     
     protected void setUp() throws Exception {
         super.setUp();
@@ -190,7 +190,7 @@ public class ProfessorshipTest extends DomainTestBase {
         }
     }
 
-    private void testProfessorshipCreate(int value1, int value2, int value3, boolean first, IProfessorship professorship){
+    private void testProfessorshipCreate(int value1, int value2, int value3, boolean first, Professorship professorship){
         if(first){
             assertEquals("Diferent Professorship", professorship, executionCourse.getProfessorships().get(value1));
             assertEquals("Professorship Unexpected", executionCourse.getProfessorships().get(value1), teacher.getProfessorships().get(value1));
@@ -203,7 +203,7 @@ public class ProfessorshipTest extends DomainTestBase {
         assertEquals("Size Unexpected", value3, teacher.getProfessorshipsCount());
     }
     
-    private void testProfessorshipDelete(int value1, int value2, IProfessorship professorship){
+    private void testProfessorshipDelete(int value1, int value2, Professorship professorship){
         
         assertEquals("Diferent Professorship", professorship, executionCourse.getProfessorships().get(value1));
         assertEquals("Professorship Unexpected", executionCourse.getProfessorships().get(value1), teacher.getProfessorships().get(value1));

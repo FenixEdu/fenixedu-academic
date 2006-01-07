@@ -1,19 +1,19 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base {
 
     public WrittenEvaluationEnrolment() {
     }
 
-    public WrittenEvaluationEnrolment(IWrittenEvaluation writtenEvaluation, IStudent student) {
+    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Student student) {
         this.setWrittenEvaluation(writtenEvaluation);
         this.setStudent(student);
     }
 
-    public WrittenEvaluationEnrolment(IWrittenEvaluation writtenEvaluation, IStudent student, IRoom room) {
+    public WrittenEvaluationEnrolment(WrittenEvaluation writtenEvaluation, Student student, Room room) {
         this.setWrittenEvaluation(writtenEvaluation);
         this.setStudent(student);
         this.setRoom(room);
@@ -30,8 +30,8 @@ public class WrittenEvaluationEnrolment extends WrittenEvaluationEnrolment_Base 
         super.deleteDomainObject();
     }
 
-    public boolean isForExecutionPeriod(final IExecutionPeriod executionPeriod) {
-        for (final IExecutionCourse executionCourse : this.getWrittenEvaluation()
+    public boolean isForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        for (final ExecutionCourse executionCourse : this.getWrittenEvaluation()
                 .getAssociatedExecutionCourses()) {
             if (executionCourse.getExecutionPeriod() == executionPeriod) {
                 return true;

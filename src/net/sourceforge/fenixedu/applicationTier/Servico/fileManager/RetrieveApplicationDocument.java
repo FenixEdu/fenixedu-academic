@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ApplicationDocumentType;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -21,7 +21,7 @@ public class RetrieveApplicationDocument implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);
+        Person person = (Person) persistentPerson.readByOID(Person.class, personId);
 
         if (adt == ApplicationDocumentType.CURRICULUM_VITAE)
             return retrieveDocumentByType(person.getSlideNameForCandidateDocuments(), "candidateCV");

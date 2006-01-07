@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
@@ -47,8 +47,8 @@ public class InsertEvaluationMarks implements IService {
     public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-        ISite site = null;
-        IEvaluation evaluation = null;
+        Site site = null;
+        Evaluation evaluation = null;
         List marksErrorsInvalidMark = null;
         List attendList = null;
         HashMap newHashMarks = new HashMap();
@@ -63,7 +63,7 @@ public class InsertEvaluationMarks implements IService {
         site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         //Evaluation
-        evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
 
         //Attend List
         attendList = persistentAttend.readByExecutionCourse(executionCourseCode);
@@ -72,7 +72,7 @@ public class InsertEvaluationMarks implements IService {
         ListIterator iterAttends = attendList.listIterator();
 
         while (iterAttends.hasNext()) {
-            IAttends attend = (IAttends) iterAttends.next();
+            Attends attend = (Attends) iterAttends.next();
 
             String mark = (String) hashMarks.get(attend.getAluno().getNumber().toString());
             hashMarks.remove(attend.getAluno().getNumber().toString());
@@ -87,7 +87,7 @@ public class InsertEvaluationMarks implements IService {
                     marksErrorsInvalidMark.add(infoMark);
                 } else {
                     newHashMarks.put(attend.getAluno().getNumber().toString(), mark);
-                    IMark domainMark = persistentMark.readBy(evaluation, attend);
+                    Mark domainMark = persistentMark.readBy(evaluation, attend);
                     //verify if the student has already a mark
                     if (domainMark == null) {
                         domainMark = DomainFactory.makeMark();
@@ -104,7 +104,7 @@ public class InsertEvaluationMarks implements IService {
 
                 }
             } else {
-                IMark domainMark = persistentMark.readBy(evaluation, attend);
+                Mark domainMark = persistentMark.readBy(evaluation, attend);
                 if (domainMark != null) {
                     persistentMark.delete(domainMark);
                 }
@@ -115,7 +115,7 @@ public class InsertEvaluationMarks implements IService {
                 hashMarks);
     }
 
-    private Object createSiteView(ISite site, IEvaluation evaluation, HashMap hashMarks,
+    private Object createSiteView(Site site, Evaluation evaluation, HashMap hashMarks,
             List marksErrorsInvalidMark, List attendList, HashMap nonExistingStudents)
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteMarks infoSiteMarks = new InfoSiteMarks();
@@ -142,8 +142,8 @@ public class InsertEvaluationMarks implements IService {
         return siteView;
     }
 
-    private boolean isValidMark(IEvaluation evaluation, String mark, IStudent student) {
-        IStudentCurricularPlan studentCurricularPlan = null;
+    private boolean isValidMark(Evaluation evaluation, String mark, Student student) {
+        StudentCurricularPlan studentCurricularPlan = null;
 
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -156,7 +156,7 @@ public class InsertEvaluationMarks implements IService {
             e.printStackTrace();
         }
 
-        IDegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
 
         // test marks by execution course: strategy
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory

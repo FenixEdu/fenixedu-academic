@@ -5,14 +5,14 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -44,23 +44,23 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
                 .getDefaultPersistenceSupport();
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        final IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
-        final ITeacher teacher = person.getTeacher();
+        final Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        final Teacher teacher = person.getTeacher();
         if(teacher != null) {
-	        final List<IProposal> orientatingProposals = teacher.getAssociatedProposalsByOrientator();
-	        final List<IProposal> coorientatingProposals = teacher.getAssociatedProposalsByCoorientator();
+	        final List<Proposal> orientatingProposals = teacher.getAssociatedProposalsByOrientator();
+	        final List<Proposal> coorientatingProposals = teacher.getAssociatedProposalsByCoorientator();
 	
-	        final List<IProposal> proposals = new ArrayList(orientatingProposals.size()
+	        final List<Proposal> proposals = new ArrayList(orientatingProposals.size()
 	                + coorientatingProposals.size());
 	        proposals.addAll(orientatingProposals);
 	        proposals.addAll(coorientatingProposals);
 	
-	        for (final IProposal proposal : proposals) {
-	            for (final IGroupProposal groupProposal : proposal.getGroupProposals()) {
-	                final IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-	                for (final IGroupStudent groupStudent : group.getGroupStudents()) {
-	                    final IStudent student = groupStudent.getStudent();
-	                    for (final IStudentCurricularPlan studentCurricularPlan : student
+	        for (final Proposal proposal : proposals) {
+	            for (final GroupProposal groupProposal : proposal.getGroupProposals()) {
+	                final Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
+	                for (final GroupStudent groupStudent : group.getGroupStudents()) {
+	                    final Student student = groupStudent.getStudent();
+	                    for (final StudentCurricularPlan studentCurricularPlan : student
 	                            .getStudentCurricularPlans()) {
 	                        if (studentCurricularPlan.getIdInternal().equals(studentCurricularPlanId)) {
 	                            return;

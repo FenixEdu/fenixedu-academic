@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.renderers.utils.ClassHierarchyTable;
 
 import org.apache.log4j.Logger;
@@ -136,7 +136,7 @@ public class DefaultValues {
         return null;
     }
     
-    public IDomainObject createValue(IDomainObject o, Class type, String defaultValue) {
+    public DomainObject createValue(DomainObject o, Class type, String defaultValue) {
         return null;
     }
 }

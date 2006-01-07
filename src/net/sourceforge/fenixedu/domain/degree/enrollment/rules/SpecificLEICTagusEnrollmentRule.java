@@ -6,38 +6,38 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 	
-    public SpecificLEICTagusEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public SpecificLEICTagusEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         super(studentCurricularPlan, executionPeriod);
     }
 	
-	protected List<ICurricularCourse> getOptionalCurricularCourses() {
-		List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
-		List<ICurricularCourse> tagusCourses = getTagus5Courses();
-		List<ICurricularCourse> tagusSecCourses = getTagusSecAreaCourses();
-		List<ICurricularCourse> leicCourses = getLEIC5Courses();
+	protected List<CurricularCourse> getOptionalCurricularCourses() {
+		List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+		List<CurricularCourse> tagusCourses = getTagus5Courses();
+		List<CurricularCourse> tagusSecCourses = getTagusSecAreaCourses();
+		List<CurricularCourse> leicCourses = getLEIC5Courses();
 		result.addAll(tagusCourses);
 		result.addAll(leicCourses);
 		result.addAll(tagusSecCourses);
 		return result;
 	}
 	
-	protected List<ICurricularCourse> getTagus5Courses(){
-		Set<ICurricularCourse> areaCourses = new HashSet<ICurricularCourse>();
-        List<ICurricularCourseGroup> optionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
-        for (ICurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
-			List<ICurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
-			for (ICurricularCourse course : optionalCurricularCourses) {
+	protected List<CurricularCourse> getTagus5Courses(){
+		Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
+        List<CurricularCourseGroup> optionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan().getAllOptionalCurricularCourseGroups();
+        for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
+			List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
+			for (CurricularCourse course : optionalCurricularCourses) {
 				if(!studentCurricularPlan.isCurricularCourseApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
 					if(isAnyScopeActive(course.getScopes())) {
 						areaCourses.add(course);
@@ -50,20 +50,20 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 				}
 			}
 		}
-        return new ArrayList<ICurricularCourse>(areaCourses);
+        return new ArrayList<CurricularCourse>(areaCourses);
 	}
 	
-	protected List<ICurricularCourse> getTagusSecAreaCourses(){
-		Set<ICurricularCourse> areaCourses = new HashSet<ICurricularCourse>();
-		Set<ICurricularCourse> allCurricularCourses = new HashSet<ICurricularCourse>();
-		List<ICurricularCourseGroup> secCurricularCourseGroups = studentCurricularPlan.getSecundaryBranch().getCurricularCourseGroups();
-		for (ICurricularCourseGroup group : secCurricularCourseGroups) {
+	protected List<CurricularCourse> getTagusSecAreaCourses(){
+		Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
+		Set<CurricularCourse> allCurricularCourses = new HashSet<CurricularCourse>();
+		List<CurricularCourseGroup> secCurricularCourseGroups = studentCurricularPlan.getSecundaryBranch().getCurricularCourseGroups();
+		for (CurricularCourseGroup group : secCurricularCourseGroups) {
 			allCurricularCourses.addAll(group.getCurricularCourses());
 		}
 
 		allCurricularCourses.removeAll(specializationAndSecundaryAreaCurricularCoursesToCountForCredits);
 		
-		for (ICurricularCourse curricularCourse : allCurricularCourses) {
+		for (CurricularCourse curricularCourse : allCurricularCourses) {
 			if(!studentCurricularPlan.isCurricularCourseApproved(curricularCourse) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod)) {
 				if(isAnyScopeActive(curricularCourse.getScopes())) {
 					areaCourses.add(curricularCourse);
@@ -76,17 +76,17 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 			}
 		}
 		
-		return new ArrayList<ICurricularCourse>(areaCourses);
+		return new ArrayList<CurricularCourse>(areaCourses);
 	}
 
-	protected List<ICurricularCourse> getLEIC5Courses(){
+	protected List<CurricularCourse> getLEIC5Courses(){
 		try {
-			Set<ICurricularCourse> areaCourses = new HashSet<ICurricularCourse>();
-			IDegreeCurricularPlan leicDegreeCurricularPlan = (IDegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, 88);
-			List<ICurricularCourseGroup> optionalCurricularCourseGroups = leicDegreeCurricularPlan.getAllOptionalCurricularCourseGroups();
-	        for (ICurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
-				List<ICurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
-				for (ICurricularCourse course : optionalCurricularCourses) {
+			Set<CurricularCourse> areaCourses = new HashSet<CurricularCourse>();
+			DegreeCurricularPlan leicDegreeCurricularPlan = (DegreeCurricularPlan) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, 88);
+			List<CurricularCourseGroup> optionalCurricularCourseGroups = leicDegreeCurricularPlan.getAllOptionalCurricularCourseGroups();
+	        for (CurricularCourseGroup curricularCourseGroup : optionalCurricularCourseGroups) {
+				List<CurricularCourse> optionalCurricularCourses = curricularCourseGroup.getCurricularCourses();
+				for (CurricularCourse course : optionalCurricularCourses) {
 					if (!isApproved(course) && !studentCurricularPlan.isCurricularCourseEnrolledInExecutionPeriod(course, executionPeriod)) {
 						if(!studentCurricularPlan.isCurricularCourseApproved(course) && isAnyScopeActive(course.getScopes())) {
 							areaCourses.add(course);
@@ -99,7 +99,7 @@ public class SpecificLEICTagusEnrollmentRule extends SpecificLEICEnrollmentRule{
 					}
 				}
 			}
-	        return new ArrayList<ICurricularCourse>(areaCourses);
+	        return new ArrayList<CurricularCourse>(areaCourses);
 		} catch (ExcepcaoPersistencia e) {
 			throw new RuntimeException(e);
 		}

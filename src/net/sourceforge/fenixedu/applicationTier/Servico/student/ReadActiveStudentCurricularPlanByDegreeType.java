@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -34,8 +34,8 @@ public class ReadActiveStudentCurricularPlanByDegreeType implements IService {
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
 
-        IStudent student = persistentStudent.readByUsername(userView.getUtilizador());
-        IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
+        Student student = persistentStudent.readByUsername(userView.getUtilizador());
+        StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
 
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;

@@ -11,7 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRegistry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,12 +35,12 @@ public class ReadInquiriesRegistriesByExecutionPeriod implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		
 		IPersistentInquiriesRegistry inquiriesRegistryDAO = sp.getIPersistentInquiriesRegistry();
-		List<IInquiriesRegistry> inquiriesRegistries = inquiriesRegistryDAO.readByExecutionPeriodId(executionPeriodId);
+		List<InquiriesRegistry> inquiriesRegistries = inquiriesRegistryDAO.readByExecutionPeriodId(executionPeriodId);
 		
 		List<InfoInquiriesRegistry> infoInquiriesRegistries = new ArrayList<InfoInquiriesRegistry>(
 		        inquiriesRegistries.size());
 		
-		for (IInquiriesRegistry inquiriesRegistry : inquiriesRegistries) {
+		for (InquiriesRegistry inquiriesRegistry : inquiriesRegistries) {
 		    infoInquiriesRegistries.add(InfoInquiriesRegistry.newInfoFromDomain(inquiriesRegistry));
 		}
 		

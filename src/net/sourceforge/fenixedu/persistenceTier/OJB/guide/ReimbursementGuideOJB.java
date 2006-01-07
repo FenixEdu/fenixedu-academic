@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.guide;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuide;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -25,7 +25,7 @@ public class ReimbursementGuideOJB extends PersistentObjectOJB implements IPersi
         List reimbursementGuides = queryList(ReimbursementGuide.class, crit, "number", false);
 
         if (reimbursementGuides != null && !reimbursementGuides.isEmpty()) {
-            IReimbursementGuide reimbursementGuide = (IReimbursementGuide) reimbursementGuides.get(0);
+            ReimbursementGuide reimbursementGuide = (ReimbursementGuide) reimbursementGuides.get(0);
             reimbursementGuideNumber = new Integer(reimbursementGuide.getNumber().intValue() + 1);
         }
         return reimbursementGuideNumber;

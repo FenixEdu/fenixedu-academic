@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
@@ -41,11 +41,11 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
 
         while (iter.hasNext()) {
 			Integer curricularCourseId = (Integer) iter.next();
-			ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                     CurricularCourse.class, curricularCourseId);
             if (curricularCourse != null) {
                 //delete curriculum
-                ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
+                Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
                 
 				if (curriculum != null) {
                     curricularCourse.removeAssociatedCurriculums(curriculum);
@@ -60,7 +60,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
 						Iterator iterator = scopes.iterator();
                         while (iterator.hasNext()) {
 							try {
-								ICurricularCourseScope scope = (ICurricularCourseScope)iterator.next();
+								CurricularCourseScope scope = (CurricularCourseScope)iterator.next();
 								iterator.remove();
 								curricularCourse.removeScopes(scope);
 								
@@ -88,10 +88,10 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
     }
 	
 	
-	private Boolean canAllCurricularCourseScopesBeDeleted (List<ICurricularCourseScope> scopes) {
+	private Boolean canAllCurricularCourseScopesBeDeleted (List<CurricularCourseScope> scopes) {
 		List nonDeletableScopes = (List)CollectionUtils.select(scopes,new Predicate() {
 			public boolean evaluate(Object o) {
-				ICurricularCourseScope ccs = (ICurricularCourseScope)o;
+				CurricularCourseScope ccs = (CurricularCourseScope)o;
 				return !ccs.canBeDeleted();
 			}});
 		

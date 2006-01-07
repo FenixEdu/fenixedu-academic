@@ -6,14 +6,14 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExportGrouping;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
 
 /**
  * @author joaosa & rmalo
  */
 public interface IPersistentExportGrouping extends IPersistentObject{
 
-    public IExportGrouping readBy(Integer groupingID, Integer executionCourseID)
+    public ExportGrouping readBy(Integer groupingID, Integer executionCourseID)
     	throws ExcepcaoPersistencia;
    
     public List readAllByGrouping(Integer groupingID) 

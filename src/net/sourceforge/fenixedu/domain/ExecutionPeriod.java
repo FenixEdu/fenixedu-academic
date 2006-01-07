@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.fileSuport.INode;
  * @author jpvl
  * 
  */
-public class ExecutionPeriod extends ExecutionPeriod_Base {
+public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comparable {
 
     public String toString() {
         String result = "[EXECUTION_PERIOD";
@@ -28,13 +28,13 @@ public class ExecutionPeriod extends ExecutionPeriod_Base {
     }
 
     public INode getParentNode() {
-        IExecutionYear executionYear = getExecutionYear();
+        ExecutionYear executionYear = getExecutionYear();
         return executionYear;
     }
 
     public int compareTo(Object object) {
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) object; 
-        final IExecutionYear executionYear = executionPeriod.getExecutionYear();
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) object; 
+        final ExecutionYear executionYear = executionPeriod.getExecutionYear();
 
         if (getExecutionYear() == executionYear) {
             return getSemester().compareTo(executionPeriod.getSemester());

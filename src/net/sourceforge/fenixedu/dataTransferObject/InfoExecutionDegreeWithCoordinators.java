@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -14,7 +14,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class InfoExecutionDegreeWithCoordinators extends InfoExecutionDegreeWithCampus {
 
-    public void copyFromDomain(IExecutionDegree executionDegree) {
+    public void copyFromDomain(ExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setCoordinatorsList(copyICoordinator2InfoCoordinator(executionDegree.getCoordinatorsList()));
@@ -30,7 +30,7 @@ public class InfoExecutionDegreeWithCoordinators extends InfoExecutionDegreeWith
 
         infoCoordinators = (List) CollectionUtils.collect(coordinatorsList, new Transformer() {
             public Object transform(Object arg0) {
-                ICoordinator coordinator = (ICoordinator) arg0;
+                Coordinator coordinator = (Coordinator) arg0;
 
                 return InfoCoordinatorWithInfoPerson.newInfoFromDomain(coordinator);
             }
@@ -38,7 +38,7 @@ public class InfoExecutionDegreeWithCoordinators extends InfoExecutionDegreeWith
         return infoCoordinators;
     }
 
-    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(ExecutionDegree executionDegree) {
         InfoExecutionDegreeWithCoordinators infoExecutionDegreeWithCoordinators = null;
         if (executionDegree != null) {
             infoExecutionDegreeWithCoordinators = new InfoExecutionDegreeWithCoordinators();

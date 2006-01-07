@@ -18,11 +18,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,33 +37,33 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod imple
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IExecutionCourse executionCourse = sp.getIPersistentExecutionCourse()
+		ExecutionCourse executionCourse = sp.getIPersistentExecutionCourse()
 				.readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,
 						infoExecutionPeriod.getIdInternal());
 
-		List<IExam> associatedExams = new ArrayList();
-		List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
-		for (IEvaluation evaluation : associatedEvaluations) {
-			if (evaluation instanceof IExam) {
-				associatedExams.add((IExam) evaluation);
+		List<Exam> associatedExams = new ArrayList();
+		List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+		for (Evaluation evaluation : associatedEvaluations) {
+			if (evaluation instanceof Exam) {
+				associatedExams.add((Exam) evaluation);
 			}
 		}
 		for (int i = 0; i < associatedExams.size(); i++) {
-			IExam exam = associatedExams.get(i);
+			Exam exam = associatedExams.get(i);
 			if (exam.getSeason().equals(season)) {
 				infoViewExamByDayAndShift.setInfoExam(InfoExam.newInfoFromDomain(exam));
 
 				List infoExecutionCourses = new ArrayList();
 				List infoDegrees = new ArrayList();
 				for (int j = 0; j < exam.getAssociatedExecutionCourses().size(); j++) {
-					IExecutionCourse tempExecutionCourse = exam.getAssociatedExecutionCourses().get(j);
+					ExecutionCourse tempExecutionCourse = exam.getAssociatedExecutionCourses().get(j);
 					infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(tempExecutionCourse));
 
 					// prepare degrees associated with exam
 					List tempAssociatedCurricularCourses = executionCourse
 							.getAssociatedCurricularCourses();
 					for (int k = 0; k < tempAssociatedCurricularCourses.size(); k++) {
-						IDegree tempDegree = ((ICurricularCourse) tempAssociatedCurricularCourses.get(k))
+						Degree tempDegree = ((CurricularCourse) tempAssociatedCurricularCourses.get(k))
 								.getDegreeCurricularPlan().getDegree();
 						infoDegrees.add(InfoDegree.newInfoFromDomain(tempDegree));
 					}

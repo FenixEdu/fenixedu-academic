@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
@@ -18,10 +18,10 @@ public interface IPersistentCurricularCourseGroup extends IPersistentObject {
 
     public List readByBranchAndAreaType(Integer branchId, AreaType areaType) throws ExcepcaoPersistencia;
 
-    public ICurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(Integer branchId,
+    public CurricularCourseGroup readByBranchAndCurricularCourseAndAreaType(Integer branchId,
            Integer curricularCourseId, AreaType areaType) throws ExcepcaoPersistencia;
 
-    public ICurricularCourseGroup readByBranchAndScientificAreaAndAreaType(Integer branchId,
+    public CurricularCourseGroup readByBranchAndScientificAreaAndAreaType(Integer branchId,
             Integer scientificAreaId, AreaType areaType) throws ExcepcaoPersistencia;
 
     public List readAllOptionalCurricularCourseGroupsFromDegreeCurricularPlan(

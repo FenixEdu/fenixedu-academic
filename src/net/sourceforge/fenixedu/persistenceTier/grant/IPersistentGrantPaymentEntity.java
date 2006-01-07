@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.persistenceTier.grant;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  * @author barbosa
  */
 public interface IPersistentGrantPaymentEntity extends IPersistentObject {
-    public IGrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass)
+    public GrantPaymentEntity readByNumberAndClass(String entityNumber, String entityClass)
             throws ExcepcaoPersistencia;
 
     public List readAllPaymentEntitiesByClassName(String className) throws ExcepcaoPersistencia;

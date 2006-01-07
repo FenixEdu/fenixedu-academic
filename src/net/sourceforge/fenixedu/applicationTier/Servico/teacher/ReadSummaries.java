@@ -24,12 +24,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -60,14 +60,14 @@ public class ReadSummaries implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
                 .getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
         }
 
         IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-        ISite site = persistentSite.readByExecutionCourse(executionCourseId);
+        Site site = persistentSite.readByExecutionCourse(executionCourseId);
         if (site == null) {
             throw new FenixServiceException("no.site");
         }
@@ -83,12 +83,12 @@ public class ReadSummaries implements IService {
             infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
 
                 public Object transform(Object arg0) {
-                    final IShift turno = (IShift) arg0;
+                    final Shift turno = (Shift) arg0;
                     final InfoShift infoShift = InfoShift.newInfoFromDomain(turno);
                     infoShift.setInfoLessons(new ArrayList(turno.getAssociatedLessons().size()));
                     for (final Iterator iterator = turno.getAssociatedLessons().iterator(); iterator
                             .hasNext();) {
-                        final ILesson lesson = (ILesson) iterator.next();
+                        final Lesson lesson = (Lesson) iterator.next();
                         final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                         final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(lesson.getSala());
                         infoLesson.setInfoSala(infoRoom);
@@ -102,14 +102,14 @@ public class ReadSummaries implements IService {
         // execution courses's professorships for display to filter summary
         IPersistentProfessorship persistentProfessorship = persistentSuport
                 .getIPersistentProfessorship();
-        List<IProfessorship> professorships = persistentProfessorship
+        List<Professorship> professorships = persistentProfessorship
                 .readByExecutionCourse(executionCourseId);
         List infoProfessorships = new ArrayList();
         if (professorships != null && professorships.size() > 0) {
             infoProfessorships = (List) CollectionUtils.collect(professorships, new Transformer() {
 
                 public Object transform(Object arg0) {
-                    IProfessorship professorship = (IProfessorship) arg0;
+                    Professorship professorship = (Professorship) arg0;
                     return InfoProfessorshipWithAll.newInfoFromDomain(professorship);
                 }
             });
@@ -137,7 +137,7 @@ public class ReadSummaries implements IService {
         if (summaries != null && summaries.size() > 0) {
             Iterator iter = summaries.iterator();
             while (iter.hasNext()) {
-                ISummary summary = (ISummary) iter.next();
+                Summary summary = (Summary) iter.next();
                 InfoSummary infoSummary = InfoSummary.newInfoFromDomain(summary);
                 result.add(infoSummary);
             }
@@ -172,11 +172,11 @@ public class ReadSummaries implements IService {
     }
 
     protected List readSummariesByShift(Integer executionCourseId, Integer shiftId,
-            IExecutionCourse executionCourse, ITurnoPersistente persistentShift,
+            ExecutionCourse executionCourse, ITurnoPersistente persistentShift,
             IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia,
             FenixServiceException {
         if (shiftId != null && shiftId.intValue() > 0) {
-            IShift shiftSelected = (IShift) persistentShift.readByOID(Shift.class, shiftId);
+            Shift shiftSelected = (Shift) persistentShift.readByOID(Shift.class, shiftId);
             if (shiftSelected == null) {
                 throw new FenixServiceException("no.shift");
             }
@@ -219,7 +219,7 @@ public class ReadSummaries implements IService {
             List summaries) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (professorShiftId != null && professorShiftId.intValue() > 0) {
-            IProfessorship professorshipSelected = (IProfessorship) persistentProfessorship.readByOID(
+            Professorship professorshipSelected = (Professorship) persistentProfessorship.readByOID(
                     Professorship.class, professorShiftId);
 
             if (professorshipSelected == null || professorshipSelected.getTeacher() == null) {
@@ -240,23 +240,23 @@ public class ReadSummaries implements IService {
 
     protected List readSummariesOfOtherTeachersIfResponsible(Integer executionCourseId,
             Integer professorShiftId, ISuportePersistente persistentSuport,
-            IPersistentSummary persistentSummary, List summaries, List<IProfessorship> professorships, String summaryType)
+            IPersistentSummary persistentSummary, List summaries, List<Professorship> professorships, String summaryType)
             throws ExcepcaoPersistencia {
 
-        IProfessorship professorship = getProfessorship(professorShiftId, professorships);
+        Professorship professorship = getProfessorship(professorShiftId, professorships);
 
         if ((professorship != null) && (professorShiftId != null) && (professorShiftId.intValue() > 0)) {
             
-            IProfessorship responsibleFor = professorship.getTeacher().responsibleFor(executionCourseId);                           
+            Professorship responsibleFor = professorship.getTeacher().responsibleFor(executionCourseId);                           
             
             if (responsibleFor != null && responsibleFor.getResponsibleFor()) {
-                List<ISummary> summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);               
+                List<Summary> summariesByTeacher = persistentSummary.readByOtherTeachers(executionCourseId);               
 
                 if (summaryType != null && !summaryType.equals("0")) {
                     ShiftType sumaryType = ShiftType.valueOf(summaryType);
                 
                     List summariesAux = new ArrayList();
-                    for(ISummary summary : summariesByTeacher){                    
+                    for(Summary summary : summariesByTeacher){                    
                         if(summary.getSummaryType().equals(sumaryType))
                             summariesAux.add(summary);
                     }
@@ -292,10 +292,10 @@ public class ReadSummaries implements IService {
         return summaries;
     }
 
-    protected IProfessorship getProfessorship(Integer professorShiftId,
-            List<IProfessorship> professorships) {
-        IProfessorship professorship = null;
-        for (IProfessorship professorship2 : professorships) {
+    protected Professorship getProfessorship(Integer professorShiftId,
+            List<Professorship> professorships) {
+        Professorship professorship = null;
+        for (Professorship professorship2 : professorships) {
             if (professorship2.getIdInternal().equals(professorShiftId)) {
                 professorship = professorship2;
                 break;
@@ -304,8 +304,8 @@ public class ReadSummaries implements IService {
         return professorship;
     }
 
-    public static List findLesson(IPersistentSummary persistentSummary, IExecutionCourse executionCourse,
-            IShift shift) throws ExcepcaoPersistencia {
+    public static List findLesson(IPersistentSummary persistentSummary, ExecutionCourse executionCourse,
+            Shift shift) throws ExcepcaoPersistencia {
 
         List summariesByExecutionCourse = persistentSummary.readByExecutionCourse(executionCourse
                 .getIdInternal());
@@ -317,7 +317,7 @@ public class ReadSummaries implements IService {
         if (summariesByExecutionCourse != null && summariesByExecutionCourse.size() > 0) {
             ListIterator iterator = summariesByExecutionCourse.listIterator();
             while (iterator.hasNext()) {
-                ISummary summary = (ISummary) iterator.next();
+                Summary summary = (Summary) iterator.next();
 
                 Calendar dateAndHourSummary = Calendar.getInstance();
 
@@ -348,7 +348,7 @@ public class ReadSummaries implements IService {
                 if (shift.getAssociatedLessons() != null && shift.getAssociatedLessons().size() > 0) {
                     ListIterator iterLesson = shift.getAssociatedLessons().listIterator();
                     while (iterLesson.hasNext()) {
-                        ILesson lesson = (ILesson) iterLesson.next();
+                        Lesson lesson = (Lesson) iterLesson.next();
 
                         beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(
                                 Calendar.HOUR_OF_DAY));
@@ -404,7 +404,7 @@ public class ReadSummaries implements IService {
         return allSummaries;
     }
 
-    private List findLessonTypesExecutionCourse(IExecutionCourse executionCourse) {
+    private List findLessonTypesExecutionCourse(ExecutionCourse executionCourse) {
         List lessonTypes = new ArrayList();
 
         if (executionCourse.getTheoreticalHours() != null

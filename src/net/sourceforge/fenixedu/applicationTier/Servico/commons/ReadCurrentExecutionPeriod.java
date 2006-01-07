@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,7 +20,7 @@ public class ReadCurrentExecutionPeriod implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-        final IExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
+        final ExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
         return InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
     }

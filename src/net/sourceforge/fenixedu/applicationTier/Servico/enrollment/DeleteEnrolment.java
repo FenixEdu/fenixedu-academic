@@ -6,11 +6,11 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -35,9 +35,9 @@ public class DeleteEnrolment implements IService {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
         IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
-        final IEnrolment enrollment1 = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
+        final Enrolment enrollment1 = (Enrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
 
-        List<IEnrolment> enrollments2Delete = new ArrayList<IEnrolment>();
+        List<Enrolment> enrollments2Delete = new ArrayList<Enrolment>();
         List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()
                 .getAllStudentEnrolledEnrollmentsInExecutionPeriod(enrollment1.getExecutionPeriod());
         List finalEnrollments2Delete = new ArrayList();
@@ -45,7 +45,7 @@ public class DeleteEnrolment implements IService {
                 new Predicate() {
 
                     public boolean evaluate(Object arg0) {
-                        IEnrolment enrollment2 = (IEnrolment) arg0;
+                        Enrolment enrollment2 = (Enrolment) arg0;
                         return enrollment2.getCurricularCourse().getCurricularYearByBranchAndSemester(
                                 enrollment2.getStudentCurricularPlan().getBranch(),
                                 enrollment2.getExecutionPeriod().getSemester()).getYear().intValue() > enrollment1
@@ -62,17 +62,17 @@ public class DeleteEnrolment implements IService {
 
                     RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse.class);
             if (restrictions != null) {
-                Iterator<IRestriction> iter = restrictions.iterator();
+                Iterator<Restriction> iter = restrictions.iterator();
                 while (iter.hasNext()) {
-                    final IRestrictionByCurricularCourse restriction = (IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
+                    final RestrictionByCurricularCourse restriction = (RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) iter
                             .next();
                     if (enrollment1.getStudentCurricularPlan().isCurricularCourseEnrolled(
                             restriction.getPrecedence().getCurricularCourse())) {
-                        IEnrolment enrollment2Delete = (IEnrolment) CollectionUtils.find(
+                        Enrolment enrollment2Delete = (Enrolment) CollectionUtils.find(
                                 studentEnrolledEnrollmentsInExecutionPeriod, new Predicate() {
 
                                     public boolean evaluate(Object arg0) {
-                                        IEnrolment enrollment = (IEnrolment) arg0;
+                                        Enrolment enrollment = (Enrolment) arg0;
                                         return enrollment.getCurricularCourse().equals(
                                                 restriction.getPrecedence().getCurricularCourse());
                                     }
@@ -87,7 +87,7 @@ public class DeleteEnrolment implements IService {
         }
         finalEnrollments2Delete.add(enrollment1);
         finalEnrollments2Delete.addAll(enrollments2Delete);
-        Iterator<IEnrolment> iter = finalEnrollments2Delete.iterator();
+        Iterator<Enrolment> iter = finalEnrollments2Delete.iterator();
         while (iter.hasNext()) {
             iter.next().unEnroll();
         }

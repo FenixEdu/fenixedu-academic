@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -34,12 +34,12 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup implements IService {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
-        IProposal proposal = (IProposal) persistentFinalDegreeWork
+        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Proposal proposal = (Proposal) persistentFinalDegreeWork
                 .readByOID(Proposal.class, proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {
-            IScheduleing scheduleing = persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(group
+            Scheduleing scheduleing = persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(group
                     .getExecutionDegree().getIdInternal());
             if (scheduleing == null
                     || scheduleing.getMaximumNumberOfProposalCandidaciesPerGroup() == null) {

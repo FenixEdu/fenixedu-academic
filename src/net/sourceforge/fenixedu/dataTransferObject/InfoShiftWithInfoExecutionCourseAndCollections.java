@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -19,7 +19,7 @@ import org.apache.commons.collections.Transformer;
  */
 public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWithInfoExecutionCourse {
 
-    public void copyFromDomain(IShift shift) {
+    public void copyFromDomain(Shift shift) {
         super.copyFromDomain(shift);
         if (shift != null) {
             setInfoLessons(copyILessons2InfoLessons(shift.getAssociatedLessons()));
@@ -27,7 +27,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
         }
     }
 
-    public static InfoShift newInfoFromDomain(IShift shift) {
+    public static InfoShift newInfoFromDomain(Shift shift) {
         InfoShiftWithInfoExecutionCourseAndCollections infoShift = null;
         if (shift != null) {
             infoShift = new InfoShiftWithInfoExecutionCourseAndCollections();
@@ -47,7 +47,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
 
                 public Object transform(Object arg0) {
 
-                    return InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain((ILesson) arg0);
+                    return InfoLessonWithInfoRoomAndInfoExecutionCourse.newInfoFromDomain((Lesson) arg0);
                 }
 
             });
@@ -66,7 +66,7 @@ public class InfoShiftWithInfoExecutionCourseAndCollections extends InfoShiftWit
 
                 public Object transform(Object arg0) {
 
-                    return InfoClassWithInfoExecutionDegree.newInfoFromDomain((ISchoolClass) arg0);
+                    return InfoClassWithInfoExecutionDegree.newInfoFromDomain((SchoolClass) arg0);
                 }
 
             });

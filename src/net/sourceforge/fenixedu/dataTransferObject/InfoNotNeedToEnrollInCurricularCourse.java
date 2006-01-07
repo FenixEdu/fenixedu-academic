@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.INotNeedToEnrollInCurricularCourse;
+import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 /**
  * @author Ricardo Rodrigues
@@ -38,7 +38,7 @@ public class InfoNotNeedToEnrollInCurricularCourse extends InfoObject {
         this.studentCurricularPlan = studentCurricularPlan;
     }
 
-    public void copyFromDomain(INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse) {
+    public void copyFromDomain(NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse) {
         super.copyFromDomain(notNeedToEnrollInCurricularCourse);
 
         if (notNeedToEnrollInCurricularCourse != null) {
@@ -50,7 +50,7 @@ public class InfoNotNeedToEnrollInCurricularCourse extends InfoObject {
     }
 
     public static InfoNotNeedToEnrollInCurricularCourse newInfoFromDomain(
-            INotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse) {
+            NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse) {
         InfoNotNeedToEnrollInCurricularCourse infoNotNeedToEnrollInCurricularCourse = null;
         if (notNeedToEnrollInCurricularCourse != null) {
             infoNotNeedToEnrollInCurricularCourse = new InfoNotNeedToEnrollInCurricularCourse();

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICurricularYear;
+import net.sourceforge.fenixedu.domain.CurricularYear;
 
 /**
  * @author dcs-rjao
@@ -52,14 +52,14 @@ public class InfoCurricularYear extends InfoObject {
         this.year = year;
     }
 
-    public void copyFromDomain(ICurricularYear curricularYear) {
+    public void copyFromDomain(CurricularYear curricularYear) {
         super.copyFromDomain(curricularYear);
         if (curricularYear != null) {
             setYear(curricularYear.getYear());
         }
     }
 
-    public static InfoCurricularYear newInfoFromDomain(ICurricularYear curricularYear) {
+    public static InfoCurricularYear newInfoFromDomain(CurricularYear curricularYear) {
         InfoCurricularYear infoCurricularYear = null;
         if (curricularYear != null) {
             infoCurricularYear = new InfoCurricularYear();

@@ -4,11 +4,11 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class AttendsTest extends DomainTestBase {
 
-	private IAttends attendToDelete;
-	private IAttends attendNotToDelete1;
-	private IAttends attendNotToDelete2;
-	private IAttends attendNotToDelete3;
-	private IAttends attendNotToDelete4;
+	private Attends attendToDelete;
+	private Attends attendNotToDelete1;
+	private Attends attendNotToDelete2;
+	private Attends attendNotToDelete3;
+	private Attends attendNotToDelete4;
 	
 	private void setUpForDeleteCase() {
 		attendToDelete = new Attends();
@@ -17,20 +17,20 @@ public class AttendsTest extends DomainTestBase {
 		attendNotToDelete3 = new Attends();
 		attendNotToDelete4 = new Attends();
 		
-		IStudent student = new Student();
-		IEnrolment enrolment = new Enrolment();
-		IExecutionCourse executionCourse = new ExecutionCourse();		
+		Student student = new Student();
+		Enrolment enrolment = new Enrolment();
+		ExecutionCourse executionCourse = new ExecutionCourse();		
 		
-		IMark mark1 = new Mark();
-		IMark mark2 = new Mark();
+		Mark mark1 = new Mark();
+		Mark mark2 = new Mark();
         
-        IGrouping grouping = new Grouping();
+        Grouping grouping = new Grouping();
         
-        IStudentGroup studentGroup1 = new StudentGroup();
+        StudentGroup studentGroup1 = new StudentGroup();
         studentGroup1.setGrouping(grouping);
-        IStudentGroup studentGroup2 = new StudentGroup();
+        StudentGroup studentGroup2 = new StudentGroup();
         studentGroup2.setGrouping(grouping);
-        IStudentGroup studentGroup3 = new StudentGroup();
+        StudentGroup studentGroup3 = new StudentGroup();
         studentGroup3.setGrouping(grouping);
 
 		attendToDelete.setAluno(student);
@@ -124,7 +124,7 @@ public class AttendsTest extends DomainTestBase {
 		assertTrue("Should not dereference Mark", attendNotToDelete4.hasAnyAssociatedMarks());
 	}
 
-	private void assertAttendsNotDereferenced(IAttends attends) {
+	private void assertAttendsNotDereferenced(Attends attends) {
 		assertTrue("Should not dereference Student", attends.hasAluno());
 		assertTrue("Should not dereference Enrolment", attends.hasEnrolment());
 		assertTrue("Should not dereference ExecutionCourse", attends.hasDisciplinaExecucao());

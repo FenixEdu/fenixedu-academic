@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.degree.fin
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
@@ -18,10 +18,10 @@ public class TeacherDegreeFinalProjectStudentVO extends VersionedObjectsBase imp
     public List readByTeacherAndExecutionPeriod(Integer teacherId, Integer executionPeriodId)
             throws ExcepcaoPersistencia {
 
-        List<ITeacherDegreeFinalProjectStudent> tdfpStudents = (List<ITeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
-        List<ITeacherDegreeFinalProjectStudent> result = new ArrayList();
+        List<TeacherDegreeFinalProjectStudent> tdfpStudents = (List<TeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
+        List<TeacherDegreeFinalProjectStudent> result = new ArrayList();
 
-        for (ITeacherDegreeFinalProjectStudent student : tdfpStudents) {
+        for (TeacherDegreeFinalProjectStudent student : tdfpStudents) {
             if (student.getTeacher().getIdInternal().equals(teacherId)
                     && student.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
                 result.add(student);
@@ -31,12 +31,12 @@ public class TeacherDegreeFinalProjectStudentVO extends VersionedObjectsBase imp
         return result;
     }
 
-    public ITeacherDegreeFinalProjectStudent readByUnique(Integer teacherId, Integer executionPeriodId,
+    public TeacherDegreeFinalProjectStudent readByUnique(Integer teacherId, Integer executionPeriodId,
             Integer studentId) throws ExcepcaoPersistencia {
 
-        List<ITeacherDegreeFinalProjectStudent> tdfpStudents = (List<ITeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
+        List<TeacherDegreeFinalProjectStudent> tdfpStudents = (List<TeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
 
-        for (ITeacherDegreeFinalProjectStudent student : tdfpStudents) {
+        for (TeacherDegreeFinalProjectStudent student : tdfpStudents) {
             if (student.getTeacher().getIdInternal().equals(teacherId)
                     && student.getExecutionPeriod().getIdInternal().equals(executionPeriodId)
                     && student.getStudent().getIdInternal().equals(studentId)) {
@@ -50,10 +50,10 @@ public class TeacherDegreeFinalProjectStudentVO extends VersionedObjectsBase imp
     public List readByStudentAndExecutionPeriod(Integer studentId, Integer executionPeriodId)
             throws ExcepcaoPersistencia {
 
-        List<ITeacherDegreeFinalProjectStudent> tdfpStudents = (List<ITeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
-        List<ITeacherDegreeFinalProjectStudent> result = new ArrayList();
+        List<TeacherDegreeFinalProjectStudent> tdfpStudents = (List<TeacherDegreeFinalProjectStudent>) readAll(TeacherDegreeFinalProjectStudent.class);
+        List<TeacherDegreeFinalProjectStudent> result = new ArrayList();
 
-        for (ITeacherDegreeFinalProjectStudent student : tdfpStudents) {
+        for (TeacherDegreeFinalProjectStudent student : tdfpStudents) {
             if (student.getStudent().getIdInternal().equals(studentId)
                     && student.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
                 result.add(student);

@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,7 +28,7 @@ public class ReadStudentById implements IService {
 		InfoStudent infoStudent = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, id);
+		Student student = (Student) sp.getIPersistentStudent().readByOID(Student.class, id);
 		if (student != null) {
 			infoStudent = InfoStudentWithInfoPerson.newInfoFromDomain(student);
 		}

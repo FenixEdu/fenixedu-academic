@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQu
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestScope;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -40,14 +40,14 @@ public class GenetareStudentTestForSimulation implements IService {
         path = path.replace('\\', '/');
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        final Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
-        ITestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
-            final IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
                     ExecutionCourse.class, executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
@@ -64,10 +64,10 @@ public class GenetareStudentTestForSimulation implements IService {
         infoDistributedTest.setTestInformation(testInformation);
         infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        List<ITestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByTest(testId);
-        for (ITestQuestion testQuestionExample : testQuestionList) {
+        List<TestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByTest(testId);
+        for (TestQuestion testQuestionExample : testQuestionList) {
 
-            List<IQuestion> questionList = new ArrayList<IQuestion>();
+            List<Question> questionList = new ArrayList<Question>();
             questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
@@ -81,7 +81,7 @@ public class GenetareStudentTestForSimulation implements IService {
 
             if (questionList.size() == 0)
                 questionList.addAll(testQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
-            IQuestion question = getStudentQuestion(questionList);
+            Question question = getStudentQuestion(questionList);
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }
@@ -99,8 +99,8 @@ public class GenetareStudentTestForSimulation implements IService {
         return infoStudentTestQuestionList;
     }
 
-    private IQuestion getStudentQuestion(List<IQuestion> questions) {
-        IQuestion question = null;
+    private Question getStudentQuestion(List<Question> questions) {
+        Question question = null;
         if (questions.size() != 0) {
             Random r = new Random();
             int questionIndex = r.nextInt(questions.size());

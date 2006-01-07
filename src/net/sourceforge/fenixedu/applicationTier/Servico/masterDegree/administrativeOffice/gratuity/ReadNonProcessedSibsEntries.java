@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.sibs.InfoSibsPaymentFileEntry;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.ISibsPaymentFileEntry;
+import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,7 +30,7 @@ public class ReadNonProcessedSibsEntries implements IService {
 		List sibsFileEntries = persistentSibsPaymentFileEntry.readNonProcessed();
 
 		for (Iterator iter = sibsFileEntries.iterator(); iter.hasNext();) {
-			ISibsPaymentFileEntry sibsPaymentFileEntry = (ISibsPaymentFileEntry) iter.next();
+			SibsPaymentFileEntry sibsPaymentFileEntry = (SibsPaymentFileEntry) iter.next();
 			infoSibsFileEntries.add(InfoSibsPaymentFileEntry.newInfoFromDomain(sibsPaymentFileEntry));
 		}
 

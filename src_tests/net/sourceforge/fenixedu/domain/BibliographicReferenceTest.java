@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class BibliographicReferenceTest extends DomainTestBase {
 
-    private IExecutionCourse executionCourse;
+    private ExecutionCourse executionCourse;
 
-    private IBibliographicReference bibliographicReference;
+    private BibliographicReference bibliographicReference;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -82,7 +82,7 @@ public class BibliographicReferenceTest extends DomainTestBase {
 
     public void checkIfBibliographicReferenceAttributesAreCorrect(final String title,
             final String authors, final String reference, final String year, final Boolean optional,
-            final IExecutionCourse executionCourse, final int size) {
+            final ExecutionCourse executionCourse, final int size) {
         
         assertEquals("Different Title in BibliographicReference!", title, bibliographicReference
                 .getTitle());

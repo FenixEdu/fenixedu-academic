@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Curriculum;
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,7 +28,7 @@ public class EditCurriculum implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-		ICurriculum curriculum = (ICurriculum) persistentCurriculum.readByOID(Curriculum.class,
+		Curriculum curriculum = (Curriculum) persistentCurriculum.readByOID(Curriculum.class,
 				curriculumId, true);
 		if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
 			curriculum.setProgram(program);

@@ -25,17 +25,17 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteRoomTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenTest;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -61,7 +61,7 @@ public class RoomSiteComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Calendar day, IRoom room, IExecutionPeriod executionPeriod) throws Exception  {
+    public ISiteComponent getComponent(ISiteComponent component, Calendar day, Room room, ExecutionPeriod executionPeriod) throws Exception  {
 
         if (component instanceof InfoSiteRoomTimeTable) {
             return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room, executionPeriod);
@@ -74,7 +74,7 @@ public class RoomSiteComponentBuilder {
     // TODO (rspl): alterar as aulas a ler e o dia da semana
     // FIXME duplicated code: this method is (almost?) identical to ReadLessonsAndExamsInWeekAndRoom.run
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-            IRoom room, IExecutionPeriod executionPeriod) throws Exception {
+            Room room, ExecutionPeriod executionPeriod) throws Exception {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
@@ -95,10 +95,10 @@ public class RoomSiteComponentBuilder {
                 Iterator iterator = lessonList.iterator();
 
                 while (iterator.hasNext()) {
-                    ILesson aula = (ILesson) iterator.next();
-                    IRoomOccupation roomOccupation = aula.getRoomOccupation();
+                    Lesson aula = (Lesson) iterator.next();
+                    RoomOccupation roomOccupation = aula.getRoomOccupation();
                     
-                    IOccupationPeriod period = roomOccupation.getPeriod();
+                    OccupationPeriod period = roomOccupation.getPeriod();
                     InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
                     
                     if (this.intersectPeriods(day, endDay, infoPeriod)) {
@@ -122,7 +122,7 @@ public class RoomSiteComponentBuilder {
                         }
                         if (add) {
                             InfoLesson infoLesson = InfoLesson.newInfoFromDomain(aula);
-                            IShift shift = aula.getShift();
+                            Shift shift = aula.getShift();
                             if (shift == null) {
                                 continue;
                             }
@@ -135,7 +135,7 @@ public class RoomSiteComponentBuilder {
                             infoRoomOccupation.setInfoRoom(infoRoom);
                             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-                            IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+                            ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
                             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse.newInfoFromDomain(executionCourse);
                             infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
 
@@ -150,16 +150,16 @@ public class RoomSiteComponentBuilder {
 
             final Date startDate = startDay.getTime();
             final Date endDate = endDay.getTime();
-            for (final IRoomOccupation roomOccupation : room.getRoomOccupations()) {
-            	final IWrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
+            for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
+            	final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
             	if (writtenEvaluation != null) {
             		final Date evaluationDate = writtenEvaluation.getDayDate();
             		if (!evaluationDate.before(startDate) && !evaluationDate.after(endDate)) {
-            			if (writtenEvaluation instanceof IExam) {
-            				final IExam exam = (IExam) writtenEvaluation;
+            			if (writtenEvaluation instanceof Exam) {
+            				final Exam exam = (Exam) writtenEvaluation;
                             infoShowOccupations.add(InfoExam.newInfoFromDomain(exam));
-            			} else if (writtenEvaluation instanceof IWrittenTest) {
-            				final IWrittenTest writtenTest = (IWrittenTest) writtenEvaluation;
+            			} else if (writtenEvaluation instanceof WrittenTest) {
+            				final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
             				infoShowOccupations.add(InfoWrittenTest.newInfoFromDomain(writtenTest));
             			}
             		}
@@ -183,7 +183,7 @@ public class RoomSiteComponentBuilder {
         return false;
     }
 
-    private InfoPeriod calculateLessonsSeason(IExecutionPeriod executionPeriod) throws Exception {
+    private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws Exception {
         try {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -191,7 +191,7 @@ public class RoomSiteComponentBuilder {
 
             List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
-            IExecutionDegree executionDegree = (IExecutionDegree) executionDegreesList.get(0);
+            ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesList.get(0);
 
             Calendar startSeason1 = null;
             Calendar endSeason2 = null;
@@ -203,7 +203,7 @@ public class RoomSiteComponentBuilder {
                 endSeason2 = executionDegree.getPeriodLessonsSecondSemester().getEndDateOfComposite();
             }
             for (int i = 1; i < executionDegreesList.size(); i++) {
-                executionDegree = (IExecutionDegree) executionDegreesList.get(i);
+                executionDegree = (ExecutionDegree) executionDegreesList.get(i);
                 Calendar startLessons;
                 Calendar endLessons;
                 if (semester == 1) {

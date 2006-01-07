@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -21,9 +21,9 @@ public class ReadAllInstitutions implements IService {
         List infoInstitutions = new ArrayList();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<IInstitution> institutions = (List<IInstitution>)sp.getIPersistentInstitution().readAll();
+        List<Institution> institutions = (List<Institution>)sp.getIPersistentInstitution().readAll();
 
-        for (IInstitution institution : institutions) {
+        for (Institution institution : institutions) {
             infoInstitutions.add(InfoInstitution.newInfoFromDomain(institution));
         }
 

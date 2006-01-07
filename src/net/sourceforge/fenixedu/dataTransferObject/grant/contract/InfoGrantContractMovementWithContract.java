@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 
 /**
  * @author Pica
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
  */
 public class InfoGrantContractMovementWithContract extends InfoGrantContractMovement {
 
-    public void copyFromDomain(IGrantContractMovement grantMovement) {
+    public void copyFromDomain(GrantContractMovement grantMovement) {
         super.copyFromDomain(grantMovement);
         if (grantMovement != null) {
             setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
@@ -20,7 +20,7 @@ public class InfoGrantContractMovementWithContract extends InfoGrantContractMove
         }
     }
 
-    public static InfoGrantContractMovement newInfoFromDomain(IGrantContractMovement grantMovement) {
+    public static InfoGrantContractMovement newInfoFromDomain(GrantContractMovement grantMovement) {
         InfoGrantContractMovementWithContract infoGrantContractMovementWithContract = null;
         if (grantMovement != null) {
             infoGrantContractMovementWithContract = new InfoGrantContractMovementWithContract();

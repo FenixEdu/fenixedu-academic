@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategy
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -39,14 +39,14 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
 			throw new FenixServiceException();
 		}
 
-		IGrouping groupProperties = studentGroup.getGrouping();
+		Grouping groupProperties = studentGroup.getGrouping();
 
 		IGroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 				.getInstance();
@@ -75,7 +75,7 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IGrouping groupProperties = (IGrouping) sp.getIPersistentStudentGroup().readByOID(
+		Grouping groupProperties = (Grouping) sp.getIPersistentStudentGroup().readByOID(
 				Grouping.class, groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -91,7 +91,7 @@ public class VerifyStudentGroupAtributes implements IService {
 			throw new NotAuthorizedException();
 		}
 
-		IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
+		Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
 		result = strategy.checkNumberOfGroups(groupProperties, shift);
 
 		if (!result)
@@ -112,13 +112,13 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
 			throw new FenixServiceException();
 		}
-		IGrouping groupProperties = studentGroup.getGrouping();
+		Grouping groupProperties = studentGroup.getGrouping();
 
 		GroupEnrolmentStrategyFactory enrolmentGroupPolicyStrategyFactory = GroupEnrolmentStrategyFactory
 				.getInstance();
@@ -147,14 +147,14 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IGrouping groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
 				StudentGroup.class, studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();
@@ -187,14 +187,14 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IGrouping groupProperties = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
 				StudentGroup.class, studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();

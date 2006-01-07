@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,7 +35,7 @@ public class ReadMasterDegreeCandidate implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // Read the candidates
-        IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        MasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
                 .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber,
                         infoExecutionDegree.getIdInternal(), degreeType);
 
@@ -46,7 +46,7 @@ public class ReadMasterDegreeCandidate implements IService {
                 .newInfoFromDomain(masterDegreeCandidate);
         List situations = new ArrayList();
         while (iterator.hasNext()) {
-            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) iterator.next());
+            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((CandidateSituation) iterator.next());
             situations.add(infoCandidateSituation);
 
             // Check if this is the Active Situation
@@ -63,12 +63,12 @@ public class ReadMasterDegreeCandidate implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
                 infoPerson.getIdInternal());
 
         // Read the candidates
 
-        IMasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        MasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
                 .readByExecutionDegreeAndPerson(infoExecutionDegree.getIdInternal(),
                         person.getIdInternal());
 
@@ -79,7 +79,7 @@ public class ReadMasterDegreeCandidate implements IService {
                 .newInfoFromDomain(masterDegreeCandidate);
         List situations = new ArrayList();
         while (iterator.hasNext()) {
-            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) iterator.next());
+            InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((CandidateSituation) iterator.next());
             situations.add(infoCandidateSituation);
 
             // Check if this is the Active Situation

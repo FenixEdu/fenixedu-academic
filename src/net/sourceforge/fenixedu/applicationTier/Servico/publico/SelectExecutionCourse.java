@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -43,7 +43,7 @@ public class SelectExecutionCourse implements IService {
                         infoExecutionPeriod.getIdInternal());
 
         for (int i = 0; i < executionCourseList.size(); i++) {
-            IExecutionCourse executionCourse = (IExecutionCourse) executionCourseList.get(i);
+            ExecutionCourse executionCourse = (ExecutionCourse) executionCourseList.get(i);
 
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                     .newInfoFromDomain(executionCourse);

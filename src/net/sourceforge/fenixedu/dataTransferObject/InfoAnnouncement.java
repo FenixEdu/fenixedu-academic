@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IAnnouncement;
+import net.sourceforge.fenixedu.domain.Announcement;
 
 /**
  * @author EP 15
@@ -131,7 +131,7 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
 
     }
 
-    public void copyFromDomain(IAnnouncement announcement) {
+    public void copyFromDomain(Announcement announcement) {
         super.copyFromDomain(announcement);
         if (announcement != null) {
             setCreationDate(announcement.getCreationDate());
@@ -141,7 +141,7 @@ public class InfoAnnouncement extends InfoObject implements Comparable, ISiteCom
         }
     }
 
-    public static InfoAnnouncement newInfoFromDomain(IAnnouncement announcement) {
+    public static InfoAnnouncement newInfoFromDomain(Announcement announcement) {
         InfoAnnouncement infoAnnouncement = null;
         if (announcement != null) {
             infoAnnouncement = new InfoAnnouncement();

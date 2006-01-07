@@ -5,10 +5,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -39,10 +39,10 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID implements IS
 		IPersistentInsuranceTransaction insuranceTransactionDAO = sp
 				.getIPersistentInsuranceTransaction();
 
-		IExecutionYear executionYear = (IExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
 				ExecutionYear.class, executionYearId);
 
-		IStudent student = (IStudent) sp.getIPersistentStudent().readByOID(Student.class, studentId);
+		Student student = (Student) sp.getIPersistentStudent().readByOID(Student.class, studentId);
 
 		if ((executionYear == null) || (student == null)) {
 			return null;
@@ -60,7 +60,7 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID implements IS
 
 		if (insuranceTransactionList.size() == 1) {
 			infoInsuranceTransaction = InfoInsuranceTransaction
-					.newInfoFromDomain((IInsuranceTransaction) insuranceTransactionList.get(0));
+					.newInfoFromDomain((InsuranceTransaction) insuranceTransactionList.get(0));
 		}
 
 		return infoInsuranceTransaction;

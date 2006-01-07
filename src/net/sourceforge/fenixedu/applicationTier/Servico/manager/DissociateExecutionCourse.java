@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -19,20 +19,20 @@ public class DissociateExecutionCourse implements IService {
             ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentObject()
+        final CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentObject()
                 .readByOID(CurricularCourse.class, curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentObject().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentObject().readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
-        List<IExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
-        List<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        List<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 
         if (!executionCourses.isEmpty() && !curricularCourses.isEmpty()) {
             executionCourses.remove(executionCourse);

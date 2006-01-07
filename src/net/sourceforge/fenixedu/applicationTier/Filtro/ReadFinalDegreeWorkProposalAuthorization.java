@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
 
-            IProposal proposal = (IProposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+            Proposal proposal = (Proposal) persistentFinalDegreeWork.readByOID(Proposal.class,
                     finalDegreeWorkProposalOID);
             if (proposal != null) {
                 if (proposal.getStatus() != null

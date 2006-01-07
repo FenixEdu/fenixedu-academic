@@ -12,19 +12,19 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IPersonFunction;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
-import net.sourceforge.fenixedu.domain.teacher.IAdvise;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherLegalRegimen;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
+import net.sourceforge.fenixedu.domain.teacher.Advise;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
+import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.PublicationArea;
@@ -40,15 +40,15 @@ public class Teacher extends Teacher_Base {
      * BUSINESS SERVICES *
      **************************************************************************/
 
-    public void addToTeacherInformationSheet(IPublication publication, PublicationArea publicationArea) {
+    public void addToTeacherInformationSheet(Publication publication, PublicationArea publicationArea) {
         new PublicationTeacher(publication, this, publicationArea);
     }
 
-    public void removeFromTeacherInformationSheet(IPublication publication) {
-        Iterator<IPublicationTeacher> iterator = getTeacherPublications().iterator();
+    public void removeFromTeacherInformationSheet(Publication publication) {
+        Iterator<PublicationTeacher> iterator = getTeacherPublications().iterator();
 
         while (iterator.hasNext()) {
-            IPublicationTeacher publicationTeacher = iterator.next();
+            PublicationTeacher publicationTeacher = iterator.next();
             if (publicationTeacher.getPublication().equals(publication)) {
                 iterator.remove();
                 publicationTeacher.delete();
@@ -66,20 +66,20 @@ public class Teacher extends Teacher_Base {
     }
 
     public List responsibleFors() {
-        List<IProfessorship> professorships = this.getProfessorships();
-        List<IProfessorship> res = new ArrayList<IProfessorship>();
+        List<Professorship> professorships = this.getProfessorships();
+        List<Professorship> res = new ArrayList<Professorship>();
 
-        for (IProfessorship professorship : professorships) {
+        for (Professorship professorship : professorships) {
             if (professorship.getResponsibleFor())
                 res.add(professorship);
         }
         return res;
     }
 
-    public IProfessorship responsibleFor(Integer executionCourseId) {
-        List<IProfessorship> professorships = this.getProfessorships();
+    public Professorship responsibleFor(Integer executionCourseId) {
+        List<Professorship> professorships = this.getProfessorships();
 
-        for (IProfessorship professorship : professorships) {
+        for (Professorship professorship : professorships) {
             if (professorship.getResponsibleFor()
                     && professorship.getExecutionCourse().getIdInternal().equals(executionCourseId))
                 return professorship;
@@ -93,8 +93,8 @@ public class Teacher extends Teacher_Base {
         if (executionYearId == null || executionCourses == null)
             throw new NullPointerException();
 
-        for (final IProfessorship professorship : this.getProfessorships()) {
-            final IExecutionCourse executionCourse = professorship.getExecutionCourse();
+        for (final Professorship professorship : this.getProfessorships()) {
+            final ExecutionCourse executionCourse = professorship.getExecutionCourse();
             ResponsibleForValidator.getInstance().validateResponsibleForList(this, executionCourse,
                     professorship);
             if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(
@@ -105,31 +105,31 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public IDepartment getCurrentWorkingDepartment() {
+    public Department getCurrentWorkingDepartment() {
 
-        IEmployee employee = this.getPerson().getEmployee();
+        Employee employee = this.getPerson().getEmployee();
         if (employee != null) {
             return employee.getCurrentDepartmentWorkingPlace();
         }
         return null;
     }
 
-    public IDepartment getLastWorkingDepartment() {
-        IEmployee employee = this.getPerson().getEmployee();
+    public Department getLastWorkingDepartment() {
+        Employee employee = this.getPerson().getEmployee();
         if (employee != null) {
             return employee.getLastDepartmentWorkingPlace();
         }
         return null;
     }
 
-    public ITeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
-            IExecutionYear executionYear) {
-        ITeacherPersonalExpectation result = null;
+    public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
+            ExecutionYear executionYear) {
+        TeacherPersonalExpectation result = null;
 
-        List<ITeacherPersonalExpectation> teacherPersonalExpectations = this
+        List<TeacherPersonalExpectation> teacherPersonalExpectations = this
                 .getTeacherPersonalExpectations();
 
-        for (ITeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
+        for (TeacherPersonalExpectation teacherPersonalExpectation : teacherPersonalExpectations) {
             if (teacherPersonalExpectation.getExecutionYear().equals(executionYear)) {
                 result = teacherPersonalExpectation;
                 break;
@@ -139,10 +139,10 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public List<IProposal> getFinalDegreeWorksByExecutionYear(IExecutionYear executionYear) {
-        List<IProposal> proposalList = new ArrayList<IProposal>();
+    public List<Proposal> getFinalDegreeWorksByExecutionYear(ExecutionYear executionYear) {
+        List<Proposal> proposalList = new ArrayList<Proposal>();
         for (Iterator iter = getAssociatedProposalsByOrientator().iterator(); iter.hasNext();) {
-            IProposal proposal = (IProposal) iter.next();
+            Proposal proposal = (Proposal) iter.next();
             if (proposal.getExecutionDegree().getExecutionYear().equals(executionYear)) {
                 // if it was attributed by the coordinator the proposal is
                 // efective
@@ -153,13 +153,13 @@ public class Teacher extends Teacher_Base {
                 // any student(s) and if that(those) student(s) has(have)
                 // accepted it
                 else {
-                    IGroup attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
+                    Group attributedGroupByTeacher = proposal.getGroupAttributedByTeacher();
                     if (attributedGroupByTeacher != null) {
                         boolean toAdd = false;
                         for (Iterator iterator = attributedGroupByTeacher.getGroupStudents().iterator(); iterator
                                 .hasNext();) {
-                            IGroupStudent groupStudent = (IGroupStudent) iterator.next();
-                            IProposal studentProposal = groupStudent
+                            GroupStudent groupStudent = (GroupStudent) iterator.next();
+                            Proposal studentProposal = groupStudent
                                     .getFinalDegreeWorkProposalConfirmation();
                             if (studentProposal != null && studentProposal.equals(proposal)) {
                                 toAdd = true;
@@ -177,21 +177,21 @@ public class Teacher extends Teacher_Base {
         return proposalList;
     }
 
-    public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionYear(IExecutionYear executionYear) {
-        List<IExecutionCourse> executionCourses = new ArrayList();
+    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionYear(ExecutionYear executionYear) {
+        List<ExecutionCourse> executionCourses = new ArrayList();
         for (Iterator iter = executionYear.getExecutionPeriods().iterator(); iter.hasNext();) {
-            IExecutionPeriod executionPeriod = (IExecutionPeriod) iter.next();
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) iter.next();
             executionCourses.addAll(getLecturedExecutionCoursesByExecutionPeriod(executionPeriod));
         }
         return executionCourses;
     }
 
-    public List<IExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
-            final IExecutionPeriod executionPeriod) {
-        List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
+    public List<ExecutionCourse> getLecturedExecutionCoursesByExecutionPeriod(
+            final ExecutionPeriod executionPeriod) {
+        List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
         for (Iterator iter = getProfessorships().iterator(); iter.hasNext();) {
-            IProfessorship professorship = (IProfessorship) iter.next();
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            Professorship professorship = (Professorship) iter.next();
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
 
             if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                 executionCourses.add(executionCourse);
@@ -200,22 +200,22 @@ public class Teacher extends Teacher_Base {
         return executionCourses;
     }
 
-    public List<IExecutionCourse> getAllLecturedExecutionCourses() {
-        List<IExecutionCourse> executionCourses = new ArrayList<IExecutionCourse>();
+    public List<ExecutionCourse> getAllLecturedExecutionCourses() {
+        List<ExecutionCourse> executionCourses = new ArrayList<ExecutionCourse>();
 
-        for (IProfessorship professorship : this.getProfessorships()) {
+        for (Professorship professorship : this.getProfessorships()) {
             executionCourses.add(professorship.getExecutionCourse());
         }
 
         return executionCourses;
     }
 
-    public Double getHoursLecturedOnExecutionCourse(IExecutionCourse executionCourse) {
+    public Double getHoursLecturedOnExecutionCourse(ExecutionCourse executionCourse) {
         double returnValue = 0;
 
-        for (IProfessorship professorShipEntry : executionCourse.getProfessorships()) {
+        for (Professorship professorShipEntry : executionCourse.getProfessorships()) {
             if (professorShipEntry.getTeacher() == this) {
-                for (IShiftProfessorship shiftProfessorShiftEntry : professorShipEntry
+                for (ShiftProfessorship shiftProfessorShiftEntry : professorShipEntry
                         .getAssociatedShiftProfessorship()) {
                     returnValue += shiftProfessorShiftEntry.getShift().hours();
                 }
@@ -225,30 +225,30 @@ public class Teacher extends Teacher_Base {
         return returnValue;
     }
 
-    public ITeacherService getTeacherServiceByExecutionPeriod(final IExecutionPeriod executionPeriod) {
-        return (ITeacherService) CollectionUtils.find(getTeacherServices(), new Predicate() {
+    public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        return (TeacherService) CollectionUtils.find(getTeacherServices(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                ITeacherService teacherService = (ITeacherService) arg0;
+                TeacherService teacherService = (TeacherService) arg0;
                 return teacherService.getExecutionPeriod() == executionPeriod;
             }
         });
     }
 
-    public IProfessorship getProfessorshipByExecutionCourse(final IExecutionCourse executionCourse) {
-        return (IProfessorship) CollectionUtils.find(getProfessorships(), new Predicate() {
+    public Professorship getProfessorshipByExecutionCourse(final ExecutionCourse executionCourse) {
+        return (Professorship) CollectionUtils.find(getProfessorships(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                IProfessorship professorship = (IProfessorship) arg0;
+                Professorship professorship = (Professorship) arg0;
                 return professorship.getExecutionCourse() == executionCourse;
             }
         });
     }
 
-    public List<IProfessorship> getDegreeProfessorshipsByExecutionPeriod(
-            final IExecutionPeriod executionPeriod) {
-        return (List<IProfessorship>) CollectionUtils.select(getProfessorships(), new Predicate() {
+    public List<Professorship> getDegreeProfessorshipsByExecutionPeriod(
+            final ExecutionPeriod executionPeriod) {
+        return (List<Professorship>) CollectionUtils.select(getProfessorships(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                IProfessorship professorship = (IProfessorship) arg0;
+                Professorship professorship = (Professorship) arg0;
                 return professorship.getExecutionCourse().getExecutionPeriod() == executionPeriod
                         && !professorship.getExecutionCourse().isMasterDegreeOnly();
             }
@@ -268,7 +268,7 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public InfoCredits getExecutionPeriodCredits(IExecutionPeriod executionPeriod) {
+    public InfoCredits getExecutionPeriodCredits(ExecutionPeriod executionPeriod) {
         return InfoCreditsBuilder.build(this, executionPeriod);
     }
 
@@ -278,7 +278,7 @@ public class Teacher extends Teacher_Base {
 
     private int countPublicationsInArea(PublicationArea area) {
         int count = 0;
-        for (IPublicationTeacher publicationTeacher : getTeacherPublications()) {
+        for (PublicationTeacher publicationTeacher : getTeacherPublications()) {
             if (publicationTeacher.getPublicationArea().equals(area)) {
                 count++;
             }
@@ -286,20 +286,20 @@ public class Teacher extends Teacher_Base {
         return count;
     }
 
-    public List<IMasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(
-            IExecutionYear executionYear) {
-        List<IMasterDegreeThesisDataVersion> guidedThesis = new ArrayList<IMasterDegreeThesisDataVersion>();
+    public List<MasterDegreeThesisDataVersion> getGuidedMasterDegreeThesisByExecutionYear(
+            ExecutionYear executionYear) {
+        List<MasterDegreeThesisDataVersion> guidedThesis = new ArrayList<MasterDegreeThesisDataVersion>();
 
-        for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this
                 .getMasterDegreeThesisGuider()) {
 
             if (masterDegreeThesisDataVersion.getCurrentState().getState() == State.ACTIVE) {
 
-                List<IExecutionDegree> executionDegrees = masterDegreeThesisDataVersion
+                List<ExecutionDegree> executionDegrees = masterDegreeThesisDataVersion
                         .getMasterDegreeThesis().getStudentCurricularPlan().getDegreeCurricularPlan()
                         .getExecutionDegrees();
 
-                for (IExecutionDegree executionDegree : executionDegrees) {
+                for (ExecutionDegree executionDegree : executionDegrees) {
                     if (executionDegree.getExecutionYear().equals(executionYear)) {
                         guidedThesis.add(masterDegreeThesisDataVersion);
                     }
@@ -311,10 +311,10 @@ public class Teacher extends Teacher_Base {
         return guidedThesis;
     }
 
-    public List<IMasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis() {
-        List<IMasterDegreeThesisDataVersion> guidedThesis = new ArrayList<IMasterDegreeThesisDataVersion>();
+    public List<MasterDegreeThesisDataVersion> getAllGuidedMasterDegreeThesis() {
+        List<MasterDegreeThesisDataVersion> guidedThesis = new ArrayList<MasterDegreeThesisDataVersion>();
 
-        for (IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this
+        for (MasterDegreeThesisDataVersion masterDegreeThesisDataVersion : this
                 .getMasterDegreeThesisGuider()) {
             if (masterDegreeThesisDataVersion.getCurrentState().getState().equals(State.ACTIVE)) {
                 guidedThesis.add(masterDegreeThesisDataVersion);
@@ -326,26 +326,26 @@ public class Teacher extends Teacher_Base {
 
     public void createTeacherPersonalExpectation(
             net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation infoTeacherPersonalExpectation,
-            IExecutionYear executionYear) {
+            ExecutionYear executionYear) {
 
         checkIfCanCreatePersonalExpectation(executionYear);
 
-        ITeacherPersonalExpectation teacherPersonalExpectation = new TeacherPersonalExpectation(
+        TeacherPersonalExpectation teacherPersonalExpectation = new TeacherPersonalExpectation(
                 infoTeacherPersonalExpectation, executionYear);
 
         addTeacherPersonalExpectations(teacherPersonalExpectation);
 
     }
 
-    private void checkIfCanCreatePersonalExpectation(IExecutionYear executionYear) {
-        ITeacherPersonalExpectation storedTeacherPersonalExpectation = getTeacherPersonalExpectationByExecutionYear(executionYear);
+    private void checkIfCanCreatePersonalExpectation(ExecutionYear executionYear) {
+        TeacherPersonalExpectation storedTeacherPersonalExpectation = getTeacherPersonalExpectationByExecutionYear(executionYear);
 
         if (storedTeacherPersonalExpectation != null) {
             throw new DomainException(
                     "error.exception.personalExpectation.expectationAlreadyExistsForExecutionYear");
         }
 
-        ITeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = this
                 .getCurrentWorkingDepartment().readTeacherExpectationDefinitionPeriodByExecutionYear(
                         executionYear);
 
@@ -356,10 +356,10 @@ public class Teacher extends Teacher_Base {
 
     }
 
-    public List<ITeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
+    public List<TeacherServiceExemption> getServiceExemptionSituations(Date beginDate, Date endDate) {
 
-        List<ITeacherServiceExemption> serviceExemptions = new ArrayList<ITeacherServiceExemption>();
-        for (ITeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
+        List<TeacherServiceExemption> serviceExemptions = new ArrayList<TeacherServiceExemption>();
+        for (TeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
             if (serviceExemption.belongsToPeriod(beginDate, endDate)) {
                 serviceExemptions.add(serviceExemption);
             }
@@ -367,14 +367,14 @@ public class Teacher extends Teacher_Base {
         return serviceExemptions;
     }
 
-    public List<IPersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
+    public List<PersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
         return getPerson().getPersonFuntions(beginDate, endDate);
     }
 
     public int getHoursByCategory(Date begin, Date end) {
 
-        List<ITeacherLegalRegimen> list = new ArrayList<ITeacherLegalRegimen>();
-        for (ITeacherLegalRegimen teacherLegalRegimen : this.getLegalRegimens()) {
+        List<TeacherLegalRegimen> list = new ArrayList<TeacherLegalRegimen>();
+        for (TeacherLegalRegimen teacherLegalRegimen : this.getLegalRegimens()) {
             if (teacherLegalRegimen.belongsToPeriod(begin, end)) {
                 list.add(teacherLegalRegimen);
             }
@@ -388,12 +388,12 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public int getServiceExemptionCredits(IExecutionPeriod executionPeriod) {
+    public int getServiceExemptionCredits(ExecutionPeriod executionPeriod) {
 
         Date begin = executionPeriod.getBeginDate();
         Date end = executionPeriod.getEndDate();
 
-        List<ITeacherServiceExemption> list = getServiceExemptionSituations(begin, end);
+        List<TeacherServiceExemption> list = getServiceExemptionSituations(begin, end);
 
         if (list.isEmpty()) {
             return 0;
@@ -402,13 +402,13 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public double getManagementFunctionsCredits(IExecutionPeriod executionPeriod) {
+    public double getManagementFunctionsCredits(ExecutionPeriod executionPeriod) {
 
         Date begin = executionPeriod.getBeginDate();
         Date end = executionPeriod.getEndDate();
 
-        List<IPersonFunction> list = new ArrayList<IPersonFunction>();
-        for (IPersonFunction personFunction : this.getPerson().getPersonFunctions()) {
+        List<PersonFunction> list = new ArrayList<PersonFunction>();
+        for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
             if (personFunction.belongsToPeriod(begin, end)) {
                 list.add(personFunction);
             }
@@ -416,7 +416,7 @@ public class Teacher extends Teacher_Base {
 
         double totalCredits = 0.0;
         if (list.size() > 1) {
-            for (IPersonFunction function : list) {
+            for (PersonFunction function : list) {
                 totalCredits = (function.getCredits() != null) ? totalCredits
                         + function.getCredits() : totalCredits;
             }
@@ -430,9 +430,9 @@ public class Teacher extends Teacher_Base {
         return 0;
     }
 
-    public ICategory getCategoryByPeriod(Date begin, Date end) {
-        List<ITeacherLegalRegimen> list = new ArrayList<ITeacherLegalRegimen>();
-        for (ITeacherLegalRegimen teacherLegalRegimen : this.getLegalRegimens()) {
+    public Category getCategoryByPeriod(Date begin, Date end) {
+        List<TeacherLegalRegimen> list = new ArrayList<TeacherLegalRegimen>();
+        for (TeacherLegalRegimen teacherLegalRegimen : this.getLegalRegimens()) {
             if (teacherLegalRegimen.belongsToPeriod(begin, end)) {
                 list.add(teacherLegalRegimen);
             }
@@ -448,11 +448,11 @@ public class Teacher extends Teacher_Base {
 
     // /////////////////////////////////////////
 
-    private ICategory getTeacherCategory(List<ITeacherLegalRegimen> list, Date begin, Date end) {
+    private Category getTeacherCategory(List<TeacherLegalRegimen> list, Date begin, Date end) {
         Integer numberOfDaysInPeriod = null, maxDays = 0;
-        ITeacherLegalRegimen teacherLegalRegimen = null;
+        TeacherLegalRegimen teacherLegalRegimen = null;
 
-        for (ITeacherLegalRegimen regimen : list) {
+        for (TeacherLegalRegimen regimen : list) {
 
             if (regimen.getBeginDate().before(begin) || regimen.getBeginDate().equals(begin)) {
                 numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(begin, regimen
@@ -479,12 +479,12 @@ public class Teacher extends Teacher_Base {
         return teacherLegalRegimen.getCategory();
     }
 
-    private int calculateTeacherHours(List<ITeacherLegalRegimen> list, Date begin, Date end) {
+    private int calculateTeacherHours(List<TeacherLegalRegimen> list, Date begin, Date end) {
 
         Integer numberOfDaysInPeriod = null, maxDays = 0;
-        ITeacherLegalRegimen teacherLegalRegimen = null;
+        TeacherLegalRegimen teacherLegalRegimen = null;
 
-        for (ITeacherLegalRegimen regimen : list) {
+        for (TeacherLegalRegimen regimen : list) {
 
             if (regimen.getBeginDate().before(begin) || regimen.getBeginDate().equals(begin)) {
                 numberOfDaysInPeriod = CalendarUtil.getNumberOfDaysBetweenDates(begin, regimen
@@ -511,13 +511,13 @@ public class Teacher extends Teacher_Base {
         return teacherLegalRegimen.getLessonHours();
     }
 
-    private int calculateServiceExemptionsCredits(List<ITeacherServiceExemption> list, Date begin,
+    private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list, Date begin,
             Date end) {
 
         Integer numberOfDaysInPeriod = null, maxDays = 0;
-        ITeacherServiceExemption teacherServiceExemption = null;
+        TeacherServiceExemption teacherServiceExemption = null;
 
-        for (ITeacherServiceExemption serviceExemption : list) {
+        for (TeacherServiceExemption serviceExemption : list) {
 
             if (serviceExemption.getStart().before(begin) || serviceExemption.getStart().equals(begin)) {
                 Date endDate = (serviceExemption.getEnd() == null) ? end : serviceExemption.getEnd();
@@ -550,14 +550,14 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseTypeAndExecutionYear(
-            net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType, IExecutionYear executionYear) {
+    public List<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvisesByAdviseTypeAndExecutionYear(
+            net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType, ExecutionYear executionYear) {
 
-        List<IAdvise> result = new ArrayList<IAdvise>();
+        List<Advise> result = new ArrayList<Advise>();
         Date executionYearStartDate = executionYear.getBeginDate();
         Date executionYearEndDate = executionYear.getEndDate();
 
-        for (IAdvise advise : this.getAdvises()) {
+        for (Advise advise : this.getAdvises()) {
             if ((advise.getAdviseType() == adviseType)) {
                 Date adviseStartDate = advise.getStartExecutionPeriod().getBeginDate();
                 Date adviseEndDate = advise.getEndExecutionPeriod().getEndDate();
@@ -577,11 +577,11 @@ public class Teacher extends Teacher_Base {
         return result;
     }
 
-    public List<net.sourceforge.fenixedu.domain.teacher.IAdvise> getAdvisesByAdviseType(
+    public List<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvisesByAdviseType(
             net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType) {
-        List<IAdvise> result = new ArrayList<IAdvise>();
+        List<Advise> result = new ArrayList<Advise>();
 
-        for (IAdvise advise : this.getAdvises()) {
+        for (Advise advise : this.getAdvises()) {
             if (advise.getAdviseType() == adviseType) {
                 result.add(advise);
             }

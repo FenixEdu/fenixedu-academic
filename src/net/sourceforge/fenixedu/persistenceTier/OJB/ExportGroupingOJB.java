@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExportGrouping;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 
@@ -20,13 +20,13 @@ import org.apache.ojb.broker.query.Criteria;
 public class ExportGroupingOJB extends ObjectFenixOJB implements
         IPersistentExportGrouping {
 
-    public IExportGrouping readBy(Integer groupingID, Integer executionCourseID) throws ExcepcaoPersistencia {
+    public ExportGrouping readBy(Integer groupingID, Integer executionCourseID) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyGrouping", groupingID);
         criteria.addEqualTo("keyExecutionCourse", executionCourseID);
 
-        return (IExportGrouping) queryObject(ExportGrouping.class, criteria);
+        return (ExportGrouping) queryObject(ExportGrouping.class, criteria);
     }
 
     public List readAllByGrouping(Integer groupingID) throws ExcepcaoPersistencia {

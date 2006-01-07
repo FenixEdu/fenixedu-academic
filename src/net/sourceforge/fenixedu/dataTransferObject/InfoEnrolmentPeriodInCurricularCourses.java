@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEnrolmentPeriod;
+import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 
 
 public class InfoEnrolmentPeriodInCurricularCourses extends InfoEnrolmentPeriod {
 
-    public static InfoEnrolmentPeriodInCurricularCourses newInfoFromDomain(final IEnrolmentPeriod enrolmentPeriod) {
+    public static InfoEnrolmentPeriodInCurricularCourses newInfoFromDomain(final EnrolmentPeriod enrolmentPeriod) {
         InfoEnrolmentPeriodInCurricularCourses infoExecutionPeriod = null;
         if (enrolmentPeriod != null) {
             infoExecutionPeriod = new InfoEnrolmentPeriodInCurricularCourses();

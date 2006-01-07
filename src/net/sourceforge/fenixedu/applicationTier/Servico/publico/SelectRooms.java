@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,10 +38,10 @@ public class SelectRooms implements IService {
 
 		Iterator iter = salas.iterator();
 		List salasView = new ArrayList();
-		IRoom sala;
+		Room sala;
 
 		while (iter.hasNext()) {
-			sala = (IRoom) iter.next();
+			sala = (Room) iter.next();
 			salasView.add(InfoRoom.newInfoFromDomain(sala));
 		}
 

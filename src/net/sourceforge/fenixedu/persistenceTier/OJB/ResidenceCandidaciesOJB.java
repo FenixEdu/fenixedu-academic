@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentResidenceCandidacies;
@@ -29,7 +29,7 @@ public class ResidenceCandidaciesOJB extends PersistentObjectOJB implements
      * 
      * @see ServidorPersistente.IPersistentResidenceCandidacies#readResidenceCandidaciesByStudent()
      */
-    public List readResidenceCandidaciesByStudent(IStudent student) throws ExcepcaoPersistencia {
+    public List readResidenceCandidaciesByStudent(Student student) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("keyStudent", student.getIdInternal());

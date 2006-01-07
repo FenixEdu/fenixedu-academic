@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -43,7 +43,7 @@ public class ReadExecutionDegreesByDegree implements IService {
         List allInfoExecutionDegrees = new ArrayList(allExecutionDegrees.size());
 
         while (iterator.hasNext()) {
-            IExecutionDegree executionDegree = (IExecutionDegree) iterator.next();
+            ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
             InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree
                     .newInfoFromDomain(executionDegree);
 

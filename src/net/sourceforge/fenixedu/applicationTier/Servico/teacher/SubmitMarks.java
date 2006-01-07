@@ -19,18 +19,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -74,13 +74,13 @@ public class SubmitMarks implements IService {
 			IPersistentEmployee persistentEmployee = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentEmployee();
             
             //execution course and execution course's site
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, executionCourseCode);
 
-			ISite site = executionCourse.getSite();
+			Site site = executionCourse.getSite();
 
             //evaluation
-			IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class,evaluationCode);
+			Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class,evaluationCode);
 
             //attend list
             List attendList = executionCourse.getAttends();
@@ -88,11 +88,11 @@ public class SubmitMarks implements IService {
             List professors = executionCourse.responsibleFors();
 
             //employee logged
-            IPerson pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
+            Person pessoa = pessoaPersistente.lerPessoaPorUsername(userView.getUtilizador());
 
-			IEmployee employee = persistentEmployee.readByPerson(pessoa.getIdInternal().intValue());
+			Employee employee = persistentEmployee.readByPerson(pessoa.getIdInternal().intValue());
 			
-            ITeacher teacher = ((IProfessorship) professors.get(0)).getTeacher();
+            Teacher teacher = ((Professorship) professors.get(0)).getTeacher();
 
             //Separate improvments/normal/not enrolled/postGraduate attends
             Integer nSubmitted = separateAttends(executionCourse, attendList, evaluation, evaluationDate, employee, teacher,
@@ -115,9 +115,9 @@ public class SubmitMarks implements IService {
     }
 
     private Integer separateAttends(
-            IExecutionCourse executionCourse, 
-            List attendList, IEvaluation evaluation,
-            Date evaluationDate, IEmployee employee, ITeacher teacher,
+            ExecutionCourse executionCourse, 
+            List attendList, Evaluation evaluation,
+            Date evaluationDate, Employee employee, Teacher teacher,
             MultiHashMap enrolmentEvaluationTableByDegree,
             MultiHashMap improvmentEnrolmentEvaluationTableByDegree,
             List notEnrolled,
@@ -141,9 +141,9 @@ public class SubmitMarks implements IService {
             }
 
             while (iter.hasNext()) {
-                IAttends attend = (IAttends) iter.next();
-                IEnrolment enrolment = attend.getEnrolment();
-                IEnrolmentEvaluation enrolmentEvaluation = null;
+                Attends attend = (Attends) iter.next();
+                Enrolment enrolment = attend.getEnrolment();
+                EnrolmentEvaluation enrolmentEvaluation = null;
 
                 //check student´s degree type
                 if (attend.getAluno().getDegreeType().equals(DegreeType.MASTER_DEGREE)) {
@@ -159,7 +159,7 @@ public class SubmitMarks implements IService {
                 }
                 
 				String observation = "Submissão da Pauta";
-                IMark mark = getMark(markList, attend);
+                Mark mark = getMark(markList, attend);
                 if(enrolment.isImprovementForExecutionCourse(executionCourse)) {
 					enrolmentEvaluation = enrolment.submitEnrolmentEvaluation(EnrolmentEvaluationType.IMPROVEMENT, mark, employee, teacher.getPerson(), evaluationDate,observation);
                     improvmentEnrolmentEvaluationTableByDegree.put(enrolment.getStudentCurricularPlan().getDegreeCurricularPlan().getDegree().getIdInternal(), enrolmentEvaluation);
@@ -177,14 +177,14 @@ public class SubmitMarks implements IService {
         }
     }
 
-    private void verifyAlreadySubmittedMarks(List attendList, final IExecutionPeriod executionPeriod,
+    private void verifyAlreadySubmittedMarks(List attendList, final ExecutionPeriod executionPeriod,
             IPersistentEnrolmentEvaluation enrolmentEvaluationDAO) throws ExcepcaoPersistencia,
             FenixServiceException {
         List enrolmentListIds = (List) CollectionUtils.collect(attendList, new Transformer() {
 
             public Object transform(Object input) {
-                IAttends attend = (IAttends) input;
-                IEnrolment enrolment = attend.getEnrolment();
+                Attends attend = (Attends) input;
+                Enrolment enrolment = attend.getEnrolment();
                 if(enrolment != null) {
                     if(enrolment.getExecutionPeriod().equals(executionPeriod))
                         return enrolment.getIdInternal();
@@ -208,8 +208,8 @@ public class SubmitMarks implements IService {
         }
     }
 
-    private IMark getMark(List<IMark> markList, IAttends attend) {
-        for (IMark mark : markList) {
+    private Mark getMark(List<Mark> markList, Attends attend) {
+        for (Mark mark : markList) {
             if(mark.getAttend().getIdInternal().equals(attend.getIdInternal()))
                 return mark;
         }
@@ -238,7 +238,7 @@ public class SubmitMarks implements IService {
         }
     }
 
-    private Object createSiteView(ISite site, IEvaluation evaluation, Integer submited,
+    private Object createSiteView(Site site, Evaluation evaluation, Integer submited,
             List notEnrolledList, List mestradoList) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoSiteSubmitMarks infoSiteSubmitMarks = new InfoSiteSubmitMarks();

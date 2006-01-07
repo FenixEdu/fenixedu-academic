@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -40,7 +40,7 @@ public class DeleteTeacher implements IService {
         // from himself the professorship
         // (it was a feature that didnt make sense)
         
-        IProfessorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(
+        Professorship professorshipToDelete = persistentProfessorship.readByTeacherAndExecutionCourse(
                 teacherCode, infoExecutionCourseCode);
 
         List shiftProfessorshipList = shiftProfessorshipDAO.readByProfessorship(professorshipToDelete);
@@ -54,7 +54,7 @@ public class DeleteTeacher implements IService {
             hasCredits = CollectionUtils.exists(shiftProfessorshipList, new Predicate() {
 
                 public boolean evaluate(Object arg0) {
-                    IShiftProfessorship shiftProfessorship = (IShiftProfessorship) arg0;
+                    ShiftProfessorship shiftProfessorship = (ShiftProfessorship) arg0;
                     return shiftProfessorship.getPercentage() != null
                             && shiftProfessorship.getPercentage() != 0;
                 }
@@ -69,7 +69,7 @@ public class DeleteTeacher implements IService {
                     .getTeacherNumber());
             if (summaryList != null && !summaryList.isEmpty()) {
                 for (Iterator iterator = summaryList.iterator(); iterator.hasNext();) {
-                    ISummary summary = (ISummary) iterator.next();
+                    Summary summary = (Summary) iterator.next();
                     persistentSummary.simpleLockWrite(summary);
                     summary.setProfessorship(null);
                     summary.setKeyProfessorship(null);
@@ -88,7 +88,7 @@ public class DeleteTeacher implements IService {
     }    
 
     private void deleteProfessorship(final IPersistentProfessorship persistentProfessorship,
-            final IProfessorship professorshipToDelete) throws ExcepcaoPersistencia {
+            final Professorship professorshipToDelete) throws ExcepcaoPersistencia {
 
         if (professorshipToDelete.getAssociatedSummaries() != null)
             professorshipToDelete.getAssociatedSummaries().clear();

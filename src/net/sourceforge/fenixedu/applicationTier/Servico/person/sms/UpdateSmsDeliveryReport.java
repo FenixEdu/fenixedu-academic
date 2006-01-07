@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.sms;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.sms.ISentSms;
+import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,7 +28,7 @@ public class UpdateSmsDeliveryReport implements IService {
 		IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
 		// read sentSms Object
-		ISentSms sentSms = (ISentSms) persistentSentSms.readByOID(SentSms.class, smsId, true);
+		SentSms sentSms = (SentSms) persistentSentSms.readByOID(SentSms.class, smsId, true);
 
 		if (sentSms == null) {
 			throw new FenixServiceException();

@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
@@ -28,23 +28,23 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
     public StudentCurricularPlanOJB() {
     }
 
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
+    public StudentCurricularPlan readActiveStudentCurricularPlan(String username, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.person.username", username);
         crit.addEqualTo("student.degreeType", degreeType);
         crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
-        return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
+        return (StudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
     }
 
     // TODO Remove DegreeType from method interface...
-    public IStudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
+    public StudentCurricularPlan readActiveStudentCurricularPlan(Integer studentNumber,
             DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("student.number", studentNumber);
         crit.addEqualTo("student.degreeType", degreeType);
         crit.addEqualTo("currentState", StudentCurricularPlanState.ACTIVE);
-        return (IStudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
+        return (StudentCurricularPlan) queryObject(StudentCurricularPlan.class, crit);
 
     }
 
@@ -100,7 +100,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
      * of an empty StudentCurricular when a student does not have an active
      * version. The new version now uses Persistence Broker criteria API
      */
-    public IStudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
+    public StudentCurricularPlan readActiveByStudentNumberAndDegreeType(Integer number,
             DegreeType degreeType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         List studentPlanState = new ArrayList();
@@ -113,7 +113,7 @@ public class StudentCurricularPlanOJB extends PersistentObjectOJB implements
         criteria.addEqualTo("student.number", number);
         criteria.addEqualTo("student.degreeType", degreeType);
 
-        IStudentCurricularPlan storedStudentCurricularPlan = (IStudentCurricularPlan) queryObject(
+        StudentCurricularPlan storedStudentCurricularPlan = (StudentCurricularPlan) queryObject(
                 StudentCurricularPlan.class, criteria);
         return storedStudentCurricularPlan;
 

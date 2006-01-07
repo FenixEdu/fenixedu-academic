@@ -10,9 +10,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanByCriteriaListGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -65,7 +65,7 @@ public class ListGrantContractByCriteria implements IService {
 			 */
 			listGrantContract = new ArrayList();
 			for (int i = 0; i < grantContractBySpanAndCriteria.size(); i++) {
-				IGrantContract grantContract = (IGrantContract) grantContractBySpanAndCriteria.get(i);
+				GrantContract grantContract = (GrantContract) grantContractBySpanAndCriteria.get(i);
 
 				convertToInfoListGrantOwnerByOrder(grantContract, infoSpanByCriteriaListGrantOwner, sp,
 						listGrantContract);
@@ -91,7 +91,7 @@ public class ListGrantContractByCriteria implements IService {
 	 * 1.1 - Read The active regime of each contract 1.2 - Read the insurance of
 	 * each contract 2- Construct the info and put it on the list result
 	 */
-	private void convertToInfoListGrantOwnerByOrder(IGrantContract grantContract,
+	private void convertToInfoListGrantOwnerByOrder(GrantContract grantContract,
 			InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner,
 			ISuportePersistente sp, List result) throws ExcepcaoPersistencia {
 
@@ -103,8 +103,8 @@ public class ListGrantContractByCriteria implements IService {
 		List grantContractRegimeList = persistentGrantContractRegime
 				.readGrantContractRegimeByGrantContractAndState(grantContract.getIdInternal(),
 						new Integer(1));
-		IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeList.get(0);
-		IGrantInsurance grantInsurance = persistentGrantInsurance
+		GrantContractRegime grantContractRegime = (GrantContractRegime) grantContractRegimeList.get(0);
+		GrantInsurance grantInsurance = persistentGrantInsurance
 				.readGrantInsuranceByGrantContract(grantContract.getIdInternal());
 
 		InfoListGrantOwnerByOrder infoListGrantOwnerByOrder = new InfoListGrantOwnerByOrder();

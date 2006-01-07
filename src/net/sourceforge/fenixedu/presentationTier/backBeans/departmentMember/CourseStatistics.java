@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseSt
 import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatisticsDTO;
 import net.sourceforge.fenixedu.dataTransferObject.department.ExecutionCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -33,9 +33,9 @@ public class CourseStatistics extends FenixBackingBean {
 
     private List<SelectItem> executionYears;
 
-    private ICompetenceCourse competenceCourse;
+    private CompetenceCourse competenceCourse;
 
-    public IDepartment getDepartment() {
+    public Department getDepartment() {
         return getUserView().getPerson().getTeacher().getLastWorkingDepartment();
     }
 
@@ -178,9 +178,9 @@ public class CourseStatistics extends FenixBackingBean {
         setDegreeId(degreeId);
     }
 
-    public ICompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
+    public CompetenceCourse getCompetenceCourse() throws FenixFilterException, FenixServiceException {
         if (competenceCourse == null) {
-            competenceCourse = (ICompetenceCourse) ServiceUtils.executeService(getUserView(),
+            competenceCourse = (CompetenceCourse) ServiceUtils.executeService(getUserView(),
                     "ReadDomainObject", new Object[] { CompetenceCourse.class,
                             this.getCompetenceCourseId() });
         }

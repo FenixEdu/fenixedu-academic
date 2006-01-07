@@ -21,22 +21,22 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourCompa
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteDistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -65,16 +65,16 @@ public class ChangeStudentTestQuestion implements IService {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IQuestion oldQuestion = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, oldQuestionId);
+        Question oldQuestion = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, oldQuestionId);
         if (oldQuestion == null)
             throw new InvalidArgumentsServiceException();
 
         IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-        IMetadata metadata = null;
+        Metadata metadata = null;
 
-        List<IQuestion> availableQuestions = new ArrayList<IQuestion>();
+        List<Question> availableQuestions = new ArrayList<Question>();
         if (newMetadataId != null) {
-            metadata = (IMetadata) persistentMetadata.readByOID(Metadata.class, newMetadataId);
+            metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, newMetadataId);
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
             availableQuestions.addAll(metadata.getVisibleQuestions());
@@ -85,11 +85,11 @@ public class ChangeStudentTestQuestion implements IService {
 
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
 
-        List<IDistributedTest> distributedTestList = new ArrayList<IDistributedTest>();
+        List<DistributedTest> distributedTestList = new ArrayList<DistributedTest>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS)
             distributedTestList = persistentStudentTestQuestion.readDistributedTestsByTestQuestion(oldQuestion.getIdInternal());
         else {
-            IDistributedTest distributedTest = (IDistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+            DistributedTest distributedTest = (DistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
                     distributedTestId);
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
@@ -97,20 +97,20 @@ public class ChangeStudentTestQuestion implements IService {
 
         }
         boolean canDelete = true;
-        for (IDistributedTest distributedTest : distributedTestList) {
-            List<IStudentTestQuestion> studentsTestQuestionList = new ArrayList<IStudentTestQuestion>();
+        for (DistributedTest distributedTest : distributedTestList) {
+            List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
             InfoSiteDistributedTestAdvisory infoSiteDistributedTestAdvisory = new InfoSiteDistributedTestAdvisory();
             infoSiteDistributedTestAdvisory.setInfoDistributedTest(InfoDistributedTest.newInfoFromDomain(distributedTest));
             infoSiteDistributedTestAdvisory.setInfoAdvisory(InfoAdvisory.newInfoFromDomain(getAdvisory(distributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
+                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 studentsTestQuestionList.add(persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
                         student.getIdInternal(), distributedTest.getIdInternal()));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
+                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 Integer order = persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
@@ -122,14 +122,14 @@ public class ChangeStudentTestQuestion implements IService {
 
             List<InfoStudent> group = new ArrayList<InfoStudent>();
 
-            for (IStudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
+            for (StudentTestQuestion studentTestQuestion : studentsTestQuestionList) {
                 if (!compareDates(studentTestQuestion.getDistributedTest().getEndDate(), studentTestQuestion.getDistributedTest().getEndHour())) {
                     canDelete = false;
                 } else {
                     if (availableQuestions.size() == 0)
                         availableQuestions.addAll(getNewQuestionList(metadata, oldQuestion));
 
-                    IQuestion newQuestion = getNewQuestion(availableQuestions);
+                    Question newQuestion = getNewQuestion(availableQuestions);
                     if (newMetadataId == null && (newQuestion == null || newQuestion.equals(oldQuestion)))
                         return null;
                     else if (newQuestion == null)
@@ -144,18 +144,18 @@ public class ChangeStudentTestQuestion implements IService {
                     if (!group.contains(studentTestQuestion.getStudent().getPerson()))
                         group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
                     if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
-                        IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
+                        OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
                                 studentTestQuestion.getDistributedTest().getIdInternal());
-                        IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
+                        Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                                 studentTestQuestion.getStudent().getIdInternal(),
-                                ((IExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
-                        IMark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
+                                ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
+                        Mark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
                         if (mark != null) {
                             mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion
                                     .getStudent(), oldMark));
                         }
                     }
-                    IStudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
+                    StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
                     studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
                     studentTestLog.setStudent(studentTestQuestion.getStudent());
                     studentTestLog.setDate(Calendar.getInstance().getTime());
@@ -170,7 +170,7 @@ public class ChangeStudentTestQuestion implements IService {
         }
 
         if (delete.booleanValue()) {
-            metadata = (IMetadata) persistentMetadata.readByOID(Metadata.class, oldQuestion.getKeyMetadata());
+            metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, oldQuestion.getKeyMetadata());
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
             removeOldTestQuestion(persistentSuport, oldQuestion);
@@ -194,9 +194,9 @@ public class ChangeStudentTestQuestion implements IService {
         return infoSiteDistributedTestAdvisoryList;
     }
 
-    private IQuestion getNewQuestion(List<IQuestion> questions) {
+    private Question getNewQuestion(List<Question> questions) {
 
-        IQuestion question = null;
+        Question question = null;
         if (questions.size() != 0) {
             Random r = new Random();
             int questionIndex = r.nextInt(questions.size());
@@ -205,8 +205,8 @@ public class ChangeStudentTestQuestion implements IService {
         return question;
     }
 
-    private List<IQuestion> getNewQuestionList(IMetadata metadata, IQuestion oldQuestion) {
-        List<IQuestion> result = new ArrayList<IQuestion>();
+    private List<Question> getNewQuestionList(Metadata metadata, Question oldQuestion) {
+        List<Question> result = new ArrayList<Question>();
         if (metadata != null) {
             result.addAll(metadata.getVisibleQuestions());
         } else {
@@ -233,33 +233,33 @@ public class ChangeStudentTestQuestion implements IService {
         return false;
     }
 
-    private void removeOldTestQuestion(ISuportePersistente persistentSuport, IQuestion oldQuestion) throws ExcepcaoPersistencia {
+    private void removeOldTestQuestion(ISuportePersistente persistentSuport, Question oldQuestion) throws ExcepcaoPersistencia {
 
         IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
-        List<ITestQuestion> testQuestionOldList = (List<ITestQuestion>) persistentTestQuestion.readByQuestion(oldQuestion.getIdInternal());
-        List<IQuestion> availableQuestions = new ArrayList<IQuestion>();
+        List<TestQuestion> testQuestionOldList = (List<TestQuestion>) persistentTestQuestion.readByQuestion(oldQuestion.getIdInternal());
+        List<Question> availableQuestions = new ArrayList<Question>();
         availableQuestions.addAll(oldQuestion.getMetadata().getVisibleQuestions());
         availableQuestions.remove(oldQuestion);
 
-        IQuestion newQuestion = getNewQuestion(availableQuestions);
+        Question newQuestion = getNewQuestion(availableQuestions);
 
         if (newQuestion == null || newQuestion.equals(oldQuestion)) {
-            for (ITestQuestion oldTestQuestion : testQuestionOldList) {
-                ITest test = oldTestQuestion.getTest();
+            for (TestQuestion oldTestQuestion : testQuestionOldList) {
+                Test test = oldTestQuestion.getTest();
                 test.deleteTestQuestion(oldTestQuestion);
             }
         } else {
-            for (ITestQuestion oldTestQuestion : testQuestionOldList) {
+            for (TestQuestion oldTestQuestion : testQuestionOldList) {
                 oldTestQuestion.setQuestion(newQuestion);
             }
         }
     }
 
-    private String getNewStudentMark(ISuportePersistente sp, IDistributedTest dt, IStudent s, double mark2Remove) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(ISuportePersistente sp, DistributedTest dt, Student s, double mark2Remove) throws ExcepcaoPersistencia {
         double totalMark = 0;
-        List<IStudentTestQuestion> studentTestQuestionList = sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+        List<StudentTestQuestion> studentTestQuestionList = sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 s.getIdInternal(), dt.getIdInternal());
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }
         DecimalFormat df =new DecimalFormat("#0.##");
@@ -268,13 +268,13 @@ public class ChangeStudentTestQuestion implements IService {
         return (df.format(Math.max(0, totalMark)));
     }
 
-    private IAdvisory getAdvisory(IDistributedTest distributedTest, String path) {
+    private Advisory getAdvisory(DistributedTest distributedTest, String path) {
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         // Create Advisory
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
+        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((ExecutionCourse) distributedTest
                 .getTestScope().getDomainObject()).getNome() }));
 
         final String beginHour = DateFormatUtils.format(distributedTest.getBeginHour().getTime(), "HH:mm");
@@ -294,7 +294,7 @@ public class ChangeStudentTestQuestion implements IService {
         }        
 
         // Create DistributedTestAdvisory
-        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
         return advisory;

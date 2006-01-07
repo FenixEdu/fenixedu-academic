@@ -17,11 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -45,7 +45,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements I
         IPersistentExecutionDegree persistentExecutionDegree = ps.getIPersistentExecutionDegree();
         IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
 
-        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
         List professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(
@@ -104,16 +104,16 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements I
         return result;
     }
 
-    private List getResponsibleForsByDegree(IExecutionDegree executionDegree) {
+    private List getResponsibleForsByDegree(ExecutionDegree executionDegree) {
         List responsibleFors = new ArrayList();
 
-        List<IExecutionCourse> executionCourses = new ArrayList();
-        List<IExecutionPeriod> executionPeriods = executionDegree.getExecutionYear()
+        List<ExecutionCourse> executionCourses = new ArrayList();
+        List<ExecutionPeriod> executionPeriods = executionDegree.getExecutionYear()
                 .getExecutionPeriods();
 
-        for (IExecutionPeriod executionPeriod : executionPeriods) {
+        for (ExecutionPeriod executionPeriod : executionPeriods) {
             executionCourses = executionPeriod.getAssociatedExecutionCourses();
-            for (IExecutionCourse executionCourse : executionCourses) {
+            for (ExecutionCourse executionCourse : executionCourses) {
                 responsibleFors.add(executionCourse.responsibleFors());
             }
         }
@@ -126,7 +126,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements I
                 new Transformer() {
 
                     public Object transform(Object input) {
-                        IProfessorship professorship = (IProfessorship) input;
+                        Professorship professorship = (Professorship) input;
 
                         InfoProfessorship infoProfessorShip = InfoProfessorshipWithAll
                                 .newInfoFromDomain(professorship);
@@ -145,13 +145,13 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree implements I
                         return detailedProfessorship;
                     }
 
-                    private List getInfoCurricularCourses(IExecutionCourse executionCourse) {
+                    private List getInfoCurricularCourses(ExecutionCourse executionCourse) {
 
                         List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
                                 .getAssociatedCurricularCourses(), new Transformer() {
 
                             public Object transform(Object input) {
-                                ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                                CurricularCourse curricularCourse = (CurricularCourse) input;
 
                                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);

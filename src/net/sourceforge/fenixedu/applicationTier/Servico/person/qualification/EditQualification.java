@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,11 +30,11 @@ public class EditQualification implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject po = sp.getIPersistentObject();
 		
-		IQualification qualification = (IQualification) po.readByOID(Qualification.class, qualificationId);
+		Qualification qualification = (Qualification) po.readByOID(Qualification.class, qualificationId);
 		//If it doesn't exist in the database, a new one has to be created
-		ICountry country = (ICountry) po.readByOID(Country.class, infoQualification.getInfoCountry().getIdInternal());
+		Country country = (Country) po.readByOID(Country.class, infoQualification.getInfoCountry().getIdInternal());
 		if(qualification == null) {
-			IPerson person = (IPerson) po.readByOID(Person.class, infoQualification.getInfoPerson().getIdInternal());
+			Person person = (Person) po.readByOID(Person.class, infoQualification.getInfoPerson().getIdInternal());
 			qualification = DomainFactory.makeQualification(person, country, infoQualification);
 		
 		} else {

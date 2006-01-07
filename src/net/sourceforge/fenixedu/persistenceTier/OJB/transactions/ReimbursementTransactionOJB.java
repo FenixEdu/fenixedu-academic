@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.transactions;
 
-import net.sourceforge.fenixedu.domain.transactions.IReimbursementTransaction;
+import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.ObjectFenixOJB;
@@ -16,13 +16,13 @@ import org.apache.ojb.broker.query.Criteria;
 public class ReimbursementTransactionOJB extends ObjectFenixOJB implements
         IPersistentReimbursementTransaction {
 
-    public IReimbursementTransaction readByReimbursementGuideEntry(
+    public ReimbursementTransaction readByReimbursementGuideEntry(
             Integer reimbursementGuideEntryID) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("reimbursementGuideEntry.idInternal", reimbursementGuideEntryID);
 
-        return (IReimbursementTransaction) queryObject(ReimbursementTransaction.class, criteria);
+        return (ReimbursementTransaction) queryObject(ReimbursementTransaction.class, criteria);
 
     }
 

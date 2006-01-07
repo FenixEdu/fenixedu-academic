@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,7 +30,7 @@ public class LerSalas implements IService {
 		Iterator iterator = salas.iterator();
 		infoSalas = new ArrayList();
 		while (iterator.hasNext()) {
-			IRoom elem = (IRoom) iterator.next();
+			Room elem = (Room) iterator.next();
 			infoSalas.add(new InfoRoom(elem.getNome(), elem.getBuilding().getName(), elem.getPiso(),
 					elem.getTipo(), elem.getCapacidadeNormal(), elem.getCapacidadeExame()));
 		}

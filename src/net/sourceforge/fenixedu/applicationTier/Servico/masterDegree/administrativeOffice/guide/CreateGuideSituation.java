@@ -5,8 +5,8 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideSituation;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,13 +25,13 @@ public class CreateGuideSituation implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuide guide = (IGuide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
+        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
 
-        for (IGuideSituation guideSituation : guide.getGuideSituations()) {
+        for (GuideSituation guideSituation : guide.getGuideSituations()) {
             guideSituation.setState(new State(State.INACTIVE));
         }
 
-        IGuideSituation guideSituation = DomainFactory.makeGuideSituation(situation, remarks, date,
+        GuideSituation guideSituation = DomainFactory.makeGuideSituation(situation, remarks, date,
                 guide, new State(State.ACTIVE));
 
         guide.getGuideSituations().add(guideSituation);

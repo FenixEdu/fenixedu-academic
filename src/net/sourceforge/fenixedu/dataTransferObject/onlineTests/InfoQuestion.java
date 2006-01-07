@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 
 /**
@@ -150,7 +150,7 @@ public class InfoQuestion extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(IQuestion question) {
+    public void copyFromDomain(Question question) {
         super.copyFromDomain(question);
         if (question != null) {
             setXmlFile(question.getXmlFile());
@@ -159,7 +159,7 @@ public class InfoQuestion extends InfoObject {
         }
     }
 
-    public static InfoQuestion newInfoFromDomain(IQuestion question) {
+    public static InfoQuestion newInfoFromDomain(Question question) {
         InfoQuestion infoQuestion = null;
         if (question != null) {
             infoQuestion = new InfoQuestion();

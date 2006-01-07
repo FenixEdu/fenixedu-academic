@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -43,18 +43,18 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             IPersistentExecutionPeriod persistentExecutionPeriod = ps.getIPersistentExecutionPeriod();
             ICursoPersistente persistentDegree = ps.getICursoPersistente();
 
-            final IExecutionPeriod executionPeriod2Compare = (IExecutionPeriod) persistentExecutionPeriod
+            final ExecutionPeriod executionPeriod2Compare = (ExecutionPeriod) persistentExecutionPeriod
                     .readByOID(ExecutionPeriod.class, executionPeriodId);
             if (executionPeriod2Compare == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            IDegree degree = (IDegree) persistentDegree.readByOID(Degree.class, degreeId);
+            Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
             if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            List<IDegreeCurricularPlan> curricularPlans = degree.getDegreeCurricularPlans();
+            List<DegreeCurricularPlan> curricularPlans = degree.getDegreeCurricularPlans();
             List curricularCourses = new ArrayList();
-            for (IDegreeCurricularPlan degreeCurricularPlan : curricularPlans) {
+            for (DegreeCurricularPlan degreeCurricularPlan : curricularPlans) {
                 if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE) && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
                     curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
                 }
@@ -62,11 +62,11 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             List executionCourses = new ArrayList();
             Iterator iter = curricularCourses.iterator();
             while (iter.hasNext()) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+                CurricularCourse curricularCourse = (CurricularCourse) iter.next();
                 executionCourses.addAll(CollectionUtils.select(curricularCourse
                         .getAssociatedExecutionCourses(), new Predicate() {
                     public boolean evaluate(Object arg0) {
-                        IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                        ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
                         return executionCourse.getExecutionPeriod().equals(executionPeriod2Compare);
                     }
@@ -75,7 +75,7 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             List infoExecutionCourses = (List) CollectionUtils.collect(executionCourses,
                     new Transformer() {
                         public Object transform(Object arg0) {
-                            return InfoExecutionCourse.newInfoFromDomain((IExecutionCourse) arg0);
+                            return InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) arg0);
                         }
                     });
             return infoExecutionCourses;

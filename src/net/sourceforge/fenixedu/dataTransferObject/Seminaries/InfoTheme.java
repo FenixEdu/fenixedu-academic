@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -83,7 +83,7 @@ public class InfoTheme extends InfoObject {
         return retorno;
     }
 
-    public void copyFromDomain(ITheme theme) {
+    public void copyFromDomain(Theme theme) {
         super.copyFromDomain(theme);
         if (theme != null) {
             setDescription(theme.getDescription());
@@ -92,7 +92,7 @@ public class InfoTheme extends InfoObject {
         }
     }
 
-    public static InfoTheme newInfoFromDomain(ITheme theme) {
+    public static InfoTheme newInfoFromDomain(Theme theme) {
         InfoTheme infoTheme = null;
 
         if (theme != null) {

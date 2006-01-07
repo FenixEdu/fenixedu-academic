@@ -6,7 +6,7 @@
 
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.Attends;
 
 /**
  * 
@@ -83,14 +83,14 @@ public class InfoFrequenta extends InfoObject {
 
     }
 
-    public void copyFromDomain(IAttends frequenta) {
+    public void copyFromDomain(Attends frequenta) {
         super.copyFromDomain(frequenta);
 		this.setAluno(InfoStudent.newInfoFromDomain(frequenta.getAluno()));
 		this.setDisciplinaExecucao(InfoExecutionCourse.newInfoFromDomain(frequenta.getDisciplinaExecucao()));
 		this.setInfoEnrolment(InfoEnrolment.newInfoFromDomain(frequenta.getEnrolment()));
     }
 
-    public static InfoFrequenta newInfoFromDomain(IAttends frequenta) {
+    public static InfoFrequenta newInfoFromDomain(Attends frequenta) {
         InfoFrequenta infoFrequenta = null;
         if (frequenta != null) {
             infoFrequenta = new InfoFrequenta();

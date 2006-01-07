@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 
 /**
  * @author João Mota
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ISchoolClass;
  */
 public class InfoClassWithInfoExecutionDegree extends InfoClass {
 
-    public void copyFromDomain(ISchoolClass turma) {
+    public void copyFromDomain(SchoolClass turma) {
         super.copyFromDomain(turma);
         if (turma != null) {
             setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
@@ -20,7 +20,7 @@ public class InfoClassWithInfoExecutionDegree extends InfoClass {
         }
     }
 
-    public static InfoClass newInfoFromDomain(ISchoolClass turma) {
+    public static InfoClass newInfoFromDomain(SchoolClass turma) {
         InfoClassWithInfoExecutionDegree infoClass = null;
         if (turma != null) {
             infoClass = new InfoClassWithInfoExecutionDegree();

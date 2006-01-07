@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICoordinator;
+import net.sourceforge.fenixedu.domain.Coordinator;
 
 /**
  * @author Tânia Pousão
@@ -15,16 +15,16 @@ public class InfoCoordinatorWithInfoPerson extends InfoCoordinator {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator#copyFromDomain(Dominio.ICoordinator)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator#copyFromDomain(Dominio.Coordinator)
      */
-    public void copyFromDomain(ICoordinator coordinator) {
+    public void copyFromDomain(Coordinator coordinator) {
         super.copyFromDomain(coordinator);
         if (coordinator != null) {
             setInfoTeacher(InfoTeacherWithPerson.newInfoFromDomain(coordinator.getTeacher()));
         }
     }
 
-    public static InfoCoordinator newInfoFromDomain(ICoordinator coordinator) {
+    public static InfoCoordinator newInfoFromDomain(Coordinator coordinator) {
         InfoCoordinatorWithInfoPerson infoCoordinator = null;
         if (coordinator != null) {
             infoCoordinator = new InfoCoordinatorWithInfoPerson();

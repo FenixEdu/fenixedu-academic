@@ -5,14 +5,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPart;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 
 /**
  * @author Pica
  * @author Barbosa
  */
 public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGrantPart {
-    public void copyFromDomain(IGrantPart grantPart) {
+    public void copyFromDomain(GrantPart grantPart) {
         super.copyFromDomain(grantPart);
         if (grantPart != null) {
             setInfoGrantPaymentEntity(InfoGrantPaymentEntity.newInfoFromDomain(grantPart
@@ -24,7 +24,7 @@ public class InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity extends InfoGran
         }
     }
 
-    public static InfoGrantPart newInfoFromDomain(IGrantPart grantPart) {
+    public static InfoGrantPart newInfoFromDomain(GrantPart grantPart) {
         InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = null;
         if (grantPart != null) {
             infoGrantPartWithSubsidyAndTeacherAndPaymentEntity = new InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity();

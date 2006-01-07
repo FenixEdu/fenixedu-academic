@@ -29,11 +29,11 @@ public class Guide extends Guide_Base {
         return result;
     }
 
-    public IGuideSituation getActiveSituation() {
+    public GuideSituation getActiveSituation() {
         if (this.getGuideSituations() != null) {
             Iterator iterator = this.getGuideSituations().iterator();
             while (iterator.hasNext()) {
-                IGuideSituation guideSituation = (IGuideSituation) iterator.next();
+                GuideSituation guideSituation = (GuideSituation) iterator.next();
                 if (guideSituation.getState().equals(new State(State.ACTIVE))) {
                     return guideSituation;
                 }
@@ -46,7 +46,7 @@ public class Guide extends Guide_Base {
         
         double total = 0;
 
-        for (IGuideEntry guideEntry : getGuideEntries()) {
+        for (GuideEntry guideEntry : getGuideEntries()) {
             total += guideEntry.getPrice() * guideEntry.getQuantity();
         }
         

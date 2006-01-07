@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -41,7 +41,7 @@ public class ReadStudentsAndGroupsWithoutShift implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();
 
-        IGrouping groupProperties = (IGrouping) persistentGroupProperties.readByOID(Grouping.class,
+        Grouping groupProperties = (Grouping) persistentGroupProperties.readByOID(Grouping.class,
                 groupPropertiesId);
 
         if (groupProperties == null) {
@@ -54,20 +54,20 @@ public class ReadStudentsAndGroupsWithoutShift implements IService {
         while (iterStudentGroups.hasNext()) {
 
             List studentGroupAttendList = new ArrayList();
-            IStudentGroup studentGroup = (IStudentGroup) iterStudentGroups.next();
+            StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
             studentGroupAttendList = studentGroup.getAttends();
 
             Iterator iterStudentGroupAttendList = studentGroupAttendList.iterator();
             InfoSiteStudentInformation infoSiteStudentInformation = null;
             InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-            IAttends attend = null;
+            Attends attend = null;
 
             while (iterStudentGroupAttendList.hasNext()) {
                 infoSiteStudentInformation = new InfoSiteStudentInformation();
                 infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-                attend = (IAttends) iterStudentGroupAttendList.next();
+                attend = (Attends) iterStudentGroupAttendList.next();
 
                 infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
                         .newInfoFromDomain(studentGroup));
@@ -91,7 +91,7 @@ public class ReadStudentsAndGroupsWithoutShift implements IService {
         return infoSiteStudentsAndGroups;
     }
 
-    private List getStudentGroupsWithoutShiftByGroupProperties(IGrouping groupProperties) {
+    private List getStudentGroupsWithoutShiftByGroupProperties(Grouping groupProperties) {
         List result = new ArrayList();
         List studentGroups = groupProperties.getStudentGroupsWithoutShift();
         result.addAll(studentGroups);

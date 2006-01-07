@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
  */
 public class Test extends Test_Base {
 
-    public void insertTestQuestion(final IQuestion question, final Integer testQuestionOrder, final Double testQuestionValue,
+    public void insertTestQuestion(final Question question, final Integer testQuestionOrder, final Double testQuestionValue,
             final CorrectionFormula formula) {
         organizeTestQuestionsOrder(testQuestionOrder);
-        ITestQuestion testQuestion = new TestQuestion();
+        TestQuestion testQuestion = new TestQuestion();
         testQuestion.setQuestion(question);
         testQuestion.setTestQuestionOrder(testQuestionOrder);
         testQuestion.setTestQuestionValue(testQuestionValue);
@@ -30,8 +30,8 @@ public class Test extends Test_Base {
 
     private void organizeTestQuestionsOrder(Integer testQuestionToInsertOrder) {
 
-        List<ITestQuestion> testQuestions = getTestQuestions();
-        for (final ITestQuestion testQuestion : testQuestions) {
+        List<TestQuestion> testQuestions = getTestQuestions();
+        for (final TestQuestion testQuestion : testQuestions) {
             Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
             if (testQuestionToInsertOrder.compareTo(iterQuestionOrder) <= 0) {
                 testQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() + 1));
@@ -39,11 +39,11 @@ public class Test extends Test_Base {
         }
     }
 
-    public void deleteTestQuestion(final ITestQuestion testQuestionToDelete) {
-        List<ITestQuestion> aux = new ArrayList<ITestQuestion>();
+    public void deleteTestQuestion(final TestQuestion testQuestionToDelete) {
+        List<TestQuestion> aux = new ArrayList<TestQuestion>();
 
-        List<ITestQuestion> testQuestions = getTestQuestions();
-        for (final ITestQuestion testQuestion : testQuestions) {
+        List<TestQuestion> testQuestions = getTestQuestions();
+        for (final TestQuestion testQuestion : testQuestions) {
             if (!testQuestionToDelete.equals(testQuestion)) {
                 Integer iterQuestionOrder = testQuestion.getTestQuestionOrder();
                 if (testQuestionToDelete.getTestQuestionOrder().compareTo(iterQuestionOrder) < 0) {
@@ -54,7 +54,7 @@ public class Test extends Test_Base {
             }
         }
 
-        for (final ITestQuestion testQuestion : aux) {
+        for (final TestQuestion testQuestion : aux) {
             testQuestion.delete();
         }
 

@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoMoneyCostCenter;
 import net.sourceforge.fenixedu.domain.CostCenter;
-import net.sourceforge.fenixedu.domain.ICostCenter;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IMoneyCostCenter;
+import net.sourceforge.fenixedu.domain.CostCenter;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -29,10 +29,10 @@ public class ReadAllMoneyCostCenterByYear implements IService {
         List<InfoMoneyCostCenter> infoMoneyCostCenterList = new ArrayList<InfoMoneyCostCenter>();
 
         // Read employee logged
-        IEmployee employeeWho = null;
+        Employee employeeWho = null;
 
         IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-        IPerson personWho = personDAO.lerPessoaPorUsername(usernameWho);
+        Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
         if (personWho != null) {
             IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
             employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
@@ -40,12 +40,12 @@ public class ReadAllMoneyCostCenterByYear implements IService {
 
         // Read all cost center and for each verify money at this year
         IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
-        List<ICostCenter> costCenterList = (List<ICostCenter>) costCenterDAO.readAll(CostCenter.class);
+        List<CostCenter> costCenterList = (List<CostCenter>) costCenterDAO.readAll(CostCenter.class);
         if (costCenterList != null && costCenterList.size() > 0) {
             IPersistentMoneyCostCenter moneyCostCenterDAO = sp.getIPersistentMoneyCostCenter();
 
-            for (ICostCenter costCenter : costCenterList) {
-                IMoneyCostCenter moneyCostCenter = moneyCostCenterDAO.readByCostCenterAndYear(
+            for (CostCenter costCenter : costCenterList) {
+                MoneyCostCenter moneyCostCenter = moneyCostCenterDAO.readByCostCenterAndYear(
                         costCenter, year);
                 if (moneyCostCenter == null) {
                     moneyCostCenter = new MoneyCostCenter();

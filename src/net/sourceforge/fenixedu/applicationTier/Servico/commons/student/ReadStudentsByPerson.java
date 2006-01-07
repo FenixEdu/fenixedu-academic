@@ -7,8 +7,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,14 +26,14 @@ public class ReadStudentsByPerson implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        IPerson person = (IPerson) persistentSuport.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) persistentSuport.getIPessoaPersistente().readByOID(Person.class,
                 infoPerson.getIdInternal());
 
         final List students = person.getStudents();
         final List infoStudents = new ArrayList(students.size());
         for (final Iterator iterator = students.iterator(); iterator.hasNext();) {
             final InfoStudent infoStudent = InfoStudentWithInfoPerson
-                    .newInfoFromDomain((IStudent) iterator.next());
+                    .newInfoFromDomain((Student) iterator.next());
             infoStudents.add(infoStudent);
         }
         return infoStudents;

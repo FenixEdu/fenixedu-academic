@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -14,7 +14,7 @@ public class ChangePassword implements IService {
 
         ISuportePersistente suportePersistente = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        IPerson person = suportePersistente.getIPessoaPersistente().lerPessoaPorUsername(
+        Person person = suportePersistente.getIPessoaPersistente().lerPessoaPorUsername(
                 userView.getUtilizador());
         try {
         	person.changePassword(oldPassword, newPassword);

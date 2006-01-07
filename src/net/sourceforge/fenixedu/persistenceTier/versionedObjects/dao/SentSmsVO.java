@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.sms.ISentSms;
+import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
@@ -25,12 +25,12 @@ public class SentSmsVO extends VersionedObjectsBase implements IPersistentSentSm
 
     public List readByPerson(final Integer personID, Integer interval) throws ExcepcaoPersistencia {
 
-		Collection<ISentSms> sentSmsList = readAll(SentSms.class);
+		Collection<SentSms> sentSmsList = readAll(SentSms.class);
 		
 		CollectionUtils.filter(sentSmsList, new Predicate() {
 		
 			public boolean evaluate(Object arg0) {
-				ISentSms sms = (ISentSms) arg0;
+				SentSms sms = (SentSms) arg0;
 				if (sms.getPerson().getIdInternal().equals(personID)){
 					return true;
 				}
@@ -39,17 +39,17 @@ public class SentSmsVO extends VersionedObjectsBase implements IPersistentSentSm
 		
 		});
 		
-		Collections.sort((List<ISentSms>)sentSmsList, new Comparator() {
+		Collections.sort((List<SentSms>)sentSmsList, new Comparator() {
 		
 			public int compare(Object o1, Object o2) {
-				ISentSms sms1 = (ISentSms) o1;
-				ISentSms sms2 = (ISentSms) o2;
+				SentSms sms1 = (SentSms) o1;
+				SentSms sms2 = (SentSms) o2;
 				return sms1.getSendDate().compareTo(sms2.getSendDate());
 			}		
 		});
 		
-		List<ISentSms> result = new ArrayList(interval);
-		for (ISentSms sms : sentSmsList) {
+		List<SentSms> result = new ArrayList(interval);
+		for (SentSms sms : sentSmsList) {
 			if (interval > 0) {
 				result.add(sms);
 				interval--;
@@ -61,12 +61,12 @@ public class SentSmsVO extends VersionedObjectsBase implements IPersistentSentSm
 
     public Integer countByPersonAndDatePeriod(final Integer personId, Date startDate, Date endDate) {
 
-		Collection<ISentSms> sentSmsList = readAll(SentSms.class);
+		Collection<SentSms> sentSmsList = readAll(SentSms.class);
 		
 		CollectionUtils.filter(sentSmsList, new Predicate() {
 		
 			public boolean evaluate(Object arg0) {
-				ISentSms sms = (ISentSms) arg0;
+				SentSms sms = (SentSms) arg0;
 				if (sms.getPerson().getIdInternal().equals(personId)){
 					return true;
 				}
@@ -76,7 +76,7 @@ public class SentSmsVO extends VersionedObjectsBase implements IPersistentSentSm
 		
 		Integer result = 0;
 		
-		for (ISentSms sms : sentSmsList) {
+		for (SentSms sms : sentSmsList) {
 			if ( sms.getSendDate().before(endDate) && sms.getSendDate().after(startDate)) {
 				result++;
 			}

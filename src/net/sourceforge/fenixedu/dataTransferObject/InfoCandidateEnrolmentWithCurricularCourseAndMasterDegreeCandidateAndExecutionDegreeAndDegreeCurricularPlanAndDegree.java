@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICandidateEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.CandidateEnrolment;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 /**
  * @author Luis Cruz
@@ -9,15 +9,15 @@ import net.sourceforge.fenixedu.domain.IExecutionDegree;
  */
 public class InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree extends InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidate {
 
-    public void copyFromDomain(ICandidateEnrolment candidateEnrolment) {
+    public void copyFromDomain(CandidateEnrolment candidateEnrolment) {
         super.copyFromDomain(candidateEnrolment);
         if (candidateEnrolment != null) {
-            IExecutionDegree executionDegree = candidateEnrolment.getMasterDegreeCandidate().getExecutionDegree();
+            ExecutionDegree executionDegree = candidateEnrolment.getMasterDegreeCandidate().getExecutionDegree();
             getInfoMasterDegreeCandidate().setInfoExecutionDegree(InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan.newInfoFromDomain(executionDegree));
         }
     }
 
-    public static InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree newInfoFromDomain(ICandidateEnrolment candidateEnrolment) {
+    public static InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree newInfoFromDomain(CandidateEnrolment candidateEnrolment) {
         InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree infoCandidateEnrolment = null;
         if (candidateEnrolment != null) {
             infoCandidateEnrolment = new InfoCandidateEnrolmentWithCurricularCourseAndMasterDegreeCandidateAndExecutionDegreeAndDegreeCurricularPlanAndDegree();

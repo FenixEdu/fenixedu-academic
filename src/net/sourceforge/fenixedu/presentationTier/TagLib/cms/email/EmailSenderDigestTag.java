@@ -13,7 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 
 import org.apache.struts.Globals;
 import org.apache.struts.taglib.TagUtils;
@@ -37,7 +37,7 @@ public class EmailSenderDigestTag extends TagSupport
 	
 	protected String addressSeparator=",";
 
-	protected IMailMessage message;
+	protected MailMessage message;
 
 	public String getLocale()
 	{
@@ -91,7 +91,7 @@ public class EmailSenderDigestTag extends TagSupport
 		}
 		else
 		{
-			this.message = (IMailMessage) value;
+			this.message = (MailMessage) value;
 		}
 		// Convert value to the String with some formatting
 		try

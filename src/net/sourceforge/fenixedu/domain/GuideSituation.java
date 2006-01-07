@@ -13,7 +13,7 @@ public class GuideSituation extends GuideSituation_Base {
     public GuideSituation() {
     }
 
-    public GuideSituation(GuideState situation, String remarks, Date date, IGuide guide, State state) {
+    public GuideSituation(GuideState situation, String remarks, Date date, Guide guide, State state) {
         this.setRemarks(remarks);
         this.setGuide(guide);
         this.setSituation(situation);

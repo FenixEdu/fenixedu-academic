@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -16,8 +16,8 @@ public class EditInstitution implements IService {
             ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IInstitution storedInstitution = sp.getIPersistentInstitution().readByName(newInstitutionName);
-        IInstitution oldInstitution = (IInstitution) sp.getIPersistentInstitution().readByOID(
+        Institution storedInstitution = sp.getIPersistentInstitution().readByName(newInstitutionName);
+        Institution oldInstitution = (Institution) sp.getIPersistentInstitution().readByOID(
                 Institution.class, oldInstitutionOID);
 
         if (oldInstitution == null) {

@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IPaymentPhase;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.PaymentPhase;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -65,12 +65,12 @@ public class InsertGratuityData implements IService {
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
 
-		IGratuityValues gratuityValues = persistentGratuityValues
+		GratuityValues gratuityValues = persistentGratuityValues
 				.readGratuityValuesByExecutionDegree(infoGratuityValues.getInfoExecutionDegree()
 						.getIdInternal());
 
 		// execution Degree
-		IExecutionDegree executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree()
+		ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
 				.readByOID(ExecutionDegree.class,
 						infoGratuityValues.getInfoExecutionDegree().getIdInternal(), true);
 
@@ -183,18 +183,18 @@ public class InsertGratuityData implements IService {
 	}
 
 	private void validatePaymentPhasesWithTransaction(ISuportePersistente sp,
-			IGratuityValues gratuityValues) throws FenixServiceException {
+			GratuityValues gratuityValues) throws FenixServiceException {
 	}
 
 	private void registerWhoAndWhen(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
-			IGratuityValues gratuityValues) throws ExcepcaoPersistencia {
+			GratuityValues gratuityValues) throws ExcepcaoPersistencia {
 		// employee who made register
 		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-		IPerson person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
+		Person person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
 				.getPerson().getUsername());
 		if (person != null) {
 			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-			IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+			Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 			gratuityValues.setEmployee(employee);
 		}
 
@@ -203,12 +203,12 @@ public class InsertGratuityData implements IService {
 	}
 
 	private void writePaymentPhases(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
-			IGratuityValues gratuityValues) throws FenixServiceException, ExcepcaoPersistencia {
+			GratuityValues gratuityValues) throws FenixServiceException, ExcepcaoPersistencia {
 		IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
 
 		if (gratuityValues.getPaymentPhaseList() != null
 				&& gratuityValues.getPaymentPhaseList().size() > 0) {
-			for (IPaymentPhase paymentPhase : gratuityValues.getPaymentPhaseList()) {
+			for (PaymentPhase paymentPhase : gratuityValues.getPaymentPhaseList()) {
 				persistentPaymentPhase.deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
 			}
 			gratuityValues.getPaymentPhaseList().clear();
@@ -220,7 +220,7 @@ public class InsertGratuityData implements IService {
 			while (iterator.hasNext()) {
 				InfoPaymentPhase infoPaymentPhase = (InfoPaymentPhase) iterator.next();
 
-				IPaymentPhase paymentPhase = DomainFactory.makePaymentPhase();
+				PaymentPhase paymentPhase = DomainFactory.makePaymentPhase();
 				paymentPhase.setStartDate(infoPaymentPhase.getStartDate());
 				paymentPhase.setEndDate(infoPaymentPhase.getEndDate());
 				paymentPhase.setValue(infoPaymentPhase.getValue());

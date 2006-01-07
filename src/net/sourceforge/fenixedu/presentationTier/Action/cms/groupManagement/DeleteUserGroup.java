@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -40,12 +40,12 @@ public class DeleteUserGroup extends FenixAction
 		IUserView userView = SessionUtils.getUserView(request);
 		try
 		{
-			IPerson person = (IPerson) ServiceManagerServiceFactory.executeService(userView, "ReadDomainPersonByUsername", new Object[]
+			Person person = (Person) ServiceManagerServiceFactory.executeService(userView, "ReadDomainPersonByUsername", new Object[]
 			{ userView.getUtilizador() });
-			IUserGroup toDelete = null;
-			for (Iterator<IUserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+			UserGroup toDelete = null;
+			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
 			{
-				IUserGroup group = iter.next();
+				UserGroup group = iter.next();
 				if (group.getIdInternal().equals(groupId))
 				{
 					toDelete = group;

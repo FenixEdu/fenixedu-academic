@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.ObjectKey;
 import net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects.ObjectChange;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
@@ -23,11 +23,11 @@ public class DomainMetaObject implements MetaObject {
     private List<MetaSlot> slots;
     private Properties properties;
 
-    private transient IDomainObject object;
+    private transient DomainObject object;
     private transient UserIdentity userIdentity;
     private String schema;
 
-    public DomainMetaObject(IDomainObject object) {
+    public DomainMetaObject(DomainObject object) {
         this.type = object.getClass();
         this.oid = object.getIdInternal().intValue();
         this.properties = new Properties();
@@ -39,7 +39,7 @@ public class DomainMetaObject implements MetaObject {
         this.userIdentity = user;
     }
 
-    public IDomainObject getObject() {
+    public DomainObject getObject() {
         if (this.object == null) {
             this.object = getPersistentObject();
         }
@@ -47,11 +47,11 @@ public class DomainMetaObject implements MetaObject {
         return this.object;
     }
 
-    private IDomainObject getPersistentObject() {
+    private DomainObject getPersistentObject() {
         try {
             IUserView userView = getUserView();
 
-            return (IDomainObject) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { getType(), getOid() });
+            return (DomainObject) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[] { getType(), getOid() });
         } catch (FenixFilterException e) {
             e.printStackTrace();
         } catch (FenixServiceException e) {

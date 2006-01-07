@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -27,11 +27,11 @@ public class ReadTeacherPersonalExpectationByTeacherIDAndExecutionYearID impleme
         IPersistentExecutionYear persistentExecutionYear = persistenceSupport
                 .getIPersistentExecutionYear();
 
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherID);
-        IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
+        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                 ExecutionYear.class, executionYearID);
 
-        ITeacherPersonalExpectation teacherPersonalExpectation = teacher
+        TeacherPersonalExpectation teacherPersonalExpectation = teacher
                 .getTeacherPersonalExpectationByExecutionYear(executionYear);
 
         return InfoTeacherPersonalExpectation

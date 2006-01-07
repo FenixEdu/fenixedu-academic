@@ -13,7 +13,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -22,18 +22,18 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class ItemOJB extends PersistentObjectOJB implements IPersistentItem {
 
-    public IItem readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia {
+    public Item readBySectionAndName(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName, String itemName) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("section.idInternal", sectionID);
         crit.addEqualTo("name", itemName);
         crit.addEqualTo("section.site.executionCourse.code", executionCourseSigla);
         crit.addEqualTo("section.site.executionCourse.executionPeriod.name", executionPeriodName);
         crit.addEqualTo("section.site.executionCourse.executionPeriod.executionYear.year", executionPeriodYear);
-        return (IItem) queryObject(Item.class, crit);
+        return (Item) queryObject(Item.class, crit);
 
     }
 
-    public List<IItem> readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
+    public List<Item> readAllItemsBySection(Integer sectionID, String executionCourseSigla, String executionPeriodYear, String executionPeriodName) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("section.idInternal", sectionID);
         crit.addEqualTo("section.site.executionCourse.code", executionCourseSigla);

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
-import net.sourceforge.fenixedu.domain.publication.IAttribute;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.Attribute;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,14 +21,14 @@ public class ReadNonRequiredAttributes implements IService {
 
         IPersistentPublicationType persistentPublicationType = persistentSuport
                 .getIPersistentPublicationType();
-        IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+        PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeId));
 
-        List<IAttribute> nonRequiredAttributeList = publicationType.getNonRequiredAttributes();
+        List<Attribute> nonRequiredAttributeList = publicationType.getNonRequiredAttributes();
 
         List<InfoAttribute> result = new ArrayList<InfoAttribute>();
         
-        for(IAttribute attribute : nonRequiredAttributeList) {
+        for(Attribute attribute : nonRequiredAttributeList) {
             result.add(InfoAttribute.newInfoFromDomain(attribute));
         }
         return result;

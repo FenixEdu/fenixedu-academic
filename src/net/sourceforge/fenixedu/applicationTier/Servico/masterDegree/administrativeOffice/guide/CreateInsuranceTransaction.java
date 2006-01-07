@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GuideEntry;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
@@ -37,16 +37,16 @@ public class CreateInsuranceTransaction implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IGuideEntry guideEntry = (IGuideEntry) sp.getIPersistentGuideEntry().readByOID(GuideEntry.class,
+        GuideEntry guideEntry = (GuideEntry) sp.getIPersistentGuideEntry().readByOID(GuideEntry.class,
                 guideEntryID);
-        IGuide guide = guideEntry.getGuide();
+        Guide guide = guideEntry.getGuide();
 
         IPersistentInsuranceTransaction insuranceTransactionDAO = sp
                 .getIPersistentInsuranceTransaction();
 
-        IStudent student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
+        Student student = sp.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
                 DegreeType.MASTER_DEGREE);
-        IPerson responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person responsible = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
         List insuranceTransactionList = insuranceTransactionDAO
                 .readAllNonReimbursedByExecutionYearAndStudent(guide.getExecutionDegree()
@@ -57,7 +57,7 @@ public class CreateInsuranceTransaction implements IService {
                     "error.message.transaction.insuranceTransactionAlreadyExists");
         }
 
-        IPersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
+        PersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(guide.getPerson().getIdInternal());
         
         if(personAccount == null){
             personAccount = DomainFactory.makePersonAccount(guide.getPerson());

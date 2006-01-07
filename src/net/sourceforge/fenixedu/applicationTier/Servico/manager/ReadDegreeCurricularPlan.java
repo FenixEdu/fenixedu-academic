@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,7 +35,7 @@ public class ReadDegreeCurricularPlan implements IService {
             ExcepcaoPersistencia {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
+		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
                 .readByOID(DegreeCurricularPlan.class, idInternal);
 
         if (degreeCurricularPlan == null) {

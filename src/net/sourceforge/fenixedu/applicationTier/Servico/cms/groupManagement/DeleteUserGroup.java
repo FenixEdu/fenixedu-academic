@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement;
 
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -16,7 +16,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class DeleteUserGroup implements IService
 {
-	public void run(IUserGroup group)
+	public void run(UserGroup group)
 	{
 		group.delete();
 	}

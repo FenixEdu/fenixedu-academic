@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.domain;
 
 public class SchoolClassTest extends DomainTestBase {
 
-    ISchoolClass schoolClass;
+    SchoolClass schoolClass;
 
-    IShift shift;
+    Shift shift;
 
     protected void setUp() throws Exception {
         super.setUp();

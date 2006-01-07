@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -44,13 +44,13 @@ public class PrepareInsertSummary implements IService {
         final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         final ISalaPersistente persistentRoom = sp.getISalaPersistente();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
         }
 
-        final ISite site = executionCourse.getSite();
+        final Site site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("no.site");
         }
@@ -62,25 +62,25 @@ public class PrepareInsertSummary implements IService {
         final InfoSiteSummaries bodyComponent = new InfoSiteSummaries();
         final SiteView siteView = new ExecutionCourseSiteView(commonComponent, bodyComponent);
 
-        final List<IShift> shifts = executionCourse.getAssociatedShifts();
+        final List<Shift> shifts = executionCourse.getAssociatedShifts();
         final List<InfoShift> infoShifts = new ArrayList<InfoShift>(shifts.size());
-        for (final IShift shift : shifts) {
+        for (final Shift shift : shifts) {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
             infoShifts.add(infoShift);
 
-            final List<ILesson> lessons = shift.getAssociatedLessons();
+            final List<Lesson> lessons = shift.getAssociatedLessons();
             final List<InfoLesson> infoLessons = new ArrayList<InfoLesson>(lessons.size());
             infoShift.setInfoLessons(infoLessons);
-            for (final ILesson lesson : lessons) {
+            for (final Lesson lesson : lessons) {
                 final InfoLesson infoLesson = InfoLessonWithInfoRoom.newInfoFromDomain(lesson);
                 infoLessons.add(infoLesson);
             }
         }
 
-        final List<IRoom> rooms = persistentRoom.readAll();
+        final List<Room> rooms = persistentRoom.readAll();
         final List<InfoRoom> infoRooms = new ArrayList<InfoRoom>(rooms.size());
 
-        for (final IRoom room : rooms) {
+        for (final Room room : rooms) {
             final InfoRoom infoRoom = new InfoRoom();
             infoRooms.add(infoRoom);
 
@@ -90,10 +90,10 @@ public class PrepareInsertSummary implements IService {
 
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        final List<IProfessorship> professorships = executionCourse.getProfessorships();
+        final List<Professorship> professorships = executionCourse.getProfessorships();
         final List<InfoProfessorship> infoProfessorships = new ArrayList<InfoProfessorship>(1);
         Integer professorshipSelect = null;
-        for (final IProfessorship professorship : professorships) {
+        for (final Professorship professorship : professorships) {
             if (professorship.getTeacher().getPerson().getUsername().equalsIgnoreCase(userLogged)) {
                 infoProfessorships.add(InfoProfessorshipWithAll.newInfoFromDomain(professorship));
                 professorshipSelect = professorship.getIdInternal();

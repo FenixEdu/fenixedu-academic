@@ -18,8 +18,8 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
     public MasterDegreeThesisDataVersion() {
     }
 
-    public MasterDegreeThesisDataVersion(IMasterDegreeThesis masterDegreeThesis,
-            IEmployee responsibleEmployee, String dissertationTitle, Date lastModification,
+    public MasterDegreeThesisDataVersion(MasterDegreeThesis masterDegreeThesis,
+            Employee responsibleEmployee, String dissertationTitle, Date lastModification,
             State currentState) {
         this.setMasterDegreeThesis(masterDegreeThesis);
         this.setResponsibleEmployee(responsibleEmployee);

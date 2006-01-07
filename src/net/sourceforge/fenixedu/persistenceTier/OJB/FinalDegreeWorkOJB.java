@@ -8,9 +8,9 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,11 +33,11 @@ public class FinalDegreeWorkOJB extends PersistentObjectOJB implements IPersiste
         return queryList(Proposal.class, criteria);
     }
 
-    public IScheduleing readFinalDegreeWorkScheduleing(Integer executionDegreeOID)
+    public Scheduleing readFinalDegreeWorkScheduleing(Integer executionDegreeOID)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("executionDegree.idInternal", executionDegreeOID);
-        return (IScheduleing) queryObject(Scheduleing.class, criteria);
+        return (Scheduleing) queryObject(Scheduleing.class, criteria);
     }
 
     public List readFinalDegreeWorkProposalsByTeacher(Integer teacherOID) throws ExcepcaoPersistencia {
@@ -65,18 +65,18 @@ public class FinalDegreeWorkOJB extends PersistentObjectOJB implements IPersiste
         return queryList(Proposal.class, criteria);
     }
 
-    public IGroup readFinalDegreeWorkGroupByUsername(String username) throws ExcepcaoPersistencia {
+    public Group readFinalDegreeWorkGroupByUsername(String username) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("groupStudents.student.person.username", username);
         criteria.addEqualTo("executionDegree.executionYear.state", PeriodState.CURRENT);
-        return (IGroup) queryObject(Group.class, criteria);
+        return (Group) queryObject(Group.class, criteria);
     }
 
-    public IProposal readFinalDegreeWorkAttributedToGroupByTeacher(Integer groupOid)
+    public Proposal readFinalDegreeWorkAttributedToGroupByTeacher(Integer groupOid)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("groupAttributedByTeacher.idInternal", groupOid);
-        return (IProposal) queryObject(Proposal.class, criteria);
+        return (Proposal) queryObject(Proposal.class, criteria);
     }
 
 }

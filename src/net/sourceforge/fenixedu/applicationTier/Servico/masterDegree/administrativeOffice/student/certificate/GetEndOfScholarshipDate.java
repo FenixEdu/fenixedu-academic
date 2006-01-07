@@ -5,7 +5,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IMasterDegreeCurricularPlanStrategy;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,7 +21,7 @@ public class GetEndOfScholarshipDate implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) sp
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 

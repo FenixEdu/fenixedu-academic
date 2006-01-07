@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantType;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantType;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,7 +35,7 @@ public class ReadAllGrantTypes implements IService {
 
         return (List) CollectionUtils.collect(grantTypes, new Transformer() {
             public Object transform(Object input) {
-                IGrantType grantType = (IGrantType) input;
+                GrantType grantType = (GrantType) input;
                 return InfoGrantType.newInfoFromDomain(grantType);
 
             }

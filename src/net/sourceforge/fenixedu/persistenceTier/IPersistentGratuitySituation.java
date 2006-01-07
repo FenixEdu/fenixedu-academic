@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
 
 /**
@@ -14,16 +14,16 @@ import net.sourceforge.fenixedu.domain.gratuity.GratuitySituationType;
  */
 public interface IPersistentGratuitySituation extends IPersistentObject {
 
-	public IGratuitySituation readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+	public GratuitySituation readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
 			Integer studentCurricularPlanID, Integer gratuityValuesID) throws ExcepcaoPersistencia;
 
 	public List readGratuitySituationsByDegreeCurricularPlan(Integer degreeCurricularPlanID)
 			throws ExcepcaoPersistencia;
 
-	public IGratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
+	public GratuitySituation readGratuitySituationByExecutionDegreeAndStudent(
 			Integer executionDegreeID, Integer studentID) throws ExcepcaoPersistencia;
 
-	public IGratuitySituation readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
+	public GratuitySituation readByStudentCurricularPlanAndGratuityValuesAndGratuitySituationType(
 			Integer studentCurricularPlanID, Integer gratuityValuesID,
 			GratuitySituationType gratuitySituationType) throws ExcepcaoPersistencia;
 	

@@ -8,9 +8,9 @@ import java.util.ListIterator;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,7 +27,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
         List allCurricularCourseScope = new ArrayList();
 
         sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         idDegreeCurricularPlan);
 
@@ -46,10 +46,10 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
         // for each curricular course, add it scopes in the result list
         Iterator iterator = allCurricularCourses.iterator();
 
-        ICurricularCourse curricularCourse = null;
+        CurricularCourse curricularCourse = null;
         ListIterator iteratorScopes = null;
         while (iterator.hasNext()) {
-            curricularCourse = (ICurricularCourse) iterator.next();
+            curricularCourse = (CurricularCourse) iterator.next();
 
             List curricularCourseScopes = sp
                     .getIPersistentCurricularCourseScope()
@@ -60,7 +60,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements ISer
                 while (iteratorScopes.hasNext()) {
                     allCurricularCourseScope
                             .add(InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
-                                    .newInfoFromDomain((ICurricularCourseScope) iteratorScopes.next()));
+                                    .newInfoFromDomain((CurricularCourseScope) iteratorScopes.next()));
                 }
             }
         }

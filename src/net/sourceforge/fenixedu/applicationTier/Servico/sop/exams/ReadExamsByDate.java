@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExamWithRoomOccupationsAn
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewExamByDayAndShift;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -31,14 +31,14 @@ public class ReadExamsByDate implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final List<IExam> filteredExams = persistentSupport.getIPersistentExam().readBy(examDay,
+        final List<Exam> filteredExams = persistentSupport.getIPersistentExam().readBy(examDay,
                 examStartTime, examEndTime);
 
         final InfoViewExam infoViewExam = new InfoViewExam();
         List<InfoViewExamByDayAndShift> infoViewExamsByDayAndShiftList = new ArrayList<InfoViewExamByDayAndShift>();
         infoViewExam.setInfoViewExamsByDayAndShift(infoViewExamsByDayAndShiftList);
 
-        for (final IExam exam : filteredExams) {
+        for (final Exam exam : filteredExams) {
             final InfoViewExamByDayAndShift viewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
             final InfoExam infoExam = InfoExamWithRoomOccupationsAndScopesWithCurricularCoursesWithDegreeAndSemesterAndYear
@@ -57,29 +57,29 @@ public class ReadExamsByDate implements IService {
         return infoViewExam;
     }
 
-    private Integer calculateAvailableRoomOccupation(final IExam exam,
+    private Integer calculateAvailableRoomOccupation(final Exam exam,
             final Integer numberStudentesAttendingCourse) {
         int totalExamCapacity = 0;
-        for (final IRoomOccupation roomOccupation : exam.getAssociatedRoomOccupation()) {
+        for (final RoomOccupation roomOccupation : exam.getAssociatedRoomOccupation()) {
             totalExamCapacity += roomOccupation.getRoom().getCapacidadeExame().intValue();
         }
         return Integer.valueOf(numberStudentesAttendingCourse.intValue() - totalExamCapacity);
     }
 
-    private List<InfoDegree> readInfoDegrees(final IExam exam,
+    private List<InfoDegree> readInfoDegrees(final Exam exam,
             InfoViewExamByDayAndShift viewExamByDayAndShift) {
 
         final List<InfoDegree> result = new ArrayList<InfoDegree>();
         final Set<Integer> curricularCourseIDs = new HashSet<Integer>();
 
         // Select an ExecutionPeriod from any ExecutionCourses
-        final IExecutionPeriod executionPeriod = exam.getAssociatedExecutionCourses().get(0)
+        final ExecutionPeriod executionPeriod = exam.getAssociatedExecutionCourses().get(0)
                 .getExecutionPeriod();
         int numberStudentes = 0;
 
-        for (final ICurricularCourseScope curricularCourseScope : exam
+        for (final CurricularCourseScope curricularCourseScope : exam
                 .getAssociatedCurricularCourseScope()) {
-            final ICurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
+            final CurricularCourse curricularCourse = curricularCourseScope.getCurricularCourse();
             if (!curricularCourseIDs.contains(curricularCourse.getIdInternal())) {
                 curricularCourseIDs.add(curricularCourse.getIdInternal());
                 result.add(InfoDegree.newInfoFromDomain(curricularCourse.getDegreeCurricularPlan()
@@ -92,10 +92,10 @@ public class ReadExamsByDate implements IService {
         return result;
     }
 
-    private Integer calculateNumberOfEnrolmentStudents(final ICurricularCourse curricularCourse,
-            final IExecutionPeriod executionPeriod) {
+    private Integer calculateNumberOfEnrolmentStudents(final CurricularCourse curricularCourse,
+            final ExecutionPeriod executionPeriod) {
         int numberOfStudents = 0;
-        for (final IEnrolment enrolment : curricularCourse.getEnrolments()) {
+        for (final Enrolment enrolment : curricularCourse.getEnrolments()) {
             if (enrolment.getExecutionPeriod() == executionPeriod) {
                 numberOfStudents++;
             }
@@ -103,10 +103,10 @@ public class ReadExamsByDate implements IService {
         return Integer.valueOf(numberOfStudents);
     }
 
-    private List<InfoExecutionCourse> readInfoExecutionCourses(final IExam exam) {
+    private List<InfoExecutionCourse> readInfoExecutionCourses(final Exam exam) {
         final List<InfoExecutionCourse> result = new ArrayList<InfoExecutionCourse>(exam
                 .getAssociatedExecutionCoursesCount());
-        for (final IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
+        for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
             result.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         }
         return result;

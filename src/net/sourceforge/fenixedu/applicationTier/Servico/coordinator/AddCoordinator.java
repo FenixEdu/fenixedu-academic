@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
@@ -30,18 +30,18 @@ public class AddCoordinator implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException();
         }
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
         if (executionDegree == null) {
             throw new InvalidArgumentsServiceException();
         }
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-        ICoordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
+        Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
                 teacher.getIdInternal(), executionDegree.getIdInternal());
         if (coordinator == null) {
             coordinator = DomainFactory.makeCoordinator();
@@ -54,9 +54,9 @@ public class AddCoordinator implements IService {
             if (executionDegreesTeacherList == null || executionDegreesTeacherList.size() <= 0) {
                 // Role Coordinator
                 IPersistentRole persistentRole = sp.getIPersistentRole();
-                IRole role = persistentRole.readByRoleType(RoleType.COORDINATOR);
+                Role role = persistentRole.readByRoleType(RoleType.COORDINATOR);
 
-                IPerson person = teacher.getPerson();
+                Person person = teacher.getPerson();
 
                 if (!person.getPersonRoles().contains(role)) {
                     person.getPersonRoles().add(role);

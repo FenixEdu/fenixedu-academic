@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.TeacherCreditsDetailsDTO;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -43,7 +43,7 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         teachers = doSearch(searchParameters, sp);
 
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-        final IExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters,
+        final ExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters,
                 executionPeriodDAO);
 
         InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
@@ -51,7 +51,7 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
 
         List list = new ArrayList();
         for (int i = 0; i < teachers.size(); i++) {
-            ITeacher teacher = (ITeacher) teachers.get(i);
+            Teacher teacher = (Teacher) teachers.get(i);
             TeacherCreditsDetailsDTO details = new TeacherCreditsDetailsDTO();
             InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
             if (teacher.getCategory() != null) {
@@ -67,9 +67,9 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         return list;
     }
 
-    private IExecutionPeriod readExecutionPeriod(HashMap searchParameters,
+    private ExecutionPeriod readExecutionPeriod(HashMap searchParameters,
             IPersistentExecutionPeriod executionPeriodDAO) throws ExcepcaoPersistencia {
-        final IExecutionPeriod executionPeriod;
+        final ExecutionPeriod executionPeriod;
         Integer executionPeriodId = null;
         try {
             executionPeriodId = Integer.valueOf((String) searchParameters.get("executionPeriodId"));
@@ -79,7 +79,7 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         if (executionPeriodId == null) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
         return executionPeriod;
@@ -89,7 +89,7 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
             throws ExcepcaoPersistencia {
         Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
         IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-        IDepartment department = (IDepartment) departmentDAO.readByOID(Department.class, departmentId);
+        Department department = (Department) departmentDAO.readByOID(Department.class, departmentId);
         
         List teachers = department.getCurrentTeachers();
         return teachers;

@@ -15,7 +15,7 @@ public class Announcement extends Announcement_Base {
     }
 
     public Announcement(String title, Date creationDate, Date lastModifiedDate, String information,
-            ISite site) {
+            Site site) {
         setTitle(title);
         setCreationDate(creationDate);
         setLastModifiedDate(lastModifiedDate);

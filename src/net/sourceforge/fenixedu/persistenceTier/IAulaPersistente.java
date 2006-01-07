@@ -12,13 +12,13 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.Lesson;
 
 public interface IAulaPersistente extends IPersistentObject {
 
-    public List<ILesson> readByRoomAndExecutionPeriod(Integer roomOID, Integer executionPeriodOID)
+    public List<Lesson> readByRoomAndExecutionPeriod(Integer roomOID, Integer executionPeriodOID)
             throws ExcepcaoPersistencia;
 
-    public List<ILesson> readLessonsByStudent(String username) throws ExcepcaoPersistencia;
+    public List<Lesson> readLessonsByStudent(String username) throws ExcepcaoPersistencia;
 
 }

@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
@@ -23,11 +23,11 @@ public class InsertSection implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
         final IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
-        final ISite site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
+        final Site site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 
-        ISection parentSection = null;
+        Section parentSection = null;
         if (sectionCode != null) {
-            parentSection = (ISection) persistentSection.readByOID(Section.class, sectionCode);
+            parentSection = (Section) persistentSection.readByOID(Section.class, sectionCode);
         }
         site.createSection(sectionName, parentSection, sectionOrder);
          

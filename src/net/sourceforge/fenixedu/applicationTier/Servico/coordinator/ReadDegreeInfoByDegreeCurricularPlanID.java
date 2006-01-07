@@ -6,8 +6,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,17 +34,17 @@ public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
                 .getDefaultPersistenceSupport();
 
         // Degree curricular plan
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) suportePersistente
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) suportePersistente
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
         // Read degree information
-        List<IDegreeInfo> degreeInfoList = degreeCurricularPlan.getDegree().getDegreeInfos();
+        List<DegreeInfo> degreeInfoList = degreeCurricularPlan.getDegree().getDegreeInfos();
         InfoDegreeInfo infoDegreeInfo = null;
 
         // Last information about this degree
         if (degreeInfoList != null && !degreeInfoList.isEmpty()) {
-            IDegreeInfo degreeInfo = (IDegreeInfo) Collections.max(degreeInfoList, new BeanComparator(
+            DegreeInfo degreeInfo = (DegreeInfo) Collections.max(degreeInfoList, new BeanComparator(
                     "lastModificationDate"));
 
             infoDegreeInfo = InfoDegreeInfo.newInfoFromDomain(degreeInfo);

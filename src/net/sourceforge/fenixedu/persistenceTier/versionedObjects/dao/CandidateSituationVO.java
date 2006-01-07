@@ -14,9 +14,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -44,7 +44,7 @@ public class CandidateSituationVO extends VersionedObjectsBase implements
 			Integer executionDegreeID, List<String> situationNames)
 			throws ExcepcaoPersistencia {
 
-		final IExecutionDegree executionDegree = (IExecutionDegree) readByOID(
+		final ExecutionDegree executionDegree = (ExecutionDegree) readByOID(
 				ExecutionDegree.class, executionDegreeID);
 
 		if (executionDegree != null && executionDegree.getMasterDegreeCandidates() != null) {
@@ -53,7 +53,7 @@ public class CandidateSituationVO extends VersionedObjectsBase implements
 			
 			for (final Iterator iterator = executionDegree
 					.getMasterDegreeCandidates().iterator(); iterator.hasNext();) {
-				final IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator
+				final MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) iterator
 						.next();
 
 				final List candidateSituations = masterDegreeCandidate
@@ -62,7 +62,7 @@ public class CandidateSituationVO extends VersionedObjectsBase implements
 				for (final Iterator iterator2 = candidateSituations.iterator(); iterator2
 						.hasNext();) {
 
-					final ICandidateSituation candidateSituation = (ICandidateSituation) iterator2
+					final CandidateSituation candidateSituation = (CandidateSituation) iterator2
 							.next();
 
 					if (candidateSituation.getValidation().getState() == State.ACTIVE

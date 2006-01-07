@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 
 /**
  * Created on 11/Fev/2003
@@ -15,12 +15,12 @@ public interface IPersistentExecutionPeriod extends IPersistentObject {
 
     public List readNotClosedPublicExecutionPeriods() throws ExcepcaoPersistencia;
 
-    public IExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia;
+    public ExecutionPeriod readActualExecutionPeriod() throws ExcepcaoPersistencia;
    
-    public IExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
+    public ExecutionPeriod readByNameAndExecutionYear(String executionPeriodName,
             String year) throws ExcepcaoPersistencia;
 
-    public IExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year)
+    public ExecutionPeriod readBySemesterAndExecutionYear(Integer semester, String year)
             throws ExcepcaoPersistencia;
 
     public List readPublic() throws ExcepcaoPersistencia;

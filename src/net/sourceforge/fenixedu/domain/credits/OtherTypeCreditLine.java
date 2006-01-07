@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.domain.credits;
 
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.credits.event.CreditsEvent;
 
 /**
@@ -15,7 +15,7 @@ public class OtherTypeCreditLine extends OtherTypeCreditLine_Base {
         return CreditsEvent.OTHER_CREDIT;
     }
     
-    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
         return this.getExecutionPeriod().equals(executionPeriod);
     }
 

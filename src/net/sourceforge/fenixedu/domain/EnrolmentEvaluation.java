@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.util.MarkType;
  * @author dcs-rjao 24/Mar/2003
  */
 
-public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
+public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Comparable {
 
     private static final String RECTIFICATION = "RECTIFICAÇÃO";
 	
 	
 	public EnrolmentEvaluation() {}
 	
-	public EnrolmentEvaluation(IEnrolment enrolment, EnrolmentEvaluationType type) {
+	public EnrolmentEvaluation(Enrolment enrolment, EnrolmentEvaluationType type) {
 		setEnrolment(enrolment);
 		setEnrolmentEvaluationType(type);
 	}
@@ -48,7 +48,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Object o) {
-        IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) o;
+        EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) o;
         EnrollmentState myEnrolmentState = this.getEnrollmentStateByGrade(this.getGrade());
         EnrollmentState otherEnrolmentState = this.getEnrollmentStateByGrade(enrolmentEvaluation.getGrade());
         String otherGrade = enrolmentEvaluation.getGrade();
@@ -190,7 +190,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 	
 	
 	
-	public void edit(IPerson responsibleFor, String grade, Date availableDate, Date examDate, String checksum) {
+	public void edit(Person responsibleFor, String grade, Date availableDate, Date examDate, String checksum) {
 		
         setCheckSum(checksum);
         setGrade(grade);
@@ -208,7 +208,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 	}
 	
 	
-	public void confirmSubmission(IEmployee employee, String observation) {
+	public void confirmSubmission(Employee employee, String observation) {
 		
         setEnrolmentEvaluationState(EnrolmentEvaluationState.FINAL_OBJ);
         Calendar calendar = Calendar.getInstance();
@@ -217,7 +217,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
         setObservation(observation);
         setCheckSum("");
 		
-		IEnrolment enrolment = getEnrolment();
+		Enrolment enrolment = getEnrolment();
         EnrollmentState newEnrolmentState = EnrollmentState.APROVED;
 
         if (MarkType.getRepMarks().contains(getGrade())) {
@@ -239,10 +239,10 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 		super.deleteDomainObject();
 	}
 	
-	public void insertStudentFinalEvaluationForMasterDegree(String grade, IPerson responsibleFor, Date examDate) 
+	public void insertStudentFinalEvaluationForMasterDegree(String grade, Person responsibleFor, Date examDate) 
 		throws DomainException {
 		
-		IDegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
+		DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
 
 		if (grade == null || grade.length() == 0) {	
 		
@@ -264,16 +264,16 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 	
 	
 	
-	public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, IEmployee employee, IPerson responsibleFor,
+	public void alterStudentEnrolmentEvaluationForMasterDegree(String grade, Employee employee, Person responsibleFor,
 			EnrolmentEvaluationType evaluationType, Date evaluationAvailableDate, Date examDate, String observation) 
 				throws DomainException {
 
-		IEnrolment enrolment = getEnrolment();
-		IDegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
+		Enrolment enrolment = getEnrolment();
+		DegreeCurricularPlan degreeCurricularPlan = getEnrolment().getStudentCurricularPlan().getDegreeCurricularPlan();
         		
 		if (grade.equals("0") || grade.equals("")) {
 
-            IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
+            EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, getEnrolmentEvaluationType());
 			enrolmentEvaluation.confirmSubmission(employee, observation);
 			enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
 
@@ -281,7 +281,7 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base {
 
 			if (degreeCurricularPlan.isGradeValid(grade)) {
 				
-				IEnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, evaluationType);
+				EnrolmentEvaluation enrolmentEvaluation = new EnrolmentEvaluation(enrolment, evaluationType);
 				enrolmentEvaluation.edit(responsibleFor, grade, evaluationAvailableDate, examDate, "");
 				enrolmentEvaluation.confirmSubmission(employee, observation);
 			}

@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -30,18 +30,18 @@ public class CriarTurno implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
 
-        final IShift existingShift = shiftDAO.readByNameAndExecutionCourse(infoTurno.getNome(),
+        final Shift existingShift = shiftDAO.readByNameAndExecutionCourse(infoTurno.getNome(),
                 infoTurno.getInfoDisciplinaExecucao().getIdInternal());
 
         if (existingShift != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoTurno.getNome());
         }
 
-        IShift newShift = DomainFactory.makeShift();
+        Shift newShift = DomainFactory.makeShift();
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
                 .doubleValue())).intValue());
         newShift.setAvailabilityFinal(availabilityFinal);
-        IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+        ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, infoTurno.getInfoDisciplinaExecucao().getIdInternal());
         newShift.setDisciplinaExecucao(executionCourse);
         newShift.setNome(infoTurno.getNome());

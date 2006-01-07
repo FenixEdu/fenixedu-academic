@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.ph
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
+import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -30,16 +30,16 @@ public class readGaugingTestsResults implements IService {
 		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentGaugingTestResult persistentGaugingTestResult = ps.getIPersistentGaugingTestResult();
 		IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
-		IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
 		IPersistentStudent persistentStudent = ps.getIPersistentStudent();
 
-		IStudent student = persistentStudent.readByPersonAndDegreeType(person.getIdInternal(),
+		Student student = persistentStudent.readByPersonAndDegreeType(person.getIdInternal(),
 				DegreeType.DEGREE);
 		if (student == null) {
 			return null;
 		}
-		IGaugingTestResult gaugingTestsResult = persistentGaugingTestResult.readByStudent(student);
+		GaugingTestResult gaugingTestsResult = persistentGaugingTestResult.readByStudent(student);
 		if (gaugingTestsResult != null) {
 
 			InfoGaugingTestResult infoGaugingTestResult = InfoGaugingTestResult

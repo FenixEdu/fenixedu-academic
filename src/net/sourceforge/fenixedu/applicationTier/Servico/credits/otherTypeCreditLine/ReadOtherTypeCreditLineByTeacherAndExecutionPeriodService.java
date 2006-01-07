@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCateg
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine;
 import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherOtherTypeCreditLineDTO;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -58,18 +58,18 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implement
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
 
-        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
+        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
         if (teacher == null) {
             throw new TeacherNotFound();
         }
 
-        IExecutionPeriod executionPeriod = null;
+        ExecutionPeriod executionPeriod = null;
 
         if (executionPeriodId == null || executionPeriodId.intValue() == 0) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
 
@@ -83,7 +83,7 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implement
         List infoOtherTypesList = (List) CollectionUtils.collect(otherTypesList, new Transformer() {
 
             public Object transform(Object input) {
-                IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) input;
+                OtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) input;
                 InfoOtherTypeCreditLine infoOtherTypeCreditLine = InfoOtherTypeCreditLine
                         .newInfoFromDomain(otherTypeCreditLine);
                 return infoOtherTypeCreditLine;
@@ -119,10 +119,10 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implement
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.IDomainObject)
+     * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#clone2InfoObject(Dominio.DomainObject)
      */
-    protected InfoObject clone2InfoObject(IDomainObject domainObject) {
-        return InfoOtherTypeCreditLine.newInfoFromDomain(((IOtherTypeCreditLine) domainObject));
+    protected InfoObject clone2InfoObject(DomainObject domainObject) {
+        return InfoOtherTypeCreditLine.newInfoFromDomain(((OtherTypeCreditLine) domainObject));
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 
 /**
@@ -24,36 +24,36 @@ public class Employee extends Employee_Base {
         return result;
     }
 
-    public IDepartment getCurrentDepartmentWorkingPlace() {
+    public Department getCurrentDepartmentWorkingPlace() {
 
-        IContract contract = getCurrentContract();
+        Contract contract = getCurrentContract();
         if (contract != null && contract.getWorkingUnit() != null) {
             return getEmployeeUnitDepartment(contract.getWorkingUnit(), true);
         }
         return null;
     }
 
-    public IDepartment getLastDepartmentWorkingPlace() {
-        IContract contract = getLastContract();
+    public Department getLastDepartmentWorkingPlace() {
+        Contract contract = getLastContract();
         if (contract != null && contract.getWorkingUnit() != null) {
             return getEmployeeUnitDepartment(contract.getWorkingUnit(), false);
         }
         return null;
     }
 
-    public IContract getCurrentContract() {        
-        List<IContract> contracts = this.getContracts();
-        for (IContract contract : contracts) {
+    public Contract getCurrentContract() {        
+        List<Contract> contracts = this.getContracts();
+        for (Contract contract : contracts) {
             if (contract.isActive(Calendar.getInstance().getTime()))
                 return contract;
         }
         return null;
     }
 
-    public IContract getLastContract() {
+    public Contract getLastContract() {
         Date date = null;
-        IContract contractToReturn = null;
-        for (IContract contract : this.getContracts()) {
+        Contract contractToReturn = null;
+        for (Contract contract : this.getContracts()) {
             if (contract.isActive(Calendar.getInstance().getTime())) {
                 contractToReturn = contract;
                 break;
@@ -65,11 +65,11 @@ public class Employee extends Employee_Base {
         return contractToReturn;
     }
 
-    private IDepartment getEmployeeUnitDepartment(IUnit unit, boolean onlyActiveEmployees) {
+    private Department getEmployeeUnitDepartment(Unit unit, boolean onlyActiveEmployees) {
 
-        List<IUnit> allTopUnits = unit.getTopUnits();
+        List<Unit> allTopUnits = unit.getTopUnits();
         if (!allTopUnits.isEmpty()) {
-            for (IUnit topUnit : allTopUnits) {
+            for (Unit topUnit : allTopUnits) {
                 if (topUnit.getType() != null
                         && topUnit.getType().equals(UnitType.DEPARTMENT)
                         && topUnit.getDepartment() != null

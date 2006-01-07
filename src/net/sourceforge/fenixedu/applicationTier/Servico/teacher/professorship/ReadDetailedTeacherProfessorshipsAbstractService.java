@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoD
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -39,13 +39,13 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
         }
 
         public Object transform(Object input) {
-            IProfessorship professorship = (IProfessorship) input;
+            Professorship professorship = (Professorship) input;
             InfoProfessorship infoProfessorShip = InfoProfessorshipWithInfoExecutionCourseAndInfoExecutionPeriod
                     .newInfoFromDomain(professorship);
 
             final DetailedProfessorship detailedProfessorship = new DetailedProfessorship();
 
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
             List executionCourseCurricularCoursesList = getInfoCurricularCourses(detailedProfessorship,
                     executionCourse);
            
@@ -59,13 +59,13 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
         }
 
         private List getInfoCurricularCourses(final DetailedProfessorship detailedProfessorship,
-                IExecutionCourse executionCourse) {
+                ExecutionCourse executionCourse) {
 
             List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
                     .getAssociatedCurricularCourses(), new Transformer() {
 
                 public Object transform(Object input) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                    CurricularCourse curricularCourse = (CurricularCourse) input;
                     InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                             .newInfoFromDomain(curricularCourse);
                     DegreeType degreeType = curricularCourse.getDegreeCurricularPlan().getDegree()
@@ -105,9 +105,9 @@ public class ReadDetailedTeacherProfessorshipsAbstractService implements IServic
      * @return
      * @throws ExcepcaoPersistencia
      */
-    protected ITeacher readTeacher(Integer teacherId, IPersistentTeacher teacherDAO)
+    protected Teacher readTeacher(Integer teacherId, IPersistentTeacher teacherDAO)
             throws NotFoundTeacher, ExcepcaoPersistencia {
-        ITeacher teacher = (ITeacher) teacherDAO.readByOID(Teacher.class, teacherId);
+        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();
         }

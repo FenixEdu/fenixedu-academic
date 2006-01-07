@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.InfoAreas2Choose;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -41,12 +41,12 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService {
         IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
                 .getIStudentCurricularPlanPersistente();
 
-        IStudent student = studentDAO.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
+        Student student = studentDAO.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
 
         if (student == null) {
             throw new ExistingServiceException("student");
         }
-        IStudentCurricularPlan studentCurricularPlan = studentCurricularPlanDAO
+        StudentCurricularPlan studentCurricularPlan = studentCurricularPlanDAO
                 .readActiveStudentCurricularPlan(student.getNumber(), student.getDegreeType());
 
         if (studentCurricularPlan == null) {
@@ -61,7 +61,7 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService {
 
             public Object transform(Object arg0) {
 
-                return InfoBranch.newInfoFromDomain((IBranch) arg0);
+                return InfoBranch.newInfoFromDomain((Branch) arg0);
             }
         });
 
@@ -70,7 +70,7 @@ public class ReadSpecializationAndSecundaryAreasByStudent implements IService {
 
                     public Object transform(Object arg0) {
 
-                        return InfoBranch.newInfoFromDomain((IBranch) arg0);
+                        return InfoBranch.newInfoFromDomain((Branch) arg0);
                     }
                 });
         infoAreas2Choose.setFinalSpecializationAreas(finalSpecializationAreas);

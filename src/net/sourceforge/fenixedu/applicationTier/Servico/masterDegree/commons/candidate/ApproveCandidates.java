@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,13 +28,13 @@ public class ApproveCandidates implements IService {
 
         for (int i = 0; i < situations.length; i++) {
 
-            IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) sp
+            MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                     .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                             new Integer(ids[i]));
-            ICandidateSituation candidateSituationOld = masterDegreeCandidate
+            CandidateSituation candidateSituationOld = masterDegreeCandidate
                     .getActiveCandidateSituation();
 
-            ICandidateSituation candidateSituationOldFromBD = (ICandidateSituation) sp
+            CandidateSituation candidateSituationOldFromBD = (CandidateSituation) sp
                     .getIPersistentCandidateSituation().readByOID(CandidateSituation.class,
                             candidateSituationOld.getIdInternal(), true);
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
@@ -45,7 +45,7 @@ public class ApproveCandidates implements IService {
 
             // Create the new Candidate Situation
 
-            ICandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
+            CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
             sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
             candidateSituation.setDate(Calendar.getInstance().getTime());
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);

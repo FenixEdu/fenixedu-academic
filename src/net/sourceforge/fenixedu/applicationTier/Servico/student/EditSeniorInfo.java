@@ -9,7 +9,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
-import net.sourceforge.fenixedu.domain.student.ISenior;
+import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,7 +27,7 @@ public class EditSeniorInfo implements IService {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSenior persistentSenior = sp.getIPersistentSenior();
             
-            ISenior seniorToEdit = (ISenior) persistentSenior.readByOID(Senior.class, changedInfoSenior.getIdInternal());
+            Senior seniorToEdit = (Senior) persistentSenior.readByOID(Senior.class, changedInfoSenior.getIdInternal());
             if (seniorToEdit == null) {
                 throw new NonExistingServiceException("Object doesn't exist!");
             }
@@ -40,7 +40,7 @@ public class EditSeniorInfo implements IService {
      * @param changedInfoSenior
      * @param seniorToEdit
      */
-    protected void copyProperties(InfoSenior changedInfoSenior, ISenior seniorToEdit) {
+    protected void copyProperties(InfoSenior changedInfoSenior, Senior seniorToEdit) {
         seniorToEdit.setExpectedDegreeTermination(changedInfoSenior.getExpectedDegreeTermination());
         seniorToEdit.setExpectedDegreeAverageGrade(changedInfoSenior.getExpectedDegreeAverageGrade());
         seniorToEdit.setSpecialtyField(changedInfoSenior.getSpecialtyField());

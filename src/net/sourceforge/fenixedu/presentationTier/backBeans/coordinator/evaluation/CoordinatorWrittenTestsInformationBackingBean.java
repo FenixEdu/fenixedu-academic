@@ -12,9 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IWrittenTest;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -22,22 +22,22 @@ import org.apache.commons.beanutils.BeanComparator;
 public class CoordinatorWrittenTestsInformationBackingBean extends
         CoordinatorEvaluationManagementBackingBean {
 
-    private Map<Integer, List<IWrittenTest>> writtenTests = new HashMap();
+    private Map<Integer, List<WrittenTest>> writtenTests = new HashMap();
     private Map<Integer, Integer> writtenTestsFreeSpace = new HashMap();
     private Map<Integer, String> writtenTestsRooms = new HashMap();
-    private List<IExecutionCourse> executionCoursesWithWrittenTests;
-    private List<IExecutionCourse> executionCoursesWithoutWrittenTests;
+    private List<ExecutionCourse> executionCoursesWithWrittenTests;
+    private List<ExecutionCourse> executionCoursesWithoutWrittenTests;
     private List<CalendarLink> writtenTestCalendarLinks;
 
-    public List<IExecutionCourse> getExecutionCoursesWithWrittenTests() {
+    public List<ExecutionCourse> getExecutionCoursesWithWrittenTests() {
         if (this.executionCoursesWithWrittenTests == null) {
             this.executionCoursesWithWrittenTests = new ArrayList();
             Collections.sort(getExecutionCourses(), new BeanComparator("sigla"));
             writtenTests.clear();
             writtenTestsFreeSpace.clear();
             writtenTestsRooms.clear();
-            for (final IExecutionCourse executionCourse : getExecutionCourses()) {
-                final List<IWrittenTest> associatedWrittenTests = executionCourse
+            for (final ExecutionCourse executionCourse : getExecutionCourses()) {
+                final List<WrittenTest> associatedWrittenTests = executionCourse
                         .getAssociatedWrittenTests();
                 if (!associatedWrittenTests.isEmpty()) {
                     Collections.sort(associatedWrittenTests, new BeanComparator("dayDate"));
@@ -50,12 +50,12 @@ public class CoordinatorWrittenTestsInformationBackingBean extends
         return this.executionCoursesWithWrittenTests;
     }
 
-    private void processWrittenTestAdditionalValues(final List<IWrittenTest> associatedWrittenTests) {
-        for (final IWrittenTest writtenTest : associatedWrittenTests) {
+    private void processWrittenTestAdditionalValues(final List<WrittenTest> associatedWrittenTests) {
+        for (final WrittenTest writtenTest : associatedWrittenTests) {
             int totalCapacity = 0;
             final StringBuffer buffer = new StringBuffer(20);
 
-            for (final IRoomOccupation roomOccupation : writtenTest.getAssociatedRoomOccupation()) {
+            for (final RoomOccupation roomOccupation : writtenTest.getAssociatedRoomOccupation()) {
                 buffer.append(roomOccupation.getRoom().getNome()).append(";");
                 totalCapacity += roomOccupation.getRoom().getCapacidadeExame();
             }
@@ -68,11 +68,11 @@ public class CoordinatorWrittenTestsInformationBackingBean extends
         }
     }
 
-    public List<IExecutionCourse> getExecutionCoursesWithoutWrittenTests() {
+    public List<ExecutionCourse> getExecutionCoursesWithoutWrittenTests() {
         if (this.executionCoursesWithoutWrittenTests == null) {
             this.executionCoursesWithoutWrittenTests = new ArrayList();
             Collections.sort(getExecutionCourses(), new BeanComparator("sigla"));
-            for (final IExecutionCourse executionCourse : getExecutionCourses()) {
+            for (final ExecutionCourse executionCourse : getExecutionCourses()) {
                 if (executionCourse.getAssociatedWrittenTests().isEmpty()) {
                     executionCoursesWithoutWrittenTests.add(executionCourse);
                 }
@@ -85,8 +85,8 @@ public class CoordinatorWrittenTestsInformationBackingBean extends
         if (this.writtenTestCalendarLinks == null) {
             this.writtenTestCalendarLinks = new ArrayList<CalendarLink>();
 
-            for (final IExecutionCourse executionCourse : this.getExecutionCoursesWithWrittenTests()) {
-                for (final IWrittenTest writtenTestToDisplay : executionCourse
+            for (final ExecutionCourse executionCourse : this.getExecutionCoursesWithWrittenTests()) {
+                for (final WrittenTest writtenTestToDisplay : executionCourse
                         .getAssociatedWrittenTests()) {
                     final CalendarLink calendarLink = new CalendarLink();
 
@@ -120,7 +120,7 @@ public class CoordinatorWrittenTestsInformationBackingBean extends
         this.writtenTestCalendarLinks = null;
     }
 
-    public Map<Integer, List<IWrittenTest>> getWrittenTests() {
+    public Map<Integer, List<WrittenTest>> getWrittenTests() {
         return writtenTests;
     }
 

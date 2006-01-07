@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -30,7 +30,7 @@ public class CreateFile {
         List fileList = new ArrayList();
         Iterator iterador = curricularCoursesList.listIterator();
         while (iterador.hasNext()) {
-            final ICurricularCourse curricularCourse = (ICurricularCourse) iterador.next();
+            final CurricularCourse curricularCourse = (CurricularCourse) iterador.next();
 
             if (curricularCourse.getDegreeCurricularPlan().getDegree().getTipoCurso().equals(
                     DegreeType.DEGREE)) {
@@ -39,7 +39,7 @@ public class CreateFile {
                 enrolmentEvaluationCurricularCourseList = (List) CollectionUtils.select(
                         enrolmentEvaluationList, new Predicate() {
                             public boolean evaluate(Object obj) {
-                                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) obj;
+                                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) obj;
                                 return enrolmentEvaluation.getEnrolment().getCurricularCourse().equals(
                                         curricularCourse);
                             }
@@ -62,11 +62,11 @@ public class CreateFile {
         File file = null;
         BufferedWriter writer = null;
         try {
-            fileName = nameFileMarks((IEnrolmentEvaluation) enrolmentEvaluationList.get(0));
+            fileName = nameFileMarks((EnrolmentEvaluation) enrolmentEvaluationList.get(0));
             file = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
             writer = new BufferedWriter(new FileWriter(file));
 
-            String mail = ((IEnrolmentEvaluation) enrolmentEvaluationList.get(0))
+            String mail = ((EnrolmentEvaluation) enrolmentEvaluationList.get(0))
                     .getPersonResponsibleForGrade().getEmail();
 
             int length = mail.length();
@@ -80,7 +80,7 @@ public class CreateFile {
 
             Iterator iterator = enrolmentEvaluationList.listIterator();
             while (iterator.hasNext()) {
-                IEnrolmentEvaluation enrolmentEvaluation = (IEnrolmentEvaluation) iterator.next();
+                EnrolmentEvaluation enrolmentEvaluation = (EnrolmentEvaluation) iterator.next();
 
                 RowMarksFile rowMarksFile = new RowMarksFile(enrolmentEvaluation);
 
@@ -97,7 +97,7 @@ public class CreateFile {
         }
     }
 
-    private static String nameFileMarks(IEnrolmentEvaluation enrolmentEvaluation) {
+    private static String nameFileMarks(EnrolmentEvaluation enrolmentEvaluation) {
         String fileName = new String();
 
         RowMarksFile rowMarksFile = new RowMarksFile(enrolmentEvaluation);

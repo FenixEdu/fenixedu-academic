@@ -6,9 +6,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.ICareer;
-import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+import net.sourceforge.fenixedu.domain.teacher.Career;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -27,14 +27,14 @@ public class DeleteCareer implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCareer pc = sp.getIPersistentCareer();
 		
-		ICareer career = (ICareer) pc.readByOID(Career.class, careerId);
+		Career career = (Career) pc.readByOID(Career.class, careerId);
 		
 		if(career instanceof TeachingCareer) {
-			ITeachingCareer teachingCareer = (ITeachingCareer) career;
+			TeachingCareer teachingCareer = (TeachingCareer) career;
 			teachingCareer.delete();
 
 		} else if(career instanceof ProfessionalCareer) {
-			IProfessionalCareer professionalCareer = (IProfessionalCareer) career;
+			ProfessionalCareer professionalCareer = (ProfessionalCareer) career;
 			professionalCareer.delete();
 		}
 		

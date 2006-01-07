@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics;
 
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.gaugingTests.physics.IGaugingTestResult;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -13,5 +13,5 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  *  
  */
 public interface IPersistentGaugingTestResult {
-    public IGaugingTestResult readByStudent(IStudent student) throws ExcepcaoPersistencia;
+    public GaugingTestResult readByStudent(Student student) throws ExcepcaoPersistencia;
 }

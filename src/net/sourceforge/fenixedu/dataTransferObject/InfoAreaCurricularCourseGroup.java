@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 
 
 /**
@@ -46,7 +46,7 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
         this.areaType = areaType;
     }
 
-    public void copyFromDomain(ICurricularCourseGroup curricularCourseGroup) {
+    public void copyFromDomain(CurricularCourseGroup curricularCourseGroup) {
         super.copyFromDomain(curricularCourseGroup);
         if (curricularCourseGroup != null) {
             setAreaType(curricularCourseGroup.getAreaType());
@@ -56,7 +56,7 @@ public class InfoAreaCurricularCourseGroup extends InfoCurricularCourseGroup {
     }
 
     public static InfoCurricularCourseGroup newInfoFromDomain(
-            ICurricularCourseGroup curricularCourseGroup) {
+            CurricularCourseGroup curricularCourseGroup) {
         InfoCurricularCourseGroup infoCurricularCourseGroup = null;
         if (curricularCourseGroup != null) {
             infoCurricularCourseGroup = new InfoAreaCurricularCourseGroup();

@@ -5,11 +5,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -37,8 +37,8 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
-        IStudent student = persistentStudent.readByUsername(username);
+        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Student student = persistentStudent.readByUsername(username);
         if (group == null || student == null || group.getGroupStudents() == null
                 || student.getIdInternal().equals(studentToRemoveID)) {
             return false;
@@ -49,7 +49,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
 
         PREDICATE_FILTER_STUDENT_ID predicate = new PREDICATE_FILTER_STUDENT_ID(studentToRemoveID);
         for (int i = 0; i < group.getGroupStudents().size(); i++) {
-            IGroupStudent groupStudent = group.getGroupStudents().get(i);
+            GroupStudent groupStudent = group.getGroupStudents().get(i);
             if (!predicate.evaluate(groupStudent)) {
                 persistentFinalDegreeWork.deleteByOID(GroupStudent.class, groupStudent.getIdInternal());
             }
@@ -62,7 +62,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
         Integer studentID;
 
         public boolean evaluate(Object arg0) {
-            IGroupStudent groupStudent = (IGroupStudent) arg0;
+            GroupStudent groupStudent = (GroupStudent) arg0;
             if (groupStudent != null && groupStudent.getStudent() != null && studentID != null
                     && !studentID.equals(groupStudent.getStudent().getIdInternal())) {
                 return true;

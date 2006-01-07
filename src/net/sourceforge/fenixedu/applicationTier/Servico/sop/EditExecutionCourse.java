@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -26,7 +26,7 @@ public class EditExecutionCourse implements IService {
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, infoExecutionCourse.getIdInternal());
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
@@ -43,9 +43,9 @@ public class EditExecutionCourse implements IService {
         return infoExecutionCourse;
     }
 
-    private List<InfoCurricularCourse> getInfoCurricularCoursesFrom(final IExecutionCourse executionCourse) {
+    private List<InfoCurricularCourse> getInfoCurricularCoursesFrom(final ExecutionCourse executionCourse) {
         final List<InfoCurricularCourse> result = new ArrayList(executionCourse.getAssociatedCurricularCoursesCount());
-        for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             result.add(InfoCurricularCourse.newInfoFromDomain(curricularCourse));
         }
         return result;

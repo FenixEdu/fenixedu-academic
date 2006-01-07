@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
-import net.sourceforge.fenixedu.domain.IWebSite;
-import net.sourceforge.fenixedu.domain.IWebSiteSection;
+import net.sourceforge.fenixedu.domain.WebSite;
+import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,19 +30,19 @@ public class ConfigureWebSiteSections implements IService {
 				.getIPersistentWebSiteSection();
 		IPersistentWebSite persistentWebSite = persistentSuport.getIPersistentWebSite();
 
-		IWebSiteSection webSiteSection = null;
+		WebSiteSection webSiteSection = null;
 		Iterator iterSections = infoWebSite.getSections().iterator();
 		while (iterSections.hasNext()) {
 			InfoWebSiteSection infoWebSiteSection = (InfoWebSiteSection) iterSections.next();
 
-			IWebSite webSite = (IWebSite) persistentWebSite.readByOID(WebSite.class, infoWebSite
+			WebSite webSite = (WebSite) persistentWebSite.readByOID(WebSite.class, infoWebSite
 					.getIdInternal());
 
 			if (webSite == null) {
 				throw new NonExistingServiceException("website");
 			}
 
-			IWebSiteSection repeatedWebSiteSection = persistentWebSiteSection.readByWebSiteAndName(
+			WebSiteSection repeatedWebSiteSection = persistentWebSiteSection.readByWebSiteAndName(
 					webSite, infoWebSiteSection.getName());
 
 			if (repeatedWebSiteSection != null
@@ -51,7 +51,7 @@ public class ConfigureWebSiteSections implements IService {
 				throw new ExistingServiceException(infoWebSiteSection.getName());
 			}
 
-			webSiteSection = (IWebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+			webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
 					infoWebSiteSection.getIdInternal(), true);
 
 			if (webSiteSection == null) {

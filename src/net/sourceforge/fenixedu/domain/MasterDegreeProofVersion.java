@@ -32,8 +32,8 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
      * @param attachedCopiesNumber
      * @param currentState
      */
-    public MasterDegreeProofVersion(IMasterDegreeThesis masterDegreeThesis,
-            IEmployee responsibleEmployee, Date lastModification, Date proofDate,
+    public MasterDegreeProofVersion(MasterDegreeThesis masterDegreeThesis,
+            Employee responsibleEmployee, Date lastModification, Date proofDate,
             Date thesisDeliveryDate, MasterDegreeClassification finalResult,
             Integer attachedCopiesNumber, State currentState, List juries, List externalJuries) {
         this.setMasterDegreeThesis(masterDegreeThesis);

@@ -8,7 +8,7 @@ import java.util.Calendar;
 
 public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 
-    private IExecutionCourse executionCourse;
+    private ExecutionCourse executionCourse;
     
 
     protected void setUp() throws Exception {
@@ -17,23 +17,23 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
         
-        IExecutionPeriod executionPeriod = new ExecutionPeriod();
-        IExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
+        ExecutionPeriod executionPeriod = new ExecutionPeriod();
+        ExecutionPeriod otherExecutionPeriod = new ExecutionPeriod();
        
-        IEnrolment enrolmentStudent1 = new Enrolment();
+        Enrolment enrolmentStudent1 = new Enrolment();
         enrolmentStudent1.setExecutionPeriod(executionPeriod);
-        IEnrolment enrolmentStudent2 = new Enrolment();   
+        Enrolment enrolmentStudent2 = new Enrolment();   
         enrolmentStudent2.setExecutionPeriod(executionPeriod);
-        IEnrolment enrolmentStudent3 = new Enrolment();   
+        Enrolment enrolmentStudent3 = new Enrolment();   
         enrolmentStudent3.setExecutionPeriod(otherExecutionPeriod);
         
-        IStudentCurricularPlan studentCurricularPlan1 = new StudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan1 = new StudentCurricularPlan();
         studentCurricularPlan1.addEnrolments(enrolmentStudent1);
-        IStudentCurricularPlan studentCurricularPlan2 = new StudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan2 = new StudentCurricularPlan();
         studentCurricularPlan2.addEnrolments(enrolmentStudent2);
         studentCurricularPlan2.addEnrolments(enrolmentStudent3);
         
-        ICurricularCourse curricularCourse = new CurricularCourse();
+        CurricularCourse curricularCourse = new CurricularCourse();
         curricularCourse.addEnrolments(enrolmentStudent1);
         curricularCourse.addEnrolments(enrolmentStudent2);
         curricularCourse.addEnrolments(enrolmentStudent3);
@@ -43,12 +43,12 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
         
 /* Create Theoretical Shift 1 */
 		
-		IShift shiftTeorica1 = new Shift();
+		Shift shiftTeorica1 = new Shift();
 		shiftTeorica1.setIdInternal(0);
 		
 		shiftTeorica1.setTipo(ShiftType.TEORICA);
 		
-		ILesson lesson = new Lesson();
+		Lesson lesson = new Lesson();
 			
 		Calendar beginLessonDate = Calendar.getInstance();
 		
@@ -66,7 +66,7 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 		
 		/* Create Theoretical Shift 2 */		
 		
-		IShift shiftTeorica2 = new Shift();
+		Shift shiftTeorica2 = new Shift();
 				
 		shiftTeorica2.setTipo(ShiftType.TEORICA);
 		
@@ -88,7 +88,7 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 		
 		/* Create Pratical Shift 1 */
 		
-		IShift shiftPratica1 = new Shift();
+		Shift shiftPratica1 = new Shift();
 		
 		
 		shiftPratica1.setTipo(ShiftType.PRATICA);
@@ -110,7 +110,7 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 		shiftPratica1.addAssociatedLessons(lesson);
 		
 		/* Create Pratical Shift 2 */
-		IShift shiftPratica2 = new Shift();
+		Shift shiftPratica2 = new Shift();
 		
 		
 		shiftPratica2.setTipo(ShiftType.PRATICA);
@@ -134,7 +134,7 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 
 		/* Create Pratical Shift 3 */
 		
-		IShift shiftPratica3 = new Shift();
+		Shift shiftPratica3 = new Shift();
 		
 		
 		shiftPratica3.setTipo(ShiftType.PRATICA);
@@ -157,7 +157,7 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 		shiftPratica3.addAssociatedLessons(lesson);
 
 		/* Create Laboratorial Shift 1 */
-		IShift shiftLaboratorio1 = new Shift();
+		Shift shiftLaboratorio1 = new Shift();
 
 		
 		shiftLaboratorio1.setTipo(ShiftType.LABORATORIAL);
@@ -180,7 +180,7 @@ public class DistributionTeacherServiceByCourseTest extends DomainTestBase {
 		shiftLaboratorio1.addAssociatedLessons(lesson);
 		
 		/* Create Laboratorial Shift 2 */	
-		IShift shiftLaboratorio2 = new Shift();
+		Shift shiftLaboratorio2 = new Shift();
 		shiftLaboratorio2.setIdInternal(6);
 		
 		shiftLaboratorio2.setTipo(ShiftType.LABORATORIAL);

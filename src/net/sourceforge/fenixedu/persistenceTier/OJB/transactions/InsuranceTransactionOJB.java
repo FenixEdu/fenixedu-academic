@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGuideEntry;
+import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
-import net.sourceforge.fenixedu.domain.transactions.IInsuranceTransaction;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
+import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.ObjectFenixOJB;
@@ -29,12 +29,12 @@ public class InsuranceTransactionOJB extends ObjectFenixOJB implements IPersiste
 	}
 
 	/*
-	 * public IInsuranceTransaction readByExecutionYearAndStudent(
-	 * IExecutionYear executionYear, IStudent student) throws
+	 * public InsuranceTransaction readByExecutionYearAndStudent(
+	 * ExecutionYear executionYear, Student student) throws
 	 * ExcepcaoPersistencia { Criteria crit = new Criteria();
 	 * crit.addEqualTo("executionYear.idInternal", executionYear
 	 * .getIdInternal()); crit.addEqualTo("student.idInternal",
-	 * student.getIdInternal()); return (IInsuranceTransaction)
+	 * student.getIdInternal()); return (InsuranceTransaction)
 	 * queryObject(InsuranceTransaction.class, crit); }
 	 */
 
@@ -50,9 +50,9 @@ public class InsuranceTransactionOJB extends ObjectFenixOJB implements IPersiste
 		List insuranceTransactions = queryList(InsuranceTransaction.class, crit);
 
 		for (Iterator iter = insuranceTransactions.iterator(); iter.hasNext();) {
-			IInsuranceTransaction insuranceTransaction = (IInsuranceTransaction) iter.next();
+			InsuranceTransaction insuranceTransaction = (InsuranceTransaction) iter.next();
 
-			IGuideEntry guideEntry = insuranceTransaction.getGuideEntry();
+			GuideEntry guideEntry = insuranceTransaction.getGuideEntry();
 			if (guideEntry == null) {
 
 				nonReimbursedInsuranceTransactions.add(insuranceTransaction);
@@ -74,11 +74,11 @@ public class InsuranceTransactionOJB extends ObjectFenixOJB implements IPersiste
 					Criteria activeSituationCriteria = new Criteria();
 
 					activeSituationCriteria.addEqualTo("reimbursementGuide.idInternal",
-							((IReimbursementGuideEntry) reimbursementGuideEntries.get(0))
+							((ReimbursementGuideEntry) reimbursementGuideEntries.get(0))
 									.getReimbursementGuide().getIdInternal());
 					activeSituationCriteria.addEqualTo("state", new State(State.ACTIVE));
 
-					IReimbursementGuideSituation activeReimbursementGuideSituation = (IReimbursementGuideSituation) queryObject(
+					ReimbursementGuideSituation activeReimbursementGuideSituation = (ReimbursementGuideSituation) queryObject(
 							ReimbursementGuideSituation.class, activeSituationCriteria);
 
 					if (activeReimbursementGuideSituation.getReimbursementGuideState().equals(

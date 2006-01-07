@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Collection;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -17,20 +17,20 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 public interface IPersistentStudent extends IPersistentObject {
 
     // feitos por David \ Ricardo
-    public IStudent readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType)
+    public Student readStudentByNumberAndDegreeType(Integer number, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;
 
     // feitos pelo Nortadas
-    public IStudent readByUsername(String username) throws ExcepcaoPersistencia;
+    public Student readByUsername(String username) throws ExcepcaoPersistencia;
 
     /**
      * @param IPerson
      * @param DegreeType
      * @return IStudent
      */
-    public IStudent readByPersonAndDegreeType(Integer personId, DegreeType degreeType)
+    public Student readByPersonAndDegreeType(Integer personId, DegreeType degreeType)
             throws ExcepcaoPersistencia;
 
     /**
@@ -56,5 +56,5 @@ public interface IPersistentStudent extends IPersistentObject {
 
     public List readAllWithPayedTuition() throws ExcepcaoPersistencia;
     
-    public Collection<IStudent> readStudentsByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia;
+    public Collection<Student> readStudentsByDegreeType(DegreeType degreeType) throws ExcepcaoPersistencia;
 }

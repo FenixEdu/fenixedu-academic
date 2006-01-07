@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 /**
  * @author João Mota
@@ -21,8 +21,8 @@ public class Summary extends Summary_Base {
 
     public boolean compareTo(Object obj) {
         boolean resultado = false;
-        if (obj instanceof ISummary) {
-            ISummary summary = (ISummary) obj;
+        if (obj instanceof Summary) {
+            Summary summary = (Summary) obj;
 
             resultado = (summary != null) && this.getShift().equals(summary.getShift())
                     && this.getSummaryDate().equals(summary.getSummaryDate())
@@ -45,7 +45,7 @@ public class Summary extends Summary_Base {
         setLastModifiedDate(Calendar.getInstance().getTime());
     }
     
-    public void modifyShift(IShift shift, Date summaryDate, Date summaryHour, IRoom room) {        
+    public void modifyShift(Shift shift, Date summaryDate, Date summaryHour, Room room) {        
         setShift(shift);
         setSummaryDate(summaryDate);
         setSummaryHour(summaryHour);
@@ -54,7 +54,7 @@ public class Summary extends Summary_Base {
     }
 
     public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            IProfessorship professorship) {
+            Professorship professorship) {
 
         if (professorship == null)
             throw new NullPointerException();
@@ -66,7 +66,7 @@ public class Summary extends Summary_Base {
     }
 
     public void edit(String title, String summaryText, Integer studentsNumber, Boolean isExtraLesson,
-            ITeacher teacher) {
+            Teacher teacher) {
 
         if (teacher == null)
             throw new NullPointerException();

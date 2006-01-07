@@ -7,8 +7,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,8 +37,8 @@ public class ReadActiveDegreeCurricularPlansByExecutionYear implements IService 
         List infoDegreeCurricularPlans = (List) CollectionUtils.collect(executionDegrees,
                 new Transformer() {
                     public Object transform(Object obj) {
-                        IExecutionDegree cursoExecucao = (IExecutionDegree) obj;
-                        IDegreeCurricularPlan degreeCurricularPlan = cursoExecucao
+                        ExecutionDegree cursoExecucao = (ExecutionDegree) obj;
+                        DegreeCurricularPlan degreeCurricularPlan = cursoExecucao
                                 .getDegreeCurricularPlan();
                         return InfoDegreeCurricularPlanWithDegree
                                 .newInfoFromDomain(degreeCurricularPlan);

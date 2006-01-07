@@ -5,28 +5,28 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.IAuthorship;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.publication.Authorship;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class PublicationTeacherTest extends DomainTestBase {
 
-    ITeacher teacher1;
+    Teacher teacher1;
     
-    ITeacher teacher2;
+    Teacher teacher2;
     
-    IPerson person1;
+    Person person1;
     
-    IAuthorship authorship1;
+    Authorship authorship1;
     
-    List<ITeacher> teachers;
+    List<Teacher> teachers;
     
-    IPublication publication;
+    Publication publication;
     
-    IPublicationTeacher publicationTeacher1;
+    PublicationTeacher publicationTeacher1;
     
     String area;
     
@@ -41,7 +41,7 @@ public class PublicationTeacherTest extends DomainTestBase {
         
         teacher2 = new Teacher();
         
-        teachers = new ArrayList<ITeacher>();
+        teachers = new ArrayList<Teacher>();
         teachers.add(teacher1);
         
         publication = new Publication();
@@ -56,7 +56,7 @@ public class PublicationTeacherTest extends DomainTestBase {
 
     public void testCreatePublicationTeacher() {
         try {
-            IPublicationTeacher publicationTeacher = new PublicationTeacher(publication, teacher1, PublicationArea.DIDATIC);
+            PublicationTeacher publicationTeacher = new PublicationTeacher(publication, teacher1, PublicationArea.DIDATIC);
             
             assertEquals("Publication Expected", publicationTeacher.getPublication(), publication);
             assertEquals("Teacher Expected", publicationTeacher.getTeacher(), teacher1);

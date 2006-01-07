@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
-import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,7 +36,7 @@ public class GetAllThemes implements IService {
 		List themes = persistentTheme.readAll();
 		for (Iterator iterator = themes.iterator(); iterator.hasNext();) {
 
-			InfoTheme infoTheme = InfoTheme.newInfoFromDomain((ITheme) iterator.next());
+			InfoTheme infoTheme = InfoTheme.newInfoFromDomain((Theme) iterator.next());
 
 			seminariesInfo.add(infoTheme);
 		}

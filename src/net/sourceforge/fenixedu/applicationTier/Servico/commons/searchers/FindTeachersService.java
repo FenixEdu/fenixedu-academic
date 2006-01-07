@@ -11,8 +11,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.framework.SearchService;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -22,15 +22,15 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class FindTeachersService extends SearchService {
 
     @Override
-    protected InfoObject newInfoFromDomain(IDomainObject object) {
-        return InfoTeacher.newInfoFromDomain((ITeacher) object);
+    protected InfoObject newInfoFromDomain(DomainObject object) {
+        return InfoTeacher.newInfoFromDomain((Teacher) object);
     }
 
     @Override
     protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
-        ITeacher teacher = null;
+        Teacher teacher = null;
         try {
             teacher = sp.getIPersistentTeacher().readByNumber(
                     new Integer(searchParameters.get("teacherNumber").toString()));

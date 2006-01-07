@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternal
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalStudentInfo;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -35,13 +35,13 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
         Collection result = new ArrayList();
         IPersistentExecutionCourse persistentExecutionCourse = PersistenceSupportFactory
                 .getDefaultPersistenceSupport().getIPersistentExecutionCourse();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseID);
 
         List groupProperties = executionCourse.getGroupings();
 
         for (Iterator iter = groupProperties.iterator(); iter.hasNext();) {
-            IGrouping group = (IGrouping) iter.next();
+            Grouping group = (Grouping) iter.next();
             InfoExternalStudentGroup foundGroup = this
                     .searchForStudentInGrouping(group, username);
             if (foundGroup != null) {
@@ -59,16 +59,16 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
 
     }
 
-    private InfoExternalStudentGroup searchForStudentInGrouping(IGrouping group,
+    private InfoExternalStudentGroup searchForStudentInGrouping(Grouping group,
             String username) throws ExcepcaoPersistencia {
         InfoExternalStudentGroup result = null;
         Collection studentGroups = group.getStudentGroups();
 
         for (Iterator iter = studentGroups.iterator(); iter.hasNext();) {
-            IStudentGroup studentGroup = (IStudentGroup) iter.next();
+            StudentGroup studentGroup = (StudentGroup) iter.next();
             List attends = studentGroup.getAttends();
             for (Iterator iterator = attends.iterator(); iterator.hasNext();) {
-                IAttends attend = (IAttends) iterator.next();
+                Attends attend = (Attends) iterator.next();
                 if (attend.getAluno().getPerson().getUsername().equals(
                         username)) {
                     InfoExternalStudentGroup info = new InfoExternalStudentGroup();
@@ -91,7 +91,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     private Collection buildStudentInfos(Iterator iterator) throws ExcepcaoPersistencia {
         Collection result = new ArrayList();
         for (Iterator iter = iterator; iter.hasNext();) {
-            IAttends attend = (IAttends) iter.next();
+            Attends attend = (Attends) iter.next();
             InfoExternalStudentInfo student = this.getStudentInformation(attend);
             result.add(student);
         }
@@ -106,7 +106,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      * @throws ExcepcaoPersistencia
      * @throws ExcepcaoPersistencia
      */
-    private InfoExternalStudentInfo getStudentInformation(IAttends attend)
+    private InfoExternalStudentInfo getStudentInformation(Attends attend)
             throws ExcepcaoPersistencia {
         InfoExternalStudentInfo student = new InfoExternalStudentInfo();
         student.setCourse(InfoExternalExecutionCourseInfo.newFromExecutionCourse(attend.getDisciplinaExecucao()));
@@ -130,18 +130,18 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     private Collection buildShiftsInfo(Collection shifts) {
         ArrayList result = new ArrayList();
         for (Iterator iter = shifts.iterator(); iter.hasNext();) {
-            IShift shift = (IShift) iter.next();
+            Shift shift = (Shift) iter.next();
             result.add(InfoExternalShiftInfo.newFromShift(shift));
         }
 
         return result;
     }
 
-    private Collection findShifts(IStudent aluno, IExecutionCourse disciplinaExecucao)
+    private Collection findShifts(Student aluno, ExecutionCourse disciplinaExecucao)
             throws ExcepcaoPersistencia {
-        List<IShift> shifts = aluno.getShifts();
+        List<Shift> shifts = aluno.getShifts();
         List result = new ArrayList();
-        for (IShift shift : shifts) {
+        for (Shift shift : shifts) {
             if (shift.getDisciplinaExecucao().equals(disciplinaExecucao)) {
                 result.add(shift);
             }
@@ -154,7 +154,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
      * @param studentGroupAttend
      * @return
      */
-    private InfoExternalGroupInfo buildInfoExternalGroupInfo(IStudentGroup studentGroup) {
+    private InfoExternalGroupInfo buildInfoExternalGroupInfo(StudentGroup studentGroup) {
         InfoExternalGroupInfo infoExternalGroupInfo = new InfoExternalGroupInfo();
         infoExternalGroupInfo.setNumber(new Integer(studentGroup.getGroupNumber().intValue()));
         infoExternalGroupInfo.setShift(InfoExternalShiftInfo.newFromShift(studentGroup.getShift()));
@@ -171,7 +171,7 @@ public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUs
     private Collection buildExecutionCoursesCollection(List executionCourses) {
         Collection result = new ArrayList();
         for (Iterator iter = executionCourses.iterator(); iter.hasNext();) {
-            IExecutionCourse course = (IExecutionCourse) iter.next();
+            ExecutionCourse course = (ExecutionCourse) iter.next();
             result.add(InfoExternalExecutionCourseInfo.newFromExecutionCourse(course));
         }
         return result;

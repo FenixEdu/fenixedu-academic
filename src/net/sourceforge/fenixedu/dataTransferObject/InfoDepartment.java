@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.Department;
 
 /**
  * @author jpvl
@@ -62,9 +62,9 @@ public class InfoDepartment extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IDepartment department) {
+    public void copyFromDomain(Department department) {
         super.copyFromDomain(department);
         if (department != null) {
             setCode(department.getCode());
@@ -73,7 +73,7 @@ public class InfoDepartment extends InfoObject {
         }
     }
 
-    public static InfoDepartment newInfoFromDomain(IDepartment department) {
+    public static InfoDepartment newInfoFromDomain(Department department) {
         InfoDepartment infoDepartment = null;
         if (department != null) {
             infoDepartment = new InfoDepartment();

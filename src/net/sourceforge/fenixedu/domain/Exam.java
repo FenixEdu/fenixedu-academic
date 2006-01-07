@@ -4,16 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.util.Season;
 
 public class Exam extends Exam_Base {
 
     public Exam(Date examDay, Date examStartTime, Date examEndTime, 
-            List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, 
-            List<IRoom> rooms,
-            IOccupationPeriod period, Season season) {
+            List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, 
+            List<Room> rooms,
+            OccupationPeriod period, Season season) {
 
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
     	
@@ -24,18 +24,18 @@ public class Exam extends Exam_Base {
         this.setSeason(season);
     }
 
-    private boolean checkScopeAndSeasonConstrains(List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, Season season) {
+    private boolean checkScopeAndSeasonConstrains(List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, Season season) {
 
         // for each execution course, there must not exist an exam for the same
         // season and scope
-        for (IExecutionCourse executionCourse : executionCoursesToAssociate) {
-            for (IEvaluation evaluation : executionCourse.getAssociatedEvaluations()) {
+        for (ExecutionCourse executionCourse : executionCoursesToAssociate) {
+            for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
                 if (evaluation instanceof Exam) {
                     Exam existingExam = (Exam) evaluation;
                     if (existingExam.getSeason().equals(season)) {
                         // is necessary to confirm if is for the same scope
-                        for (ICurricularCourseScope scope : existingExam
+                        for (CurricularCourseScope scope : existingExam
                                 .getAssociatedCurricularCourseScope()) {
                             if (curricularCourseScopesToAssociate.contains(scope)) {
                                 throw new DomainException("error.existingExam");
@@ -55,9 +55,9 @@ public class Exam extends Exam_Base {
     }
 
     public void edit(Date examDay, Date examStartTime, Date examEndTime, 
-            List<IExecutionCourse> executionCoursesToAssociate,
-            List<ICurricularCourseScope> curricularCourseScopesToAssociate, 
-            List<IRoom> rooms, IOccupationPeriod period, Season season) {
+            List<ExecutionCourse> executionCoursesToAssociate,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, 
+            List<Room> rooms, OccupationPeriod period, Season season) {
 
         // It's necessary to remove this associations before check some constrains
         this.getAssociatedExecutionCourses().clear();
@@ -72,10 +72,10 @@ public class Exam extends Exam_Base {
     }
 
     public boolean isExamsMapPublished() {
-        for (final IExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-            for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
-                final IDegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
-                for (final IExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+        for (final ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+            for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+                for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                     if (executionCourse.getExecutionPeriod().getExecutionYear() == executionDegree.getExecutionYear()
                             && !executionDegree.getTemporaryExamMap().booleanValue()) {
                         return true;

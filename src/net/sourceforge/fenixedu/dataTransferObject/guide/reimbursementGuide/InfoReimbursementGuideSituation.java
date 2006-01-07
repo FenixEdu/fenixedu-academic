@@ -9,7 +9,7 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideSituation;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -135,7 +135,7 @@ public class InfoReimbursementGuideSituation extends InfoObject {
         this.officialDate = officialDate;
     }
 
-    public void copyFromDomain(IReimbursementGuideSituation reimbursementGuideSituation) {
+    public void copyFromDomain(ReimbursementGuideSituation reimbursementGuideSituation) {
         super.copyFromDomain(reimbursementGuideSituation);
         if (reimbursementGuideSituation != null) {
 
@@ -151,7 +151,7 @@ public class InfoReimbursementGuideSituation extends InfoObject {
     }
 
     public static InfoReimbursementGuideSituation newInfoFromDomain(
-            IReimbursementGuideSituation reimbursementGuideSituation) {
+            ReimbursementGuideSituation reimbursementGuideSituation) {
         InfoReimbursementGuideSituation infoReimbursementGuideSituation = null;
         if (reimbursementGuideSituation != null) {
             infoReimbursementGuideSituation = new InfoReimbursementGuideSituation();

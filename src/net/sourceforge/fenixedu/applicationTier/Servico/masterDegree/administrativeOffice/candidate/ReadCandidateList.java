@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -37,7 +37,7 @@ public class ReadCandidateList implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // Get the Actual Execution Year
-        final IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
+        final ExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(executionYearString);
 
         // Read the candidates
         final List result = sp.getIPersistentMasterDegreeCandidate().readCandidateList(Integer.parseInt(degreeName), degreeType,
@@ -46,27 +46,27 @@ public class ReadCandidateList implements IService {
         final List candidateList = new ArrayList();
         final Iterator iterator = result.iterator();
         while (iterator.hasNext()) {
-            final IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
+            final MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) iterator.next();
             final InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
                     .newInfoFromDomain(masterDegreeCandidate);
 
             final Iterator situationIterator = masterDegreeCandidate.getSituations().iterator();
             final List situations = new ArrayList();
             while (situationIterator.hasNext()) {
-                final InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((ICandidateSituation) situationIterator.next());
+                final InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation.newInfoFromDomain((CandidateSituation) situationIterator.next());
                 situations.add(infoCandidateSituation);
             }
             infoMasterDegreeCandidate.setSituationList(situations);
 
-            final IExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+            final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
             final InfoExecutionDegree infoExecutionDegree = InfoExecutionDegree.newInfoFromDomain(executionDegree);
             infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
 
-            final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
             final InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
             infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-            final IDegree degree = degreeCurricularPlan.getDegree();
+            final Degree degree = degreeCurricularPlan.getDegree();
             final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
             infoDegreeCurricularPlan.setInfoDegree(infoDegree);
 

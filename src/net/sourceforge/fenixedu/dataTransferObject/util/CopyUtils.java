@@ -7,15 +7,13 @@ package net.sourceforge.fenixedu.dataTransferObject.util;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.Collection;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author Luis Cruz & João Luz
@@ -26,7 +24,7 @@ public class CopyUtils {
     private static Class[] interfacesNotToCopy =  {
         Collection.class,
         java.util.Iterator.class,
-        IDomainObject.class
+        DomainObject.class
     };
 
     private static boolean shouldCopyPropertyOfClass(Class propClass) {
@@ -50,11 +48,6 @@ public class CopyUtils {
          * 
          * @author jpvl
          */
-        
-        if (sourceBean instanceof Proxy) {
-            sourceBean = ProxyHelper.getRealObject(sourceBean);
-        }
-        
         PropertyDescriptor[] fields = PropertyUtils.getPropertyDescriptors(sourceBean.getClass());
         for (PropertyDescriptor propertyDescriptor : fields) {
             Class fieldClass = propertyDescriptor.getPropertyType();

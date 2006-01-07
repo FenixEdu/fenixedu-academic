@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,16 +25,16 @@ public class EditDegreeCurricularPlan implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IDegreeCurricularPlan dcpToEdit = (IDegreeCurricularPlan) persistentSupport
+        final DegreeCurricularPlan dcpToEdit = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class, dcpId);
         if (dcpToEdit == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
 
         // assert unique pair name/degree
-        final List<IDegreeCurricularPlan> dcps = (List<IDegreeCurricularPlan>) persistentSupport
+        final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readFromNewDegreeStructure();
-        for (IDegreeCurricularPlan dcp : dcps) {
+        for (DegreeCurricularPlan dcp : dcps) {
             if (dcp.getDegree() == dcpToEdit.getDegree() && dcp.getName().equalsIgnoreCase(name)) {
                 throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
             }

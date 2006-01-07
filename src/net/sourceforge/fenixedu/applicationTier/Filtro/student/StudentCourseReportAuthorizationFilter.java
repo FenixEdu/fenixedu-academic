@@ -11,11 +11,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -56,9 +56,9 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
             IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
-            IStudent student = persistentStudent.readByUsername(id.getUtilizador());
-            IDelegate delegate = persistentDelegate.readByStudent(student);
-            ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse
+            Student student = persistentStudent.readByUsername(id.getUtilizador());
+            Delegate delegate = persistentDelegate.readByStudent(student);
+            CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse
                     .readByOID(CurricularCourse.class, objectId);
 
             List degreeDelegates = persistentDelegate.readDegreeDelegateByDegreeAndExecutionYear(
@@ -71,7 +71,7 @@ public class StudentCourseReportAuthorizationFilter extends DomainObjectAuthoriz
             List scopes = curricularCourse.getScopes();
             List years = (List) CollectionUtils.collect(scopes, new Transformer() {
                 public Object transform(Object arg0) {
-                    ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                    CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
                     return curricularCourseScope.getCurricularSemester().getCurricularYear().getYear();
                 }
             });

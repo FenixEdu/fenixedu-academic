@@ -8,10 +8,10 @@ import java.util.Calendar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
@@ -33,16 +33,16 @@ public class DeleteExercise implements IService {
     public void run(Integer executionCourseId, Integer metadataId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-        IMetadata metadata = (IMetadata) persistentMetadata.readByOID(Metadata.class, metadataId, true);
+        Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId, true);
         if (metadata == null)
             throw new InvalidArgumentsServiceException();
-        List<IQuestion> questionList = persistentSuport.getIPersistentQuestion().readByMetadata(metadata);
+        List<Question> questionList = persistentSuport.getIPersistentQuestion().readByMetadata(metadata);
         boolean delete = true;
         IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
-        for (IQuestion question : questionList) {
-            List<ITestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByQuestion(question.getIdInternal());
-            for (ITestQuestion testQuestion : testQuestionList) {
+        for (Question question : questionList) {
+            List<TestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByQuestion(question.getIdInternal());
+            for (TestQuestion testQuestion : testQuestionList) {
                 removeTestQuestionFromTest(persistentSuport, testQuestion);
             }
             if (persistentStudentTestQuestion.countByQuestion(question.getIdInternal()) == 0) {
@@ -60,16 +60,16 @@ public class DeleteExercise implements IService {
         }
     }
 
-    private void removeTestQuestionFromTest(ISuportePersistente persistentSuport, ITestQuestion testQuestion) throws ExcepcaoPersistencia {
+    private void removeTestQuestionFromTest(ISuportePersistente persistentSuport, TestQuestion testQuestion) throws ExcepcaoPersistencia {
         IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
 
-        ITest test = (ITest) persistentSuport.getIPersistentTest().readByOID(Test.class, testQuestion.getKeyTest(), true);
+        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testQuestion.getKeyTest(), true);
         if (test == null)
             throw new ExcepcaoPersistencia();
-        List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(test.getIdInternal());
+        List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(test.getIdInternal());
         Integer questionOrder = testQuestion.getTestQuestionOrder();
         if (testQuestionList != null) {
-            for (ITestQuestion iterTestQuestion : testQuestionList) {
+            for (TestQuestion iterTestQuestion : testQuestionList) {
                 Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
                 if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
                     iterTestQuestion.setTestQuestionOrder(new Integer(iterQuestionOrder.intValue() - 1));

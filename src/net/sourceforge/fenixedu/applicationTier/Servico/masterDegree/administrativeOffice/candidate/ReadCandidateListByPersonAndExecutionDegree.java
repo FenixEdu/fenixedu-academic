@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,13 +33,13 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IService {
 			Integer number) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = null;
-		IMasterDegreeCandidate result = null;
+		MasterDegreeCandidate result = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		// Read the candidates
 
-		IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+		Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
 				infoPerson.getIdInternal());
 
 		result = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(
@@ -51,7 +51,7 @@ public class ReadCandidateListByPersonAndExecutionDegree implements IService {
 		List situations = new ArrayList();
 		while (situationIterator.hasNext()) {
 			InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
-					.newInfoFromDomain((ICandidateSituation) situationIterator.next());
+					.newInfoFromDomain((CandidateSituation) situationIterator.next());
 			situations.add(infoCandidateSituation);
 
 			// Check if this is the Active Situation

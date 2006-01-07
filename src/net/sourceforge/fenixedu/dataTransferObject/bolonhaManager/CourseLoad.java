@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.dataTransferObject.bolonhaManager;
 
 import java.io.Serializable;
 
-import net.sourceforge.fenixedu.domain.degreeStructure.ICompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 
 public class CourseLoad implements Serializable {
     private Double theoreticalHours = Double.valueOf(0);
@@ -32,7 +32,7 @@ public class CourseLoad implements Serializable {
         setOrder(order);
     }
     
-    public CourseLoad(String action, ICompetenceCourseLoad competenceCourseLoad) {
+    public CourseLoad(String action, CompetenceCourseLoad competenceCourseLoad) {
         setAction(action);
         setIdentification(competenceCourseLoad.getIdInternal());
         setTheoreticalHours(competenceCourseLoad.getTheoreticalHours());

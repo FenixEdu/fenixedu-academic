@@ -9,7 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.IUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManagement.ManagerFunctionsManagementBackingBean;
 
@@ -18,9 +18,9 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
     public String getUnits() throws FenixFilterException, FenixServiceException {
 
         StringBuffer buffer = new StringBuffer();
-        List<IUnit> allUnits = readAllDomainObjects(Unit.class);
+        List<Unit> allUnits = readAllDomainObjects(Unit.class);
         
-        for (IUnit unit : allUnits) {
+        for (Unit unit : allUnits) {
             if (unit.getParentUnits().isEmpty() && unit.isActive(Calendar.getInstance().getTime())) {
                 getUnitTree(buffer, unit);
             }
@@ -29,20 +29,20 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuffer buffer, IUnit parentUnit) {
+    public void getUnitTree(StringBuffer buffer, Unit parentUnit) {
         buffer.append("<ul>");
         getUnitsList(parentUnit, 0, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(IUnit parentUnit, int index, StringBuffer buffer) {
+    private void getUnitsList(Unit parentUnit, int index, StringBuffer buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/facultyAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID)
                 .append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
                         parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
 
-        for (IUnit subUnit : parentUnit.getSubUnits()) {
+        for (Unit subUnit : parentUnit.getSubUnits()) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, index + 1, buffer);
             }

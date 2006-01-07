@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDistrict;
 import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.IDistrict;
+import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistrict;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -35,7 +35,7 @@ public class ReadAllDistricts implements IService {
         List infoDistricts = (List) CollectionUtils.collect(districts, new Transformer(){
 
             public Object transform(Object arg0) {
-                IDistrict district = (IDistrict) arg0;                
+                District district = (District) arg0;                
                 return InfoDistrict.newInfoFromDomain(district);
             }});
         

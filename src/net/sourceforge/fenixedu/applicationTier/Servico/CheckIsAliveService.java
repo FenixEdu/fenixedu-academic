@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -69,7 +69,7 @@ public class CheckIsAliveService implements IService {
         final IPersistentExecutionYear persistentExecutionYear = persistenceSupport
                 .getIPersistentExecutionYear();
 
-        final IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 
         if (executionYear == null || executionYear.getIdInternal() == null) {
             logger.fatal("Got a null result checking fenix database.");

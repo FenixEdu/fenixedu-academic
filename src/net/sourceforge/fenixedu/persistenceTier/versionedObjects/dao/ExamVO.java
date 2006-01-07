@@ -18,15 +18,15 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -40,7 +40,7 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
         final Collection evaluations = super.readAll(clazz);
         CollectionUtils.filter(evaluations, new Predicate() {
             public boolean evaluate(Object arg0) {
-                final IEvaluation evaluation = (IEvaluation) arg0;
+                final Evaluation evaluation = (Evaluation) arg0;
                 return evaluation.getOjbConcreteClass().equals(Exam.class.getName());
             }});
         return evaluations;
@@ -48,9 +48,9 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
 
     public List readBy(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
 
-        List<IExam> exams = (List<IExam>) readAll(Exam.class);
-        List<IExam> result = new ArrayList();
-        for (IExam exam : exams) {
+        List<Exam> exams = (List<Exam>) readAll(Exam.class);
+        List<Exam> result = new ArrayList();
+        for (Exam exam : exams) {
             if (exam.getBeginning().equals(beginning) && exam.getDay().equals(day)) {
                 result.add(exam);
             }
@@ -61,41 +61,41 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
 
     public List readByRoomAndExecutionPeriod(String roomName, String executionPeriodName, String year)
             throws ExcepcaoPersistencia {
-        List<IExecutionYear> executionYears = (List<IExecutionYear>) readAll(ExecutionYear.class);
-        IExecutionYear executionYearResult = null;
-        IExecutionPeriod executionPeriodResult = null;
+        List<ExecutionYear> executionYears = (List<ExecutionYear>) readAll(ExecutionYear.class);
+        ExecutionYear executionYearResult = null;
+        ExecutionPeriod executionPeriodResult = null;
 
-        for (IExecutionYear executionYear : executionYears) {
+        for (ExecutionYear executionYear : executionYears) {
             if (executionYear.getYear().equals(year)) {
                 executionYearResult = executionYear;
                 break;
             }
         }
 
-        List<IExecutionPeriod> executionPeriods = executionYearResult.getExecutionPeriods();
-        for (IExecutionPeriod executionPeriod : executionPeriods) {
+        List<ExecutionPeriod> executionPeriods = executionYearResult.getExecutionPeriods();
+        for (ExecutionPeriod executionPeriod : executionPeriods) {
             if (executionPeriod.getName().equalsIgnoreCase(executionPeriodName)) {
                 executionPeriodResult = executionPeriod;
                 break;
             }
         }
 
-        List<IExecutionCourse> executionCourses = executionPeriodResult.getAssociatedExecutionCourses();
-        List<IExam> result = new ArrayList();
+        List<ExecutionCourse> executionCourses = executionPeriodResult.getAssociatedExecutionCourses();
+        List<Exam> result = new ArrayList();
 
         HashSet hashSet = new HashSet(75);
 
-        for (IExecutionCourse executionCourse : executionCourses) {
-            List<IExam> exams = new ArrayList();
-            List<IEvaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
-            for(IEvaluation evaluation : associatedEvaluations){
-                if (evaluation instanceof IExam){
-                    exams.add((IExam) evaluation);
+        for (ExecutionCourse executionCourse : executionCourses) {
+            List<Exam> exams = new ArrayList();
+            List<Evaluation> associatedEvaluations = executionCourse.getAssociatedEvaluations();
+            for(Evaluation evaluation : associatedEvaluations){
+                if (evaluation instanceof Exam){
+                    exams.add((Exam) evaluation);
                 }
             }
-            for (IExam exam : exams) {
-                List<IRoom> rooms = exam.getAssociatedRooms();
-                for (IRoom room : rooms) {
+            for (Exam exam : exams) {
+                List<Room> rooms = exam.getAssociatedRooms();
+                for (Room room : rooms) {
                     if (room.getNome().equalsIgnoreCase(roomName)) {
 
                         if (!hashSet.contains(exam.getIdInternal())) {
@@ -117,18 +117,18 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
      *      java.util.Calendar, java.util.Calendar)
      */
     public List readBy(Calendar day, Calendar beginning, Calendar end) throws ExcepcaoPersistencia {
-        List<IExam> exams = (List<IExam>) readAll(Exam.class);
-        List<IExam> result = new ArrayList();
+        List<Exam> exams = (List<Exam>) readAll(Exam.class);
+        List<Exam> result = new ArrayList();
         if (beginning != null) {
             if (end != null) {
-                for (IExam exam : exams) {
+                for (Exam exam : exams) {
                     if (exam.getBeginning().equals(beginning) && exam.getDay().equals(day)
                             && exam.getEnd().equals(end)) {
                         result.add(exam);
                     }
                 }
             } else {
-                for (IExam exam : exams) {
+                for (Exam exam : exams) {
                     if (exam.getBeginning().equals(beginning) && exam.getDay().equals(day)) {
                         result.add(exam);
                     }
@@ -136,13 +136,13 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
             }
         } else {
             if (end != null) {
-                for (IExam exam : exams) {
+                for (Exam exam : exams) {
                     if (exam.getDay().equals(day) && exam.getEnd().equals(end)) {
                         result.add(exam);
                     }
                 }
             } else {
-                for (IExam exam : exams) {
+                for (Exam exam : exams) {
                     if (exam.getDay().equals(day)) {
                         result.add(exam);
                     }
@@ -154,8 +154,8 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
     }
 
     public List readByRoomAndWeek(String roomName, Calendar day) throws ExcepcaoPersistencia {
-        List<IExam> result = new ArrayList();
-        List<IExam> exams = (List<IExam>) readAll(Exam.class);
+        List<Exam> result = new ArrayList();
+        List<Exam> exams = (List<Exam>) readAll(Exam.class);
 
         // day.add(Calendar.DATE, Calendar.MONDAY -
         // day.get(Calendar.DAY_OF_WEEK));
@@ -163,10 +163,10 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
         endDay.setTime(day.getTime());
         endDay.add(Calendar.DATE, 6);
 
-        for (IExam exam : exams) {
+        for (Exam exam : exams) {
             if (!(exam.getDay().before(day) || exam.getDay().after(endDay))) {
-                List<IRoomOccupation> roomOccupations = exam.getAssociatedRoomOccupation();
-                for (IRoomOccupation roomOccupation : roomOccupations) {
+                List<RoomOccupation> roomOccupations = exam.getAssociatedRoomOccupation();
+                for (RoomOccupation roomOccupation : roomOccupations) {
                     if (roomOccupation.getRoom().getNome().equals(roomName)) {
                         result.add(exam);
 
@@ -179,11 +179,11 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
 
     public boolean isExamOfExecutionCourseTheStudentAttends(Integer examOID, String studentsUsername)
             throws ExcepcaoPersistencia {
-        IExam exam = (IExam) readByOID(Exam.class, examOID);
+        Exam exam = (Exam) readByOID(Exam.class, examOID);
 
-        for (IExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
-            for (final IAttends attends : executionCourse.getAttends()) {
-                final IStudent student = attends.getAluno();
+        for (ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
+            for (final Attends attends : executionCourse.getAttends()) {
+                final Student student = attends.getAluno();
                 if (student.getPerson().getUsername().equals(studentsUsername)) {
                     return true;
                 }

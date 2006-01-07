@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import net.sourceforge.fenixedu.domain.IInsuranceValue;
+import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
@@ -17,11 +17,11 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class InsuranceValueOJB extends PersistentObjectOJB implements IPersistentInsuranceValue {
 
-	public IInsuranceValue readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia {
+	public InsuranceValue readByExecutionYear(Integer executionYearID) throws ExcepcaoPersistencia {
 		Criteria criteria = new Criteria();
 		criteria.addEqualTo("executionYear.idInternal", executionYearID);
 
-		return (IInsuranceValue) queryObject(InsuranceValue.class, criteria);
+		return (InsuranceValue) queryObject(InsuranceValue.class, criteria);
 	}
 
 }

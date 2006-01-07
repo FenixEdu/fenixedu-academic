@@ -4,9 +4,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys;
 
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 
 /**
  * @author asnr and scpo
@@ -20,8 +20,8 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
 
     }
 
-    public Integer enrolmentPolicyNewGroup(IGrouping groupProperties, int numberOfStudentsToEnrole,
-            IShift shift) {
+    public Integer enrolmentPolicyNewGroup(Grouping groupProperties, int numberOfStudentsToEnrole,
+            Shift shift) {
 
         if (checkNumberOfGroups(groupProperties, shift)) {
             return Integer.valueOf(1);
@@ -30,7 +30,7 @@ public class IndividualGroupEnrolmentStrategy extends GroupEnrolmentStrategy imp
         return Integer.valueOf(-1);
     }
 
-    public boolean checkNumberOfGroupElements(IGrouping groupProperties, IStudentGroup studentGroup) {
+    public boolean checkNumberOfGroupElements(Grouping groupProperties, StudentGroup studentGroup) {
         return true;
     }
 }

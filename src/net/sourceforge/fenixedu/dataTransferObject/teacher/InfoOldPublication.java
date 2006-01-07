@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.IOldPublication;
+import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 
 /**
@@ -114,9 +114,9 @@ public class InfoOldPublication extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IOldPublication oldPublication) {
+    public void copyFromDomain(OldPublication oldPublication) {
         super.copyFromDomain(oldPublication);
 
         if (oldPublication != null) {
@@ -127,7 +127,7 @@ public class InfoOldPublication extends InfoObject {
         }
     }
 
-    public static InfoOldPublication newInfoFromDomain(IOldPublication oldPublication) {
+    public static InfoOldPublication newInfoFromDomain(OldPublication oldPublication) {
         InfoOldPublication infoOldPublication = null;
         if (oldPublication != null) {
             infoOldPublication = new InfoOldPublication();

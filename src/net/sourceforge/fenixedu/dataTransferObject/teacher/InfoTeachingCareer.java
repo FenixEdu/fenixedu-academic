@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
 /**
  * @author Leonor Almeida
@@ -57,16 +57,16 @@ public class InfoTeachingCareer extends InfoCareer {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain(Dominio.teacher.ICareer)
+     * @see net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer#copyFromDomain(Dominio.teacher.Career)
      */
-    public void copyFromDomain(ITeachingCareer teachingCareer) {
+    public void copyFromDomain(TeachingCareer teachingCareer) {
         super.copyFromDomain(teachingCareer);
         if (teachingCareer != null) {
             setCourseOrPosition(teachingCareer.getCourseOrPosition());
         }
     }
 
-    public static InfoTeachingCareer newInfoFromDomain(ITeachingCareer teachingCareer) {
+    public static InfoTeachingCareer newInfoFromDomain(TeachingCareer teachingCareer) {
         InfoTeachingCareer infoTeachingCareer = null;
         if (teachingCareer != null) {
             infoTeachingCareer = new InfoTeachingCareer();

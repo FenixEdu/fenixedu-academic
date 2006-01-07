@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteSer
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,7 +37,7 @@ public class DeleteEnrollmentsList implements IService {
             while (iterator.hasNext()) {
                 Integer enrolmentID = (Integer) iterator.next();
 
-                final IEnrolment enrollment = (IEnrolment) enrolmentDAO.readByOID(Enrolment.class,
+                final Enrolment enrollment = (Enrolment) enrolmentDAO.readByOID(Enrolment.class,
                         enrolmentID);
 
                 if (enrollment != null) {

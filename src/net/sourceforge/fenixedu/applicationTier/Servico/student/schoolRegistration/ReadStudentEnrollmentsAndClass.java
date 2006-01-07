@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -48,14 +48,14 @@ public class ReadStudentEnrollmentsAndClass implements IService {
         String user = userView.getUtilizador();
         Integer studentNumber = new Integer(user.substring(1));
 
-        IStudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,
+        StudentCurricularPlan scp = pSCP.readActiveStudentCurricularPlan(studentNumber,
                 DegreeType.DEGREE);
         List studentEnrollments = scp.getEnrolments();
-        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
         
         List studentShifts = new ArrayList();
-        List<IShift> shifts = scp.getStudent().getShifts();
-        for (IShift shift : shifts) {
+        List<Shift> shifts = scp.getStudent().getShifts();
+        for (Shift shift : shifts) {
             if (shift.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
                 studentShifts.add(shift);
             }
@@ -69,7 +69,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
 
         for (int iterator = 0; iterator < studentEnrollments.size(); iterator++) {
 
-            IEnrolment enrollment = (IEnrolment) studentEnrollments.get(iterator);
+            Enrolment enrollment = (Enrolment) studentEnrollments.get(iterator);
 
             InfoEnrolment infoEnrollment = InfoEnrolmentWithInfoCurricularCourse
                     .newInfoFromDomain(enrollment);
@@ -93,16 +93,16 @@ public class ReadStudentEnrollmentsAndClass implements IService {
         List classesName = new ArrayList();
         InfoClass infoClass = new InfoClass();
         for (int iter = 0; iter < studentShifts.size(); iter++) {
-            IShift shift = (IShift) studentShifts.get(0);
+            Shift shift = (Shift) studentShifts.get(0);
             List classes = shift.getAssociatedClasses();
             if (classes.size() == 1) {
-                ISchoolClass klass = (ISchoolClass) classes.get(0);
+                SchoolClass klass = (SchoolClass) classes.get(0);
                 infoClass.setNome(klass.getNome());
                 return infoClass;
             }
 
             for (int j = 0; j < classes.size(); j++) {
-                ISchoolClass klass = (ISchoolClass) classes.get(j);
+                SchoolClass klass = (SchoolClass) classes.get(j);
                 if (degreeName.equals(klass.getExecutionDegree().getDegreeCurricularPlan().getDegree()
                         .getNome())) {
                     classesName.add(klass.getNome());
@@ -125,7 +125,7 @@ public class ReadStudentEnrollmentsAndClass implements IService {
                     ShiftType.TEORICO_PRATICA });
 
             public boolean evaluate(Object input) {
-                IShift shift = (IShift) input;
+                Shift shift = (Shift) input;
                 return validTypes.contains(shift.getTipo());
             }
         });

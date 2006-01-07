@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 
 /**
  * @author T�nia Pous�o Created on 30/Out/2003
@@ -378,7 +378,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         }
     }
 
-    public void copyFromDomain(IDegreeInfo degreeInfo) {
+    public void copyFromDomain(DegreeInfo degreeInfo) {
         super.copyFromDomain(degreeInfo);
         if (degreeInfo != null) {
             setAdditionalInfo(degreeInfo.getAdditionalInfo());
@@ -412,7 +412,7 @@ public class InfoDegreeInfo extends InfoObject implements ISiteComponent {
         }
     }
 
-    public static InfoDegreeInfo newInfoFromDomain(IDegreeInfo degreeInfo) {
+    public static InfoDegreeInfo newInfoFromDomain(DegreeInfo degreeInfo) {
         InfoDegreeInfo infoDegreeInfo = null;
         if (degreeInfo != null) {
             infoDegreeInfo = new InfoDegreeInfo();

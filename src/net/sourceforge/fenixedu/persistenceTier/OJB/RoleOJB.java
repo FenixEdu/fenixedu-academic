@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -20,10 +20,10 @@ public class RoleOJB extends PersistentObjectOJB implements IPersistentRole {
         super();
     }
 
-    public IRole readByRoleType(RoleType roleType) throws ExcepcaoPersistencia {
+    public Role readByRoleType(RoleType roleType) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("roleType", roleType);
-        return (IRole) queryObject(Role.class, crit);
+        return (Role) queryObject(Role.class, crit);
 
     }
 

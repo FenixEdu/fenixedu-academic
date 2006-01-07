@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -19,9 +19,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *  
  */
 public interface IPersistentSeminaryTheme extends IPersistentObject {
-    ITheme readByName(String name) throws ExcepcaoPersistencia;
+    Theme readByName(String name) throws ExcepcaoPersistencia;
 
     List readAll() throws ExcepcaoPersistencia;
 
-    void delete(ITheme theme) throws ExcepcaoPersistencia;
+    void delete(Theme theme) throws ExcepcaoPersistencia;
 }

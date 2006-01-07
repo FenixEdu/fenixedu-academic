@@ -65,7 +65,7 @@ public class InfoStudentWithAttendsAndInquiriesRegistries extends InfoStudent {
 		this.inquiriesRegistries = inquiriesRegistries;
 	}
 	
-//    public void copyFromDomain(IStudent student) {
+//    public void copyFromDomain(Student student) {
 //
 //        if (student != null) {
 //	        super.copyFromDomain(student);
@@ -79,7 +79,7 @@ public class InfoStudentWithAttendsAndInquiriesRegistries extends InfoStudent {
 //        }
 //    }
 //
-//    public static InfoStudent newInfoFromDomain(IStudent student) {
+//    public static InfoStudent newInfoFromDomain(Student student) {
 //        InfoStudent infoStudent = null;
 //        if (student != null) {
 //            infoStudent = new InfoStudent();

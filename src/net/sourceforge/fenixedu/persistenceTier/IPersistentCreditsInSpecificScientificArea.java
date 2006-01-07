@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
+import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 
 /**
  * @author David Santos Jan 14, 2004
@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.ICreditsInScientificArea;
 
 public interface IPersistentCreditsInSpecificScientificArea extends IPersistentObject {
 
-    public ICreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
+    public CreditsInScientificArea readByStudentCurricularPlanAndEnrollmentAndScientificArea(
             Integer studentCurricularPlanKey, Integer enrolmentKey,
             Integer scientificAreaKey) throws ExcepcaoPersistencia;
 }

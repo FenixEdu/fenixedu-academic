@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 
 /**
  * Created on 11/Fev/2003
@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.domain.IExecutionYear;
  */
 public interface IPersistentExecutionYear extends IPersistentObject {
 
-    public IExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia;
+    public ExecutionYear readExecutionYearByName(String year) throws ExcepcaoPersistencia;
 
     public List readNotClosedExecutionYears() throws ExcepcaoPersistencia;
 
-    public IExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia;
+    public ExecutionYear readCurrentExecutionYear() throws ExcepcaoPersistencia;
 
     public List readOpenExecutionYears() throws ExcepcaoPersistencia;
     

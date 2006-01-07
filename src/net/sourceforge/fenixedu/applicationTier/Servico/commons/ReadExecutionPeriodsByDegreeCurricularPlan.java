@@ -13,8 +13,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,15 +36,15 @@ public class ReadExecutionPeriodsByDegreeCurricularPlan implements IService {
         Date end = sp.getIPersistentExecutionYear().readCurrentExecutionYear().getEndDate();
 
         // Start date of the degree curricular plan
-        Date start = ((IDegreeCurricularPlan) (sp.getIPersistentDegreeCurricularPlan().readByOID(
+        Date start = ((DegreeCurricularPlan) (sp.getIPersistentDegreeCurricularPlan().readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID))).getInitialDate();
 
-        List<IExecutionPeriod> executionPeriods = sp.getIPersistentExecutionPeriod()
+        List<ExecutionPeriod> executionPeriods = sp.getIPersistentExecutionPeriod()
                 .readExecutionPeriodsInTimePeriod(start, end);
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>(
                 executionPeriods.size());
-        for (final IExecutionPeriod executionPeriod : executionPeriods) {
+        for (final ExecutionPeriod executionPeriod : executionPeriods) {
             infoExecutionPeriods.add(InfoExecutionPeriodWithInfoExecutionYear
                     .newInfoFromDomain(executionPeriod));
         }

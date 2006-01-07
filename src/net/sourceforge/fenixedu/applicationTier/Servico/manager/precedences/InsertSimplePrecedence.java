@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,15 +27,15 @@ public class InsertSimplePrecedence implements IService {
         IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
                 .getIPersistentCurricularCourse();
 
-        ICurricularCourse curricularCourseToAddPrecedence = (ICurricularCourse) persistentCurricularCourse
+        CurricularCourse curricularCourseToAddPrecedence = (CurricularCourse) persistentCurricularCourse
                 .readByOID(CurricularCourse.class, curricularCourseToAddPrecedenceID);
         if (curricularCourseToAddPrecedence == null) {
             throw new FenixServiceException("curricularCourseToAddPrecedence.NULL");
         }
 
-        ICurricularCourse precedentCurricularCourse = null;
+        CurricularCourse precedentCurricularCourse = null;
         if (precedentCurricularCourseID != null) {
-            precedentCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+            precedentCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                     CurricularCourse.class, precedentCurricularCourseID);
             if (precedentCurricularCourse == null) {
                 throw new FenixServiceException("precedentCurricularCourse.NULL");

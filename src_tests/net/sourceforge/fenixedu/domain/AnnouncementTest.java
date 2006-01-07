@@ -9,14 +9,14 @@ import java.util.Date;
 
 public class AnnouncementTest extends DomainTestBase {
 
-    private ISite site;
+    private Site site;
 
-    private IAnnouncement announcement;
+    private Announcement announcement;
 
     protected void setUp() throws Exception {
         super.setUp();
 
-        IExecutionCourse executionCourse = new ExecutionCourse();
+        ExecutionCourse executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
 
         site = new Site();
@@ -77,7 +77,7 @@ public class AnnouncementTest extends DomainTestBase {
     }
 
     private void checkIfAnnouncementAttributesAreCorrect(final int size, final String title,
-            final String information, final ISite site) {
+            final String information, final Site site) {
         assertEquals("Size unexpected!", size, site.getAssociatedAnnouncementsCount());
         assertEquals("Different Announcement Title!", title, announcement.getTitle());
         assertEquals("Different Announcement Information!", information, announcement.getInformation());

@@ -43,7 +43,7 @@ public class AreaCurricularCourseGroup extends AreaCurricularCourseGroup_Base {
                 + super.getMaximumValue() + "] branch[" + getBranch().getName() + "]";
     }
 
-	public void edit(String name, IBranch branch, Integer minimumValue, Integer maximumValue, AreaType areaType){
+	public void edit(String name, Branch branch, Integer minimumValue, Integer maximumValue, AreaType areaType){
         setName(name);
 		setBranch(branch);
 		setMinimumCredits(minimumValue);

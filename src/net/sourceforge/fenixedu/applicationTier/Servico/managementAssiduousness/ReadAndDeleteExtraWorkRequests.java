@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoE
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.ICostCenter;
-import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.CostCenter;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -54,14 +54,14 @@ public class ReadAndDeleteExtraWorkRequests implements IService {
 						.getIdInternal());
 			} else {
 				// read
-				IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) extraWorkRequestsDAO
+				ExtraWorkRequests extraWorkRequests = (ExtraWorkRequests) extraWorkRequestsDAO
 						.readByOID(ExtraWorkRequests.class, infoExtraWorkRequests.getIdInternal());
 				if (extraWorkRequests == null) {
 					// TODO
 					continue;
 				}
 
-				IEmployee employee = (IEmployee) employeeDAO.readByOID(Employee.class, extraWorkRequests
+				Employee employee = (Employee) employeeDAO.readByOID(Employee.class, extraWorkRequests
 						.getEmployeeKey());
 				if (employee == null) {
 					// TODO
@@ -69,7 +69,7 @@ public class ReadAndDeleteExtraWorkRequests implements IService {
 				}
 				extraWorkRequests.setEmployee(employee);
 
-				ICostCenter costCenter = (ICostCenter) costCenterDAO.readByOID(CostCenter.class,
+				CostCenter costCenter = (CostCenter) costCenterDAO.readByOID(CostCenter.class,
 						extraWorkRequests.getCostCenterExtraWorkKey());
 				if (costCenter == null) {
 					// TODO
@@ -77,7 +77,7 @@ public class ReadAndDeleteExtraWorkRequests implements IService {
 				}
 				extraWorkRequests.setCostCenterExtraWork(costCenter);
 
-				ICostCenter costCenterMoney = (ICostCenter) costCenterDAO.readByOID(CostCenter.class,
+				CostCenter costCenterMoney = (CostCenter) costCenterDAO.readByOID(CostCenter.class,
 						extraWorkRequests.getCostCenterMoneyKey());
 				if (costCenterMoney == null) {
 					// TODO
@@ -93,7 +93,7 @@ public class ReadAndDeleteExtraWorkRequests implements IService {
 				new Transformer() {
 
 					public Object transform(Object arg0) {
-						IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
+						ExtraWorkRequests extraWorkRequests = (ExtraWorkRequests) arg0;
 						return InfoExtraWorkRequestsWithAll.newInfoFromDomain(extraWorkRequests);
 					}
 

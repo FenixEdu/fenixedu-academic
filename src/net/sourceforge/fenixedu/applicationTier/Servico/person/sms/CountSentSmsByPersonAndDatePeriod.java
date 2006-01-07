@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsLimitReachedServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -33,7 +33,7 @@ public class CountSentSmsByPersonAndDatePeriod implements IService {
 		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
-		IPerson person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+		Person person = ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
 
 		Integer numberOfSms = persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(),
 				startDate, endDate);

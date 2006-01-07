@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -50,7 +50,7 @@ public class ReadPersonCandidates implements IService {
         return CollectionUtils.collect(candidates, new Transformer() {
 
             public Object transform(Object arg0) {
-                IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) arg0;
+                MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) arg0;
                 return InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);
             }
 

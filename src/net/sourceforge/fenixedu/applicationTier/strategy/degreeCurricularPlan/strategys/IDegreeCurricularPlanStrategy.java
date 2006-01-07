@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
@@ -19,7 +19,7 @@ public interface IDegreeCurricularPlanStrategy {
      * 
      * @return the DegreeCurricular Plan
      */
-    public IDegreeCurricularPlan getDegreeCurricularPlan();
+    public DegreeCurricularPlan getDegreeCurricularPlan();
 
     /**
      * Checks if the mark is Valid for this Degree Curricular Plan
@@ -40,7 +40,7 @@ public interface IDegreeCurricularPlanStrategy {
      *            list of the students enrolment
      * @return The Student's Average
      */
-    public Double calculateStudentRegularAverage(IStudentCurricularPlan studentCurricularPlan)
+    public Double calculateStudentRegularAverage(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia;
 
     /**
@@ -52,7 +52,7 @@ public interface IDegreeCurricularPlanStrategy {
      *            list of the students enrolment
      * @return The Student's Average
      */
-    public Double calculateStudentWeightedAverage(IStudentCurricularPlan studentCurricularPlan)
+    public Double calculateStudentWeightedAverage(StudentCurricularPlan studentCurricularPlan)
             throws ExcepcaoPersistencia;
 
     /**
@@ -61,7 +61,7 @@ public interface IDegreeCurricularPlanStrategy {
      * @param infoFinalResult
      * @throws ExcepcaoPersistencia
      */
-    public void calculateStudentAverage(IStudentCurricularPlan studentCurricularPlan,
+    public void calculateStudentAverage(StudentCurricularPlan studentCurricularPlan,
             InfoFinalResult infoFinalResult) throws ExcepcaoPersistencia;
 
 }

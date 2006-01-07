@@ -5,9 +5,9 @@
 
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher;
 
-import net.sourceforge.fenixedu.domain.ITeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.IOrientation;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.util.OrientationType;
 public class OrientationVO extends VersionedObjectsBase implements
 		IPersistentOrientation {
 
-	public IOrientation readByTeacherIdAndOrientationType(Integer teacherId,
+	public Orientation readByTeacherIdAndOrientationType(Integer teacherId,
 			OrientationType orientationType) throws ExcepcaoPersistencia {
 		
-		ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherId);
-		for(IOrientation orientation : teacher.getAssociatedOrientations()) {
+		Teacher teacher = (Teacher) readByOID(Teacher.class, teacherId);
+		for(Orientation orientation : teacher.getAssociatedOrientations()) {
 			if(orientation.getOrientationType().equals(orientationType))
 				return orientation;
 		}

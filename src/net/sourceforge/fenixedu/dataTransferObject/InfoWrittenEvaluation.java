@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenTest;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenTest;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 
 /**
  * @author Ana e Ricardo
@@ -129,19 +129,19 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
         return getEnd();
     }
 
-    public void copyFromDomain(IWrittenEvaluation writtenEvaluation) {
+    public void copyFromDomain(WrittenEvaluation writtenEvaluation) {
         super.copyFromDomain(writtenEvaluation);
         if (writtenEvaluation != null) {
             associatedExecutionCourse = new ArrayList();
             associatedRoomOccupation = new ArrayList();
             associatedCurricularCourseScope = new ArrayList();
-            for(IExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()){
+            for(ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()){
                 associatedExecutionCourse.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
             }
-            for(IRoomOccupation roomOccupation : writtenEvaluation.getAssociatedRoomOccupation()){
+            for(RoomOccupation roomOccupation : writtenEvaluation.getAssociatedRoomOccupation()){
                 associatedRoomOccupation.add(InfoRoomOccupationWithInfoRoom.newInfoFromDomain(roomOccupation));
             }
-            for(ICurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()){
+            for(CurricularCourseScope curricularCourseScope : writtenEvaluation.getAssociatedCurricularCourseScope()){
                 associatedCurricularCourseScope.add(InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope));
             }
             setBeginning(writtenEvaluation.getBeginning());
@@ -154,13 +154,13 @@ public class InfoWrittenEvaluation extends InfoEvaluation {
         }
     }  
 
-    public static InfoWrittenEvaluation newInfoFromDomain(IWrittenEvaluation writtenEvaluation) {
+    public static InfoWrittenEvaluation newInfoFromDomain(WrittenEvaluation writtenEvaluation) {
         InfoWrittenEvaluation infoWrittenEvaluation = null;
         if (writtenEvaluation != null) {
-            if (writtenEvaluation instanceof IExam) {
-                infoWrittenEvaluation = InfoExam.newInfoFromDomain((IExam) writtenEvaluation);
-            } else if (writtenEvaluation instanceof IWrittenTest) {
-                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((IWrittenTest)writtenEvaluation);
+            if (writtenEvaluation instanceof Exam) {
+                infoWrittenEvaluation = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
+            } else if (writtenEvaluation instanceof WrittenTest) {
+                infoWrittenEvaluation = InfoWrittenTest.newInfoFromDomain((WrittenTest)writtenEvaluation);
             } else {
                 infoWrittenEvaluation = new InfoWrittenEvaluation();
                 infoWrittenEvaluation.copyFromDomain(writtenEvaluation);

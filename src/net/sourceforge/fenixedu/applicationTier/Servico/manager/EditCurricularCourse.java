@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,7 +33,7 @@ public class EditCurricularCourse implements IService {
     public void run(InfoCurricularCourse newInfoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
         IPersistentCurricularCourse persistentCurricularCourse = null;
-        ICurricularCourse oldCurricularCourse = null;
+        CurricularCourse oldCurricularCourse = null;
         String newName = null;
         String newNameEn = null;
         String newCode = null;
@@ -42,7 +42,7 @@ public class EditCurricularCourse implements IService {
 
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
-            oldCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+            oldCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                     CurricularCourse.class, newInfoCurricularCourse.getIdInternal(), true);
 
             newName = newInfoCurricularCourse.getName();
@@ -57,10 +57,10 @@ public class EditCurricularCourse implements IService {
             List curricularCourses = null;
             curricularCourses = oldCurricularCourse.getDegreeCurricularPlan().getCurricularCourses();
             
-            ICurricularCourse cCourse = (ICurricularCourse) CollectionUtils.find(curricularCourses,new Predicate(){
+            CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses,new Predicate(){
 
 				public boolean evaluate(Object arg0) {
-					ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+					CurricularCourse curricularCourse = (CurricularCourse) arg0;
 					if(newAcronym.equalsIgnoreCase(curricularCourse.getAcronym()))
 						return true;
 					return false;

@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseOccupancy;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoLessons;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,14 +24,14 @@ public class ReadShiftsByExecutionCourseID implements IService {
         final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, executionCourseID);
-        final List<IShift> shifts = executionCourse.getAssociatedShifts();
+        final List<Shift> shifts = executionCourse.getAssociatedShifts();
 
         infoExecutionCourseOccupancy.setInfoExecutionCourse(InfoExecutionCourse
                 .newInfoFromDomain(executionCourse));
 
-        for (final IShift shift : shifts) {
+        for (final Shift shift : shifts) {
             Integer capacity = Integer.valueOf(1);
             if (shift.getLotacao() != null && shift.getLotacao().intValue() != 0) {
                 capacity = shift.getLotacao();

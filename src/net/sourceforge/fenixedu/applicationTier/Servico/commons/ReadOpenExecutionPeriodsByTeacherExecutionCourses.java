@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,20 +32,20 @@ public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IServi
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         
-        final ITeacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
-        final List<IExecutionPeriod> executionPeriods = new ArrayList();
+        final Teacher teacher = persistentTeacher.readTeacherByUsername(userView.getUtilizador());
+        final List<ExecutionPeriod> executionPeriods = new ArrayList();
         
         final Iterator associatedProfessorships = teacher.getProfessorshipsIterator();
         while (associatedProfessorships.hasNext()) {
-            IProfessorship professorship = (IProfessorship) associatedProfessorships.next();
-            IExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
+            Professorship professorship = (Professorship) associatedProfessorships.next();
+            ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
             PeriodState periodState = executionPeriod.getState();
             if (!executionPeriods.contains(executionPeriod) && (periodState.getStateCode().equals("C") || periodState.getStateCode().equals("O"))) {
                 executionPeriods.add(executionPeriod);
             }
         }
                
-        for (final IExecutionPeriod executionPeriod : executionPeriods) {
+        for (final ExecutionPeriod executionPeriod : executionPeriods) {
             result.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
         }
         return result;

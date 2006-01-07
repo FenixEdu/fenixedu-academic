@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeInfo;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,11 +29,11 @@ public class EditDegreeInfoByDegreeCurricularPlanID implements IService {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) suportePersistente
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) suportePersistente
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
-        IDegreeInfo degreeInfo = DomainFactory.makeDegreeInfo();
+        DegreeInfo degreeInfo = DomainFactory.makeDegreeInfo();
 
         // update information that it will be displayed in degree site.
         degreeInfo.setDescription(infoDegreeInfo.getDescription());

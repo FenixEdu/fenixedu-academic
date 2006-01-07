@@ -6,7 +6,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject.externalServices;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -31,7 +31,7 @@ public class InfoExternalExecutionCourseInfo
         this.name = name;
     }
     
-    public static InfoExternalExecutionCourseInfo newFromExecutionCourse(IExecutionCourse executionCourse)
+    public static InfoExternalExecutionCourseInfo newFromExecutionCourse(ExecutionCourse executionCourse)
     {
        InfoExternalExecutionCourseInfo info = new InfoExternalExecutionCourseInfo();
        info.setName(executionCourse.getNome());

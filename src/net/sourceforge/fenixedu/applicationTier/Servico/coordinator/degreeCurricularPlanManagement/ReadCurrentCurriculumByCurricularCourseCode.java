@@ -13,11 +13,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculumWithInfoCurricu
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurriculum;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Curriculum;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
@@ -53,7 +53,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
             throw new FenixServiceException("nullCurricularCourse");
         }
 
-        ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();
@@ -65,7 +65,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
         activeCurricularCourseScopes = (List) CollectionUtils.select(activeCurricularCourseScopes,
                 new Predicate() {
                     public boolean evaluate(Object arg0) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
                         if (curricularCourseScope.isActive().booleanValue()) {
                             return true;
                         }
@@ -74,17 +74,17 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
                 });
 
         //selects execution courses for current execution period
-        final IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+        final ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
        
-        List<IExecutionCourse> associatedExecutionCourses = new ArrayList<IExecutionCourse>();
-        List<IExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
-        for(IExecutionCourse executionCourse : executionCourses){
+        List<ExecutionCourse> associatedExecutionCourses = new ArrayList<ExecutionCourse>();
+        List<ExecutionCourse> executionCourses = curricularCourse.getAssociatedExecutionCourses();
+        for(ExecutionCourse executionCourse : executionCourses){
             if(executionCourse.getExecutionPeriod().equals(executionPeriod))
                 associatedExecutionCourses.add(executionCourse);
         }
         
 
-        ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
+        Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
                 .getIdInternal());
         InfoCurriculum infoCurriculum = null; 
         if (curriculum != null) {
@@ -108,7 +108,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
 
         CollectionUtils.collect(activeCurricularCourseScopes, new Transformer() {
             public Object transform(Object arg0) {
-                ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) arg0;
+                CurricularCourseScope curricularCourseScope = (CurricularCourseScope) arg0;
 
                 return InfoCurricularCourseScopeWithCurricularCourseAndBranchAndSemesterAndYear
                         .newInfoFromDomain(curricularCourseScope);
@@ -119,7 +119,7 @@ public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
         List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         Iterator iterExecutionCourses = associatedExecutionCourses.iterator();
         while (iterExecutionCourses.hasNext()) {
-            IExecutionCourse executionCourse = (IExecutionCourse) iterExecutionCourses.next();
+            ExecutionCourse executionCourse = (ExecutionCourse) iterExecutionCourses.next();
 
             InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                     .newInfoFromDomain(executionCourse);

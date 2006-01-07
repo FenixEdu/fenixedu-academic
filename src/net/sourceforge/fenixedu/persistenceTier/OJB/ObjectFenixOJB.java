@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.stm.Transaction;
@@ -47,7 +47,7 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     /**
      * @deprecated
      */
-    public void simpleLockWrite(IDomainObject obj) {
+    public void simpleLockWrite(DomainObject obj) {
     }
 
     /**
@@ -69,14 +69,14 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     }
 
     /**
-     * @see IPersistentObject#readByOId(IDomainObject, boolean)
+     * @see IPersistentObject#readByOId(DomainObject, boolean)
      * @deprecated
      */
-    public IDomainObject readByOId(IDomainObject obj, boolean lockWrite) {
+    public DomainObject readByOId(DomainObject obj, boolean lockWrite) {
         PersistenceBroker broker = getCurrentPersistenceBroker();
         Identity identity = new Identity(obj, broker);
 
-        return (IDomainObject) broker.getObjectByIdentity(identity);
+        return (DomainObject) broker.getObjectByIdentity(identity);
     }
 
     //    public Object readDomainObjectByCriteria(Object obj) throws
@@ -151,17 +151,17 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return object;
     }
 
-    public IDomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
+    public DomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
-        return (IDomainObject) queryObject(classToQuery, criteria);
+        return (DomainObject) queryObject(classToQuery, criteria);
     }
 
-    public IDomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
+    public DomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
-        return (IDomainObject) queryObject(classToQuery, criteria);
+        return (DomainObject) queryObject(classToQuery, criteria);
     }
 
     /**
@@ -364,8 +364,8 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return iterator.next();
     }
 
-    public IDomainObject materialize(IDomainObject domainObject) {
-        return (IDomainObject) ProxyHelper.getRealObject(domainObject);
+    public DomainObject materialize(DomainObject domainObject) {
+        return (DomainObject) ProxyHelper.getRealObject(domainObject);
     }
     
     public Collection readAll(Class classToQuery) throws ExcepcaoPersistencia {

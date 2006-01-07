@@ -9,8 +9,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -41,7 +41,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
         List executionDegrees = null;
 
         sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
@@ -51,7 +51,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
         infoExecutionDegreeList = new ArrayList();
 
         for (Iterator iter = executionDegrees.iterator(); iter.hasNext();) {
-            IExecutionDegree executionDegree = (IExecutionDegree) iter.next();
+            ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
 
             InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
                     .newInfoFromDomain(executionDegree);
@@ -81,7 +81,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
@@ -91,11 +91,11 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
                             .get(0));
         }
 
-        IExecutionDegree executionDegree = (IExecutionDegree) CollectionUtils.find(degreeCurricularPlan
+        ExecutionDegree executionDegree = (ExecutionDegree) CollectionUtils.find(degreeCurricularPlan
                 .getExecutionDegrees(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
-                IExecutionDegree executionDegree = (IExecutionDegree) arg0;
+                ExecutionDegree executionDegree = (ExecutionDegree) arg0;
                 if (executionDegree.getExecutionYear().getYear().equals(executionYear)) {
                     return true;
                 }

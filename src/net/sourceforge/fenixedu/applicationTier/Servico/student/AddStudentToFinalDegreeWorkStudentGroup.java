@@ -5,11 +5,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupStudent;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IScheduleing;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
@@ -35,8 +35,8 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-        IGroup group = (IGroup) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
-        IStudent student = persistentStudent.readByUsername(username);
+        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Student student = persistentStudent.readByUsername(username);
         if (group == null
                 || student == null
                 || group.getGroupStudents() == null
@@ -44,7 +44,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
                         new PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(student)) != null) {
             return false;
         }
-        IScheduleing scheduleing = persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(group
+        Scheduleing scheduleing = persistentFinalDegreeWork.readFinalDegreeWorkScheduleing(group
                 .getExecutionDegree().getIdInternal());
 
         if (scheduleing == null || scheduleing.getMaximumNumberOfStudents() == null) {
@@ -66,7 +66,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
             }
         }
 
-        IGroupStudent groupStudent = DomainFactory.makeGroupStudent();
+        GroupStudent groupStudent = DomainFactory.makeGroupStudent();
         groupStudent.setStudent(student);
         groupStudent.setFinalDegreeDegreeWorkGroup(group);
         return true;
@@ -161,14 +161,14 @@ public class AddStudentToFinalDegreeWorkStudentGroup implements IService {
     }
 
     private class PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT implements Predicate {
-        IStudent student = null;
+        Student student = null;
 
         public boolean evaluate(Object arg0) {
-            IGroupStudent groupStudent = (IGroupStudent) arg0;
+            GroupStudent groupStudent = (GroupStudent) arg0;
             return student.getIdInternal().equals(groupStudent.getStudent().getIdInternal());
         }
 
-        public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(IStudent student) {
+        public PREDICATE_FIND_GROUP_STUDENT_BY_STUDENT(Student student) {
             super();
             this.student = student;
         }

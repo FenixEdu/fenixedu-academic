@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 
 /**
  * @author Tânia Pousão
@@ -15,9 +15,9 @@ public class InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom extends In
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IWrittenEvaluationEnrolment writtenEvaluationEnrolment) {
+    public void copyFromDomain(WrittenEvaluationEnrolment writtenEvaluationEnrolment) {
         super.copyFromDomain(writtenEvaluationEnrolment);
         if (writtenEvaluationEnrolment != null) {
             setInfoStudent(InfoStudentWithInfoPerson.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
@@ -25,7 +25,7 @@ public class InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom extends In
         }
     }
 
-    public static InfoWrittenEvaluationEnrolment newInfoFromDomain(IWrittenEvaluationEnrolment writtenEvaluationEnrolment) {
+    public static InfoWrittenEvaluationEnrolment newInfoFromDomain(WrittenEvaluationEnrolment writtenEvaluationEnrolment) {
         InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom infoWrittenEvaluationEnrolment = null;
         if (writtenEvaluationEnrolment != null) {
             infoWrittenEvaluationEnrolment = new InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom();

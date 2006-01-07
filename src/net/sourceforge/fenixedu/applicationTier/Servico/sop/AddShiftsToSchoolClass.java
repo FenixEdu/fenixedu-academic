@@ -5,8 +5,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -25,7 +25,7 @@ public class AddShiftsToSchoolClass implements IService {
 				.getDefaultPersistenceSupport();
 		final ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
 
-		final ISchoolClass schoolClass = (ISchoolClass) persistentSchoolClass.readByOID(
+		final SchoolClass schoolClass = (SchoolClass) persistentSchoolClass.readByOID(
 				SchoolClass.class, infoClass.getIdInternal());
 		if (schoolClass == null) {
 			throw new InvalidArgumentsServiceException();
@@ -33,7 +33,7 @@ public class AddShiftsToSchoolClass implements IService {
 
 		final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 		for (final String shiftOID : shiftOIDs) {
-			final IShift shift = (IShift) persistentShift.readByOID(Shift.class, new Integer(shiftOID));
+			final Shift shift = (Shift) persistentShift.readByOID(Shift.class, new Integer(shiftOID));
 			if (shift == null) {
 				throw new InvalidArgumentsServiceException();
 			}

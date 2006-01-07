@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 
 /**
  * @author Leonor Almeida
@@ -57,7 +57,7 @@ public class InfoCourseReport extends InfoObject {
         this.lastModificationDate = lastModificationDate;
     }
 
-    public void copyFromDomain(ICourseReport courseReport) {
+    public void copyFromDomain(CourseReport courseReport) {
         super.copyFromDomain(courseReport);
         if (courseReport != null) {
             setLastModificationDate(courseReport.getLastModificationDate());
@@ -65,7 +65,7 @@ public class InfoCourseReport extends InfoObject {
         }
     }
 
-    public static InfoCourseReport newInfoFromDomain(ICourseReport courseReport) {
+    public static InfoCourseReport newInfoFromDomain(CourseReport courseReport) {
         InfoCourseReport infoCourseReport = null;
         if (courseReport != null) {
             infoCourseReport = new InfoCourseReport();

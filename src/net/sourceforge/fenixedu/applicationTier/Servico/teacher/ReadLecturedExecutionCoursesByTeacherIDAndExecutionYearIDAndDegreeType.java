@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -22,7 +22,7 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeType implements IService {
 
-    public List<IExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
+    public List<ExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
             throws ExcepcaoPersistencia, FenixServiceException {
 
         ISuportePersistente persistenceSupport = PersistenceSupportFactory
@@ -32,20 +32,20 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
                 .getIPersistentExecutionYear();
         IPersistentTeacher persistentTeacher = persistenceSupport.getIPersistentTeacher();
 
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, teacherID);
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
 
-        List<IExecutionCourse> lecturedExecutionCourses;
+        List<ExecutionCourse> lecturedExecutionCourses;
 
         if (executionYearID == null) {
             lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
 
         } else {
-            IExecutionYear executionYear = (IExecutionYear) persistentExecutionYear.readByOID(
+            ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                     ExecutionYear.class, executionYearID);
             lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
         }
 
-        List<IExecutionCourse> result;
+        List<ExecutionCourse> result;
 
         if (degreeType == DegreeType.DEGREE) {
             result = filterExecutionCourses(lecturedExecutionCourses, false);
@@ -58,11 +58,11 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
 
     }
 
-    private List<IExecutionCourse> filterExecutionCourses(List<IExecutionCourse> executionCourses,
+    private List<ExecutionCourse> filterExecutionCourses(List<ExecutionCourse> executionCourses,
             boolean masterDegreeOnly) {
-        List<IExecutionCourse> masterDegreeExecutionCourses = new ArrayList<IExecutionCourse>();
+        List<ExecutionCourse> masterDegreeExecutionCourses = new ArrayList<ExecutionCourse>();
 
-        for (IExecutionCourse executionCourse : executionCourses) {
+        for (ExecutionCourse executionCourse : executionCourses) {
             if (executionCourse.isMasterDegreeOnly() == masterDegreeOnly) {
                 masterDegreeExecutionCourses.add(executionCourse);
             }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -20,9 +20,9 @@ public class ReadExecutionPeriods implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
 
-        final Collection<IExecutionPeriod> executionPeriods = executionPeriodDAO.readAll(ExecutionPeriod.class);
+        final Collection<ExecutionPeriod> executionPeriods = executionPeriodDAO.readAll(ExecutionPeriod.class);
         final List result = new ArrayList(executionPeriods.size());
-        for (final IExecutionPeriod executionPeriod : executionPeriods) {
+        for (final ExecutionPeriod executionPeriod : executionPeriods) {
             result.add(InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod));
         }
         return result;

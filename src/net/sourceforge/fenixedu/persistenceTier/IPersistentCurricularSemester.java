@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 
 /**
  * @author dcs-rjao
@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ICurricularSemester;
 
 public interface IPersistentCurricularSemester extends IPersistentObject {
 
-    public ICurricularSemester readCurricularSemesterBySemesterAndCurricularYear(Integer semester,
+    public CurricularSemester readCurricularSemesterBySemesterAndCurricularYear(Integer semester,
             Integer year) throws ExcepcaoPersistencia;
 
     public List readAll() throws ExcepcaoPersistencia;

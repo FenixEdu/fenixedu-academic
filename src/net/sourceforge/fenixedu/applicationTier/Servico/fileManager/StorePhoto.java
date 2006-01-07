@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
@@ -28,7 +28,7 @@ public class StorePhoto implements IService {
 			ExcepcaoPersistencia {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-		IPerson person = (IPerson) persistentPerson.readByOID(Person.class, personId);
+		Person person = (Person) persistentPerson.readByOID(Person.class, personId);
 
 		file.setUri(person.getSlideName());
 		IFileSuport fileSuport = FileSuport.getInstance();

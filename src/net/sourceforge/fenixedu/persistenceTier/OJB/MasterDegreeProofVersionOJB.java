@@ -8,8 +8,8 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
@@ -26,14 +26,14 @@ public class MasterDegreeProofVersionOJB extends PersistentObjectOJB implements
         IPersistentMasterDegreeProofVersion {
 
 
-    public IMasterDegreeProofVersion readActiveByStudentCurricularPlan(
-            IStudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
+    public MasterDegreeProofVersion readActiveByStudentCurricularPlan(
+            StudentCurricularPlan studentCurricularPlan) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
 
         criteria.addEqualTo("masterDegreeThesis.studentCurricularPlan.idInternal", studentCurricularPlan
                 .getIdInternal());
         criteria.addEqualTo("currentState", new Integer(State.ACTIVE));
-        IMasterDegreeProofVersion storedMasterDegreeProofVersion = (IMasterDegreeProofVersion) queryObject(
+        MasterDegreeProofVersion storedMasterDegreeProofVersion = (MasterDegreeProofVersion) queryObject(
                 MasterDegreeProofVersion.class, criteria);
 
         return storedMasterDegreeProofVersion;

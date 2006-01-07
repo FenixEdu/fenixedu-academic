@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
@@ -41,7 +41,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
             IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
                     .getIPersistentDegreeCurricularPlan();
 
-            IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentDegreeCurricularPlan
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
             if (degreeCurricularPlan == null)
@@ -55,11 +55,11 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
             List curricularCourses = null;
             curricularCourses = degreeCurricularPlan.getCurricularCourses();
 
-            ICurricularCourse cCourse = (ICurricularCourse) CollectionUtils.find(curricularCourses,
+            CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses,
                     new Predicate() {
 
                         public boolean evaluate(Object arg0) {
-                            ICurricularCourse curricularCourse = (ICurricularCourse) arg0;
+                            CurricularCourse curricularCourse = (CurricularCourse) arg0;
                             if (acronym.equalsIgnoreCase(curricularCourse.getAcronym()))
                                 return true;
                             return false;
@@ -67,7 +67,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
                     });
 
             if (cCourse == null) {
-                ICurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse(name,
+                CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse(name,
                         code, infoCurricularCourse.getAcronym(), infoCurricularCourse
                                 .getEnrollmentAllowed(), CurricularStage.OLD); 
                 curricularCourse.setBasic(infoCurricularCourse.getBasic());

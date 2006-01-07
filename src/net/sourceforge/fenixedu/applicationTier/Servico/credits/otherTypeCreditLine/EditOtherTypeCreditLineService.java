@@ -8,11 +8,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoOtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -27,19 +27,19 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
 
     @Override
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            IDomainObject domainObject) throws ExcepcaoPersistencia {
+            DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoOtherTypeCreditLine infoOtherTypeCreditLine = (InfoOtherTypeCreditLine) infoObject;
-        IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) domainObject;
+        OtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) domainObject;
 
         otherTypeCreditLine.setCredits(infoOtherTypeCreditLine.getCredits());
 
         IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoOtherTypeCreditLine.getInfoExecutionPeriod().getIdInternal());
         otherTypeCreditLine.setExecutionPeriod(executionPeriod);
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = (ITeacher) persistentTeacher.readByOID(Teacher.class, infoOtherTypeCreditLine
+        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, infoOtherTypeCreditLine
                 .getInfoTeacher().getIdInternal());
         otherTypeCreditLine.setTeacher(teacher);
 
@@ -48,7 +48,7 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
     }
 
     @Override
-    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+    protected DomainObject createNewDomainObject(InfoObject infoObject) {
         return DomainFactory.makeOtherTypeCreditLine();
     }
 

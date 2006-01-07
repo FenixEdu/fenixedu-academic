@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
+import net.sourceforge.fenixedu.domain.Employee;
 
 /**
  * @author : - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -56,7 +56,7 @@ public class InfoEmployee extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(IEmployee employee) {
+    public void copyFromDomain(Employee employee) {
         super.copyFromDomain(employee);
         if (employee != null) {
             setEmployeeNumber(employee.getEmployeeNumber());
@@ -69,7 +69,7 @@ public class InfoEmployee extends InfoObject {
         }
     }
 
-    public static InfoEmployee newInfoFromDomain(IEmployee employee) {
+    public static InfoEmployee newInfoFromDomain(Employee employee) {
         InfoEmployee infoEmployee = null;
         if (employee != null) {
             infoEmployee = new InfoEmployee();

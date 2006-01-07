@@ -19,17 +19,17 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
         return result;
     }
 
-    public boolean belongsToExecutionPeriod(IExecutionPeriod executionPeriod) {
+    public boolean belongsToExecutionPeriod(ExecutionPeriod executionPeriod) {
         return this.getExecutionCourse().getExecutionPeriod().equals(executionPeriod);
     }
 
-    public static IProfessorship create(Boolean responsibleFor, IExecutionCourse executionCourse,
-            ITeacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory {
+    public static Professorship create(Boolean responsibleFor, ExecutionCourse executionCourse,
+            Teacher teacher, Double hours) throws MaxResponsibleForExceed, InvalidCategory {
 
         if (responsibleFor == null || executionCourse == null || teacher == null)
             throw new NullPointerException();
 
-        IProfessorship professorShip = new Professorship();
+        Professorship professorShip = new Professorship();
         professorShip.setHours((hours == null) ? new Double(0.0) : hours);
         
         if (responsibleFor.booleanValue()) {

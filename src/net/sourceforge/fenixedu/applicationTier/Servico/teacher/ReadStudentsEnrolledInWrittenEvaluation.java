@@ -15,11 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenEvaluationEnrolmen
 import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.ISite;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.IWrittenTest;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.Site;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
+import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -35,19 +35,19 @@ public class ReadStudentsEnrolledInWrittenEvaluation implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IWrittenEvaluation writtenEvaluation = (IWrittenEvaluation) persistentSupport
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
                 .getIPersistentEvaluation().readByOID(WrittenEvaluation.class, writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
         final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        final ISite site = persistentSite.readByExecutionCourse(executionCourseID);
+        final Site site = persistentSite.readByExecutionCourse(executionCourseID);
         if (site == null) {
             throw new FenixServiceException("error.noSite");
         }
 
-        final List<IWrittenEvaluationEnrolment> writtenEvaluationEnrolmentList = writtenEvaluation
+        final List<WrittenEvaluationEnrolment> writtenEvaluationEnrolmentList = writtenEvaluation
                 .getWrittenEvaluationEnrolments();
 
         final List<InfoStudent> infoStudents = new ArrayList<InfoStudent>(writtenEvaluationEnrolmentList
@@ -55,20 +55,20 @@ public class ReadStudentsEnrolledInWrittenEvaluation implements IService {
         final List<InfoWrittenEvaluationEnrolment> infoWrittenEvaluationEnrolments = new ArrayList<InfoWrittenEvaluationEnrolment>(
                 writtenEvaluationEnrolmentList.size());
 
-        for (final IWrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluationEnrolmentList) {
+        for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : writtenEvaluationEnrolmentList) {
             infoStudents.add(InfoStudent.newInfoFromDomain(writtenEvaluationEnrolment.getStudent()));
             infoWrittenEvaluationEnrolments.add(InfoWrittenEvaluationEnrolmentWithInfoStudentAndInfoRoom
                     .newInfoFromDomain(writtenEvaluationEnrolment));
         }
 
         ISiteComponent component = null;
-        if (writtenEvaluation instanceof IExam) {
-            final InfoExam infoExam = InfoExam.newInfoFromDomain((IExam) writtenEvaluation);
+        if (writtenEvaluation instanceof Exam) {
+            final InfoExam infoExam = InfoExam.newInfoFromDomain((Exam) writtenEvaluation);
             component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoExam,
                     infoWrittenEvaluationEnrolments);
-        } else if (writtenEvaluation instanceof IWrittenTest) {
+        } else if (writtenEvaluation instanceof WrittenTest) {
             final InfoWrittenTest infoWrittenTest = InfoWrittenTest
-                    .newInfoFromDomain((IWrittenTest) writtenEvaluation);
+                    .newInfoFromDomain((WrittenTest) writtenEvaluation);
             component = new InfoSiteTeacherStudentsEnrolledList(infoStudents, infoWrittenTest,
                     infoWrittenEvaluationEnrolments);
         } else {

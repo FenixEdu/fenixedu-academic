@@ -11,9 +11,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ReadDetailedTeacherProfessorshipsAbstractService;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -36,13 +36,13 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
                 .getIPersistentExecutionPeriod();
 
-        IExecutionPeriod executionPeriod = null;
+        ExecutionPeriod executionPeriod = null;
         if (executionPeriodCode != null) {
-            executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+            executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                     ExecutionPeriod.class, executionPeriodCode);
         }
 
-        ITeacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
+        Teacher teacher = teacherDAO.readTeacherByUsername(userView.getUtilizador());
 
         List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
         List professorshipsList = new ArrayList();
@@ -51,7 +51,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         if (executionPeriod != null) {
             Iterator iterProfessorships = professorships.iterator();
             while (iterProfessorships.hasNext()) {
-                IProfessorship professorship = (IProfessorship) iterProfessorships.next();
+                Professorship professorship = (Professorship) iterProfessorships.next();
                 if (!professorship.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
                     professorshipsList.remove(professorship);
                 }
@@ -65,7 +65,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         if (executionPeriod != null) {
             Iterator iterResponsibleFors = responsibleFors.iterator();
             while (iterResponsibleFors.hasNext()) {
-                IProfessorship responsibleFor = (IProfessorship) iterResponsibleFors.next();
+                Professorship responsibleFor = (Professorship) iterResponsibleFors.next();
                 if (!responsibleFor.getExecutionCourse().getExecutionPeriod().equals(executionPeriod)) {
                     responsibleForsList.remove(responsibleFor);
                 }

@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 
 /**
  * @author jpvl
@@ -55,13 +55,13 @@ public abstract class InfoObject extends DataTranferObject {
         return 0;
     }
 
-    public void copyFromDomain(IDomainObject domainObject) {
+    public void copyFromDomain(DomainObject domainObject) {
         if (domainObject != null) {
             setIdInternal(domainObject.getIdInternal());
         }
     }
 
-    public void copyToDomain(InfoObject infoObject, IDomainObject domainObject) {
+    public void copyToDomain(InfoObject infoObject, DomainObject domainObject) {
  		if (domainObject != null) {
             domainObject.setIdInternal(infoObject.getIdInternal());
         }

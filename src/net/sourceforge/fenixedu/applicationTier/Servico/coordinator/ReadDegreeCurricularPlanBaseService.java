@@ -5,10 +5,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -47,7 +47,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
                 CollectionUtils.collect(allActiveScopes, new Transformer() {
                     public Object transform(Object input) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) input;
 
                         return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
@@ -62,7 +62,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
     // Read all curricular course scope of this year
     protected List readActiveCurricularCourseScopesInExecutionYear(Integer degreeCurricularPlanId,
-            IExecutionYear executionYear) throws FenixServiceException, ExcepcaoPersistencia {
+            ExecutionYear executionYear) throws FenixServiceException, ExcepcaoPersistencia {
         List infoActiveScopes = null;
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -80,7 +80,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
                 CollectionUtils.collect(allActiveScopes, new Transformer() {
                     public Object transform(Object input) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) input;
                         return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
                     }
@@ -95,7 +95,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
 
     // Read all curricular course scope of this year and curricular year
     protected List readActiveCurricularCourseScopesInCurricularYearAndExecutionPeriodAndExecutionDegree(
-            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree, Integer curricularYear)
+            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, Integer curricularYear)
             throws FenixServiceException, ExcepcaoPersistencia {
         List infoActiveScopes = null;
 
@@ -115,7 +115,7 @@ abstract public class ReadDegreeCurricularPlanBaseService implements IService {
                 infoActiveScopes = new ArrayList();
                 CollectionUtils.collect(allActiveExecution, new Transformer() {
                     public Object transform(Object input) {
-                        ICurricularCourseScope curricularCourseScope = (ICurricularCourseScope) input;
+                        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) input;
                         return InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear
                                 .newInfoFromDomain(curricularCourseScope);
                     }

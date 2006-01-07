@@ -23,18 +23,18 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.Detaile
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.credits.IManagementPositionCreditLine;
-import net.sourceforge.fenixedu.domain.credits.IOtherTypeCreditLine;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
+import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
-import net.sourceforge.fenixedu.domain.teacher.workTime.ITeacherInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -52,26 +52,26 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadTeacherCreditsSheet implements IService {
 
-    private IExecutionPeriod readExecutionPeriod(Integer executionPeriodId,
+    private ExecutionPeriod readExecutionPeriod(Integer executionPeriodId,
             IPersistentExecutionPeriod executionPeriodDAO) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IExecutionPeriod executionPeriod;
+        ExecutionPeriod executionPeriod;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (IExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
         return executionPeriod;
     }
 
-    private List readInfoMasterDegreeProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod) {
+    private List readInfoMasterDegreeProfessorships(Teacher teacher, ExecutionPeriod executionPeriod) {
         List professorships = teacher.getProfessorships();
 
         List infoMasterDegreeProfessorships = new ArrayList();
         for (int i = 0; i < professorships.size(); i++) {
-            IProfessorship professorship = (IProfessorship) professorships.get(i);
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            Professorship professorship = (Professorship) professorships.get(i);
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
 
             if (executionCourse.getExecutionPeriod().equals(executionPeriod)
                     && executionCourse.isMasterDegreeOnly()) {
@@ -90,12 +90,12 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param infoExecutionPeriod
      * @return
      */
-    private List readInfoShiftProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod) {
+    private List readInfoShiftProfessorships(Teacher teacher, ExecutionPeriod executionPeriod) {
         List professorships = teacher.getProfessorships();
         List shiftProfessorships = new ArrayList();
         for (int i = 0; i < professorships.size(); i++) {
-            IProfessorship professorship = (IProfessorship) professorships.get(i);
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            Professorship professorship = (Professorship) professorships.get(i);
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                 shiftProfessorships.addAll(professorship.getAssociatedShiftProfessorship());
             }
@@ -103,7 +103,7 @@ public class ReadTeacherCreditsSheet implements IService {
 
         List infoShiftProfessorships = new ArrayList();
         for (int i = 0; i < shiftProfessorships.size(); i++) {
-            IShiftProfessorship shiftProfessorship = (IShiftProfessorship) shiftProfessorships.get(i);
+            ShiftProfessorship shiftProfessorship = (ShiftProfessorship) shiftProfessorships.get(i);
             InfoShiftProfessorship infoShiftProfessorship = InfoShiftProfessorshipWithProfessorshipAndExecutionCourseAndShiftAndLessons
                     .newInfoFromDomain(shiftProfessorship);
             infoShiftProfessorships.add(infoShiftProfessorship);
@@ -118,13 +118,13 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    private List readInfoSupportLessonList(ITeacher teacher, IExecutionPeriod executionPeriod) {
+    private List readInfoSupportLessonList(Teacher teacher, ExecutionPeriod executionPeriod) {
 
         List professorships = teacher.getProfessorships();
         List supportLessonList = new ArrayList();
         for (int i = 0; i < professorships.size(); i++) {
-            IProfessorship professorship = (IProfessorship) professorships.get(i);
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+            Professorship professorship = (Professorship) professorships.get(i);
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod().equals(executionPeriod)) {
                 supportLessonList.addAll(professorship.getSupportLessons());
 
@@ -132,7 +132,7 @@ public class ReadTeacherCreditsSheet implements IService {
         }
         List infoSupportLessonList = new ArrayList();
         for (int i = 0; i < supportLessonList.size(); i++) {
-            ISupportLesson supportLesson = (ISupportLesson) supportLessonList.get(i);
+            SupportLesson supportLesson = (SupportLesson) supportLessonList.get(i);
 
             InfoSupportLesson infoSupportLesson = InfoSupportLesson.newInfoFromDomain(supportLesson);
             infoSupportLessonList.add(infoSupportLesson);
@@ -152,9 +152,9 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    private List readInfoTeacherInstitutionWorkingTime(ITeacher teacher, IExecutionPeriod executionPeriod) {
+    private List readInfoTeacherInstitutionWorkingTime(Teacher teacher, ExecutionPeriod executionPeriod) {
         List<InfoTeacherInstitutionWorkTime> infoTeacherInstitutionWorkingTimeList = new ArrayList<InfoTeacherInstitutionWorkTime>();
-        for (ITeacherInstitutionWorkTime item : teacher.getInstitutionWorkTimePeriods()) {
+        for (TeacherInstitutionWorkTime item : teacher.getInstitutionWorkTimePeriods()) {
             if (item.getExecutionPeriod().equals(executionPeriod)) {
                 InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = InfoTeacherInstitutionWorkTime
                         .newInfoFromDomain(item);
@@ -169,9 +169,9 @@ public class ReadTeacherCreditsSheet implements IService {
         return infoTeacherInstitutionWorkingTimeList;
     }
 
-    private ITeacher readTeacher(Integer teacherNumber, IPersistentTeacher teacherDAO)
+    private Teacher readTeacher(Integer teacherNumber, IPersistentTeacher teacherDAO)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ITeacher teacher;
+        Teacher teacher;
         teacher = teacherDAO.readByNumber(teacherNumber);
         return teacher;
     }
@@ -183,11 +183,11 @@ public class ReadTeacherCreditsSheet implements IService {
      * @param sp
      * @return
      */
-    private List readTeacherDegreeFinalProjectStudentList(ITeacher teacher,
-            IExecutionPeriod executionPeriod) {
+    private List readTeacherDegreeFinalProjectStudentList(Teacher teacher,
+            ExecutionPeriod executionPeriod) {
 
         List<InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson> infoList = new ArrayList<InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson>();
-        for (ITeacherDegreeFinalProjectStudent student : teacher.getDegreeFinalProjectStudents()) {
+        for (TeacherDegreeFinalProjectStudent student : teacher.getDegreeFinalProjectStudents()) {
             if (student.getExecutionPeriod().equals(executionPeriod)) {
                 infoList.add(InfoTeacherDegreeFinalProjectStudentWithStudentAndPerson
                         .newInfoFromDomain(student));
@@ -207,8 +207,8 @@ public class ReadTeacherCreditsSheet implements IService {
 
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
         IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
-        ITeacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
+        ExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
+        Teacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
 
         List infoMasterDegreeProfessorships = readInfoMasterDegreeProfessorships(teacher,
                 executionPeriod);
@@ -265,7 +265,7 @@ public class ReadTeacherCreditsSheet implements IService {
         return teacherCreditsSheetDTO;
     }
 
-    private List readManagementPositions(ITeacher teacher, IExecutionPeriod executionPeriod,
+    private List readManagementPositions(Teacher teacher, ExecutionPeriod executionPeriod,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentManagementPositionCreditLine managementPosistionCreditLineDAO = sp
                 .getIPersistentManagementPositionCreditLine();
@@ -277,7 +277,7 @@ public class ReadTeacherCreditsSheet implements IService {
                 new Transformer() {
 
                     public Object transform(Object input) {
-                        IManagementPositionCreditLine managementPositionCreditLine = (IManagementPositionCreditLine) input;
+                        ManagementPositionCreditLine managementPositionCreditLine = (ManagementPositionCreditLine) input;
                         InfoManagementPositionCreditLine infoManagementPositionCreditLine = InfoManagementPositionCreditLine
                                 .newInfoFromDomain(managementPositionCreditLine);
                         return infoManagementPositionCreditLine;
@@ -288,12 +288,12 @@ public class ReadTeacherCreditsSheet implements IService {
         return infoManagementPositions;
     }
 
-    private List readOtherTypeCreditLine(ITeacher teacher, IExecutionPeriod executionPeriod) {
+    private List readOtherTypeCreditLine(Teacher teacher, ExecutionPeriod executionPeriod) {
 
         List otherCreditLines = teacher.getOtherTypeCreditLines();
         List infoOtherCreditLines = new ArrayList();
         for (int i = 0; i < otherCreditLines.size(); i++) {
-            IOtherTypeCreditLine otherTypeCreditLine = (IOtherTypeCreditLine) otherCreditLines.get(i);
+            OtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) otherCreditLines.get(i);
             if (otherTypeCreditLine.getExecutionPeriod().equals(executionPeriod)) {
                 InfoOtherTypeCreditLine infoOtherTypeCreditLine = InfoOtherTypeCreditLine
                         .newInfoFromDomain(otherTypeCreditLine);
@@ -305,7 +305,7 @@ public class ReadTeacherCreditsSheet implements IService {
         return infoOtherCreditLines;
     }
 
-    private List readDetailedProfessorships(ITeacher teacher, IExecutionPeriod executionPeriod,
+    private List readDetailedProfessorships(Teacher teacher, ExecutionPeriod executionPeriod,
             ISuportePersistente sp) throws ExcepcaoPersistencia {
         IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
 
@@ -318,7 +318,7 @@ public class ReadTeacherCreditsSheet implements IService {
                 new Transformer() {
 
                     public Object transform(Object input) {
-                        IProfessorship professorship = (IProfessorship) input;
+                        Professorship professorship = (Professorship) input;
                         InfoProfessorship infoProfessorShip = InfoProfessorshipWithInfoExecutionCourse
                                 .newInfoFromDomain(professorship);
 
@@ -339,13 +339,13 @@ public class ReadTeacherCreditsSheet implements IService {
 
                     private List getInfoCurricularCourses(
                             final DetailedProfessorship detailedProfessorship,
-                            IExecutionCourse executionCourse) {
+                            ExecutionCourse executionCourse) {
 
                         List infoCurricularCourses = (List) CollectionUtils.collect(executionCourse
                                 .getAssociatedCurricularCourses(), new Transformer() {
 
                             public Object transform(Object input) {
-                                ICurricularCourse curricularCourse = (ICurricularCourse) input;
+                                CurricularCourse curricularCourse = (CurricularCourse) input;
                                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                                         .newInfoFromDomain(curricularCourse);
                                 if (curricularCourse.getDegreeCurricularPlan().getDegree()

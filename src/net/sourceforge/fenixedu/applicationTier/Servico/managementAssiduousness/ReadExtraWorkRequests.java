@@ -7,8 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
-import net.sourceforge.fenixedu.domain.ICostCenter;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkRequests;
+import net.sourceforge.fenixedu.domain.CostCenter;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
@@ -36,12 +36,12 @@ public class ReadExtraWorkRequests implements IService {
 		// Read employee logged
 		IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
 
-		ICostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
+		CostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
 		if (costCenter == null) {
 			// TODO
 		}
 
-		ICostCenter costCenterMoney = costCenterDAO.readCostCenterByCode(costCenterCodeMoney);
+		CostCenter costCenterMoney = costCenterDAO.readCostCenterByCode(costCenterCodeMoney);
 		if (costCenterMoney == null) {
 			// TODO
 		}
@@ -52,7 +52,7 @@ public class ReadExtraWorkRequests implements IService {
 			infoExtraWorkRequestsListAfter = (List) CollectionUtils.collect(extraWorkRequestsList,
 					new Transformer() {
 						public Object transform(Object arg0) {
-							IExtraWorkRequests extraWorkRequests = (IExtraWorkRequests) arg0;
+							ExtraWorkRequests extraWorkRequests = (ExtraWorkRequests) arg0;
 							return InfoExtraWorkRequestsWithAll.newInfoFromDomain(extraWorkRequests);
 						}
 

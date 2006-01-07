@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSitePublications;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.publication.IPublicationTeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,10 +21,10 @@ public class ReadTeacherPublicationsByArea implements IService {
         
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        final ITeacher teacher = persistentTeacher.readTeacherByUsername(user);
+        final Teacher teacher = persistentTeacher.readTeacherByUsername(user);
         
         List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(); 
-        for(IPublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
+        for(PublicationTeacher publicationTeacher : teacher.getTeacherPublications()) {
             if (publicationTeacher.getPublicationArea().getName().equals(publicationAreaString)) {
                 infoPublications.add(InfoPublication.newInfoFromDomain(publicationTeacher.getPublication()));
             }

@@ -11,37 +11,37 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 public class EnrolmentEvaluationTest extends DomainTestBase {
 
-	private IEnrolmentEvaluation normalEvaluation;
-	private IEnrolmentEvaluation evaluationToClear;
-	private IEnrolmentEvaluation evaluationWithoutExamDate;
+	private EnrolmentEvaluation normalEvaluation;
+	private EnrolmentEvaluation evaluationToClear;
+	private EnrolmentEvaluation evaluationWithoutExamDate;
     
-    private IEnrolmentEvaluation enrolmentEvaluationA;
-    private IEnrolmentEvaluation enrolmentEvaluationB;
-    private IEnrolmentEvaluation enrolmentEvaluationC;
-    private IEnrolmentEvaluation enrolmentEvaluationD;
-    private IEnrolmentEvaluation enrolmentEvaluationE;
-    private IEnrolmentEvaluation enrolmentEvaluationF;
+    private EnrolmentEvaluation enrolmentEvaluationA;
+    private EnrolmentEvaluation enrolmentEvaluationB;
+    private EnrolmentEvaluation enrolmentEvaluationC;
+    private EnrolmentEvaluation enrolmentEvaluationD;
+    private EnrolmentEvaluation enrolmentEvaluationE;
+    private EnrolmentEvaluation enrolmentEvaluationF;
 	
-	private IPerson newResponsibleFor;
+	private Person newResponsibleFor;
 	private String newGrade;
 	private Date newAvailableDate;
 	private Date newExamDate;
 	private String newChecksum;
 	
-	private IEnrolmentEvaluation aprovedEvaluation;
-	private IEnrolmentEvaluation notAprovedEvaluation;
-	private IEnrolmentEvaluation notEvaluatedEvaluation;
+	private EnrolmentEvaluation aprovedEvaluation;
+	private EnrolmentEvaluation notAprovedEvaluation;
+	private EnrolmentEvaluation notEvaluatedEvaluation;
 	
-	private IEmployee employee;
+	private Employee employee;
 	private String observation;
 	
-	private IEnrolmentEvaluation evaluation;
-	private IEnrolmentEvaluation improvementEvaluation;
-	private IEnrolmentEvaluation notImprovementEvaluation;
+	private EnrolmentEvaluation evaluation;
+	private EnrolmentEvaluation improvementEvaluation;
+	private EnrolmentEvaluation notImprovementEvaluation;
 	
-	private IExecutionPeriod currentExecutionPeriod;
-	private IAttends attendsToDelete;
-	private IAttends attendsNotToDelete;
+	private ExecutionPeriod currentExecutionPeriod;
+	private Attends attendsToDelete;
+	private Attends attendsNotToDelete;
 	
 		
 	private void setUpEdit() {
@@ -102,13 +102,13 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		notAprovedEvaluation = new EnrolmentEvaluation();
 		notEvaluatedEvaluation = new EnrolmentEvaluation();
 		
-		IEnrolment aprovedEnrolment = new Enrolment();
+		Enrolment aprovedEnrolment = new Enrolment();
 		aprovedEnrolment.addEvaluations(aprovedEvaluation);
 		
-		IEnrolment notAprovedEnrolment = new Enrolment();
+		Enrolment notAprovedEnrolment = new Enrolment();
 		notAprovedEnrolment.addEvaluations(notAprovedEvaluation);
 		
-		IEnrolment notEvaluatedEnrolment = new Enrolment();
+		Enrolment notEvaluatedEnrolment = new Enrolment();
 		notEvaluatedEnrolment.addEvaluations(notEvaluatedEvaluation);
 		
 		aprovedEvaluation.setGrade("20");
@@ -128,9 +128,9 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 		
 		evaluation = new EnrolmentEvaluation();
 
-		IPerson person = new Person();
-		IEmployee employee = new Employee();
-		IEnrolment enrolment = new Enrolment();
+		Person person = new Person();
+		Employee employee = new Employee();
+		Enrolment enrolment = new Enrolment();
 		
 		evaluation.setPersonResponsibleForGrade(person);
 		evaluation.setEmployee(employee);
@@ -152,18 +152,18 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 
 		//associated attends
 		currentExecutionPeriod = new ExecutionPeriod();
-		IExecutionPeriod notCurrentExecutionPeriod = new ExecutionPeriod();
+		ExecutionPeriod notCurrentExecutionPeriod = new ExecutionPeriod();
 		
 		attendsToDelete = new Attends();
 		attendsNotToDelete = new Attends();
 		
-		ICurricularCourse curricularCourse = new CurricularCourse();
+		CurricularCourse curricularCourse = new CurricularCourse();
 		
-		IExecutionCourse currentExecutionCourse = new ExecutionCourse();
-		IExecutionCourse notCurrentExecutionCourse = new ExecutionCourse();
+		ExecutionCourse currentExecutionCourse = new ExecutionCourse();
+		ExecutionCourse notCurrentExecutionCourse = new ExecutionCourse();
 		
-		IStudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
-		IStudent student = new Student();
+		StudentCurricularPlan studentCurricularPlan = new StudentCurricularPlan();
+		Student student = new Student();
 		
 		enrolment.setCurricularCourse(curricularCourse);
 		enrolment.setStudentCurricularPlan(studentCurricularPlan);
@@ -282,8 +282,8 @@ public class EnrolmentEvaluationTest extends DomainTestBase {
 //		assertTrue(mdEvaluationToInsert.getExamDate().equals(newExamDate));	
 //	}
 	
-	private void assertCorrectSubmissionConfirmation(String errorMessagePrefix, IEnrolmentEvaluation evaluation, EnrolmentEvaluationState state, 
-			IEmployee employee, String observation, EnrollmentState enrolmentState) {
+	private void assertCorrectSubmissionConfirmation(String errorMessagePrefix, EnrolmentEvaluation evaluation, EnrolmentEvaluationState state, 
+			Employee employee, String observation, EnrollmentState enrolmentState) {
 		assertTrue(errorMessagePrefix + ": enrolmentEvaluationState", evaluation.getEnrolmentEvaluationState().equals(state));
 		assertTrue(errorMessagePrefix + ": employee", evaluation.getEmployee().equals(employee));
 		assertTrue(errorMessagePrefix + ": observation", evaluation.getObservation().equals(observation));

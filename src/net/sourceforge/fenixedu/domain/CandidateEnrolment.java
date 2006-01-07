@@ -10,14 +10,14 @@ public class CandidateEnrolment extends CandidateEnrolment_Base {
 	public CandidateEnrolment() {
 	}
 
-	// public CandidateEnrolment(IMasterDegreeCandidate masterDegreeCandidate,
-	// ICurricularCourseScope curricularCourseScope) {
+	// public CandidateEnrolment(MasterDegreeCandidate masterDegreeCandidate,
+	// CurricularCourseScope curricularCourseScope) {
 	// setMasterDegreeCandidate(masterDegreeCandidate);
 	// setCurricularCourseScope(curricularCourseScope);
 	// }
 
-	public CandidateEnrolment(IMasterDegreeCandidate masterDegreeCandidate,
-			ICurricularCourse curricularCourse) {
+	public CandidateEnrolment(MasterDegreeCandidate masterDegreeCandidate,
+			CurricularCourse curricularCourse) {
 		setMasterDegreeCandidate(masterDegreeCandidate);
 		setCurricularCourse(curricularCourse);
 	}

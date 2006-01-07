@@ -21,19 +21,19 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GraduationType;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IContributor;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGuide;
-import net.sourceforge.fenixedu.domain.IGuideEntry;
-import net.sourceforge.fenixedu.domain.IGuideSituation;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IPersonAccount;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.IReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.Contributor;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.GuideSituation;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonAccount;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
+import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -66,7 +66,7 @@ public class EditGuideInformation implements IService {
         // Read The Guide
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IGuide guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
+        Guide guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
                 infoGuide.getYear(), infoGuide.getVersion());
 
         // check if it's needed to change the Contributor
@@ -79,7 +79,7 @@ public class EditGuideInformation implements IService {
 
         // Read the Contributor
 
-        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
+        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
 
         infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
 
@@ -112,7 +112,7 @@ public class EditGuideInformation implements IService {
         }
 
         // Check if a Others Guide Entry will be Added
-        IGuideEntry othersGuideEntry = null;
+        GuideEntry othersGuideEntry = null;
         if ((othersPrice != null) && (othersQuantity != null) && (!othersPrice.equals(new Double(0)))
                 && (!othersQuantity.equals(new Integer(0)))) {
             change = true;
@@ -138,10 +138,10 @@ public class EditGuideInformation implements IService {
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
 
-                    IGuideEntry guideEntry = (IGuideEntry) sp.getIPersistentGuideEntry().readByOID(
+                    GuideEntry guideEntry = (GuideEntry) sp.getIPersistentGuideEntry().readByOID(
                             GuideEntry.class, infoGuideEntry.getIdInternal());
 
-                    IPaymentTransaction paymentTransaction = sp.getIPersistentPaymentTransaction()
+                    PaymentTransaction paymentTransaction = sp.getIPersistentPaymentTransaction()
                             .readByGuideEntryID(guideEntry.getIdInternal());
 
                     if (paymentTransaction != null) {
@@ -152,7 +152,7 @@ public class EditGuideInformation implements IService {
                     }
 
                     if (guideEntry.getReimbursementGuideEntries() != null) {
-                        for (IReimbursementGuideEntry reimbursementGuideEntry : guideEntry
+                        for (ReimbursementGuideEntry reimbursementGuideEntry : guideEntry
                                 .getReimbursementGuideEntries()) {
                             reimbursementGuideEntry.getReimbursementGuide()
                                     .getReimbursementGuideEntries().remove(reimbursementGuideEntry);
@@ -171,7 +171,7 @@ public class EditGuideInformation implements IService {
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
 
-                    IGuideEntry guideEntry = sp.getIPersistentGuideEntry()
+                    GuideEntry guideEntry = sp.getIPersistentGuideEntry()
                             .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
                                     infoGuideEntry.getGraduationType(),
                                     infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
@@ -187,7 +187,7 @@ public class EditGuideInformation implements IService {
             if (change) {
 
                 // Create a new Guide Version
-                IGuide newGuideVersion = this.createNewGuideVersion(infoGuide);
+                Guide newGuideVersion = this.createNewGuideVersion(infoGuide);
 
                 // fill in the last field in the Others Guide Entry if
                 // necessary
@@ -196,17 +196,17 @@ public class EditGuideInformation implements IService {
                 }
 
                 // Create The new Situation
-                IGuideSituation guideSituation = DomainFactory.makeGuideSituation();
+                GuideSituation guideSituation = DomainFactory.makeGuideSituation();
                 guideSituation.setDate(infoGuide.getInfoGuideSituation().getDate());
                 guideSituation.setGuide(newGuideVersion);
                 guideSituation.setRemarks(infoGuide.getRemarks());
                 guideSituation.setSituation(infoGuide.getInfoGuideSituation().getSituation());
                 guideSituation.setState(new State(State.ACTIVE));
 
-                IPaymentTransaction paymentTransaction = null;
-                IGratuitySituation gratuitySituation = null;
+                PaymentTransaction paymentTransaction = null;
+                GratuitySituation gratuitySituation = null;
                 IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();
-                IPersonAccount personAccount = persistentPersonAccount.readByPerson(guide.getPerson()
+                PersonAccount personAccount = persistentPersonAccount.readByPerson(guide.getPerson()
                         .getIdInternal());
 
                 if (personAccount == null) {
@@ -218,17 +218,17 @@ public class EditGuideInformation implements IService {
 
                 // Write the Guide Entries
                 for (InfoGuideEntry infoGuideEntry : (List<InfoGuideEntry>) newInfoGuideEntries) {
-                    IGuideEntry guideEntry = DomainFactory.makeGuideEntry();
+                    GuideEntry guideEntry = DomainFactory.makeGuideEntry();
                     infoGuideEntry.copyToDomain(infoGuideEntry, guideEntry);
 
                     // Reset id internal to allow persistence to write a new
                     // version
                     guideEntry.setGuide(newGuideVersion);
 
-                    IPerson studentPerson = guide.getPerson();
-                    IStudent student = sp.getIPersistentStudent().readByUsername(
+                    Person studentPerson = guide.getPerson();
+                    Student student = sp.getIPersistentStudent().readByUsername(
                             studentPerson.getUsername());
-                    IExecutionDegree executionDegree = guide.getExecutionDegree();
+                    ExecutionDegree executionDegree = guide.getExecutionDegree();
 
                     // Write Gratuity Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.GRATUITY)) {
@@ -280,7 +280,7 @@ public class EditGuideInformation implements IService {
         if (!change) {
             throw new NoChangeMadeServiceException();
         }
-        IGuide newGuide = null;
+        Guide newGuide = null;
         InfoGuide result = null;
 
         // Make sure that everything is written before reading ...
@@ -311,7 +311,7 @@ public class EditGuideInformation implements IService {
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
         
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();        
-        List<IGuide> guides = sp.getIPersistentGuide()
+        List<Guide> guides = sp.getIPersistentGuide()
                 .readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
 
         // If it's not the latest version ...
@@ -319,24 +319,24 @@ public class EditGuideInformation implements IService {
             throw new InvalidChangeServiceException("Not the Latest Version");
     }
 
-    private IGuide createNewGuideVersion(InfoGuide infoGuide) throws 
+    private Guide createNewGuideVersion(InfoGuide infoGuide) throws 
             ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();  
 
         // Read the needed information from the DataBase
-        IPerson person = sp.getIPessoaPersistente()
+        Person person = sp.getIPessoaPersistente()
                 .lerPessoaPorUsername(infoGuide.getInfoPerson().getUsername());
-        IContributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(
                 infoGuide.getInfoContributor().getContributorNumber());
-        IExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+        ExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
                 infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        IExecutionDegree executionDegree = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
+        ExecutionDegree executionDegree = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
                 infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
                 infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
                         .getSigla(), executionYear.getYear());
 
-        IGuide guide = DomainFactory.makeGuide();
+        Guide guide = DomainFactory.makeGuide();
 
         // Set the fields
         guide.setContributor(contributor);

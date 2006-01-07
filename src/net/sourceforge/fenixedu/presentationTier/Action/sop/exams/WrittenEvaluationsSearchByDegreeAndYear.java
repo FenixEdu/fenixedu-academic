@@ -16,15 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
-import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -47,15 +47,15 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         final IUserView userView = SessionUtils.getUserView(request);
         final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
         final Object[] args = { ExecutionPeriod.class, infoExecutionPeriod.getIdInternal() };
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
 
         final MessageResources enumMessages = MessageResources.getMessageResources("ServidorApresentacao/EnumerationResources");
         final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/PublicDegreeInformation");
 
         final List<LabelValueBean> executionDegreeLabelValueBeans = new ArrayList<LabelValueBean>();
-        for (final IExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
-            final IDegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
-            final IDegree degree = degreeCurricularPlan.getDegree();
+        for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+            final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+            final Degree degree = degreeCurricularPlan.getDegree();
             executionDegreeLabelValueBeans.add(new LabelValueBean(StringAppender.append(
                     enumMessages.getMessage(getLocale(request), degree.getTipoCurso().toString()),
                     " ",
@@ -77,7 +77,7 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
 
         final InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute(SessionConstants.EXECUTION_PERIOD);
         final Object[] args = { ExecutionPeriod.class, infoExecutionPeriod.getIdInternal() };
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
         request.setAttribute("executionPeriod", executionPeriod);
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
@@ -90,40 +90,40 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         	years.add(Integer.valueOf(yearString));
         }
 
-        final Map<IExecutionDegree, Map<ICurricularYear, Set<IExecutionCourse>>> executionCoursesByCurricularYearByExecutionDegree =
-        		new TreeMap<IExecutionDegree, Map<ICurricularYear, Set<IExecutionCourse>>>(new Comparator<IExecutionDegree>() {
-					public int compare(IExecutionDegree executionDegree1, IExecutionDegree executionDegree2) {
-						final IDegree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
-						final IDegree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
+        final Map<ExecutionDegree, Map<CurricularYear, Set<ExecutionCourse>>> executionCoursesByCurricularYearByExecutionDegree =
+        		new TreeMap<ExecutionDegree, Map<CurricularYear, Set<ExecutionCourse>>>(new Comparator<ExecutionDegree>() {
+					public int compare(ExecutionDegree executionDegree1, ExecutionDegree executionDegree2) {
+						final Degree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
+						final Degree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
 						return (degree1.getTipoCurso() == degree2.getTipoCurso()) ? 
 								degree1.getNome().compareTo(degree2.getNome()) :
 								degree1.getTipoCurso().compareTo(degree2.getTipoCurso());
 					}}); 
-        for (final IExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
+        for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
             if (executionDegreeID == null || executionDegreeID.length() == 0 || executionDegreeID.equals(executionDegree.getIdInternal().toString())) {
-            	final Map<ICurricularYear, Set<IExecutionCourse>> executionCoursesByCurricularYear = new TreeMap<ICurricularYear, Set<IExecutionCourse>>(new Comparator<ICurricularYear>() {
-					public int compare(final ICurricularYear curricularYear1, final ICurricularYear curricularYear2) {
+            	final Map<CurricularYear, Set<ExecutionCourse>> executionCoursesByCurricularYear = new TreeMap<CurricularYear, Set<ExecutionCourse>>(new Comparator<CurricularYear>() {
+					public int compare(final CurricularYear curricularYear1, final CurricularYear curricularYear2) {
 						return curricularYear1.getYear().compareTo(curricularYear2.getYear());
 					}});
             	executionCoursesByCurricularYearByExecutionDegree.put(executionDegree, executionCoursesByCurricularYear);
-                for (final ICurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
-                	for (final ICurricularCourseScope curricularCourseScope : curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod)) {
-                		final ICurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
-           				final ICurricularYear curricularYear = curricularSemester.getCurricularYear();
+                for (final CurricularCourse curricularCourse : executionDegree.getDegreeCurricularPlan().getCurricularCourses()) {
+                	for (final CurricularCourseScope curricularCourseScope : curricularCourse.getActiveScopesInExecutionPeriod(executionPeriod)) {
+                		final CurricularSemester curricularSemester = curricularCourseScope.getCurricularSemester();
+           				final CurricularYear curricularYear = curricularSemester.getCurricularYear();
            				final Integer year = curricularYear.getYear();
            				if (curricularSemester.getSemester().equals(executionPeriod.getSemester()) &&
            						(selectAllCurricularYears != null && selectAllCurricularYears.booleanValue()) || years.contains(year)) {
-           					final Set<IExecutionCourse> executionCourses;
+           					final Set<ExecutionCourse> executionCourses;
            					if (!executionCoursesByCurricularYear.containsKey(curricularYear)) {
-           						executionCourses = new TreeSet<IExecutionCourse>(new Comparator<IExecutionCourse>() {
-									public int compare(final IExecutionCourse executionCourse1, final IExecutionCourse executionCourse2) {
+           						executionCourses = new TreeSet<ExecutionCourse>(new Comparator<ExecutionCourse>() {
+									public int compare(final ExecutionCourse executionCourse1, final ExecutionCourse executionCourse2) {
 										return executionCourse1.getNome().compareTo(executionCourse2.getNome());
 									}});
            						executionCoursesByCurricularYear.put(curricularYear, executionCourses);
            					} else {
            						executionCourses = executionCoursesByCurricularYear.get(curricularYear);
            					}
-                            for (final IExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
+                            for (final ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
                                	if (executionPeriod == executionCourse.getExecutionPeriod()) {
                                		executionCourses.add(executionCourse);
                                	}

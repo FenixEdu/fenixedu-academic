@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.seminaries
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -22,16 +22,16 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class CandidacyVO extends VersionedObjectsBase implements IPersistentSeminaryCandidacy {
 
     public List readByStudentID(final Integer studentID) throws ExcepcaoPersistencia {
-        final IStudent student = (IStudent) readByOID(Student.class, studentID);
+        final Student student = (Student) readByOID(Student.class, studentID);
         return student.getAssociatedCandidancies();
     }
 
     public List readByStudentIDAndSeminaryID(final Integer studentID, final Integer seminaryID)
             throws ExcepcaoPersistencia {
-        final IStudent student = (IStudent) readByOID(Student.class, studentID);
-        final List<ICandidacy> candidacies = student.getAssociatedCandidancies();
-        final List<ICandidacy> result = new ArrayList<ICandidacy>();
-        for (final ICandidacy candidacy : candidacies) {
+        final Student student = (Student) readByOID(Student.class, studentID);
+        final List<Candidacy> candidacies = student.getAssociatedCandidancies();
+        final List<Candidacy> result = new ArrayList<Candidacy>();
+        for (final Candidacy candidacy : candidacies) {
             if (candidacy.getSeminary().getIdInternal().equals(seminaryID)) {
                 result.add(candidacy);
             }
@@ -43,9 +43,9 @@ public class CandidacyVO extends VersionedObjectsBase implements IPersistentSemi
             final Integer case1Id, final Integer case2Id, final Integer case3Id, final Integer case4Id, final Integer case5Id,
             final Integer curricularCourseID, final Integer degreeID, final Boolean approved) throws ExcepcaoPersistencia {
 
-        final List<ICandidacy> candidacies = (List<ICandidacy>) readAll(Candidacy.class);
-        final List<ICandidacy> result = new ArrayList<ICandidacy>();
-        for (final ICandidacy candidacy : candidacies) {
+        final List<Candidacy> candidacies = (List<Candidacy>) readAll(Candidacy.class);
+        final List<Candidacy> result = new ArrayList<Candidacy>();
+        for (final Candidacy candidacy : candidacies) {
             boolean addCandidacy = true;
 
             if (modalityID.intValue() != -1 && !candidacy.getModality().getIdInternal().equals(modalityID)) {

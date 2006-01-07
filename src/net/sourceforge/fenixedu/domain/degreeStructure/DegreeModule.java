@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
@@ -12,20 +12,20 @@ public abstract class DegreeModule extends DegreeModule_Base {
         for (;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
     }
     
-    public IContext addContext(ICourseGroup courseGroup, ICurricularSemester curricularSemester,
-            IExecutionPeriod beginExecutionPeriod, IExecutionPeriod endExecutionPeriod) {
+    public Context addContext(CourseGroup courseGroup, CurricularSemester curricularSemester,
+            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
         checkContextsFor(courseGroup, curricularSemester);
         return new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, endExecutionPeriod);
     }
     
-    public void editContext(IContext context, ICourseGroup courseGroup, ICurricularSemester curricularSemester) {
+    public void editContext(Context context, CourseGroup courseGroup, CurricularSemester curricularSemester) {
         if (context.getCourseGroup() != courseGroup || context.getCurricularSemester() != curricularSemester) {
             checkContextsFor(courseGroup, curricularSemester);
             context.edit(courseGroup, this, curricularSemester);
         }
     }
     
-    public void deleteContext(IContext context) {        
+    public void deleteContext(Context context) {        
         if (hasDegreeModuleContexts(context)) {
             context.delete();
         }
@@ -34,17 +34,17 @@ public abstract class DegreeModule extends DegreeModule_Base {
         }
     }
     
-    protected abstract void checkContextsFor(final ICourseGroup parentCourseGroup, final ICurricularSemester curricularSemester);
+    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularSemester curricularSemester);
     
     public boolean isRoot() {
         return (getNewDegreeCurricularPlan() != null);
     }
     
-    public IDegreeCurricularPlan getParentDegreeCurricularPlan() {
+    public DegreeCurricularPlan getParentDegreeCurricularPlan() {
         return searchParentDegreeCurricularPlan(getFirstParent());
     }
     
-    private IDegreeCurricularPlan searchParentDegreeCurricularPlan(IDegreeModule degreeModule) {        
+    private DegreeCurricularPlan searchParentDegreeCurricularPlan(DegreeModule degreeModule) {        
         if (degreeModule.isRoot()) {
             return degreeModule.getNewDegreeCurricularPlan();
         } else {
@@ -52,7 +52,16 @@ public abstract class DegreeModule extends DegreeModule_Base {
         }
     }    
     
-    private IDegreeModule getFirstParent() {
+    private DegreeModule getFirstParent() {
         return (hasAnyDegreeModuleContexts()) ? getDegreeModuleContexts().get(0).getCourseGroup() : null;
     }
+
+    public abstract Double computeEctsCredits();
+
+    public abstract void print(StringBuffer stringBuffer, String tabs, Context previousContext);
+
+	public abstract Boolean getCanBeDeleted();
+
+	public abstract boolean isLeaf();
+
 }

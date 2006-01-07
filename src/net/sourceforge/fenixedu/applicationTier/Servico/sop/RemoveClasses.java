@@ -13,8 +13,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -30,13 +30,13 @@ public class RemoveClasses implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IShift shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
+        Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class,
                 infoShift.getIdInternal());
 
         sp.getITurnoPersistente().simpleLockWrite(shift);
 
         for (int i = 0; i < classOIDs.size(); i++) {
-            ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
+            SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                     (Integer) classOIDs.get(i));
 
             shift.getAssociatedClasses().remove(schoolClass);

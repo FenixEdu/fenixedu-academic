@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -23,7 +23,7 @@ public class DeleteEnrollment implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
 
-        final IEnrolment enrollment = (IEnrolment) persistentEnrollment.readByOID(Enrolment.class, enrollmentId);
+        final Enrolment enrollment = (Enrolment) persistentEnrollment.readByOID(Enrolment.class, enrollmentId);
         enrollment.delete();
     }
 }

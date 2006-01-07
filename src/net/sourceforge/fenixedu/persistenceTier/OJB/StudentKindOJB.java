@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import net.sourceforge.fenixedu.domain.IStudentKind;
+import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
@@ -18,12 +18,12 @@ public class StudentKindOJB extends PersistentObjectOJB implements IPersistentSt
     public StudentKindOJB() {
     }
 
-    public IStudentKind readByStudentType(StudentType studentType) throws ExcepcaoPersistencia {
+    public StudentKind readByStudentType(StudentType studentType) throws ExcepcaoPersistencia {
 
         Criteria criteria = new Criteria();
         criteria.addEqualTo("studentType", studentType);
 
-        return (IStudentKind) queryObject(StudentKind.class, criteria);
+        return (StudentKind) queryObject(StudentKind.class, criteria);
 
     }
 }

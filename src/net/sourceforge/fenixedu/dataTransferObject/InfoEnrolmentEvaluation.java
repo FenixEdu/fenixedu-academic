@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
@@ -160,7 +160,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         when = date;
     }
 
-    public void copyFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+    public void copyFromDomain(EnrolmentEvaluation enrolmentEvaluation) {
         super.copyFromDomain(enrolmentEvaluation);
         if (enrolmentEvaluation != null) {
             setEnrolmentEvaluationType(enrolmentEvaluation.getEnrolmentEvaluationType());
@@ -173,7 +173,7 @@ public class InfoEnrolmentEvaluation extends InfoObject {
         }
     }
 
-    public static InfoEnrolmentEvaluation newInfoFromDomain(IEnrolmentEvaluation enrolmentEvaluation) {
+    public static InfoEnrolmentEvaluation newInfoFromDomain(EnrolmentEvaluation enrolmentEvaluation) {
         InfoEnrolmentEvaluation infoEnrolmentEvaluation = null;
         if (enrolmentEvaluation != null) {
             infoEnrolmentEvaluation = new InfoEnrolmentEvaluation();

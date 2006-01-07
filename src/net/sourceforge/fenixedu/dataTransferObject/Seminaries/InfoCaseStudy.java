@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -108,7 +108,7 @@ public class InfoCaseStudy extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(ICaseStudy caseStudy) {
+    public void copyFromDomain(CaseStudy caseStudy) {
         super.copyFromDomain(caseStudy);
         if (caseStudy != null) {
             setCode(caseStudy.getCode());
@@ -120,7 +120,7 @@ public class InfoCaseStudy extends InfoObject {
         }
     }
 
-    public static InfoCaseStudy newInfoFromDomain(ICaseStudy caseStudy) {
+    public static InfoCaseStudy newInfoFromDomain(CaseStudy caseStudy) {
         InfoCaseStudy infoCaseStudy = null;
         if (caseStudy != null) {
             infoCaseStudy = new InfoCaseStudy();

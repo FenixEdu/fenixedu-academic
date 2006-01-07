@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -44,7 +44,7 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID implements I
 
         InfoExecutionCourse infoExecutionCourse = null;
 
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentObject.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, oid);
 
         if (executionCourse != null) {
@@ -56,7 +56,7 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID implements I
             infoExecutionCourse.setAssociatedInfoCurricularCourses(new ArrayList());
             for (Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator(); iterator
                     .hasNext();) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+                CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
                         .newInfoFromDomain(curricularCourse);
                 infoCurricularCourse.setInfoDegreeCurricularPlan(InfoDegreeCurricularPlan
@@ -71,13 +71,13 @@ public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID implements I
             infoExecutionCourse.setAssociatedInfoShifts(new ArrayList());
             List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
             for (Iterator iterator = shifts.iterator(); iterator.hasNext();) {
-                IShift shift = (IShift) iterator.next();
+                Shift shift = (Shift) iterator.next();
                 InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
                 infoShift.setInfoLessons(new ArrayList());
                 List lessons = shift.getAssociatedLessons();
                 for (int i = 0; i < lessons.size(); i++) {
-                    ILesson lesson = (ILesson) lessons.get(i);
+                    Lesson lesson = (Lesson) lessons.get(i);
                     InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
                     infoLesson.setInfoSala(InfoRoom.newInfoFromDomain(lesson.getSala()));
 

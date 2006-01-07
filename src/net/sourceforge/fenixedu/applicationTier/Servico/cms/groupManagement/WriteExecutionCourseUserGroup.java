@@ -7,10 +7,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement;
 
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IExecutionCourseUserGroup;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -24,11 +24,11 @@ import relations.GroupOwnership;
  */
 public class WriteExecutionCourseUserGroup implements IService
 {
-	public IUserGroup run(IExecutionCourse leafHook, String name, String description, IPerson owner,
+	public UserGroup run(ExecutionCourse leafHook, String name, String description, Person owner,
 			UserGroupTypes type) throws FenixServiceException, InstantiationException,
 			IllegalAccessException, ExcepcaoPersistencia
 	{
-		IExecutionCourseUserGroup group = (IExecutionCourseUserGroup) type.getImplementationClass().newInstance();
+		ExecutionCourseUserGroup group = (ExecutionCourseUserGroup) type.getImplementationClass().newInstance();
 		group.setName(name);
 		group.setDescription(description);
 		group.setExecutionCourse(leafHook);

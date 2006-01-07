@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.domain.ISummary;
+import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
@@ -31,7 +31,7 @@ public class DeleteSummary implements IService {
                 .getDefaultPersistenceSupport();
         final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
 
-        final ISummary summary = (ISummary) persistentSummary.readByOID(Summary.class, summaryID);
+        final Summary summary = (Summary) persistentSummary.readByOID(Summary.class, summaryID);
         if (summary == null)
             throw new InvalidArgumentsServiceException();
 

@@ -8,7 +8,7 @@ import java.util.Calendar;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 
 /**
  * @author Susana Fernandes
@@ -97,7 +97,7 @@ public class InfoProjectAccess extends InfoObject {
         return result;
     }
 
-    public void copyFromDomain(IProjectAccess projectAccess) {
+    public void copyFromDomain(ProjectAccess projectAccess) {
         super.copyFromDomain(projectAccess);
         if (projectAccess != null) {
             setInfoPerson(InfoPerson.newInfoFromDomain(projectAccess.getPerson()));
@@ -108,7 +108,7 @@ public class InfoProjectAccess extends InfoObject {
         }
     }
 
-    public static InfoProjectAccess newInfoFromDomain(IProjectAccess projectAccess) {
+    public static InfoProjectAccess newInfoFromDomain(ProjectAccess projectAccess) {
         InfoProjectAccess infoProjectAccess = null;
         if (projectAccess != null) {
             infoProjectAccess = new InfoProjectAccess();

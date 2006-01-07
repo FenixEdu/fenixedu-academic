@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
-import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
@@ -23,13 +23,13 @@ public class EditSection implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSection persistentSection = sp.getIPersistentSection();
 
-        ISection iSection = (ISection) persistentSection.readByOID(Section.class, sectionCode);
+        Section iSection = (Section) persistentSection.readByOID(Section.class, sectionCode);
 
         if (iSection == null) {
             throw new NonExistingServiceException();
         }
         
-        List<ISection> sectionsList = Section.getSections(iSection.getSuperiorSection(), iSection.getSite());
+        List<Section> sectionsList = Section.getSections(iSection.getSuperiorSection(), iSection.getSite());
         if (newOrder.intValue() == -2) {
             newOrder = new Integer(sectionsList.size() - 1);
         }

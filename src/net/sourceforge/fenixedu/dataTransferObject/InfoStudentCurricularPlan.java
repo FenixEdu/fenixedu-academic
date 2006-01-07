@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 
@@ -336,7 +336,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
         this.infoSecundaryBranch = infoSecundaryBranch;
     }
 
-    public void copyFromDomain(IStudentCurricularPlan studentCurricularPlan) {
+    public void copyFromDomain(StudentCurricularPlan studentCurricularPlan) {
         super.copyFromDomain(studentCurricularPlan);
         if (studentCurricularPlan != null) {
             setSpecialization(studentCurricularPlan.getSpecialization());
@@ -354,7 +354,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     }
 
     public static InfoStudentCurricularPlan newInfoFromDomain(
-            IStudentCurricularPlan studentCurricularPlan) {
+            StudentCurricularPlan studentCurricularPlan) {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
         if (studentCurricularPlan != null) {
             infoStudentCurricularPlan = new InfoStudentCurricularPlan();
@@ -364,7 +364,7 @@ public class InfoStudentCurricularPlan extends InfoObject implements Serializabl
     }
 
     public void copyToDomain(InfoStudentCurricularPlan infoStudentCurricularPlan,
-            IStudentCurricularPlan studentCurricularPlan) {
+            StudentCurricularPlan studentCurricularPlan) {
         super.copyToDomain(infoStudentCurricularPlan, studentCurricularPlan);
 
         studentCurricularPlan.setClassification(infoStudentCurricularPlan.getClassification());

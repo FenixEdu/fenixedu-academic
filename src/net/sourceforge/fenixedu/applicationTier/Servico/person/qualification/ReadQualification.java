@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualification;
 import net.sourceforge.fenixedu.dataTransferObject.person.InfoQualificationWithPersonAndCountry;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -31,8 +31,8 @@ public class ReadQualification extends ReadDomainObjectService {
         return sp.getIPersistentQualification();
     }
 
-    protected InfoObject newInfoFromDomain(IDomainObject domainObject) {
-        return InfoQualificationWithPersonAndCountry.newInfoFromDomain((IQualification) domainObject);
+    protected InfoObject newInfoFromDomain(DomainObject domainObject) {
+        return InfoQualificationWithPersonAndCountry.newInfoFromDomain((Qualification) domainObject);
     }
 
     protected ISiteComponent getISiteComponent(InfoObject infoObject) {

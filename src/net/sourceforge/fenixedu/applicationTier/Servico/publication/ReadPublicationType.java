@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationType;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -16,7 +16,7 @@ public class ReadPublicationType implements IService {
 
             IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
-            IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+            PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                     PublicationType.class, publicationTypeId);
             
             return InfoPublicationType.newInfoFromDomain(publicationType);

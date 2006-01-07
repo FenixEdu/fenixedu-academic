@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.ISection;
+import net.sourceforge.fenixedu.domain.Section;
 
 /**
  * This is the view class that contains information about the seccao domain
@@ -243,9 +243,9 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(ISection section) {
+    public void copyFromDomain(Section section) {
         super.copyFromDomain(section);
         if (section != null) {
             setName(section.getName());
@@ -255,7 +255,7 @@ public class InfoSection extends InfoObject implements Comparable, ISiteComponen
         }
     }
 
-    public static InfoSection newInfoFromDomain(ISection section) {
+    public static InfoSection newInfoFromDomain(Section section) {
         InfoSection infoSection = null;
         if (section != null) {
             infoSection = new InfoSection();

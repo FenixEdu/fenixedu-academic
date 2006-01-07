@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShiftProfessorship;
-import net.sourceforge.fenixedu.domain.ISummary;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.ShiftProfessorship;
+import net.sourceforge.fenixedu.domain.Summary;
+import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
@@ -32,7 +32,7 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ITeacher teacher = sp.getIPersistentTeacher().readByNumber(teacherNumber);
+        final Teacher teacher = sp.getIPersistentTeacher().readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException("noTeacher");
         }
@@ -40,9 +40,9 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
         List<InfoProfessorship> professorshipsWithSupportLessons = new ArrayList<InfoProfessorship>();
         List<InfoProfessorship> professorshipsWithShifts = new ArrayList<InfoProfessorship>();
         if (professorships != null && responsibleFors != null) {
-            List<IProfessorship> newProfessorships = new ArrayList<IProfessorship>();
+            List<Professorship> newProfessorships = new ArrayList<Professorship>();
             for (Integer professorshipId : professorships) {
-                IProfessorship professorship = (IProfessorship) sp.getIPersistentObject().readByOID(
+                Professorship professorship = (Professorship) sp.getIPersistentObject().readByOID(
                         Professorship.class, professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
@@ -54,9 +54,9 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                 newProfessorships.add(professorship);
             }
 
-            List<IProfessorship> newResponsibleFor = new ArrayList<IProfessorship>();
+            List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
             for (Integer responsibleForId : responsibleFors) {
-                IProfessorship responsibleFor = (IProfessorship) sp.getIPersistentObject().readByOID(
+                Professorship responsibleFor = (Professorship) sp.getIPersistentObject().readByOID(
                         Professorship.class, responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
@@ -70,20 +70,20 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
 
             // everything is ok for removal, but first check
             // professorships with support lessons and shifts
-            for (IProfessorship professorship : newProfessorships) {
-                List<ISupportLesson> supportLessons = professorship.getSupportLessons();
-                List<IShiftProfessorship> shiftProfessorships = professorship
+            for (Professorship professorship : newProfessorships) {
+                List<SupportLesson> supportLessons = professorship.getSupportLessons();
+                List<ShiftProfessorship> shiftProfessorships = professorship
                         .getAssociatedShiftProfessorship();
 
                 if ((shiftProfessorships == null || shiftProfessorships.isEmpty())
                         && (supportLessons == null || supportLessons.isEmpty())) {
 
                     final IPersistentSummary persistentSummary = sp.getIPersistentSummary();
-                    List<ISummary> summaryList = persistentSummary.readByTeacher(professorship
+                    List<Summary> summaryList = persistentSummary.readByTeacher(professorship
                             .getExecutionCourse().getIdInternal(), professorship.getTeacher()
                             .getTeacherNumber());
                     if (summaryList != null && !summaryList.isEmpty()) {
-                        for (ISummary summary : summaryList) {
+                        for (Summary summary : summaryList) {
                             summary.removeProfessorship();
                         }
                     }
@@ -101,7 +101,7 @@ public class DissociateProfessorShipsAndResponsibleFor implements IService {
                 }
             }
 
-            for (IProfessorship responsibleFor : newResponsibleFor) {
+            for (Professorship responsibleFor : newResponsibleFor) {
                 responsibleFor.setResponsibleFor(false);
             }
         }

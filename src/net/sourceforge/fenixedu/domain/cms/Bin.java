@@ -10,11 +10,11 @@ public abstract class Bin extends Bin_Base {
     @Override
     public void delete()
     {
-    	for (IContent child : this.getChildren())
+    	for (Content child : this.getChildren())
 		{
 			ContentHierarchy.remove(child,this);
 		}
-    	for(IBin parent : this.getParents())
+    	for(Bin parent : this.getParents())
     	{
     		ContentHierarchy.remove(this,parent);
     	}

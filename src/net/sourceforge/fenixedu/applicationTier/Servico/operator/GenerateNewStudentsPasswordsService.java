@@ -12,8 +12,8 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
@@ -36,11 +36,11 @@ public class GenerateNewStudentsPasswordsService implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         List studentsList = persistentStudent.readAllBetweenNumbers(fromNumber, toNumber);
-        Set<IStudent> studentsUniqueList = new HashSet(studentsList);
+        Set<Student> studentsUniqueList = new HashSet(studentsList);
 
-        for (IStudent student : studentsUniqueList) {
+        for (Student student : studentsUniqueList) {
 
-            IPerson person = student.getPerson();
+            Person person = student.getPerson();
             boolean isFirstTimeStudent = person.hasRole(RoleType.FIRST_TIME_STUDENT);
                         
             if (isFirstTimeStudent) {

@@ -14,23 +14,23 @@ import javax.faces.component.html.HtmlInputHidden;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 
 public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToEnrol {
 
-    private List<IEvaluation> evaluationsWithEnrolmentPeriodOpened;
-    private List<IEvaluation> evaluationsWithEnrolmentPeriodClosed;
+    private List<Evaluation> evaluationsWithEnrolmentPeriodOpened;
+    private List<Evaluation> evaluationsWithEnrolmentPeriodClosed;
     private HtmlInputHidden evaluationTypeHidden;
     private Map<Integer, Boolean> enroledEvaluationsForStudent;
     private Map<Integer, String> studentRooms;
 
-    public List<IEvaluation> getEvaluationsWithEnrolmentPeriodClosed() {
+    public List<Evaluation> getEvaluationsWithEnrolmentPeriodClosed() {
         if (this.evaluationsWithEnrolmentPeriodClosed == null) {
             processEvaluations();
         }
@@ -38,11 +38,11 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
     }
 
     public void setEvaluationsWithEnrolmentPeriodClosed(
-            List<IEvaluation> evaluationsWithEnrolmentPeriodClosed) {
+            List<Evaluation> evaluationsWithEnrolmentPeriodClosed) {
         this.evaluationsWithEnrolmentPeriodClosed = evaluationsWithEnrolmentPeriodClosed;
     }
 
-    public List<IEvaluation> getEvaluationsWithEnrolmentPeriodOpened() {
+    public List<Evaluation> getEvaluationsWithEnrolmentPeriodOpened() {
         if (this.evaluationsWithEnrolmentPeriodOpened == null) {
             processEvaluations();
         }
@@ -50,7 +50,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
     }
 
     public void setEvaluationsWithEnrolmentPeriodOpened(
-            List<IEvaluation> evaluationsWithEnrolmentPeriodOpened) {
+            List<Evaluation> evaluationsWithEnrolmentPeriodOpened) {
         this.evaluationsWithEnrolmentPeriodOpened = evaluationsWithEnrolmentPeriodOpened;
     }
 
@@ -59,7 +59,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
         this.evaluationsWithEnrolmentPeriodOpened = new ArrayList();
 
         final String evaluationType = getEvaluationTypeString();
-        for (final IWrittenEvaluation writtenEvaluation : this.getStudent().getWrittenEvaluations(
+        for (final WrittenEvaluation writtenEvaluation : this.getStudent().getWrittenEvaluations(
                 getExecutionPeriod())) {
             if (writtenEvaluation.getClass().getName().equals(evaluationType)) {
                 try {
@@ -67,7 +67,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
                         this.evaluationsWithEnrolmentPeriodOpened.add(writtenEvaluation);
                     } else {
                         this.evaluationsWithEnrolmentPeriodClosed.add(writtenEvaluation);
-                        final IRoom room = getStudent().getRoomFor(writtenEvaluation);
+                        final Room room = getStudent().getRoomFor(writtenEvaluation);
                         getStudentRooms().put(writtenEvaluation.getIdInternal(),
                                 room != null ? room.getNome() : "-");
                     }
@@ -75,7 +75,7 @@ public class ManageEvaluationsForStudent extends DisplayEvaluationsForStudentToE
                             Boolean.valueOf(getStudent().isEnroledIn(writtenEvaluation)));
                 } catch (final DomainException e) {
                     getEvaluationsWithoutEnrolmentPeriod().add(writtenEvaluation);
-                    final IRoom room = getStudent().getRoomFor(writtenEvaluation);
+                    final Room room = getStudent().getRoomFor(writtenEvaluation);
                     getStudentRooms().put(writtenEvaluation.getIdInternal(),
                             room != null ? room.getNome() : "-");
                 } finally {

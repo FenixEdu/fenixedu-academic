@@ -16,16 +16,16 @@ import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateCompa
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTestAdvisory;
-import net.sourceforge.fenixedu.domain.onlineTests.IOnlineTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
+import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -50,13 +50,13 @@ public class EditDistributedTest implements IService {
             String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IExecutionCourse executionCourse = (IExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
                 executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
         IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
-        IDistributedTest distributedTest = (IDistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId, true);
+        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId, true);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -74,7 +74,7 @@ public class EditDistributedTest implements IService {
 
         CalendarDateComparator dateComparator = new CalendarDateComparator();
         CalendarHourComparator hourComparator = new CalendarHourComparator();
-        IAdvisory advisory = null;
+        Advisory advisory = null;
         if (dateComparator.compare(distributedTest.getBeginDate(), beginDate) != 0
                 || hourComparator.compare(distributedTest.getBeginHour(), beginHour) != 0
                 || dateComparator.compare(distributedTest.getEndDate(), endDate) != 0
@@ -92,28 +92,28 @@ public class EditDistributedTest implements IService {
         if (change2OtherType) {
             // Change evaluation test to study/inquiry test
             // delete evaluation and marks
-            IOnlineTest onlineTest = (IOnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+            OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
             persistentSuport.getIPersistentMark().deleteByEvaluation(onlineTest);
             persistentSuport.getIPersistentOnlineTest().deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
         } else if (change2EvaluationType) {
             // Change to evaluation test
             // Create evaluation (onlineTest) and marks
-            IOnlineTest onlineTest = DomainFactory.makeOnlineTest();
+            OnlineTest onlineTest = DomainFactory.makeOnlineTest();
             onlineTest.setDistributedTest(distributedTest);
             onlineTest.addAssociatedExecutionCourses(executionCourse);
-            List<IStudent> studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
+            List<Student> studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
                     distributedTest.getIdInternal());
-            for (IStudent student : studentList) {
-                List<IStudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+            for (Student student : studentList) {
+                List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
                         .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
                 double studentMark = 0;
-                for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+                for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                     studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();
                 }
-                IAttends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+                Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
                         executionCourse.getIdInternal());
                 if (attend != null) {
-                    IMark mark = DomainFactory.makeMark();
+                    Mark mark = DomainFactory.makeMark();
                     mark.setAttend(attend);
                     mark.setEvaluation(onlineTest);
                     DecimalFormat df =new DecimalFormat("#0.##");
@@ -127,13 +127,13 @@ public class EditDistributedTest implements IService {
         return advisory.getIdInternal();
     }
 
-    private IAdvisory createTestAdvisory(IDistributedTest distributedTest) {
+    private Advisory createTestAdvisory(DistributedTest distributedTest) {
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
 
-        IAdvisory advisory = DomainFactory.makeAdvisory();
+        Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());
-        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((IExecutionCourse) distributedTest
+        advisory.setSender(MessageFormat.format(bundle.getString("message.distributedTest.from"), new Object[] { ((ExecutionCourse) distributedTest
                 .getTestScope().getDomainObject()).getNome() }));        
         advisory.setSubject(MessageFormat.format(bundle.getString("message.distributedTest.subjectChangeDates"), new Object[] { distributedTest
                 .getTitle() }));
@@ -153,8 +153,8 @@ public class EditDistributedTest implements IService {
         return advisory;
     }
 
-    private IDistributedTestAdvisory createDistributedTestAdvisory(IDistributedTest distributedTest, IAdvisory advisory) {
-        IDistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
+    private DistributedTestAdvisory createDistributedTestAdvisory(DistributedTest distributedTest, Advisory advisory) {
+        DistributedTestAdvisory distributedTestAdvisory = DomainFactory.makeDistributedTestAdvisory();
         distributedTestAdvisory.setAdvisory(advisory);
         distributedTestAdvisory.setDistributedTest(distributedTest);
         return distributedTestAdvisory;

@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ICountry;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
@@ -14,10 +14,10 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class CountryVO extends VersionedObjectsBase implements IPersistentCountry {
 
-    public ICountry readCountryByName(String name) throws ExcepcaoPersistencia {
-        List<ICountry> countries = (List<ICountry>) readAll(Country.class);
+    public Country readCountryByName(String name) throws ExcepcaoPersistencia {
+        List<Country> countries = (List<Country>) readAll(Country.class);
         
-        for (ICountry country : countries) {
+        for (Country country : countries) {
             if (country.getName().equals(name)) {
                 return country;
             }
@@ -26,10 +26,10 @@ public class CountryVO extends VersionedObjectsBase implements IPersistentCountr
         return null;
     }
 
-    public ICountry readCountryByCode(String code) throws ExcepcaoPersistencia {
-        List<ICountry> countries = (List<ICountry>) readAll(Country.class);
+    public Country readCountryByCode(String code) throws ExcepcaoPersistencia {
+        List<Country> countries = (List<Country>) readAll(Country.class);
         
-        for (ICountry country : countries) {
+        for (Country country : countries) {
             if (country.getCode().equals(code)) {
                 return country;
             }
@@ -38,10 +38,10 @@ public class CountryVO extends VersionedObjectsBase implements IPersistentCountr
         return null;
     }
 
-    public ICountry readCountryByNationality(String nationality) throws ExcepcaoPersistencia {
-        List<ICountry> countries = (List<ICountry>) readAll(Country.class);
+    public Country readCountryByNationality(String nationality) throws ExcepcaoPersistencia {
+        List<Country> countries = (List<Country>) readAll(Country.class);
         
-        for (ICountry country : countries) {
+        for (Country country : countries) {
             if (country.getNationality().equals(nationality)) {
                 return country;
             }
@@ -51,7 +51,7 @@ public class CountryVO extends VersionedObjectsBase implements IPersistentCountr
     }
 
     public List readAllCountrys() throws ExcepcaoPersistencia {
-        List<ICountry> countries = (List<ICountry>) readAll(Country.class);
+        List<Country> countries = (List<Country>) readAll(Country.class);
         
         ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator("nationality"), true);
         Collections.sort(countries, comparatorChain);

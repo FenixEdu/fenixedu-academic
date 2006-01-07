@@ -200,9 +200,9 @@ public class MailMessage extends MailMessage_Base implements MimePart, Part
 		return result;
 	}
 
-	public Iterator<IMailConversation> getMailConversationsIterator()
+	public Iterator<MailConversation> getMailConversationsIterator()
 	{
-		return new FilterIterator(this.getParentsIterator(), new ContentAssignableClassPredicate(IMailConversation.class));
+		return new FilterIterator(this.getParentsIterator(), new ContentAssignableClassPredicate(MailConversation.class));
 	}
 
 	public Collection<InternetAddress> getFrom() throws MessagingException
@@ -287,7 +287,7 @@ public class MailMessage extends MailMessage_Base implements MimePart, Part
 	public int getMailConversationsCount()
 	{
 		int count =0;
-		Iterator<IMailConversation> conversationsIterator = this.getMailConversationsIterator();
+		Iterator<MailConversation> conversationsIterator = this.getMailConversationsIterator();
 		while (conversationsIterator.hasNext())
 		{
 			count++;

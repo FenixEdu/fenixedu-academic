@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.utils;
 
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 
 public interface IGeneratePassword {
 
-	public String generatePassword(IPerson person);
+	public String generatePassword(Person person);
 	
 }

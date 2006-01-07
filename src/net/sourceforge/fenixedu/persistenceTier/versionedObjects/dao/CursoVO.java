@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.IDegree;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
@@ -15,10 +15,10 @@ import org.apache.commons.collections.Predicate;
 
 public class CursoVO extends VersionedObjectsBase implements ICursoPersistente {
 
-    public IDegree readBySigla(String sigla) throws ExcepcaoPersistencia {
+    public Degree readBySigla(String sigla) throws ExcepcaoPersistencia {
         Iterator degreesIterator = ((List) readAll(Degree.class)).iterator();
         while (degreesIterator.hasNext()) {
-            IDegree degree = (IDegree) degreesIterator.next();
+            Degree degree = (Degree) degreesIterator.next();
 
             if (degree.getSigla().equals(sigla))
                 return degree;
@@ -26,32 +26,32 @@ public class CursoVO extends VersionedObjectsBase implements ICursoPersistente {
         return null;
     }
 
-    public List<IDegree> readAllFromOldDegreeStructure() throws ExcepcaoPersistencia {
-        List<IDegree> degrees = (List<IDegree>) readAll(Degree.class);
+    public List<Degree> readAllFromOldDegreeStructure() throws ExcepcaoPersistencia {
+        List<Degree> degrees = (List<Degree>) readAll(Degree.class);
 
-        return (List<IDegree>) CollectionUtils.select(degrees, new Predicate() {
+        return (List<Degree>) CollectionUtils.select(degrees, new Predicate() {
             public boolean evaluate(Object o) {
-                return ((IDegree) o).getBolonhaDegreeType() == null;
+                return ((Degree) o).getBolonhaDegreeType() == null;
             }
         });
     }
 
-    public List<IDegree> readAllFromNewDegreeStructure() throws ExcepcaoPersistencia {
-        List<IDegree> degrees = (List<IDegree>) readAll(Degree.class);
+    public List<Degree> readAllFromNewDegreeStructure() throws ExcepcaoPersistencia {
+        List<Degree> degrees = (List<Degree>) readAll(Degree.class);
 
-        return (List<IDegree>) CollectionUtils.select(degrees, new Predicate() {
+        return (List<Degree>) CollectionUtils.select(degrees, new Predicate() {
             public boolean evaluate(Object o) {
-                return ((IDegree) o).getBolonhaDegreeType() != null;
+                return ((Degree) o).getBolonhaDegreeType() != null;
             }
         });
     }
 
-    public List<IDegree> readAllByDegreeType(final DegreeType degreeType) throws ExcepcaoPersistencia {
-        List<IDegree> degrees = (List<IDegree>) readAll(Degree.class);
+    public List<Degree> readAllByDegreeType(final DegreeType degreeType) throws ExcepcaoPersistencia {
+        List<Degree> degrees = (List<Degree>) readAll(Degree.class);
 
-        return (List<IDegree>) CollectionUtils.select(degrees, new Predicate() {
+        return (List<Degree>) CollectionUtils.select(degrees, new Predicate() {
             public boolean evaluate(Object o) {
-                return ((IDegree) o).getTipoCurso().equals(degreeType);
+                return ((Degree) o).getTipoCurso().equals(degreeType);
             }
         });
     }

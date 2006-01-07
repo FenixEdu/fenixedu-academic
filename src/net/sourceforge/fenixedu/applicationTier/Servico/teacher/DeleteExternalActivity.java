@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
-import net.sourceforge.fenixedu.domain.teacher.IExternalActivity;
+import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,7 +23,7 @@ public class DeleteExternalActivity implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExternalActivity pea = sp.getIPersistentExternalActivity();
 		
-		IExternalActivity externalActivity = (IExternalActivity) pea.readByOID(ExternalActivity.class, externalActivityId);
+		ExternalActivity externalActivity = (ExternalActivity) pea.readByOID(ExternalActivity.class, externalActivityId);
 		externalActivity.delete();
 		
 	}

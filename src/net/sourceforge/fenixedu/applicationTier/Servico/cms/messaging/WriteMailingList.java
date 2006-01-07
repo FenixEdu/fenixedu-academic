@@ -8,13 +8,13 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
-import net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias;
-import net.sourceforge.fenixedu.domain.cms.infrastructure.IMailQueue;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue;
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
+import net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,13 +32,13 @@ import relations.MailingListQueue;
  */
 public class WriteMailingList extends CmsService
 {
-	public IMailingList run(String name, String description, String address,
-			Collection<String> aliasAdresses, Collection<IUserGroup> mailingListGroups,
-			boolean membersOnly, boolean replyToList, IPerson owner) throws FenixServiceException,
+	public MailingList run(String name, String description, String address,
+			Collection<String> aliasAdresses, Collection<UserGroup> mailingListGroups,
+			boolean membersOnly, boolean replyToList, Person owner) throws FenixServiceException,
 			ExcepcaoPersistencia
 	{
-		IMailingList mailingList = new MailingList();
-		IMailQueue queue = new MailQueue();
+		MailingList mailingList = new MailingList();
+		MailQueue queue = new MailQueue();
 		mailingList.setName(name);
 		mailingList.setDescription(description);
 		mailingList.setAddress(address);
@@ -48,10 +48,10 @@ public class WriteMailingList extends CmsService
 
 		ContentCreation.add(owner, mailingList);
 		MailingListQueue.add(mailingList, queue);
-		Collection<IMailAddressAlias> aliases = new ArrayList<IMailAddressAlias>();
+		Collection<MailAddressAlias> aliases = new ArrayList<MailAddressAlias>();
 		for (String aliasAddress : aliasAdresses)
 		{
-			IMailAddressAlias existingAlias = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailAdressAlias().readByAddress(aliasAddress);
+			MailAddressAlias existingAlias = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailAdressAlias().readByAddress(aliasAddress);
 			if (existingAlias == null)
 			{
 				existingAlias = new MailAddressAlias();
@@ -59,11 +59,11 @@ public class WriteMailingList extends CmsService
 			}
 			aliases.add(existingAlias);
 		}
-		for (IMailAddressAlias alias : aliases)
+		for (MailAddressAlias alias : aliases)
 		{
 			MailingListAlias.add(mailingList, alias);
 		}
-		for (IUserGroup group : mailingListGroups)
+		for (UserGroup group : mailingListGroups)
 		{
 			GroupMailingList.add(mailingList, group);
 		}
@@ -72,7 +72,7 @@ public class WriteMailingList extends CmsService
 		return mailingList;
 	}
 
-	protected void updateRootObjectReferences(IMailingList mailingList) throws ExcepcaoPersistencia
+	protected void updateRootObjectReferences(MailingList mailingList) throws ExcepcaoPersistencia
 	{
 		CmsUsers.add(this.readFenixCMS(), mailingList.getCreator());
 		CmsContents.add(this.readFenixCMS(), mailingList);

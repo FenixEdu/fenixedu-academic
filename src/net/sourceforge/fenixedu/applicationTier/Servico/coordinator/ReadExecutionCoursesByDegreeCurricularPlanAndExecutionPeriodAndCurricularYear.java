@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.ICurricularYear;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -25,34 +25,34 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear implements
         IService {
 
-    public List<IExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID,
+    public List<ExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID,
             Integer curricularYearID) throws ExcepcaoPersistencia, FenixServiceException {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) persistentSupport
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
                 .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, executionPeriodID);
         if (executionPeriod == null) {
             throw new FenixServiceException("error.no.executionPeriod");
         }
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentSupport
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.coordinator.noDegreeCurricularPlan");
         }
-        ICurricularYear curricularYear = null;
+        CurricularYear curricularYear = null;
         if (curricularYearID != 0) {
-            curricularYear = (ICurricularYear) persistentSupport.getIPersistentCurricularYear()
+            curricularYear = (CurricularYear) persistentSupport.getIPersistentCurricularYear()
                     .readByOID(CurricularYear.class, curricularYearID);
             if (curricularYear == null) {
                 throw new FenixServiceException("error.no.curYear");
             }
         }
 
-        final List<IExecutionCourse> result = new ArrayList();
-        for (final IExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+        final List<ExecutionCourse> result = new ArrayList();
+        for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
             if (belongToDegreeCurricularPlanAndCurricularYear(executionCourse, degreeCurricularPlan,
                     curricularYear)) {
                 result.add(executionCourse);
@@ -62,12 +62,12 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
     }
 
     private boolean belongToDegreeCurricularPlanAndCurricularYear(
-            final IExecutionCourse executionCourse, final IDegreeCurricularPlan degreeCurricularPlan,
-            final ICurricularYear curricularYear) {
+            final ExecutionCourse executionCourse, final DegreeCurricularPlan degreeCurricularPlan,
+            final CurricularYear curricularYear) {
 
-        for (final ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
             if (curricularCourse.getDegreeCurricularPlan() == degreeCurricularPlan) {
-                for (final ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                for (final CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
                     if (curricularCourseScope.getCurricularSemester().getSemester().equals(
                             executionCourse.getExecutionPeriod().getSemester())
                             && (curricularYear == null || curricularCourseScope.getCurricularSemester()

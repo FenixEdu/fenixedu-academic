@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.teacher.professorship;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IInstitution;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.Institution;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -31,11 +31,11 @@ public class NonAffiliatedTeacherOJB extends PersistentObjectOJB implements IPer
         return queryList(NonAffiliatedTeacher.class, criteria);
     }
     
-    public INonAffiliatedTeacher readByNameAndInstitution(String name, IInstitution institution) throws ExcepcaoPersistencia{
+    public NonAffiliatedTeacher readByNameAndInstitution(String name, Institution institution) throws ExcepcaoPersistencia{
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
         criteria.addEqualTo("institution.idInternal",institution.getIdInternal());
-        return (INonAffiliatedTeacher) queryObject(NonAffiliatedTeacher.class, criteria);
+        return (NonAffiliatedTeacher) queryObject(NonAffiliatedTeacher.class, criteria);
     }
     
     public List readAll() throws ExcepcaoPersistencia {

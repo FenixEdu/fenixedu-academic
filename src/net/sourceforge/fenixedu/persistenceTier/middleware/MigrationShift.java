@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.persistenceTier.middleware;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
 
 /**
  * @author jpvl
@@ -20,7 +20,7 @@ public class MigrationShift {
 
     private MigrationExecutionCourse migrationExecutionCourse;
 
-    private IShift shift = null;
+    private Shift shift = null;
 
     private String shiftName;
 
@@ -49,7 +49,7 @@ public class MigrationShift {
     /**
      * @return IShift
      */
-    public IShift getShift() {
+    public Shift getShift() {
         return shift;
     }
 
@@ -110,7 +110,7 @@ public class MigrationShift {
      * @param shift
      *            The shift to set
      */
-    public void setShift(IShift shift) {
+    public void setShift(Shift shift) {
         this.shift = shift;
     }
 
@@ -140,7 +140,7 @@ public class MigrationShift {
         return stringBuffer.toString();
     }
 
-    public void setClass(ISchoolClass clazz) {
+    public void setClass(SchoolClass clazz) {
         if (!classList.contains(clazz))
             classList.add(clazz);
     }

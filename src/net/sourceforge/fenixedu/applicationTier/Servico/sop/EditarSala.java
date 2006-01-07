@@ -14,8 +14,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
-import net.sourceforge.fenixedu.domain.space.IBuilding;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -30,7 +30,7 @@ public class EditarSala implements IService {
 
 	public Object run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException,
 			ExcepcaoPersistencia {
-		IRoom sala = null;
+		Room sala = null;
 		boolean result = false;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -41,13 +41,13 @@ public class EditarSala implements IService {
 		if (sala != null) {
 
 			if (!sala.getNome().equals(salaNova.getNome())) {
-				IRoom roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
+				Room roomWithSameName = sp.getISalaPersistente().readByName(salaNova.getNome());
 				if (roomWithSameName != null) {
 					throw new ExistingServiceException();
 				}
 			}
 
-			final IBuilding building = findBuilding(persistentBuilding, salaNova.getEdificio());
+			final Building building = findBuilding(persistentBuilding, salaNova.getEdificio());
 
 			sp.getISalaPersistente().simpleLockWrite(sala);
 			sala.setNome(salaNova.getNome());
@@ -63,12 +63,12 @@ public class EditarSala implements IService {
 		return new Boolean(result);
 	}
 
-	protected IBuilding findBuilding(final IPersistentBuilding persistentBuilding, final String edificio)
+	protected Building findBuilding(final IPersistentBuilding persistentBuilding, final String edificio)
 			throws ExcepcaoPersistencia {
 		final List buildings = persistentBuilding.readAll();
-		return (IBuilding) CollectionUtils.find(buildings, new Predicate() {
+		return (Building) CollectionUtils.find(buildings, new Predicate() {
 			public boolean evaluate(Object arg0) {
-				final IBuilding building = (IBuilding) arg0;
+				final Building building = (Building) arg0;
 				return building.getName().equalsIgnoreCase(edificio);
 			}
 		});

@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -14,7 +14,7 @@ import org.apache.commons.collections.Transformer;
 public class InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod extends
         InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod {
 
-    public void copyFromDomain(IEnrolment enrolment) {
+    public void copyFromDomain(Enrolment enrolment) {
         super.copyFromDomain(enrolment);
         if (enrolment != null) {
             setInfoEvaluations(copyIEnrolmentEvaluation2InfoEnrolmentEvaluation(enrolment
@@ -33,7 +33,7 @@ public class InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeri
 
                 public Object transform(Object arg0) {
 
-                    return InfoEnrolmentEvaluation.newInfoFromDomain((IEnrolmentEvaluation) arg0);
+                    return InfoEnrolmentEvaluation.newInfoFromDomain((EnrolmentEvaluation) arg0);
                 }
 
             });
@@ -41,7 +41,7 @@ public class InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeri
         return infoEnrolmentEvaluations;
     }
 
-    public static InfoEnrolment newInfoFromDomain(IEnrolment enrolment) {
+    public static InfoEnrolment newInfoFromDomain(Enrolment enrolment) {
         InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod infoEnrolment = null;
         if (enrolment != null) {
             infoEnrolment = new InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod();

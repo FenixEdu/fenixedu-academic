@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.degree.finalProject.ITeacherDegreeFinalProjectStudent;
+import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -13,7 +13,7 @@ public class DeleteTeacherDegreeFinalProjectStudentByOID implements IService {
     public void run(Integer teacherDegreeFinalProjectStudentID) throws ExcepcaoPersistencia, FenixServiceException {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final ITeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (ITeacherDegreeFinalProjectStudent) persistentSupport
+        final TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) persistentSupport
                 .getIPersistentTeacherDegreeFinalProjectStudent().readByOID(
                         TeacherDegreeFinalProjectStudent.class, teacherDegreeFinalProjectStudentID);
         if (teacherDegreeFinalProjectStudent == null) {

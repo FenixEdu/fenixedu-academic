@@ -6,10 +6,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.dto.SchoolClassDTO;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -31,19 +31,19 @@ public class ReadSchoolClassByNameInCurrentExecutionPeriod implements IService {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
 				.getIPersistentExecutionPeriod();
-		IExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
-		ISchoolClass schoolClass = (ISchoolClass) CollectionUtils.find(executionPeriod
+		ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
+		SchoolClass schoolClass = (SchoolClass) CollectionUtils.find(executionPeriod
 				.getSchoolClasses(), new Predicate() {
 
 			public boolean evaluate(Object arg0) {
-				ISchoolClass schoolClass = (ISchoolClass) arg0;
+				SchoolClass schoolClass = (SchoolClass) arg0;
 				return schoolClass.getNome().equalsIgnoreCase(schoolClassName);
 			}
 		});
 		if (schoolClass != null) {
-			IDegreeCurricularPlan degreeCurricularPlan = schoolClass.getExecutionDegree()
+			DegreeCurricularPlan degreeCurricularPlan = schoolClass.getExecutionDegree()
 					.getDegreeCurricularPlan();
-			IDegree degree = degreeCurricularPlan.getDegree();
+			Degree degree = degreeCurricularPlan.getDegree();
 			SchoolClassDTO schoolClassDTO = new SchoolClassDTO();
 			schoolClassDTO.setExecutionPeriodId(executionPeriod.getIdInternal());
 			schoolClassDTO.setSchoolClassId(schoolClass.getIdInternal());

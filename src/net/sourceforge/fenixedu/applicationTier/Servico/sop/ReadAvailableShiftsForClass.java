@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -46,17 +46,17 @@ public class ReadAvailableShiftsForClass implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ISchoolClass schoolClass = (ISchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
+        SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
         List shifts = sp.getITurnoPersistente().readAvailableShiftsForClass(schoolClass.getIdInternal());
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {
-                IShift shift = (IShift) arg0;
+                Shift shift = (Shift) arg0;
                 final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);
 
-                final IExecutionCourse executionCourse = shift.getDisciplinaExecucao();
+                final ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
                 final InfoExecutionCourse infoExecutionCourse = InfoExecutionCourse
                         .newInfoFromDomain(executionCourse);
                 infoShift.setInfoDisciplinaExecucao(infoExecutionCourse);
@@ -65,20 +65,20 @@ public class ReadAvailableShiftsForClass implements IService {
                 final List infoLessons = new ArrayList(lessons.size());
                 infoShift.setInfoLessons(infoLessons);
                 for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
-                    final ILesson lesson = (ILesson) iterator2.next();
+                    final Lesson lesson = (Lesson) iterator2.next();
                     final InfoLesson infoLesson = InfoLesson.newInfoFromDomain(lesson);
 
-                    final IRoomOccupation roomOccupation = lesson.getRoomOccupation();
+                    final RoomOccupation roomOccupation = lesson.getRoomOccupation();
                     final InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation
                             .newInfoFromDomain(roomOccupation);
                     infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-                    final IRoom room = roomOccupation.getRoom();
+                    final Room room = roomOccupation.getRoom();
                     final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
                     infoRoomOccupation.setInfoRoom(infoRoom);
                     infoLesson.setInfoSala(infoRoom);
 
-                    final IOccupationPeriod period = roomOccupation.getPeriod();
+                    final OccupationPeriod period = roomOccupation.getPeriod();
                     final InfoPeriod infoPeriod = InfoPeriod.newInfoFromDomain(period);
                     infoRoomOccupation.setInfoPeriod(infoPeriod);
 

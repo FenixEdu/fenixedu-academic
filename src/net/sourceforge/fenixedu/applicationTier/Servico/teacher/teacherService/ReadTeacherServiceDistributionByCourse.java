@@ -11,15 +11,15 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByCourseDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByCourseDTO.ExecutionCourseDistributionServiceEntryDTO;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -38,13 +38,13 @@ public class ReadTeacherServiceDistributionByCourse implements IService {
 
 		DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();
 
-		List<ICompetenceCourse> competenceCourseList;
+		List<CompetenceCourse> competenceCourseList;
 
-		List<IExecutionPeriod> executionPeriodList;
+		List<ExecutionPeriod> executionPeriodList;
 
-		ITeacher teacher;
+		Teacher teacher;
 
-		IDepartment department;
+		Department department;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -62,22 +62,22 @@ public class ReadTeacherServiceDistributionByCourse implements IService {
 
 		Map<Integer, Boolean> executionCoursesMap = new HashMap<Integer, Boolean>();
 
-		for (ICompetenceCourse cc : competenceCourseList) {
-			for (ICurricularCourse curricularCourseEntry : cc.getAssociatedCurricularCourses()) {
+		for (CompetenceCourse cc : competenceCourseList) {
+			for (CurricularCourse curricularCourseEntry : cc.getAssociatedCurricularCourses()) {
 
-				for (IExecutionPeriod executionPeriodEntry : executionPeriodList) {
+				for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
 
-					List<ICurricularCourseScope> scopesList = curricularCourseEntry
+					List<CurricularCourseScope> scopesList = curricularCourseEntry
 							.getActiveScopesInExecutionPeriod(executionPeriodEntry);
 					Set<String> curricularYearsList = new HashSet<String>();
-					for (ICurricularCourseScope scopeEntry : scopesList) {
+					for (CurricularCourseScope scopeEntry : scopesList) {
 						curricularYearsList.add(curricularCourseEntry
 								.getCurricularYearByBranchAndSemester(scopeEntry.getBranch(),
 										scopeEntry.getCurricularSemester().getSemester()).getYear()
 								.toString());
 					}
 
-					for (IExecutionCourse executionCourseEntry : (List<IExecutionCourse>) curricularCourseEntry
+					for (ExecutionCourse executionCourseEntry : (List<ExecutionCourse>) curricularCourseEntry
 							.getExecutionCoursesByExecutionPeriod(executionPeriodEntry)) {
 
 						if (executionCoursesMap.containsKey(executionCourseEntry.getIdInternal())) {
@@ -139,10 +139,10 @@ public class ReadTeacherServiceDistributionByCourse implements IService {
 	}
 
 	private void fillExecutionCourseDTOWithTeachers(DistributionTeacherServicesByCourseDTO dto,
-			IExecutionCourse executionCourse, IDepartment department) {
+			ExecutionCourse executionCourse, Department department) {
 
-		for (IProfessorship professorShipEntry : executionCourse.getProfessorships()) {
-			ITeacher teacher = professorShipEntry.getTeacher();
+		for (Professorship professorShipEntry : executionCourse.getProfessorships()) {
+			Teacher teacher = professorShipEntry.getTeacher();
 
 			Integer teacherIdInternal = teacher.getIdInternal();
 			String teacherName = teacher.getPerson().getNome();
@@ -166,11 +166,11 @@ public class ReadTeacherServiceDistributionByCourse implements IService {
 
 	}
 
-	private String getCampusForCurricularCourseAndExecutionPeriod(ICurricularCourse curricularCourse,
-			IExecutionPeriod executionPeriod) {
+	private String getCampusForCurricularCourseAndExecutionPeriod(CurricularCourse curricularCourse,
+			ExecutionPeriod executionPeriod) {
 		String campus = "";
 
-		for (IExecutionDegree executionDegreeEntry : curricularCourse.getDegreeCurricularPlan()
+		for (ExecutionDegree executionDegreeEntry : curricularCourse.getDegreeCurricularPlan()
 				.getExecutionDegrees()) {
 			if (executionDegreeEntry.getExecutionYear() == executionPeriod.getExecutionYear()) {
 				campus = executionDegreeEntry.getCampus().getName();

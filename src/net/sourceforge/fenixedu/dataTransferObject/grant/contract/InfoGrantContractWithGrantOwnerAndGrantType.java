@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.grant.contract;
 
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwnerWithPerson;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 
 /**
  * @author Pica
@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
  */
 public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContract {
 
-    public void copyFromDomain(IGrantContract grantContract) {
+    public void copyFromDomain(GrantContract grantContract) {
         super.copyFromDomain(grantContract);
 
         if (grantContract != null) {
@@ -26,7 +26,7 @@ public class InfoGrantContractWithGrantOwnerAndGrantType extends InfoGrantContra
         }
     }
 
-    public static InfoGrantContract newInfoFromDomain(IGrantContract grantContract) {
+    public static InfoGrantContract newInfoFromDomain(GrantContract grantContract) {
         InfoGrantContractWithGrantOwnerAndGrantType infoGrantContract = null;
         if (grantContract != null) {
             infoGrantContract = new InfoGrantContractWithGrantOwnerAndGrantType();

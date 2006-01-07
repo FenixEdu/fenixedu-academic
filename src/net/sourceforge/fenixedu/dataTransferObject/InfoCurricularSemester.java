@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularSemester;
+import net.sourceforge.fenixedu.domain.CurricularSemester;
 
 /**
  * @author dcs-rjao
@@ -118,14 +118,14 @@ public class InfoCurricularSemester extends InfoObject {
         this.infoScopes = infoScopes;
     }
 
-    public void copyFromDomain(ICurricularSemester curricularSemester) {
+    public void copyFromDomain(CurricularSemester curricularSemester) {
         super.copyFromDomain(curricularSemester);
         if (curricularSemester != null) {
             setSemester(curricularSemester.getSemester());
         }
     }
 
-    public static InfoCurricularSemester newInfoFromDomain(ICurricularSemester curricularSemester) {
+    public static InfoCurricularSemester newInfoFromDomain(CurricularSemester curricularSemester) {
         InfoCurricularSemester infoCurricularSemester = null;
         if (curricularSemester != null) {
             infoCurricularSemester = new InfoCurricularSemester();

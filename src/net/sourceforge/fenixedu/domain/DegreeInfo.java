@@ -44,7 +44,7 @@ public class DegreeInfo extends DegreeInfo_Base {
 		setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 	}
 	
-	public DegreeInfo(IDegree degree) {
+	public DegreeInfo(Degree degree) {
 		setDegree(degree);
 		setLastModificationDate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 	}

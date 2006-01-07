@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.ITest;
-import net.sourceforge.fenixedu.domain.onlineTests.ITestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
+import net.sourceforge.fenixedu.domain.onlineTests.Test;
+import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -40,12 +40,12 @@ public class InsertTestQuestion implements IService {
 
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		for (int i = 0; i < metadataId.length; i++) {
-			IMetadata metadata = (IMetadata) persistentSuport.getIPersistentMetadata().readByOID(
+			Metadata metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(
 					Metadata.class, new Integer(metadataId[i]));
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			IQuestion question = null;
+			Question question = null;
 			if (metadata.getVisibleQuestions() != null && metadata.getVisibleQuestions().size() != 0) {
 				question = metadata.getVisibleQuestions().get(0);
 			} else {
@@ -55,19 +55,19 @@ public class InsertTestQuestion implements IService {
 				throw new InvalidArgumentsServiceException();
 			}
 			IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-			ITest test = (ITest) persistentTest.readByOID(Test.class, testId);
+			Test test = (Test) persistentTest.readByOID(Test.class, testId);
 			if (test == null) {
 				throw new InvalidArgumentsServiceException();
 			}
 			IPersistentTestQuestion persistentTestQuestion = persistentSuport
 					.getIPersistentTestQuestion();
-			List<ITestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
+			List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
 			if (testQuestionList != null) {
 				if (questionOrder == null || questionOrder.equals(new Integer(-1))) {
 					questionOrder = new Integer(testQuestionList.size() + 1);
 				} else
 					questionOrder = new Integer(questionOrder.intValue() + 1);
-				for (ITestQuestion iterTestQuestion : testQuestionList) {
+				for (TestQuestion iterTestQuestion : testQuestionList) {
 					Integer iterQuestionOrder = iterTestQuestion.getTestQuestionOrder();
 					if (questionOrder.compareTo(iterQuestionOrder) <= 0) {
 						iterTestQuestion.setTestQuestionOrder(new Integer(
@@ -89,7 +89,7 @@ public class InsertTestQuestion implements IService {
 				if (thisQuestionValue == null)
 					thisQuestionValue = new Double(0);
 			}
-			ITestQuestion testQuestion = DomainFactory.makeTestQuestion();
+			TestQuestion testQuestion = DomainFactory.makeTestQuestion();
 			test.setLastModifiedDate(Calendar.getInstance().getTime());
 			testQuestion.setQuestion(question);
 			testQuestion.setTest(test);

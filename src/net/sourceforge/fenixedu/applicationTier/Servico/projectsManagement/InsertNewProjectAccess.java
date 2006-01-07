@@ -9,11 +9,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProject;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
+import net.sourceforge.fenixedu.domain.projectsManagement.Project;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,7 +29,7 @@ public class InsertNewProjectAccess implements IService {
     public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate, String userNumber)
             throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
@@ -49,10 +49,10 @@ public class InsertNewProjectAccess implements IService {
         List projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes);
 
         for (int i = 0; i < projectList.size(); i++) {
-            IProject project = (IProject) projectList.get(i);
+            Project project = (Project) projectList.get(i);
             if (sp.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(project.getProjectCode())) != 0)
                 throw new IllegalArgumentException();
-            IProjectAccess projectAccess = DomainFactory.makeProjectAccess();
+            ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
             projectAccess.setPerson(person);
             projectAccess.setKeyProjectCoordinator(coordinatorCode);
             projectAccess.setKeyProject(new Integer(project.getProjectCode()));
@@ -65,7 +65,7 @@ public class InsertNewProjectAccess implements IService {
     public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
             GregorianCalendar endDate, String userNumber) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
@@ -86,7 +86,7 @@ public class InsertNewProjectAccess implements IService {
             if (sp.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(projectCodes[i])) != 0)
                 throw new IllegalArgumentException();
 
-            IProjectAccess projectAccess = DomainFactory.makeProjectAccess();
+            ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
             projectAccess.setPerson(person);
             projectAccess.setKeyProjectCoordinator(new Integer(userNumber));
             projectAccess.setKeyProject(new Integer(projectCodes[i]));
@@ -96,10 +96,10 @@ public class InsertNewProjectAccess implements IService {
         }
     }
 
-    private boolean hasProjectsManagerRole(IPerson person, RoleType roleType) {
+    private boolean hasProjectsManagerRole(Person person, RoleType roleType) {
         Iterator iterator = person.getPersonRoles().iterator();
         while (iterator.hasNext())
-            if (((IRole) iterator.next()).getRoleType().equals(roleType))
+            if (((Role) iterator.next()).getRoleType().equals(roleType))
                 return true;
         return false;
     }

@@ -9,9 +9,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -44,7 +44,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
         List studentsList = pStudent.readAllBetweenNumbers(fromNumber, toNumber);
 
         for (int iter = 0; iter < studentsList.size(); iter++) {
-            IStudent student = (IStudent) studentsList.get(iter);
+            Student student = (Student) studentsList.get(iter);
             //TODO se ele está inscrito no semestre actual é porque já pagou as
             // propinas...
             if (student.getPayedTuition().booleanValue() && studentHasEnrollments(student, sp)) {
@@ -67,18 +67,18 @@ public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private boolean studentHasEnrollments(IStudent student, ISuportePersistente sp)
+    private boolean studentHasEnrollments(Student student, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
         IPersistentEnrollment pEnrollment = sp.getIPersistentEnrolment();
         IPersistentExecutionPeriod pExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IExecutionPeriod executionPeriod = pExecutionPeriod.readActualExecutionPeriod();
+        ExecutionPeriod executionPeriod = pExecutionPeriod.readActualExecutionPeriod();
 
         List enrollments = pEnrollment.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(
                 student.getActiveStudentCurricularPlan().getIdInternal(), executionPeriod.getIdInternal());
 
         for (int iter = 0; iter < enrollments.size(); iter++) {
-            IEnrolment enrollment = (IEnrolment) enrollments.get(iter);
+            Enrolment enrollment = (Enrolment) enrollments.get(iter);
             if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED)
                     || enrollment.getEnrollmentState().equals(EnrollmentState.TEMPORARILY_ENROLLED)
                     || enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED))

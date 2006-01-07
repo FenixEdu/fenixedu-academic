@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.util.CopyUtils;
-import net.sourceforge.fenixedu.domain.inquiries.IInquiriesRoom;
+import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
 import net.sourceforge.fenixedu.util.InquiriesUtil;
 
 /**
@@ -119,7 +119,7 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
         return 0;
     }
 
-    public static InfoInquiriesRoom newInfoFromDomain(IInquiriesRoom inquiriesRoom) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static InfoInquiriesRoom newInfoFromDomain(InquiriesRoom inquiriesRoom) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         InfoInquiriesRoom newInfo = null;
         if(inquiriesRoom != null) {
             newInfo = new InfoInquiriesRoom();
@@ -128,7 +128,7 @@ public class InfoInquiriesRoom extends InfoObject implements Comparable {
         return newInfo;
     }
        
-    public void copyFromDomain(IInquiriesRoom inquiriesRoom) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void copyFromDomain(InquiriesRoom inquiriesRoom) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (inquiriesRoom != null) {
             super.copyFromDomain(inquiriesRoom);
         }

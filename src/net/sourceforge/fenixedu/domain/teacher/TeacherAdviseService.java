@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class TeacherAdviseService extends TeacherAdviseService_Base {
     
-    public TeacherAdviseService(ITeacherService teacherService, IAdvise advise, Double percentage) {
+    public TeacherAdviseService(TeacherService teacherService, Advise advise, Double percentage) {
         super();
         
         if(teacherService == null || advise == null || percentage == null){

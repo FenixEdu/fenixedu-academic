@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.StringTokenizer;
 
-import net.sourceforge.fenixedu.domain.IBranch;
+import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 /**
@@ -187,7 +187,7 @@ public class InfoBranch extends InfoObject {
         this.branchType = branchType;
     }
 
-    public void copyFromDomain(IBranch branch) {
+    public void copyFromDomain(Branch branch) {
         super.copyFromDomain(branch);
         if (branch != null) {
             setAcronym(branch.getAcronym());
@@ -201,7 +201,7 @@ public class InfoBranch extends InfoObject {
         }
     }
 
-    public static InfoBranch newInfoFromDomain(IBranch branch) {
+    public static InfoBranch newInfoFromDomain(Branch branch) {
         InfoBranch infoBranch = null;
         if (branch != null) {
             infoBranch = new InfoBranch();

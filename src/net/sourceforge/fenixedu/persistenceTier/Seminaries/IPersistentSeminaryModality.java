@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.persistenceTier.Seminaries;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Seminaries.IModality;
+import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentSeminaryModality extends IPersistentObject {
 
-    IModality readByName(String name) throws ExcepcaoPersistencia;
+    Modality readByName(String name) throws ExcepcaoPersistencia;
 
     List readAll() throws ExcepcaoPersistencia;
 

@@ -13,7 +13,7 @@ public class InsuranceValue extends InsuranceValue_Base {
     public InsuranceValue() {
     }
 
-    public InsuranceValue(IExecutionYear executionYear, Double annualValue, Date endDate) {
+    public InsuranceValue(ExecutionYear executionYear, Double annualValue, Date endDate) {
         this.setExecutionYear(executionYear);
         this.setAnnualValue(annualValue);
         this.setEndDate(endDate);

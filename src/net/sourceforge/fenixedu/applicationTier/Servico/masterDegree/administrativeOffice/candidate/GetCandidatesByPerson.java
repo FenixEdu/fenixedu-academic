@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IMasterDegreeCandidate;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,11 +40,11 @@ public class GetCandidatesByPerson implements IService {
 		List candidateList = new ArrayList();
 		Iterator iterator = result.iterator();
 		while (iterator.hasNext()) {
-			IMasterDegreeCandidate masterDegreeCandidate = (IMasterDegreeCandidate) iterator.next();
+			MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) iterator.next();
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
 					.newInfoFromDomain(masterDegreeCandidate);
 
-			IExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+			ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
 			InfoExecutionDegree infoExecutionDegree = InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan
 					.newInfoFromDomain(executionDegree);
 			infoMasterDegreeCandidate.setInfoExecutionDegree(infoExecutionDegree);
@@ -53,7 +53,7 @@ public class GetCandidatesByPerson implements IService {
 			List situations = new ArrayList();
 			while (situationIterator.hasNext()) {
 				InfoCandidateSituation infoCandidateSituation = InfoCandidateSituation
-						.newInfoFromDomain((ICandidateSituation) situationIterator.next());
+						.newInfoFromDomain((CandidateSituation) situationIterator.next());
 				situations.add(infoCandidateSituation);
 
 				// Check if this is the Active Situation

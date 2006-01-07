@@ -5,7 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.IMasterDegreeProofVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,7 +34,7 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan impl
         CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {
 
             public Object transform(Object arg0) {
-                IMasterDegreeProofVersion masterDegreeProofVersion = (IMasterDegreeProofVersion) arg0;
+                MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) arg0;
                 return InfoMasterDegreeProofVersion.newInfoFromDomain(masterDegreeProofVersion);
             }
 

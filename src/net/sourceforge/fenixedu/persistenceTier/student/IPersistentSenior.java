@@ -4,8 +4,8 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.student;
 
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.student.ISenior;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -14,5 +14,5 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  *
  */
 public interface IPersistentSenior extends IPersistentObject {
-    public ISenior readByStudent(IStudent student) throws ExcepcaoPersistencia;
+    public Senior readByStudent(Student student) throws ExcepcaoPersistencia;
 }

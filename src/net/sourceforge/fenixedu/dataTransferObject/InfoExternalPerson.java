@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -56,7 +56,7 @@ public class InfoExternalPerson extends InfoObject {
         return result;
     }
 
-    public static InfoExternalPerson newInfoFromDomain(IExternalPerson externalPerson) {
+    public static InfoExternalPerson newInfoFromDomain(ExternalPerson externalPerson) {
         InfoExternalPerson infoExternalPerson = null;
         if (externalPerson != null) {
             infoExternalPerson = new InfoExternalPerson();
@@ -65,7 +65,7 @@ public class InfoExternalPerson extends InfoObject {
         return infoExternalPerson;
     }
     
-    public void copyFromDomain(IExternalPerson externalPerson) {
+    public void copyFromDomain(ExternalPerson externalPerson) {
         super.copyFromDomain(externalPerson);
         
         setInfoPerson(InfoPerson.newInfoFromDomain(externalPerson.getPerson()));

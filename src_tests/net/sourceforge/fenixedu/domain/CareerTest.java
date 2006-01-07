@@ -8,9 +8,9 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
-import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
@@ -23,16 +23,16 @@ public class CareerTest extends DomainTestBase {
 	//Career attributes
     Integer beginYear = 2004;
     Integer endYear = 2005;
-    ITeacher teacher;
+    Teacher teacher;
 
 	//Teaching career attributes
     String courseOrPosition = "courseOrPosition";
-	ICategory category;
+	Category category;
 	String categoryCode = "code";
 	String categoryLongName = "longName";
 	String categoryShortName = "shortName";
 	Boolean categoryCanBeExecutionCourseResponsible = Boolean.TRUE;
-	ICategory category2;
+	Category category2;
 	String categoryCode2 = "code2";
 	String categoryLongName2 = "longName2";
 	String categoryShortName2 = "shortName2";
@@ -43,11 +43,11 @@ public class CareerTest extends DomainTestBase {
     String function = "function";
 	
 	
-	ITeachingCareer teachingCareerToDelete;
-	IProfessionalCareer professionalCareerToDelete;
+	TeachingCareer teachingCareerToDelete;
+	ProfessionalCareer professionalCareerToDelete;
 	
-	ITeachingCareer teachingCareerToEdit;
-	IProfessionalCareer professionalCareerToEdit;
+	TeachingCareer teachingCareerToEdit;
+	ProfessionalCareer professionalCareerToEdit;
 	
 	InfoTeachingCareer infoTeachingCareerToCreate;
 	InfoProfessionalCareer infoProfessionalCareerToCreate;
@@ -87,7 +87,7 @@ public class CareerTest extends DomainTestBase {
 		
 	}
 
-//	private void initializeCareer(ITeachingCareer teachingCareer) {
+//	private void initializeCareer(TeachingCareer teachingCareer) {
 //		teachingCareer.setBeginYear(beginYear);
 //		teachingCareer.setEndYear(endYear);
 //		teachingCareer.setCourseOrPosition(courseOrPosition);
@@ -96,7 +96,7 @@ public class CareerTest extends DomainTestBase {
 //	}
 //	
 //	
-//	private void initializeCareer(IProfessionalCareer professionalCareer) {
+//	private void initializeCareer(ProfessionalCareer professionalCareer) {
 //		professionalCareer.setBeginYear(beginYear);
 //		professionalCareer.setEndYear(endYear);
 //		professionalCareer.setEntity(entity);
@@ -153,12 +153,12 @@ public class CareerTest extends DomainTestBase {
 		}
 		
 
-		IProfessionalCareer newProfessionalCareer = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareerToCreate);
+		ProfessionalCareer newProfessionalCareer = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareerToCreate);
 		assertTrue("Failed to reference teacher!", newProfessionalCareer.hasTeacher());
 		assertEquals("Different teacher!", newProfessionalCareer.getTeacher(), teacher);
 		verifyCareerAttributes(newProfessionalCareer, infoProfessionalCareerToCreate);
 		
-		ITeachingCareer newTeachingCareer = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareerToCreate);
+		TeachingCareer newTeachingCareer = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareerToCreate);
 		assertTrue("Failed to reference teacher!", newTeachingCareer.hasTeacher());
 		assertEquals("Different teacher!", newTeachingCareer.getTeacher(), teacher);
 		assertEquals("Different category!", newTeachingCareer.getCategory(), category);
@@ -198,7 +198,7 @@ public class CareerTest extends DomainTestBase {
 
 	}
 
-	private void verifyCareerAttributes(ITeachingCareer teachingCareer, InfoTeachingCareer infoTeachingCareer) {
+	private void verifyCareerAttributes(TeachingCareer teachingCareer, InfoTeachingCareer infoTeachingCareer) {
 		assertEquals("Different objConcreteType!",
 				teachingCareer.getOjbConcreteClass(), TeachingCareer.class.getName());
 		assertEquals("Different beginYear!", teachingCareer.getBeginYear(), infoTeachingCareer.getBeginYear());
@@ -206,7 +206,7 @@ public class CareerTest extends DomainTestBase {
 		assertEquals("Different courseOrPosition!", teachingCareer.getCourseOrPosition(), infoTeachingCareer.getCourseOrPosition());
 	}
 
-	private void verifyCareerAttributes(IProfessionalCareer professionalCareer, InfoProfessionalCareer infoProfessionalCareer) {
+	private void verifyCareerAttributes(ProfessionalCareer professionalCareer, InfoProfessionalCareer infoProfessionalCareer) {
 		assertEquals("Different objConcreteType!",
 				professionalCareer.getOjbConcreteClass(), ProfessionalCareer.class.getName());
 		assertEquals("Different beginYear!", professionalCareer.getBeginYear(), infoProfessionalCareer.getBeginYear());

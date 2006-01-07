@@ -12,11 +12,11 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObject
 public class ProfessorshipVO extends VersionedObjectsBase implements IPersistentProfessorship {
 
     public List readByTeacherNumber(final Integer teacherNumber) throws ExcepcaoPersistencia {
-        final Collection<ITeacher> teachers = readAll(Teacher.class);
-        for (final ITeacher teacher : teachers) {
+        final Collection<Teacher> teachers = readAll(Teacher.class);
+        for (final Teacher teacher : teachers) {
             if (teacher.getTeacherNumber().equals(teacherNumber))
                 return teacher.getProfessorships();
         }
@@ -38,18 +38,18 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readByTeacher(final Integer teacherID) throws ExcepcaoPersistencia {
-        final ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherID);
+        final Teacher teacher = (Teacher) readByOID(Teacher.class, teacherID);
         return (teacher != null) ? teacher.getProfessorships() : new ArrayList();
     }
 
-    public IProfessorship readByTeacherAndExecutionCourse(final Integer teacherID,
+    public Professorship readByTeacherAndExecutionCourse(final Integer teacherID,
             final Integer executionCourseID) throws ExcepcaoPersistencia {
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        final ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseID);
         if (executionCourse != null) {
-            final List<IProfessorship> associatedProfessorships = executionCourse.getProfessorships();
-            for (final IProfessorship professorship : associatedProfessorships) {
+            final List<Professorship> associatedProfessorships = executionCourse.getProfessorships();
+            for (final Professorship professorship : associatedProfessorships) {
                 if (professorship.getTeacher().getIdInternal().equals(teacherID))
                     return professorship;
             }
@@ -58,7 +58,7 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     }
 
     public List readByExecutionCourse(final Integer executionCourseID) throws ExcepcaoPersistencia {
-        final IExecutionCourse executionCourse = (IExecutionCourse) readByOID(ExecutionCourse.class,
+        final ExecutionCourse executionCourse = (ExecutionCourse) readByOID(ExecutionCourse.class,
                 executionCourseID);
         return (executionCourse != null) ? executionCourse.getProfessorships() : new ArrayList();
     }
@@ -66,11 +66,11 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     public List readByTeacherAndExecutionPeriod(final Integer teacherID, final Integer executionPeriodID)
             throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> result = new ArrayList<IProfessorship>();
-        final ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherID);
+        final List<Professorship> result = new ArrayList<Professorship>();
+        final Teacher teacher = (Teacher) readByOID(Teacher.class, teacherID);
         if (teacher != null) {
-            final List<IProfessorship> associatedProfessorships = teacher.getProfessorships();
-            for (final IProfessorship professorship : associatedProfessorships) {
+            final List<Professorship> associatedProfessorships = teacher.getProfessorships();
+            for (final Professorship professorship : associatedProfessorships) {
                 if (professorship.getExecutionCourse().getExecutionPeriod().getIdInternal().equals(
                         executionPeriodID))
                     result.add(professorship);
@@ -82,11 +82,11 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     public List readByTeacherAndExecutionYear(final Integer teacherID, final Integer executionYearID)
             throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> result = new ArrayList<IProfessorship>();
-        final ITeacher teacher = (ITeacher) readByOID(Teacher.class, teacherID);
+        final List<Professorship> result = new ArrayList<Professorship>();
+        final Teacher teacher = (Teacher) readByOID(Teacher.class, teacherID);
         if (teacher != null) {
-            final List<IProfessorship> associatedProfessorships = teacher.getProfessorships();
-            for (final IProfessorship professorship : associatedProfessorships) {
+            final List<Professorship> associatedProfessorships = teacher.getProfessorships();
+            for (final Professorship professorship : associatedProfessorships) {
                 if (professorship.getExecutionCourse().getExecutionPeriod().getExecutionYear()
                         .getIdInternal().equals(executionYearID))
                     result.add(professorship);
@@ -98,21 +98,21 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     public List readByDegreeCurricularPlansAndExecutionYearAndBasic(final List degreeCurricularPlanIDs,
             final Integer executionYearID, final Boolean basic) throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> result = new ArrayList<IProfessorship>();
+        final List<Professorship> result = new ArrayList<Professorship>();
         final Set<Integer> professorShipsIDs = new HashSet<Integer>();
 
         if (degreeCurricularPlanIDs != null) {
             for (final Integer degreeCurricularPlanID : (List<Integer>) degreeCurricularPlanIDs) {
-                final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+                final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                         DegreeCurricularPlan.class, degreeCurricularPlanID);
                 if (degreeCurricularPlan != null) {
-                    final List<ICurricularCourse> curricularCourses = degreeCurricularPlan
+                    final List<CurricularCourse> curricularCourses = degreeCurricularPlan
                             .getCurricularCourses();
-                    for (final ICurricularCourse curricularCourse : curricularCourses) {
+                    for (final CurricularCourse curricularCourse : curricularCourses) {
                         if (curricularCourse.getBasic().equals(basic)) {
-                            final List<IExecutionCourse> executionCourses = curricularCourse
+                            final List<ExecutionCourse> executionCourses = curricularCourse
                                     .getAssociatedExecutionCourses();
-                            for (final IExecutionCourse executionCourse : executionCourses) {
+                            for (final ExecutionCourse executionCourse : executionCourses) {
                                 if (executionYearID != null) {
                                     if (executionCourse.getExecutionPeriod().getExecutionYear()
                                             .getIdInternal().equals(executionYearID)) {
@@ -135,19 +135,19 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     public List readByDegreeCurricularPlanAndExecutionYear(final Integer degreeCurricularPlanID,
             final Integer executionYearID) throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> result = new ArrayList<IProfessorship>();
+        final List<Professorship> result = new ArrayList<Professorship>();
         final Set<Integer> professorShipsIDs = new HashSet<Integer>();
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {
-            final List<ICurricularCourse> curricularCourses = degreeCurricularPlan
+            final List<CurricularCourse> curricularCourses = degreeCurricularPlan
                     .getCurricularCourses();
-            for (final ICurricularCourse curricularCourse : curricularCourses) {
-                final List<IExecutionCourse> executionCourses = curricularCourse
+            for (final CurricularCourse curricularCourse : curricularCourses) {
+                final List<ExecutionCourse> executionCourses = curricularCourse
                         .getAssociatedExecutionCourses();
-                for (final IExecutionCourse executionCourse : executionCourses) {
+                for (final ExecutionCourse executionCourse : executionCourses) {
                     if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal().equals(
                             executionYearID)) {
                         addProfessorships(executionCourse, result, professorShipsIDs);
@@ -161,19 +161,19 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     public List readByDegreeCurricularPlanAndBasic(final Integer degreeCurricularPlanID,
             final Integer executionYearID, final Boolean basic) throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> result = new ArrayList<IProfessorship>();
+        final List<Professorship> result = new ArrayList<Professorship>();
         final Set<Integer> professorShipsIDs = new HashSet<Integer>();
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
         if (degreeCurricularPlan != null) {
-            final List<ICurricularCourse> curricularCourses = degreeCurricularPlan
+            final List<CurricularCourse> curricularCourses = degreeCurricularPlan
                     .getCurricularCourses();
-            for (final ICurricularCourse curricularCourse : curricularCourses) {
+            for (final CurricularCourse curricularCourse : curricularCourses) {
                 if (curricularCourse.getBasic().equals(basic)) {
-                    final List<IExecutionCourse> executionCourses = curricularCourse
+                    final List<ExecutionCourse> executionCourses = curricularCourse
                             .getAssociatedExecutionCourses();
-                    for (final IExecutionCourse executionCourse : executionCourses) {
+                    for (final ExecutionCourse executionCourse : executionCourses) {
                         if (executionCourse.getExecutionPeriod().getExecutionYear().getIdInternal()
                                 .equals(executionYearID)) {
                             addProfessorships(executionCourse, result, professorShipsIDs);
@@ -189,20 +189,20 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     public List readByDegreeCurricularPlansAndExecutionYear(final List degreeCurricularPlanIDs,
             final Integer executionYearID) throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> result = new ArrayList<IProfessorship>();
+        final List<Professorship> result = new ArrayList<Professorship>();
         final Set<Integer> professorShipsIDs = new HashSet<Integer>();
 
         if (degreeCurricularPlanIDs != null) {
             for (final Integer degreeCurricularPlanID : (List<Integer>) degreeCurricularPlanIDs) {
-                final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+                final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                         DegreeCurricularPlan.class, degreeCurricularPlanID);
                 if (degreeCurricularPlan != null) {
-                    final List<ICurricularCourse> curricularCourses = degreeCurricularPlan
+                    final List<CurricularCourse> curricularCourses = degreeCurricularPlan
                             .getCurricularCourses();
-                    for (final ICurricularCourse curricularCourse : curricularCourses) {
-                        final List<IExecutionCourse> executionCourses = curricularCourse
+                    for (final CurricularCourse curricularCourse : curricularCourses) {
+                        final List<ExecutionCourse> executionCourses = curricularCourse
                                 .getAssociatedExecutionCourses();
-                        for (final IExecutionCourse executionCourse : executionCourses) {
+                        for (final ExecutionCourse executionCourse : executionCourses) {
                             if (executionYearID != null) {
                                 if (executionCourse.getExecutionPeriod().getExecutionYear()
                                         .getIdInternal().equals(executionYearID)) {
@@ -224,18 +224,18 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
     public List readByDegreeCurricularPlanAndExecutionPeriod(final Integer degreeCurricularPlanID,
             final Integer executionPeriodID) throws ExcepcaoPersistencia {
 
-        final List<IProfessorship> result = new ArrayList<IProfessorship>();
+        final List<Professorship> result = new ArrayList<Professorship>();
         final Set<Integer> professorShipsIDs = new HashSet<Integer>();
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
         if (degreeCurricularPlan != null) {
-            final List<ICurricularCourse> curricularCourses = degreeCurricularPlan
+            final List<CurricularCourse> curricularCourses = degreeCurricularPlan
                     .getCurricularCourses();
-            for (final ICurricularCourse curricularCourse : curricularCourses) {
-                final List<IExecutionCourse> executionCourses = curricularCourse
+            for (final CurricularCourse curricularCourse : curricularCourses) {
+                final List<ExecutionCourse> executionCourses = curricularCourse
                         .getAssociatedExecutionCourses();
-                for (final IExecutionCourse executionCourse : executionCourses) {
+                for (final ExecutionCourse executionCourse : executionCourses) {
                     if (executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodID)) {
                         addProfessorships(executionCourse, result, professorShipsIDs);
                     }
@@ -245,10 +245,10 @@ public class ProfessorshipVO extends VersionedObjectsBase implements IPersistent
         return result;
     }
 
-    private void addProfessorships(final IExecutionCourse executionCourse, List<IProfessorship> result,
+    private void addProfessorships(final ExecutionCourse executionCourse, List<Professorship> result,
             Set<Integer> professorShipsIDs) {
-        final List<IProfessorship> professorships = executionCourse.getProfessorships();
-        for (final IProfessorship professorship : professorships) {
+        final List<Professorship> professorships = executionCourse.getProfessorships();
+        for (final Professorship professorship : professorships) {
             if (!professorShipsIDs.contains((professorship.getIdInternal()))) {
                 professorShipsIDs.add(professorship.getIdInternal());
                 result.add(professorship);

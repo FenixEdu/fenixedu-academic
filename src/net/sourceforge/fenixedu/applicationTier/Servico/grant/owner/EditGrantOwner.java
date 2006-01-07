@@ -6,11 +6,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IDomainObject;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.grant.owner.IGrantOwner;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
@@ -27,15 +27,15 @@ public class EditGrantOwner implements IService {
 		return result;
 	}
 
-	private IGrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber,
+	private GrantOwner checkIfGrantOwnerExists(Integer grantOwnerNumber,
 			IPersistentGrantOwner persistentGrantOwner) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		IGrantOwner grantOwner = null;
+		GrantOwner grantOwner = null;
 		grantOwner = persistentGrantOwner.readGrantOwnerByNumber(grantOwnerNumber);
 		return grantOwner;
 	}
 
-	private IGrantOwner prepareGrantOwner(IGrantOwner grantOwner, IPerson person,
+	private GrantOwner prepareGrantOwner(GrantOwner grantOwner, Person person,
 			InfoGrantOwner infoGrantOwner, IPersistentGrantOwner pGrantOwner)
 			throws ExcepcaoPersistencia {
 		grantOwner.setPerson(person);
@@ -54,7 +54,7 @@ public class EditGrantOwner implements IService {
 		return grantOwner;
 	}
 
-	protected boolean isNew(IDomainObject domainObject) {
+	protected boolean isNew(DomainObject domainObject) {
 		Integer objectId = domainObject.getIdInternal();
 		return ((objectId == null) || objectId.equals(new Integer(0)));
 	}
@@ -66,19 +66,19 @@ public class EditGrantOwner implements IService {
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		pGrantOwner = sp.getIPersistentGrantOwner();
 
-		IPerson person = null;
-		IGrantOwner grantOwner = null;
-		ICountry country = null;
+		Person person = null;
+		GrantOwner grantOwner = null;
+		Country country = null;
 
 		if (infoGrantOwner.getPersonInfo().getInfoPais() != null) {
-			country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
+			country = (Country) sp.getIPersistentCountry().readByOID(Country.class,
 					infoGrantOwner.getPersonInfo().getInfoPais().getIdInternal());
 		} else {
 			// If the person country is undefined it is set to default
 			// "PORTUGUESA NATURAL DO CONTINENTE"
 			// In a not distance future this will not be needed since the coutry
 			// can never be null
-			country = (ICountry) sp.getIPersistentCountry().readCountryByNationality(
+			country = (Country) sp.getIPersistentCountry().readCountryByNationality(
 					"PORTUGUESA NATURAL DO CONTINENTE");
 		}
 
@@ -86,7 +86,7 @@ public class EditGrantOwner implements IService {
 		if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
 			person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);
 		} else {
-			person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+			person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
 					infoGrantOwner.getPersonInfo().getIdInternal());
 			person.edit(infoGrantOwner.getPersonInfo(), country);
 		}
@@ -111,7 +111,7 @@ public class EditGrantOwner implements IService {
 		// Generate the GrantOwner's Person Username
 		if (person.getUsername() == null || person.getUsername().length() == 0)
 			person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()),
-					(List<IPerson>) sp.getIPessoaPersistente().readAll(Person.class));
+					(List<Person>) sp.getIPessoaPersistente().readAll(Person.class));
 		return grantOwner.getIdInternal();
 	}
 }

@@ -5,7 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,7 +27,7 @@ public class ReadGratuitySituationById implements IService {
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 
-		IGratuitySituation gratuitySituation = (IGratuitySituation) persistentGratuitySituation
+		GratuitySituation gratuitySituation = (GratuitySituation) persistentGratuitySituation
 				.readByOID(GratuitySituation.class, gratuitySituationID, true);
 
 		if (gratuitySituation == null) {

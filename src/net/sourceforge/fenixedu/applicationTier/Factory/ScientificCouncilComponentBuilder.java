@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteDegreeCurricularPlans
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSCDegrees;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -85,7 +85,7 @@ public class ScientificCouncilComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject persistentObject = sp.getIPersistentObject();
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentObject.readByOID(
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
 				DegreeCurricularPlan.class, degreeCurricularPlanId);
 
 		if (degreeCurricularPlan == null) {
@@ -105,13 +105,13 @@ public class ScientificCouncilComponentBuilder {
 		List infoNonBasicCurricularCourses = new ArrayList();
 		List infoBasicCurricularCourses = new ArrayList();
 		while (iter.hasNext()) {
-			ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 					.newInfoFromDomain(curricularCourse);
 			infoNonBasicCurricularCourses.add(infoCurricularCourse);
 		}
 		while (iter1.hasNext()) {
-			ICurricularCourse curricularCourse = (ICurricularCourse) iter1.next();
+			CurricularCourse curricularCourse = (CurricularCourse) iter1.next();
 			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 					.newInfoFromDomain(curricularCourse);
 			infoBasicCurricularCourses.add(infoCurricularCourse);
@@ -136,7 +136,7 @@ public class ScientificCouncilComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject persistentObject = sp.getIPersistentObject();
-		IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) persistentObject.readByOID(
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
 				DegreeCurricularPlan.class, degreeCurricularPlanId);
 
 		if (degreeCurricularPlan == null) {
@@ -153,7 +153,7 @@ public class ScientificCouncilComponentBuilder {
 		Iterator iter = curricularCourses.iterator();
 		List infoCurricularCourses = new ArrayList();
 		while (iter.hasNext()) {
-			ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 			InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 					.newInfoFromDomain(curricularCourse);
 			infoCurricularCourses.add(infoCurricularCourse);
@@ -175,7 +175,7 @@ public class ScientificCouncilComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject persistentObject = sp.getIPersistentObject();
-		IDegree degree = (IDegree) persistentObject.readByOID(Degree.class, degreeId);
+		Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
 		if (degree == null) {
 			throw new InvalidArgumentsServiceException();
 		}
@@ -186,7 +186,7 @@ public class ScientificCouncilComponentBuilder {
 		Iterator iter = degreeCurricularPlans.iterator();
 		List infoDegreeCurricularPlans = new ArrayList();
 		while (iter.hasNext()) {
-			IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) iter.next();
+			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) iter.next();
 			InfoDegreeCurricularPlan infoDegreeCurricularPlan = InfoDegreeCurricularPlanWithDegree
 					.newInfoFromDomain(degreeCurricularPlan);
 			infoDegreeCurricularPlans.add(infoDegreeCurricularPlan);
@@ -210,7 +210,7 @@ public class ScientificCouncilComponentBuilder {
 		Iterator degreeIterator = degrees.iterator();
 		List infoDegrees = new ArrayList();
 		while (degreeIterator.hasNext()) {
-			IDegree degree = (IDegree) degreeIterator.next();
+			Degree degree = (Degree) degreeIterator.next();
 			InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
 			infoDegrees.add(infoDegree);
 		}

@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.IServiceProviderRegime;
+import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.util.ProviderRegimeType;
 
 /**
@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.util.ProviderRegimeType;
  *
  */
 public class ServiceProviderRegimeTest extends DomainTestBase {
-	private ITeacher teacher;
+	private Teacher teacher;
 	
 	private InfoServiceProviderRegime infoServiceProviderRegimeToCreate;
 	private InfoServiceProviderRegime infoServiceProviderRegimeToEdit;
 	
-	private IServiceProviderRegime serviceProviderRegimeToEdit;
+	private ServiceProviderRegime serviceProviderRegimeToEdit;
 	
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -47,7 +47,7 @@ public class ServiceProviderRegimeTest extends DomainTestBase {
 			
 		}
 		
-		IServiceProviderRegime newServiceProviderRegime = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegimeToCreate);
+		ServiceProviderRegime newServiceProviderRegime = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegimeToCreate);
 		assertTrue("Failed to reference teacher!", newServiceProviderRegime.hasTeacher());
 		assertEquals("Different teacher!", newServiceProviderRegime.getTeacher(), teacher);
 		verifyServiceProviderRegimeAttributes(newServiceProviderRegime, infoServiceProviderRegimeToCreate);
@@ -59,7 +59,7 @@ public class ServiceProviderRegimeTest extends DomainTestBase {
 		verifyServiceProviderRegimeAttributes(serviceProviderRegimeToEdit, infoServiceProviderRegimeToEdit);
 	}
 
-	private void verifyServiceProviderRegimeAttributes(IServiceProviderRegime serviceProviderRegime, InfoServiceProviderRegime infoServiceProviderRegime) {
+	private void verifyServiceProviderRegimeAttributes(ServiceProviderRegime serviceProviderRegime, InfoServiceProviderRegime infoServiceProviderRegime) {
 		assertEquals("Different research!", serviceProviderRegime.getProviderRegimeType(), infoServiceProviderRegime.getProviderRegimeType());
 	}
 }

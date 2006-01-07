@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherPersonalExpectation;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherPersonalExpectation;
+import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +22,7 @@ public class EditTeacherPersonalExpectation implements IService {
                 .getDefaultPersistenceSupport();
         IPersistentTeacherPersonalExpectation persistentTeacherPersonalExpectation = persistenceSupport
                 .getIPersistentTeacherPersonalExpectation();
-        ITeacherPersonalExpectation teacherPersonalExpectation = (ITeacherPersonalExpectation) persistentTeacherPersonalExpectation
+        TeacherPersonalExpectation teacherPersonalExpectation = (TeacherPersonalExpectation) persistentTeacherPersonalExpectation
                 .readByOID(TeacherPersonalExpectation.class, infoTeacherPersonalExpectation.getIdInternal());
 
         teacherPersonalExpectation.edit(infoTeacherPersonalExpectation);

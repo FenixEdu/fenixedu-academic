@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,7 +33,7 @@ public class ReadExecutionYears implements IService {
 
         Iterator iterator = executionYears.iterator();
         while (iterator.hasNext()) {
-            String year = ((IExecutionYear) iterator.next()).getYear();
+            String year = ((ExecutionYear) iterator.next()).getYear();
             result.add(new LabelValueBean(year, year));
         }
 

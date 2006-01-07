@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -19,7 +19,7 @@ public class DeleteItemFile implements IService {
 			SlideException {
 		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		final IPersistentItem persistentItem = sp.getIPersistentItem();
-		final IItem item = (IItem) persistentItem.readByOID(Item.class, itemId);
+		final Item item = (Item) persistentItem.readByOID(Item.class, itemId);
         final String slidename = item.getSlideName();
         JdbcMysqlFileSupport.deleteFile(slidename, fileName);
 	}

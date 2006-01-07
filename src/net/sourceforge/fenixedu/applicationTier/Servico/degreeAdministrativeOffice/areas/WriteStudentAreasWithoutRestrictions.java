@@ -5,8 +5,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Branch;
-import net.sourceforge.fenixedu.domain.IBranch;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Branch;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -34,19 +34,19 @@ public class WriteStudentAreasWithoutRestrictions implements IService {
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSuport
                 .getIStudentCurricularPlanPersistente();
 
-        IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();
         }
 
-        IBranch specializationArea = (IBranch) persistentBranch.readByOID(Branch.class,
+        Branch specializationArea = (Branch) persistentBranch.readByOID(Branch.class,
                 specializationAreaID);
 
-        IBranch secundaryArea = null;
+        Branch secundaryArea = null;
         if (secundaryAreaID != null) {
-            secundaryArea = (IBranch) persistentBranch.readByOID(Branch.class, secundaryAreaID);
+            secundaryArea = (Branch) persistentBranch.readByOID(Branch.class, secundaryAreaID);
         }
 
         try {

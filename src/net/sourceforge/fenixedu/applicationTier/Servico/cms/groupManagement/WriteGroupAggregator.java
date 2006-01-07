@@ -9,9 +9,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.accessControl.INodeGroup;
-import net.sourceforge.fenixedu.domain.accessControl.IUserGroup;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -25,14 +25,14 @@ import relations.GroupOwnership;
  */
 public class WriteGroupAggregator implements IService
 {
-	public IUserGroup run(Collection<IUserGroup> parts, String name, String description, IPerson owner,
+	public UserGroup run(Collection<UserGroup> parts, String name, String description, Person owner,
 			UserGroupTypes type) throws FenixServiceException, InstantiationException,
 			IllegalAccessException, ExcepcaoPersistencia
 	{
-		INodeGroup aggregator = (INodeGroup) type.getImplementationClass().newInstance();
+		NodeGroup aggregator = (NodeGroup) type.getImplementationClass().newInstance();
 		aggregator.setName(name);
 		aggregator.setDescription(description);
-		for (IUserGroup group : parts)
+		for (UserGroup group : parts)
 		{
 			aggregator.addParts(group);
 		}

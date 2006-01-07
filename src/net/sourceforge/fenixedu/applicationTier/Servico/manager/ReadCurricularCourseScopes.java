@@ -10,8 +10,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -33,7 +33,7 @@ public class ReadCurricularCourseScopes implements IService {
 		List allCurricularCourseScopes = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ICurricularCourse curricularCourse = (ICurricularCourse) sp.getIPersistentCurricularCourse()
+		CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
 				.readByOID(CurricularCourse.class, curricularCourseId);
 		allCurricularCourseScopes = curricularCourse.getScopes();
 
@@ -45,7 +45,7 @@ public class ReadCurricularCourseScopes implements IService {
 
 		while (iterator.hasNext())
 			result.add(InfoCurricularCourseScopeWithBranchAndSemesterAndYear
-					.newInfoFromDomain((ICurricularCourseScope) iterator.next()));
+					.newInfoFromDomain((CurricularCourseScope) iterator.next()));
 
 		return result;
 	}

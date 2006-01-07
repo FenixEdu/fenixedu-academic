@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICampus;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
+import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,20 +22,20 @@ public class EditExecutionDegree implements IService {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final IExecutionDegree oldExecutionDegree = (IExecutionDegree) persistentSuport
+        final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentSuport
                 .getIPersistentObject().readByOID(ExecutionDegree.class,
                         infoExecutionDegree.getIdInternal());
         if (oldExecutionDegree == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionDegree", null);
         }
 
-        final ICampus campus = (ICampus) persistentSuport.getIPersistentObject().readByOID(Campus.class,
+        final Campus campus = (Campus) persistentSuport.getIPersistentObject().readByOID(Campus.class,
                 infoExecutionDegree.getInfoCampus().getIdInternal());
         if (campus == null) {
             throw new NonExistingServiceException("message.nonExistingCampus", null);
         }
 
-        final IExecutionYear executionYear = (IExecutionYear) persistentSuport.getIPersistentObject()
+        final ExecutionYear executionYear = (ExecutionYear) persistentSuport.getIPersistentObject()
                 .readByOID(ExecutionYear.class,
                         infoExecutionDegree.getInfoExecutionYear().getIdInternal());
         if (executionYear == null) {

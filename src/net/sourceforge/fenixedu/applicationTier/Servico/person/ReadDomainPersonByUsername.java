@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -28,7 +28,7 @@ public class ReadDomainPersonByUsername implements IService, Serializable
 	{
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+		Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
 
 		if (person == null) throw new ExcepcaoInexistente("Unknown Person !!");
 

@@ -3,8 +3,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.IDepartment;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Department;
 
 public class InfoCompetenceCourse extends InfoObject {
     private String name;
@@ -38,20 +38,20 @@ public class InfoCompetenceCourse extends InfoObject {
 			List<InfoCurricularCourse> associatedCurricularCourses) {
 		this.associatedCurricularCourses = associatedCurricularCourses;
 	}
-	public void copyFromDomain(ICompetenceCourse competenceCourse) {
+	public void copyFromDomain(CompetenceCourse competenceCourse) {
 		super.copyFromDomain(competenceCourse);
 		if(competenceCourse != null) {
 			setCode(competenceCourse.getCode());
 			setName(competenceCourse.getName());
 			List<InfoDepartment> infoDepartments = new ArrayList<InfoDepartment>();
-        	for (IDepartment department : competenceCourse.getDepartments()) {
+        	for (Department department : competenceCourse.getDepartments()) {
 				infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
 			}
             setDepartment(infoDepartments);
 		}
 	}
 	
-	public static InfoCompetenceCourse newInfoFromDomain(ICompetenceCourse competenceCourse) {
+	public static InfoCompetenceCourse newInfoFromDomain(CompetenceCourse competenceCourse) {
 		InfoCompetenceCourse infoCompetenceCourse = null;
 		if(competenceCourse != null) {
 			infoCompetenceCourse = new InfoCompetenceCourse();

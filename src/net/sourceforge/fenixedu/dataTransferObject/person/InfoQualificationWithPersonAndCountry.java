@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.dataTransferObject.person;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IQualification;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  */
 public class InfoQualificationWithPersonAndCountry extends InfoQualification {
 
-    public void copyFromDomain(IQualification qualification) {
+    public void copyFromDomain(Qualification qualification) {
         super.copyFromDomain(qualification);
         if (qualification != null) {
             setInfoCountry(InfoCountry.newInfoFromDomain(qualification.getCountry()));
@@ -28,7 +28,7 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
         }
     }
 
-    public static InfoQualification newInfoFromDomain(IQualification qualification) {
+    public static InfoQualification newInfoFromDomain(Qualification qualification) {
         InfoQualificationWithPersonAndCountry infoQualification = null;
         if (qualification != null) {
             infoQualification = new InfoQualificationWithPersonAndCountry();
@@ -37,17 +37,17 @@ public class InfoQualificationWithPersonAndCountry extends InfoQualification {
         return infoQualification;
     }
 
-    public void copyToDomain(InfoQualification infoQualification, IQualification qualification)
+    public void copyToDomain(InfoQualification infoQualification, Qualification qualification)
             throws ExcepcaoPersistencia {
         super.copyToDomain(infoQualification, qualification);
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
+        Country country = (Country) sp.getIPersistentCountry().readByOID(Country.class,
                 infoQualification.getInfoCountry().getIdInternal());
         qualification.setCountry(country);
 
-        IPerson person = (IPerson) sp.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
                 infoQualification.getInfoPerson().getIdInternal());
         qualification.setPerson(person);
     }

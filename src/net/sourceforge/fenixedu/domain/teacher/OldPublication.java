@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
  * @author Leonor Almeida
@@ -19,7 +19,7 @@ public class OldPublication extends OldPublication_Base {
 		super.deleteDomainObject();
 	}
 
-	public void edit(InfoOldPublication infoOldPublication, ITeacher teacher) {
+	public void edit(InfoOldPublication infoOldPublication, Teacher teacher) {
 		
 		if((infoOldPublication == null) || (teacher == null))
 			throw new NullPointerException();

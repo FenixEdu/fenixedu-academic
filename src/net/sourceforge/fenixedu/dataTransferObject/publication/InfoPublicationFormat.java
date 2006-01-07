@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
+import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
 
 public class InfoPublicationFormat extends InfoObject {
 
@@ -11,7 +11,7 @@ public class InfoPublicationFormat extends InfoObject {
         super();
     }
     
-    public static InfoPublicationFormat newInfoFromDomain(IPublicationFormat publicationFormat) {
+    public static InfoPublicationFormat newInfoFromDomain(PublicationFormat publicationFormat) {
         InfoPublicationFormat infoPublicationFormat = new InfoPublicationFormat();
         if(publicationFormat != null) {
             infoPublicationFormat.copyFromDomain(publicationFormat);
@@ -19,7 +19,7 @@ public class InfoPublicationFormat extends InfoObject {
         return infoPublicationFormat;
     }
     
-    public void copyFromDomain(IPublicationFormat publicationFormat) {
+    public void copyFromDomain(PublicationFormat publicationFormat) {
         super.copyFromDomain(publicationFormat);
         if (publicationFormat != null) {
             format = publicationFormat.getFormat();

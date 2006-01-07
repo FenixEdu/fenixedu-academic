@@ -20,15 +20,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStatistics;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseReport;
+import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -51,12 +51,12 @@ public class SearchExecutionCourses implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod()
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) sp.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
-        IExecutionDegree executionDegree = null;
+        ExecutionDegree executionDegree = null;
 
         if (infoExecutionDegree != null) {
-            executionDegree = (IExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+            executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
                     ExecutionDegree.class, infoExecutionDegree.getIdInternal());
         }
 
@@ -96,7 +96,7 @@ public class SearchExecutionCourses implements IService {
             private void getTeacherReportInformation(InfoExecutionCourse infoExecutionCourse, Object arg0)
                     throws ExcepcaoPersistencia {
 
-                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
                 if (executionCourse.getAssociatedCurricularCourses() != null) {
                     ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -107,7 +107,7 @@ public class SearchExecutionCourses implements IService {
                     int approved = 0;
                     Iterator iter = executionCourse.getAssociatedCurricularCourses().iterator();
                     while (iter.hasNext()) {
-                        ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+                        CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
                         List enrolled = getEnrolled(executionCourse.getExecutionPeriod(),
                                 curricularCourse, sp);
@@ -124,7 +124,7 @@ public class SearchExecutionCourses implements IService {
                     infoExecutionCourse.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
 
                     IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
-                    ICourseReport courseReport = persistentCourseReport
+                    CourseReport courseReport = persistentCourseReport
                             .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
                     if (courseReport != null) {
                         infoExecutionCourse
@@ -143,7 +143,7 @@ public class SearchExecutionCourses implements IService {
                 int approved = 0;
                 Iterator iter = enrolments.iterator();
                 while (iter.hasNext()) {
-                    IEnrolment enrolment = (IEnrolment) iter.next();
+                    Enrolment enrolment = (Enrolment) iter.next();
                     EnrollmentState enrollmentState = enrolment.getEnrollmentState();
                     if (enrollmentState.equals(EnrollmentState.APROVED)) {
                         approved++;
@@ -156,7 +156,7 @@ public class SearchExecutionCourses implements IService {
                 int evaluated = 0;
                 Iterator iter = enrolments.iterator();
                 while (iter.hasNext()) {
-                    IEnrolment enrolment = (IEnrolment) iter.next();
+                    Enrolment enrolment = (Enrolment) iter.next();
                     EnrollmentState enrollmentState = enrolment.getEnrollmentState();
                     if (enrollmentState.equals(EnrollmentState.APROVED)
                             || enrollmentState.equals(EnrollmentState.NOT_APROVED)) {
@@ -166,8 +166,8 @@ public class SearchExecutionCourses implements IService {
                 return new Integer(evaluated);
             }
 
-            private List getEnrolled(IExecutionPeriod executionPeriod,
-                    ICurricularCourse curricularCourse, ISuportePersistente sp)
+            private List getEnrolled(ExecutionPeriod executionPeriod,
+                    CurricularCourse curricularCourse, ISuportePersistente sp)
                     throws ExcepcaoPersistencia {
                 IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
                 List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
@@ -176,13 +176,13 @@ public class SearchExecutionCourses implements IService {
             }
 
             private void checkEqualLoads(Object arg0, InfoExecutionCourse infoExecutionCourse,
-                    IExecutionPeriod executionPeriod) {
-                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                    ExecutionPeriod executionPeriod) {
+                ExecutionCourse executionCourse = (ExecutionCourse) arg0;
                 infoExecutionCourse.setEqualLoad(Boolean.TRUE.toString());
 
                 Iterator iterator = executionCourse.getAssociatedCurricularCourses().iterator();
                 while (iterator.hasNext()) {
-                    ICurricularCourse curricularCourse = (ICurricularCourse) iterator.next();
+                    CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
 
                     if ((!executionCourse.getTheoPratHours().equals(curricularCourse.getTheoPratHours()))
                             || (!executionCourse.getTheoreticalHours().equals(
@@ -200,7 +200,7 @@ public class SearchExecutionCourses implements IService {
                 InfoExecutionCourse infoExecutionCourse;
                 // Get the associated Shifs
                 ISuportePersistente spTemp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                IExecutionCourse executionCourse = (IExecutionCourse) arg0;
+                ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
                 // FIXME: Find a better way to get the total
                 // capacity for
@@ -216,7 +216,7 @@ public class SearchExecutionCourses implements IService {
                         executionCourse.getIdInternal());
                 Iterator iterator = shifts.iterator();
                 while (iterator.hasNext()) {
-                    IShift shift = (IShift) iterator.next();
+                    Shift shift = (Shift) iterator.next();
 
                     if (shift.getTipo().equals(ShiftType.TEORICA)) {
                         theoreticalCapacity = new Integer(theoreticalCapacity.intValue()

@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO;
-import net.sourceforge.fenixedu.domain.IDepartment;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.teacher.IInstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.teacher.ITeacherService;
+import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -59,13 +59,13 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 
         final Integer executionPeriodID = Integer.valueOf((String) institutionWorkingTimeForm
                 .get("executionPeriodId"));
-        final IExecutionPeriod executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(
                 userView, "ReadDomainExecutionPeriodByOID", new Object[] { executionPeriodID });
 
         Integer teacherNumber = Integer.valueOf(institutionWorkingTimeForm.getString("teacherNumber"));
-        List<IDepartment> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-        ITeacher teacher = null;
-        for (IDepartment department : manageableDepartments) {
+        List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
+        Teacher teacher = null;
+        for (Department department : manageableDepartments) {
             teacher = department.getTeacherByPeriod(teacherNumber, executionPeriod.getBeginDate(),
                     executionPeriod.getEndDate());
             if (teacher != null) {
@@ -77,7 +77,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
             return mapping.findForward("teacher-not-found");
         }
 
-        ITeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
+        TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if (teacherService != null && !teacherService.getInstitutionWorkTimes().isEmpty()) {
 
             ComparatorChain comparatorChain = new ComparatorChain();
@@ -107,21 +107,21 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
         Integer institutionWorkingTimeID = (Integer) institutionWorkingTimeForm
                 .get("institutionWorkTimeID");
 
-        IExecutionPeriod executionPeriod = null;
-        ITeacher teacher = null;
+        ExecutionPeriod executionPeriod = null;
+        Teacher teacher = null;
         if (institutionWorkingTimeID == null || institutionWorkingTimeID == 0) {
             Integer teacherID = Integer.valueOf(institutionWorkingTimeForm.getString("teacherId"));
-            teacher = (ITeacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
+            teacher = (Teacher) ServiceUtils.executeService(SessionUtils.getUserView(request),
                     "ReadDomainTeacherByOID", new Object[] { teacherID });
             Integer executionPeriodID = Integer.valueOf(institutionWorkingTimeForm
                     .getString("executionPeriodId"));
-            executionPeriod = (IExecutionPeriod) ServiceUtils.executeService(SessionUtils
+            executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(SessionUtils
                     .getUserView(request), "ReadDomainExecutionPeriodByOID",
                     new Object[] { executionPeriodID });
             request.setAttribute("toCreate", "toCreate");
         } else {
 
-            IInstitutionWorkTime institutionWorkTime = (IInstitutionWorkTime) ServiceUtils
+            InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) ServiceUtils
                     .executeService(SessionUtils.getUserView(request), "ReadInstitutionWorkTimeByOID",
                             new Object[] { institutionWorkingTimeID });
 
@@ -141,7 +141,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
             institutionWorkingTimeForm.set("endTimeMinutes", String.valueOf(time.get(Calendar.MINUTE)));
 
             institutionWorkingTimeForm.set("weekDay", institutionWorkTime.getWeekDay().getName());
-            ITeacherService teacherService = institutionWorkTime.getTeacherService();
+            TeacherService teacherService = institutionWorkTime.getTeacherService();
             teacher = teacherService.getTeacher();
             executionPeriod = teacherService.getExecutionPeriod();
         }

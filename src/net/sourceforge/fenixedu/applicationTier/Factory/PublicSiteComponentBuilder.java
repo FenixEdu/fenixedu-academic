@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteClasses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
@@ -53,7 +53,7 @@ public class PublicSiteComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, ISchoolClass domainClass)
+    public ISiteComponent getComponent(ISiteComponent component, SchoolClass domainClass)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         if (component instanceof InfoSiteTimetable) {
@@ -71,7 +71,7 @@ public class PublicSiteComponentBuilder {
      * @return
      * @throws ExcepcaoPersistencia 
      */
-    private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, ISchoolClass domainClass)
+    private ISiteComponent getInfoSiteClasses(InfoSiteClasses component, SchoolClass domainClass)
             throws FenixServiceException, ExcepcaoPersistencia {
         List classes = new ArrayList();
         List infoClasses = new ArrayList();
@@ -80,14 +80,14 @@ public class PublicSiteComponentBuilder {
 
             ITurmaPersistente classDAO = sp.getITurmaPersistente();
 
-            IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
-            IExecutionDegree executionDegree = domainClass.getExecutionDegree();
+            ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
+            ExecutionDegree executionDegree = domainClass.getExecutionDegree();
 
             classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(executionPeriod
                     .getIdInternal(), domainClass.getAnoCurricular(), executionDegree.getIdInternal());
 
             for (int i = 0; i < classes.size(); i++) {
-                ISchoolClass taux = (ISchoolClass) classes.get(i);
+                SchoolClass taux = (SchoolClass) classes.get(i);
                 infoClasses.add(copyClass2InfoClass(taux));
             }
 
@@ -100,19 +100,19 @@ public class PublicSiteComponentBuilder {
      * @param site
      * @return
      */
-    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, ISchoolClass domainClass)
+    private ISiteComponent getInfoSiteTimetable(InfoSiteTimetable component, SchoolClass domainClass)
             throws FenixServiceException {
         List infoLessonList = null;
 
-        List<IShift> shiftList = domainClass.getAssociatedShifts();
+        List<Shift> shiftList = domainClass.getAssociatedShifts();
         infoLessonList = new ArrayList();
 
-        IExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
+        ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear
                 .newInfoFromDomain(executionPeriod);
 
         for (final Iterator classIterator = shiftList.iterator(); classIterator.hasNext();) {
-            IShift shift = (IShift) classIterator.next();
+            Shift shift = (Shift) classIterator.next();
 
             InfoShift infoShift = copyIShift2InfoShift(shift);
             InfoExecutionCourse infoExecutionCourse = copyIExecutionCourse2InfoExecutionCourse(shift
@@ -123,7 +123,7 @@ public class PublicSiteComponentBuilder {
             List lessonList = shift.getAssociatedLessons();
             Iterator lessonIterator = lessonList.iterator();
             while (lessonIterator.hasNext()) {
-                ILesson elem = (ILesson) lessonIterator.next();
+                Lesson elem = (Lesson) lessonIterator.next();
                 InfoLesson infoLesson = copyILesson2InfoLesson(elem);
 
                 if (infoLesson != null) {
@@ -140,7 +140,7 @@ public class PublicSiteComponentBuilder {
         return component;
     }
 
-    private InfoLesson copyILesson2InfoLesson(ILesson lesson) {
+    private InfoLesson copyILesson2InfoLesson(Lesson lesson) {
         InfoLesson infoLesson = null;
         if (lesson != null) {
             infoLesson = new InfoLesson();
@@ -151,8 +151,8 @@ public class PublicSiteComponentBuilder {
             infoLesson.setTipo(lesson.getTipo());
             // infoLesson.setInfoSala(copyISala2InfoRoom(lesson.getSala()));
 
-            IRoomOccupation roomOccupation = lesson.getRoomOccupation();
-            IRoom room = roomOccupation.getRoom();
+            RoomOccupation roomOccupation = lesson.getRoomOccupation();
+            Room room = roomOccupation.getRoom();
             InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             infoRoomOccupation.setInfoRoom(infoRoom);
@@ -167,7 +167,7 @@ public class PublicSiteComponentBuilder {
      * @param executionCourse
      * @return
      */
-    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(IExecutionCourse executionCourse) {
+    private InfoExecutionCourse copyIExecutionCourse2InfoExecutionCourse(ExecutionCourse executionCourse) {
         InfoExecutionCourse infoExecutionCourse = null;
         if (executionCourse != null) {
             infoExecutionCourse = new InfoExecutionCourse();
@@ -185,7 +185,7 @@ public class PublicSiteComponentBuilder {
      * @param shift
      * @return
      */
-    private InfoShift copyIShift2InfoShift(IShift shift) {
+    private InfoShift copyIShift2InfoShift(Shift shift) {
         InfoShift infoShift = null;
         if (shift != null) {
             infoShift = new InfoShift();
@@ -199,7 +199,7 @@ public class PublicSiteComponentBuilder {
      * @param taux
      * @return
      */
-    private InfoClass copyClass2InfoClass(ISchoolClass taux) {
+    private InfoClass copyClass2InfoClass(SchoolClass taux) {
         InfoClass infoClass = null;
         if (taux != null) {
             infoClass = new InfoClass();
@@ -216,7 +216,7 @@ public class PublicSiteComponentBuilder {
      * @param period
      * @return
      */
-    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(IExecutionPeriod period) {
+    private InfoExecutionPeriod copyIExecutionPeriod2InfoExecutionPeriod(ExecutionPeriod period) {
         InfoExecutionPeriod infoExecutionPeriod = null;
         if (period != null) {
             infoExecutionPeriod = new InfoExecutionPeriod();

@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.transactions;
 
-import net.sourceforge.fenixedu.domain.transactions.IPaymentTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
@@ -12,6 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
  */
 public interface IPersistentPaymentTransaction extends IPersistentObject {
     
-    public IPaymentTransaction readByGuideEntryID(Integer guideEntryID) throws ExcepcaoPersistencia;
+    public PaymentTransaction readByGuideEntryID(Integer guideEntryID) throws ExcepcaoPersistencia;
     
 }

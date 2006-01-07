@@ -4,8 +4,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -28,8 +28,8 @@ public class WriteStudentPersonalDataAuthorizationAnswer implements IService {
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
         
-        IStudent student = (IStudent) persistentStudent.readByOID(Student.class,studentID);
-        IExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
+        Student student = (Student) persistentStudent.readByOID(Student.class,studentID);
+        ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
         
         StudentPersonalDataAuthorization studentPersonalDataAuthorization = DomainFactory.makeStudentPersonalDataAuthorization();
         studentPersonalDataAuthorization.setStudent(student);

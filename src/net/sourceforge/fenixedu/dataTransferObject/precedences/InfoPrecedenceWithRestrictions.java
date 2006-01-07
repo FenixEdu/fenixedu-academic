@@ -1,23 +1,20 @@
 package net.sourceforge.fenixedu.dataTransferObject.precedences;
 
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.precedences.IPrecedence;
-import net.sourceforge.fenixedu.domain.precedences.IRestriction;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByNumberOfCurricularCourses;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionByNumberOfDoneCurricularCourses;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionDoneCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionNotDoneCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionNotEnrolledInCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionPeriodToApply;
-
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
+import net.sourceforge.fenixedu.domain.precedences.Precedence;
+import net.sourceforge.fenixedu.domain.precedences.Restriction;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfCurricularCourses;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionNotDoneCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionNotEnrolledInCurricularCourse;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 
 /**
  * @author David Santos on Jul 27, 2004
@@ -35,12 +32,12 @@ public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
         this.infoRestrictions = infoRestrictions;
     }
 
-    public void copyFromDomain(IPrecedence precedence) {
+    public void copyFromDomain(Precedence precedence) {
         super.copyFromDomain(precedence);
         this.setInfoRestrictions(getInfoRestrictionsList(precedence.getRestrictions()));
     }
 
-    public static InfoPrecedence newInfoFromDomain(IPrecedence precedence) {
+    public static InfoPrecedence newInfoFromDomain(Precedence precedence) {
         InfoPrecedenceWithRestrictions infoPrecedenceWithRestrictions = null;
 
         if (precedence != null) {
@@ -51,46 +48,41 @@ public class InfoPrecedenceWithRestrictions extends InfoPrecedence {
         return infoPrecedenceWithRestrictions;
     }
 
-    private List getInfoRestrictionsList(List<IRestriction> restrictions) {
+    private List getInfoRestrictionsList(List<Restriction> restrictions) {
         List<InfoRestriction> infoRestrictions = new ArrayList();
 
-        for (IRestriction restriction : restrictions) {
-
-            if (restriction instanceof Proxy) {
-                restriction = (IRestriction) ProxyHelper.getRealObject(restriction);
-            }
-
-            if (restriction instanceof IRestrictionByNumberOfDoneCurricularCourses) {
+        for (Restriction restriction : restrictions) {
+            if (restriction instanceof RestrictionByNumberOfDoneCurricularCourses) {
                 InfoRestrictionByNumberOfCurricularCourses infoRestriction = InfoRestrictionByNumberOfDoneCurricularCourses
-                        .newInfoFromDomain((IRestrictionByNumberOfCurricularCourses) restriction);
+                        .newInfoFromDomain((RestrictionByNumberOfCurricularCourses) restriction);
                 infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof IRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) {
+            } else if (restriction instanceof RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                        .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof IRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse) {
+            } else if (restriction instanceof RestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionHasEverBeenOrWillBeAbleToBeEnrolledInCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                        .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof IRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse) {
+            } else if (restriction instanceof RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionDoneOrHasEverBeenEnrolledInCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                        .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof IRestrictionNotEnrolledInCurricularCourse) {
+            } else if (restriction instanceof RestrictionNotEnrolledInCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionNotEnrolledInCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                        .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof IRestrictionDoneCurricularCourse) {
+            } else if (restriction instanceof RestrictionDoneCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionDoneCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                        .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof IRestrictionNotDoneCurricularCourse) {
+            } else if (restriction instanceof RestrictionNotDoneCurricularCourse) {
                 InfoRestrictionByCurricularCourse infoRestriction = InfoRestrictionNotDoneCurricularCourse
-                        .newInfoFromDomain((IRestrictionByCurricularCourse) restriction);
+                        .newInfoFromDomain((RestrictionByCurricularCourse) restriction);
                 infoRestrictions.add(infoRestriction);
-            } else if (restriction instanceof IRestrictionPeriodToApply) {
+            } else if (restriction instanceof RestrictionPeriodToApply) {
                 InfoRestrictionPeriodToApply infoRestriction = InfoRestrictionPeriodToApply
-                        .newInfoFromDomain((IRestrictionPeriodToApply) restriction);
+                        .newInfoFromDomain((RestrictionPeriodToApply) restriction);
                 infoRestrictions.add(infoRestriction);
             }
         }

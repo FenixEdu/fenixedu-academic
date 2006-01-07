@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -250,7 +250,7 @@ public class InfoExecutionDegree extends InfoObject {
 
     }
 
-    public void copyFromDomain(IExecutionDegree executionDegree) {
+    public void copyFromDomain(ExecutionDegree executionDegree) {
         super.copyFromDomain(executionDegree);
         if (executionDegree != null) {
             setTemporaryExamMap(executionDegree.getTemporaryExamMap());
@@ -261,7 +261,7 @@ public class InfoExecutionDegree extends InfoObject {
      * @param executionDegree
      * @return
      */
-    public static InfoExecutionDegree newInfoFromDomain(IExecutionDegree executionDegree) {
+    public static InfoExecutionDegree newInfoFromDomain(ExecutionDegree executionDegree) {
         InfoExecutionDegree infoExecutionDegree = null;
         if (executionDegree != null) {
             infoExecutionDegree = new InfoExecutionDegree();
@@ -270,7 +270,7 @@ public class InfoExecutionDegree extends InfoObject {
         return infoExecutionDegree;
     }
 
-    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, IExecutionDegree executionDegree) {
+    public void copyToDomain(InfoExecutionDegree infoExecutionDegree, ExecutionDegree executionDegree) {
         super.copyToDomain(infoExecutionDegree, executionDegree);
         executionDegree.setTemporaryExamMap(infoExecutionDegree.getTemporaryExamMap());
     }

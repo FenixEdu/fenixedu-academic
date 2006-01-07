@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,9 +38,9 @@ public class GetCandidaciesByStudentIDAndSeminaryID implements IService {
 		List candidacies = persistentSeminaryCandidacy.readByStudentIDAndSeminaryID(studentID,
 				seminaryID);
 		for (Iterator iterator = candidacies.iterator(); iterator.hasNext();) {
-			ICandidacy candidacy = (ICandidacy) iterator.next();
+			Candidacy candidacy = (Candidacy) iterator.next();
 			InfoCandidacy infoCandidacy = InfoCandidacy.newInfoFromDomain(candidacy);
-			ISeminary seminary = candidacy.getSeminary();
+			Seminary seminary = candidacy.getSeminary();
 			infoCandidacy.setSeminaryName(seminary.getName());
 			candidaciesInfo.add(infoCandidacy);
 		}

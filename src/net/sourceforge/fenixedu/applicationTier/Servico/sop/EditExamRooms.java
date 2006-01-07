@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.IExam;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
@@ -28,12 +28,12 @@ public class EditExamRooms implements IService {
         final ISalaPersistente persistentRoom = sp.getISalaPersistente();
         final IPersistentExam persistentExam = sp.getIPersistentExam();
 
-        final List<IRoom> finalRoomList = new ArrayList<IRoom>();
+        final List<Room> finalRoomList = new ArrayList<Room>();
         for (final Integer id : roomsForExam) {
-        	finalRoomList.add((IRoom) persistentRoom.readByOID(Room.class, (Integer) id));
+        	finalRoomList.add((Room) persistentRoom.readByOID(Room.class, (Integer) id));
         }
 
-        final IExam exam = (IExam) persistentExam.readByOID(Exam.class, infoExam.getIdInternal());
+        final Exam exam = (Exam) persistentExam.readByOID(Exam.class, infoExam.getIdInternal());
         if (exam == null) {
             throw new NonExistingServiceException();
         }

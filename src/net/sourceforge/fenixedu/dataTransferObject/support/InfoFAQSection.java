@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.support.IFAQSection;
+import net.sourceforge.fenixedu.domain.support.FAQSection;
 
 /**
  * @author Luis Cruz
@@ -68,11 +68,11 @@ public class InfoFAQSection extends InfoObject implements Serializable {
         this.entries = entries;
     }
 
-    public void copyFromDomain(IFAQSection faqSection) {
+    public void copyFromDomain(FAQSection faqSection) {
         super.copyFromDomain(faqSection);
         if (faqSection != null) {
             setSectionName(faqSection.getSectionName());
-            IFAQSection parentSection = faqSection.getParentSection();
+            FAQSection parentSection = faqSection.getParentSection();
             if (parentSection != null) {
                 setParentSection(new InfoFAQSection());
                 getParentSection().setIdInternal(parentSection.getIdInternal());
@@ -80,7 +80,7 @@ public class InfoFAQSection extends InfoObject implements Serializable {
         }
     }
 
-    public static InfoFAQSection newInfoFromDomain(IFAQSection faqSection) {
+    public static InfoFAQSection newInfoFromDomain(FAQSection faqSection) {
         InfoFAQSection infoFAQSection = null;
         if (faqSection != null) {
             infoFAQSection = new InfoFAQSection();

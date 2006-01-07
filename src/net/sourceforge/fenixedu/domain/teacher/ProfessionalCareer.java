@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 /**
@@ -20,7 +20,7 @@ public class ProfessionalCareer extends ProfessionalCareer_Base {
         setOjbConcreteClass(ProfessionalCareer.class.getName());
     }
 	
-    public ProfessionalCareer(ITeacher teacher, InfoProfessionalCareer infoProfessionalCareer) {
+    public ProfessionalCareer(Teacher teacher, InfoProfessionalCareer infoProfessionalCareer) {
 		if(teacher == null)
 			throw new DomainException("The teacher should not be null!");
 

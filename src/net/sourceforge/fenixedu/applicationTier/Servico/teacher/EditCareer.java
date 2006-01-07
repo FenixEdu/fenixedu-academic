@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCareer;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ICategory;
-import net.sourceforge.fenixedu.domain.teacher.IProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.ITeachingCareer;
+import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
+import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -45,12 +45,12 @@ public class EditCareer implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject po = sp.getIPersistentObject();
 		
-		ITeachingCareer teachingCareer = (ITeachingCareer) po.readByOID(TeachingCareer.class, careerId);
+		TeachingCareer teachingCareer = (TeachingCareer) po.readByOID(TeachingCareer.class, careerId);
 		
-        ICategory category = (ICategory)po.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
+        Category category = (Category)po.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
 		//If it doesn't exist in the database, a new one has to be created
 		if(teachingCareer == null) {
-			ITeacher teacher = (ITeacher) po.readByOID(Teacher.class, infoTeachingCareer.getInfoTeacher().getIdInternal());
+			Teacher teacher = (Teacher) po.readByOID(Teacher.class, infoTeachingCareer.getInfoTeacher().getIdInternal());
 			teachingCareer = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareer);
 
 		} else {
@@ -65,11 +65,11 @@ public class EditCareer implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject po = sp.getIPersistentObject();
 		
-		IProfessionalCareer professionalCareer = (IProfessionalCareer) po.readByOID(ProfessionalCareer.class, careerId);
+		ProfessionalCareer professionalCareer = (ProfessionalCareer) po.readByOID(ProfessionalCareer.class, careerId);
 		
 		//If it doesn't exist in the database, a new one has to be created
 		if(professionalCareer == null) {
-			ITeacher teacher = (ITeacher) po.readByOID(Teacher.class, infoProfessionalCareer.getInfoTeacher().getIdInternal());
+			Teacher teacher = (Teacher) po.readByOID(Teacher.class, infoProfessionalCareer.getInfoTeacher().getIdInternal());
 			professionalCareer = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareer);
 		} else {
 			professionalCareer.edit(infoProfessionalCareer);

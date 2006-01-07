@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.ICountry;
-import net.sourceforge.fenixedu.domain.IPerson;
+import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
  */
 public class InfoPersonWithInfoCountry extends InfoPerson {
 
-    public void copyFromDomain(IPerson person) {
+    public void copyFromDomain(Person person) {
         super.copyFromDomain(person);
         if (person != null) {
             setInfoPais(InfoCountry.newInfoFromDomain(person.getPais()));
         }
     }
 
-    public static InfoPerson newInfoFromDomain(IPerson person) {
+    public static InfoPerson newInfoFromDomain(Person person) {
         InfoPersonWithInfoCountry infoPerson = null;
         if (person != null) {
             infoPerson = new InfoPersonWithInfoCountry();
@@ -33,11 +33,11 @@ public class InfoPersonWithInfoCountry extends InfoPerson {
         return infoPerson;
     }
 
-    public void copyToDomain(InfoPerson infoPerson, IPerson person) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoPerson infoPerson, Person person) throws ExcepcaoPersistencia {
         super.copyToDomain(infoPerson, person);
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ICountry country = (ICountry) sp.getIPersistentCountry().readByOID(Country.class,
+        Country country = (Country) sp.getIPersistentCountry().readByOID(Country.class,
                 infoPerson.getInfoPais().getIdInternal());
         person.setPais(country);
     }

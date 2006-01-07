@@ -4,7 +4,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.cms.website;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
-import net.sourceforge.fenixedu.domain.cms.website.IExecutionCourseWebsite;
+import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.cms.website.IExecutionCourseWebsite;
  */
 public class DeleteExecutionCourseWebsite extends CmsService
 {
-	public void run(IExecutionCourseWebsite website)
+	public void run(ExecutionCourseWebsite website)
 	{
 		website.delete();
 	}

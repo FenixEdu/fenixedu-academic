@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -30,7 +30,7 @@ public class ResponsibleCoordinators implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        IExecutionDegree executionDegree = (IExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
         if (executionDegree == null) {
             throw new InvalidArgumentsServiceException();
@@ -39,9 +39,9 @@ public class ResponsibleCoordinators implements IService {
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
         Iterator iterator = executionDegree.getCoordinatorsList().iterator();
         while (iterator.hasNext()) {
-            ICoordinator coordinator = (ICoordinator) iterator.next();
+            Coordinator coordinator = (Coordinator) iterator.next();
 
-            coordinator = (ICoordinator) persistentCoordinator.readByOID(Coordinator.class, coordinator
+            coordinator = (Coordinator) persistentCoordinator.readByOID(Coordinator.class, coordinator
                     .getIdInternal(), true);
             if (coordinator == null) {
                 return new Boolean(false);

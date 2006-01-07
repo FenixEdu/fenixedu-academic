@@ -27,7 +27,7 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
      * @param sibsPaymentStatusType
      */
     public SibsPaymentFileEntry(Integer year, Integer studentNumber, SibsPaymentType paymentType,
-            Date transactionDate, Double payedValue, ISibsPaymentFile sibsPaymentFile,
+            Date transactionDate, Double payedValue, SibsPaymentFile sibsPaymentFile,
             SibsPaymentStatus paymentStatus) {
         this.setYear(year);
         this.setStudentNumber(studentNumber);

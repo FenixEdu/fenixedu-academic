@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -76,7 +76,7 @@ public class Authenticate implements IService, Serializable {
 
         final private Collection roles;
 
-        private UserView(final IPerson person, final Set allowedRoles) {
+        private UserView(final Person person, final Set allowedRoles) {
             this.personRef = new DomainObjectReference<Person>((Person) person);
 
             final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
@@ -97,7 +97,7 @@ public class Authenticate implements IService, Serializable {
             return roles.contains(infoRole);
         }
 
-		public IPerson getPerson() {
+		public Person getPerson() {
 			return personRef.get();
 		}
 
@@ -130,7 +130,7 @@ public class Authenticate implements IService, Serializable {
                 .getDefaultPersistenceSupport();
         final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
 
-        final IPerson person = persistentPerson.lerPessoaPorUsername(username);
+        final Person person = persistentPerson.lerPessoaPorUsername(username);
         if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
@@ -144,7 +144,7 @@ public class Authenticate implements IService, Serializable {
             final Set allowedRoles) {
         final Map<RoleType, InfoRole> infoRoles = new HashMap<RoleType, InfoRole>(personRoles.size());
         for (final Iterator iterator = personRoles.iterator(); iterator.hasNext();) {
-            final IRole role = (IRole) iterator.next();
+            final Role role = (Role) iterator.next();
             final RoleType roleType = role.getRoleType();
             if (allowedRoles.contains(roleType)) {
                 final InfoRole infoRole = InfoRole.newInfoFromDomain(role);

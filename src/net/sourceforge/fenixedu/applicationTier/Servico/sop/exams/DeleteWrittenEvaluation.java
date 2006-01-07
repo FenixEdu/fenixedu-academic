@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop.exams;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.IWrittenEvaluation;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
@@ -22,7 +22,7 @@ public class DeleteWrittenEvaluation implements IService {
                 .getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
 
-        final IWrittenEvaluation writtenEvaluationToDelete = (IWrittenEvaluation) persistentObject
+        final WrittenEvaluation writtenEvaluationToDelete = (WrittenEvaluation) persistentObject
                 .readByOID(WrittenEvaluation.class, writtenEvaluationOID);
         if (writtenEvaluationToDelete == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");

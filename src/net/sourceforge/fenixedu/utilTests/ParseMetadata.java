@@ -16,7 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -37,7 +37,7 @@ public class ParseMetadata extends DefaultHandler {
 
     private Element current = null;
 
-    public IMetadata parseMetadata(IMetadata metadata, String path) throws IOException, ParserConfigurationException, SAXException {
+    public Metadata parseMetadata(Metadata metadata, String path) throws IOException, ParserConfigurationException, SAXException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
         SAXParser saxParser = spf.newSAXParser();
@@ -93,7 +93,7 @@ public class ParseMetadata extends DefaultHandler {
         }
     }
 
-    private IMetadata vector2Metadata(Vector<Element> vector, IMetadata metadata) {
+    private Metadata vector2Metadata(Vector<Element> vector, Metadata metadata) {
 
         boolean difficulty = false, description = false, mainsubject = false, secondarysubject = false, level = false, author = false, value = false, typicallearningtime = false;
         String secondarySubjectString = new String(), authorString = new String();

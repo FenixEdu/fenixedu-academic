@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -62,18 +62,18 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
         try {
             final ISuportePersistente persistentSupport = PersistenceSupportFactory
                     .getDefaultPersistenceSupport();
-            final ITeacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
+            final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
                     id.getUtilizador());
             if (teacher == null) {
                 return false;
             }
-            final IExecutionCourse executionCourse = (IExecutionCourse) persistentSupport
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
                     .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseID);
             if (executionCourse == null) {
                 return false;
             }
 
-            for (final IProfessorship professorship : executionCourse.getProfessorships()) {
+            for (final Professorship professorship : executionCourse.getProfessorships()) {
                 if (professorship.getTeacher() == teacher) {
                     return true;
                 }

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.ISupportLesson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.SupportLesson;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.WeekDay;
@@ -20,7 +20,7 @@ import org.apache.commons.collections.Predicate;
 
 public class TeacherService extends TeacherService_Base {
 
-    public TeacherService(ITeacher teacher, IExecutionPeriod executionPeriod) {
+    public TeacherService(Teacher teacher, ExecutionPeriod executionPeriod) {
         super();
         if (teacher == null || executionPeriod == null) {
             throw new DomainException("arguments can't be null");
@@ -50,7 +50,7 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getTeachingDegreeCredits() {
         double credits = 0;
-        for (IDegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
+        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             credits += degreeTeachingService.getShift().hours()
                     * (degreeTeachingService.getPercentage().doubleValue() / 100);
         }
@@ -59,7 +59,7 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getSupportLessonHours() {
         double hours = 0;
-        for (ISupportLesson supportLesson : getSupportLessons()) {
+        for (SupportLesson supportLesson : getSupportLessons()) {
             hours += supportLesson.hours();
         }
         return hours;
@@ -67,7 +67,7 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getMasterDegreeServiceCredits() {
         double credits = 0;
-        for (ITeacherMasterDegreeService teacherMasterDegreeService : getMasterDegreeServices()) {
+        for (TeacherMasterDegreeService teacherMasterDegreeService : getMasterDegreeServices()) {
             if (teacherMasterDegreeService.getCredits() != null) {
                 credits += teacherMasterDegreeService.getCredits();
             }
@@ -77,7 +77,7 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getTeacherAdviseServiceCredits() {
         double credits = 0;
-        for (ITeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
+        for (TeacherAdviseService teacherAdviseService : getTeacherAdviseServices()) {
             credits = credits + ((teacherAdviseService.getPercentage().doubleValue() / 100) * (1.0 / 3));
         }
         return round(credits);
@@ -85,7 +85,7 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getPastServiceCredits() {
         double credits = 0;
-        ITeacherPastService teacherPastService = getPastService();
+        TeacherPastService teacherPastService = getPastService();
         if (teacherPastService != null) {
             credits = teacherPastService.getCredits();
         }
@@ -94,7 +94,7 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getOtherServiceCredits() {
         double credits = 0;
-        for (IOtherService otherService : getOtherServices()) {
+        for (OtherService otherService : getOtherServices()) {
             credits += otherService.getCredits();
         }
         return round(credits);
@@ -102,14 +102,14 @@ public class TeacherService extends TeacherService_Base {
 
     public Double getInstitutionWorkingHours() {
         double hours = 0;
-        for (IInstitutionWorkTime institutionWorkTime : getInstitutionWorkTimes()) {
+        for (InstitutionWorkTime institutionWorkTime : getInstitutionWorkTimes()) {
             hours += institutionWorkTime.getHours();
         }
         return hours;
     }
 
     public void verifyOverlappingWithInstitutionWorkingTime(Date startTime, Date endTime, WeekDay weekDay) {
-        for (IInstitutionWorkTime teacherInstitutionWorkTime : getInstitutionWorkTimes()) {
+        for (InstitutionWorkTime teacherInstitutionWorkTime : getInstitutionWorkTimes()) {
             if (teacherInstitutionWorkTime.getWeekDay().equals(weekDay)) {
                 Date startWorkTime = teacherInstitutionWorkTime.getStartTime();
                 Date endWorkTime = teacherInstitutionWorkTime.getEndTime();
@@ -121,7 +121,7 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public void verifyOverlappingWithSupportLesson(Date startTime, Date endTime, WeekDay weekDay) {
-        for (ISupportLesson supportLesson : getSupportLessons()) {
+        for (SupportLesson supportLesson : getSupportLessons()) {
             if (WeekDay.getWeekDay(supportLesson.getWeekDay()).equals(weekDay)) {
                 Date supportLessonStart = supportLesson.getStartTime();
                 Date supportLessonEnd = supportLesson.getEndTime();
@@ -134,9 +134,9 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public void verifyOverlappingWithTeachingService(Date startTime, Date endTime, WeekDay weekDay) {
-        for (IDegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
+        for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
             if (degreeTeachingService.getPercentage().doubleValue() == 100) {
-                for (ILesson lesson : degreeTeachingService.getShift().getAssociatedLessons()) {
+                for (Lesson lesson : degreeTeachingService.getShift().getAssociatedLessons()) {
                     if (weekDay.equals(WeekDay.getWeekDay(lesson.getDiaSemana()))) {
                         Date lessonStartTime = lesson.getBegin();
                         Date lessonEndTime = lesson.getEnd();
@@ -149,63 +149,63 @@ public class TeacherService extends TeacherService_Base {
         }
     }
 
-    public IDegreeTeachingService getDegreeTeachingServiceByShiftAndExecutionCourse(final IShift shift,
-            final IExecutionCourse executionCourse) {
-        return (IDegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
+    public DegreeTeachingService getDegreeTeachingServiceByShiftAndExecutionCourse(final Shift shift,
+            final ExecutionCourse executionCourse) {
+        return (DegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
                 new Predicate() {
                     public boolean evaluate(Object arg0) {
-                        IDegreeTeachingService degreeTeachingService = (IDegreeTeachingService) arg0;
+                        DegreeTeachingService degreeTeachingService = (DegreeTeachingService) arg0;
                         return (degreeTeachingService.getShift() == shift)
                                 && (degreeTeachingService.getProfessorship().getExecutionCourse() == executionCourse);
                     }
                 });
     }
 
-    public List<IDegreeTeachingService> getDegreeTeachingServices() {
-        return (List<IDegreeTeachingService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+    public List<DegreeTeachingService> getDegreeTeachingServices() {
+        return (List<DegreeTeachingService>) CollectionUtils.select(getServiceItems(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                return arg0 instanceof IDegreeTeachingService;
+                return arg0 instanceof DegreeTeachingService;
             }
         });
     }
 
-    public List<ITeacherMasterDegreeService> getMasterDegreeServices() {
-        return (List<ITeacherMasterDegreeService>) CollectionUtils.select(getServiceItems(),
+    public List<TeacherMasterDegreeService> getMasterDegreeServices() {
+        return (List<TeacherMasterDegreeService>) CollectionUtils.select(getServiceItems(),
                 new Predicate() {
                     public boolean evaluate(Object arg0) {
-                        return arg0 instanceof ITeacherMasterDegreeService;
+                        return arg0 instanceof TeacherMasterDegreeService;
                     }
                 });
     }
 
-    public ITeacherPastService getPastService() {
-        return (ITeacherPastService) CollectionUtils.find(getServiceItems(), new Predicate() {
+    public TeacherPastService getPastService() {
+        return (TeacherPastService) CollectionUtils.find(getServiceItems(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                return arg0 instanceof ITeacherPastService;
+                return arg0 instanceof TeacherPastService;
             }
         });
     }
 
-    public List<IOtherService> getOtherServices() {
-        return (List<IOtherService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+    public List<OtherService> getOtherServices() {
+        return (List<OtherService>) CollectionUtils.select(getServiceItems(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                return arg0 instanceof IOtherService;
+                return arg0 instanceof OtherService;
             }
         });
     }
 
-    public List<IInstitutionWorkTime> getInstitutionWorkTimes() {
-        return (List<IInstitutionWorkTime>) CollectionUtils.select(getServiceItems(), new Predicate() {
+    public List<InstitutionWorkTime> getInstitutionWorkTimes() {
+        return (List<InstitutionWorkTime>) CollectionUtils.select(getServiceItems(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                return arg0 instanceof IInstitutionWorkTime;
+                return arg0 instanceof InstitutionWorkTime;
             }
         });
     }
 
-    public List<ISupportLesson> getSupportLessons() {
-        List<ISupportLesson> supportLessons = new ArrayList<ISupportLesson>();
-        for (IProfessorship professorship : getTeacher().getProfessorships()) {
-            IExecutionCourse executionCourse = professorship.getExecutionCourse();
+    public List<SupportLesson> getSupportLessons() {
+        List<SupportLesson> supportLessons = new ArrayList<SupportLesson>();
+        for (Professorship professorship : getTeacher().getProfessorships()) {
+            ExecutionCourse executionCourse = professorship.getExecutionCourse();
             if (executionCourse.getExecutionPeriod() == getExecutionPeriod()) {
                 if (!executionCourse.isMasterDegreeOnly()) {
                     supportLessons.addAll(professorship.getSupportLessons());
@@ -215,10 +215,10 @@ public class TeacherService extends TeacherService_Base {
         return supportLessons;
     }
 
-    public List<ITeacherAdviseService> getTeacherAdviseServices() {
-        return (List<ITeacherAdviseService>) CollectionUtils.select(getServiceItems(), new Predicate() {
+    public List<TeacherAdviseService> getTeacherAdviseServices() {
+        return (List<TeacherAdviseService>) CollectionUtils.select(getServiceItems(), new Predicate() {
             public boolean evaluate(Object arg0) {
-                return arg0 instanceof ITeacherAdviseService;
+                return arg0 instanceof TeacherAdviseService;
             }
         });
     }

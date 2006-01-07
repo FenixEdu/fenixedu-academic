@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
-import net.sourceforge.fenixedu.domain.IScientificArea;
+import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
@@ -19,9 +19,9 @@ public class ScientificAreaOJB extends PersistentObjectOJB implements IPersisten
     public ScientificAreaOJB() {
     }
 
-    public IScientificArea readByName(String name) throws ExcepcaoPersistencia {
+    public ScientificArea readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
-        return (IScientificArea) queryObject(ScientificArea.class, criteria);
+        return (ScientificArea) queryObject(ScientificArea.class, criteria);
     }
 }

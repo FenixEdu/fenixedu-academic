@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
-import net.sourceforge.fenixedu.domain.ICandidateSituation;
+import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,7 +43,7 @@ public class ReadCandidateForRegistration implements IService {
 		List candidateList = new ArrayList();
 		Iterator iterator = result.iterator();
 		while (iterator.hasNext()) {
-			ICandidateSituation candidateSituation = (ICandidateSituation) iterator
+			CandidateSituation candidateSituation = (CandidateSituation) iterator
 					.next();
 			InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson
 					.newInfoFromDomain(candidateSituation

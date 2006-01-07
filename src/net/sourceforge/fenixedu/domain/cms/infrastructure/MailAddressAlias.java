@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.cms.infrastructure;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailingList;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import relations.MailingListAlias;
 public class MailAddressAlias extends MailAddressAlias_Base {
     
@@ -10,7 +10,7 @@ public class MailAddressAlias extends MailAddressAlias_Base {
 
 	public void delete()
 	{
-		for (IMailingList mailingList : this.getMailingLists())
+		for (MailingList mailingList : this.getMailingLists())
 		{
 			MailingListAlias.remove(mailingList,this);
 		}		

@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -44,10 +44,10 @@ public class DeleteProffessorshpAuthorizationFilter extends AuthorizationByRoleF
         final Integer executionCourseID = (Integer) argumentos[0];
         final Integer teacherID = (Integer) argumentos[1];
 
-        final IProfessorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
+        final Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
                 teacherID, executionCourseID);
-        final ITeacher teacher = professorship.getTeacher();
-        final IPerson person = teacher.getPerson();
+        final Teacher teacher = professorship.getTeacher();
+        final Person person = teacher.getPerson();
         return id.getUtilizador().equalsIgnoreCase(person.getUsername());
     }
 

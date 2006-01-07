@@ -8,10 +8,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IEnrolmentEvaluation;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
@@ -42,17 +42,17 @@ public class AlterStudentEnrolmentEvaluation implements IService {
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
         IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
 
-        IPerson person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
         if (person == null)
             throw new NonExistingServiceException();
 
-        IEmployee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
+        Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 
-        ITeacher teacher = persistentTeacher.readByNumber(teacherNumber);
+        Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
         if (teacher == null)
             throw new NonExistingServiceException();
 
-        IEnrolmentEvaluation enrolmentEvaluationCopy = (IEnrolmentEvaluation) persistentEnrolmentEvaluation
+        EnrolmentEvaluation enrolmentEvaluationCopy = (EnrolmentEvaluation) persistentEnrolmentEvaluation
                 .readByOID(EnrolmentEvaluation.class, enrolmentEvaluationCode);
         if (enrolmentEvaluationCopy == null)
             throw new NonExistingServiceException();

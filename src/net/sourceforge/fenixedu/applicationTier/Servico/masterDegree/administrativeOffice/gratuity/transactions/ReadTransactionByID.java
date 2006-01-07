@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
-import net.sourceforge.fenixedu.domain.transactions.ITransaction;
+import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -22,7 +22,7 @@ public class ReadTransactionByID implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		ITransaction transaction = (ITransaction) sp.getIPersistentTransaction().readByOID(
+		Transaction transaction = (Transaction) sp.getIPersistentTransaction().readByOID(
 				Transaction.class, transactionId);
 
 		if (transaction == null) {

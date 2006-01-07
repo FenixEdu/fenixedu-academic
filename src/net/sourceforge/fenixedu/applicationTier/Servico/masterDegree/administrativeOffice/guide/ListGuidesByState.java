@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.GuideState;
-import net.sourceforge.fenixedu.domain.IGuide;
+import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -33,7 +33,7 @@ public class ListGuidesByState implements IService {
 		List result = new ArrayList();
 		while (iterator.hasNext()) {
 			result.add(InfoGuideWithPersonAndExecutionDegreeAndContributor
-					.newInfoFromDomain((IGuide) iterator.next()));
+					.newInfoFromDomain((Guide) iterator.next()));
 		}
 
 		return result;

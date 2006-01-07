@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.OJB.cms;
 
-import net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias;
+import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
@@ -22,12 +22,12 @@ import org.apache.ojb.broker.query.Criteria;
 public class PersistentMailAddressAliasOJB extends PersistentObjectOJB implements IPersistentMailAddressAlias
 {
 
-	public IMailAddressAlias readByAddress(String name) throws ExcepcaoPersistencia
+	public MailAddressAlias readByAddress(String name) throws ExcepcaoPersistencia
 	{
 		Criteria crit = new Criteria();
 		crit.addEqualTo("address",name);
 		
-		return (IMailAddressAlias) queryObject(MailAddressAlias.class,crit);
+		return (MailAddressAlias) queryObject(MailAddressAlias.class,crit);
 	}
 
 }

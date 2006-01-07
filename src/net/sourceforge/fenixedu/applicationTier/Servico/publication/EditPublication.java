@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationAuthor;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.publication.IPublication;
-import net.sourceforge.fenixedu.domain.publication.IPublicationType;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.publication.Publication;
+import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,10 +26,10 @@ public class EditPublication implements IService {
         final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
         final IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
 
-        final IPublication publication = (IPublication) persistentPublication.readByOID(
+        final Publication publication = (Publication) persistentPublication.readByOID(
                 Publication.class, infoPublication.getIdInternal());
 
-        final IPublicationType publicationType = (IPublicationType) persistentPublicationType.readByOID(
+        final PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, infoPublication.getInfoPublicationType().getIdInternal());
 
         final List<InfoAuthor> infoAuthors = new ArrayList<InfoAuthor>();
@@ -42,7 +42,7 @@ public class EditPublication implements IService {
         // Call the InsertInexistentAuthors Service to insert the inexistent
         // authors as external persons
         final InsertInexistentAuthors ia = new InsertInexistentAuthors();
-        final List<IPerson> authors = ia.run(infoAuthors);
+        final List<Person> authors = ia.run(infoAuthors);
 
         publication.edit(infoPublication, publicationType, authors);
     }

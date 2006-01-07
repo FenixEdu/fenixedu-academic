@@ -14,8 +14,8 @@ public class Function extends Function_Base {
         return false;
     }
 
-    public void edit(String functionName, Date beginDate, Date endDate, FunctionType type, IUnit unit,
-            IFunction parentInherentFunction) {       
+    public void edit(String functionName, Date beginDate, Date endDate, FunctionType type, Unit unit,
+            Function parentInherentFunction) {       
         this.setName(functionName);
         this.setBeginDate(beginDate);
         if(endDate != null && endDate.before(beginDate)){

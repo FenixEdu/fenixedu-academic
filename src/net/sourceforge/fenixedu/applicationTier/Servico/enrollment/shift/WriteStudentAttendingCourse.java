@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IEnrolment;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -45,7 +45,7 @@ public class WriteStudentAttendingCourse implements IService {
 				.getIStudentCurricularPlanPersistente();
 
 		IPersistentStudent studentDAO = sp.getIPersistentStudent();
-		IStudent student = (IStudent) studentDAO.readByOID(Student.class,
+		Student student = (Student) studentDAO.readByOID(Student.class,
 				infoStudent.getIdInternal());
 		infoStudent.setNumber(student.getNumber());
 
@@ -54,10 +54,10 @@ public class WriteStudentAttendingCourse implements IService {
 		}
 
 		if (executionCourseId != null) {
-			IStudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(
+			StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(
 					infoStudent, persistentStudentCurricularPlan);
 
-			IExecutionCourse executionCourse = findExecutionCourse(
+			ExecutionCourse executionCourse = findExecutionCourse(
 					executionCourseId, persistentExecutionCourse);
 
 			// Read every course the student attends to:
@@ -69,7 +69,7 @@ public class WriteStudentAttendingCourse implements IService {
 				throw new ReachedAttendsLimitServiceException();
 			}
 
-			IAttends attendsEntry = persistentAttend
+			Attends attendsEntry = persistentAttend
 					.readByAlunoAndDisciplinaExecucao(studentCurricularPlan
 							.getStudent().getIdInternal(), executionCourse
 							.getIdInternal());
@@ -89,17 +89,17 @@ public class WriteStudentAttendingCourse implements IService {
 
 	private void findEnrollmentForAttend(
 			IPersistentEnrollment persistentEnrolment,
-			IStudentCurricularPlan studentCurricularPlan,
-			IExecutionCourse executionCourse, IAttends attendsEntry)
+			StudentCurricularPlan studentCurricularPlan,
+			ExecutionCourse executionCourse, Attends attendsEntry)
 			throws ExcepcaoPersistencia {
 		// checks if there is an enrollment for this attend
 		Iterator iterCurricularCourses = executionCourse
 				.getAssociatedCurricularCourses().iterator();
 		while (iterCurricularCourses.hasNext()) {
-			ICurricularCourse curricularCourseElem = (ICurricularCourse) iterCurricularCourses
+			CurricularCourse curricularCourseElem = (CurricularCourse) iterCurricularCourses
 					.next();
 
-			IEnrolment enrollment = persistentEnrolment
+			Enrolment enrollment = persistentEnrolment
 					.readByStudentCurricularPlanAndCurricularCourseAndExecutionPeriod(
 							studentCurricularPlan.getIdInternal(),
 							curricularCourseElem.getIdInternal(),
@@ -112,10 +112,10 @@ public class WriteStudentAttendingCourse implements IService {
 		}
 	}
 
-	private IExecutionCourse findExecutionCourse(Integer executionCourseId,
+	private ExecutionCourse findExecutionCourse(Integer executionCourseId,
 			IPersistentExecutionCourse persistentExecutionCourse)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse
 				.readByOID(ExecutionCourse.class, executionCourseId);
 
 		if (executionCourse == null) {
@@ -124,11 +124,11 @@ public class WriteStudentAttendingCourse implements IService {
 		return executionCourse;
 	}
 
-	private IStudentCurricularPlan findStudentCurricularPlan(
+	private StudentCurricularPlan findStudentCurricularPlan(
 			InfoStudent infoStudent,
 			IPersistentStudentCurricularPlan persistentStudentCurricularPlan)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		IStudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
+		StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
 				.readActiveByStudentNumberAndDegreeType(
 						infoStudent.getNumber(), DegreeType.DEGREE);
 

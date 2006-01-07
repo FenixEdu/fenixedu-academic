@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -22,11 +22,11 @@ public class ReadExecutionPeriod implements IService {
 	public InfoExecutionPeriod run(Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp;
 		InfoExecutionPeriod infoExecutionPeriod = null;
-		IExecutionPeriod executionPeriod = null;
+		ExecutionPeriod executionPeriod = null;
 
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		executionPeriod = (IExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(
+		executionPeriod = (ExecutionPeriod) sp.getIPersistentExecutionPeriod().readByOID(
 				ExecutionPeriod.class, executionPeriodId);
 
 		if (executionPeriod == null) {

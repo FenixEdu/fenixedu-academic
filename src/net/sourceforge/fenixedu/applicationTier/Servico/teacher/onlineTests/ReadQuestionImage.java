@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.IQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class ReadQuestionImage implements IService {
     public String run(Integer exerciseId, Integer imageId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IQuestion question = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, exerciseId);
+        Question question = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, exerciseId);
         ParseQuestion parse = new ParseQuestion();
         String image;
         try {
@@ -47,7 +47,7 @@ public class ReadQuestionImage implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IQuestion question = (IQuestion) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionId);
+        Question question = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionId);
         InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
         try {
             ParseQuestion parse = new ParseQuestion();

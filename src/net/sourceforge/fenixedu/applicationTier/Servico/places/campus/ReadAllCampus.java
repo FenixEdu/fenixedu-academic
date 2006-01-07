@@ -8,7 +8,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCampus;
-import net.sourceforge.fenixedu.domain.ICampus;
+import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -33,7 +33,7 @@ public class ReadAllCampus implements IService {
 		infoCampusList = (List) CollectionUtils.collect(campusList, new Transformer() {
 
 			public Object transform(Object input) {
-				ICampus campus = (ICampus) input;
+				Campus campus = (Campus) input;
 				InfoCampus infoCampus = InfoCampus.newInfoFromDomain(campus);
 				return infoCampus;
 			}

@@ -10,16 +10,16 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICandidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudyChoice;
-import net.sourceforge.fenixedu.domain.Seminaries.IModality;
-import net.sourceforge.fenixedu.domain.Seminaries.ISeminary;
-import net.sourceforge.fenixedu.domain.Seminaries.ITheme;
+import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
+import net.sourceforge.fenixedu.domain.Seminaries.Modality;
+import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
+import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
@@ -43,28 +43,28 @@ public class WriteCandidacy implements IService {
     public void run(InfoCandidacy infoCandidacy) throws ExcepcaoPersistencia {
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ICandidacy candidacy = DomainFactory.makeCandidacy();
+        Candidacy candidacy = DomainFactory.makeCandidacy();
         candidacy.setApproved(infoCandidacy.getApproved());
         candidacy.setMotivation(infoCandidacy.getMotivation());
         
         // Modality
         final IPersistentSeminaryModality persistentModality = persistenceSupport.getIPersistentSeminaryModality();
-        final IModality modality = (IModality) persistentModality.readByOID(Modality.class,infoCandidacy.getInfoModality().getIdInternal());        
+        final Modality modality = (Modality) persistentModality.readByOID(Modality.class,infoCandidacy.getInfoModality().getIdInternal());        
         candidacy.setModality(modality);
 
         // Student
         final IPersistentStudent persistentStudent = persistenceSupport.getIPersistentStudent();
-        final IStudent readStudent = (IStudent) persistentStudent.readByOID(Student.class, infoCandidacy.getInfoStudent().getIdInternal());
+        final Student readStudent = (Student) persistentStudent.readByOID(Student.class, infoCandidacy.getInfoStudent().getIdInternal());
         candidacy.setStudent(readStudent);
 
         // Seminary
         final IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();
-        final ISeminary readSeminary = (ISeminary) persistentSeminary.readByOID(Seminary.class, infoCandidacy.getInfoSeminary().getIdInternal());
+        final Seminary readSeminary = (Seminary) persistentSeminary.readByOID(Seminary.class, infoCandidacy.getInfoSeminary().getIdInternal());
         candidacy.setSeminary(readSeminary);
         
         // Curricular Course
         final IPersistentCurricularCourse persistentCurricularCourse = persistenceSupport.getIPersistentCurricularCourse();
-        final ICurricularCourse readCurricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, infoCandidacy.getCurricularCourse().getIdInternal());
+        final CurricularCourse readCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, infoCandidacy.getCurricularCourse().getIdInternal());
         candidacy.setCurricularCourse(readCurricularCourse);
 
         // Theme
@@ -72,7 +72,7 @@ public class WriteCandidacy implements IService {
             candidacy.setTheme(null);
         } else {
             final IPersistentSeminaryTheme persistentTheme = persistenceSupport.getIPersistentSeminaryTheme();
-            final ITheme readTheme = (ITheme) persistentTheme.readByOID(Theme.class, infoCandidacy.getTheme().getIdInternal());
+            final Theme readTheme = (Theme) persistentTheme.readByOID(Theme.class, infoCandidacy.getTheme().getIdInternal());
             candidacy.setTheme(readTheme);
         }
         if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
@@ -82,11 +82,11 @@ public class WriteCandidacy implements IService {
         // Seminary Case Study Choices
         final IPersistentSeminaryCaseStudy persistentSeminaryCaseStudy = persistenceSupport.getIPersistentSeminaryCaseStudy();
         for (InfoCaseStudyChoice infoCaseStudyChoice : (List<InfoCaseStudyChoice>) infoCandidacy.getCaseStudyChoices()) {
-            final ICaseStudyChoice caseStudyChoice = DomainFactory.makeCaseStudyChoice();
+            final CaseStudyChoice caseStudyChoice = DomainFactory.makeCaseStudyChoice();
             
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-            final ICaseStudy caseStudy = (ICaseStudy) persistentSeminaryCaseStudy.readByOID(CaseStudy.class, infoCaseStudyChoice.getCaseStudy().getIdInternal());
+            final CaseStudy caseStudy = (CaseStudy) persistentSeminaryCaseStudy.readByOID(CaseStudy.class, infoCaseStudyChoice.getCaseStudy().getIdInternal());
             caseStudyChoice.setCaseStudy(caseStudy);
 
             caseStudyChoice.setCandidacy(candidacy);

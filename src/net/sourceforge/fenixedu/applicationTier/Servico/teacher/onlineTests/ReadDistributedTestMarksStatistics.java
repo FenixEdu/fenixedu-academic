@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTestWithTestScope;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarksStatistics;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,14 +38,14 @@ public class ReadDistributedTestMarksStatistics implements IService {
 		InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
 		persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+		DistributedTest distributedTest = (DistributedTest) persistentSuport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)
 			throw new InvalidArgumentsServiceException();
 
 		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
 				.getIPersistentStudentTestQuestion();
-		List<IStudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion
+		List<StudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion
 				.readStudentTestQuestionsByDistributedTest(distributedTest);
 
 		List<String> correctAnswersPercentageList = new ArrayList<String>();
@@ -56,7 +56,7 @@ public class ReadDistributedTestMarksStatistics implements IService {
 
 		DecimalFormat df = new DecimalFormat("#%");
 		int numOfStudent = persistentStudentTestQuestion.countNumberOfStudents(distributedTest);
-		for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+		for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
 			if (studentTestQuestion.getCorrectionFormula().getFormula().intValue() == CorrectionFormula.FENIX) {
 
 				correctAnswersPercentageList.add(df.format(persistentStudentTestQuestion

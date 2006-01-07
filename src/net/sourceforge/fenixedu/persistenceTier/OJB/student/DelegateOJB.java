@@ -6,11 +6,11 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.student;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.IDelegate;
+import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
@@ -28,10 +28,10 @@ public class DelegateOJB extends PersistentObjectOJB implements IPersistentDeleg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYear(Dominio.IDegree,
-     *      Dominio.IExecutionYear)
+     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYear(Dominio.Degree,
+     *      Dominio.ExecutionYear)
      */
-    public List readByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
+    public List readByDegreeAndExecutionYear(Degree degree, ExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degree.getIdInternal());
@@ -42,10 +42,10 @@ public class DelegateOJB extends PersistentObjectOJB implements IPersistentDeleg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYearAndType(Dominio.IDegree,
-     *      Dominio.IExecutionYear, Util.DelegateType)
+     * @see ServidorPersistente.student.IPersistentDelegate#readByDegreeAndExecutionYearAndType(Dominio.Degree,
+     *      Dominio.ExecutionYear, Util.DelegateType)
      */
-    public List readByDegreeAndExecutionYearAndYearType(IDegree degree, IExecutionYear executionYear,
+    public List readByDegreeAndExecutionYearAndYearType(Degree degree, ExecutionYear executionYear,
             DelegateYearType yearType) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degree.getIdInternal());
@@ -57,21 +57,21 @@ public class DelegateOJB extends PersistentObjectOJB implements IPersistentDeleg
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.student.IPersistentDelegate#readByStudent(Dominio.IStudent)
+     * @see ServidorPersistente.student.IPersistentDelegate#readByStudent(Dominio.Student)
      */
-    public IDelegate readByStudent(IStudent student) throws ExcepcaoPersistencia {
+    public Delegate readByStudent(Student student) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("student.idInternal", student.getIdInternal());
-        return (IDelegate) queryObject(Delegate.class, criteria);
+        return (Delegate) queryObject(Delegate.class, criteria);
     }
 
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.student.IPersistentDelegate#readDegreeDelegateByDegreeAndExecutionYear(Dominio.IDegree,
-     *      Dominio.IExecutionYear)
+     * @see ServidorPersistente.student.IPersistentDelegate#readDegreeDelegateByDegreeAndExecutionYear(Dominio.Degree,
+     *      Dominio.ExecutionYear)
      */
-    public List readDegreeDelegateByDegreeAndExecutionYear(IDegree degree, IExecutionYear executionYear)
+    public List readDegreeDelegateByDegreeAndExecutionYear(Degree degree, ExecutionYear executionYear)
             throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("degree.idInternal", degree.getIdInternal());

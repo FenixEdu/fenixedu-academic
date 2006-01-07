@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,7 +21,7 @@ public class CreditsServiceWithInfoProfessorshipArgumentAuthorization extends
         InfoProfessorship infoProfessorship = (InfoProfessorship) arguments[0];
 
         IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        ITeacher teacher = teacherDAO
+        Teacher teacher = teacherDAO
                 .readByNumber(infoProfessorship.getInfoTeacher().getTeacherNumber());
 
         return teacher == null ? null : teacher.getIdInternal();

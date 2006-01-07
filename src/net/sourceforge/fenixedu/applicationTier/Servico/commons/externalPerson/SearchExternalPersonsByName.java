@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.domain.IExternalPerson;
+import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -23,9 +23,9 @@ public class SearchExternalPersonsByName implements IService {
         List infoExternalPersons = new ArrayList();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<IExternalPerson> externalPersons = sp.getIPersistentExternalPerson().readByName(name);
+        List<ExternalPerson> externalPersons = sp.getIPersistentExternalPerson().readByName(name);
 
-        for (IExternalPerson externalPerson : externalPersons) {
+        for (ExternalPerson externalPerson : externalPersons) {
             infoExternalPersons.add(InfoExternalPerson.newInfoFromDomain(externalPerson));
         }
 

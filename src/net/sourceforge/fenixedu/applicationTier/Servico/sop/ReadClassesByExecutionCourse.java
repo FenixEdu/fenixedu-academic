@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IDegree;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,7 +30,7 @@ public class ReadClassesByExecutionCourse implements IService {
     public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
         final List classes = sp.getITurmaPersistente().readByExecutionCourse(
@@ -40,10 +40,10 @@ public class ReadClassesByExecutionCourse implements IService {
         final Map infoExecutionDegrees = new HashMap();
 
         for (final Iterator iterator = classes.iterator(); iterator.hasNext();) {
-            final ISchoolClass schoolClass = (ISchoolClass) iterator.next();
+            final SchoolClass schoolClass = (SchoolClass) iterator.next();
             final InfoClass infoClass = InfoClass.newInfoFromDomain(schoolClass);
 
-            final IExecutionDegree executionDegree = schoolClass.getExecutionDegree();
+            final ExecutionDegree executionDegree = schoolClass.getExecutionDegree();
             final InfoExecutionDegree infoExecutionDegree;
             final String executionDegreeKey = executionDegree.getIdInternal().toString();
             if (infoExecutionDegrees.containsKey(executionDegreeKey)) {
@@ -56,14 +56,14 @@ public class ReadClassesByExecutionCourse implements IService {
 
                 infoExecutionDegree.setIdInternal(executionDegree.getIdInternal());
 
-                final IDegreeCurricularPlan degreeCurricularPlan = executionDegree
+                final DegreeCurricularPlan degreeCurricularPlan = executionDegree
                         .getDegreeCurricularPlan();
                 // final InfoDegreeCurricularPlan infoDegreeCurricularPlan =
                 // InfoDegreeCurricularPlan.newInfoFromDomain(degreeCurricularPlan);
                 final InfoDegreeCurricularPlan infoDegreeCurricularPlan = new InfoDegreeCurricularPlan();
                 infoExecutionDegree.setInfoDegreeCurricularPlan(infoDegreeCurricularPlan);
 
-                final IDegree degree = degreeCurricularPlan.getDegree();
+                final Degree degree = degreeCurricularPlan.getDegree();
                 final InfoDegree infoDegree = InfoDegree.newInfoFromDomain(degree);
                 infoDegreeCurricularPlan.setInfoDegree(infoDegree);
             }

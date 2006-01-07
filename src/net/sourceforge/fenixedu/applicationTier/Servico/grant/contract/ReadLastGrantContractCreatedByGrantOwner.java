@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacherWithTeacherAndGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantOrientationTeacher;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,8 +27,8 @@ public class ReadLastGrantContractCreatedByGrantOwner implements IService {
 	public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException,
 			ExcepcaoPersistencia {
 		Integer grantContractNumber = null;
-		IGrantContract grantContract = null;
-		IGrantOrientationTeacher grantOrientationTeacher = null;
+		GrantContract grantContract = null;
+		GrantOrientationTeacher grantOrientationTeacher = null;
 		IPersistentGrantContract persistentGrantContract = null;
 		IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = null;
 

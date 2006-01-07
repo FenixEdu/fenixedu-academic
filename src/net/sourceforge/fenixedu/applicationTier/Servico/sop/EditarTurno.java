@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -37,7 +37,7 @@ public class EditarTurno implements IService {
 
 		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IShift shiftToEdit = (IShift) sp.getITurnoPersistente().readByOID(Shift.class,
+		Shift shiftToEdit = (Shift) sp.getITurnoPersistente().readByOID(Shift.class,
 				infoShiftOld.getIdInternal());
 
 		int capacityDiference = infoShiftNew.getLotacao().intValue()
@@ -47,7 +47,7 @@ public class EditarTurno implements IService {
 			throw new InvalidFinalAvailabilityException();
 		}
 
-		IShift otherShiftWithSameNewName = sp.getITurnoPersistente().readByNameAndExecutionCourse(
+		Shift otherShiftWithSameNewName = sp.getITurnoPersistente().readByNameAndExecutionCourse(
 				infoShiftNew.getNome(), infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 
 		if ((otherShiftWithSameNewName != null)
@@ -64,7 +64,7 @@ public class EditarTurno implements IService {
 		shiftToEdit.setAvailabilityFinal(new Integer(shiftToEdit.getAvailabilityFinal().intValue()
 				+ capacityDiference));
 
-		final IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+		final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
 				.readByOID(ExecutionCourse.class,
 						infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 		shiftToEdit.setDisciplinaExecucao(executionCourse);
@@ -89,17 +89,17 @@ public class EditarTurno implements IService {
 
 		// 1. Read shift lessons
 		List shiftLessons = null;
-		IShift shift = null;
+		Shift shift = null;
 		ISuportePersistente sp;
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		shift = (IShift) sp.getITurnoPersistente().readByOID(Shift.class, infoShiftOld.getIdInternal());
+		shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, infoShiftOld.getIdInternal());
 		shiftLessons = shift.getAssociatedLessons();
 
 		// 2. Count shift total duration and get maximum lesson room capacity
 		Integer maxCapacity = new Integer(0);
 		double shiftDuration = 0;
 		for (int i = 0; i < shiftLessons.size(); i++) {
-			ILesson lesson = ((ILesson) shiftLessons.get(i));
+			Lesson lesson = ((Lesson) shiftLessons.get(i));
 			shiftDuration += (getLessonDurationInMinutes(lesson).doubleValue() / 60);
 			if (lesson.getRoomOccupation().getRoom().getCapacidadeNormal().intValue() > maxCapacity
 					.intValue()) {
@@ -131,7 +131,7 @@ public class EditarTurno implements IService {
 		// }
 	}
 
-	private boolean newShiftTypeIsValid(IShift shift, ShiftType newShiftType, double shiftDuration) {
+	private boolean newShiftTypeIsValid(Shift shift, ShiftType newShiftType, double shiftDuration) {
 		// Verify if shift total duration exceeds new shift type duration
 		if (newShiftType.equals(ShiftType.TEORICA)) {
 			if (shiftDuration > shift.getDisciplinaExecucao().getTheoreticalHours().doubleValue()) {
@@ -156,7 +156,7 @@ public class EditarTurno implements IService {
 		return true;
 	}
 
-	private boolean newShiftExecutionCourseIsValid(IShift shift,
+	private boolean newShiftExecutionCourseIsValid(Shift shift,
 			InfoExecutionCourse newShiftExecutionCourse, double shiftDuration) {
 
 		// Verify if shift total duration exceeds new executionCourse uration
@@ -183,7 +183,7 @@ public class EditarTurno implements IService {
 		return true;
 	}
 
-	private Integer getLessonDurationInMinutes(ILesson lesson) {
+	private Integer getLessonDurationInMinutes(Lesson lesson) {
 		int beginHour = lesson.getInicio().get(Calendar.HOUR_OF_DAY);
 		int beginMinutes = lesson.getInicio().get(Calendar.MINUTE);
 		int endHour = lesson.getFim().get(Calendar.HOUR_OF_DAY);

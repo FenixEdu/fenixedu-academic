@@ -7,8 +7,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -30,14 +30,14 @@ public class InsertProfessorShip implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
         final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, infoProfessorShip.getInfoExecutionCourse().getIdInternal());
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
         final IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        final ITeacher teacher = persistentTeacher.readByNumber(infoProfessorShip.getInfoTeacher().getTeacherNumber());
+        final Teacher teacher = persistentTeacher.readByNumber(infoProfessorShip.getInfoTeacher().getTeacherNumber());
         if (teacher == null) {
             throw new NonExistingServiceException("message.non.existing.teacher", null);
         }

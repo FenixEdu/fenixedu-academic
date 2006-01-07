@@ -26,11 +26,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -96,10 +96,10 @@ public class GroupSiteComponentBuilder {
 			FenixServiceException, ExcepcaoPersistencia {
 
 		List projects = null;
-		IGrouping groupProperties;
+		Grouping groupProperties;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IExecutionCourse executionCourse = (IExecutionCourse) sp.getIPersistentExecutionCourse()
+		ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
 				.readByOID(ExecutionCourse.class, executionCourseCode);
 
 		List executionCourseProjects = executionCourse.getGroupings();
@@ -109,7 +109,7 @@ public class GroupSiteComponentBuilder {
 
 		while (iterator.hasNext()) {
 
-			groupProperties = (IGrouping) iterator.next();
+			groupProperties = (Grouping) iterator.next();
 
 			InfoGrouping infoGroupProperties = InfoGroupingWithExportGrouping
 					.newInfoFromDomain(groupProperties);
@@ -135,7 +135,7 @@ public class GroupSiteComponentBuilder {
 			ExcepcaoPersistencia {
 
 		List infoSiteStudentsAndGroups = new ArrayList();
-		IShift shift = null;
+		Shift shift = null;
 		if (value.intValue() == 1) {
 			infoSiteStudentsAndGroups = readStudentsAndGroupsByShift(groupPropertiesCode, shiftCode);
 			shift = readShift(shiftCode);
@@ -167,9 +167,9 @@ public class GroupSiteComponentBuilder {
 		IPersistentGrouping persistentGrouping = sp.getIPersistentGrouping();
 		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
 				groupPropertiesCode);
-		IShift shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
+		Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
@@ -180,7 +180,7 @@ public class GroupSiteComponentBuilder {
 		while (iterStudentGroups.hasNext()) {
 
 			List studentGroupAttendList = new ArrayList();
-			IStudentGroup studentGroup = (IStudentGroup) iterStudentGroups.next();
+			StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
 			studentGroupAttendList = studentGroup.getAttends();
 
@@ -188,13 +188,13 @@ public class GroupSiteComponentBuilder {
 			InfoSiteStudentInformation infoSiteStudentInformation = null;
 			InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
 
-			IAttends attend = null;
+			Attends attend = null;
 
 			while (iterAttendsList.hasNext()) {
 				infoSiteStudentInformation = new InfoSiteStudentInformation();
 				infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-				attend = (IAttends) iterAttendsList.next();
+				attend = (Attends) iterAttendsList.next();
 
 				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
 						.newInfoFromDomain(studentGroup));
@@ -224,7 +224,7 @@ public class GroupSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentGrouping persistentGrouping = sp.getIPersistentGrouping();
-		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -236,20 +236,20 @@ public class GroupSiteComponentBuilder {
 		while (iterStudentGroups.hasNext()) {
 
 			List studentGroupAttendList = new ArrayList();
-			IStudentGroup studentGroup = (IStudentGroup) iterStudentGroups.next();
+			StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
 			studentGroupAttendList = studentGroup.getAttends();
 
 			Iterator iterAttendsList = studentGroupAttendList.iterator();
 			InfoSiteStudentInformation infoSiteStudentInformation = null;
 			InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-			IAttends attend = null;
+			Attends attend = null;
 
 			while (iterAttendsList.hasNext()) {
 				infoSiteStudentInformation = new InfoSiteStudentInformation();
 				infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-				attend = (IAttends) iterAttendsList.next();
+				attend = (Attends) iterAttendsList.next();
 
 				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
 						.newInfoFromDomain(studentGroup));
@@ -280,7 +280,7 @@ public class GroupSiteComponentBuilder {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentGrouping persistentGrouping = sp.getIPersistentGrouping();
 
-		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -292,20 +292,20 @@ public class GroupSiteComponentBuilder {
 		while (iterStudentGroups.hasNext()) {
 
 			List studentGroupAttendList = new ArrayList();
-			IStudentGroup studentGroup = (IStudentGroup) iterStudentGroups.next();
+			StudentGroup studentGroup = (StudentGroup) iterStudentGroups.next();
 
 			studentGroupAttendList = studentGroup.getAttends();
 
 			Iterator iterAttendsList = studentGroupAttendList.iterator();
 			InfoSiteStudentInformation infoSiteStudentInformation = null;
 			InfoSiteStudentAndGroup infoSiteStudentAndGroup = null;
-			IAttends attend = null;
+			Attends attend = null;
 
 			while (iterAttendsList.hasNext()) {
 				infoSiteStudentInformation = new InfoSiteStudentInformation();
 				infoSiteStudentAndGroup = new InfoSiteStudentAndGroup();
 
-				attend = (IAttends) iterAttendsList.next();
+				attend = (Attends) iterAttendsList.next();
 
 				infoSiteStudentAndGroup.setInfoStudentGroup(InfoStudentGroup
 						.newInfoFromDomain(studentGroup));
@@ -328,12 +328,12 @@ public class GroupSiteComponentBuilder {
 		return infoSiteStudentsAndGroupsList;
 	}
 
-	private List getStudentGroupsByShiftAndGrouping(IGrouping groupProperties, IShift shift) {
+	private List getStudentGroupsByShiftAndGrouping(Grouping groupProperties, Shift shift) {
 		List result = new ArrayList();
 		List studentGroups = groupProperties.getStudentGroupsWithShift();
 		Iterator iter = studentGroups.iterator();
 		while (iter.hasNext()) {
-			IStudentGroup sg = (IStudentGroup) iter.next();
+			StudentGroup sg = (StudentGroup) iter.next();
 			if (sg.getShift().equals(shift)) {
 				result.add(sg);
 			}
@@ -341,28 +341,28 @@ public class GroupSiteComponentBuilder {
 		return result;
 	}
 
-	private List getStudentGroupsWithoutShiftByGrouping(IGrouping groupProperties) {
+	private List getStudentGroupsWithoutShiftByGrouping(Grouping groupProperties) {
 		List result = new ArrayList();
 		List studentGroups = groupProperties.getStudentGroupsWithoutShift();
 		result.addAll(studentGroups);
 		return result;
 	}
 
-	private List getAllStudentGroups(IGrouping groupProperties) {
+	private List getAllStudentGroups(Grouping groupProperties) {
 		List result = new ArrayList();
 		List studentGroups = groupProperties.getStudentGroups();
 		result.addAll(studentGroups);
 		return result;
 	}
 
-	private IShift readShift(Integer shiftCode) throws ExcepcaoInexistente, FenixServiceException,
+	private Shift readShift(Integer shiftCode) throws ExcepcaoInexistente, FenixServiceException,
 			ExcepcaoPersistencia {
-		IShift shift = null;
+		Shift shift = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-		shift = (IShift) persistentShift.readByOID(Shift.class, shiftCode);
+		shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
 
 		return shift;
 	}
@@ -379,7 +379,7 @@ public class GroupSiteComponentBuilder {
 			Integer groupPropertiesCode) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IGrouping grouping = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(grouping).getInfoSiteGroupsByShiftList();
@@ -398,7 +398,7 @@ public class GroupSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IGrouping grouping = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);
@@ -433,7 +433,7 @@ public class GroupSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IStudentGroup studentGroup = (IStudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		List studentGroupAttendList = studentGroup.getAttends();
@@ -441,13 +441,13 @@ public class GroupSiteComponentBuilder {
 		studentGroupAttendInformationList = new ArrayList(studentGroupAttendList.size());
 		Iterator iter = studentGroupAttendList.iterator();
 		InfoSiteStudentInformation infoSiteStudentInformation = null;
-		IAttends attend = null;
+		Attends attend = null;
 
 		while (iter.hasNext()) {
 
 			infoSiteStudentInformation = new InfoSiteStudentInformation();
 
-			attend = (IAttends) iter.next();
+			attend = (Attends) iter.next();
 
 			infoSiteStudentInformation.setNumber(attend.getAluno().getNumber());
 
@@ -473,7 +473,7 @@ public class GroupSiteComponentBuilder {
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
 
-		IStudentGroup studentGroup = (IStudentGroup) persistentSupport.getIPersistentStudentGroup()
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentStudentGroup()
 				.readByOID(StudentGroup.class, studentGroupID);
 		infoStudentGroup = InfoStudentGroup.newInfoFromDomain(studentGroup);
 

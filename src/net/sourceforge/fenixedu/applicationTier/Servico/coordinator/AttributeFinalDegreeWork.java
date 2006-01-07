@@ -1,9 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroup;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IGroupProposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.IProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -17,18 +17,18 @@ public class AttributeFinalDegreeWork implements IService {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        IGroupProposal groupProposal = (IGroupProposal) persistentFinalDegreeWork.readByOID(
+        GroupProposal groupProposal = (GroupProposal) persistentFinalDegreeWork.readByOID(
                 GroupProposal.class, selectedGroupProposal);
         if (groupProposal != null) {
-            IProposal proposal = groupProposal.getFinalDegreeWorkProposal();
+            Proposal proposal = groupProposal.getFinalDegreeWorkProposal();
             proposal.setGroupAttributed(groupProposal.getFinalDegreeDegreeWorkGroup());
 
-            IGroup group = groupProposal.getFinalDegreeDegreeWorkGroup();
-            for (IGroupProposal otherGroupProposal : group.getGroupProposals()) {
+            Group group = groupProposal.getFinalDegreeDegreeWorkGroup();
+            for (GroupProposal otherGroupProposal : group.getGroupProposals()) {
                 if (!(otherGroupProposal == groupProposal)
                         && otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() != null
                         && (otherGroupProposal.getFinalDegreeWorkProposal().getGroupAttributed() == group)) {
-                    IProposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
+                    Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
                     otherProposal.removeGroupAttributed();
                 }
             }

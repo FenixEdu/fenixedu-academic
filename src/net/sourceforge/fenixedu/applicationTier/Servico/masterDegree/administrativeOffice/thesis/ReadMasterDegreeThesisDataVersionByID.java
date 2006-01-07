@@ -4,7 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
-import net.sourceforge.fenixedu.domain.IMasterDegreeThesisDataVersion;
+import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,10 +21,10 @@ public class ReadMasterDegreeThesisDataVersionByID implements IService {
 
 	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
-		IMasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
+		MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		masterDegreeThesisDataVersion = (IMasterDegreeThesisDataVersion) sp
+		masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) sp
 				.getIPersistentMasterDegreeThesisDataVersion().readByOID(
 						MasterDegreeThesisDataVersion.class, masterDegreeThesisDataVersionID);
 

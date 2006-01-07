@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IPersonAccount;
+import net.sourceforge.fenixedu.domain.PersonAccount;
 
 /**
  * 
@@ -10,6 +10,6 @@ import net.sourceforge.fenixedu.domain.IPersonAccount;
  */
 public interface IPersistentPersonAccount extends IPersistentObject {
 
-    public IPersonAccount readByPerson(final Integer personOID) throws ExcepcaoPersistencia;
+    public PersonAccount readByPerson(final Integer personOID) throws ExcepcaoPersistencia;
 
 }

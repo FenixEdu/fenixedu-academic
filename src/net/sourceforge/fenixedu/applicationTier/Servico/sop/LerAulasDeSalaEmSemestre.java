@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
-import net.sourceforge.fenixedu.domain.ILesson;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,10 +32,10 @@ public class LerAulasDeSalaEmSemestre implements IService {
         }
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final List<ILesson> lessonList = sp.getIAulaPersistente().readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriodId);
+        final List<Lesson> lessonList = sp.getIAulaPersistente().readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriodId);
 
         List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
-        for (ILesson elem : lessonList) {
+        for (Lesson elem : lessonList) {
             if (elem.getShift() == null) {
                 continue;
             }

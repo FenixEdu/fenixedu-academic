@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidMarksServiceException;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.IEvaluation;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IMark;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -31,17 +31,17 @@ public class WriteMarks implements IService {
         final IPersistentEvaluation persistentEvaluation = persistentSupport.getIPersistentEvaluation();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         
-        final IEvaluation evaluation = (IEvaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationOID);
-        final IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executioCourseOID);
+        final Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationOID);
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executioCourseOID);
         
         for (final Entry<Integer, String> entry : marks.entrySet()) {
             final Integer studentNumber = entry.getKey();
             final String markValue = entry.getValue();
             
-            final IAttends attends = findStudentAttends(executionCourse, studentNumber);
+            final Attends attends = findStudentAttends(executionCourse, studentNumber);
 
             if(attends != null) {            
-	            final IMark mark = findExistingMark(attends.getAssociatedMarks(), evaluation);
+	            final Mark mark = findExistingMark(attends.getAssociatedMarks(), evaluation);
 	            
 	            if(markValue == null || markValue.length() == 0) {
 	            	if(mark != null) {
@@ -67,8 +67,8 @@ public class WriteMarks implements IService {
         }
    }
 
-    private IAttends findStudentAttends(final IExecutionCourse executionCourse, final Integer studentNumber) {
-		for(final IAttends attends: executionCourse.getAttends()) {
+    private Attends findStudentAttends(final ExecutionCourse executionCourse, final Integer studentNumber) {
+		for(final Attends attends: executionCourse.getAttends()) {
 			if(attends.getAluno().getNumber().equals(studentNumber)) {
 				return attends;
 			}
@@ -77,9 +77,9 @@ public class WriteMarks implements IService {
 	}
 
 
-	private IMark findExistingMark(final List<IMark> marks, IEvaluation evaluation) {
-        for (final IMark mark : marks) {
-            final IEvaluation markEvaluation = mark.getEvaluation();
+	private Mark findExistingMark(final List<Mark> marks, Evaluation evaluation) {
+        for (final Mark mark : marks) {
+            final Evaluation markEvaluation = mark.getEvaluation();
             if (markEvaluation.equals(evaluation)) {
                 return mark;
             }

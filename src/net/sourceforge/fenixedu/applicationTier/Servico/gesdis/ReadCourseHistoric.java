@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.gesdis.ICourseHistoric;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -38,7 +38,7 @@ public class ReadCourseHistoric implements IService {
 	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-		IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
 				ExecutionCourse.class, executionCourseId);
 		Integer semester = executionCourse.getExecutionPeriod().getSemester();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
@@ -50,12 +50,12 @@ public class ReadCourseHistoric implements IService {
 	 * @param sp
 	 * @return
 	 */
-	private List getInfoSiteCoursesHistoric(IExecutionCourse executionCourse, List curricularCourses,
+	private List getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List curricularCourses,
 			Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
 		List infoSiteCoursesHistoric = new ArrayList();
 		Iterator iter = curricularCourses.iterator();
 		while (iter.hasNext()) {
-			ICurricularCourse curricularCourse = (ICurricularCourse) iter.next();
+			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 			infoSiteCoursesHistoric.add(getInfoSiteCourseHistoric(executionCourse.getExecutionPeriod()
 					.getExecutionYear(), curricularCourse, semester, sp));
 		}
@@ -67,8 +67,8 @@ public class ReadCourseHistoric implements IService {
 	 * @param sp
 	 * @return
 	 */
-	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final IExecutionYear executionYear,
-			ICurricularCourse curricularCourse, Integer semester, ISuportePersistente sp)
+	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear,
+			CurricularCourse curricularCourse, Integer semester, ISuportePersistente sp)
 			throws ExcepcaoPersistencia {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 
@@ -76,14 +76,14 @@ public class ReadCourseHistoric implements IService {
 				.newInfoFromDomain(curricularCourse);
 		infoSiteCourseHistoric.setInfoCurricularCourse(infoCurricularCourse);
 
-		final List<ICourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
+		final List<CourseHistoric> courseHistorics = curricularCourse.getAssociatedCourseHistorics();
 
 		// the historic must only show info regarding the years previous to the
 		// year chosen by the user
 		List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
 		final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-		for (ICourseHistoric courseHistoric : courseHistorics) {
-			IExecutionYear courseHistoricExecutionYear = persistentExecutionYear
+		for (CourseHistoric courseHistoric : courseHistorics) {
+			ExecutionYear courseHistoricExecutionYear = persistentExecutionYear
 					.readExecutionYearByName(courseHistoric.getCurricularYear());
 			if (courseHistoric.getSemester().equals(semester)
 					&& courseHistoricExecutionYear.getBeginDate().before(executionYear.getBeginDate())) {

@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.domain.inquiries.IOldInquiriesCoursesRes;
+import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -38,7 +38,7 @@ public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode i
 
         IPersistentOldInquiriesCoursesRes poics = sp.getIPersistentOldInquiriesCoursesRes();
 
-        IOldInquiriesCoursesRes oics = poics.readByExecutionPeriodAndDegreeIdAndCourseCode(
+        OldInquiriesCoursesRes oics = poics.readByExecutionPeriodAndDegreeIdAndCourseCode(
                 executionPeriodId, degreeId, courseCode);
 
         oldInquiriesCoursesRes = new InfoOldInquiriesCoursesRes();

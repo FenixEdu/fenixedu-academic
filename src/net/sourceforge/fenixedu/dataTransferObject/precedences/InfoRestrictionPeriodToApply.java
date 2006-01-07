@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.precedences;
 
-import net.sourceforge.fenixedu.domain.precedences.IRestrictionPeriodToApply;
+import net.sourceforge.fenixedu.domain.precedences.RestrictionPeriodToApply;
 import net.sourceforge.fenixedu.util.PeriodToApplyRestriction;
 
 /**
@@ -22,13 +22,13 @@ public class InfoRestrictionPeriodToApply extends InfoRestriction {
         this.periodToApplyRestriction = periodToApplyRestriction;
     }
 
-    public void copyFromDomain(IRestrictionPeriodToApply restriction) {
+    public void copyFromDomain(RestrictionPeriodToApply restriction) {
         super.copyFromDomain(restriction);
         this.setPeriodToApplyRestriction(restriction.getPeriodToApplyRestriction());
         this.setRestrictionKindResourceKey("label.manager.restrictionPeriodToApply");
     }
 
-    public static InfoRestrictionPeriodToApply newInfoFromDomain(IRestrictionPeriodToApply restriction) {
+    public static InfoRestrictionPeriodToApply newInfoFromDomain(RestrictionPeriodToApply restriction) {
 
         InfoRestrictionPeriodToApply infoRestriction = null;
 

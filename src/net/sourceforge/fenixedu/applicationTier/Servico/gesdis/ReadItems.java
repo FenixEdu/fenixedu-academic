@@ -12,7 +12,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
-import net.sourceforge.fenixedu.domain.IItem;
+import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,14 +29,14 @@ public class ReadItems implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentItem persistentItem = sp.getIPersistentItem();
 
-        List<IItem> itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(),
+        List<Item> itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(),
                 infoSection.getInfoSite().getInfoExecutionCourse().getSigla(), infoSection.getInfoSite()
                         .getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear()
                         .getYear(), infoSection.getInfoSite().getInfoExecutionCourse()
                         .getInfoExecutionPeriod().getName());
 
         List<InfoItem> infoItemsList = new ArrayList<InfoItem>(itemsList.size());
-        for (IItem elem : itemsList) {
+        for (Item elem : itemsList) {
             infoItemsList.add(InfoItem.newInfoFromDomain(elem));
         }
 

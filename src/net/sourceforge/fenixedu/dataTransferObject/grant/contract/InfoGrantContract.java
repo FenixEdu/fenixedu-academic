@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -159,7 +159,7 @@ public class InfoGrantContract extends InfoObject {
     /**
      * @param GrantContract
      */
-    public void copyFromDomain(IGrantContract grantContract) {
+    public void copyFromDomain(GrantContract grantContract) {
         super.copyFromDomain(grantContract);
         if (grantContract != null) {
             setContractNumber(grantContract.getContractNumber());
@@ -172,7 +172,7 @@ public class InfoGrantContract extends InfoObject {
      * @param GrantContract
      * @return
      */
-    public static InfoGrantContract newInfoFromDomain(IGrantContract grantContract) {
+    public static InfoGrantContract newInfoFromDomain(GrantContract grantContract) {
         InfoGrantContract infoGrantContract = null;
         if (grantContract != null) {
             infoGrantContract = new InfoGrantContract();
@@ -181,7 +181,7 @@ public class InfoGrantContract extends InfoObject {
         return infoGrantContract;
     }
 
-    public void copyToDomain(InfoGrantContract infoGrantContract, IGrantContract grantContract)
+    public void copyToDomain(InfoGrantContract infoGrantContract, GrantContract grantContract)
             throws ExcepcaoPersistencia {
         super.copyToDomain(infoGrantContract, grantContract);
 

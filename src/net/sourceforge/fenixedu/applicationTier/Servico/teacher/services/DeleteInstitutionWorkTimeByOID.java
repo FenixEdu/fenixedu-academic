@@ -3,7 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
-import net.sourceforge.fenixedu.domain.teacher.IInstitutionWorkTime;
+import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,7 +20,7 @@ public class DeleteInstitutionWorkTimeByOID implements IService {
     public void run(Integer institutionWorkTimeID) throws ExcepcaoPersistencia {
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IInstitutionWorkTime institutionWorkTime = (IInstitutionWorkTime) persistentSupport
+        InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) persistentSupport
                 .getIPersistentInstitutionWorkTime().readByOID(InstitutionWorkTime.class,
                         institutionWorkTimeID);
         

@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -45,17 +45,17 @@ public class ClassSiteComponentService implements IService {
         final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
         final ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
 
-        IExecutionYear executionYear = persistentExecutionYear
+        ExecutionYear executionYear = persistentExecutionYear
                 .readExecutionYearByName(executionYearName);
 
-        IExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
+        ExecutionPeriod executionPeriod = persistentExecutionPeriod.readByNameAndExecutionYear(
                 executionPeriodName, executionYear.getYear());
 
-        IExecutionDegree executionDegree = executionDegreeDAO
+        ExecutionDegree executionDegree = executionDegreeDAO
                 .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan, degreeInitials,
                         executionYear.getYear());
         PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
-        ISchoolClass domainClass;
+        SchoolClass domainClass;
         if (classId == null) {
             domainClass = getDomainClass(className, curricularYear, executionPeriod, executionDegree, sp);
             if (domainClass == null) {
@@ -63,7 +63,7 @@ public class ClassSiteComponentService implements IService {
             }
         } else {
 
-            domainClass = (ISchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classId);
+            domainClass = (SchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classId);
         }
         bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
         SiteView siteView = new SiteView(bodyComponent);
@@ -71,12 +71,12 @@ public class ClassSiteComponentService implements IService {
         return siteView;
     }
 
-    private ISchoolClass getDomainClass(String className, Integer curricularYear,
-            IExecutionPeriod executionPeriod, IExecutionDegree executionDegree, ISuportePersistente sp)
+    private SchoolClass getDomainClass(String className, Integer curricularYear,
+            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
         ITurmaPersistente persistentClass = sp.getITurmaPersistente();
-        ISchoolClass domainClass = null;
+        SchoolClass domainClass = null;
         List domainList = new ArrayList();
         if (curricularYear == null) {
             domainClass = persistentClass.readByNameAndExecutionDegreeAndExecutionPeriod(className,
@@ -90,7 +90,7 @@ public class ClassSiteComponentService implements IService {
                                 .getDegree().getIdInternal(), executionPeriod.getIdInternal());
 
                 if (domainList.size() != 0) {
-                    domainClass = (ISchoolClass) domainList.get(0);
+                    domainClass = (SchoolClass) domainList.get(0);
                 }
             }
         }

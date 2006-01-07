@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -25,19 +25,19 @@ public class ReadCurricularCourseListOfExecutionCourse implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
 
-        IExecutionCourse executionCourse = executionCourseDAO
+        ExecutionCourse executionCourse = executionCourseDAO
                 .readByExecutionCourseInitialsAndExecutionPeriodId(infoExecCourse.getSigla(),
                         infoExecCourse.getInfoExecutionPeriod().getIdInternal());
 
         List<InfoCurricularCourse> infoCurricularCourseList = new ArrayList<InfoCurricularCourse>();
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {
 
-            for (ICurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                 InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
 
                 // curricular course scope list
                 List<InfoCurricularCourseScope> infoCurricularCourseScopeList = new ArrayList<InfoCurricularCourseScope>();
-                for (ICurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
                     InfoCurricularCourseScope infoCurricularCourseScope = InfoCurricularCourseScope.newInfoFromDomain(curricularCourseScope);
                     infoCurricularCourseScopeList.add(infoCurricularCourseScope);
                 }

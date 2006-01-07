@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -155,7 +155,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
         return result;
     }
 
-    public void copyFromDomain(ITeacher teacher) {
+    public void copyFromDomain(Teacher teacher) {
         if (teacher != null) {
             super.copyFromDomain(teacher);
             setTeacherNumber(teacher.getTeacherNumber());
@@ -169,7 +169,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
      * @param teacher
      * @return
      */
-    public static InfoTeacher newInfoFromDomain(ITeacher teacher) {
+    public static InfoTeacher newInfoFromDomain(Teacher teacher) {
         InfoTeacher infoTeacher = null;
         if (teacher != null) {
             infoTeacher = new InfoTeacher();
@@ -178,7 +178,7 @@ public class InfoTeacher extends InfoObject implements ISmsDTO {
         return infoTeacher;
     }
 
-    public void copyToDomain(InfoTeacher infoTeacher, ITeacher teacher) throws ExcepcaoPersistencia {
+    public void copyToDomain(InfoTeacher infoTeacher, Teacher teacher) throws ExcepcaoPersistencia {
         super.copyToDomain(infoTeacher, teacher);
         teacher.setTeacherNumber(infoTeacher.getTeacherNumber());
     }

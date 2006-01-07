@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
 /**
  * @author jpvl
@@ -22,7 +22,7 @@ public class MigrationExecutionCourse {
 
     private HashMap degreeToSopCourse;
 
-    private IExecutionCourse executionCourse = null;
+    private ExecutionCourse executionCourse = null;
 
     private String initials;
 
@@ -40,7 +40,7 @@ public class MigrationExecutionCourse {
     /**
      * @param curricularCourse
      */
-    public void addCurricularCourse(ICurricularCourse curricularCourse) {
+    public void addCurricularCourse(CurricularCourse curricularCourse) {
 
         //		try {
         //			this.theoreticalHours =
@@ -133,7 +133,7 @@ public class MigrationExecutionCourse {
     /**
      * @return IDisciplinaExecucao
      */
-    public IExecutionCourse getExecutionCourse() {
+    public ExecutionCourse getExecutionCourse() {
         return executionCourse;
     }
 
@@ -220,7 +220,7 @@ public class MigrationExecutionCourse {
      * @param executionCourse
      *            The executionCourse to set
      */
-    public void setExecutionCourse(IExecutionCourse executionCourse) {
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
         this.executionCourse = executionCourse;
     }
 
@@ -283,7 +283,7 @@ public class MigrationExecutionCourse {
             Iterator curricularCoursesIterator = associatedCurricularCourses.iterator();
             stringBuffer.append("\tDisciplinas curriculares:\r\n");
             while (curricularCoursesIterator.hasNext()) {
-                ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesIterator
+                CurricularCourse curricularCourse = (CurricularCourse) curricularCoursesIterator
                         .next();
                 stringBuffer.append("\t\t(").append("Nome:").append(curricularCourse.getName()).append(
                         ",Degree:").append(

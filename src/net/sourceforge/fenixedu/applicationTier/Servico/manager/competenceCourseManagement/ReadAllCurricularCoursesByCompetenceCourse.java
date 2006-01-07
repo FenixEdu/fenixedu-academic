@@ -5,8 +5,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICompetenceCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
+import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -15,16 +15,16 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class ReadAllCurricularCoursesByCompetenceCourse implements IService {
 
-	public List<ICurricularCourse> run(Integer competenceID) throws Exception {
+	public List<CurricularCourse> run(Integer competenceID) throws Exception {
 		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCompetenceCourse persistentCompetenceCourse = suportePersistente.getIPersistentCompetenceCourse();
-		ICompetenceCourse competenceCourse = (ICompetenceCourse) persistentCompetenceCourse.readByOID(CompetenceCourse.class, competenceID);
+		CompetenceCourse competenceCourse = (CompetenceCourse) persistentCompetenceCourse.readByOID(CompetenceCourse.class, competenceID);
 		if(competenceCourse == null) {
 			throw new NonExistingServiceException("error.manager.noCompetenceCourse");
 		}
 		
-        List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
-        for (ICurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
             if (curricularCourse.getCurricularStage().equals(CurricularStage.OLD)) {
                 result.add(curricularCourse);
             }

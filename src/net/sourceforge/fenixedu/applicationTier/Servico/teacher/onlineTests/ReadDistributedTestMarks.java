@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsTestMarks;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestionMark;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -41,7 +41,7 @@ public class ReadDistributedTestMarks implements IService {
 		InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
 		persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IDistributedTest distributedTest = (IDistributedTest) persistentSuport
+		DistributedTest distributedTest = (DistributedTest) persistentSuport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null) {
 			throw new InvalidArgumentsServiceException();
@@ -56,7 +56,7 @@ public class ReadDistributedTestMarks implements IService {
 				.collect(studentTestQuestionList, new Transformer() {
 
 					public Object transform(Object arg0) {
-						IStudentTestQuestion studentTestQuestion = (IStudentTestQuestion) arg0;
+						StudentTestQuestion studentTestQuestion = (StudentTestQuestion) arg0;
 						return InfoStudentTestQuestionMark.newInfoFromDomain(studentTestQuestion);
 					}
 
@@ -66,7 +66,7 @@ public class ReadDistributedTestMarks implements IService {
 				.getMaximumDistributedTestMark(distributedTest.getIdInternal()));
 		infoSiteStudentsTestMarks.setInfoStudentTestQuestionList(infoStudentTestQuestionList);
 		infoSiteStudentsTestMarks.setExecutionCourse(InfoExecutionCourse
-				.newInfoFromDomain((IExecutionCourse) distributedTest.getTestScope().getDomainObject()));
+				.newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
 		infoSiteStudentsTestMarks.setInfoDistributedTest(InfoDistributedTest
 				.newInfoFromDomain(distributedTest));
 

@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -29,7 +29,7 @@ public class ReadAvailableExecutionPeriods implements IService {
 	public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException, ExcepcaoPersistencia {
 
 		List infoExecutionPeriods = null;
-		IExecutionPeriod executionPeriod = null;
+		ExecutionPeriod executionPeriod = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
@@ -38,7 +38,7 @@ public class ReadAvailableExecutionPeriods implements IService {
 		Iterator iter = unavailableExecutionPeriodsIds.iterator();
 		while (iter.hasNext()) {
 
-			executionPeriod = (IExecutionPeriod) persistentExecutionPeriod.readByOID(
+			executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
 					ExecutionPeriod.class, (Integer) iter.next());
 			executionPeriods.remove(executionPeriod);
 		}
@@ -52,7 +52,7 @@ public class ReadAvailableExecutionPeriods implements IService {
 	private Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
 		public Object transform(Object executionPeriod) {
 			return InfoExecutionPeriodWithInfoExecutionYear
-					.newInfoFromDomain((IExecutionPeriod) executionPeriod);
+					.newInfoFromDomain((ExecutionPeriod) executionPeriod);
 		}
 	};
 

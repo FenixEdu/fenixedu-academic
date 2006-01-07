@@ -6,7 +6,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
+import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.domain.Seminaries.ICourseEquivalency;
  */
 public class InfoEquivalencyWithCurricularCourse extends InfoEquivalency {
 
-    public void copyFromDomain(ICourseEquivalency courseEquivalency) {
+    public void copyFromDomain(CourseEquivalency courseEquivalency) {
         super.copyFromDomain(courseEquivalency);
         if (courseEquivalency != null) {
             setCurricularCourse(InfoCurricularCourseWithInfoDegreeCurricularPlan.newInfoFromDomain(courseEquivalency.getCurricularCourse()));
         }
     }
 
-    public static InfoEquivalencyWithCurricularCourse newInfoFromDomain(ICourseEquivalency courseEquivalency) {
+    public static InfoEquivalencyWithCurricularCourse newInfoFromDomain(CourseEquivalency courseEquivalency) {
         InfoEquivalencyWithCurricularCourse infoEquivalency = null;
         if (courseEquivalency != null) {
             infoEquivalency = new InfoEquivalencyWithCurricularCourse();

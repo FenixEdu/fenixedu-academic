@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
@@ -37,14 +37,14 @@ public class VerifyStudentGroupWithoutShift implements IService {
 
 		persistentGrouping = ps.getIPersistentGrouping();
 
-		IGrouping groupProperties = (IGrouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		IStudentGroup studentGroup = (IStudentGroup) persistentStudentGroup.readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {

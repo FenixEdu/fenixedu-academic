@@ -4,13 +4,13 @@
  */
 package net.sourceforge.fenixedu.persistenceTier;
 
-import net.sourceforge.fenixedu.domain.IGratuityValues;
+import net.sourceforge.fenixedu.domain.GratuityValues;
 
 /**
  * @author Tânia Pousão
  *  
  */
 public interface IPersistentGratuityValues extends IPersistentObject {
-    public IGratuityValues readGratuityValuesByExecutionDegree(Integer executionDegreeID)
+    public GratuityValues readGratuityValuesByExecutionDegree(Integer executionDegreeID)
             throws ExcepcaoPersistencia;
 }

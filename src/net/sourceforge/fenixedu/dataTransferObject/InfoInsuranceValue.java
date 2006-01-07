@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.IInsuranceValue;
+import net.sourceforge.fenixedu.domain.InsuranceValue;
 
 /**
  * 
@@ -18,7 +18,7 @@ public class InfoInsuranceValue extends InfoObject {
 
     private Date endDate;
 
-    protected void copyFromDomain(IInsuranceValue insuranceValue) {
+    protected void copyFromDomain(InsuranceValue insuranceValue) {
         super.copyFromDomain(insuranceValue);
         this.annualValue = insuranceValue.getAnnualValue();
         this.endDate = insuranceValue.getEndDate();
@@ -26,7 +26,7 @@ public class InfoInsuranceValue extends InfoObject {
 
     }
 
-    public static InfoInsuranceValue newInfoFromDomain(IInsuranceValue insuranceValue) {
+    public static InfoInsuranceValue newInfoFromDomain(InsuranceValue insuranceValue) {
 
         InfoInsuranceValue infoInsuranceValue = null;
         if (insuranceValue != null) {

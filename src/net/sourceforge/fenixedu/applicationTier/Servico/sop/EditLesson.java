@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonServiceResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IShift;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.IRoom;
-import net.sourceforge.fenixedu.domain.space.IRoomOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,11 +33,11 @@ public class EditLesson implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
 
-        IRoom salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
-        ILesson aula = (ILesson) aulaPersistente.readByOID(Lesson.class, aulaAntiga.getIdInternal());
-        IShift shift = aula.getShift();
+        Room salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
+        Lesson aula = (Lesson) aulaPersistente.readByOID(Lesson.class, aulaAntiga.getIdInternal());
+        Shift shift = aula.getShift();
 
-        IRoomOccupation roomOccupation = aula.getRoomOccupation();
+        RoomOccupation roomOccupation = aula.getRoomOccupation();
 
         if (aula != null) {
             result = valid(aulaNova.getInicio(), aulaNova.getFim());
@@ -90,11 +90,11 @@ public class EditLesson implements IService {
 
 
     private boolean validNoInterceptingLesson(Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week, IRoom room, IRoomOccupation oldroomOccupation)
+            DiaSemana dayOfWeek, Integer frequency, Integer week, Room room, RoomOccupation oldroomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final List<IRoomOccupation> roomOccupations = room.getRoomOccupations();
+        final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 
-        for (final IRoomOccupation roomOccupation : roomOccupations) {
+        for (final RoomOccupation roomOccupation : roomOccupations) {
             if (roomOccupation != oldroomOccupation && 
                     roomOccupation.roomOccupationForDateAndTime(
                     oldroomOccupation.getPeriod().getStartDate(),
@@ -106,7 +106,7 @@ public class EditLesson implements IService {
         return true;
     }
 
-    private InfoShiftServiceResult valid(IShift shift, Integer lessonId, Calendar start, Calendar end) throws ExcepcaoPersistencia {
+    private InfoShiftServiceResult valid(Shift shift, Integer lessonId, Calendar start, Calendar end) throws ExcepcaoPersistencia {
         InfoShiftServiceResult result = new InfoShiftServiceResult();
         result.setMessageType(InfoShiftServiceResult.SUCESS);
         double hours = getTotalHoursOfShiftType(shift, lessonId, start, end);
@@ -141,11 +141,11 @@ public class EditLesson implements IService {
         return result;
     }
 
-    private double getTotalHoursOfShiftType(IShift shift, Integer lessonId, Calendar start, Calendar end)
+    private double getTotalHoursOfShiftType(Shift shift, Integer lessonId, Calendar start, Calendar end)
             throws ExcepcaoPersistencia {
         double duration = 0;
-        final List<ILesson> associatedLessons = shift.getAssociatedLessons();
-        for (final ILesson lesson : associatedLessons) {
+        final List<Lesson> associatedLessons = shift.getAssociatedLessons();
+        for (final Lesson lesson : associatedLessons) {
             if (!lesson.getIdInternal().equals(lessonId)) {
                 duration += (getLessonDurationInMinutes(lesson.getBegin(), lesson.getEnd()).doubleValue() / 60);
             }

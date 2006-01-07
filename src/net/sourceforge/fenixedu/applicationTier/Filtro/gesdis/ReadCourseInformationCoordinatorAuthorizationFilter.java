@@ -9,8 +9,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAuthorizationFilter;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -38,8 +38,8 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends DomainO
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
             IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
 
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, objectId);
             List executionDegrees = persistentExecutionDegree.readByExecutionCourseAndByTeacher(
                     executionCourse.getIdInternal(), teacher.getIdInternal());

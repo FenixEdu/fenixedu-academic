@@ -15,7 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,7 +39,7 @@ public class ReadSites implements IService {
 		List result = new ArrayList(allSites.size());
 
 		while (iterator.hasNext())
-			result.add(InfoSiteWithInfoExecutionCourse.newInfoFromDomain(((ISite) iterator.next())));
+			result.add(InfoSiteWithInfoExecutionCourse.newInfoFromDomain(((Site) iterator.next())));
 
 		return result;
 	}

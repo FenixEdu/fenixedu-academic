@@ -11,9 +11,9 @@ public class CurricularCourseEquivalence extends CurricularCourseEquivalence_Bas
     public CurricularCourseEquivalence() {
     }
 
-    public CurricularCourseEquivalence(final IDegreeCurricularPlan degreeCurricularPlan,
-            final ICurricularCourse curricularCourse, final ICurricularCourse oldCurricularCourse) {
-        for (final ICurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalences()) {
+    public CurricularCourseEquivalence(final DegreeCurricularPlan degreeCurricularPlan,
+            final CurricularCourse curricularCourse, final CurricularCourse oldCurricularCourse) {
+        for (final CurricularCourseEquivalence curricularCourseEquivalence : curricularCourse.getCurricularCourseEquivalences()) {
             if (oldCurricularCourse.equals(curricularCourseEquivalence.getOldCurricularCourse())) {
                 throw new DomainException("error.exists.curricular.course.equivalency");
             }

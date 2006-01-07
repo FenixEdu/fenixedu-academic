@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantInsurance;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantPaymentEntity;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,7 +34,7 @@ public class EditGrantInsurance implements IService {
         final IPersistentGrantPaymentEntity persistentGrantPaymentEntity = persistentSupport
                 .getIPersistentGrantPaymentEntity();
 
-        IGrantInsurance grantInsurance = (IGrantInsurance) persistentSupport.getIPersistentObject()
+        GrantInsurance grantInsurance = (GrantInsurance) persistentSupport.getIPersistentObject()
                 .readByOID(GrantInsurance.class, infoGrantInsurance.getIdInternal());
         if (grantInsurance == null) {
             grantInsurance = DomainFactory.makeGrantInsurance();
@@ -46,18 +46,18 @@ public class EditGrantInsurance implements IService {
                     .readGrantContractRegimeByGrantContractAndState(infoGrantInsurance
                             .getInfoGrantContract().getIdInternal(), InfoGrantContractRegime
                             .getActiveState());
-            final IGrantContractRegime grantContractRegime = (IGrantContractRegime) grantContractRegimeList
+            final GrantContractRegime grantContractRegime = (GrantContractRegime) grantContractRegimeList
                     .get(0);
             grantInsurance.setDateEndInsurance(grantContractRegime.getDateEndContract());
         } else {
             grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
         }
 
-        final IGrantContract grantContract = (IGrantContract) persistentGrantContract.readByOID(
+        final GrantContract grantContract = (GrantContract) persistentGrantContract.readByOID(
                 GrantContract.class, infoGrantInsurance.getInfoGrantContract().getIdInternal());
         grantInsurance.setGrantContract(grantContract);
 
-        final IGrantPaymentEntity grantPaymentEntity = (IGrantPaymentEntity) persistentGrantPaymentEntity
+        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentGrantPaymentEntity
                 .readByOID(GrantPaymentEntity.class, infoGrantInsurance.getInfoGrantPaymentEntity()
                         .getIdInternal());
         grantInsurance.setGrantPaymentEntity(grantPaymentEntity);

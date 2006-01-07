@@ -5,11 +5,11 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ICampus;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IOccupationPeriod;
+import net.sourceforge.fenixedu.domain.Campus;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -32,23 +32,23 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
 
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IExecutionYear executionYear = (IExecutionYear) ps.getIPersistentExecutionYear()
+        final ExecutionYear executionYear = (ExecutionYear) ps.getIPersistentExecutionYear()
                 .readByOID(ExecutionYear.class, executionYearID);
 
-        final ICampus campus = ps.getIPersistentCampus().readByName(campusName);
+        final Campus campus = ps.getIPersistentCampus().readByName(campusName);
 
-        final IOccupationPeriod lessonSeason1 = createPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
-        final IOccupationPeriod lessonSeason2 = createPeriod(lessonSeason2BeginDate, lessonSeason2EndDate);
-        final IOccupationPeriod examsSeason1 = createPeriod(examsSeason1BeginDate, examsSeason1EndDate);
-        final IOccupationPeriod examsSeason2 = createPeriod(examsSeason2BeginDate, examsSeason2EndDate);
+        final OccupationPeriod lessonSeason1 = createPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
+        final OccupationPeriod lessonSeason2 = createPeriod(lessonSeason2BeginDate, lessonSeason2EndDate);
+        final OccupationPeriod examsSeason1 = createPeriod(examsSeason1BeginDate, examsSeason1EndDate);
+        final OccupationPeriod examsSeason2 = createPeriod(examsSeason2BeginDate, examsSeason2EndDate);
 
         for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
 
-            final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) ps
+            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ps
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             degreeCurricularPlanID);
 
-            IExecutionDegree storedExecutionDegree = ps.getIPersistentExecutionDegree()
+            ExecutionDegree storedExecutionDegree = ps.getIPersistentExecutionDegree()
                     .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID,
                             executionYear.getYear());
 
@@ -63,8 +63,8 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
 
     }
 
-    private IOccupationPeriod createPeriod(final Calendar startDate, final Calendar endDate) {
-        final IOccupationPeriod period = DomainFactory.makeOccupationPeriod();
+    private OccupationPeriod createPeriod(final Calendar startDate, final Calendar endDate) {
+        final OccupationPeriod period = DomainFactory.makeOccupationPeriod();
 
         period.setStartDate(startDate);
         period.setEndDate(endDate);
@@ -75,11 +75,11 @@ public class CreateExecutionDegreesForExecutionYear implements IService {
 
     protected void createExecutionDegree(
 
-    final IExecutionYear executionYear, ICampus campus, IDegreeCurricularPlan degreeCurricularPlan,
-            Boolean temporaryExamMap, IOccupationPeriod periodExamsSeason1, IOccupationPeriod periodExamsSeason2,
-            IOccupationPeriod periodLessonSeason1, IOccupationPeriod periodLessonSeason2) {
+    final ExecutionYear executionYear, Campus campus, DegreeCurricularPlan degreeCurricularPlan,
+            Boolean temporaryExamMap, OccupationPeriod periodExamsSeason1, OccupationPeriod periodExamsSeason2,
+            OccupationPeriod periodLessonSeason1, OccupationPeriod periodLessonSeason2) {
 
-        final IExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
+        final ExecutionDegree executionDegree = DomainFactory.makeExecutionDegree();
 
         executionDegree.setCampus(campus);
         executionDegree.setDegreeCurricularPlan(degreeCurricularPlan);

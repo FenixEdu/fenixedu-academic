@@ -1,7 +1,7 @@
 package relations;
 
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -13,7 +13,7 @@ public class PersonRole extends PersonRole_Base {
      * prerequisites to add this new role; to update the username; to actually
      * add the role.
      */
-    public static void add(IPerson person, IRole role) {
+    public static void add(Person person, Role role) {
 
         // verify if the person already has the role being inserted
         if (!person.hasRole(role.getRoleType())) {
@@ -41,7 +41,7 @@ public class PersonRole extends PersonRole_Base {
      * role; to update the username.
      * 
      */
-    public static void remove(IPerson person, IRole removedRole) {   
+    public static void remove(Person person, Role removedRole) {   
         if (removedRole != null && person.hasRole(removedRole.getRoleType())) {
             // Remove the role in case
             PersonRole_Base.remove(person, removedRole);
@@ -54,7 +54,7 @@ public class PersonRole extends PersonRole_Base {
         person.updateIstUsername();
     }
 
-    private static Boolean verifiesDependencies(IPerson person, IRole role) {
+    private static Boolean verifiesDependencies(Person person, Role role) {
         switch (role.getRoleType()) {
         case COORDINATOR:
         case DIRECTIVE_COUNCIL:
@@ -78,7 +78,7 @@ public class PersonRole extends PersonRole_Base {
         }
     }
 
-    private static void removeDependencies(IPerson person, IRole removedRole) {
+    private static void removeDependencies(Person person, Role removedRole) {
         switch (removedRole.getRoleType()) {
         case PERSON:
             removeRoleIfPresent(person, RoleType.TEACHER);
@@ -117,8 +117,8 @@ public class PersonRole extends PersonRole_Base {
         }
     }
 
-    private static void removeRoleIfPresent(IPerson person, RoleType roleType) {
-        IRole tmpRole = null;
+    private static void removeRoleIfPresent(Person person, RoleType roleType) {
+        Role tmpRole = null;
         tmpRole = person.getPersonRole(roleType);
         if (tmpRole != null) {
             person.getPersonRoles().remove(tmpRole);

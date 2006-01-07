@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
-import net.sourceforge.fenixedu.domain.onlineTests.IMetadata;
+import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -24,7 +24,7 @@ public class ReadMetadatas implements IService {
     public List<InfoMetadata> run(Integer executionCourseId, Integer testId, Boolean distributedTest) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
-        List<IMetadata> metadatas = null;
+        List<Metadata> metadatas = null;
         if (testId == null) {
             metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourseId);
         } else if (distributedTest == false) {
@@ -33,7 +33,7 @@ public class ReadMetadatas implements IService {
             metadatas = persistentSuport.getIPersistentMetadata().readByExecutionCourseAndNotDistributedTest(executionCourseId, testId);
         }
         List<InfoMetadata> infoMetadataList = new ArrayList<InfoMetadata>();
-        for (IMetadata metadata : metadatas) {
+        for (Metadata metadata : metadatas) {
             infoMetadataList.add(InfoMetadata.newInfoFromDomain(metadata));
         }
         return infoMetadataList;

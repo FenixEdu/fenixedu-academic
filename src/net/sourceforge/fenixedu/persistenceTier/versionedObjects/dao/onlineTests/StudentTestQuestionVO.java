@@ -11,10 +11,10 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IDistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.IStudentTestQuestion;
+import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
+import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
@@ -27,10 +27,10 @@ import org.apache.commons.beanutils.BeanComparator;
  */
 public class StudentTestQuestionVO extends VersionedObjectsBase implements IPersistentStudentTestQuestion {
 
-    public List<IStudentTestQuestion> readByStudentAndDistributedTest(Integer studentId, Integer distributedTestId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudentTestQuestion> result = new ArrayList<IStudentTestQuestion>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<StudentTestQuestion> readByStudentAndDistributedTest(Integer studentId, Integer distributedTestId) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<StudentTestQuestion> result = new ArrayList<StudentTestQuestion>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyStudent().equals(studentId) && studentTestQuestion.getKeyDistributedTest().equals(distributedTestId)) {
                 result.add(studentTestQuestion);
             }
@@ -38,10 +38,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public List<IStudentTestQuestion> readByDistributedTest(Integer distributedTestId) {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudentTestQuestion> result = new ArrayList<IStudentTestQuestion>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<StudentTestQuestion> readByDistributedTest(Integer distributedTestId) {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<StudentTestQuestion> result = new ArrayList<StudentTestQuestion>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyDistributedTest().equals(distributedTestId)) {
                 result.add(studentTestQuestion);
             }
@@ -51,10 +51,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public List<IStudentTestQuestion> readByStudent(Integer studentId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudentTestQuestion> result = new ArrayList<IStudentTestQuestion>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<StudentTestQuestion> readByStudent(Integer studentId) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<StudentTestQuestion> result = new ArrayList<StudentTestQuestion>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyStudent().equals(studentId)) {
                 result.add(studentTestQuestion);
             }
@@ -62,10 +62,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public List<IStudentTestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudentTestQuestion> result = new ArrayList<IStudentTestQuestion>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<StudentTestQuestion> readByQuestion(Integer questionId) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<StudentTestQuestion> result = new ArrayList<StudentTestQuestion>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyQuestion().equals(questionId)) {
                 result.add(studentTestQuestion);
             }
@@ -73,10 +73,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public List<IStudentTestQuestion> readByQuestionAndDistributedTest(Integer questionId, Integer distributedTestId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudentTestQuestion> result = new ArrayList<IStudentTestQuestion>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<StudentTestQuestion> readByQuestionAndDistributedTest(Integer questionId, Integer distributedTestId) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<StudentTestQuestion> result = new ArrayList<StudentTestQuestion>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyDistributedTest().equals(distributedTestId) && studentTestQuestion.getKeyQuestion().equals(questionId)) {
                 result.add(studentTestQuestion);
             }
@@ -84,10 +84,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public IStudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
+    public StudentTestQuestion readByQuestionAndStudentAndDistributedTest(Integer questionId, Integer studentId, Integer distributedTestId)
             throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyDistributedTest().equals(distributedTestId) && studentTestQuestion.getKeyStudent().equals(studentId)
                     && studentTestQuestion.getKeyQuestion().equals(questionId)) {
                 return studentTestQuestion;
@@ -96,10 +96,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return null;
     }
 
-    public List<IStudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudentTestQuestion> result = new ArrayList<IStudentTestQuestion>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<StudentTestQuestion> readByOrderAndDistributedTest(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<StudentTestQuestion> result = new ArrayList<StudentTestQuestion>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyDistributedTest().equals(distributedTestId) && studentTestQuestion.getTestQuestionOrder().equals(order)) {
                 result.add(studentTestQuestion);
             }
@@ -107,10 +107,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public List<IStudent> readStudentsByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudent> result = new ArrayList<IStudent>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<Student> readStudentsByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<Student> result = new ArrayList<Student>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getKeyDistributedTest().equals(distributedTestId) && studentTestQuestion.getTestQuestionOrder().equals(1)) {
                 result.add(studentTestQuestion.getStudent());
             }
@@ -118,10 +118,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public List<IStudent> readStudentsByDistributedTests(Collection distributedTestsIds) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = (List<IStudentTestQuestion>) readAll(StudentTestQuestion.class);
-        List<IStudent> result = new ArrayList<IStudent>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+    public List<Student> readStudentsByDistributedTests(Collection distributedTestsIds) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = (List<StudentTestQuestion>) readAll(StudentTestQuestion.class);
+        List<Student> result = new ArrayList<Student>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getTestQuestionOrder().equals(1) && distributedTestsIds.contains(studentTestQuestion.getKeyDistributedTest())
                     && !result.contains(studentTestQuestion.getStudent())) {
                 result.add(studentTestQuestion.getStudent());
@@ -132,38 +132,38 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return result;
     }
 
-    public List<IStudentTestQuestion> readStudentTestQuestionsByDistributedTest(IDistributedTest distributedTest) {
-        final List<IStudentTestQuestion> studentTestQuestionList = readByDistributedTest(distributedTest.getIdInternal());
+    public List<StudentTestQuestion> readStudentTestQuestionsByDistributedTest(DistributedTest distributedTest) {
+        final List<StudentTestQuestion> studentTestQuestionList = readByDistributedTest(distributedTest.getIdInternal());
         return studentTestQuestionList.subList(0, distributedTest.getNumberOfQuestions());
     }
 
     public Double getMaximumDistributedTestMark(Integer distributedTestId) throws ExcepcaoPersistencia {
-        final IDistributedTest distributedTest = (IDistributedTest) readByOID(DistributedTest.class, distributedTestId);
+        final DistributedTest distributedTest = (DistributedTest) readByOID(DistributedTest.class, distributedTestId);
         double result = 0;
-        List<IStudentTestQuestion> studentTestQuestionList = readStudentTestQuestionsByDistributedTest(distributedTest);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList)
+        List<StudentTestQuestion> studentTestQuestionList = readStudentTestQuestionsByDistributedTest(distributedTest);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList)
             result = result + studentTestQuestion.getTestQuestionValue().doubleValue();
         return new Double(result);
     }
 
     public Double readStudentTestFinalMark(Integer distributedTestId, Integer studentId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = readByStudentAndDistributedTest(studentId, distributedTestId);
+        final List<StudentTestQuestion> studentTestQuestionList = readByStudentAndDistributedTest(studentId, distributedTestId);
         if (studentTestQuestionList == null || studentTestQuestionList.size() == 0) {
             return null;
         }
         Double result = new Double(0);
 
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             result = new Double(result.doubleValue() + studentTestQuestion.getTestQuestionMark().doubleValue());
         }
         return result;
     }
 
-    public List<IDistributedTest> readDistributedTestsByTestQuestion(Integer questionId) throws ExcepcaoPersistencia {
-        final List<IStudentTestQuestion> studentTestQuestionList = readByQuestion(questionId);
-        List<IDistributedTest> result = new ArrayList<IDistributedTest>();
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-            IDistributedTest distributedTest = studentTestQuestion.getDistributedTest();
+    public List<DistributedTest> readDistributedTestsByTestQuestion(Integer questionId) throws ExcepcaoPersistencia {
+        final List<StudentTestQuestion> studentTestQuestionList = readByQuestion(questionId);
+        List<DistributedTest> result = new ArrayList<DistributedTest>();
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+            DistributedTest distributedTest = studentTestQuestion.getDistributedTest();
             if (!result.contains(distributedTest))
                 result.add(distributedTest);
         }
@@ -172,8 +172,8 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
 
     public int countResponses(Integer order, String response, Integer distributedTestId) throws ExcepcaoPersistencia {
         int result = 0;
-        List<IStudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        List<StudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getResponse() != null && studentTestQuestion.getResponse().equals(response)) {
                 result++;
             }
@@ -183,8 +183,8 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
 
     public List<String> getResponses(Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
         List<String> result = new ArrayList<String>();
-        List<IStudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        List<StudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getResponse() != null) {
                 result.add(studentTestQuestion.getResponse());
             }
@@ -193,9 +193,9 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
     }
 
     public int countByResponse(String response, Integer order, Integer distributedTestId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
+        List<StudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
         int result = 0;
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getResponse() != null && studentTestQuestion.getResponse().equals(response)) {
                 result++;
             }
@@ -204,7 +204,7 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
     }
 
     public int countResponsedOrNotResponsed(Integer order, boolean responsed, Integer distributedTestId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = null;
+        List<StudentTestQuestion> studentTestQuestionList = null;
         int responsedNumber = 0;
         int notResponsedNumber = 0;
         if (order != null) {
@@ -212,7 +212,7 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         } else {
             studentTestQuestionList = readByDistributedTest(distributedTestId);
         }
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getResponse() != null) {
                 responsedNumber++;
             } else {
@@ -226,10 +226,10 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
     }
 
     public int countCorrectOrIncorrectAnswers(Integer order, Double mark, boolean correct, Integer distributedTestId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
+        List<StudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
         int correctNumber = 0;
         int incorrectNumber = 0;
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getResponse() != null) {
                 if (studentTestQuestion.getTestQuestionMark().compareTo(mark) >= 0) {
                     correctNumber++;
@@ -245,9 +245,9 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
     }
 
     public int countPartiallyCorrectAnswers(Integer order, Double mark, Integer distributedTestId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
+        List<StudentTestQuestion> studentTestQuestionList = readByOrderAndDistributedTest(order, distributedTestId);
         int partiallyCorrect = 0;
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getResponse() != null) {
                 if (studentTestQuestion.getTestQuestionMark().compareTo(mark) < 0 && studentTestQuestion.getTestQuestionMark() > 0) {
                     partiallyCorrect++;
@@ -258,14 +258,14 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
         return partiallyCorrect;
     }
 
-    public int countNumberOfStudents(IDistributedTest distributedTest) throws ExcepcaoPersistencia {
+    public int countNumberOfStudents(DistributedTest distributedTest) throws ExcepcaoPersistencia {
         return readByOrderAndDistributedTest(1, distributedTest.getIdInternal()).size();
     }
 
     public int countStudentTestByStudentAndExecutionCourse(Integer executionCourseId, Integer studentId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = readByStudent(studentId);
+        List<StudentTestQuestion> studentTestQuestionList = readByStudent(studentId);
         int result = 0;
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             if (studentTestQuestion.getTestQuestionOrder().equals(1)
                     && studentTestQuestion.getDistributedTest().getTestScope().getClassName().equals(ExecutionCourse.class.getName())
                     && studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(executionCourseId)) {
@@ -280,8 +280,8 @@ public class StudentTestQuestionVO extends VersionedObjectsBase implements IPers
     }
 
     public void deleteByDistributedTest(Integer distributedTestId) throws ExcepcaoPersistencia {
-        List<IStudentTestQuestion> studentTestQuestionList = readByDistributedTest(distributedTestId);
-        for (IStudentTestQuestion studentTestQuestion : studentTestQuestionList) {
+        List<StudentTestQuestion> studentTestQuestionList = readByDistributedTest(distributedTestId);
+        for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             deleteByOID(StudentTestQuestion.class, studentTestQuestion.getIdInternal());
         }
     }

@@ -10,7 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 
 import org.apache.struts.taglib.TagUtils;
 
@@ -28,7 +28,7 @@ public class EmailSenderWriteTag extends TagSupport
 	protected String name;
 	protected String property;
 	protected String scope;
-	protected IMailMessage message;
+	protected MailMessage message;
 	protected String locale;
 	protected String bundle;
 	protected String addressSeparator=",";
@@ -45,7 +45,7 @@ public class EmailSenderWriteTag extends TagSupport
 		}
 		else
 		{
-			this.message = (IMailMessage) value;
+			this.message = (MailMessage) value;
 		}
 		// Convert value to the String with some formatting
 		try

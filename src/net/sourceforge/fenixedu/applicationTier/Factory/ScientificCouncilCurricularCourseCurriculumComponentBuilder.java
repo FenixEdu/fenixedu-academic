@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurriculum;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurriculum;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
@@ -59,9 +59,9 @@ public class ScientificCouncilCurricularCourseCurriculumComponentBuilder {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		ICurricularCourse curricularCourse = (ICurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, curricularCourseId);
-		ICurriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
+		Curriculum curriculum = persistentCurriculum.readCurriculumByCurricularCourse(curricularCourse
 				.getIdInternal());
 		if (curriculum != null) {
 			InfoCurriculum infoCurriculum = InfoCurriculum.newInfoFromDomain(curriculum);

@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
-import net.sourceforge.fenixedu.domain.ISection;
-import net.sourceforge.fenixedu.domain.ISite;
+import net.sourceforge.fenixedu.domain.Section;
+import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -35,12 +35,12 @@ public class ReadSectionsBySiteAndSuperiorSection implements IService {
 			ExcepcaoPersistencia {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ISite site = (ISite) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
+		Site site = (Site) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
 		List allSections = null;
 
-		ISection superiorSection = null;
+		Section superiorSection = null;
 		if (infoSuperiorSection != null) {
-			superiorSection = (ISection) sp.getIPersistentSection().readByOID(Section.class,
+			superiorSection = (Section) sp.getIPersistentSection().readByOID(Section.class,
 					infoSuperiorSection.getIdInternal());
 			superiorSection.setSite(site);
 		}
@@ -64,7 +64,7 @@ public class ReadSectionsBySiteAndSuperiorSection implements IService {
 			Iterator iterator = allSections.iterator();
 
 			while (iterator.hasNext())
-				result.add(InfoSectionWithAll.newInfoFromDomain((ISection) iterator.next()));
+				result.add(InfoSectionWithAll.newInfoFromDomain((Section) iterator.next()));
 		}
 
 		return result;

@@ -19,11 +19,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExportGrouping;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.IShift;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExportGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,7 +37,7 @@ public class ReadShiftsAndGroups implements IService {
     public static ISiteComponent run(Integer groupingCode, String username) throws ExcepcaoPersistencia, FenixServiceException {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final IGrouping grouping = (IGrouping) sp.getIPersistentGrouping().readByOID(Grouping.class, groupingCode);
+        final Grouping grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class, groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();
         }
@@ -52,7 +52,7 @@ public class ReadShiftsAndGroups implements IService {
         return run(grouping);
     }
 
-    public static InfoSiteShiftsAndGroups run(IGrouping grouping) throws ExcepcaoPersistencia, FenixServiceException {
+    public static InfoSiteShiftsAndGroups run(Grouping grouping) throws ExcepcaoPersistencia, FenixServiceException {
         final InfoSiteShiftsAndGroups infoSiteShiftsAndGroups = new InfoSiteShiftsAndGroups();
 
         final List<InfoSiteGroupsByShift> infoSiteGroupsByShiftList = new ArrayList<InfoSiteGroupsByShift>();
@@ -63,9 +63,9 @@ public class ReadShiftsAndGroups implements IService {
         final IGroupEnrolmentStrategy strategy = enrolmentGroupPolicyStrategyFactory.getGroupEnrolmentStrategyInstance(grouping);
 
         if (strategy.checkHasShift(grouping)) {
-            for (final IExportGrouping exportGrouping : grouping.getExportGroupings()) {
-                final IExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
-                for (final IShift shift : executionCourse.getAssociatedShifts()) {
+            for (final ExportGrouping exportGrouping : grouping.getExportGroupings()) {
+                final ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
+                for (final Shift shift : executionCourse.getAssociatedShifts()) {
                     if (shift.getTipo() == grouping.getShiftType()) {
                         infoSiteGroupsByShiftList.add(createInfoSiteGroupByShift(shift, grouping));
                     }
@@ -84,14 +84,14 @@ public class ReadShiftsAndGroups implements IService {
 
     }
 
-    private static InfoSiteGroupsByShift createInfoSiteGroupByShift(final IShift shift, final IGrouping grouping) {
+    private static InfoSiteGroupsByShift createInfoSiteGroupByShift(final Shift shift, final Grouping grouping) {
         final InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
 
         final InfoSiteShift infoSiteShift = new InfoSiteShift();
         infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
         infoSiteShift.setInfoShift(InfoShiftWithInfoLessons.newInfoFromDomain(shift));
         Collections.sort(infoSiteShift.getInfoShift().getInfoLessons());
-        final List<IStudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
+        final List<StudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
         infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));
         
         infoSiteGroupsByShift.setInfoSiteStudentGroupsList(createInfoStudentGroupsList(studentGroups));
@@ -99,12 +99,12 @@ public class ReadShiftsAndGroups implements IService {
         return infoSiteGroupsByShift;
     }
 
-    private static InfoSiteGroupsByShift createInfoSiteGroupByShift(final IGrouping grouping) {
+    private static InfoSiteGroupsByShift createInfoSiteGroupByShift(final Grouping grouping) {
         final InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
 
         final InfoSiteShift infoSiteShift = new InfoSiteShift();
         infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
-        final List<IStudentGroup> studentGroups = grouping.getStudentGroupsWithoutShift();
+        final List<StudentGroup> studentGroups = grouping.getStudentGroupsWithoutShift();
         infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));
         
         infoSiteGroupsByShift.setInfoSiteStudentGroupsList(createInfoStudentGroupsList(studentGroups));
@@ -118,9 +118,9 @@ public class ReadShiftsAndGroups implements IService {
             : "Sem limite";
     }
 
-    private static List<InfoSiteStudentGroup> createInfoStudentGroupsList(final List<IStudentGroup> studentGroups) {
+    private static List<InfoSiteStudentGroup> createInfoStudentGroupsList(final List<StudentGroup> studentGroups) {
         final List<InfoSiteStudentGroup> infoSiteStudentGroups = new ArrayList<InfoSiteStudentGroup>();
-        for (final IStudentGroup studentGroup : studentGroups) {
+        for (final StudentGroup studentGroup : studentGroups) {
             final InfoSiteStudentGroup infoSiteStudentGroup = new InfoSiteStudentGroup();
             infoSiteStudentGroup.setInfoStudentGroup(InfoStudentGroup.newInfoFromDomain(studentGroup));
             infoSiteStudentGroups.add(infoSiteStudentGroup);

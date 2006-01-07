@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IInstitution;
+import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
@@ -19,11 +19,11 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class InstitutionOJB extends PersistentObjectOJB implements IPersistentInstitution {
 
-    public IInstitution readByName(String name) throws ExcepcaoPersistencia {
+    public Institution readByName(String name) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("name", name);
 
-        return (IInstitution) queryObject(Institution.class, criteria);
+        return (Institution) queryObject(Institution.class, criteria);
     }
 
     public List readAll() throws ExcepcaoPersistencia {

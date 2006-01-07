@@ -21,12 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IAttends;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IGrouping;
-import net.sourceforge.fenixedu.domain.ILesson;
-import net.sourceforge.fenixedu.domain.IStudentGroup;
+import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Grouping;
+import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -58,11 +58,11 @@ public class ShowStudentGroupInfo extends Action
 			{ username, password, requestURL };
 			IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(null, "Autenticacao", argsAutenticacao);
 
-			IExecutionCourse executionCourse = null;
-			Collection<IGrouping> groupings = null;
+			ExecutionCourse executionCourse = null;
+			Collection<Grouping> groupings = null;
 			try
 			{
-				executionCourse = (IExecutionCourse) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]
+				executionCourse = (ExecutionCourse) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]
 				{ ExecutionCourse.class, executionCourseID });
 				groupings = executionCourse.getGroupings();
 			}
@@ -76,21 +76,21 @@ public class ShowStudentGroupInfo extends Action
 
 			for (Iterator iterGroupings = groupings.iterator(); iterGroupings.hasNext();)
 			{
-				IGrouping grouping = (IGrouping) iterGroupings.next();
+				Grouping grouping = (Grouping) iterGroupings.next();
 
 				if (grouping != null)
 				{
 
-					for (IStudentGroup studentGroup : grouping.getStudentGroups())
+					for (StudentGroup studentGroup : grouping.getStudentGroups())
 					{
-						for (IAttends searchingAttendsSet : studentGroup.getAttends())
+						for (Attends searchingAttendsSet : studentGroup.getAttends())
 						{
 							if (username.equalsIgnoreCase(searchingAttendsSet.getAluno().getPerson().getUsername()))
 							{
 								result = executionCourse.getNome() + "(";
-								Collection<ICurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
+								Collection<CurricularCourse> curricularCourses = executionCourse.getAssociatedCurricularCourses();
 								boolean firstCurricularCourse = true;
-								for (ICurricularCourse course : curricularCourses)
+								for (CurricularCourse course : curricularCourses)
 								{
 									if (!firstCurricularCourse) result += ",";
 									result += course.getDegreeCurricularPlan().getName();
@@ -98,7 +98,7 @@ public class ShowStudentGroupInfo extends Action
 								result += ")\n";
 								result += grouping.getName() + "\n";
 								int remainingStudents = grouping.getMaximumCapacity().intValue();
-								for (IAttends attends : studentGroup.getAttends())
+								for (Attends attends : studentGroup.getAttends())
 								{
 									result += attends.getAluno().getNumber();
 									result += "-";
@@ -114,7 +114,7 @@ public class ShowStudentGroupInfo extends Action
 
 								result += studentGroup.getGroupNumber() + "\n"
 										+ studentGroup.getShift().getNome() + "\n";
-								for (ILesson lesson : studentGroup.getShift().getAssociatedLessons())
+								for (Lesson lesson : studentGroup.getShift().getAssociatedLessons())
 								{
 									result += lesson.getDiaSemana().toString() + " "
 											+ lesson.getInicio().get(Calendar.HOUR_OF_DAY);

@@ -9,11 +9,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.framework.EditDomainObje
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractMovement;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.IDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantContractMovement;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -32,7 +32,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
     @Override
-    protected IDomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
+    protected DomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         IPersistentGrantContractMovement persistentGrantContractMovement = sp
                 .getIPersistentGrantContractMovement();
@@ -43,7 +43,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
     @Override
-    protected void doAfterLock(IDomainObject domainObjectLocked, InfoObject infoObject,
+    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject,
             ISuportePersistente sp) throws FenixServiceException {
 
         try {
@@ -51,10 +51,10 @@ public class EditGrantContractMovement extends EditDomainObjectService {
              * In case of a new Movement, the Contract associated needs to be
              * set.
              */
-            IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObjectLocked;
+            GrantContractMovement grantContractMovement = (GrantContractMovement) domainObjectLocked;
             InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
-            IGrantContract grantContract = (IGrantContract) sp.getIPersistentGrantContract().readByOID(
+            GrantContract grantContract = (GrantContract) sp.getIPersistentGrantContract().readByOID(
                     GrantContract.class,
                     infoGrantContractMovement.getInfoGrantContract().getIdInternal());
             grantContractMovement.setGrantContract(grantContract);
@@ -70,15 +70,15 @@ public class EditGrantContractMovement extends EditDomainObjectService {
 
     @Override
     protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            IDomainObject domainObject) throws ExcepcaoPersistencia {
+            DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
-        IGrantContractMovement grantContractMovement = (IGrantContractMovement) domainObject;
+        GrantContractMovement grantContractMovement = (GrantContractMovement) domainObject;
 
         grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
         grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
 
         IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
-        IGrantContract grantContract = (IGrantContract) persistentGrantContract.readByOID(GrantContract.class,
+        GrantContract grantContract = (GrantContract) persistentGrantContract.readByOID(GrantContract.class,
                 infoGrantContractMovement.getInfoGrantContract().getIdInternal());
         grantContractMovement.setGrantContract(grantContract);
 
@@ -87,7 +87,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
     @Override
-    protected IDomainObject createNewDomainObject(InfoObject infoObject) {
+    protected DomainObject createNewDomainObject(InfoObject infoObject) {
         return DomainFactory.makeGrantContractMovement();
     }
 

@@ -7,7 +7,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoEmployee;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.IExtraWorkHistoric;
+import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric;
 
 /**
  * @author Tânia Pousão
@@ -151,7 +151,7 @@ public class InfoExtraWorkHistoric extends InfoObject {
         this.timeForServiceDismissal = timeForServiceDismissal;
     }
     
-    public void copyFromDomain(IExtraWorkHistoric extraWorkHistoric) {
+    public void copyFromDomain(ExtraWorkHistoric extraWorkHistoric) {
         super.copyFromDomain(extraWorkHistoric);
         if(extraWorkHistoric != null) {
             setServiceDismissalPerYear(extraWorkHistoric.getServiceDismissalPerYear());
@@ -164,7 +164,7 @@ public class InfoExtraWorkHistoric extends InfoObject {
         }        
     }   
 
-    public static InfoExtraWorkHistoric newInfoFromDomain(IExtraWorkHistoric extraWorkHistoric) {
+    public static InfoExtraWorkHistoric newInfoFromDomain(ExtraWorkHistoric extraWorkHistoric) {
         InfoExtraWorkHistoric infoExtraWorkHistoric = null;
         if (extraWorkHistoric != null) {
             infoExtraWorkHistoric = new InfoExtraWorkHistoric();

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -88,8 +88,8 @@ public class PersonLoader extends BaseLoader {
         persistentSupport.iniciarTransaccao();
 
         final IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
-        final IRole personRole = persistentRole.readByRoleType(RoleType.PERSON);
-        final List<IPerson> peopleWithPersonRole = personRole.getAssociatedPersons();
+        final Role personRole = persistentRole.readByRoleType(RoleType.PERSON);
+        final List<Person> peopleWithPersonRole = personRole.getAssociatedPersons();
 
 		final HSSFSheet sheet = workbook.getSheet(sheetname);
 		for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
@@ -178,7 +178,7 @@ public class PersonLoader extends BaseLoader {
         return people;
 	}
 
-    public static void dump(final HSSFRow row, final IPerson person) {
+    public static void dump(final HSSFRow row, final Person person) {
         final HSSFCell usernameCell = row.createCell((short) 0);
         final HSSFCell nameCell = row.createCell((short) 1);
         final HSSFCell genderCell = row.createCell((short) 2);

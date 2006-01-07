@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.ICoordinator;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
@@ -21,10 +21,10 @@ public class RemoveCoordinators implements IService {
         IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
 
         for (final Iterator iter = coordinatorsIds.iterator(); iter.hasNext(); ) {
-            ICoordinator coordinator = (ICoordinator) persistentCoordinator.readByOID(Coordinator.class, (Integer) iter.next());
+            Coordinator coordinator = (Coordinator) persistentCoordinator.readByOID(Coordinator.class, (Integer) iter.next());
 
             if (coordinator != null) {
-                ITeacher teacher = coordinator.getTeacher();
+                Teacher teacher = coordinator.getTeacher();
 
                 coordinator.setExecutionDegree(null);
                 coordinator.setTeacher(null);
@@ -32,7 +32,7 @@ public class RemoveCoordinators implements IService {
                 persistentCoordinator.deleteByOID(Coordinator.class, coordinator.getIdInternal());
 
                 if (teacher.getCoordinators().isEmpty()) {
-                    IPerson person = teacher.getPerson();
+                    Person person = teacher.getPerson();
                     if (teacher.getCoordinators().isEmpty()) {
                         person.removeRoleByType(RoleType.COORDINATOR);
                     }

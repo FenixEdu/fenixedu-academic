@@ -7,7 +7,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.publication;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.publication.IPublicationSubtype;
+import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
 
 /**
  * @author TJBF & PFON
@@ -27,13 +27,13 @@ public class InfoPublicationSubtype extends InfoObject {
         super();
     }
     
-    public void copyFromDomain(IPublicationSubtype pubSubtype) {
+    public void copyFromDomain(PublicationSubtype pubSubtype) {
         super.copyFromDomain(pubSubtype);
         keyPublicationType = pubSubtype.getKeyPublicationType();
         subtype = pubSubtype.getSubtype();
     }
     
-    public static InfoPublicationSubtype newInfoFromDomain(IPublicationSubtype pubSubtype) {
+    public static InfoPublicationSubtype newInfoFromDomain(PublicationSubtype pubSubtype) {
         InfoPublicationSubtype infoSubtype = new InfoPublicationSubtype();
         infoSubtype.copyFromDomain(pubSubtype);
         return infoSubtype;

@@ -7,10 +7,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
-import net.sourceforge.fenixedu.domain.IDegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -23,8 +23,8 @@ import org.apache.commons.collections.Predicate;
 public class CurricularCourseVO extends VersionedObjectsBase implements IPersistentCurricularCourse {
 
     public List readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
-        List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
-        for (ICurricularCourse cc : (List<ICurricularCourse>) readAll(CurricularCourse.class)) {
+        List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        for (CurricularCourse cc : (List<CurricularCourse>) readAll(CurricularCourse.class)) {
             if (cc.getCurricularStage().equals(curricularStage)) {
                 result.add(cc);
             }
@@ -39,10 +39,10 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
-                String nameEval = ((ICurricularCourse) obj).getDegreeCurricularPlan().getName();
-                String degreeNameEval = ((ICurricularCourse) obj).getDegreeCurricularPlan().getDegree()
+                String nameEval = ((CurricularCourse) obj).getDegreeCurricularPlan().getName();
+                String degreeNameEval = ((CurricularCourse) obj).getDegreeCurricularPlan().getDegree()
                         .getNome();
-                String degreeSiglaEval = ((ICurricularCourse) obj).getDegreeCurricularPlan().getDegree()
+                String degreeSiglaEval = ((CurricularCourse) obj).getDegreeCurricularPlan().getDegree()
                         .getSigla();
 
                 return (nameEval.equals(name) && degreeNameEval.equals(degreeName) && degreeSiglaEval
@@ -58,9 +58,9 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
-                return ((ICurricularCourse) obj).getDegreeCurricularPlan().getIdInternal().equals(
+                return ((CurricularCourse) obj).getDegreeCurricularPlan().getIdInternal().equals(
                         degreeCurricularPlanKey)
-                        && ((ICurricularCourse) obj).getBasic().equals(basic);
+                        && ((CurricularCourse) obj).getBasic().equals(basic);
             }
         });
     }
@@ -72,8 +72,8 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
-                return ((ICurricularCourse) obj).getName().equals(curricularCourseName)
-                        && ((ICurricularCourse) obj).getDegreeCurricularPlan().getIdInternal().equals(
+                return ((CurricularCourse) obj).getName().equals(curricularCourseName)
+                        && ((CurricularCourse) obj).getDegreeCurricularPlan().getIdInternal().equals(
                                 degreeCurricularPlanKey);
             }
         });
@@ -86,15 +86,15 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
-                List executionCourses = ((ICurricularCourse) obj).getAssociatedExecutionCourses();
+                List executionCourses = ((CurricularCourse) obj).getAssociatedExecutionCourses();
 
-                if (((ICurricularCourse) obj).getDegreeCurricularPlan().getDegree().getIdInternal()
+                if (((CurricularCourse) obj).getDegreeCurricularPlan().getDegree().getIdInternal()
                         .equals(degreeKey)
-                        && ((ICurricularCourse) obj).getDegreeCurricularPlan().getState().equals(
+                        && ((CurricularCourse) obj).getDegreeCurricularPlan().getState().equals(
                                 DegreeCurricularPlanState.ACTIVE)) {
 
                     for (Iterator iterator = executionCourses.iterator(); iterator.hasNext();) {
-                        if (((IExecutionCourse) iterator.next()).getExecutionPeriod().getExecutionYear()
+                        if (((ExecutionCourse) iterator.next()).getExecutionPeriod().getExecutionYear()
                                 .getIdInternal().equals(executionYearKey))
                             return true;
 
@@ -113,20 +113,20 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
 
         return (List) CollectionUtils.select(curricularCourses, new Predicate() {
             public boolean evaluate(Object obj) {
-                List executionCourses = ((ICurricularCourse) obj).getAssociatedExecutionCourses();
-                List scopes = ((ICurricularCourse) obj).getScopes();
+                List executionCourses = ((CurricularCourse) obj).getAssociatedExecutionCourses();
+                List scopes = ((CurricularCourse) obj).getScopes();
 
-                if (((ICurricularCourse) obj).getDegreeCurricularPlan().getDegree().getIdInternal()
+                if (((CurricularCourse) obj).getDegreeCurricularPlan().getDegree().getIdInternal()
                         .equals(degreeKey)
-                        && ((ICurricularCourse) obj).getDegreeCurricularPlan().getState().equals(
+                        && ((CurricularCourse) obj).getDegreeCurricularPlan().getState().equals(
                                 DegreeCurricularPlanState.ACTIVE)) {
 
                     for (Iterator iterator = executionCourses.iterator(); iterator.hasNext();) {
-                        if (((IExecutionCourse) iterator.next()).getExecutionPeriod().getExecutionYear()
+                        if (((ExecutionCourse) iterator.next()).getExecutionPeriod().getExecutionYear()
                                 .getIdInternal().equals(executionYearKey))
 
                             for (Iterator iteratorScope = scopes.iterator(); iteratorScope.hasNext();) {
-                                if (((ICurricularCourseScope) iterator.next()).getCurricularSemester()
+                                if (((CurricularCourseScope) iterator.next()).getCurricularSemester()
                                         .getCurricularYear().getYear().equals(year))
                                     return true;
                             }
@@ -137,16 +137,16 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
         });
     }
 
-    public ICurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
+    public CurricularCourse readCurricularCourseByDegreeCurricularPlanAndNameAndCode(
             final Integer degreeCurricularPlanId, final String name, final String code)
             throws ExcepcaoPersistencia {
 
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanId);
 
         if (degreeCurricularPlan != null) {
-            List<ICurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
-            for (final ICurricularCourse curricularCourse : curricularCourses) {
+            List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+            for (final CurricularCourse curricularCourse : curricularCourses) {
                 if (curricularCourse.getName().equals(name) && curricularCourse.getCode().equals(code)) {
                     return curricularCourse;
                 }
@@ -158,13 +158,13 @@ public class CurricularCourseVO extends VersionedObjectsBase implements IPersist
     public List readbyCourseCodeAndDegreeCurricularPlan(final String curricularCourseCode,
             final Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 
-        final List<ICurricularCourse> result = new ArrayList<ICurricularCourse>();
-        final IDegreeCurricularPlan degreeCurricularPlan = (IDegreeCurricularPlan) readByOID(
+        final List<CurricularCourse> result = new ArrayList<CurricularCourse>();
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {
-            List<ICurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
-            for (final ICurricularCourse curricularCourse : curricularCourses) {
+            List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();
+            for (final CurricularCourse curricularCourse : curricularCourses) {
                 if (curricularCourse.getCode().equals(curricularCourseCode)) {
                     result.add(curricularCourse);
                 }

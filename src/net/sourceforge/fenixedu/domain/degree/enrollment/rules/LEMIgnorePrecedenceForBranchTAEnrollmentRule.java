@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.domain.degree.enrollment.rules;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
@@ -22,8 +22,8 @@ import org.apache.commons.collections.Predicate;
  */
 public class LEMIgnorePrecedenceForBranchTAEnrollmentRule implements IEnrollmentRule {
 
-    private IStudentCurricularPlan studentCurricularPlan;
-    private IExecutionPeriod executionPeriod;
+    private StudentCurricularPlan studentCurricularPlan;
+    private ExecutionPeriod executionPeriod;
 
     private static final String MOTORES_TERMICOS_CODE = "F2";
     private static final String TERMODINAMICA_APLICADA_BRANCH_CODE = "310";
@@ -31,8 +31,8 @@ public class LEMIgnorePrecedenceForBranchTAEnrollmentRule implements IEnrollment
     /**
      *  
      */
-    public LEMIgnorePrecedenceForBranchTAEnrollmentRule(IStudentCurricularPlan studentCurricularPlan,
-            IExecutionPeriod executionPeriod) {
+    public LEMIgnorePrecedenceForBranchTAEnrollmentRule(StudentCurricularPlan studentCurricularPlan,
+            ExecutionPeriod executionPeriod) {
         this.studentCurricularPlan = studentCurricularPlan;
         this.executionPeriod = executionPeriod;
     }
@@ -50,10 +50,10 @@ public class LEMIgnorePrecedenceForBranchTAEnrollmentRule implements IEnrollment
             List curricularCourses = studentCurricularPlan.getDegreeCurricularPlan()
                     .getCurricularCoursesFromArea(studentCurricularPlan.getBranch(),
                             AreaType.SPECIALIZATION);
-            ICurricularCourse curricularCourse = (ICurricularCourse) CollectionUtils.find(
+            CurricularCourse curricularCourse = (CurricularCourse) CollectionUtils.find(
                     curricularCourses, new Predicate() {
                         public boolean evaluate(Object arg0) {
-                            ICurricularCourse curricularCourseToFind = (ICurricularCourse) arg0;
+                            CurricularCourse curricularCourseToFind = (CurricularCourse) arg0;
                             return curricularCourseToFind.getCode().equals(MOTORES_TERMICOS_CODE);
                         }
                     });
@@ -74,7 +74,7 @@ public class LEMIgnorePrecedenceForBranchTAEnrollmentRule implements IEnrollment
     }
 
     protected CurricularCourse2Enroll transformToCurricularCourse2Enroll(
-            ICurricularCourse curricularCourse, IExecutionPeriod currentExecutionPeriod) {
+            CurricularCourse curricularCourse, ExecutionPeriod currentExecutionPeriod) {
         return new CurricularCourse2Enroll(curricularCourse, studentCurricularPlan
                 .getCurricularCourseEnrollmentType(curricularCourse, currentExecutionPeriod),
                 new Boolean(true));

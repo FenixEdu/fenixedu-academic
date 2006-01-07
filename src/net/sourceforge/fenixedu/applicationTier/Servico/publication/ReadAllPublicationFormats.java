@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationFormat;
-import net.sourceforge.fenixedu.domain.publication.IPublicationFormat;
+import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
 import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,11 +20,11 @@ public class ReadAllPublicationFormats implements IService {
         IPersistentPublicationFormat persistentPublicationFormat = persistentSuport
                 .getIPersistentPublicationFormat();
 
-        List<IPublicationFormat> publicationFormatList = (List<IPublicationFormat>)persistentPublicationFormat.readAll(PublicationFormat.class);
+        List<PublicationFormat> publicationFormatList = (List<PublicationFormat>)persistentPublicationFormat.readAll(PublicationFormat.class);
 
         List<InfoPublicationFormat> result = new ArrayList<InfoPublicationFormat>();
         
-        for(IPublicationFormat publicationFormat : publicationFormatList) {
+        for(PublicationFormat publicationFormat : publicationFormatList) {
             result.add(InfoPublicationFormat.newInfoFromDomain(publicationFormat));
         }
         

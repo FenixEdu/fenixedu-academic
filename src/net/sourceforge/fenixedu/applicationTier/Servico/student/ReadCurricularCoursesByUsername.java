@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
-import net.sourceforge.fenixedu.domain.ICurricularCourse;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,10 +34,10 @@ public class ReadCurricularCoursesByUsername implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		List curricularPlans = sp.getIStudentCurricularPlanPersistente().readByUsername(username);
 		for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
-			IStudentCurricularPlan studentCurricularPlan = (IStudentCurricularPlan) iterator.next();
+			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 			for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan()
 					.getCurricularCourses().iterator(); curricularCoursesIterator.hasNext();) {
-				ICurricularCourse curricularCourse = (ICurricularCourse) curricularCoursesIterator
+				CurricularCourse curricularCourse = (CurricularCourse) curricularCoursesIterator
 						.next();
 				curricularCourses.add(InfoCurricularCourseWithInfoDegree
 						.newInfoFromDomain(curricularCourse));

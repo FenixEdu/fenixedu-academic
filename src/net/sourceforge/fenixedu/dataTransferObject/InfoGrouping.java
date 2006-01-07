@@ -7,7 +7,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.IGrouping;
+import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
 
@@ -296,7 +296,7 @@ public class InfoGrouping extends InfoObject
 		return result;
 	}
 			
-    public void copyFromDomain(IGrouping groupProperties) {
+    public void copyFromDomain(Grouping groupProperties) {
         super.copyFromDomain(groupProperties);
         if(groupProperties != null) {
             setName(groupProperties.getName());
@@ -313,7 +313,7 @@ public class InfoGrouping extends InfoObject
         }
     }
     
-    public static InfoGrouping newInfoFromDomain(IGrouping groupProperties){
+    public static InfoGrouping newInfoFromDomain(Grouping groupProperties){
         InfoGrouping infoGroupProperties = null;
         if(groupProperties != null) {
             infoGroupProperties = new InfoGrouping();

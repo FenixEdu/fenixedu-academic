@@ -5,8 +5,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.IAdvisory;
-import net.sourceforge.fenixedu.domain.IStudent;
+import net.sourceforge.fenixedu.domain.Advisory;
+import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -20,8 +20,8 @@ public class InsertStudentDistributedTestAdvisory implements IService {
 
     public void run(final Integer executionCourseId, final Integer advisoryId, final Integer studentId) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IAdvisory advisory = (IAdvisory) persistentSuport.getIPersistentObject().readByOID(Advisory.class, advisoryId);
-        IStudent student = (IStudent) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
+        Advisory advisory = (Advisory) persistentSuport.getIPersistentObject().readByOID(Advisory.class, advisoryId);
+        Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
         advisory.addPeople(student.getPerson());
     }
 

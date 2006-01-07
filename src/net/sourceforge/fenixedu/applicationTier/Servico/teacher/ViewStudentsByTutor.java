@@ -9,8 +9,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
-import net.sourceforge.fenixedu.domain.ITeacher;
-import net.sourceforge.fenixedu.domain.ITutor;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
@@ -36,17 +36,17 @@ public class ViewStudentsByTutor implements IService {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        ITeacher teacher = persistentTeacher.readTeacherByUsername(userName);
+        Teacher teacher = persistentTeacher.readTeacherByUsername(userName);
 
         IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-        List<ITutor> tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(),
+        List<Tutor> tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(),
                 teacher.getTeacherNumber());
 
         if (tutorStudents == null) {
             return infoTutorStudents;
         }
 
-        for (ITutor tutor : tutorStudents) {
+        for (Tutor tutor : tutorStudents) {
             infoTutorStudents.add(InfoTutorWithInfoStudent.newInfoFromDomain(tutor));
         }
 

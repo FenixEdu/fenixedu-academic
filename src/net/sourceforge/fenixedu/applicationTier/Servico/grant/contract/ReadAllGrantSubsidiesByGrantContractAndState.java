@@ -10,7 +10,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
-import net.sourceforge.fenixedu.domain.grant.contract.IGrantSubsidy;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -42,7 +42,7 @@ public class ReadAllGrantSubsidiesByGrantContractAndState implements IService {
 
 		List infoSubsidyList = (List) CollectionUtils.collect(subsidies, new Transformer() {
 			public Object transform(Object input) {
-				IGrantSubsidy grantSubsidy = (IGrantSubsidy) input;
+				GrantSubsidy grantSubsidy = (GrantSubsidy) input;
 				InfoGrantSubsidy infoGrantSubsidy = InfoGrantSubsidyWithContract
 						.newInfoFromDomain(grantSubsidy);
 				return infoGrantSubsidy;

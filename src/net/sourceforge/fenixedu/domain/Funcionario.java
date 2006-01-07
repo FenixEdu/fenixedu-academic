@@ -18,7 +18,7 @@ public class Funcionario {
 
     private int codigoInterno = 0;
 
-    private IPerson person = null;
+    private Person person = null;
 
     private int chavePessoa = 0;
 
@@ -49,10 +49,10 @@ public class Funcionario {
 
     private Timestamp quando = null;
 
-    //private ICostCenter salaryCostCenter = null;
-    private ICostCenter workingPlaceCostCenter = null;
+    //private CostCenter salaryCostCenter = null;
+    private CostCenter workingPlaceCostCenter = null;
 
-    private ICostCenter mailingCostCenter = null;
+    private CostCenter mailingCostCenter = null;
 
     private Date assiduidade = null; //atributo auxiliar
 
@@ -229,7 +229,7 @@ public class Funcionario {
         return chavePessoa;
     }
 
-    public IPerson getPerson() {
+    public Person getPerson() {
         return person;
     }
 
@@ -237,7 +237,7 @@ public class Funcionario {
         this.chavePessoa = chavePessoa;
     }
 
-    public void setPerson(IPerson person) {
+    public void setPerson(Person person) {
         this.person = person;
     }
 
@@ -353,19 +353,19 @@ public class Funcionario {
         this.quem = quem;
     }
 
-    public ICostCenter getMailingCostCenter() {
+    public CostCenter getMailingCostCenter() {
         return this.mailingCostCenter;
     }
 
-    public void setMailingCostCenter(ICostCenter mailingCostCenter) {
+    public void setMailingCostCenter(CostCenter mailingCostCenter) {
         this.mailingCostCenter = mailingCostCenter;
     }
 
-    public ICostCenter getWorkingPlaceCostCenter() {
+    public CostCenter getWorkingPlaceCostCenter() {
         return this.workingPlaceCostCenter;
     }
 
-    public void setWorkingPlaceCostCenter(ICostCenter workingPlaceCostCenter) {
+    public void setWorkingPlaceCostCenter(CostCenter workingPlaceCostCenter) {
         this.workingPlaceCostCenter = workingPlaceCostCenter;
     }
 

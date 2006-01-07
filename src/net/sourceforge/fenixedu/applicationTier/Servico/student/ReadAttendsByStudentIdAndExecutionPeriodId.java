@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
-import net.sourceforge.fenixedu.domain.IAttends;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -27,12 +27,12 @@ public class ReadAttendsByStudentIdAndExecutionPeriodId implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
 
-        final List<IAttends> attendsList = persistentAttend.readByStudentIdAndExecutionPeriodId(
+        final List<Attends> attendsList = persistentAttend.readByStudentIdAndExecutionPeriodId(
                 studentId, executionPeriodId);
         final List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> infoAttendsList =
 			new ArrayList<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers>(attendsList.size());
 
-        for (final IAttends attends : attendsList) {
+        for (final Attends attends : attendsList) {
             if (!(onlyEnrolledCourses.booleanValue() && (attends.getEnrolment() == null))) {
 				if(!onlyAttendsWithTeachers) {
 					infoAttendsList.add(InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers.newInfoFromDomain(attends));

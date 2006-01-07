@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseReport;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IProfessorship;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -72,15 +72,15 @@ public class EditCourseInformationAuthorizationFilter extends AuthorizationByRol
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            ITeacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
+            Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             InfoExecutionCourse infoExecutionCourse = infoCourseReport.getInfoExecutionCourse();
             IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IExecutionCourse executionCourse = (IExecutionCourse) persistentExecutionCourse.readByOID(
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                     ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-            List<IProfessorship> responsiblesFor = executionCourse.responsibleFors();
+            List<Professorship> responsiblesFor = executionCourse.responsibleFors();
             
-			for(IProfessorship professorship : responsiblesFor){
+			for(Professorship professorship : responsiblesFor){
 			    if(professorship.getTeacher().equals(teacher))
                     return true;
             }            

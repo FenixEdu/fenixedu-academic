@@ -31,7 +31,7 @@ public class OldPublicationOJB extends PersistentObjectOJB implements IPersisten
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorPersistente.teacher.IPersistentOldPublication#readAllByTeacherAndOldPublicationType(Dominio.ITeacher,
+     * @see ServidorPersistente.teacher.IPersistentOldPublication#readAllByTeacherAndOldPublicationType(Dominio.Teacher,
      *      Util.OldPublicationType)
      */
     public List readAllByTeacherIdAndOldPublicationType(final Integer teacherId,

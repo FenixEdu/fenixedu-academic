@@ -7,14 +7,14 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionYear;
-import net.sourceforge.fenixedu.domain.IGratuitySituation;
-import net.sourceforge.fenixedu.domain.IGratuityValues;
-import net.sourceforge.fenixedu.domain.IStudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuityValues;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.transactions.IGratuityTransaction;
+import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -30,23 +30,23 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
     private Boolean firstYear;
 
-    private Set<IGratuitySituation> gratuitySituationsToDelete;
+    private Set<GratuitySituation> gratuitySituationsToDelete;
 
     public void run(String year) throws ExcepcaoPersistencia {
 
-        gratuitySituationsToDelete = new HashSet<IGratuitySituation>();
+        gratuitySituationsToDelete = new HashSet<GratuitySituation>();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IExecutionYear executionYear = readExecutionYear(year, sp);
+        ExecutionYear executionYear = readExecutionYear(year, sp);
 
         // read master degree and specialization execution degrees
-        Collection<IExecutionDegree> executionDegrees = executionYear
+        Collection<ExecutionDegree> executionDegrees = executionYear
                 .getExecutionDegreesByType(DegreeType.MASTER_DEGREE);
 
-        for (IExecutionDegree executionDegree : executionDegrees) {
+        for (ExecutionDegree executionDegree : executionDegrees) {
 
-            IGratuityValues gratuityValues = executionDegree.getGratuityValues();
+            GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
             if (gratuityValues == null) {
                 continue;
@@ -54,11 +54,11 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
             this.firstYear = executionDegree.isFirstYear();
 
-            List<IStudentCurricularPlan> studentCurricularPlans = executionDegree
+            List<StudentCurricularPlan> studentCurricularPlans = executionDegree
                     .getDegreeCurricularPlan().getStudentCurricularPlans();
-            for (IStudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+            for (StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
-                IGratuitySituation gratuitySituation = studentCurricularPlan
+                GratuitySituation gratuitySituation = studentCurricularPlan
                         .getGratuitySituationByGratuityValues(gratuityValues);
                 
                 if(year.equals("2002/2003") && gratuitySituation.getTransactionListCount() == 0){
@@ -77,15 +77,15 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
             }
         }
 
-        for (IGratuitySituation gratuitySituationToDelete : this.gratuitySituationsToDelete) {
+        for (GratuitySituation gratuitySituationToDelete : this.gratuitySituationsToDelete) {
             sp.getIPersistentObject().deleteByOID(GratuitySituation.class,
                     gratuitySituationToDelete.getIdInternal());
         }
     }
 
-    private IExecutionYear readExecutionYear(String year, ISuportePersistente sp)
+    private ExecutionYear readExecutionYear(String year, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
-        IExecutionYear executionYear;
+        ExecutionYear executionYear;
         if (year == null || year.equals("")) {
             executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
         } else {
@@ -97,7 +97,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
     /**
      * @param gratuitySituation
      */
-    private void updateGratuitySituation(IGratuitySituation gratuitySituation) {
+    private void updateGratuitySituation(GratuitySituation gratuitySituation) {
 
         // check if there isnt any specialization for a 2nd year
         if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
@@ -119,16 +119,16 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
 
     }
 
-    private void removeWrongGratuitySituation(IGratuitySituation gratuitySituation) {
+    private void removeWrongGratuitySituation(GratuitySituation gratuitySituation) {
 
         // find gratuity situation of first specialization year
-        for (IGratuitySituation correctSituation : gratuitySituation.getStudentCurricularPlan()
+        for (GratuitySituation correctSituation : gratuitySituation.getStudentCurricularPlan()
                 .getGratuitySituations()) {
             if (correctSituation.getGratuityValues().getExecutionDegree().isFirstYear()) {
 
                 // transfer transactions from wrong to correct gratuity
                 // situation
-                for (IGratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
+                for (GratuityTransaction gratuityTransaction : gratuitySituation.getTransactionList()) {
                     correctSituation.addTransactionList(gratuityTransaction);
                 }
 
@@ -147,8 +147,8 @@ public class CreateGratuitySituationsForCurrentExecutionYear implements IService
      * @param studentCurricularPlan
      * @throws ExcepcaoPersistencia
      */
-    private void createGratuitySituation(IGratuityValues gratuityValues,
-            IStudentCurricularPlan studentCurricularPlan) {
+    private void createGratuitySituation(GratuityValues gratuityValues,
+            StudentCurricularPlan studentCurricularPlan) {
 
         if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)
                 && !this.firstYear) {

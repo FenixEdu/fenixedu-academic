@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
-import net.sourceforge.fenixedu.domain.Seminaries.ICaseStudy;
+import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 
@@ -28,9 +28,9 @@ public class CaseStudyVO extends VersionedObjectsBase implements IPersistentSemi
     }
 
     public List readByThemeID(Integer themeID) {
-        final Collection<ICaseStudy> caseStudies = readAll(CaseStudy.class);
+        final Collection<CaseStudy> caseStudies = readAll(CaseStudy.class);
         final List result = new ArrayList();
-        for (final ICaseStudy caseStudy : caseStudies) {
+        for (final CaseStudy caseStudy : caseStudies) {
             if (caseStudy.getSeminaryTheme().getIdInternal().equals(themeID)) {
                 result.add(caseStudy);
             }

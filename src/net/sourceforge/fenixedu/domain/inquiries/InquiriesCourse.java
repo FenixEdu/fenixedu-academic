@@ -7,15 +7,15 @@ package net.sourceforge.fenixedu.domain.inquiries;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesRoom;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
-import net.sourceforge.fenixedu.domain.IExecutionCourse;
-import net.sourceforge.fenixedu.domain.IExecutionDegree;
-import net.sourceforge.fenixedu.domain.IExecutionPeriod;
-import net.sourceforge.fenixedu.domain.INonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.ISchoolClass;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.IRoom;
+import net.sourceforge.fenixedu.domain.space.Room;
 
 
 /**
@@ -48,9 +48,9 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 	 * Invariants:
 	 *   - None
 	 */
-	public InquiriesCourse(IExecutionCourse executionCourse, IExecutionDegree executionDegreeCourse,
-			IExecutionDegree executionDegreeStudent, IExecutionPeriod executionPeriod,
-			ISchoolClass schoolClass, InfoInquiriesCourse infoInquiriesCourse,
+	public InquiriesCourse(ExecutionCourse executionCourse, ExecutionDegree executionDegreeCourse,
+			ExecutionDegree executionDegreeStudent, ExecutionPeriod executionPeriod,
+			SchoolClass schoolClass, InfoInquiriesCourse infoInquiriesCourse,
             Character entryGradeClassification, Character approvationRatioClassification, 
             Character arithmeticMeanClassification) {
 		if((executionCourse == null) || (executionDegreeCourse == null) || (executionDegreeStudent == null) || (executionPeriod == null)) {
@@ -69,15 +69,15 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 
 	}
 
-	public void createInquiriesTeacher(ITeacher teacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {        
+	public void createInquiriesTeacher(Teacher teacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {        
 		new InquiriesTeacher(this, teacher, shiftType, infoInquiriesTeacher);
 	}
 	
-	public void createInquiriesTeacher(INonAffiliatedTeacher nonAffiliatedTeacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {        
+	public void createInquiriesTeacher(NonAffiliatedTeacher nonAffiliatedTeacher, ShiftType shiftType, InfoInquiriesTeacher infoInquiriesTeacher) {        
 		new InquiriesTeacher(this, nonAffiliatedTeacher, shiftType, infoInquiriesTeacher);
 	}
 	
-	public void createInquiriesRoom(IRoom room, InfoInquiriesRoom infoInquiriesRoom) {
+	public void createInquiriesRoom(Room room, InfoInquiriesRoom infoInquiriesRoom) {
 		new InquiriesRoom(this, room, infoInquiriesRoom);
 	}
 	

@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.ICurricularCourseScope;
+import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 
 /**
  * @author tfc130
@@ -147,7 +147,7 @@ public class InfoCurricularCourseScope extends InfoObject {
         this.infoCurricularSemester = infoCurricularSemester;
     }
 
-    public void copyFromDomain(ICurricularCourseScope curricularCourseScope) {
+    public void copyFromDomain(CurricularCourseScope curricularCourseScope) {
         super.copyFromDomain(curricularCourseScope);
         if (curricularCourseScope != null) {
             setBeginDate(curricularCourseScope.getBeginDate());
@@ -157,7 +157,7 @@ public class InfoCurricularCourseScope extends InfoObject {
     }
 
     public static InfoCurricularCourseScope newInfoFromDomain(
-            ICurricularCourseScope curricularCourseScope) {
+            CurricularCourseScope curricularCourseScope) {
         InfoCurricularCourseScope infoCurricularCourseScope = null;
         if (curricularCourseScope != null) {
             infoCurricularCourseScope = new InfoCurricularCourseScope();

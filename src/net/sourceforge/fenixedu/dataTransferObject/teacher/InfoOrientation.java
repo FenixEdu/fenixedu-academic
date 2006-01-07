@@ -8,7 +8,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.IOrientation;
+import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.util.OrientationType;
 
 /**
@@ -112,9 +112,9 @@ public class InfoOrientation extends InfoObject {
     /*
      * (non-Javadoc)
      * 
-     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.IDomainObject)
+     * @see net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain(Dominio.DomainObject)
      */
-    public void copyFromDomain(IOrientation orientation) {
+    public void copyFromDomain(Orientation orientation) {
         super.copyFromDomain(orientation);
         if (orientation != null) {
             setDescription(orientation.getDescription());
@@ -124,7 +124,7 @@ public class InfoOrientation extends InfoObject {
         }
     }
 
-    public static InfoOrientation newInfoFromDomain(IOrientation orientation) {
+    public static InfoOrientation newInfoFromDomain(Orientation orientation) {
         InfoOrientation infoOrientation = null;
         if (orientation != null) {
             infoOrientation = new InfoOrientation();

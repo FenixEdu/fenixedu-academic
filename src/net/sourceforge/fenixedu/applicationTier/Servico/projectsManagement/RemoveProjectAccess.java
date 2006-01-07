@@ -6,12 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.IEmployee;
-import net.sourceforge.fenixedu.domain.IPerson;
-import net.sourceforge.fenixedu.domain.IRole;
-import net.sourceforge.fenixedu.domain.ITeacher;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.projectsManagement.IProjectAccess;
+import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -28,7 +28,7 @@ public class RemoveProjectAccess implements IService {
     public void run(String username, String costCenter, String personUsername, Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        IPerson person = sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
+        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
 
         RoleType roleType = RoleType.PROJECTS_MANAGER;
         Boolean isCostCenter = false;
@@ -44,24 +44,24 @@ public class RemoveProjectAccess implements IService {
 
                 Iterator iter = person.getPersonRolesIterator();
                 while (iter.hasNext()) {
-                    IRole role = (IRole) iter.next();
+                    Role role = (Role) iter.next();
                     if (role.getRoleType().equals(roleType)) {
                         iter.remove();
                     }                    
                 }
             }
         }
-        IProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(person.getIdInternal(), projectCode);
+        ProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(person.getIdInternal(), projectCode);
         persistentProjectAccess.delete(projectAccess);
     }
 
-    private Integer getUserNumber(ISuportePersistente sp, IPerson person) throws ExcepcaoPersistencia {
+    private Integer getUserNumber(ISuportePersistente sp, Person person) throws ExcepcaoPersistencia {
         Integer userNumber = null;
-        ITeacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+        Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
         if (teacher != null)
             userNumber = teacher.getTeacherNumber();
         else {
-            IEmployee employee = sp.getIPersistentEmployee().readByPerson(person);
+            Employee employee = sp.getIPersistentEmployee().readByPerson(person);
             if (employee != null)
                 userNumber = employee.getEmployeeNumber();
         }

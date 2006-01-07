@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.IFinalEvaluation;
+import net.sourceforge.fenixedu.domain.FinalEvaluation;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
 /**
@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
  */
 public class InfoFinalEvaluation extends InfoEvaluation implements ISiteComponent {
 
-    public void copyFromDomain(IFinalEvaluation finalEvaluation) {
+    public void copyFromDomain(FinalEvaluation finalEvaluation) {
         super.copyFromDomain(finalEvaluation);
         if (finalEvaluation != null) {
             setEvaluationType(EvaluationType.FINAL_TYPE);
@@ -20,7 +20,7 @@ public class InfoFinalEvaluation extends InfoEvaluation implements ISiteComponen
      * @param finalEvaluation
      * @return
      */
-    public static InfoFinalEvaluation newInfoFromDomain(IFinalEvaluation finalEvaluation) {
+    public static InfoFinalEvaluation newInfoFromDomain(FinalEvaluation finalEvaluation) {
         InfoFinalEvaluation infoFinalEvaluation = null;
         if (finalEvaluation != null) {
             infoFinalEvaluation = new InfoFinalEvaluation();
