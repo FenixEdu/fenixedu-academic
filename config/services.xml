@@ -36,13 +36,6 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ObterData</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.ObterData</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains />
-	</service>
-	<service>
 		<name>AddSchoolClassesToShift</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.AddSchoolClassesToShift</implementationClass>
 		<description />
@@ -559,16 +552,6 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>ReadDisciplinesByStudent</name>
-		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.student.ReadDisciplinesByStudent</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="StudentAuthorization" />
-		</filterChains>
-	</service>
-	<service>
         <name>student.ReadAttendsByStudentIdAndExecutionPeriodId</name>
         <implementationClass> 
             net.sourceforge.fenixedu.applicationTier.Servico.student.ReadAttendsByStudentIdAndExecutionPeriodId
@@ -599,15 +582,6 @@
             <chain name="StudentAuthorization"/>
         </filterChains>
     </service>
-    <service>
-		<name>ReadCourseByStudent</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.ReadCourseByStudent</implementationClass>
-		<description />
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="StudentAuthorization" />
-		</filterChains>
-	</service>
 	<service>
 		<name>ReadEnroledExecutionCourses</name>
 		<implementationClass> 

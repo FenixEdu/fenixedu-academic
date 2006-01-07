@@ -441,58 +441,6 @@
       <!-- VIEW SCHEDULE -->
 <!--
       <action 
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.GrauMestreAction"
-              path="/obtainCertificateTipo1"
-             >
-        
-        <forward name="GrauMestre"
-                 path="/student/obtainCertificateTipo1.jsp"
-                 contextRelative="true"
-                 redirect="true"/>
-        <forward name="PrestouProvas"
-                 path="/student/obtainCertificateTipo2.jsp"
-                 contextRelative="true"
-                 redirect="true"/>
-      </action>
-      
-      <action 
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowDisciplineListAction"
-              path="/obtainCertificateTipo3"
-              
-             >
-        
-        <forward name="viewDisciplinesList"
-                 path="/student/obtainCertificateTipo3.jsp"
-                 contextRelative="true"
-                 />
-      </action>
-      
-      <action 
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowDisciplineListAction"
-              path="/obtainCertificateTipo4"
-              
-             >
-        
-        <forward name="viewDisciplinesList"
-                 path="/student/obtainCertificateTipo4.jsp"
-                 contextRelative="true"
-                 redirect="true"/>
-      </action>
-      
-     
-    	<action 
-              type="net.sourceforge.fenixedu.presentationTier.Action.student.ShowDisciplineListAction"
-              path="/obtainCertificateTipo5"
-              
-             >
-        
-        <forward name="viewDisciplinesList"
-                 path="/student/obtainCertificateTipo5.jsp"
-                 contextRelative="true"
-                 redirect="true"/>
-      </action>
-      
-      <action 
               type="net.sourceforge.fenixedu.presentationTier.Action.student.PrepararEscolherCertidoesAction"
               path="/chooseObtainCertificate"
               
