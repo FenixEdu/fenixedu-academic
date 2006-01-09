@@ -242,7 +242,7 @@ public class SubmitMarks implements IService {
 		}
 
 		public void setVersion(String version) {
-			this.version = version;
+			this.version = StringUtils.leftPad(version, 2, '0');
 		}
 		
 		public String getFileName() {
