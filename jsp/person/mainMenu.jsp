@@ -10,6 +10,6 @@
 	<li><html:link page="/changePersonalInfoDispatchAction.do?method=prepare" titleKey="link.title.person.changeContacts"  ><bean:message key="label.person.changeContacts"  /></html:link></li>
 	<li><html:link page="/changePasswordForward.do" titleKey="link.title.person.changePassword" ><bean:message key="label.person.changePassword"  /></html:link></li>
 	<br />
-	<li><html:link page="/sendSms.do?method=prepare" ><bean:message key="label.person.sendSms"  /></html:link></li>
+	<!-- <li><html:link page="/sendSms.do?method=prepare" ><bean:message key="label.person.sendSms"  /></html:link></li>-->
 	<li><html:link page="/findPerson.do?method=prepareFindPerson" ><bean:message key="label.person.findPerson"  /></html:link></li>
 </ul>
