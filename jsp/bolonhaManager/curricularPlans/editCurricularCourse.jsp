@@ -41,6 +41,7 @@
 			<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
 				<h:outputText value="#{bolonhaBundle['showPage']} #{bolonhaBundle['competenceCourse']}"/>
 				<f:param name="competenceCourseID" value="#{CurricularCourseManagement.competenceCourseID}"/>
+				<f:param name="action" value="view"/>
 			</h:outputLink>
 			<h:outputText value=" (#{bolonhaBundle['newPage']})<br/>" escape="false"/>
 		</h:panelGroup>		

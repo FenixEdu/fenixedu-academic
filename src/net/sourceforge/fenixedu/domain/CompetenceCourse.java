@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -76,8 +77,18 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public void edit(String name, String nameEn, String acronym, Boolean basic, CurricularStage curricularStage) {
+        checkIfCanEdit();
+        if (curricularStage.equals(CurricularStage.APPROVED)) {
+            setCreationDate(Calendar.getInstance().getTime());
+        }
         setCurricularStage(curricularStage);
         getRecentCompetenceCourseInformation().edit(name, nameEn, acronym, basic);
+    }
+
+    private void checkIfCanEdit() {
+        if (this.getCurricularStage().equals(CurricularStage.APPROVED)) {
+            throw new DomainException("competenceCourse.approved");
+        }
     }
 
     public void edit(String objectives, String program, String evaluationMethod, String objectivesEn,
@@ -88,7 +99,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
 	public void delete() {
         if (hasAnyAssociatedCurricularCourses()) {
-            throw new DomainException("error.mustDeleteCurricularCoursesFirst");
+            throw new DomainException("mustDeleteCurricularCoursesFirst");
         }
 		getDepartments().clear();
         removeUnit();

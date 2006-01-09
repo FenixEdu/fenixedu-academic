@@ -8,12 +8,8 @@
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	<h:form>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}" style="font-style:italic"/>
-		<h2><h:outputText value="#{bolonhaBundle['competenceCoursesManagement']}"/></h2>
-		
-		<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}"/>
-		<h:messages styleClass="infoMsg"/>
-		
+		<h2><h:outputText value="#{bolonhaBundle['competenceCoursesManagement']}"/></h2>		
+		<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.scientificAreaUnits}">
 			<h:outputText style="font-style:italic" value="#{bolonhaBundle['noScientificAreas']}<br/>" escape="false"/>
 		</h:panelGroup>
@@ -34,11 +30,13 @@
 							<h:outputText value="  (#{enumerationBundle[competenceCourse.curricularStage]})" style="font-style:italic"/>
 						</h:column>
 						<h:column>
-							<h:outputLink value="editCompetenceCourseMainPage.faces">
-								<h:outputText value="#{bolonhaBundle['edit']}" />
-								<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-							</h:outputLink>
-							<h:outputText value=", "/>
+							<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'APPROVED'}">
+								<h:outputLink value="editCompetenceCourseMainPage.faces">
+									<h:outputText value="#{bolonhaBundle['edit']}" />
+									<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+								</h:outputLink>
+								<h:outputText value=", "/>
+							</h:panelGroup>							
 							<h:outputLink value="deleteCompetenceCourse.faces">
 								<h:outputText value="#{bolonhaBundle['delete']}" />
 								<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>

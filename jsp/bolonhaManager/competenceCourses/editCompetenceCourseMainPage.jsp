@@ -21,21 +21,8 @@
 		<h:outputText value="#{bolonhaBundle['area']}: " style="font-weight: bold"/>
 		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}<br/>" escape="false"/>
 	</fc:dataRepeater>
-	<br/>		
-	<h:outputText value="#{bolonhaBundle['activeCurricularPlans']}: " style="font-weight: bold"/><br/>
-	<h:panelGroup rendered="#{empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
-		<h:outputText value="(#{bolonhaBundle['noCurricularCourses']})"/>
-	</h:panelGroup>
-	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
-		<h:dataTable value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">
-			<h:column>
-				<h:outputText value="#{curricularCourse.name}"/>
-			</h:column>
-		</h:dataTable>
-	</h:panelGroup>
-	<br/>
-	<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-		value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
+	<br/>	
+	<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['name']} (pt): " style="font-weight: bold"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}"/><br/>

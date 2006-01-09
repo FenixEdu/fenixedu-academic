@@ -13,8 +13,7 @@
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	<h:form>
 		<h2><h:outputText value="#{bolonhaBundle['delete']} #{bolonhaBundle['competenceCourse']}"/></h2>
-		<h3><h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" style="font-weight: bold"/></h3>
-		
+		<h3><h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" style="font-weight: bold"/></h3>		
 		<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
 		<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}"/><br/>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
@@ -29,8 +28,8 @@
 		<h:outputText value="#{bolonhaBundle['acronym']}: " style="font-weight: bold"/>
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}" /><br/>	
 		<br/>
-		<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
+		<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
+		<br/>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/><br/>
 		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" styleClass="error"/>
 		<br/><br/>

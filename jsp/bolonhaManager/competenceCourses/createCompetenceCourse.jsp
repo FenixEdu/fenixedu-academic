@@ -28,8 +28,7 @@
 	<h:outputText value=" > #{bolonhaBundle['step']} 2: #{bolonhaBundle['setCompetenceCourseLoad']}"/>
 	<h:outputText value=" > #{bolonhaBundle['step']} 3: #{bolonhaBundle['setData']}"/>
 	<br/>
-	<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-			value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
+	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['area']}:" style="font-weight: bold"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">

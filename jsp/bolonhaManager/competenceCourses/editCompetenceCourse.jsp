@@ -15,8 +15,7 @@
 </style>
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
-	
+	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>	
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']}</h2>" escape="false">
 		<f:param value=" #{bolonhaBundle['competenceCourse']}"/>
 	</h:outputFormat>
@@ -38,7 +37,7 @@
 			</h:selectOneMenu>
 		</h:panelGrid>
 		<br/>
-		<h:messages styleClass="error"/>
+		<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>				
 		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['name']} (pt): "/>

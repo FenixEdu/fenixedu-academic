@@ -24,8 +24,7 @@
 	<h:outputText value="#{bolonhaBundle['step']} 2: #{bolonhaBundle['setCompetenceCourseLoad']}" style="font-weight: bold"/>
 	<h:outputText value=" > #{bolonhaBundle['step']} 3: #{bolonhaBundle['setData']}"/>
 	<br/>
-	<h:outputText styleClass="error" rendered="#{!empty CompetenceCourseManagement.errorMessage}"
-		value="#{bolonhaBundle[CompetenceCourseManagement.errorMessage]}<br/>" escape="false"/>
+	<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
 	<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}" style="font-style:italic"/><br/>

@@ -1622,6 +1622,17 @@
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/deleteCurricularCourseContext.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>buildCurricularPlan</from-outcome>

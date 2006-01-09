@@ -59,6 +59,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
     }
     
+    public String getAction() {
+        return getAndHoldStringParameter("action");
+    }
+    
     public Integer getContextID() {
         return (contextID == null) ? (contextID = getAndHoldIntegerParameter("contextID")) : contextID;
     }
@@ -256,7 +260,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             addInfoMessage(messages.getString("curricularCourseCreated"));
             return "buildCurricularPlan";
         } catch (FenixServiceException e) {
-          setErrorMessage(e.getMessage());
+            setErrorMessage(e.getMessage());
         } catch (FenixActionException e) {
             setErrorMessage(e.getMessage());
         }

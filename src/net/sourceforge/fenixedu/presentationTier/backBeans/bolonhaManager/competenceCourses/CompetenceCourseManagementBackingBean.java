@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.compe
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -27,6 +28,8 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import org.apache.commons.beanutils.BeanComparator;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
+    private final ResourceBundle bolonhaResources = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
+    private final ResourceBundle domainResources = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
     
     private Integer competenceCourseID = null;
     private Unit competenceCourseGroupUnit = null;
@@ -367,11 +370,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourse(competenceCourse);
             return "setCompetenceCourseLoad";
         } catch (FenixFilterException e) {
-            setErrorMessage("error.creatingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.creatingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            setErrorMessage("error.creatingCompetenceCourse");
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
         return "";
     }
@@ -381,11 +382,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseLoad();
             return "setCompetenceCourseAdditionalInformation";
         } catch (FenixFilterException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            setErrorMessage("error.editingCompetenceCourse");
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());            
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
         return "";
     }
@@ -395,9 +394,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseAdditionalInformation();
             return "competenceCoursesManagement";
         } catch (FenixFilterException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
         return "";        
     }
@@ -409,9 +408,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
             return "editCompetenceCourseMainPage";
         } catch (FenixFilterException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }   
@@ -421,11 +422,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseLoad();
             return "editCompetenceCourseMainPage";
         } catch (FenixFilterException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            setErrorMessage("error.editingCompetenceCourse");
-        } catch (DomainException e) {
-            setErrorMessage(e.getMessage());            
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
         return "";
     }
@@ -435,9 +434,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             setCompetenceCourseAdditionalInformation();
             return "editCompetenceCourseMainPage";
         } catch (FenixFilterException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            setErrorMessage("error.editingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
         return "";
     }
@@ -457,14 +456,14 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         try {
             Object[] args = { getCompetenceCourseID() };
             ServiceUtils.executeService(getUserView(), "DeleteCompetenceCourse", args);
-            addInfoMessage(getResourceBundle("ServidorApresentacao/BolonhaManagerResources").getString("competenceCourseDeleted"));
+            addInfoMessage(bolonhaResources.getString("competenceCourseDeleted"));
             return "competenceCoursesManagement";
         } catch (FenixFilterException e) {
-            setErrorMessage("error.deletingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.deletingCompetenceCourse"));
         } catch (FenixServiceException e) {
-            setErrorMessage("error.deletingCompetenceCourse");
+            addErrorMessage(bolonhaResources.getString("error.deletingCompetenceCourse"));
         } catch (DomainException e) {
-            setErrorMessage(e.getMessage());        
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }

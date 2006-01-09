@@ -15,9 +15,19 @@
 		<h:outputText value="(#{bolonhaBundle['noCurricularCourses']})"/>
 	</h:panelGroup>
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
-		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">
-			<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name} > "/> 
-			<h:outputText value="#{curricularCourse.name}<br/>" escape="false"/>
+		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">			
+			<h:outputLink value="../curricularPlans/viewCurricularPlan.faces" target="_blank">
+				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}"/>
+				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
+				<f:param name="action" value="viewccm"/>
+			</h:outputLink>
+			<h:outputText value=" > "/>
+			<h:outputLink value="../curricularPlans/viewCurricularCourse.faces" target="_blank">
+				<h:outputText value="#{curricularCourse.name}"/>
+				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
+				<f:param name="action" value="viewccm"/>
+			</h:outputLink>
+			<h:outputText value="<br/>" escape="false"/>
 		</fc:dataRepeater>
 	</h:panelGroup>
 	<br/><br/>
@@ -97,6 +107,8 @@
 	</h:panelGrid>
 	<br/><hr>
 	<h:form>
-		<h:commandLink action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
+		<h:panelGroup rendered="#{empty CompetenceCourseManagement.action}">
+			<h:commandLink action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
+		</h:panelGroup>
 	</h:form>
 </ft:tilesView>
