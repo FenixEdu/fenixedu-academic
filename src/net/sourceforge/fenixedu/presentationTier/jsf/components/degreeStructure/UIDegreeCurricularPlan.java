@@ -12,6 +12,7 @@ import javax.faces.context.ResponseWriter;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
@@ -70,25 +71,37 @@ public class UIDegreeCurricularPlan extends UIInput {
         this.facesContext = facesContext;
         this.writer = facesContext.getResponseWriter();
         
-        int maxYears = 1;
-        if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.DEGREE)) {
-            maxYears = 3;
-        } else if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.MASTER_DEGREE)) {
-            maxYears = 2;
-        } else if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE)) {
-            maxYears = 5;
-        }
-        
-        List<CurricularCourse> dcpCurricularCourses = dcp.getDcpCurricularCourses();
-        for (int year = 1; year <= maxYears; year++) {
-            List<CurricularCourse> anualCurricularCourses = collectCurrentYearCurricularCoursesBySemester(year, 0, dcpCurricularCourses);
-            if (!anualCurricularCourses.isEmpty()) {
-                encodeSemesterTable(year, 0, anualCurricularCourses);    
+        if (!((CourseGroup) dcp.getDegreeModule()).hasAnyCourseGroupContexts()) {
+            writer.startElement("table", this);
+            writer.startElement("tr", this);
+            writer.startElement("td", this);
+            writer.writeAttribute("align", "center", null);
+            writer.startElement("i", this);
+            writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "empty.curricularPlan"));
+            writer.endElement("i");
+            writer.endElement("td");
+            writer.endElement("tr");
+            writer.endElement("table");
+        } else {
+            int maxYears = 1;
+            if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.DEGREE)) {
+                maxYears = 3;
+            } else if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.MASTER_DEGREE)) {
+                maxYears = 2;
+            } else if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE)) {
+                maxYears = 5;
             }
-            encodeSemesterTable(year, 1, collectCurrentYearCurricularCoursesBySemester(year, 1, dcpCurricularCourses));
-            encodeSemesterTable(year, 2, collectCurrentYearCurricularCoursesBySemester(year, 2, dcpCurricularCourses));
+            
+            List<CurricularCourse> dcpCurricularCourses = dcp.getDcpCurricularCourses();
+            for (int year = 1; year <= maxYears; year++) {
+                List<CurricularCourse> anualCurricularCourses = collectCurrentYearCurricularCoursesBySemester(year, 0, dcpCurricularCourses);
+                if (!anualCurricularCourses.isEmpty()) {
+                    encodeSemesterTable(year, 0, anualCurricularCourses);    
+                }
+                encodeSemesterTable(year, 1, collectCurrentYearCurricularCoursesBySemester(year, 1, dcpCurricularCourses));
+                encodeSemesterTable(year, 2, collectCurrentYearCurricularCoursesBySemester(year, 2, dcpCurricularCourses));
+            }
         }
-        
     }
 
     private List<CurricularCourse> collectCurrentYearCurricularCoursesBySemester(int year, int semester, List<CurricularCourse> dcpCurricularCourses) {
