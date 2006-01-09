@@ -61,7 +61,7 @@
     <renderer type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumRenderer"/>
     <renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
 
-    <renderer type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
+    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="DomainObject.oid"/>
         <property name="destinyLayout" value="tabular"/>
@@ -73,8 +73,8 @@
 
     <!-- input -->
   
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
     
