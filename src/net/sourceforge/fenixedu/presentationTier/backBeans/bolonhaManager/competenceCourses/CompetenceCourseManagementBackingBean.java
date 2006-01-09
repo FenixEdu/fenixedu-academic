@@ -14,14 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
+import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -227,13 +225,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private void addCourseLoad(final List<CourseLoad> courseLoads) {
         if (getAction().equals("create")) {
-            courseLoads.add(new CourseLoad(2));
+            courseLoads.add(new CourseLoad(courseLoads.size() + 1));
         } else if (getAction().equals("edit")) {
             final CourseLoad courseLoad = searchDeleteCourseLoad(courseLoads);
             if (courseLoad != null) {
                 courseLoad.setAction("edit");
             } else {
-                courseLoads.add(new CourseLoad(2));
+                courseLoads.add(new CourseLoad(courseLoads.size() + 1));
             }
         }        
     }
@@ -249,9 +247,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     private void removeCourseLoad(final List<CourseLoad> courseLoads) {
         if (getAction().equals("create") && courseLoads.size() > 1) {
-            courseLoads.remove(1);
+            courseLoads.remove(courseLoads.size() - 1);
         } else if (getAction().equals("edit") && courseLoads.size() > 1) {
-            courseLoads.get(1).setAction("delete");
+            courseLoads.get(courseLoads.size() - 1).setAction("delete");
         }
     }
 

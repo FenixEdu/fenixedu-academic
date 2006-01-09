@@ -84,7 +84,6 @@
 		<h:outputText value="- #{bolonhaBundle['ectsCredits']}: " style="font-weight: bold" escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.ectsCredits}<br/><br/>" escape="false"/>
 	</fc:dataRepeater>
-	<br/>
 	<h:outputLink value="setCompetenceCourseLoad.faces">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 		<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
