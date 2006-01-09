@@ -103,7 +103,7 @@ public class UsernameUtils extends FenixUtil {
         } else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)) {
             return "G" + person.getNumeroDocumentoIdentificacao();
         } else if (roleType.equals(RoleType.PERSON)) {
-            return "P" + person.getNumeroDocumentoIdentificacao();
+            return "P" + person.getIdInternal();
         }
 
         return oldUsername;
