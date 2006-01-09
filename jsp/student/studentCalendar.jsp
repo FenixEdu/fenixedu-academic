@@ -3,6 +3,9 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
+<ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
+	<f:loadBundle basename="ServidorApresentacao/StudentResources" var="bundle"/>
+
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 
 <style>
@@ -23,9 +26,6 @@
 	font-weight: bold
 }
 </style>
-
-<ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/StudentResources" var="bundle"/>
 
 	<h:form>
 		<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>
