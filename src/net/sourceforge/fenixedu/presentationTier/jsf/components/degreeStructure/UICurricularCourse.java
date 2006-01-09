@@ -62,11 +62,14 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("tr", this);
         
         writer.startElement("td", this);
+        writer.startElement("a", this);
+        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal(), null);
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
-            writer.append(this.degreeModule.getName());    
+            writer.append(this.degreeModule.getName());
         } else {
             writer.append(this.degreeModule.getNameEn());
         }
+        writer.endElement("a");
         writer.endElement("td");
         
         writer.startElement("td", this);
