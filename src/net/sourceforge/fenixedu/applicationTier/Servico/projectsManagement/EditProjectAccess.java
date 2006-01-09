@@ -1,7 +1,3 @@
-/*
- * Created on Jan 11, 2005
- */
-
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
 import java.util.Calendar;
@@ -15,23 +11,22 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Susana Fernandes
- */
 public class EditProjectAccess implements IService {
 
-    public EditProjectAccess() {
-    }
+    public void run(String username, String costCenter, Integer personId, Integer projectCode,
+            Calendar beginDate, Calendar endDate, String userNumber) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-    public void run(String username, String costCenter, Integer personId, Integer projectCode, Calendar beginDate, Calendar endDate, String userNumber)
-            throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        ProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(personId, projectCode);
-        if (projectAccess == null)
+        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
+        final ProjectAccess projectAccess = persistentProjectAccess.readByPersonIdAndProjectAndDate(
+                personId, projectCode);
+        if (projectAccess == null) {
             throw new InvalidArgumentsServiceException();
+        }
+        
         projectAccess.setBeginDate(beginDate);
         projectAccess.setEndDate(endDate);
-        persistentProjectAccess.simpleLockWrite(projectAccess);
     }
+
 }
