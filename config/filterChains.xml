@@ -1006,4 +1006,12 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    
+    <filterChain>
+        <name>SubmitMarksAuthorization</name>
+        <expression>ExecutionCourseResponsibleForTeacherAuthorization &amp;&amp; SubmitMarksPeriod</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>    
 </filterChainsDefinitions>
