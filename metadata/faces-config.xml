@@ -1007,6 +1007,31 @@
 			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/submitMarksList.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>enterSubmitMarksList</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>		
+			<from-outcome>enterSubmitMarksList2</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList2.jsp</to-view-id>
+		</navigation-case>		
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/teacher/evaluation/submitMarksList2.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>enterSubmitMarksList</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList.jsp</to-view-id>
+		</navigation-case>
+ 		<navigation-case>		
+			<from-outcome>enterSubmitMarksList2</from-outcome>
+			<to-view-id>/teacher/evaluation/submitMarksList2.jsp</to-view-id>
+		</navigation-case>		
+	</navigation-rule>
+	
 
 	<!-- BEGIN: FUNCTIONS_MANAGEMENT Navigation Rules -->
 	
