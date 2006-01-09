@@ -28,8 +28,10 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.OutOfPeriodFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidMarksServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -127,13 +129,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     
     protected String[] attendsIDs;
     
-    protected String submitEvaluationDate;
-    
     protected String submitEvaluationDateTextBoxValue;
     
     protected HtmlInputText submitEvaluationDateTextBox;
-    
-    protected HtmlSelectOneRadio chooseEvaluationDateRadio;
     
     protected List<FinalMark> alreadySubmitedMarks;
     
@@ -1027,6 +1025,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     		FinalEvaluation evaluation = (FinalEvaluation) getEvaluation();
     		ExecutionCourse executionCourse = getExecutionCourse();
     		this.alreadySubmitedMarks = evaluation.getAlreadySubmitedMarks(executionCourse);
+    		Collections.sort(this.alreadySubmitedMarks, new BeanComparator("attend.aluno.number"));
     	}
     	return this.alreadySubmitedMarks;
     }
@@ -1036,6 +1035,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    	FinalEvaluation evaluation = (FinalEvaluation) getEvaluation();
 	    	ExecutionCourse executionCourse = getExecutionCourse();
 	    	this.notSubmitedMarks = evaluation.getNotSubmitedMarkAttends(executionCourse); 
+	    	Collections.sort(this.notSubmitedMarks, new BeanComparator("aluno.number"));
     	}
     	return this.notSubmitedMarks;
     }
@@ -1052,37 +1052,34 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public String submitMarks2() throws FenixFilterException, FenixServiceException, ParseException {
-    	String evaluationDate = getSubmitEvaluationDate();
-    	if(evaluationDate.equals("-1")) {
-    		evaluationDate = (String) getSubmitEvaluationDateTextBox().getValue();
-    	}
+    	String evaluationDate = (String) getSubmitEvaluationDateTextBox().getValue();
+
     	String[] attendsIDs = (String[]) this.getViewState().getAttribute("attendIDs");
     	Object[] args = {getExecutionCourseID(), getEvaluationID(), attendsIDs, DateFormatUtil.parse("dd/MM/yyyy", evaluationDate), getUserView()};
-    	ServiceUtils.executeService(getUserView(), "SubmitMarksNew", args);
-    	return "enterSubmitMarksList2";
+    	try {
+    		ServiceUtils.executeService(getUserView(), "SubmitMarks", args);
+    	} catch(NotAuthorizedFilterException notAuthorizedFilterException) {
+    		setErrorMessage("error.notAuthorized.sumbitMarks");
+    		return "enterSubmitMarksList";
+    	} catch(OutOfPeriodFilterException e) {
+    		setErrorMessage(e.getMessageKey());
+    		return "enterSubmitMarksList";
+    	} catch(OutOfPeriodException e) {
+    		setErrorMessage(getFormatedMessage("ServidorApresentacao/ApplicationResources", e.getMessageKey(), DateFormatUtil.format("dd/MM/yyyy", e.getStartDate()), DateFormatUtil.format("dd/MM/yyyy", e.getEndDate())));
+    		return "";
+    	}
+    	return "enterSubmitMarksList";
     }
     
-    public List<SelectItem> getExamsItems() throws FenixFilterException, FenixServiceException {
-    	List<Exam> exams = getExamList();
-    	List<SelectItem> items = new ArrayList<SelectItem>(exams.size());
-    	Collections.sort(exams, new BeanComparator("day"));
-    	for (Exam exam : exams) {
-			items.add(new SelectItem(DateFormatUtil.format("dd/MM/yyyy", exam.getDayDate()), exam.getSeason().toString() + " : " + exam.getDayDate()));
+
+	public String getSubmitEvaluationDateTextBoxValue() throws FenixFilterException, FenixServiceException {
+		if(submitEvaluationDateTextBoxValue == null) {
+			List<Exam> exams = getExamList();
+			if(exams != null && !exams.isEmpty()) {
+				Exam exam = exams.get(exams.size() - 1);
+				submitEvaluationDateTextBoxValue = DateFormatUtil.format("dd/MM/yyyy", exam.getDayDate());
+			}
 		}
-    	items.add(new SelectItem("-1", "Outra"));
-    	
-    	return items;
-    }
-
-	public String getSubmitEvaluationDate() {
-		return submitEvaluationDate;
-	}
-
-	public void setSubmitEvaluationDate(String submitEvaluationDate) {
-		this.submitEvaluationDate = submitEvaluationDate;
-	}
-
-	public String getSubmitEvaluationDateTextBoxValue() {
 		return submitEvaluationDateTextBoxValue;
 	}
 
@@ -1090,18 +1087,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 		this.submitEvaluationDateTextBoxValue = submitEvaluationDateTextBoxValue;
 	}
 	
-	public void onCheckBox(ValueChangeEvent changeEvent) {
-		if (this.getChooseEvaluationDateRadio().getValue().toString().equals("-1"))
-		{
-			this.submitEvaluationDateTextBox.setDisabled(false);
-		}
-		else
-		{
-		
-		this.submitEvaluationDateTextBox.setDisabled(true);
-		}
-	}
-
 	public HtmlInputText getSubmitEvaluationDateTextBox() {
 		return submitEvaluationDateTextBox;
 	}
@@ -1109,15 +1094,5 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	public void setSubmitEvaluationDateTextBox(
 			HtmlInputText submitEvaluationDateTextBox) {
 		this.submitEvaluationDateTextBox = submitEvaluationDateTextBox;
-	}
-
-	public HtmlSelectOneRadio getChooseEvaluationDateRadio() {
-		return chooseEvaluationDateRadio;
-	}
-
-	public void setChooseEvaluationDateRadio(
-			HtmlSelectOneRadio chooseEvaluationDateRadio) {
-		this.chooseEvaluationDateRadio = chooseEvaluationDateRadio;
-	}
-    
+	}    
 }
