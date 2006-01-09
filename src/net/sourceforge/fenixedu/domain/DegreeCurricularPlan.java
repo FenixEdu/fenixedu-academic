@@ -188,6 +188,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         return studentCurricularPlan;
     }
+    
+    public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
+    	for (ExecutionDegree executionDegree : getExecutionDegrees()) {
+			if(executionDegree.getExecutionYear().equals(executionYear)) {
+				return executionDegree;
+			}
+		}
+    	return null;
+    }
 
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
