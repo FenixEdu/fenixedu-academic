@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
@@ -17,5 +16,10 @@ public class CompetenceCourseOJB extends ObjectFenixOJB implements IPersistentCo
         criteria.addEqualTo("curricularStage", curricularStage);
         return queryList(CompetenceCourse.class, criteria);
     }
-
+    
+    public List<CompetenceCourse> readFromNewDegreeStructure() throws ExcepcaoPersistencia {
+        Criteria criteria = new Criteria();
+        criteria.addNotEqualTo("curricularStage", CurricularStage.OLD);
+        return queryList(CompetenceCourse.class, criteria);
+    }
 }
