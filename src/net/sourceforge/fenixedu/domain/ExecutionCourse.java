@@ -331,7 +331,10 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode
 
 			for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete())
 				;
-
+			
+			for(; !getAttends().isEmpty(); getAttends().get(0).delete())
+				;
+			
 			getNonAffiliatedTeachers().clear();
 
 			for (UserGroup userGroup : this.getHookedGroups())
@@ -359,10 +362,6 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode
 			return false;
 		}
 		if (hasAnyAssociatedEvaluations())
-		{
-			return false;
-		}
-		if (hasAnyAttends())
 		{
 			return false;
 		}
