@@ -5,7 +5,7 @@
 
 <logic:present name="studentExecutionCoursesList">
 	<logic:empty name="studentExecutionCoursesList">
-		<h2><bean:message key="message.noStudentTests"/></h2>
+		<p><strong><bean:message key="message.noStudentTests"/></strong></p>
 	</logic:empty>
 	
 	<logic:notEmpty name="studentExecutionCoursesList" >
