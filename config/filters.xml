@@ -872,4 +872,10 @@
         <description/>
         <isTransactional>false</isTransactional>
     </filter>
+    <filter>
+        <name>SubmitMarksPeriod</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.teacher.SubmitMarksPeriodFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>    
 </filterDefinitions>
