@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -18,14 +19,12 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
-import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
-import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.PublicationArea;
 import net.sourceforge.fenixedu.util.State;
@@ -106,7 +105,6 @@ public class Teacher extends Teacher_Base {
     }
 
     public Department getCurrentWorkingDepartment() {
-
         Employee employee = this.getPerson().getEmployee();
         if (employee != null) {
             return employee.getCurrentDepartmentWorkingPlace();
@@ -120,6 +118,28 @@ public class Teacher extends Teacher_Base {
             return employee.getLastDepartmentWorkingPlace();
         }
         return null;
+    }
+    
+    public Category getCategory(){
+        if(getLastLegalRegimen() != null){
+            return getLastLegalRegimen().getCategory();
+        }
+        return null;
+    }
+       
+    public TeacherLegalRegimen getLastLegalRegimen(){
+        Date date = null;
+        TeacherLegalRegimen regimenToReturn = null;
+        for (TeacherLegalRegimen regimen : this.getLegalRegimens()) {
+            if (regimen.isActive(Calendar.getInstance().getTime())) {
+                regimenToReturn = regimen;
+                break;
+            } else if (date == null || date.before(regimen.getEndDate())) {
+                date = regimen.getEndDate();
+                regimenToReturn = regimen;
+            }
+        }
+        return regimenToReturn;
     }
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(

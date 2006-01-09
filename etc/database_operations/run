@@ -13,3 +13,7 @@ read -s password
 echo Altering table CompetenceCourseLoad
 mysql -u$2 -f -p$password $1 < alterTableCompetenceCourseLoad.sql
 echo done.
+
+echo Altering Teacher Table
+mysql -u$2 -f -p$password $1 < alterTeacherTable.sql
+echo done.

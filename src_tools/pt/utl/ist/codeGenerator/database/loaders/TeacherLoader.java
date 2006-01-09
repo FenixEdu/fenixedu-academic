@@ -58,7 +58,7 @@ public class TeacherLoader extends PersonLoader {
 
             final Teacher teacher = new Teacher();
             teacher.setTeacherNumber(teacherNumber);
-            teacher.setCategory(categories.get(CATEGORY));
+            //teacher.setCategory(categories.get(CATEGORY));
 
             final Person person = people.get(username);
             teacher.setPerson(person);

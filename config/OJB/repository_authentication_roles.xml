@@ -153,19 +153,7 @@
          class-ref="net.sourceforge.fenixedu.domain.Person"
          >
          <foreignkey field-ref="keyPerson"/>
-      </reference-descriptor>       
-
-	  <field-descriptor
-         name="keyCategory"
-         column="KEY_CATEGORY"
-         jdbc-type="INTEGER"/>
-
-      <reference-descriptor auto-retrieve="false"
-         name="category"
-         class-ref="net.sourceforge.fenixedu.domain.teacher.Category"
-         >
-         <foreignkey field-ref="keyCategory"/>
-      </reference-descriptor>     
+      </reference-descriptor>           
 
 	 <field-descriptor
          name="keyServiceProviderRegime"

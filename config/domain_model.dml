@@ -2262,7 +2262,6 @@ class net.sourceforge.fenixedu.domain.SupportLesson extends net.sourceforge.feni
 class net.sourceforge.fenixedu.domain.Teacher extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer teacherNumber;
 	Integer keyPerson;
-	Integer keyCategory;
 	Integer keyServiceProviderRegime;
 	Integer keyPublicationsNumber;
 }
@@ -4932,15 +4931,6 @@ relation TeachingCareerCategory {
 	}
 	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
 }
-
-
-relation TeacherCategory {
-	net.sourceforge.fenixedu.domain.Teacher playsRole teacher {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.teacher.Category playsRole category;
-}
-
 
 relation TeacherDegreeFinalProjectStudentExecutionPeriod {
     net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent playsRole associatedTeacherDegreeFinalProjectStudents {
