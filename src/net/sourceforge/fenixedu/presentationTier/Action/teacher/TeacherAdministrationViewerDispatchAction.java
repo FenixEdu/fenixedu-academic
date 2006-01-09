@@ -832,7 +832,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         } catch (ExistingServiceException e) {
             throw new ExistingActionException("Uma sec��o com esse nome", e);
         } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
+            throw new FenixActionException(fenixServiceException.getMessage(), fenixServiceException);
         }
         return sectionsFirstPage(mapping, form, request, response);
     }
