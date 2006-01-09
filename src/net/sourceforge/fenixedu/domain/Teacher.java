@@ -121,8 +121,9 @@ public class Teacher extends Teacher_Base {
     }
     
     public Category getCategory(){
-        if(getLastLegalRegimen() != null){
-            return getLastLegalRegimen().getCategory();
+        TeacherLegalRegimen regimen = getLastLegalRegimen();
+        if(regimen != null){
+            return regimen.getCategory();
         }
         return null;
     }
