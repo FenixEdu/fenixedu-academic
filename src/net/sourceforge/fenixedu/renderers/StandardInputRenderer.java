@@ -156,7 +156,10 @@ public class StandardInputRenderer extends InputRenderer {
             try {
                 constructor = validatorType.getConstructor(new Class[] { Validatable.class });
 
-                return constructor.newInstance(inputComponent);
+                HtmlValidator validator = constructor.newInstance(inputComponent);
+                RenderUtils.setProperties(validator, slot.getValidatorProperties());
+                
+                return validator;
             } catch (Exception e) {
                 logger.warn("could not create validator '" + validatorType.getName() + "' for slot '"
                         + slot.getName() + "': " + e);

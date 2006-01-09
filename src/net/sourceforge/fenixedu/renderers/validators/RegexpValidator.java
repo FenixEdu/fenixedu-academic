@@ -7,22 +7,41 @@ public class RegexpValidator extends HtmlValidator {
 
     private String regexp;
 
+    /**
+     * Required constructor.
+     */
+    public RegexpValidator(Validatable component) {
+        this(component, ".*");
+    }
+
     public RegexpValidator(Validatable component, String regexp) {
         super(component);
 
+        setRegexp(regexp);
+        
+        // default messsage
+        setKey(true);
+        setMessage("validator.regexp");
+    }
+
+    public String getRegexp() {
+        return this.regexp;
+    }
+
+    public void setRegexp(String regexp) {
         this.regexp = regexp;
     }
 
     @Override
-    public String getErrorMessage() {
-        return RenderUtils.getResourceString("validator.regexp", this.regexp);
+    protected String getResourceMessage(String message) {
+        return RenderUtils.getResourceString(message, getRegexp());
     }
 
     @Override
     public void performValidation() {
         String text = getComponent().getValue();
 
-        setValid(text.matches(this.regexp));
+        setValid(text.matches(getRegexp()));
     }
 
 }

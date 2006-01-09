@@ -61,7 +61,7 @@
     <renderer type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumRenderer"/>
     <renderer type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateRenderer"/>
 
-    <renderer type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
+    <renderer type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.presentationTier.renderers.DomainObjectLinkRenderer">
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="DomainObject.oid"/>
         <property name="destinyLayout" value="tabular"/>
@@ -73,8 +73,9 @@
 
     <!-- input -->
   
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
-    <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="net.sourceforge.fenixedu.domain.IDomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
     
@@ -95,4 +96,16 @@
     <renderer mode="input" type="dml.DomainClass" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
     <renderer mode="input" type="dml.DomainClass" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
 
+
+    <!-- FIXME: this should be removed, used for renderers examples only -->
+    <renderer type="java.lang.Object" layout="nice-details-table" class="net.sourceforge.fenixedu.renderers.StandardObjectRenderer">
+        <property name="classes" value="style1"/>
+        <property name="columnClasses" value="listClasses,"/>
+    </renderer>
+    
+    <renderer type="java.lang.Object" layout="values-dash" class="net.sourceforge.fenixedu.renderers.ValuesRenderer">
+        <property name="htmlSeparator" value=" - "/>
+    </renderer>
+    
+    <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="net.sourceforge.fenixedu.renderers.StringCaseChangerRenderer"/>
 </renderers-config>

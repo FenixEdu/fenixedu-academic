@@ -472,4 +472,25 @@
     <definition name="renderers.output" extends="definition.manager.masterPage" >
         <put name="body" value="/manager/renderers/output.jsp" />
     </definition>
+
+    <definition name="renderers.input" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/input.jsp" />
+    </definition>
+
+    <definition name="renderers.actions" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/actions.jsp" />
+    </definition>
+
+    <definition name="renderers.new" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/new.jsp" />
+    </definition>
+
+    <definition name="renderers.searchInput" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/search-input.jsp" />
+    </definition>
+
+    <definition name="renderers.searchResults" extends="definition.manager.masterPage" >
+        <put name="body" value="/manager/renderers/search-results.jsp" />
+    </definition>
+
 </tiles-definitions>

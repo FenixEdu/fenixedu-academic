@@ -37,6 +37,13 @@ public class RenderKit {
         schemaRegistry = new SchemaRegistry();
     }
 
+    /**
+     * Used to allow reloading of the configuration in runtime 
+     */
+    public static void reset() {
+        RenderKit.instance = new RenderKit();
+    }
+    
     public static RenderKit getInstance() {
         return instance;
     }

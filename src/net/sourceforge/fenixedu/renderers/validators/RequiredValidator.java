@@ -7,11 +7,9 @@ public class RequiredValidator extends HtmlValidator {
 
     public RequiredValidator(Validatable component) {
         super(component);
-    }
-
-    @Override
-    public String getErrorMessage() {
-        return RenderUtils.getResourceString("validator.required");
+        
+        setKey(true);
+        setMessage("validator.required");
     }
 
     @Override

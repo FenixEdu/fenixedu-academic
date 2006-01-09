@@ -1,7 +1,9 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <!-- Title and TOC -->
+<a name="top"></a>
 <div style="margin-bottom: 50px">
     <h2>The first situation: presenting the world</h2>
     
@@ -12,24 +14,30 @@
         <li><a href="#schemas">And now schemas for everybody</a></li>
         <li><a href="#properties">Renderers can receive properties</a></li>
         <li><a href="#more-schemas">Schemas have so much more to be said</a></li>
+        <li><a href="#layouts">We add new schemas but what about new layouts?</a></li>
+        <li><a href="#templates">We can always use templates and all that we already knew</a></li>
     </ul>
 </div>
 
 <h3>Warming up</h3>
 <a name="warming"></a>
 
-As the use of renderers is made through a TagLib, the first thing you need to do is to 
-declare the use of the <code>fenix-renderers.tld</code> description file. The following
-line does the trick:
+<p>
+    As the use of renderers is made through a TagLib, the first thing you need to do is to 
+    declare the use of the <code>fenix-renderers.tld</code> description file. The following
+    line does the trick:
+</p>
 
-<div style="border: 1px solid #000; padding: 20px 20px 20px 20px; margin-top: 10px; margin-bottom: 10px;" >
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px;">
     <pre>&lt;%@ taglib uri=&quot;/WEB-INF/fenix-renderers.tld&quot; prefix=&quot;fr&quot; %&gt;</pre>
 </div>
 
-The TLD is somewhat documented and eclipse is able to show that documentation if you have the Web
-Standard Tools installed. Just copy the <code>fenix-renderers.tld</code> to the 
-<code>jsp/WEB-INF</code> directory and possibly restart eclipse. From this moment you can use the
-beloved <code>Ctrl+Space</code> shortcut to auto-complete tags and see documentation.
+<p>
+    The TLD is somewhat documented and eclipse is able to show that documentation if you have the Web
+    Standard Tools installed. Just copy the <code>fenix-renderers.tld</code> to the 
+    <code>jsp/WEB-INF</code> directory and possibly restart eclipse. From this moment you can use the
+    beloved <code>Ctrl+Space</code> shortcut to auto-complete tags and see documentation.
+</p>
 
 <h3>Presenting an object</h3>
 <a name="present"></a>
@@ -69,9 +77,9 @@ beloved <code>Ctrl+Space</code> shortcut to auto-complete tags and see documenta
 </div>
 
 <p>
-    As you can see, we are using the default presentation for the UserView object available in the session scope.
-    If you ommit the <code>scope</code> attribute then the attribute with the given name will be searched in all
-    scopes starting from the most specific, that is, page scope.
+    As you can see, we are using the default presentation for the <code>UserView</code> object available in 
+    the session scope. If you ommit the <code>scope</code> attribute then the attribute with the given name 
+    will be searched in all scopes starting from the most specific, that is, page scope.
 </p>
 
 <p>
@@ -109,6 +117,23 @@ beloved <code>Ctrl+Space</code> shortcut to auto-complete tags and see documenta
    
 <p>    
      as long as all middle elements are not null.
+</p>
+
+<p>
+    As Fénix domain objects are persistent you have and additional way of refering to a domain object.
+    You can specify the object internal id type directly in the tag. If you do this the object will
+    be retrieved from the database and displayed as before. So to display the same person as in the
+    last example you could write:
+</p>
+
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px;">
+    <bean:define id="personId" name="UserView" property="person.idInternal"/>
+    <pre>&lt;fr:view oid=&quot;<%= personId %>&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot; layout=&quot;tabular&quot;/&gt;</pre>
+</div>
+
+<p>
+    One thing you must notice. The type must be the same as specified in the DML. If you use an
+    interface as the type you will get a <code>ClassNotPersistenceCapableException</code>.
 </p>
 
 <h3>Before schemas what about ...</h3>
@@ -298,18 +323,21 @@ beloved <code>Ctrl+Space</code> shortcut to auto-complete tags and see documenta
 <div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
     <!-- Schema -->
     <div>
-        <p><strong>Schema</strong></p>
+        <p><strong>Schemas</strong></p>
         <pre>&lt;schema name=&quot;person.simple-admin-info.extended&quot; type=&quot;net.sourceforge.fenixedu.domain.Person&quot;&gt;
     &lt;slot name=&quot;nome&quot;/&gt;
     &lt;slot name=&quot;username&quot; layout=&quot;link&quot;/&gt;
     &lt;slot name=&quot;email&quot;&gt;
         &lt;property name=&quot;link&quot; value=&quot;true&quot;/&gt;
     &lt;/slot&gt;
-    &lt;slot name=&quot;pais&quot; schema=&quot;country.name&quot; layout=&quot;values&quot;/&gt;
+    &lt;slot name=&quot;pais&quot; schema=&quot;country.short&quot; layout=&quot;values&quot;&gt;
+        &lt;property name=&quot;htmlSeparator&quot; value=&quot; - &quot;/&gt;
+    &lt;/slot&gt;
 &lt;/schema&gt;
 
-&lt;schema name=&quot;country.name&quot; type=&quot;net.sourceforge.fenixedu.domain.Country&quot;&gt;
-    &lt;slot name=&quot;name&quot;/&gt;
+&lt;schema name=&quot;country.short&quot; type=&quot;net.sourceforge.fenixedu.domain.Country&quot;&gt;
+    &lt;slot name=&quot;code&quot;/&gt;
+    &lt;slot name=&quot;nationality&quot;/&gt;
 &lt;/schema&gt;
 </pre>
     </div>
@@ -338,3 +366,191 @@ beloved <code>Ctrl+Space</code> shortcut to auto-complete tags and see documenta
         </div>
     </div>
 </div>
+
+<h3>We add new schemas but what about new layouts?</h3>
+<a name="layouts"></a>
+
+<p>
+    First, remember that a layout is a combination of a name, a renderer and a set of properties. Layouts are defined in the
+    configuration file and may use existing renderes. Of course, some layouts seem to have a one-to-one mapping with a
+    renderer but that's not necessary.
+</p>
+
+<p>
+    Lets use the last example to add two new layouts. First lets suppose that the type of table used &#0151; with all that
+    nice colors and borders &#0151; is frequently used. We could use the well known Copy&amp;Paste to reuse the layout and
+    it's properties. The same for the inline presentation of the country, that is, presenting several values separated
+    by a simple <code>" - "</code>.
+</p>
+
+<p>
+    So we could do some sort of refactoring and create a layouts to represents those patterns. How do we do this? We add
+    new entries to the renderers' configuration. Here is an example of what can be added:
+</p>
+
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
+    <pre>&lt;renderer type=&quot;java.lang.Object&quot; layout=&quot;nice-details-table&quot; 
+          class=&quot;net.sourceforge.fenixedu.renderers.StandardObjectRenderer&quot;&gt;
+    &lt;property name=&quot;classes&quot; value=&quot;style1&quot;/&gt;
+    &lt;property name=&quot;columnClasses&quot; value=&quot;listClasses,&quot;/&gt;
+&lt;/renderer&gt;
+    
+&lt;renderer type=&quot;java.lang.Object&quot; layout=&quot;values-dash&quot; 
+          class=&quot;net.sourceforge.fenixedu.renderers.ValuesRenderer&quot;&gt;
+    &lt;property name=&quot;htmlSeparator&quot; value=&quot; - &quot;/&gt;
+&lt;/renderer&gt;</pre>
+</div>
+
+<p>
+    Two new layous named <code>nide-details-table</code> and <code>values-dash</code> were defined. So now we can ommit the
+    properties from the previous example and use the new names for the layout.
+</p>
+    
+<div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
+    <!-- Schema -->
+    <div>
+        <p><strong>Schemas</strong></p>
+        <pre>(...)
+    &lt;slot name=&quot;pais&quot; schema=&quot;country.short&quot; layout=&quot;values-dash&quot;/&gt;
+(...)
+</pre>
+    </div>
+
+    <!-- Code -->
+    <div>
+        <p><strong>Code</strong></p>
+        <pre>&lt;fr:view name=&quot;UserView&quot; property=&quot;person&quot; schema=&quot;person.simple-admin-info.extended&quot; layout=&quot;nice-details-table&quot;/&gt;</pre>
+    </div>
+
+    <!-- Result -->
+    <div>
+        <p><strong>Result</strong></p>
+        <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
+            <fr:view name="UserView" property="person" schema="person.simple-admin-info.extended" layout="nice-details-table"/>
+        </div>
+    </div>
+</div>
+
+<h3>We can always use templates and all that we already knew</h3>
+<a name="templates"></a>
+
+<p>
+    Suppose that you need to present a person in a very exotic manner. It would probably be much easier
+    to create a JSP &#0151; probably with a powerfull web page designer &#0151; and simply introduce
+    a couple of <code>bean:write</code> tags to display the information you need. But obviously you
+    don't want to abandon the power provided by the renderers so there is a possibility to mix
+    both approaches.
+</p>
+
+<p>
+    One of the predefined renderers is the <code>TemplateRenderer</code>. You can configure the 
+    <code>template</code> property of this renderer to refer one JSP. What the renderer does is
+    setup the environment for the JSP and then delegating the presentation to it. You can consider
+    that the JSP is included in the place were you used the <code>view</code> tag. 
+</p>
+
+<p>
+    First, here is an example of how to delegate the presentation of a person to a template:
+</p>
+
+<div style="border-left: 1px solid #AAAAAA; padding-left: 10px;">
+    <!-- Code -->
+    <div>
+        <p><strong>Code</strong></p>
+        <pre>&lt;fr:view name=&quot;UserView&quot; property=&quot;person&quot;&gt;
+    &lt;fr:layout name=&quot;template&quot;&gt;
+        &lt;fr:property name=&quot;template&quot; value=&quot;/manager/renderers/template.jsp&quot;/&gt;
+    &lt;/fr:layout&gt;
+&lt;/fr:view&gt;</pre>
+    </div>
+
+    <!-- Result -->
+    <div>
+        <p><strong>Result</strong></p>
+        <div style="border: 1px solid #000; padding: 20px 20px 20px 20px" >
+            <fr:view name="UserView" property="person">
+                <fr:layout name="template">
+                    <fr:property name="template" value="/manager/renderers/template.jsp"/>
+                </fr:layout>
+            </fr:view>
+        </div>
+    </div>
+</div>
+
+<p>
+    As this is a little too much to write just to specify the template that should be used, the 
+    <code>view</code> tag supports an abbreviation for this case. In the same way that the 
+    <code>layout</code> attribute allows to ommit the inner <code>fr:layout</code> tag, the 
+    <code>template</code> attribute allows you to ommit all the inner tags.
+</p>
+
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
+    <pre>&lt;fr:view name=&quot;UserView&quot; property=&quot;person&quot; template=&quot;/manager/renderers/template.jsp&quot;&gt;</pre>
+</div>
+
+<p>
+    But how do we access the object to be presented from the template?
+</p>
+
+<p>
+    There is an additional taglib that can only be used in templates: <code>fenix-template.tld</code>.
+    This taglib provides tags very similar to those we have been using but reference the
+    object to be presented implicitly. Let's look at the template used before. You can easily see how 
+    each element was generated by looking at the <code>(n)</code> notation.
+</p>
+
+<div style="border: 1px solid #000; padding: 20px 20px 20px 20px">
+    <pre>&lt;%@ taglib uri=&quot;/WEB-INF/fenix-template.tld&quot; prefix=&quot;ft&quot; %&gt;
+
+&lt;!-- Defines a page attribute with the value of the property &quot;nome&quot; of the shown object --&gt;
+&lt;ft:define id=&quot;personName&quot; property=&quot;nome&quot;/&gt;
+
+&lt;table style=&quot;border-bottom: 1px solid gray&quot;&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th colspan=&quot;5&quot; style=&quot;border-bottom: 1px solid gray&quot;&gt;(1) &lt;%= personName %&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;(2) &lt;ft:label property=&quot;gender&quot;/&gt;&lt;/td&gt;
+            &lt;td&gt;(3) &lt;ft:view property=&quot;gender&quot;/&gt;&lt;/td&gt;
+            
+            &lt;!-- separator --&gt;
+            &lt;td width=&quot;100px&quot; rowspan=&quot;2&quot;&gt;&lt;/td&gt;
+            
+            &lt;td&gt;(4) &lt;ft:label property=&quot;nascimento&quot;/&gt;&lt;/td&gt;
+            &lt;td&gt;(5)
+                &lt;ft:view property=&quot;nascimento&quot;&gt;
+                    &lt;ft:layout&gt;
+                        &lt;ft:property name=&quot;format&quot; value=&quot;dd MMMM yyyy&quot;/&gt;
+                    &lt;/ft:layout&gt;
+                &lt;/ft:view&gt;
+            &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;(6) &lt;ft:label property=&quot;username&quot;/&gt;&lt;/td&gt;
+            &lt;td&gt;(7) &lt;ft:view property=&quot;username&quot;/&gt;&lt;/td&gt;
+
+            &lt;td&gt;(8) &lt;ft:label property=&quot;pais.nationality&quot;/&gt;&lt;/td&gt;
+            &lt;td&gt;(9) &lt;ft:view property=&quot;pais.nationality&quot;/&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+</div>
+
+<p>
+    The two entirely new tags are <code>define</code> and <code>label</code>. The first tag
+    is very similar to the <code>bean:define</code> tag. It defines a new attribute in the 
+    page with the value of the given property from the presented object.  The <code>label</code> 
+    tag allows you to search for the label defined in the renderers' resources using the 
+    renderer's conventions for labels.
+</p>
+
+<p style="margin-top: 50px; padding-top: 10px; border-top: 1px solid #AAAAAA">
+    <span style="float: left;"><a href="#top">Top</a></span>
+    <span style="float: right;">
+        Next: <html:link page="/renderers/input.do">The second situation: give me input</html:link>
+    </span>
+</p>
+

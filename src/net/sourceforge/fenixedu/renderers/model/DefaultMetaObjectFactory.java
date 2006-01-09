@@ -53,6 +53,7 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         metaSlot.setSchema(slotDescription.getSchema());
         metaSlot.setLayout(slotDescription.getLayout());
         metaSlot.setValidator(slotDescription.getValidator());
+        metaSlot.setValidatorProperties(slotDescription.getValidatorProperties());
         metaSlot.setDefaultValue(slotDescription.getDefaultValue());
         metaSlot.setProperties(slotDescription.getProperties());
         

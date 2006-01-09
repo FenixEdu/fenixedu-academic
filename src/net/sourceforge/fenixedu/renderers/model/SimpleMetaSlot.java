@@ -20,6 +20,7 @@ public class SimpleMetaSlot implements MetaSlot {
     private Class<HtmlValidator> validator;
     private String defaultValue;
     private Properties properties;
+    private Properties validatorProperties;
 
     public SimpleMetaSlot(MetaObject metaObject, String name) {
         super();
@@ -64,10 +65,18 @@ public class SimpleMetaSlot implements MetaSlot {
         return this.validator;
     }
 
+    public void setValidatorProperties(Properties validatorProperties) {
+        this.validatorProperties = validatorProperties;
+    }
+    
+    public Properties getValidatorProperties() {
+        return this.validatorProperties;
+    }
+
     public void setObject(Object object) {
         // TODO: do something with exceptions
         try {
-            PropertyUtils.setProperty(getObject(), getName(), object);
+            PropertyUtils.setProperty(getMetaObject().getObject(), getName(), object);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {

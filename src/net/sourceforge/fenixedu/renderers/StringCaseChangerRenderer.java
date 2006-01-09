@@ -27,22 +27,20 @@ public class StringCaseChangerRenderer extends StringInputRenderer {
         container.addChild(caseChangeButton);
         container.addChild(capitalizeButton);
         
-        CaseChangeController controller = new CaseChangeController(component, caseChangeButton, capitalizeButton); 
-        
-        caseChangeButton.setController(controller);
+        caseChangeButton.setController(new CaseChangeController(component, caseChangeButton, capitalizeButton));
         capitalizeButton.setController(new CapitalizeController(component));
         
         return container;
     }
 
-    private void nameButton(HtmlSubmitButton caseChangeButton, String attribute) {
+    private void nameButton(HtmlSubmitButton button, String attribute) {
         String buttonName = (String) getInputContext().getViewState().getAttribute(attribute);
         
         if (buttonName == null) {
-            getInputContext().getViewState().setAttribute(attribute, caseChangeButton.getName());
+            getInputContext().getViewState().setAttribute(attribute, button.getName());
         }
         else {
-            caseChangeButton.setName(buttonName);
+            button.setName(buttonName);
         }
     }
 
@@ -80,18 +78,21 @@ public class StringCaseChangerRenderer extends StringInputRenderer {
             setupButtons();
         }
 
-        public boolean isUpperCase() {
-            return getInputContext().getViewState().getAttribute("isUpperCase") == null ||
-            ((Boolean) getInputContext().getViewState().getAttribute("isUpperCase")).booleanValue();
-        }
-        
-        public void setUpperCase(boolean isUpperCase) {
-            getInputContext().getViewState().setAttribute("isUpperCase", new Boolean(isUpperCase));
-        }
-        
-        public void setupButtons() {
+        private void setupButtons() {
             this.button.setText(isUpperCase() ? "To Upper Case" : "To Lower Case");
             this.capitalize.setVisible(isUpperCase());
+        }
+        
+        private boolean isUpperCase() {
+            if (getInputContext().getViewState().getAttribute("isUpperCase") == null) {
+                return true;
+            }
+            
+            return ((Boolean) getInputContext().getViewState().getAttribute("isUpperCase")).booleanValue();
+        }
+        
+        private void setUpperCase(boolean isUpperCase) {
+            getInputContext().getViewState().setAttribute("isUpperCase", new Boolean(isUpperCase));
         }
         
         @Override

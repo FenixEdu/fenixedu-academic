@@ -75,6 +75,7 @@ public class FenixMetaObjectFactory extends DefaultMetaObjectFactory {
         metaSlot.setSchema(slotDescription.getSchema());
         metaSlot.setLayout(slotDescription.getLayout());
         metaSlot.setValidator(slotDescription.getValidator());
+        metaSlot.setValidatorProperties(slotDescription.getValidatorProperties());
         metaSlot.setDefaultValue(slotDescription.getDefaultValue());
         metaSlot.setProperties(slotDescription.getProperties());
         

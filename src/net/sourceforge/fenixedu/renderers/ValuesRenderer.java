@@ -105,7 +105,7 @@ public class ValuesRenderer extends OutputRenderer {
 
         @Override
         protected boolean hasMoreComponents() {
-            return slotsIterator.hasNext() || this.insertSeparator;
+            return slotsIterator.hasNext();
         }
 
         @Override

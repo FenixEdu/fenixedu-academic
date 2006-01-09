@@ -122,4 +122,7 @@ concrete, and increasingly challenging situations.
 
 <ul>
     <li><html:link page="/renderers/output.do">The first situation: presenting the world</html:link></li>
+    <li><html:link page="/renderers/input.do">The second situation: give me input</html:link></li>
+    <li><html:link page="/renderers/actions.do">The third situation: renderers meet actions</html:link></li>
+    <li><html:link page="/renderers/new.do">The fourth situation: a new renderer</html:link></li>
 </ul>

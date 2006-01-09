@@ -5,12 +5,17 @@ import javax.servlet.jsp.PageContext;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.Validatable;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public abstract class HtmlValidator extends HtmlComponent {
 
     private Validatable component;
     
     private boolean valid;
+    
+    private boolean isKey;
+    
+    private String message;
     
     public HtmlValidator(Validatable component) {
         super();
@@ -31,8 +36,35 @@ public abstract class HtmlValidator extends HtmlComponent {
         return this.component;
     }
     
-    public abstract String getErrorMessage();
+    public boolean isKey() {
+        return this.isKey;
+    }
+
+    public void setKey(boolean isKey) {
+        this.isKey = isKey;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getErrorMessage() {
+        if (isKey()) {
+            return getResourceMessage(getMessage());
+        }
+        else {
+            return getMessage();
+        }
+    }
     
+    protected String getResourceMessage(String message) {
+        return RenderUtils.getResourceString(message);
+    }
+
     public abstract void performValidation();
 
     @Override

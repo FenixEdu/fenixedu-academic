@@ -16,6 +16,8 @@ public class SchemaSlotDescription {
 
     private Class<HtmlValidator> validator;
     
+    private Properties validatorProperties;
+    
     private String defaultValue;
 
     private String schema;
@@ -70,6 +72,14 @@ public class SchemaSlotDescription {
     
     public void setValidator(Class<HtmlValidator> validator) {
         this.validator = validator;
+    }
+
+    public Properties getValidatorProperties() {
+        return this.validatorProperties;
+    }
+
+    public void setValidatorProperties(Properties validatorProperties) {
+        this.validatorProperties = validatorProperties;
     }
 
     public String getDefaultValue() {

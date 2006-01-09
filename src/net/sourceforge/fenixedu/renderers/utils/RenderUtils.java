@@ -80,9 +80,13 @@ public class RenderUtils {
     }
     
     public static void setProperties(Object target, Properties properties) {
-        String propertyName = null;
-
+        if (properties == null) {
+            return;
+        }
+        
         for (Object property : properties.keySet()) {
+            String propertyName = null;
+
             try {
                 propertyName = (String) property;
 

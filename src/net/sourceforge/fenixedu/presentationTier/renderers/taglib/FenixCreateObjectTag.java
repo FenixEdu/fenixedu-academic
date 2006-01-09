@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
 import javax.servlet.jsp.JspException;
 
+import dml.DomainClass;
+
 import net.sourceforge.fenixedu._development.MetadataManager;
 
 public class FenixCreateObjectTag extends FenixEditObjectTag {
@@ -16,6 +18,12 @@ public class FenixCreateObjectTag extends FenixEditObjectTag {
             type = getViewState().getMetaObject().getType().getName();
         }
         
-        return MetadataManager.getDomainModel().findClass(type);
+        DomainClass domainClass = MetadataManager.getDomainModel().findClass(type);
+        
+        if (domainClass == null) {
+            throw new JspException("Could not find domain class for type " + type);
+        }
+        
+        return domainClass;
     }
 }

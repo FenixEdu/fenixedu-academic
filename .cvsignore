@@ -65,4 +65,5 @@ build.properties.test
 build.properties.prod
 development.properties
 build.properties.tests
-pLogs
+plogs
+zbuild

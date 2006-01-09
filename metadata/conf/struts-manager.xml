@@ -1803,8 +1803,17 @@
         <forward name="show" path="domain.view"/>
     </action>
         
+    <action path="/renderers/reload" type="net.sourceforge.fenixedu.renderers.plugin.ReloadConfigurationAction">
+        <forward name="Success" path="renderers.index"/>
+    </action>
+    
     <!-- FIXME: this is temporary and should be moved. serves only as example -->
     <!-- check also 'tiles-manager-pages-definitions.xml' -->
+
+    <action path="/renderers/searchPersons" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.renderers.SearchAction">
+      <forward name="input" path="renderers.searchInput"/>
+      <forward name="results" path="renderers.searchResults"/>
+    </action>
 
     <action path="/renderers/*" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
       <forward name="Success" path="renderers.{1}"/>

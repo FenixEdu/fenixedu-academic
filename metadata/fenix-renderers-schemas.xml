@@ -42,10 +42,90 @@
     <slot name="email">
         <property name="link" value="true"/>
     </slot>
-    <slot name="pais" schema="country.name" layout="values"/>
+    <slot name="pais" schema="country.short" layout="values">
+        <property name="htmlSeparator" value=" - "/>
+    </slot>
   </schema>
   
-  <schema name="country.name" type="net.sourceforge.fenixedu.domain.Country">
-    <slot name="name"/>
+  <schema name="country.short" type="net.sourceforge.fenixedu.domain.Country">
+    <slot name="code"/>
+    <slot name="nationality"/>
+  </schema>
+  
+  <schema name="person.simple-edit" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="nome">
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="gender"/>
+    <slot name="idDocumentType"/>
+    <slot name="numeroDocumentoIdentificacao"/>
+    <slot name="dataValidadeDocumentoIdentificacao">
+        <property name="size" value="12"/>
+        <property name="maxLength" value="10"/>
+    </slot>
+    <slot name="availablePhoto"/>
+  </schema>
+  
+  <schema name="person.simple-edit-validated" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="nome">
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
+            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="key" value="false"/>
+        </validator>
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="numeroDocumentoIdentificacao" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="dataValidadeDocumentoIdentificacao">
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\p{Digit}?\p{Digit}/\p{Digit}?\p{Digit}/(\p{Digit}\p{Digit})?\p{Digit}\p{Digit}"/>
+        </validator>
+        <property name="size" value="12"/>
+        <property name="maxLength" value="10"/>
+    </slot>
+    <slot name="availablePhoto"/>
+  </schema>
+  
+  <schema name="person.create-minimal" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="nome">
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
+            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="key" value="false"/>
+        </validator>
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="username" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="idDocumentType" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="numeroDocumentoIdentificacao" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="maritalStatus" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="isPassInKerberos"/>
+  </schema>
+  
+  <schema name="person.create-minimal-defaults" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="nome">
+        <validator class="net.sourceforge.fenixedu.renderers.validators.RegexpValidator">
+            <property name="regexp" value="\p{Space}*[^ ]+\p{Space}+[^ ]+.*"/>
+            <property name="message" value="Escreva pelo menos o primeiro e último nome"/>
+            <property name="key" value="false"/>
+        </validator>
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="username" default="pxxxxx"
+          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="idDocumentType" default="IDENTITY_CARD"
+          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="numeroDocumentoIdentificacao" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="gender" validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="maritalStatus" default="UNKNOWN"
+          validator="net.sourceforge.fenixedu.renderers.validators.RequiredValidator"/>
+    <slot name="isPassInKerberos"/>
+  </schema>
+  
+  <schema name="person.name" type="net.sourceforge.fenixedu.domain.Person">
+    <slot name="nome" layout="allow-case-change"/>
   </schema>
 </schemas>

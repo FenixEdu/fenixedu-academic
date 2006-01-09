@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="compile" name="Compilation Scripts">
 
-    <property environment="env"/>
-	<property name="encoding" value="ISO-8859-1"/>	
+	<property environment="env"/>
+	<property name="encoding" value="ISO-8859-1"/>
 
 	<property file="build.properties"/>
 
-    <!-- Source code directories -->
-    <property name="src" location="src"/>
-    <property name="src_gen" location="src_gen"/>    
-    <property name="config" location="config"/>
+	<!-- Source code directories -->
+	<property name="src" location="src"/>
+	<property name="src_gen" location="src_gen"/>
+	<property name="config" location="config"/>
 	<property name="config.web" location="metadata"/>
 
 	<!-- Directories for compiled code -->
@@ -22,33 +22,33 @@
 
 	<!-- Directories for deploy -->
 	<property name="deploy.home" location="deploy"/>
-	
-    <!-- Directories with libraries (JARs) -->
-    <property name="lib" location="lib" />
 
-    <!-- Directory with SQL instructions -->
-    <property name="etc" location="etc"/>
+	<!-- Directories with libraries (JARs) -->
+	<property name="lib" location="lib" />
 
-    <!-- Directory with web-content -->
-    <property name="web-content" location="jsp"/>
+	<!-- Directory with SQL instructions -->
+	<property name="etc" location="etc"/>
+
+	<!-- Directory with web-content -->
+	<property name="web-content" location="jsp"/>
 
 	<!-- DML definition file -->
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
 
 	<!-- Compilation options -->
 	<property name="compile.debug"       value="on"/>
-  	<property name="compile.deprecation" value="off"/>
-  	<property name="compile.optimize"    value="on"/>
+	<property name="compile.deprecation" value="off"/>
+	<property name="compile.optimize"    value="on"/>
 
 	<!-- Renderers properties -->
 	<property name="renderers.package.dir" value="net/sourceforge/fenixedu/renderers"/>
 	<property name="renderers.lib.name" value="fenix-renderers.jar"/>
 
-    <target name="clean-all"
+	<target name="clean-all"
     		description="Removes any generated files">
 		<delete dir="${build.home}"/>
 		<delete dir="${deploy.home}"/>
-    </target>
+	</target>
 
 	<target name="prepare"
 			description="Copy configuration files to compile dir">
@@ -89,7 +89,7 @@
 			</parallel>
 
 			<!-- Replace tokens in configuration files with local config -->
-			<antcall target="replace-property-values"/>			
+			<antcall target="replace-property-values"/>
 		</sequential>
 
 		<echo file="${build.home.webinf.classes}/checkIsAlive.properties" append="false">
@@ -113,48 +113,48 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@db.alias@"
 							   property="db.alias"/>
 
-					<replacefilter token="@db.assiduousness.user@"
+				<replacefilter token="@db.assiduousness.user@"
 								   property="db.assiduousness.user"/>
-					<replacefilter token="@db.assiduousness.pass@" 
+				<replacefilter token="@db.assiduousness.pass@" 
 				    			   property="db.assiduousness.pass"/>
-					<replacefilter token="@db.assiduousness.name@" 
+				<replacefilter token="@db.assiduousness.name@" 
 								   property="db.assiduousness.name"/>
-					<replacefilter token="@db.assiduousness.alias@" 
+				<replacefilter token="@db.assiduousness.alias@" 
 				    			   property="db.assiduousness.alias"/>
-					<replacefilter token="@db.assiduousness.platform@" 
+				<replacefilter token="@db.assiduousness.platform@" 
 				    			   property="db.assiduousness.platform"/>
-					<replacefilter token="@db.assiduousness.driver@" 
+				<replacefilter token="@db.assiduousness.driver@" 
 				    			   property="db.assiduousness.driver"/>
-					<replacefilter token="@db.assiduousness.protocol@" 
+				<replacefilter token="@db.assiduousness.protocol@" 
 				    			   property="db.assiduousness.protocol"/>
-					<replacefilter token="@db.assiduousness.subprotocol@" 
+				<replacefilter token="@db.assiduousness.subprotocol@" 
 				    			   property="db.assiduousness.subprotocol"/>
-					<replacefilter token="@db.assiduousness.validationQuery@" 
+				<replacefilter token="@db.assiduousness.validationQuery@" 
 				    			   property="db.assiduousness.validationQuery"/>
-			  		    
-					<replacefilter token="@db.personFilter.user@" 
+
+				<replacefilter token="@db.personFilter.user@" 
 				    			   property="db.personFilter.user"/>
-					<replacefilter token="@db.personFilter.pass@" 
+				<replacefilter token="@db.personFilter.pass@" 
 				    			   property="db.personFilter.pass"/>
-					<replacefilter token="@db.personFilter.name@" 
+				<replacefilter token="@db.personFilter.name@" 
 				    			   property="db.personFilter.name"/>
-					<replacefilter token="@db.personFilter.alias@" 
+				<replacefilter token="@db.personFilter.alias@" 
 				    			   property="db.personFilter.alias"/>
-					<replacefilter token="@db.personFilter.platform@" 
+				<replacefilter token="@db.personFilter.platform@" 
 				    			   property="db.personFilter.platform"/>
-					<replacefilter token="@db.personFilter.driver@" 
+				<replacefilter token="@db.personFilter.driver@" 
 				    			   property="db.personFilter.driver"/>
-					<replacefilter token="@db.personFilter.protocol@" 
+				<replacefilter token="@db.personFilter.protocol@" 
 				    			   property="db.personFilter.protocol"/>
-					<replacefilter token="@db.personFilter.subprotocol@" 
+				<replacefilter token="@db.personFilter.subprotocol@" 
 				    			   property="db.personFilter.subprotocol"/>
-					<replacefilter token="@db.personFilter.validationQuery@" 
+				<replacefilter token="@db.personFilter.validationQuery@" 
 				    			   property="db.personFilter.validationQuery"/>
-					<replacefilter token="@db.personFilter.other@" 
+				<replacefilter token="@db.personFilter.other@" 
 				    			   property="db.personFilter.other"/>
-					<replacefilter token="@db.personFilter.errorFile@" 
+				<replacefilter token="@db.personFilter.errorFile@" 
 				    			   property="db.personFilter.errorFile"/>
-					<replacefilter token="@db.personFilter.log@" 
+				<replacefilter token="@db.personFilter.log@" 
 				    			   property="db.personFilter.log"/>
 			</replace>
 
@@ -165,9 +165,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			    			   property="db.slide.driver"/>
 				<replacefilter token="@db.slide.alias@" 
 			    			   property="db.slide.alias"/>
-			    <replacefilter token="@db.slide.user@" 
+				<replacefilter token="@db.slide.user@" 
 			    			   property="db.slide.user"/>
-			    <replacefilter token="@db.slide.pass@" 
+				<replacefilter token="@db.slide.pass@" 
 			    			   property="db.slide.pass"/>
 			</replace>
 
@@ -185,15 +185,15 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="slide.properties"/>
-			    <replacefilter token="@slide.config@" 
+				<replacefilter token="@slide.config@" 
 			    			   property="slide.config"/>
 				<replacefilter token="@db.slide.driver@" 
 			    			   property="db.slide.driver"/>
 				<replacefilter token="@db.slide.alias@" 
 			    			   property="db.slide.alias"/>
-			    <replacefilter token="@db.slide.user@" 
+				<replacefilter token="@db.slide.user@" 
 			    			   property="db.slide.user"/>
-			    <replacefilter token="@db.slide.pass@" 
+				<replacefilter token="@db.slide.pass@" 
 			    			   property="db.slide.pass"/>
 			</replace>
 
@@ -203,16 +203,16 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter 
 		                 token="@ftp.IST.server.user@" 
 		                 property="ftp.IST.server.user"/>
-			  <replacefilter 
+				<replacefilter 
 	                  token="@ftp.IST.server.pass@" 
 	                  property="ftp.IST.server.pass"/>
-			  <replacefilter 
+				<replacefilter 
 	                 token="@ftp.IST.server.address@" 
 	                 property="ftp.IST.server.address"/>
-	            <replacefilter 
+				<replacefilter 
 	                 token="@ftp.IST.scp.command@" 
 	                 property="ftp.IST.scp.command"/>
-			  <replacefilter 
+				<replacefilter 
 	                 token="@ftp.IST.scp.args@" 
 	                 property="ftp.IST.scp.args"/>
 			</replace>
@@ -220,13 +220,13 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="DegreeGradesFtpServerConfig.properties"/>
-	            <replacefilter 
+				<replacefilter 
     	             token="@ftp.degree.grades.server.user@" 
 	                 property="ftp.degree.grades.server.user"/>
-			  <replacefilter 
+				<replacefilter 
 	                  token="@ftp.degree.grades.server.pass@" 
 	                  property="ftp.degree.grades.server.pass"/>
-			  <replacefilter 
+				<replacefilter 
 	                 token="@ftp.degree.grades.server.address@" 
 	                 property="ftp.degree.grades.server.address"/>
 			</replace>
@@ -235,11 +235,11 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
 				<include name="log4j.xml"/>
-			  	<replacefilter token="@log.image.directory@"
+				<replacefilter token="@log.image.directory@"
 			  				   property="log.image.directory"/>
-			  	<replacefilter token="@log.profile.dir@"
+				<replacefilter token="@log.profile.dir@"
 			  				   property="log.profile.dir"/>
-			  	<replacefilter token="@log.profile.filename@"
+				<replacefilter token="@log.profile.filename@"
 			  				   property="log.profile.filename"/>
 			</replace>
 
@@ -289,7 +289,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter token="@sms.delivery.password@"
 			    			   property="sms.delivery.password"/>
 			</replace>
-		
+
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="GratuitySituationCreatorTask.properties"/>
@@ -305,7 +305,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter 
 				    token="@app.context@"
 				    property="app.context"/>
-			  	<replacefilter token="@login.page@"
+				<replacefilter token="@login.page@"
 							   value="${login.page}"/>
 				<replacefilter token="@roleback.filename@"
 		    			   property="roleback.filename"/>
@@ -324,11 +324,11 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 							   property="log4j.email.smtp.to"/>
 				<replacefilter token="@log4j.email.smtp.subject@"
 							   property="log4j.email.smtp.subject"/>
-			  	<replacefilter token="@log.image.directory@"
+				<replacefilter token="@log.image.directory@"
 			  				   property="log.image.directory"/>
-			  	<replacefilter token="@log.profile.dir@"
+				<replacefilter token="@log.profile.dir@"
 			  				   property="log.profile.dir"/>
-			  	<replacefilter token="@log.profile.filename@"
+				<replacefilter token="@log.profile.filename@"
 			  				   property="log.profile.filename"/>
 			</replace>
 
@@ -348,20 +348,20 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<include name="ApplicationResources*.properties"/>
 				<include name="ApplicationResourcesSOP*.properties"/>
 				<include name="ManagerResources*.properties"/>
-			  	<replacefilter token="@login.page@"
+				<replacefilter token="@login.page@"
 							   value="${login.page}"/>
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="logAnalyser.properties"/>
-			  	<replacefilter token="@login.page@"
+				<replacefilter token="@login.page@"
 					  		   value="${login.page}"/>
-			  	<replacefilter token="@log.image.directory@"
+				<replacefilter token="@log.image.directory@"
 			  				   property="log.image.directory"/>
-			  	<replacefilter token="@log.profile.dir@"
+				<replacefilter token="@log.profile.dir@"
 			  				   property="log.profile.dir"/>
-			  	<replacefilter token="@log.profile.filename@"
+				<replacefilter token="@log.profile.filename@"
 			  				   property="log.profile.filename"/>
 			</replace>
 
@@ -397,13 +397,13 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<include name="student/enrollment/warning.jsp"/>
 				<include name="degreeAdministrativeOffice/enrolment/withRules/enrollmentConfirmation.jsp"/>
 				<include name="degreeAdministrativeOffice/enrolment/withRules/prepareEnrollmentChooseCurricularCourses.jsp"/>
-	            <replacefilter token="@enrollment.faq.url@"
-			    			   property="enrollment.faq.url"/>    
+				<replacefilter token="@enrollment.faq.url@"
+			    			   property="enrollment.faq.url"/>
 			</replace>
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="services.xml"/>
-			  	<replacefilter token="@authenticationService@"
+				<replacefilter token="@authenticationService@"
 			  		property="authenticationService"/>
 				<replacefilter token="@changePassService@"
 					property="changePassService"/>
@@ -411,16 +411,16 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<replace dir="${build.home.webinf.classes}"
 					 propertyFile="build.properties">
 				<include name="berserk.properties"/>
-			  	<replacefilter token="@application.filterBroker@"
+				<replacefilter token="@application.filterBroker@"
 			  				   property="application.filterBroker"/>
 			</replace>
 		</parallel>
 	</target>
 
-    <target name="write-index-redirect-hostnames-configuration-file">
-    	<delete file=".indexRedirectHostnames.properties.xml"/>
-    	<delete file="${build.home.webinf.classes}/.indexRedirectHostnames.properties"/>
-    	<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
+	<target name="write-index-redirect-hostnames-configuration-file">
+		<delete file=".indexRedirectHostnames.properties.xml"/>
+		<delete file="${build.home.webinf.classes}/.indexRedirectHostnames.properties"/>
+		<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
 		<concat destfile=".indexRedirectHostnames.properties.xml">
 			${filter.hostnames}
 			<filterchain>
@@ -431,7 +431,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
 				</tokenfilter>
 				<tokenfilter>
-				    <replacestring from="," to=""/>
+					<replacestring from="," to=""/>
 					<trim/>
 					<ignoreblank/>
 				</tokenfilter>
@@ -461,13 +461,13 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			</filterchain>
 		</concat>
 		<ant antfile=".indexRedirectHostnames.properties.xml"/>
-    	<delete file=".indexRedirectHostnames.properties.xml"/>
+		<delete file=".indexRedirectHostnames.properties.xml"/>
 	</target>
 
-    <target name="write-filter-hostnames-configuration-file">
-    	<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
-    	<delete file="${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties"/>
-    	<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
+	<target name="write-filter-hostnames-configuration-file">
+		<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
+		<delete file="${build.home.webinf.classes}/.authenticationServiceHostnamesFiltering.properties"/>
+		<property name="ant.regexp.regexpimpl" value="org.apache.tools.ant.util.regexp.Jdk14RegexpRegexp"/>
 		<concat destfile=".authenticationServiceHostnamesFiltering.properties.xml">
 			${filter.hostnames}
 			<filterchain>
@@ -478,7 +478,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 					<replaceregex pattern="(.*)" replace="\1${line.seperator}"/>
 				</tokenfilter>
 				<tokenfilter>
-				    <replacestring from="," to=""/>
+					<replacestring from="," to=""/>
 					<trim/>
 					<ignoreblank/>
 				</tokenfilter>
@@ -508,7 +508,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			</filterchain>
 		</concat>
 		<ant antfile=".authenticationServiceHostnamesFiltering.properties.xml"/>
-    	<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
+		<delete file=".authenticationServiceHostnamesFiltering.properties.xml"/>
 	</target>
 
 	<target name="generate" description="Generate java code">
@@ -516,7 +516,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<ant antfile="build_codeGenerator.xml" target="generate-DAOs"/>
 	</target>
 
-    <target name="i18nDefault"
+	<target name="i18nDefault"
     		depends="prepare">
 		<copy todir="${build.home.webinf.classes}/ServidorApresentacao">
 			<fileset dir="${build.home.webinf.classes}/ServidorApresentacao" >
@@ -526,79 +526,70 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</copy>
 	</target>
 
-  <target name="compile-domain" 
+	<target name="compile-domain" 
           description="Compile application's domain"
           depends="generate">
-    <javac destdir="${build.home.webinf.classes}"
+		<javac destdir="${build.home.webinf.classes}"
            extdirs="${lib}"
            debug="${compile.debug}"
            optimize="${compile.optimize}"
            deprecation="${compile.deprecation}"
            encoding="${encoding}"
            nowarn="true">
-      <src path="${src_gen}"/>
-      <src path="${src}"/>
-      <include name="net/sourceforge/fenixedu/tools/**"/>
-      <include name="net/sourceforge/fenixedu/domain/**"/>
-      <include name="relation/**"/>
-    </javac>
-    <java classname="net.sourceforge.fenixedu.tools.CreateDomainFactoryClassSource" 
-          dir="${src_gen}"
-          fork="true">
-      <classpath>
-	<pathelement path="${build.home.webinf.classes}"/>
-	<fileset dir="${lib}">
-	  <include name="**/*.jar"/>
-	</fileset>
-      </classpath>
-      <arg value="-cfn"/>
-      <arg value="net.sourceforge.fenixedu.domain.DomainFactory"/>
-      <arg value="-d"/>
-      <arg value="${dml.definition.file}"/>
-    </java>	
-  </target>
-
-  <target name="check-renderers" description="Checks if the lib built is still up to date">
-  	<uptodate property="renderers.skip-compile" targetfile="${lib}/${renderers.lib.name}">
-  		<srcfiles dir="${src}/${renderers.package.dir}" includes="**/*.*"/>
-  	</uptodate>
-  	<echo level="info">Renderers lib up to date: ${renderers.skip-compile}</echo>
-  </target>
-
-  <target name="compile-renderers" depends="check-renderers" unless="renderers.skip-compile"
-  	      description="Make renderers available as a lib">
-  	<javac srcdir="${src}"
-  		   includes="${renderers.package.dir}/**"
-  		   destdir="${build.home.webinf.classes}"
- 		   extdirs="${lib}"
-  	       debug="${compile.debug}"
-  	       optimize="${compile.optimize}"
-  	       deprecation="${compile.deprecation}"
-  	       encoding="${encoding}"
-  		   nowarn="true"/>
-  	<jar destfile="${lib}/${renderers.lib.name}"
-  	     basedir="${build.home.webinf.classes}"
-  	     includes="${renderers.package.dir}/**"/>
-  	<delete dir="${build.home.webinf.classes}/${renderers.package.dir}"/>
-  </target>
-	
-    <target name="compile"
-    		description="Compile application"
-    		depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate">
-		<javac destdir="${build.home.webinf.classes}"
-               extdirs="${lib}"
-               debug="${compile.debug}"
-               optimize="${compile.optimize}"
-               deprecation="${compile.deprecation}"
-               encoding="${encoding}"
-			   nowarn="true">
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
-			
+			<include name="net/sourceforge/fenixedu/tools/**"/>
+			<include name="net/sourceforge/fenixedu/domain/**"/>
+			<include name="relation/**"/>
+		</javac>
+		<java classname="net.sourceforge.fenixedu.tools.CreateDomainFactoryClassSource" 
+          dir="${src_gen}"
+          fork="true">
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+			<arg value="-cfn"/>
+			<arg value="net.sourceforge.fenixedu.domain.DomainFactory"/>
+			<arg value="-d"/>
+			<arg value="${dml.definition.file}"/>
+		</java>
+	</target>
+
+	<target name="check-renderers" description="Checks if the lib built is still up to date">
+		<uptodate property="renderers.skip-compile" targetfile="${lib}/${renderers.lib.name}">
+			<srcfiles dir="${src}/${renderers.package.dir}" includes="**/*.*" />
+		</uptodate>
+	</target>
+
+	<target name="print-renderers-message" if="renderers.skip-compile">
+		<echo level="info">Renderers lib is up to date: '${renderers.lib.name}' not built.</echo>
+	</target>
+
+	<target name="compile-renderers" depends="check-renderers,print-renderers-message" unless="renderers.skip-compile" description="Make renderers available as a lib">
+		<javac srcdir="${src}" includes="${renderers.package.dir}/**" destdir="${build.home.webinf.classes}" 
+			   extdirs="${lib}" 
+			   debug="${compile.debug}" 
+			   optimize="${compile.optimize}" 
+			   deprecation="${compile.deprecation}" 
+			   encoding="${encoding}" 
+			   nowarn="true" />
+		<jar destfile="${lib}/${renderers.lib.name}" basedir="${build.home.webinf.classes}" 
+			 includes="${renderers.package.dir}/**" />
+		<delete dir="${build.home.webinf.classes}/${renderers.package.dir}" />
+	</target>
+
+	<target name="compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate">
+		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
+			<src path="${src_gen}"/>
+			<src path="${src}"/>
+
 			<!-- they are used as a lib and not directly -->
 			<exclude name="${renderers.package.dir}/**"/>
 		</javac>
-        <java classname="net.sourceforge.fenixedu.tools.AddOJBConstructors" 
+		<java classname="net.sourceforge.fenixedu.tools.AddOJBConstructors" 
 			dir="${build.home.webinf.classes}"
 			fork="true">
 			<classpath>
@@ -613,76 +604,76 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="${dml.definition.file}"/>
 		</java>
 		<ant antfile="build_accessControl.xml"/>
-    </target>
+	</target>
 
-    <target name="deploy-linux"
+	<target name="deploy-linux"
             description="Deploys standalone application to local web server">
-    	<exec executable="rm" failonerror="false" os="Linux">
+		<exec executable="rm" failonerror="false" os="Linux">
 			<arg line="-rf"/>
 			<arg line="${env.CATALINA_HOME}/webapps/${app.context}"/>
 		</exec>
-    	<exec executable="ln" failonerror="false" os="Linux">
+		<exec executable="ln" failonerror="false" os="Linux">
 			<arg line="-s"/>
 			<arg line="${build.home}"/>
 			<arg line="${env.CATALINA_HOME}/webapps/${app.context}"/>
 		</exec>
-    </target>
+	</target>
 
 	<target name="deploy-win"
             description="Deploys standalone application to local web server">
 		<ant antfile="build_tomcat.xml" target="install">
 			<property name="webapp" value="${build.home}"/>
 		</ant>
-    </target>
-	
-    <target name="install"
+	</target>
+
+	<target name="install"
     		depends="compile"
             description="Deploys standalone application to web server">
 		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
 			<arg line="-f"/>
-			<arg line="build_compile.xml"/>			
-			<arg line="deploy-win"/>			
+			<arg line="build_compile.xml"/>
+			<arg line="deploy-win"/>
 		</exec>
 		<exec executable="ant" failonerror="false" os="Linux">
 			<arg line="-f"/>
-			<arg line="build_compile.xml"/>			
-			<arg line="deploy-linux"/>			
+			<arg line="build_compile.xml"/>
+			<arg line="deploy-linux"/>
 		</exec>
 	</target>
 
-    <target name="jar"
+	<target name="jar"
     		depends="compile"
             description="Generates a java archive applications 'core' (services and domain).">
 		<mkdir dir="${deploy.home}"/>
 		<jar destfile="${deploy.home}/${app.name}.jar">
 			<fileset dir="${build.home.webinf.classes}">
 				<include name="net/sourceforge/fenixedu/_development/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/constants/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/constants/**/*.class"/>
 				<include name="net/sourceforge/fenixedu/commons/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/dataTransferObject/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/domain/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/fileSuport/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/middleware/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/applicationTier/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/persistenceTier/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/persistenceTierFiltroPessoa/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/persistenceTierOracle/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/util/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/tools/**/*.class"/>
-	       		<include name="net/sourceforge/fenixedu/framework/**/*.class"/>
-	       		<include name="relations/*.class"/>
+				<include name="net/sourceforge/fenixedu/dataTransferObject/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/domain/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/fileSuport/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/middleware/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/applicationTier/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/persistenceTier/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/persistenceTierFiltroPessoa/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/persistenceTierJDBC/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/persistenceTierOracle/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/util/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/utilInsc/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/utilTests/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/tools/**/*.class"/>
+				<include name="net/sourceforge/fenixedu/framework/**/*.class"/>
+				<include name="relations/*.class"/>
 				<include name="org/**/*.class"/>
 			</fileset>
 		</jar>
 	</target>
 
-    <target name="war"
+	<target name="war"
 	    	depends="compile"
             description="Generates a web archive of the application.">
-    	<mkdir dir="${deploy.home}"/>
+		<mkdir dir="${deploy.home}"/>
 		<war destfile="${deploy.home}/${app.name}.war" webxml="${build.home.webinf}/web.xml">
 			<fileset dir="${build.home}">
 				<exclude name="WEB-INF/web.xml"/>
@@ -693,31 +684,31 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<classes dir="${build.home.webinf.classes}"/>
 		</war>
 	</target>
-	
+
 	<target name="jsp-precompile" depends="compile">
 		<mkdir dir="${build.home.jsp_gen_code}"/>
 		<mkdir dir="${build.home.jsp_gen_code.classes}"/>
-		<taskdef classname="org.apache.jasper.JspC" name="jasper2" > 
-	      <classpath id="jspc.classpath"> 
-	        <pathelement location="${jenv.JAVA_HOME}/../lib/tools.jar"/> 
-	        <fileset dir="${env.CATALINA_HOME}/bin"> 
-	          <include name="*.jar"/> 
-	        </fileset> 
-	        <fileset dir="${env.CATALINA_HOME}/server/lib"> 
-	          <include name="*.jar"/> 
-	        </fileset> 
-	        <fileset dir="${env.CATALINA_HOME}/common/lib"> 
-	          <include name="*.jar"/> 
-	        </fileset> 
-	      </classpath> 
-	    </taskdef> 
+		<taskdef classname="org.apache.jasper.JspC" name="jasper2" >
+			<classpath id="jspc.classpath">
+				<pathelement location="${jenv.JAVA_HOME}/../lib/tools.jar"/>
+				<fileset dir="${env.CATALINA_HOME}/bin">
+					<include name="*.jar"/>
+				</fileset>
+				<fileset dir="${env.CATALINA_HOME}/server/lib">
+					<include name="*.jar"/>
+				</fileset>
+				<fileset dir="${env.CATALINA_HOME}/common/lib">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
 
-	    <jasper2 
+		<jasper2 
 	             validateXml="false" 
 	             uriroot="${build.home}" 	            
 	        	 webXmlFragment="${build.home.webinf}/generated_web.xml"
-	             outputDir="${build.home.jsp_gen_code}" /> 
-		
+	             outputDir="${build.home.jsp_gen_code}" />
+
 		<!--<jspc srcdir="${build.home}" destdir="${build.home.jsp_gen_code}"
 				package="net.sourceforge.fenixedu.jsp" compiler="jasper2" verbose="0"  uriroot="${build.home}">
 			<classpath>
@@ -729,7 +720,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			;${env.CATALINA_HOME}/server/lib
 			               extdirs="${lib};${build.home.webinf.classes};${env.CATALINA_HOME}/common/lib;"
 		</jspc>-->
-		
+
 		<javac destdir="${build.home.webinf.classes}"
 
                debug="${compile.debug}"
@@ -739,25 +730,25 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
                encoding="${encoding}"
 			   nowarn="true">
 			<classpath>
-		        <pathelement path="${build.home.webinf.classes};"/>
-		        <fileset dir="${lib}">
-		          <include name="*.jar"/>
-		        </fileset>
-		        <pathelement location="${env.CATALINA_HOME}/common/classes"/>
-		        <fileset dir="${env.CATALINA_HOME}/common/lib">
-		          <include name="*.jar"/>
-		        </fileset>
-		        <pathelement location="${env.CATALINA_HOME}/shared/classes"/>
-		        <fileset dir="${env.CATALINA_HOME}/shared/lib">
-		          <include name="*.jar"/>
-		        </fileset>
-		        <fileset dir="${env.CATALINA_HOME}/bin"> 
-		          <include name="*.jar"/> 
-		        </fileset> 
-	      </classpath>
+				<pathelement path="${build.home.webinf.classes};"/>
+				<fileset dir="${lib}">
+					<include name="*.jar"/>
+				</fileset>
+				<pathelement location="${env.CATALINA_HOME}/common/classes"/>
+				<fileset dir="${env.CATALINA_HOME}/common/lib">
+					<include name="*.jar"/>
+				</fileset>
+				<pathelement location="${env.CATALINA_HOME}/shared/classes"/>
+				<fileset dir="${env.CATALINA_HOME}/shared/lib">
+					<include name="*.jar"/>
+				</fileset>
+				<fileset dir="${env.CATALINA_HOME}/bin">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
 			<src path="${build.home.jsp_gen_code}"/>
 		</javac>
-		
+
 	</target>
 
 	<target name="run">
@@ -769,112 +760,112 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="2"/>
 			<arg value="2004/2005"/>
 
-				<arg value="PY"/>
-				<arg value="P5"/>
-				<arg value="AC1"/>
-				<arg value="AC0"/>
-				<arg value="PM"/>
-				<arg value="RB"/>
-				<arg value="QA"/>
-				<arg value="AG"/>
-				<arg value="22"/>
-				<arg value="RM"/>
-				<arg value="QM"/>
-				<arg value="QY"/>
-				<arg value="PA"/>
-				<arg value="AZ3"/>
-				<arg value="AH"/>
-				<arg value="26"/>
-				<arg value="RS"/>
-				<arg value="QS"/>
-				<arg value="PG"/>
-				<arg value="PT"/>
-				<arg value="Q6"/>
-				<arg value="RG"/>
-				<arg value="QF"/>
-				<arg value="AZ4"/>
-				<arg value="UC"/>
-				<arg value="UN"/>
-				<arg value="UY"/>
-				<arg value="AJ"/>
-				<arg value="VA"/>
-				<arg value="S6"/>
-				<arg value="VL"/>
-				<arg value="U2"/>
-				<arg value="AZ5"/>
-				<arg value="AC2"/>
-				<arg value="V5"/>
-				<arg value="AK"/>
-				<arg value="VF"/>
-				<arg value="SB"/>
-				<arg value="VR"/>
-				<arg value="U8"/>
-				<arg value="UH"/>
-				<arg value="UT"/>
-				<arg value="AZ6"/>
-				<arg value="QZ"/>
-				<arg value="P6"/>
-				<arg value="RN"/>
-				<arg value="PN"/>
-				<arg value="QN"/>
-				<arg value="24"/>
-				<arg value="RH"/>
-				<arg value="PB"/>
-				<arg value="QJ"/>
-				<arg value="AZ2"/>
-				<arg value="AX2"/>
-				<arg value="AZD"/>
-				<arg value="AZG"/>
-				<arg value="A04"/>
-				<arg value="VC"/>
-				<arg value="SF"/>
-				<arg value="UK"/>
-				<arg value="UZ"/>
-				<arg value="NR"/>
-				<arg value="VM"/>
-				<arg value="U7"/>
-				<arg value="UP"/>
-				<arg value="ADU"/>
-				<arg value="KI"/>
-				<arg value="U3"/>
-				<arg value="JI"/>
-				<arg value="SA"/>
-				<arg value="UE"/>
-				<arg value="AZ7"/>
-				<arg value="AZJ"/>
-				<arg value="N4"/>
-				<arg value="A7Y"/>
-				<arg value="AZH"/>
-				<arg value="AZI"/>
-				<arg value="AGW"/>
-				<arg value="QW"/>
-				<arg value="HU"/>
-				<arg value="HV"/>
-				<arg value="AJM"/>
-				<arg value="V4"/>
-				<arg value="P2"/>
-				<arg value="RD"/>
-				<arg value="S2"/>
-				<arg value="N9"/>
-				<arg value="PL"/>
-				<arg value="RR"/>
-				<arg value="VD"/>
-				<arg value="HT"/>
-				<arg value="ZH"/>
-				<arg value="BMG"/>
-				<arg value="AIG"/>
-				<arg value="AM8"/>
-				<arg value="AM9"/>
-				<arg value="9Y"/>
-				<arg value="AR9"/>
-				<arg value="ARA"/>
-				<arg value="AMS"/>
-				<arg value="AMT"/>
+			<arg value="PY"/>
+			<arg value="P5"/>
+			<arg value="AC1"/>
+			<arg value="AC0"/>
+			<arg value="PM"/>
+			<arg value="RB"/>
+			<arg value="QA"/>
+			<arg value="AG"/>
+			<arg value="22"/>
+			<arg value="RM"/>
+			<arg value="QM"/>
+			<arg value="QY"/>
+			<arg value="PA"/>
+			<arg value="AZ3"/>
+			<arg value="AH"/>
+			<arg value="26"/>
+			<arg value="RS"/>
+			<arg value="QS"/>
+			<arg value="PG"/>
+			<arg value="PT"/>
+			<arg value="Q6"/>
+			<arg value="RG"/>
+			<arg value="QF"/>
+			<arg value="AZ4"/>
+			<arg value="UC"/>
+			<arg value="UN"/>
+			<arg value="UY"/>
+			<arg value="AJ"/>
+			<arg value="VA"/>
+			<arg value="S6"/>
+			<arg value="VL"/>
+			<arg value="U2"/>
+			<arg value="AZ5"/>
+			<arg value="AC2"/>
+			<arg value="V5"/>
+			<arg value="AK"/>
+			<arg value="VF"/>
+			<arg value="SB"/>
+			<arg value="VR"/>
+			<arg value="U8"/>
+			<arg value="UH"/>
+			<arg value="UT"/>
+			<arg value="AZ6"/>
+			<arg value="QZ"/>
+			<arg value="P6"/>
+			<arg value="RN"/>
+			<arg value="PN"/>
+			<arg value="QN"/>
+			<arg value="24"/>
+			<arg value="RH"/>
+			<arg value="PB"/>
+			<arg value="QJ"/>
+			<arg value="AZ2"/>
+			<arg value="AX2"/>
+			<arg value="AZD"/>
+			<arg value="AZG"/>
+			<arg value="A04"/>
+			<arg value="VC"/>
+			<arg value="SF"/>
+			<arg value="UK"/>
+			<arg value="UZ"/>
+			<arg value="NR"/>
+			<arg value="VM"/>
+			<arg value="U7"/>
+			<arg value="UP"/>
+			<arg value="ADU"/>
+			<arg value="KI"/>
+			<arg value="U3"/>
+			<arg value="JI"/>
+			<arg value="SA"/>
+			<arg value="UE"/>
+			<arg value="AZ7"/>
+			<arg value="AZJ"/>
+			<arg value="N4"/>
+			<arg value="A7Y"/>
+			<arg value="AZH"/>
+			<arg value="AZI"/>
+			<arg value="AGW"/>
+			<arg value="QW"/>
+			<arg value="HU"/>
+			<arg value="HV"/>
+			<arg value="AJM"/>
+			<arg value="V4"/>
+			<arg value="P2"/>
+			<arg value="RD"/>
+			<arg value="S2"/>
+			<arg value="N9"/>
+			<arg value="PL"/>
+			<arg value="RR"/>
+			<arg value="VD"/>
+			<arg value="HT"/>
+			<arg value="ZH"/>
+			<arg value="BMG"/>
+			<arg value="AIG"/>
+			<arg value="AM8"/>
+			<arg value="AM9"/>
+			<arg value="9Y"/>
+			<arg value="AR9"/>
+			<arg value="ARA"/>
+			<arg value="AMS"/>
+			<arg value="AMT"/>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
 			</classpath>
 		</java>
 	</target>
@@ -887,15 +878,15 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
 			</classpath>
 		</java>
 	</target>
 
 	<target name="check-oro">
-<!--		<java classname="net.sourceforge.fenixedu.dataConsistency.CheckOverlappingRoomOccupations"-->
+		<!--		<java classname="net.sourceforge.fenixedu.dataConsistency.CheckOverlappingRoomOccupations"-->
 		<java classname="net.sourceforge.fenixedu.infrastructuralTier.MailSender"
 				fork="true"
 				failonerror="true"
@@ -903,9 +894,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
 			</classpath>
 		</java>
 	</target>
@@ -918,9 +909,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				>
 			<classpath>
 				<pathelement path="${build.home.webinf.classes}"/>
-                <fileset dir="${lib}">
-                    <include name="**/*.jar"/>
-                </fileset>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
 			</classpath>
 		</java>
 	</target>
