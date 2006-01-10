@@ -10,7 +10,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -94,19 +93,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    public DegreeCurricularPlan(Degree degree, String name, Double ectsCredits, CurricularStage curricularStage, GradeScale gradeScale, Person creator) {
+    public DegreeCurricularPlan(Degree degree, String name, Double ectsCredits, CurricularStage curricularStage, GradeScale gradeScale) {
         this(degree);
         commonFieldsChange(name, gradeScale);
         newStructureFieldsChange(ectsCredits, curricularStage);
         
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
         this.setDegreeModule(dcpRoot);
-
-        // create degree curricular plan management group and add creator
-        DegreeCurricularPlanMembersGroup managementGroup = new DegreeCurricularPlanMembersGroup(creator, this);
-        addCreatorToManagementGroup(creator, managementGroup);
     }
-
+    
     private void newStructureFieldsChange(Double ectsCredits, CurricularStage curricularStage) {
         if (ectsCredits == null) {
             throw new DomainException("degreeCurricularPlan.ectsCredits.not.null");
@@ -116,15 +111,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         this.setEctsCredits(ectsCredits);
         this.setCurricularStage(curricularStage);
-    }
-    
-    private void addCreatorToManagementGroup(Person creator, DegreeCurricularPlanMembersGroup managementGroup) {
-        if (creator.getHookedGroups() != null) {
-            PersonGroup personGroup = creator.getHookedGroups().get(0);
-            personGroup.addAggregators(managementGroup);
-        } else {
-            new PersonGroup(creator, creator, managementGroup);
-        }
     }
     
     public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
@@ -148,10 +134,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void delete() {
         if (getCanBeDeleted()) {
             ((CourseGroup)getDegreeModule()).delete();
-            removeDegree();
-            if (hasCurricularPlanMembersGroup()) {
-                getCurricularPlanMembersGroup().delete();
-            }
+            removeDegree();            
             deleteDomainObject();
         } else
             throw new DomainException("error.degree.curricular.plan.cant.delete");
