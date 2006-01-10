@@ -313,9 +313,7 @@ else
 			</logic:equal>	        
 			</tr>
 		</table>
-	   
-	    
-
+	  
 		<table class="ppdetails" id="<%= pageContext.findAttribute("aa").toString() %>" style="display:none">
 		<logic:present  name="personalInfo" property="infoEmployee" >
 			<!-- Local de Trabalho -->                    
@@ -344,12 +342,14 @@ else
 		</logic:present>
 		
 		<logic:present  name="personalInfo" property="infoTeacher" >
+			<logic:present  name="personalInfo" property="infoTeacher.infoCategory" >
 			<tr>
 				<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
 				<bean:define id="categoryCode" name="personalInfo" property="infoTeacher.infoCategory.code"/>
 				<bean:define id="categoryName" name="personalInfo" property="infoTeacher.infoCategory.longName"/>
 				<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
 			</tr>
+			</logic:present>
 		</logic:present>
 		<!-- WebPage -->
 		<logic:equal name="personalInfo" property="availableWebSite" value="true">        
