@@ -43,27 +43,40 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeCourseGroup() throws IOException {
-        if (((CourseGroup)this.degreeModule).getNewDegreeCurricularPlan() == null) {
+        if (!this.degreeModule.isRoot()) {
             // this is not the root course group
             encodeSelf();
         } else {
             // root course group
-            if (this.onlyStructure && this.toEdit) {
+            if (this.onlyStructure) {
+                if (this.toEdit) {
+                    writer.startElement("table", this);
+                    writer.writeAttribute("class", "style2", null);
+                    writer.writeAttribute("width", "60%", null);
+                    writer.startElement("tr", this);
+                    writer.startElement("th", this);
+                    writer.append("(");
+                    encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+                    .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
+                    writer.append(") ");
+                    writer.endElement("th");
+                    writer.endElement("tr");
+                
+                    encodeChildCurricularCourses();
+                    writer.endElement("table");
+                }
+            } else if (!((CourseGroup)this.degreeModule).hasAnyCourseGroupContexts()) {
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "style2", null);
-                writer.writeAttribute("width", "60%", null);
                 writer.startElement("tr", this);
-                writer.startElement("th", this);
-                writer.append("(");
-                encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
-                writer.append(") ");
-                writer.endElement("th");
+                writer.startElement("td", this);
+                writer.writeAttribute("align", "center", null);
+                writer.startElement("i", this);
+                writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "empty.curricularPlan"));
+                writer.endElement("i");
+                writer.endElement("td");
                 writer.endElement("tr");
-            
-                encodeChildCurricularCourses();
                 writer.endElement("table");
-            }                
+            }
         }
         encodeChildCourseGroups();
     }
