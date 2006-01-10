@@ -30,7 +30,6 @@
 	<br/>
 	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
 	<br/>
-	<h:outputText value="#{bolonhaBundle['area']}:" style="font-weight: bold"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourseGroupUnit.parentUnits}" var="scientificAreaUnit">
 		<h:outputText value="#{bolonhaBundle['area']}: " style="font-weight: bold"/>
 		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourseGroupUnit.name}<br/>" escape="false"/>
