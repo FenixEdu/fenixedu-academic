@@ -53,7 +53,7 @@
 				<h:message styleClass="error" for="nameEn" />
 			</h:panelGroup>
 			
-			<h:outputText value="#{bolonhaBundle['acronym']} (en): "/>
+			<h:outputText value="#{bolonhaBundle['acronym']}: "/>
 			<h:panelGroup>
 				<h:inputText id="acronym" required="true" maxlength="40" size="10" value="#{CompetenceCourseManagement.acronym}"/>
 				<h:message styleClass="error" for="acronym" />

@@ -44,10 +44,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     // Competence-Course-Additional-Data
     private String objectives;
     private String program;
-    private String evaluationMethod;
     private String objectivesEn;
-    private String programEn;
-    private String evaluationMethodEn;    
+    private String programEn;        
     private String stage;
     
     public String getAction() {
@@ -296,18 +294,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public void setProgram(String program) {
         this.program = program;
     }
-
-    public String getEvaluationMethod() throws FenixFilterException, FenixServiceException {
-        if (evaluationMethod == null && getCompetenceCourse() != null) {
-            evaluationMethod = getCompetenceCourse().getEvaluationMethod();
-        }
-        return evaluationMethod;
-    }
-
-    public void setEvaluationMethod(String evaluationMethod) {
-        this.evaluationMethod = evaluationMethod;
-    }
-
+    
     public String getObjectivesEn() throws FenixFilterException, FenixServiceException {
         if (objectivesEn == null && getCompetenceCourse() != null) {
             objectivesEn = getCompetenceCourse().getObjectivesEn();
@@ -328,17 +315,6 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public void setProgramEn(String programEn) {
         this.programEn = programEn;
-    }
-
-    public String getEvaluationMethodEn() throws FenixFilterException, FenixServiceException {
-        if (evaluationMethodEn == null && getCompetenceCourse() != null) {
-            evaluationMethodEn = getCompetenceCourse().getEvaluationMethodEn();
-        }
-        return evaluationMethodEn;
-    }
-
-    public void setEvaluationMethodEn(String evaluationMethodEn) {
-        this.evaluationMethodEn = evaluationMethodEn;
     }
     
     public String getStage() throws FenixFilterException, FenixServiceException {
@@ -448,7 +424,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private void setCompetenceCourseAdditionalInformation() throws FenixFilterException, FenixServiceException {
         final Object args[] = { getCompetenceCourseID(), getObjectives(), getProgram(),
-                getEvaluationMethod(), getObjectivesEn(), getProgramEn(), getEvaluationMethodEn() };
+                "", getObjectivesEn(), getProgramEn(), "" };
         ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
     }
     

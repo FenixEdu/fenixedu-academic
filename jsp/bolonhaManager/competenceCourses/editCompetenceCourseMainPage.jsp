@@ -90,12 +90,6 @@
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 	</h:outputLink>
 	<br/><br/>
-	<h:outputText value="#{bolonhaBundle['evaluationMethod']}: <br/>" style="font-weight: bold" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}<br/>" escape="false"/>
-	<h:outputLink value="setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.idInternal}&action=edit#evaluationMethod">
-		<h:outputText value="#{bolonhaBundle['edit']}"/>
-	</h:outputLink>
-	<br/><br/>
 	<h:outputText value="#{bolonhaBundle['english']}: <br/>" style="font-style: italic" escape="false"/>
 	<h:outputText value="#{bolonhaBundle['objectivesEn']}: <br/>" style="font-weight: bold" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}<br/>" escape="false"/>
@@ -106,12 +100,6 @@
 	<h:outputText value="#{bolonhaBundle['programEn']}: <br/>" style="font-weight: bold" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.programEn}<br/>" escape="false"/>
 	<h:outputLink value="setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.idInternal}&action=edit#programEn">
-		<h:outputText value="#{bolonhaBundle['edit']}"/>
-	</h:outputLink>
-	<br/><br/>
-	<h:outputText value="#{bolonhaBundle['evaluationMethodEn']}: <br/>" style="font-weight: bold" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}<br/>" escape="false"/>
-	<h:outputLink value="setCompetenceCourseAdditionalInformation.faces?competenceCourseID=#{CompetenceCourseManagement.competenceCourse.idInternal}&action=edit#evaluationMethodEn">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 	</h:outputLink>
 	<br/><br/><hr>

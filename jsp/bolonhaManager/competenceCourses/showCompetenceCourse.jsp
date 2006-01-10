@@ -89,9 +89,6 @@
 		
 		<h:outputText value="#{bolonhaBundle['program']}: "/>
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.program}"/>
-		
-		<h:outputText value="#{bolonhaBundle['evaluationMethod']}: "/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}"/>
 	</h:panelGrid>
 	<br/>
 	<h:outputText value="#{bolonhaBundle['english']}: "/>
@@ -100,10 +97,7 @@
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}"/>
 		
 		<h:outputText value="#{bolonhaBundle['programEn']}: "/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.programEn}"/>	
-		
-		<h:outputText value="#{bolonhaBundle['evaluationMethodEn']}: " />
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}" />
+		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.programEn}"/>
 	</h:panelGrid>
 	<br/><hr>
 	<h:form>

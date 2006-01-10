@@ -52,10 +52,7 @@
 			<h:inputTextarea id="generalObjectives" cols="80" rows="5" value="#{CompetenceCourseManagement.objectives}"/>
 			
 			<h:outputText value="<a name='program'>#{bolonhaBundle['program']}: </a>" escape="false"/>
-			<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>
-			
-			<h:outputText value="<a name='evaluationMethod'>#{bolonhaBundle['evaluationMethod']}: </a>" escape="false"/>
-			<h:inputTextarea id="evaluationMethod" cols="80" rows="5" value="#{CompetenceCourseManagement.evaluationMethod}"/>			
+			<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>			
 		</h:panelGrid>
 		<br/>
 		<h:outputText value="#{bolonhaBundle['english']}: " />
@@ -64,10 +61,7 @@
 			<h:inputTextarea id="generalObjectivesEn" cols="80" rows="5" value="#{CompetenceCourseManagement.objectivesEn}"/>
 			
 			<h:outputText value="<a name='programEn'>#{bolonhaBundle['programEn']}: </a>" escape="false"/>
-			<h:inputTextarea id="programEn" cols="80" rows="5" value="#{CompetenceCourseManagement.programEn}"/>
-			
-			<h:outputText value="<a name='evaluationMethodEn'>#{bolonhaBundle['evaluationMethodEn']}: </a>" escape="false"/>
-			<h:inputTextarea id="evaluationMethodEn" cols="80" rows="5" value="#{CompetenceCourseManagement.evaluationMethodEn}"/>		
+			<h:inputTextarea id="programEn" cols="80" rows="5" value="#{CompetenceCourseManagement.programEn}"/>			
 		</h:panelGrid>
 		<br/><hr>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
