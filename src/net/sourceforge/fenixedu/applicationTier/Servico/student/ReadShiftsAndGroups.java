@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteShiftsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;

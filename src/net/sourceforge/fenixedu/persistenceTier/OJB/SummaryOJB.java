@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

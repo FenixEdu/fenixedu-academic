@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWebSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
-import net.sourceforge.fenixedu.domain.WebSite;
-import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;

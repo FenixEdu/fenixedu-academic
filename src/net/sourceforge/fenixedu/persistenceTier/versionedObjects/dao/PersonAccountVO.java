@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonAccount;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

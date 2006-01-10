@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.dataTransferObject.grant.owner;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

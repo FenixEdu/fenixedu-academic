@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.model.MultipleMetaObject;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 

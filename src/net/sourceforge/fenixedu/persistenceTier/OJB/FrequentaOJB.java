@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;

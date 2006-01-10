@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.inquiries;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;

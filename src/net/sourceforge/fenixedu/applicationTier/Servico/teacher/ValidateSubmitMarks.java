@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEvaluation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSubmitMarks;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Evaluation;

@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.renderers.components;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.jsp.PageContext; 
+import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 

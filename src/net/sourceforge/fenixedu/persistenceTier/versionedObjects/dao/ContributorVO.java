@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Contributor;
-import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentContributor;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

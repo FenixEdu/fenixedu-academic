@@ -8,12 +8,10 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContr
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;

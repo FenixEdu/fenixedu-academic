@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.publication.Authorship;
-import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentAuthorship;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 

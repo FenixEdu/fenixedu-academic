@@ -19,7 +19,6 @@ import java.util.Map.Entry;
 
 import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.component.html.HtmlInputText;
-import javax.faces.component.html.HtmlSelectOneRadio;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;

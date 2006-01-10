@@ -11,9 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoE
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.CostCenter;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

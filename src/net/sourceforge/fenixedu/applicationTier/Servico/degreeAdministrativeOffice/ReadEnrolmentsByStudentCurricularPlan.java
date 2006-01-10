@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithExecutionPer
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

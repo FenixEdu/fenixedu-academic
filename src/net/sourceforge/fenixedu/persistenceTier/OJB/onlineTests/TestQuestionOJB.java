@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.onlineTests;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;

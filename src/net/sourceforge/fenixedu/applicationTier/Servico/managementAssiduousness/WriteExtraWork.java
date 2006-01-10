@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoE
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

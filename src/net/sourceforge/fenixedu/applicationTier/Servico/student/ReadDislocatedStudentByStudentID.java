@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoDislocatedStudent;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

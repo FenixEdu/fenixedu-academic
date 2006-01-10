@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.WebSite;
-import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 

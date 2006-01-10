@@ -15,12 +15,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.Require
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.GuideEntry;
-import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;

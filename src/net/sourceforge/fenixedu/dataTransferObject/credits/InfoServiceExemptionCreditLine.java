@@ -4,8 +4,8 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 /**
  * @author jpvl

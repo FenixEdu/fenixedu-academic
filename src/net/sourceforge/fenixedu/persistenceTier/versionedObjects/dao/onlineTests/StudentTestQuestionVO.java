@@ -13,8 +13,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;

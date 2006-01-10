@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationFormat;
 import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
-import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

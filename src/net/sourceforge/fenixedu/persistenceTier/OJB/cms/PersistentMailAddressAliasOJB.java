@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.cms;
 
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
-import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailAddressAlias;

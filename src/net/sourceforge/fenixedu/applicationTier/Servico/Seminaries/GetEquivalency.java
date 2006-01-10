@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoEquivalency;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
-import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

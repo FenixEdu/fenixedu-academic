@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.GuideSituation;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.util.State;
 
 /**

@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

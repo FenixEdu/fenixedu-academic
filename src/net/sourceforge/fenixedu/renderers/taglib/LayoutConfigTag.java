@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.renderers.taglib;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import net.sourceforge.fenixedu.renderers.taglib.BaseRenderObjectTag;
-
 public class LayoutConfigTag extends TagSupport {
 
 	private String name = null;

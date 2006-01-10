@@ -4,12 +4,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DislocatedStudent;
 import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoD
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorshipWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;

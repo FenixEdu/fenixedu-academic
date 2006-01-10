@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.ScientificArea;
-import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

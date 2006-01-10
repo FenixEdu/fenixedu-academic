@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;

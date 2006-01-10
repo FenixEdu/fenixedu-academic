@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
-import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

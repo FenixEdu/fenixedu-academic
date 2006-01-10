@@ -8,16 +8,11 @@ import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.Mark;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

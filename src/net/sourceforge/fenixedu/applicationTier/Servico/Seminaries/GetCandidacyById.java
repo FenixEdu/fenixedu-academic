@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyWithCaseStudyChoices;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatGrantOwner;
 import net.sourceforge.fenixedu.dataTransferObject.grant.stat.InfoStatResultGrantOwner;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

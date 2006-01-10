@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.st
 import net.sourceforge.fenixedu.dataTransferObject.InfoFinalResult;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;

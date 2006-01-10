@@ -1,7 +1,9 @@
 package pt.utl.ist.analysis;
 
 import java.util.List;
-import dml.*;
+
+import dml.DmlCompiler;
+import dml.DomainModel;
 
 public class DomainModelInfo {
     private DomainModel domainModel = null;

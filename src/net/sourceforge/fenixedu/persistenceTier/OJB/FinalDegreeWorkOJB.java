@@ -8,9 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

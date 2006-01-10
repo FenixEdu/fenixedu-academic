@@ -9,8 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
-import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;

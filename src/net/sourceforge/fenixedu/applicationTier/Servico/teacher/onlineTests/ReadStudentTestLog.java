@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestLog;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestLogWithStudentAndDistributedTest;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

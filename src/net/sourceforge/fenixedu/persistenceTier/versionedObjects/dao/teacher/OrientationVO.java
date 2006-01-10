@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher;
 
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;

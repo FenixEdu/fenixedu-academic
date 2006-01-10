@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EquivalentEnrolmentForEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;

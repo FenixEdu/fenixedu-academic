@@ -11,8 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;

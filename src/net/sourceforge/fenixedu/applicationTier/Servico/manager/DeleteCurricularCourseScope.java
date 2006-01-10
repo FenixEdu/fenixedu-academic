@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
-import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;

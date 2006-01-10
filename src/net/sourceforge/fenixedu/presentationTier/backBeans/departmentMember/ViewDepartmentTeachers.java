@@ -20,15 +20,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
+import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 

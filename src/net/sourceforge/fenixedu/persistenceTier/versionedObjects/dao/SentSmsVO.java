@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.sms.SentSms;
-import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

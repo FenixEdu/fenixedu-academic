@@ -5,13 +5,10 @@ import java.util.List;
 
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.collections.Predicate;
-
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
-import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 public class HtmlForm extends HtmlComponent implements Controllable {
 

@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

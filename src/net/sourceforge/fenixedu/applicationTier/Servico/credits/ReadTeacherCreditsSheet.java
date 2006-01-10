@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.InfoShiftProf
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.DetailedProfessorship;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InfoTeacherInstitutionWorkTime;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;

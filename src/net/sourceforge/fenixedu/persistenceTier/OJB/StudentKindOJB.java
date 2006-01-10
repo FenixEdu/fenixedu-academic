@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import net.sourceforge.fenixedu.domain.StudentKind;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
 import net.sourceforge.fenixedu.util.StudentType;

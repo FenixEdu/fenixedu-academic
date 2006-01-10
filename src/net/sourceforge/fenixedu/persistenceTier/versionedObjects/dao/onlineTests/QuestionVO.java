@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.Question;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

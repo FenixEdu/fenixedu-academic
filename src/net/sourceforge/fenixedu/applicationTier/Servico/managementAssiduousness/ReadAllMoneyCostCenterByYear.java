@@ -8,10 +8,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoMoneyCostCenter;
 import net.sourceforge.fenixedu.domain.CostCenter;
-import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;

@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;

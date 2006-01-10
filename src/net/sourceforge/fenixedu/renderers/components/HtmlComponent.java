@@ -7,9 +7,9 @@ import java.util.List;
 
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.collections.Predicate;
-
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+
+import org.apache.commons.collections.Predicate;
 
 public abstract class HtmlComponent implements Serializable {
 

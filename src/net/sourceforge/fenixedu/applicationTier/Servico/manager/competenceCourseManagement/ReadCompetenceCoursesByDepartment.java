@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;

@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.credits;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
-import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

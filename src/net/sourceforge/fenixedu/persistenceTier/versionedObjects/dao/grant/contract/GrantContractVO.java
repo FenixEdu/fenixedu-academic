@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;

@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentAndGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentInformation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsAndGroups;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroup;
-import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;

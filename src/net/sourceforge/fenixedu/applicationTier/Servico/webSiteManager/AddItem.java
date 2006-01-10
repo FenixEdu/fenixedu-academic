@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
-import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;

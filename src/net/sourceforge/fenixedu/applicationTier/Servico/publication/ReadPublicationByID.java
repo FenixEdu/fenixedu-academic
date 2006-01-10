@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
 import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

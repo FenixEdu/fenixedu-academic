@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroAlte
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ServicoSeguroLerPessoa;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.presentationTier.formbeans.person.DadosForm;
 import net.sourceforge.fenixedu.util.EMail;
 import net.sourceforge.fenixedu.util.RandomPassword;

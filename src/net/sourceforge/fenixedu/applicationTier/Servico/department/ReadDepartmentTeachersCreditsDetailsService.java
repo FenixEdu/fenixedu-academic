@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.credits.TeacherCreditsDetailsDTO;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;

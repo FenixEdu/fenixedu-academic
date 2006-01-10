@@ -14,7 +14,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;

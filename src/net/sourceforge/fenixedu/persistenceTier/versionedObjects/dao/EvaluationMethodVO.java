@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

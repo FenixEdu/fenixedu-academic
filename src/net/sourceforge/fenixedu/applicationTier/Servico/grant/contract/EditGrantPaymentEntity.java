@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;

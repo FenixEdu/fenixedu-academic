@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics;
 
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
-import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 

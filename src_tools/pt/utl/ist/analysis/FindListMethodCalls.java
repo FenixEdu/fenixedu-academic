@@ -1,7 +1,11 @@
 package pt.utl.ist.analysis;
 
-import org.objectweb.asm.*;
-import org.objectweb.asm.commons.*;
+import org.objectweb.asm.ClassAdapter;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodAdapter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.commons.EmptyVisitor;
 
 public class FindListMethodCalls extends ClassFilesVisitor implements Opcodes {
 

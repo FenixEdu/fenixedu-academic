@@ -2,9 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.renderers.taglib;
 
 import javax.servlet.jsp.JspException;
 
-import dml.DomainClass;
-
 import net.sourceforge.fenixedu._development.MetadataManager;
+import dml.DomainClass;
 
 public class FenixCreateObjectTag extends FenixEditObjectTag {
 

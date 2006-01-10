@@ -10,7 +10,6 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

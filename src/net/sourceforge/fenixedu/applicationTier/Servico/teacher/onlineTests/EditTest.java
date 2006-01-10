@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
-import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;

@@ -16,8 +16,8 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.InfoSupportLesson;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;

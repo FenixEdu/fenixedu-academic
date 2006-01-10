@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

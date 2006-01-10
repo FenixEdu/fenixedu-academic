@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWork;
 

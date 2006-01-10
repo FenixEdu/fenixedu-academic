@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

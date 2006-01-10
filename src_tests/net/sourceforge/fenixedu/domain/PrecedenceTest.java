@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.domain.precedences.Restriction;
-import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
-import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByNumberOfDoneCurricularCourses;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionDoneOrHasEverBeenEnrolledInCurricularCourse;

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTierJDBC;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Person;
 
 /**
  * @author Ivo Brandão

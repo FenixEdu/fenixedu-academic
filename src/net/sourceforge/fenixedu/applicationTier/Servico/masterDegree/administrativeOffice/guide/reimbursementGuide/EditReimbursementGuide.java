@@ -29,8 +29,6 @@ import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideSituation;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

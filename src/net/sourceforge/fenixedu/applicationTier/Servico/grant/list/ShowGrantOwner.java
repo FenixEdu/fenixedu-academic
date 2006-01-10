@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
-import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

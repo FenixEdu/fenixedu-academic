@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
-import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 

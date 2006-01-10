@@ -9,9 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
-import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

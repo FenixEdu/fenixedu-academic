@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

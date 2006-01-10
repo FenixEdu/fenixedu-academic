@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
-import net.sourceforge.fenixedu.domain.student.PersonalDataUseInquiryAnswers;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
 

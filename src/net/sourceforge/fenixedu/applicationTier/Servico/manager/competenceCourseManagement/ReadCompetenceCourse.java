@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCompetenceCourseWithCurricularCourses;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

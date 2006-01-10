@@ -12,7 +12,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.Student;

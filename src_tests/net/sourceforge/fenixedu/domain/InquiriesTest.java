@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
-import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.space.Room;
 
 import org.apache.commons.lang.NullArgumentException;

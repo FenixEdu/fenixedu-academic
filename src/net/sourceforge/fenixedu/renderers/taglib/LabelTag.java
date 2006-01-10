@@ -1,18 +1,16 @@
 package net.sourceforge.fenixedu.renderers.taglib;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import net.sourceforge.fenixedu.renderers.components.Constants;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 public class LabelTag extends BodyTagSupport {
 

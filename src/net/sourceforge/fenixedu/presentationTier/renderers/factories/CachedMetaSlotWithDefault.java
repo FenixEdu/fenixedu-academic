@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 
 import java.beans.PropertyDescriptor;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 public class CachedMetaSlotWithDefault extends CachedMetaSlot {
 

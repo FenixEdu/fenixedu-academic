@@ -6,9 +6,6 @@ import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class StandardObjectRenderer extends OutputRenderer {
     private String caption;

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSen
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

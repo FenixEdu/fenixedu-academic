@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.teacher;
 
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
-import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;

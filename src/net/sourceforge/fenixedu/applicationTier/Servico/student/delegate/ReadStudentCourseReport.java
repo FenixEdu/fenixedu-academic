@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteEvaluationStat
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSiteStudentCourseReport;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoStudentCourseReport;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;

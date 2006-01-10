@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.teacher;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
-import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

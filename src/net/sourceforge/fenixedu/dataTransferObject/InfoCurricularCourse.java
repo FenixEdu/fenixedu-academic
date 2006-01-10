@@ -9,8 +9,8 @@ package net.sourceforge.fenixedu.dataTransferObject;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.util.CurricularCourseExecutionScope;
 

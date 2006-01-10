@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
-import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;

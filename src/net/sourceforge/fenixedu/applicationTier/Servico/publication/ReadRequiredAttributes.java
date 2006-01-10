@@ -10,7 +10,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.domain.publication.Attribute;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
-import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

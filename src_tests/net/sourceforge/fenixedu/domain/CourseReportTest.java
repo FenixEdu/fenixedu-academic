@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 
 public class CourseReportTest extends DomainTestBase {
 

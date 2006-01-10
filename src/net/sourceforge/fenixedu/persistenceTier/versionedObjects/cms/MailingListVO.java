@@ -14,7 +14,6 @@ import javax.mail.internet.InternetAddress;
 
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
-import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

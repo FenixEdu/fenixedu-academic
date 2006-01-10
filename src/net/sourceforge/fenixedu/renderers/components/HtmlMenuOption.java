@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.renderers.components;
 
-import java.io.IOException;
-
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;

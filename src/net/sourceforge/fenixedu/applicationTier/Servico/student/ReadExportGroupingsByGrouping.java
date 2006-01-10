@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
-import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

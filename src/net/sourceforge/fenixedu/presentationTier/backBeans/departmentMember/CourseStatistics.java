@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.department.CompetenceCourseSt
 import net.sourceforge.fenixedu.dataTransferObject.department.DegreeCourseStatisticsDTO;
 import net.sourceforge.fenixedu.dataTransferObject.department.ExecutionCourseStatisticsDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;

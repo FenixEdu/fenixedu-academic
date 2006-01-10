@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.Guide;
-import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

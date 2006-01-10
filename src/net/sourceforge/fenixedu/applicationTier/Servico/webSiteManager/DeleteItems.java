@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
-import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

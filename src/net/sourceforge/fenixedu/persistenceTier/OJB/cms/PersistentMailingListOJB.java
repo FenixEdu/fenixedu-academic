@@ -13,7 +13,6 @@ import javax.mail.Address;
 import javax.mail.internet.InternetAddress;
 
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
-import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentMailingList;

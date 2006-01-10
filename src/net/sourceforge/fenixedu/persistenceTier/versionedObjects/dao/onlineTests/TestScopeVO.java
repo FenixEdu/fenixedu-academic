@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.onlineTest
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
-import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestScope;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

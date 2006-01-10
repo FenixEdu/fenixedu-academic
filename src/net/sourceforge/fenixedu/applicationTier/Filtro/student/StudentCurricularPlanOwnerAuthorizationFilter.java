@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

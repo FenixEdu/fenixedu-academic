@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;

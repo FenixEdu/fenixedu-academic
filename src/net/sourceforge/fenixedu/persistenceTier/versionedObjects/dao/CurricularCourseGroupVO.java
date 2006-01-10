@@ -4,13 +4,12 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
-import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.domain.OptionalCurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.ScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

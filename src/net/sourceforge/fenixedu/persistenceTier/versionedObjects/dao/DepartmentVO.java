@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 

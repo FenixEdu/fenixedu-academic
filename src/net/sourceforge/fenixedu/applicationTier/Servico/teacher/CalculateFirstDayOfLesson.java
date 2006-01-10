@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

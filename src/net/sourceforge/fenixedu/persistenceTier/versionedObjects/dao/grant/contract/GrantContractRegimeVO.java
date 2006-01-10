@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.cont
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

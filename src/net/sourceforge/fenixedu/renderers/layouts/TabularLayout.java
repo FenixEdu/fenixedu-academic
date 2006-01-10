@@ -1,12 +1,12 @@
 package net.sourceforge.fenixedu.renderers.layouts;
 
-import org.apache.log4j.Logger;
-
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableHeader;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
+
+import org.apache.log4j.Logger;
 
 public abstract class TabularLayout extends Layout {
     private static Logger logger = Logger.getLogger(TabularLayout.class);

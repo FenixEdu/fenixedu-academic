@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.cms.Cms;
-import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.cms.IPersistentCMS;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

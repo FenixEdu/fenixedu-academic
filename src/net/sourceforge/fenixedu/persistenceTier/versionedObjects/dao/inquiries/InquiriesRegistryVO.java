@@ -8,8 +8,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.inquiries;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

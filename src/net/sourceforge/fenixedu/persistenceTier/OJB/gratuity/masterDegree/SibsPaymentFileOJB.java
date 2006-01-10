@@ -6,7 +6,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.gratuity.masterDegree;
 
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFile;

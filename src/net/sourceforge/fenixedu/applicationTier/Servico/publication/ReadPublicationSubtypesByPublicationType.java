@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSu
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSubtypeWithPublicationType;
 import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
-import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

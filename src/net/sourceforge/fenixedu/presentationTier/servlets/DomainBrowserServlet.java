@@ -54,7 +54,6 @@ import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
-import dml.DmlCompiler;
 import dml.DomainClass;
 import dml.DomainEntity;
 import dml.DomainModel;

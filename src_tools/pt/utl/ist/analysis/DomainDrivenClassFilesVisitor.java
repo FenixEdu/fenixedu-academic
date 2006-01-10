@@ -1,9 +1,11 @@
 package pt.utl.ist.analysis;
 
-import org.objectweb.asm.*;
-import org.objectweb.asm.commons.*;
-
 import java.util.ArrayList;
+
+import org.objectweb.asm.ClassAdapter;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.commons.EmptyVisitor;
 
 public class DomainDrivenClassFilesVisitor extends ClassFilesVisitor {
 

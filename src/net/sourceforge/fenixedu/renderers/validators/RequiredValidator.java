@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.renderers.validators;
 
 import net.sourceforge.fenixedu.renderers.components.Validatable;
-import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class RequiredValidator extends HtmlValidator {
 

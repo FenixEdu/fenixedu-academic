@@ -5,8 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.Advisory;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

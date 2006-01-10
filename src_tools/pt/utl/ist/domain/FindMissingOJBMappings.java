@@ -12,7 +12,12 @@ import org.apache.ojb.broker.metadata.ClassDescriptor;
 import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.broker.metadata.MetadataManager;
 
-import dml.*;
+import dml.DmlCompiler;
+import dml.DomainClass;
+import dml.DomainEntity;
+import dml.DomainModel;
+import dml.Role;
+import dml.Slot;
 
 public class FindMissingOJBMappings {
 

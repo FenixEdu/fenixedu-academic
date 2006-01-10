@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudy;
-import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;

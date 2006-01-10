@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
 import net.sourceforge.fenixedu.domain.GuideSituation;
-import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

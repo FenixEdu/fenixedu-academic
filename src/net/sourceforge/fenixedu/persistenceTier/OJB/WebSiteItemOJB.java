@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
-import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 

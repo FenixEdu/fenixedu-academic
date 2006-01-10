@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits.otherTypeCreditL
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.credits.AbstractTeacherDepartmentAuthorization;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
-import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;

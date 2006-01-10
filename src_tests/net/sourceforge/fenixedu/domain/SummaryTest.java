@@ -10,7 +10,6 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.space.Room;
 
 public class SummaryTest extends DomainTestBase {
 

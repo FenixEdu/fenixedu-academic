@@ -12,9 +12,9 @@ import javax.faces.context.ResponseWriter;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan";

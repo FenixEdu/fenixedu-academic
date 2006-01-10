@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularYear;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

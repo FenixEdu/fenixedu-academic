@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCourseManagement;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

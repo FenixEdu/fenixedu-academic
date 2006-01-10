@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import net.sourceforge.fenixedu.domain.GuiderType;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
+import net.sourceforge.fenixedu.domain.GuiderType;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.domain.Teacher;
 

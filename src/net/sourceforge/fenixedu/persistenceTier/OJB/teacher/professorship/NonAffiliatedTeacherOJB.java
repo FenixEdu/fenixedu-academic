@@ -8,7 +8,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;

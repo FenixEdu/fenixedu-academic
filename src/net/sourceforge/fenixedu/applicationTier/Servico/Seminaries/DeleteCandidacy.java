@@ -10,8 +10,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
-import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
-import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

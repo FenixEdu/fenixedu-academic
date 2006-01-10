@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternal
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalShiftInfo;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalStudentGroup;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.InfoExternalStudentInfo;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;

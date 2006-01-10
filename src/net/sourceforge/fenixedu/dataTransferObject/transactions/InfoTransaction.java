@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonAccount;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
+import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
-import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 
 /**

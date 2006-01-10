@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 
 public class BranchTest extends DomainTestBase {
 

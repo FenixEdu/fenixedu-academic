@@ -9,8 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;

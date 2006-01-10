@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoD
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoricWithInfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoSiteCourseHistoric;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionYear;

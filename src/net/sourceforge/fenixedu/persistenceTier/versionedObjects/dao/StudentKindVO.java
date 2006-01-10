@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.StudentKind;
-import net.sourceforge.fenixedu.domain.StudentKind;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

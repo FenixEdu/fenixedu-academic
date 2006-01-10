@@ -6,8 +6,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesTeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 

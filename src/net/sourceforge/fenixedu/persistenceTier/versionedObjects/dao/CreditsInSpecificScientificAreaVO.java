@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CreditsInScientificArea;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCreditsInSpecificScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

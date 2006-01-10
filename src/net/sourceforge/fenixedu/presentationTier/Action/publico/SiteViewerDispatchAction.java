@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSummaries;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteTimetable;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;

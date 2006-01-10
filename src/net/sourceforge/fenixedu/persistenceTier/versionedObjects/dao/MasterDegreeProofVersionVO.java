@@ -12,7 +12,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesis;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

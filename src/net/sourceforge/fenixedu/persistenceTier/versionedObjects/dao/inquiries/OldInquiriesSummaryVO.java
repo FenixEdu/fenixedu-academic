@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;

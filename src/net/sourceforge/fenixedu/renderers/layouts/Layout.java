@@ -3,10 +3,10 @@ package net.sourceforge.fenixedu.renderers.layouts;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
-
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 
 public abstract class Layout {
     private static Logger logger = Logger.getLogger(Layout.class);

@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;

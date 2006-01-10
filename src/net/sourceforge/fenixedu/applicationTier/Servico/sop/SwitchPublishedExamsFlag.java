@@ -11,7 +11,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;

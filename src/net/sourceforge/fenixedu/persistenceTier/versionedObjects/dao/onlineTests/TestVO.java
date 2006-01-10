@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
-import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

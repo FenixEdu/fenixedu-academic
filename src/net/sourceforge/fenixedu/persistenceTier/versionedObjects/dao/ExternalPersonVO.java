@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
 

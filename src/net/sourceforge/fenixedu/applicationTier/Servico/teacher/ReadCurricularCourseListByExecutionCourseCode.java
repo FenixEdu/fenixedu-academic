@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoD
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteAssociatedCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCommon;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;

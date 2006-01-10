@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoSiteTeacherInformation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.CareerType;
-import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;

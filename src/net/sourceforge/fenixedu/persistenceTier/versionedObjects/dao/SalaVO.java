@@ -14,12 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

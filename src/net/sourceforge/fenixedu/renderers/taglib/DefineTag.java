@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.renderers.taglib;
 
-import java.lang.reflect.InvocationTargetException;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import net.sourceforge.fenixedu.renderers.components.Constants;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 public class DefineTag extends TagSupport {
 

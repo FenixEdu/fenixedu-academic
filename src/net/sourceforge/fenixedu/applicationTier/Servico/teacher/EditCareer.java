@@ -10,11 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoProfessionalCaree
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoTeachingCareer;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

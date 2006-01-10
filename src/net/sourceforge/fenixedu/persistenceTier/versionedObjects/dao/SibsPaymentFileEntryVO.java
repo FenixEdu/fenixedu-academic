@@ -11,7 +11,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
-import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

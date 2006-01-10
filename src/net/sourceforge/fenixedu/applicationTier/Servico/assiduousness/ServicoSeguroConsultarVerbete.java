@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExecuteExc
 import net.sourceforge.fenixedu.constants.assiduousness.Constants;
 import net.sourceforge.fenixedu.domain.Funcionario;
 import net.sourceforge.fenixedu.domain.Horario;
-import net.sourceforge.fenixedu.domain.StatusAssiduidade;
 import net.sourceforge.fenixedu.domain.IStrategyHorarios;
 import net.sourceforge.fenixedu.domain.IStrategyJustificacoes;
 import net.sourceforge.fenixedu.domain.Justificacao;
 import net.sourceforge.fenixedu.domain.MarcacaoPonto;
 import net.sourceforge.fenixedu.domain.ParamJustificacao;
+import net.sourceforge.fenixedu.domain.StatusAssiduidade;
 import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
 import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;

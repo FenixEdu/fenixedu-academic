@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;

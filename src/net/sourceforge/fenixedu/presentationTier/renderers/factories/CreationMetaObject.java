@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import dml.DomainClass;
-
 import net.sourceforge.fenixedu._development.MetadataManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -17,6 +15,7 @@ import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.UserIdentity;
+import dml.DomainClass;
 
 public class CreationMetaObject implements MetaObject {
 

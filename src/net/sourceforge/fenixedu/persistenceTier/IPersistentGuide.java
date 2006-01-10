@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.persistenceTier;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Guide;
+import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 /**

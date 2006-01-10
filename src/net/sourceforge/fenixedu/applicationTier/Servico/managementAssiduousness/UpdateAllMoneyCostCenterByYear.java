@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoM
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

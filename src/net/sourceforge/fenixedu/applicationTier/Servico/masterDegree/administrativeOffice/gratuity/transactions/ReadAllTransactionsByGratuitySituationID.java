@@ -10,11 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
-import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;

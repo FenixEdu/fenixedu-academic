@@ -25,8 +25,6 @@ import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
-import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
-import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import relations.CmsContents;

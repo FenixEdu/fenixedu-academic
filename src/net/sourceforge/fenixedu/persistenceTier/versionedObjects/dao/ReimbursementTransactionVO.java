@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;

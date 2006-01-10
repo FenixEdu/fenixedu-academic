@@ -6,9 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainObject;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;

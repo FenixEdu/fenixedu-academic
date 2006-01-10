@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
-import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.framework.DomainObjectAut
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
-import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

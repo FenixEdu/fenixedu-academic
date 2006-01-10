@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Degree;

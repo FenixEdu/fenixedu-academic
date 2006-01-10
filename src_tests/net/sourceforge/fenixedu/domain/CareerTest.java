@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
-import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
-import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 
 /**
  * @author João Fialho & Rita Ferreira

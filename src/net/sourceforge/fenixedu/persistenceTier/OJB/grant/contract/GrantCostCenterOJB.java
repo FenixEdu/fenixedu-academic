@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB.grant.contract;
 
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
-import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;

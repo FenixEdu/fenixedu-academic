@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.renderers;
 
 import java.util.Iterator;
-import java.util.Properties;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlBlockContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;

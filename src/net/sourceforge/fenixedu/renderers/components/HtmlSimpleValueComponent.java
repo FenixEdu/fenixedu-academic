@@ -2,9 +2,9 @@ package net.sourceforge.fenixedu.renderers.components;
 
 import javax.servlet.jsp.PageContext;
 
-import org.apache.commons.beanutils.ConvertUtils;
-
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+
+import org.apache.commons.beanutils.ConvertUtils;
 
 public abstract class HtmlSimpleValueComponent extends HtmlFormComponent implements Validatable {
 

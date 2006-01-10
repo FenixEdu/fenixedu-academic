@@ -9,7 +9,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

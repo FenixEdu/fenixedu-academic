@@ -1,7 +1,6 @@
 package relations;
 
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;

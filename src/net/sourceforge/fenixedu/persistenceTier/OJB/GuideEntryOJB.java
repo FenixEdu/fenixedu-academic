@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.persistenceTier.OJB;
 
 import net.sourceforge.fenixedu.domain.DocumentType;
 import net.sourceforge.fenixedu.domain.GraduationType;
-import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

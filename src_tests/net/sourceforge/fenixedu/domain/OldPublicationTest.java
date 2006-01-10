@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOldPublication;
 import net.sourceforge.fenixedu.domain.teacher.OldPublication;
-import net.sourceforge.fenixedu.domain.teacher.OldPublication;
 import net.sourceforge.fenixedu.util.OldPublicationType;
 
 /**

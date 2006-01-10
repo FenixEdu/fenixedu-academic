@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoDistrict;
 import net.sourceforge.fenixedu.domain.District;
-import net.sourceforge.fenixedu.domain.District;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDistrict;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

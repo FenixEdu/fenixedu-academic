@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 
 public class NotNeedToEnrollInCurricularCourseTest extends DomainTestBase {
 

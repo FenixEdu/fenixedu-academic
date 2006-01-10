@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.space.Room;
-import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

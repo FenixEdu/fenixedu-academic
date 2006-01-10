@@ -12,11 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRe
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoWeeklyOcupation;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.Orientation;
-import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
-import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
-import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;

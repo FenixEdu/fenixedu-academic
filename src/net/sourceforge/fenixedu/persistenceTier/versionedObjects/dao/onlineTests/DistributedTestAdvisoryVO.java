@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;

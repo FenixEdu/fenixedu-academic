@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.managementAssiduousness;
 
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric;
-import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkHistoric;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkHistoric;
 

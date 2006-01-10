@@ -6,7 +6,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriodInCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriodInSchoolClasses;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses;

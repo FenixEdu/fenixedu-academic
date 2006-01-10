@@ -7,7 +7,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.gesdis;
 
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.PersistentObjectOJB;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;

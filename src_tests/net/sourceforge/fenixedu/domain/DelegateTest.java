@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.Delegate;
 
 public class DelegateTest extends DomainTestBase {
 

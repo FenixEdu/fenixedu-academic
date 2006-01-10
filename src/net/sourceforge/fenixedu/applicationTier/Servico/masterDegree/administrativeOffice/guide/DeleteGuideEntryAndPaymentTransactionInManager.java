@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
-import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
-import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
-import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

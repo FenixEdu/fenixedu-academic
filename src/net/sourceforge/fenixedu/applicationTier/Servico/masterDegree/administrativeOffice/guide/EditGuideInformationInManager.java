@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
-import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;

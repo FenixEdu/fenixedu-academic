@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
-import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

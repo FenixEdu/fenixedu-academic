@@ -4,11 +4,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 public class SimpleMetaSlot implements MetaSlot {
     

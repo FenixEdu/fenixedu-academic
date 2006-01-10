@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;

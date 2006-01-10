@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.OJB.transactions;
 
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
-import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.OJB.ObjectFenixOJB;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentPaymentTransaction;

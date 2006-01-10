@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Iterator;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.NotImplementedException;
+import net.sourceforge.fenixedu.domain.Person;
 public class GroupDifference extends GroupDifference_Base {
     
     public GroupDifference() {

@@ -6,10 +6,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.beanutils.PropertyUtils;
-
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
 import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 public class DefaultSchemaFactory extends SchemaFactory {
 

@@ -8,7 +8,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.StudentGroupAttendacyInformation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;

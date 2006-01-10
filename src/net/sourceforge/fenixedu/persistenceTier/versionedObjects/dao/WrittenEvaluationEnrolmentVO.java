@@ -8,10 +8,8 @@ package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsBase;
