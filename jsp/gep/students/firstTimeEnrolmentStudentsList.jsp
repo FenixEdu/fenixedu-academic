@@ -14,6 +14,13 @@
 
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
 	<f:loadBundle basename="ServidorApresentacao/GEPResources" var="bundleGEP"/>
+	
+	<h:form>
+		<h:outputText value="#{bundleGEP['label.gep.chooseExecutionYear']}: " />
+		<h:selectOneMenu value="#{listFirstTimeEnrolmentMasterDegreeStudents.selectedExecutionYear}" onchange="this.form.submit()">
+			<f:selectItems value="#{listFirstTimeEnrolmentMasterDegreeStudents.executionYears}" />	
+		</h:selectOneMenu>
+	</h:form>
 
 	<h:dataTable value="#{listFirstTimeEnrolmentMasterDegreeStudents.studentCurricularPlans}" var="studentCurricularPlan" columnClasses="solidBorderClass">
 		<h:column>
