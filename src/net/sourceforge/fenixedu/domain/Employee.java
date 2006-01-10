@@ -41,7 +41,7 @@ public class Employee extends Employee_Base {
         return null;
     }
 
-    public Contract getCurrentContract() {        
+    public Contract getCurrentContract() {
         List<Contract> contracts = this.getContracts();
         for (Contract contract : contracts) {
             if (contract.isActive(Calendar.getInstance().getTime()))
@@ -54,7 +54,7 @@ public class Employee extends Employee_Base {
         Date date = null;
         Contract contractToReturn = null;
         for (Contract contract : this.getContracts()) {
-            if (contract.isActive(Calendar.getInstance().getTime())) {                
+            if (contract.isActive(Calendar.getInstance().getTime())) {
                 return contract;
             } else if (date == null || date.before(contract.getEndDate())) {
                 date = contract.getEndDate();
@@ -65,21 +65,32 @@ public class Employee extends Employee_Base {
     }
 
     private Department getEmployeeUnitDepartment(Unit unit, boolean onlyActiveEmployees) {
-
-        List<Unit> allTopUnits = unit.getTopUnits();
-        if (!allTopUnits.isEmpty()) {
-            for (Unit topUnit : allTopUnits) {
-                if (topUnit.getType() != null
-                        && topUnit.getType().equals(UnitType.DEPARTMENT)
-                        && topUnit.getDepartment() != null
-                        && (!onlyActiveEmployees || topUnit.getDepartment()
-                                .getCurrentActiveWorkingEmployees().contains(this))) {
-                    return topUnit.getDepartment();
+        List<Unit> parentUnits = unit.getParentUnits();
+        if (!parentUnits.isEmpty()) {
+            for (Unit parentUnit : parentUnits) {
+                if (unitDepartment(parentUnit, onlyActiveEmployees)) {
+                    return parentUnit.getDepartment();
+                } else if (parentUnit.hasAnyParentUnits()) {
+                    Department department = getEmployeeUnitDepartment(parentUnit, onlyActiveEmployees);
+                    if (department != null) {
+                        return department;
+                    }
                 }
             }
-        } else if (unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)) {
+        } else if (unitDepartment(unit, onlyActiveEmployees)) {
             return unit.getDepartment();
         }
         return null;
     }
+    
+    private boolean unitDepartment(Unit unit, boolean onlyActiveEmployees){
+        if (unit.getType() != null
+                && unit.getType().equals(UnitType.DEPARTMENT)
+                && unit.getDepartment() != null
+                && (!onlyActiveEmployees || unit.getDepartment()
+                        .getCurrentActiveWorkingEmployees().contains(this))){
+            return true;
+        }
+        return false;
+    }    
 }
