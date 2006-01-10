@@ -2,9 +2,13 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.gep;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -26,11 +30,11 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
     }
 
     public Collection getStudentCurricularPlans() throws FenixFilterException, FenixServiceException {
-        
-        if(getSelectedExecutionYear() == null || getSelectedExecutionYear().length() == 0){
+
+        if (getSelectedExecutionYear() == null || getSelectedExecutionYear().length() == 0) {
             return new ArrayList();
         }
-        
+
         Object[] args = { getSelectedExecutionYear() };
         return (Collection) ServiceUtils.executeService(userView, "ListMasterDegreeStudents", args);
     }
@@ -39,6 +43,15 @@ public class ListFirstTimeEnrolmentMasterDegreeStudents extends FenixBackingBean
         List<SelectItem> result = new ArrayList<SelectItem>();
         List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
                 userView, "ReadNotClosedExecutionYears", null);
+
+        Collections.sort(executionYears, new Comparator<InfoExecutionYear>() {
+
+            public int compare(InfoExecutionYear o1, InfoExecutionYear o2) {
+                return o1.getYear().compareTo(o2.getYear()) * (-1);
+            }
+
+        });
+
         for (InfoExecutionYear executionYear : executionYears) {
             result.add(new SelectItem(executionYear.getYear(), executionYear.getYear()));
         }
