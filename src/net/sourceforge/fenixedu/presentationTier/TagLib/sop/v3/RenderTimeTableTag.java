@@ -64,6 +64,8 @@ public final class RenderTimeTableTag extends TagSupport {
 
     // Factor de divisão das celulas.
     // private final int COL_SPAN_FACTOR = 24;
+    
+    private boolean definedWidth = true;
 
     private ColorPicker colorPicker;
 
@@ -140,7 +142,7 @@ public final class RenderTimeTableTag extends TagSupport {
                 this.slotSizeMinutes, this.startTimeTableHour, this.endTimeTableHour, colorPicker);
 
         try {
-            writer.print(renderer.render(locale, pageContext));
+            writer.print(renderer.render(locale, pageContext, getDefinedWidth()));
             writer.print(legenda(infoLessonList, locale));
         } catch (IOException e) {
             throw new JspException(messages.getMessage("gerarHorario.io", e.toString()));
@@ -386,6 +388,14 @@ public final class RenderTimeTableTag extends TagSupport {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean getDefinedWidth() {
+        return definedWidth;
+    }
+
+    public void setDefinedWidth(boolean definedWidth) {
+        this.definedWidth = definedWidth;
     }
 
 }

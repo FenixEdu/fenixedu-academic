@@ -56,14 +56,18 @@ public class TimeTableRenderer {
         this.colorPicker = colorPicker;
     }
 
-    public StringBuffer render(Locale locale, PageContext pageContext) {
+    public StringBuffer render(Locale locale, PageContext pageContext, boolean definedWidth) {
         StringBuffer strBuffer = new StringBuffer("");
         HashMap slotLessons = new HashMap();
         TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
-        strBuffer.append("<table class='timetable' cellspacing='0' cellpadding='0' width='90%'>");
+        strBuffer.append("<table class='timetable' cellspacing='0' cellpadding='0'");
+        if (definedWidth) {
+            strBuffer.append("width='90%'");
+        }
+        strBuffer.append(">");
 
-        renderHeader(strBuffer, locale, pageContext);
+        renderHeader(strBuffer, locale, pageContext, definedWidth);
 
         for (int hourIndex = 0; hourIndex < timeTable.getNumberOfHours().intValue(); hourIndex++) {
             strBuffer.append("<tr>\r\n");
@@ -225,8 +229,9 @@ public class TimeTableRenderer {
      * 
      * @param strBuffer
      * @param pageContext
+     * @param definedWidth 
      */
-    private void renderHeader(StringBuffer strBuffer, Locale locale, PageContext pageContext) {
+    private void renderHeader(StringBuffer strBuffer, Locale locale, PageContext pageContext, boolean definedWidth) {
 
         // strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
         String hourDaysTitle;
@@ -243,9 +248,19 @@ public class TimeTableRenderer {
 
         int cellWidth = (100 - 15) / timeTable.getNumberOfDays().intValue();
         for (int index = 0; index < this.timeTable.getNumberOfDays().intValue(); index++) {
-            strBuffer.append("<th colspan='").append(timeTable.getDayColumn(index).getMaxColisionSize())
-                    .append("' width='").append(cellWidth).append("%'>\r\n").append(
-                            timeTable.getDayColumn(index).getLabel()).append("</th>\r\n");
+            strBuffer.append("<th colspan='");
+            strBuffer.append(timeTable.getDayColumn(index).getMaxColisionSize());
+            strBuffer.append("' ");
+
+            if (definedWidth) {
+                strBuffer.append("width='");
+                strBuffer.append(cellWidth);
+                strBuffer.append("%'");
+            }
+
+            strBuffer.append(">\r\n");
+            strBuffer.append(timeTable.getDayColumn(index).getLabel());
+            strBuffer.append("</th>\r\n");
         }
     }
 

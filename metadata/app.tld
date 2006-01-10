@@ -83,27 +83,21 @@
   <tag>
 
     <name>gerarHorario</name>
-    
     <tagclass>net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.RenderTimeTableTag</tagclass>
-    
     <bodycontent>empty</bodycontent>
-    
     <info>
-        
         Gera a apresentação de um horário.
-    
     </info>
-
     <attribute>
-
       <name>name</name>
-
       <required>true</required>
-
       <rtexprvalue>true</rtexprvalue>
-
     </attribute>
-
+    <attribute>
+    	<name>definedWidth</name>
+    	<required>false</required>
+    	<rtexprvalue>true</rtexprvalue>
+    </attribute>
     <attribute>
     	<name>type</name>
     	<required>false</required>
