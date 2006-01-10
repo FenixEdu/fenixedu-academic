@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curri
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -29,8 +30,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.collections.comparators.ReverseComparator;
+
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
+    private final ResourceBundle enumerationBundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
     private final ResourceBundle domainExceptionBundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
     private final Integer NO_SELECTION = 0;    
     
@@ -415,21 +421,28 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             addErrorMessage("error.gettingDepartmentUnits");
         }
         return result;
-    }
+    }    
 
+    private final ComparatorChain comparatorChain = new ComparatorChain(); {
+        comparatorChain.addComparator(new ReverseComparator(new BeanComparator("curricularStage")));
+        comparatorChain.addComparator(new BeanComparator("name"));    
+    }
     private List<SelectItem> readCompetenceCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(this.NO_SELECTION, messages.getString("choose")));
         final Unit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
+            final List<CompetenceCourse> competenceCourses = new ArrayList<CompetenceCourse>();
             for (final Unit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
-                for (final Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
-                    for (final CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                        if (!competenceCourse.getCurricularStage().equals(CurricularStage.DRAFT)) {
-                            result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName()));
-                        }                        
-                    }
+                for (final Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {                    
+                    competenceCourses.addAll(competenceCourseGroupUnit.getCompetenceCourses());                    
                 }
+            }
+            Collections.sort(competenceCourses, comparatorChain);
+            for (final CompetenceCourse competenceCourse : competenceCourses) {
+                result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("
+                        + enumerationBundle.getString(competenceCourse.getCurricularStage().getName())
+                        + ")", "", competenceCourse.getCurricularStage().equals(CurricularStage.DRAFT)));
             }
         }
         return result;
