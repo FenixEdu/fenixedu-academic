@@ -35,7 +35,7 @@ public class AuthenticationAction extends FenixAction {
             final IUserView userView = authenticateUser(form, request);
 
             if (userView.getRoles().isEmpty()) {
-                return authenticationFailedForward(mapping, request, "errors.noAuthorization");
+                return authenticationFailedForward(mapping, request, "errors.noAuthorization", "errors.noAuthorization");
             }
 
             final HttpSession session = request.getSession(false);
@@ -86,7 +86,7 @@ public class AuthenticationAction extends FenixAction {
                 }
             }
         } catch (ExcepcaoAutenticacao e) {
-            return authenticationFailedForward(mapping, request, "errors.invalidAuthentication");
+            return authenticationFailedForward(mapping, request, "invalidAuthentication", "errors.invalidAuthentication");
         }
     }
 
@@ -106,9 +106,9 @@ public class AuthenticationAction extends FenixAction {
     }
 
     private ActionForward authenticationFailedForward(final ActionMapping mapping,
-            final HttpServletRequest request, final String messageKey) {
+            final HttpServletRequest request, final String actionKey, final String messageKey) {
         final ActionErrors actionErrors = new ActionErrors();
-        actionErrors.add(messageKey, new ActionError(messageKey));
+        actionErrors.add(actionKey, new ActionError(messageKey));
         saveErrors(request, actionErrors);
         return mapping.getInputForward();
     }
