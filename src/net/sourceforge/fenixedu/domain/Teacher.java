@@ -133,8 +133,7 @@ public class Teacher extends Teacher_Base {
         TeacherLegalRegimen regimenToReturn = null;
         for (TeacherLegalRegimen regimen : this.getLegalRegimens()) {
             if (regimen.isActive(Calendar.getInstance().getTime())) {
-                regimenToReturn = regimen;
-                break;
+                return regimen;               
             } else if (date == null || date.before(regimen.getEndDate())) {
                 date = regimen.getEndDate();
                 regimenToReturn = regimen;

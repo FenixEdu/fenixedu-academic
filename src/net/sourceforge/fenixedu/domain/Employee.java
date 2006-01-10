@@ -54,9 +54,8 @@ public class Employee extends Employee_Base {
         Date date = null;
         Contract contractToReturn = null;
         for (Contract contract : this.getContracts()) {
-            if (contract.isActive(Calendar.getInstance().getTime())) {
-                contractToReturn = contract;
-                break;
+            if (contract.isActive(Calendar.getInstance().getTime())) {                
+                return contract;
             } else if (date == null || date.before(contract.getEndDate())) {
                 date = contract.getEndDate();
                 contractToReturn = contract;
