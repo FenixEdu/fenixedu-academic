@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -23,6 +24,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 /**
@@ -92,7 +95,7 @@ public class ManageRolesDA extends FenixDispatchAction {
      * Prepare information to show existing execution periods and working areas.
      */
     public ActionForward setPersonRoles(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws Exception {
+            HttpServletRequest request, HttpServletResponse response) {
 
         DynaActionForm rolesForm = (DynaActionForm) form;
         String[] roleOIDsAsStrings = (String[]) rolesForm.get("roleOIDs");
@@ -105,7 +108,14 @@ public class ManageRolesDA extends FenixDispatchAction {
 
         IUserView userView = SessionUtils.getUserView(request);
         Object[] args = { username, roleOIDs };
-        ServiceUtils.executeService(userView, "SetPersonRoles", args);
+        try {
+            ServiceUtils.executeService(userView, "SetPersonRoles", args);
+        } catch (Exception e) {
+            ActionMessages messages = new ActionMessages();
+            messages.add("invalidRole", new ActionMessage("error.invalidRole"));
+            saveMessages(request, messages);   
+            return mapping.getInputForward();
+        } 
 
         return mapping.findForward("Manage");
     }
