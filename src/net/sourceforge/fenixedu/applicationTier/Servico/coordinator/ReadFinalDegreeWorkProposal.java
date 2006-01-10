@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;

@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositio
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;

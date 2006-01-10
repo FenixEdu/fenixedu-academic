@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Factory;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -74,12 +73,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentGroupWithAttendsAn
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.domain.Announcement;
-import net.sourceforge.fenixedu.domain.BibliographicReference;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -101,10 +94,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.Item;
-import net.sourceforge.fenixedu.domain.Section;
-import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
@@ -123,7 +112,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 
 /**
  * @author Fernanda Quitério

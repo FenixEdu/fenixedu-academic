@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteBasicCurricularCourse
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteCurricularCourses;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteDegreeCurricularPlans;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteSCDegrees;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
