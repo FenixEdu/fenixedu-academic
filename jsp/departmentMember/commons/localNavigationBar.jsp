@@ -4,6 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>	
 
+
 <!-- Import new CSS for this section: #navlateral  -->
 <style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
 
@@ -18,7 +19,14 @@
 			<html:link page="/courseStatistics/viewCompetenceCourses.faces">
 				<bean:message key="link.departmentCourses"/>
 			</html:link>
-		</li>
+		</li>	
+		<logic:equal scope="session" name='<%=SessionConstants.U_VIEW%>' property="person.username" value="D2023">
+		<li>
+			<html:link page="/expectationManagement/viewPersonalExpectation.faces">
+				<bean:message key="link.personalExpectationsManagement"/>
+			</html:link>
+		</li>		
+		</logic:equal>
 		<li>
 			<html:link page="/viewTeacherService/viewTeacherService.faces">
 				<bean:message key="link.teacherService"/>
