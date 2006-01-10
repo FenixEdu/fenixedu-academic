@@ -7,15 +7,12 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.Category;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 
 
 public class ProfessorshipTest extends DomainTestBase {
 
     ExecutionCourse executionCourse;
     Teacher teacher,teacher2;
-    Category category;
     Professorship professorship, professorship2;
     Summary summary;
     ShiftProfessorship shiftProfessorship;
@@ -24,15 +21,11 @@ public class ProfessorshipTest extends DomainTestBase {
     protected void setUp() throws Exception {
         super.setUp();
         
-        category = new Category();
-        category.setIdInternal(0);
-        
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
         
         teacher = new Teacher();
         teacher.setIdInternal(0);
-        teacher.setCategory(category);
         teacher.getCategory().setCanBeExecutionCourseResponsible(true);
         
         teacher2 = new Teacher();

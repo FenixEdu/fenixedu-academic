@@ -13,9 +13,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
-import net.sourceforge.fenixedu.domain.publication.Publication;
-import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.util.PublicationArea;
 
@@ -376,7 +373,6 @@ public class TeacherTest extends DomainTestBase {
         
         teacher3 = new Teacher();
         teacher3.setIdInternal(0);
-        teacher3.setCategory(category);      
         
         executionCourse = new ExecutionCourse();
         executionCourse.setIdInternal(0);
