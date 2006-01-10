@@ -747,8 +747,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
         Object args[] = { objectCode, teacherCode };
         try {
             ServiceManagerServiceFactory.executeService(userView, "DeleteTeacher", args);
-        } catch (notAuthorizedServiceDeleteException ee) {
-            throw new notAuthorizedActionDeleteException("error.invalidTeacherRemoval");
+        } catch (NotAuthorizedFilterException e) {
+            final ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error.invalidTeacherRemoval", new ActionError("error.invalidTeacherRemoval"));
+            saveErrors(request, actionErrors);
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);
         }

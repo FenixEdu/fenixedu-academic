@@ -956,10 +956,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.teacher.TeacherAdministrationViewerDispatchAction" 
             className="net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping">
             <set-property property="componentClassName" value="net.sourceforge.fenixedu.dataTransferObject.InfoSiteTeachers"/>
-            <set-property property="inputForwardName" value="viewTeachers"/>
-            <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException" 
-                key="ServidorApresentacao.Action.exceptions.notAuthorizedActionDeleteException" 
-                handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" />
+            <set-property property="inputForwardName" value="viewTeachers"/>           
             <forward name="viewTeachers" path="/viewTeachers.jsp"/>
         </action>
         <action path="/teacherManagerDA" name="teacherForm" parameter="method" 
