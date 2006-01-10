@@ -7,14 +7,13 @@
 	
 	<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.name}" style="font-style: italic"/>
 	<h2><h:outputText value="#{bolonhaBundle['associateCurricularCourse']}"/></h2>
-	<h:outputText styleClass="error" rendered="#{!empty CurricularCourseManagement.errorMessage}"
-			value="#{bolonhaBundle[CurricularCourseManagement.errorMessage]}" escape="false"/>			
-	<h:messages styleClass="infomsg"/>
+
 	<br/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
 		
 		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['chooseCurricularCourseAndContext']}: "/>
+		<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['curricularCourse']}: " />
 			<h:selectOneMenu value="#{CurricularCourseManagement.curricularCourseID}">
@@ -38,7 +37,7 @@
 		</h:panelGrid>
 		<br/><br/><hr>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['associate']}"
-			action="buildCurricularPlan" actionListener="#{CurricularCourseManagement.addContext}"/>	
+			action="#{CurricularCourseManagement.addContext}"/>	
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
 			action="buildCurricularPlan"/>
 	</h:form>

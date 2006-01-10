@@ -8,8 +8,7 @@
 
 	<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.name}" style="font-style: italic"/>
 	<h2><h:outputText value="#{bolonhaBundle['createCurricularCourse']}"/></h2>
-	<h:outputText styleClass="error" rendered="#{!empty CurricularCourseManagement.errorMessage}"
-			value="#{bolonhaBundle[CurricularCourseManagement.errorMessage]}<br/>" escape="false"/>
+	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}" />
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
