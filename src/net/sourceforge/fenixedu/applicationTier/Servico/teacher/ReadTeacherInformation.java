@@ -102,12 +102,18 @@ public class ReadTeacherInformation implements IService {
                     .readActualExecutionPeriod();
             ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod
                     .getPreviousExecutionPeriod();
-            while (previousExecutionPeriod.getExecutionYear().equals(
-                    actualExecutionPeriod.getExecutionYear())) {
-                previousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
+            if (previousExecutionPeriod != null) {
+                while (previousExecutionPeriod.getExecutionYear().equals(
+                        actualExecutionPeriod.getExecutionYear())) {
+                    previousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
+                }
             }
 
-            executionYear = previousExecutionPeriod.getExecutionYear();
+            if (previousExecutionPeriod != null) {
+                executionYear = previousExecutionPeriod.getExecutionYear();
+            } else {
+                executionYear = actualExecutionPeriod.getExecutionYear();
+            }
         } else
             executionYear = persistentExecutionYear.readExecutionYearByName(argExecutionYear);
 

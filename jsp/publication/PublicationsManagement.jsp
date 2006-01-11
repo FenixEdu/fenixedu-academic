@@ -35,7 +35,12 @@
 			</tr>
 			<tr>
 				<td><b><bean:message key="message.teacherInformation.category" /></b>
-					&nbsp;<bean:write name="infoSitePublications" property="infoTeacher.infoCategory.shortName" /></td>
+					<logic:present name="infoSitePublications" property="infoTeacher">
+						<logic:present name="infoSitePublications" property="infoTeacher.infoCategory">
+							&nbsp;<bean:write name="infoSitePublications" property="infoTeacher.infoCategory.shortName" />
+						</logic:present>
+					</logic:present>
+				</td>
 			</tr>
 		</table>
 

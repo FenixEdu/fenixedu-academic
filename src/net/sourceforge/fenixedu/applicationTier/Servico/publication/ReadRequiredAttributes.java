@@ -27,9 +27,11 @@ public class ReadRequiredAttributes implements IService {
         PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeId));
 
-        List<InfoAttribute> infoAttributes = new ArrayList<InfoAttribute>(); 
-        for (Attribute attribute : (List<Attribute>)publicationType.getRequiredAttributes()) {
-            infoAttributes.add(InfoAttribute.newInfoFromDomain(attribute));
+        List<InfoAttribute> infoAttributes = new ArrayList<InfoAttribute>();
+        if (publicationType != null) {
+            for (Attribute attribute : (List<Attribute>)publicationType.getRequiredAttributes()) {
+                infoAttributes.add(InfoAttribute.newInfoFromDomain(attribute));
+            }
         }
 
         return infoAttributes;

@@ -24,13 +24,14 @@ public class ReadPublicationSubtypesByPublicationType implements IService {
         PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeId));
 
-        List<PublicationSubtype> publicationSubtypeList = publicationType.getSubtypes();
-
         List<InfoPublicationSubtype> result = new ArrayList<InfoPublicationSubtype>();
-        for (PublicationSubtype publicationSubtype : publicationSubtypeList) {
-			result.add(InfoPublicationSubtypeWithPublicationType.newInfoFromDomain(publicationSubtype));
-		}
+        if (publicationType != null) {
+            List<PublicationSubtype> publicationSubtypeList = publicationType.getSubtypes();
 
+            for (PublicationSubtype publicationSubtype : publicationSubtypeList) {
+                result.add(InfoPublicationSubtypeWithPublicationType.newInfoFromDomain(publicationSubtype));
+            }
+        }
 
         return result;
     }

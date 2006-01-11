@@ -36,16 +36,18 @@ public class ReadAttributesByPublicationType implements IService {
         PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeID));
 
-        List<Attribute> requiredAttributes = publicationType.getRequiredAttributes();
-        List<Attribute> nonRequiredAttributes = publicationType.getNonRequiredAttributes();
-        List<Attribute> allAttributes = new ArrayList<Attribute>(requiredAttributes);
-        allAttributes.addAll(nonRequiredAttributes);
-        
         HashMap result = new HashMap();
-        for (Iterator iter = allAttributes.iterator(); iter.hasNext();) {
-            Attribute attribute = (Attribute) iter.next();
-            String attributeName = attribute.getAttributeType();
-            result.put(attributeName, attributeName);
+        if (publicationType != null) {
+        List<Attribute> requiredAttributes = publicationType.getRequiredAttributes();
+            List<Attribute> nonRequiredAttributes = publicationType.getNonRequiredAttributes();
+            List<Attribute> allAttributes = new ArrayList<Attribute>(requiredAttributes);
+            allAttributes.addAll(nonRequiredAttributes);
+
+            for (Iterator iter = allAttributes.iterator(); iter.hasNext();) {
+                Attribute attribute = (Attribute) iter.next();
+                String attributeName = attribute.getAttributeType();
+                result.put(attributeName, attributeName);
+            }
         }
 
         return result;
