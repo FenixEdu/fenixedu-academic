@@ -44,7 +44,7 @@
 				
 		<h:commandLink value="#{scouncilBundle['addPersons']}" actionListener="#{CurricularPlansMembersManagementBackingBean.addMembers}" />
 
-		<h:outputText value="<br/><br/>" escape="false" />		
+		<h:outputText value="<br/><br/><br/><hr/>" escape="false" />
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
 

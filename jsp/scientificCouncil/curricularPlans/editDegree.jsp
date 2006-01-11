@@ -61,7 +61,7 @@
 			</h:panelGroup>
 --%>
 		</h:panelGrid>
-		<br/>
+		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['edit']}"
 			action="#{ScientificCouncilDegreeManagement.editDegree}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"

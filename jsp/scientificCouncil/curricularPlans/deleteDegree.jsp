@@ -40,7 +40,7 @@
 			<h:outputText id="gradeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.gradeType]}"/>
 --%>
 		</h:panelGrid>
-		<br/>
+		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
 			action="#{ScientificCouncilDegreeManagement.deleteDegree}" onclick="return confirm('#{scouncilBundle['confirm.delete.degree']}')"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"

@@ -39,9 +39,10 @@
 	<h:outputText value="</br></br>" escape="false"/>
 	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="true" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 
-	<h:outputText value="</br></br><hr/>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/><br/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
+
+		<h:outputText value="</br></br><hr/>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}"
 			action="curricularPlansManagement"/>
 	</h:form>

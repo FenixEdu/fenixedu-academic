@@ -41,7 +41,7 @@
 --%>
 
 		</h:panelGrid>
-		<br/>
+		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['create']}"
 			action="#{ScientificCouncilCurricularPlanManagement.createCurricularPlan}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"

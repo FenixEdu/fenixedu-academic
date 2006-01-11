@@ -11,15 +11,16 @@
 	
 	<h:outputText value="<i>#{ScientificCouncilCurricularPlanManagement.dcp.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]})</i>" escape="false"/>
-	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
+	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2><br/>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 
 	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" />
 
-	<h:outputText value="</br></br>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/><br/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/>
+
+		<h:outputText value="<br/><br/><hr/>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
 	</h:form>

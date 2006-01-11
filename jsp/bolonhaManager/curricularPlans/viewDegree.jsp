@@ -8,17 +8,17 @@
 
 	<h:outputText value="<i>#{ScientificCouncilDegreeManagement.degree.nome}" escape="false"/>
 	<h:outputText value=" (#{ScientificCouncilDegreeManagement.degree.acronym})</i>" escape="false"/>
-	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
+	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2><br/>" escape="false">
 		<f:param value="#{scouncilBundle['degree']}" />
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'"/><br/>
+		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'"/>
 		
 		<h:outputText value="<b>#{scouncilBundle['degree.data']}:</b><br/><br/>" escape="false"/>
 		
 		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}"
-			value="#{ScientificCouncilDegreeManagement.errorMessage}<br/><br/>" escape="false"/>
 		
+			value="#{ScientificCouncilDegreeManagement.errorMessage}<br/><br/>" escape="false"/>
 		<h:panelGrid styleClass="infoselected" columns="2" border="0">
 			<h:outputText value="<b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
 			<h:outputText id="name" value="#{ScientificCouncilDegreeManagement.name}"/>
@@ -40,7 +40,7 @@
 			<h:outputText id="gradeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.gradeType]}"/>
 --%>
 		</h:panelGrid>
-		<br/>
+		<br/><br/><hr/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
 	</h:form>
