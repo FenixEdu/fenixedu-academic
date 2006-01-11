@@ -134,6 +134,20 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         return result;
     }
+    
+    public List<String> getGroupMembersLabels() throws FenixFilterException, FenixServiceException {
+        List<String> result = new ArrayList<String>();
+
+        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
+        if (curricularPlanMembersGroup != null) {
+            for (UserGroup member : curricularPlanMembersGroup.getParts()) {
+                Person person = ((PersonGroup) member).getPerson();
+                result.add(person.getNome() + " (" + person.getUsername() + ")");
+            }
+        }
+
+        return result;
+    }
 
     public List<SelectItem> getDepartmentEmployees() throws FenixFilterException, FenixServiceException {
         List<SelectItem> result = new ArrayList<SelectItem>();

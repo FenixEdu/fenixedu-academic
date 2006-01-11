@@ -11,8 +11,10 @@
 	<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
+	<br/>
+	
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/><br/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/>
 
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">
 			<h:outputText value="#{scouncilBundle['curricularStage']}: " />
@@ -24,10 +26,10 @@
 			</h:panelGroup>
 		</h:panelGrid>
 
-		<h:outputText value="<br/><b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
+		<h:outputText value="<br/><b>#{scouncilBundle['curricularPlan.data']}:</b><br/>" escape="false"/>
 		
-		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilCurricularPlanManagement.errorMessage}"
-			value="#{ScientificCouncilCurricularPlanManagement.errorMessage}<br/><br/>" escape="false"/>
+		<h:outputText styleClass="error" rendered="<br/><br/>#{!empty ScientificCouncilCurricularPlanManagement.errorMessage}"
+			value="#{ScientificCouncilCurricularPlanManagement.errorMessage}<br/>" escape="false"/>
 		
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">
 			<h:outputText value="#{scouncilBundle['name']}: " />
@@ -44,14 +46,16 @@
 			
 		</h:panelGrid>
 
-		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembers}">		
-			<h:outputText value="<br/><b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']})<br/>" escape="false" />
-			<h:selectManyCheckbox value="#{CurricularPlansMembersManagementBackingBean.selectedPersonGroupsIDsToRemove}" layout="pageDirection">
-				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.groupMembers}"  />
-			</h:selectManyCheckbox>
+		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.curricularPlanMembersGroup}">
+			<h:outputText value="<br/><b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']}):<br/>" escape="false" />
+			<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
+				<h:column>
+					<h:outputText value="#{memberLabel}" escape="false"/>
+				</h:column>
+			</h:dataTable>
 		</h:panelGroup>
 
-		<br/>
+		<br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['edit']}"
 			action="#{ScientificCouncilCurricularPlanManagement.editCurricularPlan}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
