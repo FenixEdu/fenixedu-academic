@@ -9,6 +9,7 @@ public enum LegalRegimenType {
     PROVISIONS_ADMINISTRATIVE_CONTRACT,
     TERM_CONTRACT,
     TEMPORARY_SUBSTITUTION,
+    DEFINITIVE_PROVISORY,
     DEFINITIVE_NOMINATION;
         
     public String getName() {
