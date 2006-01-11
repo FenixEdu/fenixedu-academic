@@ -29,7 +29,7 @@
 			<h:outputText value="<b>#{scouncilBundle['ectsCredits']}</b> " escape="false"/>
 			<h:outputText value="#{ScientificCouncilCurricularPlanManagement.ectsCredits}"/>
 		</h:panelGrid>
-		<br/>
+		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
 			action="#{ScientificCouncilCurricularPlanManagement.deleteCurricularPlan}" onclick="return confirm('#{scouncilBundle['confirm.delete.curricularPlan']}')"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"

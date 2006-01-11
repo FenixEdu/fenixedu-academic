@@ -32,9 +32,9 @@
 		<h:outputText value="#{bolonhaBundle['edit.curricularPlan.structure']}" />
 		<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 	</h:outputLink>
-	<h:outputText value="</br>" escape="false"/>
+	</br>
 
-	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/><br/>
+	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
 	<h:messages styleClass="error" infoClass="infoMsg"/>
 	<h:outputText value="</br></br>" escape="false"/>
 	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="true" organizeBy="<%=request.getParameter("organizeBy")%>"/>
