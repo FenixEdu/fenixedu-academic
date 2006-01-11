@@ -39,8 +39,10 @@
           <tr>
             <td width="30%"><bean:message key="label.person.sex" /></td>
             <td class="greytxt">
-            	<bean:define id="gender" name="personalInfo" property="sexo"/>
-            	<bean:message key='<%=gender.toString()%>' bundle="ENUMERATION_RESOURCES"/>
+            	<logic:present name="personalInfo" property="sexo">
+	            	<bean:define id="gender" name="personalInfo" property="sexo"/>
+    	        	<bean:message key='<%=gender.toString()%>' bundle="ENUMERATION_RESOURCES"/>
+    	        </logic:present>
             </td>
           </tr>
  	      <!-- Numero do Documento de Identificacao -->
@@ -52,8 +54,10 @@
           <tr>
             <td width="30%"><bean:message key="label.person.identificationDocumentType" /></td>
             <td class="greytxt">
-            	<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
-            	<bean:message key='<%=idType.toString()%>'/>
+            	<logic:present name="personalInfo" property="tipoDocumentoIdentificacao">
+	            	<bean:define id="idType" name="personalInfo" property="tipoDocumentoIdentificacao"/>
+    	        	<bean:message key='<%=idType.toString()%>'/>
+    	        </logic:present>
             </td>
           </tr>
           <!-- Local de Emissao do Documento de Identificacao -->
@@ -90,8 +94,10 @@
           <!-- Estado Civil -->
           <tr>
             <td width="30%"><bean:message key="label.person.maritalStatus" /></td>
-            <bean:define id="maritalStatus" name="personalInfo" property="maritalStatus"/>
-            <td class="greytxt"><bean:message key='<%= maritalStatus.toString() %>'/></td>
+            <logic:present name="personalInfo" property="maritalStatus">
+	            <bean:define id="maritalStatus" name="personalInfo" property="maritalStatus"/>
+    	        <td class="greytxt"><bean:message key='<%= maritalStatus.toString() %>'/></td>
+    	    </logic:present>
           </tr>
 		</table>
 		<br />
