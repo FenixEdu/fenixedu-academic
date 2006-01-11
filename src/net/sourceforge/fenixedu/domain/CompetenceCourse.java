@@ -124,7 +124,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
             (recentCompetenceCourseInformation = findRecentCompetenceCourseInformation()); 
     }
     
-    // TODO: Check this method!!!
     private CompetenceCourseInformation findRecentCompetenceCourseInformation() {
         for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformations()) {
             if (competenceCourseInformation.getEndDate() == null) { // endDate not defined: most recent information
@@ -136,26 +135,26 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     @Override
     public String getName() {
-        if (super.getName() == null || super.getName().length() == 0) {
+        if ((super.getName() == null || super.getName().length() == 0) && getRecentCompetenceCourseInformation() != null) {
             return getRecentCompetenceCourseInformation().getName();
         }
         return super.getName();
     }
 
     public String getNameEn() {
-        return getRecentCompetenceCourseInformation().getNameEn();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getNameEn() : null;
     }
     
     public String getAcronym() {
-        return getRecentCompetenceCourseInformation().getAcronym();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getAcronym() : null;
     }
     
     public boolean isBasic() {
-        return getRecentCompetenceCourseInformation().getBasic().booleanValue();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getBasic().booleanValue() : false;
     }
     
     public RegimeType getRegime() {
-        return getRecentCompetenceCourseInformation().getRegime();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getRegime() : null;
     }
     
     public void setRegime(RegimeType regimeType) {
@@ -163,23 +162,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
-        return getRecentCompetenceCourseInformation().getCompetenceCourseLoads();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getCompetenceCourseLoads() : null;
     }
     
     public String getObjectives() {
-        return getRecentCompetenceCourseInformation().getObjectives();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getObjectives() : null;
     }
 
     public String getProgram() {
-        return getRecentCompetenceCourseInformation().getProgram();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getProgram() : null;
     }
 
     public String getEvaluationMethod() {
-        return getRecentCompetenceCourseInformation().getEvaluationMethod();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getEvaluationMethod() : null;
     }
 
     public String getObjectivesEn() {
-        return getRecentCompetenceCourseInformation().getObjectivesEn();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getObjectivesEn() : null;
     }
 
     public String getProgramEn() {
@@ -187,7 +186,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public String getEvaluationMethodEn() {
-        return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
+        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getEvaluationMethodEn() : null;
     }
     
     public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {

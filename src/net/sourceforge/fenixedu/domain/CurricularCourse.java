@@ -443,7 +443,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public String getName() {
-        if (super.getName() == null || super.getName().length() == 0) {
+        if ((super.getName() == null || super.getName().length() == 0) && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getName();
         }
         return super.getName();
@@ -451,7 +451,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     @Override
     public String getNameEn() {
-        if (super.getNameEn() == null || super.getNameEn().length() == 0) {
+        if ((super.getNameEn() == null || super.getNameEn().length() == 0) && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getNameEn();
         }
         return super.getNameEn();
@@ -459,7 +459,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     @Override
     public String getAcronym() {
-        if (super.getAcronym() == null || super.getAcronym().length() == 0) {
+        if ((super.getAcronym() == null || super.getAcronym().length() == 0) && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getAcronym();
         }
         return super.getAcronym();
@@ -467,7 +467,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     @Override
     public Boolean getBasic() {
-        if (super.getBasic() == null) {
+        if (super.getBasic() == null && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().isBasic();
         }
         return super.getBasic();
