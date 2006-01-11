@@ -103,11 +103,17 @@ public class ChangePersonalInfoDispatchAction extends DispatchAction {
         changePersonalInfoForm.set("mobilePhone", infoPerson.getTelemovel());
         changePersonalInfoForm.set("workPhone", infoPerson.getWorkPhone());
         changePersonalInfoForm.set("email", infoPerson.getEmail());
-        changePersonalInfoForm.set("availableEmail", infoPerson.getAvailableEmail().toString());
+        if (infoPerson.getAvailableEmail() != null) {
+            changePersonalInfoForm.set("availableEmail", infoPerson.getAvailableEmail().toString());
+        }
 
         changePersonalInfoForm.set("webSite", infoPerson.getEnderecoWeb());
-        changePersonalInfoForm.set("availableWebSite", infoPerson.getAvailableWebSite().toString());
-        changePersonalInfoForm.set("availablePhoto", infoPerson.getAvailablePhoto().toString());
+        if (infoPerson.getAvailableWebSite() != null) {
+            changePersonalInfoForm.set("availableWebSite", infoPerson.getAvailableWebSite().toString());
+        }
+        if (infoPerson.getAvailablePhoto() != null) {
+            changePersonalInfoForm.set("availablePhoto", infoPerson.getAvailablePhoto().toString());
+        }
         session.setAttribute(SessionConstants.PERSONAL_INFO_KEY, infoPerson);
         return mapping.findForward("prepareReady");
     }
