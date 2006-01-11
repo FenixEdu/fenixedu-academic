@@ -449,4 +449,27 @@ public class CurricularCourse extends CurricularCourse_Base {
         return super.getName();
     }
 
+    @Override
+    public String getNameEn() {
+        if (super.getNameEn() == null || super.getNameEn().length() == 0) {
+            return this.getCompetenceCourse().getNameEn();
+        }
+        return super.getNameEn();
+    }
+    
+    @Override
+    public String getAcronym() {
+        if (super.getAcronym() == null || super.getAcronym().length() == 0) {
+            return this.getCompetenceCourse().getAcronym();
+        }
+        return super.getAcronym();
+    }
+    
+    @Override
+    public Boolean getBasic() {
+        if (super.getBasic() == null) {
+            return this.getCompetenceCourse().isBasic();
+        }
+        return super.getBasic();
+    }    
 }
