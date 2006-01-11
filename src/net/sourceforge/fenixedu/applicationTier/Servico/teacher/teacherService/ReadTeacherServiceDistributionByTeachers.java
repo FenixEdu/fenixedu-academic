@@ -30,73 +30,79 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ReadTeacherServiceDistributionByTeachers implements IService {
 
-	public List run(String username, Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
+    public List run(String username, Integer executionYearID) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
-		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
+        DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
 
-		List<Teacher> teachers;
+        List<Teacher> teachers;
 
-		List<ExecutionPeriod> executionPeriodList;
+        List<ExecutionPeriod> executionPeriodList;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
 
-		executionPeriodList = persistentExecutionPeriod.readByExecutionYear(executionYearID);
+        executionPeriodList = persistentExecutionPeriod.readByExecutionYear(executionYearID);
 
-		Department department = persistentTeacher.readTeacherByUsername(username)
-				.getLastWorkingDepartment();
+        Department department = persistentTeacher.readTeacherByUsername(username)
+                .getLastWorkingDepartment();
 
-		teachers = department.getCurrentTeachers();
+        teachers = department.getCurrentTeachers();
 
-		/* Information about teacher */
-		Double hoursSpentByTeacher;
+        /* Information about teacher */
+        Double hoursSpentByTeacher;
 
-		for (Teacher teacher : teachers) {
-			returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
-					.getCategory().getCode(), teacher.getPerson().getNome(), 0, 0d);
+        for (Teacher teacher : teachers) {
+            //FIXME: ....
+            if (teacher.getCategory() == null) {
+                continue;
+            }
 
-			for (Professorship professorShip : teacher.getProfessorships()) {
-				ExecutionCourse executionCourse = professorShip.getExecutionCourse();
+            returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
+                    .getCategory().getCode(), teacher.getPerson().getNome(), 0, 0d);
 
-				if (!executionPeriodList.contains(executionCourse.getExecutionPeriod())) {
-					continue;
-				}
+            for (Professorship professorShip : teacher.getProfessorships()) {
+                ExecutionCourse executionCourse = professorShip.getExecutionCourse();
 
-				Set<String> curricularYears = new HashSet<String>();
-				Set<String> degreeNames = new HashSet<String>();
-				for (CurricularCourse curricularCourse : executionCourse
-						.getAssociatedCurricularCourses()) {
-					degreeNames.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
+                if (!executionPeriodList.contains(executionCourse.getExecutionPeriod())) {
+                    continue;
+                }
 
-					for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-						CurricularSemester curricularSemester = curricularCourseScope
-								.getCurricularSemester();
-						curricularYears.add(curricularSemester.getCurricularYear().getYear().toString());
-					}
-				}
+                Set<String> curricularYears = new HashSet<String>();
+                Set<String> degreeNames = new HashSet<String>();
+                for (CurricularCourse curricularCourse : executionCourse
+                        .getAssociatedCurricularCourses()) {
+                    degreeNames.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
 
-				hoursSpentByTeacher = StrictMath.ceil(teacher
-						.getHoursLecturedOnExecutionCourse(executionCourse));
+                    for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
+                        CurricularSemester curricularSemester = curricularCourseScope
+                                .getCurricularSemester();
+                        curricularYears.add(curricularSemester.getCurricularYear().getYear().toString());
+                    }
+                }
 
-				returnDTO.addExecutionCourseToTeacher(teacher.getIdInternal(), executionCourse
-						.getIdInternal(), executionCourse.getNome(), hoursSpentByTeacher.intValue(),
-						degreeNames, curricularYears, executionCourse.getExecutionPeriod().getName());
+                hoursSpentByTeacher = StrictMath.ceil(teacher
+                        .getHoursLecturedOnExecutionCourse(executionCourse));
 
-			}
-		}
+                returnDTO.addExecutionCourseToTeacher(teacher.getIdInternal(), executionCourse
+                        .getIdInternal(), executionCourse.getNome(), hoursSpentByTeacher.intValue(),
+                        degreeNames, curricularYears, executionCourse.getExecutionPeriod().getName());
 
-		ArrayList<TeacherDistributionServiceEntryDTO> returnArraylist = new ArrayList<TeacherDistributionServiceEntryDTO>();
+            }
+        }
 
-		for (TeacherDistributionServiceEntryDTO teacher : returnDTO.getTeachersMap().values()) {
-			returnArraylist.add(teacher);
-		}
+        ArrayList<TeacherDistributionServiceEntryDTO> returnArraylist = new ArrayList<TeacherDistributionServiceEntryDTO>();
 
-		Collections.sort(returnArraylist);
+        for (TeacherDistributionServiceEntryDTO teacher : returnDTO.getTeachersMap().values()) {
+            returnArraylist.add(teacher);
+        }
 
-		return returnArraylist;
-	}
+        Collections.sort(returnArraylist);
+
+        return returnArraylist;
+    }
 
 }
