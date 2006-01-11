@@ -34,7 +34,7 @@ public class EditDegreeCurricularPlan implements IService {
         final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readFromNewDegreeStructure();
         for (DegreeCurricularPlan dcp : dcps) {
-            if (dcp.getDegree() == dcpToEdit.getDegree() && dcp.getName().equalsIgnoreCase(name)) {
+            if (dcp != dcpToEdit && dcp.getDegree() == dcpToEdit.getDegree() && dcp.getName().equalsIgnoreCase(name)) {
                 throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
             }
         }
