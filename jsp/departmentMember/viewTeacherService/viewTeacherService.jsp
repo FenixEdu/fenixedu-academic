@@ -95,7 +95,7 @@ text-align: right;
 		<h:outputText value="#{bundle['label.teacherService.navigateByCourse']}" escape="false"/>
 		<c:out value="</a> <br /> <p />" escapeXml="false"/>
 		
-		<h:outputText value="<p /><font color='red'>#{bundle['label.teacherService.warning']}</font><p />" escape="false"/>
+		<h:outputText value="<p /><font color='#449760'>#{bundle['label.teacherService.warning']}</font><p />" escape="false"/>
 		
 		<h:outputText value="<p /><b>#{bundle['label.teacherService.teacher.title']}</b><p />" escape="false"/>
 		
@@ -108,6 +108,7 @@ text-align: right;
 				<h:outputText value="<th>#{bundle['label.teacherService.teacher.credits']}</th>" escape="false" />
 				<h:outputText value="<th>#{bundle['label.teacherService.teacher.totalLecturedHours']}</th>" escape="false" />
 				<h:outputText value="<th>#{bundle['label.teacherService.teacher.availability']}</th>" escape="false" />
+				<h:outputText value="<th>#{bundle['label.teacherService.teacher.accumulatedCredits']}</th>" escape="false" />
 			<c:out value="</tr>" escapeXml="false" />
 			<c:forEach items="${viewTeacherService.teacherServiceDTO}" var="teacher">
 				<c:out value="<tr id=${teacher.teacherIdInternal}>" escapeXml="false" />
@@ -115,13 +116,14 @@ text-align: right;
 				<c:out value="<td title=\"${bundle['label.teacherService.teacher.category']}\">${teacher.teacherCategory}</td>" escapeXml="false" />	
 				<c:out value="<td class='courses' title=\"${bundle['label.teacherService.teacher.name']}\">${teacher.teacherName}</td>" escapeXml="false" />	
 				<c:out value="<td title=\"${bundle['label.teacherService.teacher.hours']}\">${teacher.teacherRequiredHours}</td>" escapeXml="false" />	
-				<c:out value="<td title=\"${bundle['label.teacherService.teacher.credits']}\">${teacher.teacherSpentCredits}</td>" escapeXml="false" />	
+				<c:out value="<td title=\"${bundle['label.teacherService.teacher.credits']}\">${teacher.formattedTeacherSpentCredits}</td>" escapeXml="false" />	
 				<c:out value="<td title=\"${bundle['label.teacherService.teacher.totalLecturedHours']}\">${teacher.totalLecturedHours}</td>" escapeXml="false" />	
-				<c:out value="<td title=\"${bundle['label.teacherService.teacher.availability']}\"> ${teacher.availability} </td>" escapeXml="false" />	
+				<c:out value="<td title=\"${bundle['label.teacherService.teacher.availability']}\"> ${teacher.availability} </td>" escapeXml="false" />
+				<c:out value="<td title=\"${bundle['label.teacherService.teacher.accumulatedCredits']}\"> ${teacher.formattedTeacherAccumulatedCredits} </td>" escapeXml="false" />
 				<c:out value="</tr>" escapeXml="false" />
 				
 				<c:out value="<tr>" escapeXml="false" />
-				<c:out value="<td colspan=7 class='backwhite' style='background-color: #fff;'>" escapeXml="false" />
+				<c:out value="<td colspan=8 class='backwhite' style='background-color: #fff;'>" escapeXml="false" />
 					<c:out value="<ul>" escapeXml="false" />
 						<c:forEach items="${teacher.executionCourseTeacherServiceList}" var="coursesList">
 							<c:out value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=${viewTeacherService.selectedExecutionYearID}#${coursesList.executionCourseIdInternal}'>" escapeXml="false"/>

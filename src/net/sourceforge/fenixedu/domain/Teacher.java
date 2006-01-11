@@ -105,6 +105,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public Department getCurrentWorkingDepartment() {
+
         Employee employee = this.getPerson().getEmployee();
         if (employee != null) {
             return employee.getCurrentDepartmentWorkingPlace();
@@ -119,7 +120,7 @@ public class Teacher extends Teacher_Base {
         }
         return null;
     }
-    
+
     public Category getCategory(){
         TeacherLegalRegimen regimen = getLastLegalRegimen();
         if(regimen != null){
@@ -245,7 +246,7 @@ public class Teacher extends Teacher_Base {
         return returnValue;
     }
 
-    public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod executionPeriod) {
         return (TeacherService) CollectionUtils.find(getTeacherServices(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -543,5 +544,44 @@ public class Teacher extends Teacher_Base {
         }
 
         return result;
+    }
+    
+    
+    
+    public double getCreditsBetweenExecutionPeriods(ExecutionPeriod startExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+    	
+     	ExecutionPeriod startPeriod = startExecutionPeriod;
+	          	   	    	 
+    	ExecutionPeriod executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
+    	   	
+    	boolean pastServiceAdded = false;
+    	double totalCredits = 0.0;
+    	
+    	while(startPeriod != executionPeriodAfterEnd) {
+    		TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
+    		    		
+    		
+    		if(teacherService != null){
+    			totalCredits += getManagementFunctionsCredits(startPeriod); 
+        		totalCredits += getServiceExemptionCredits(startPeriod);
+	    		totalCredits += teacherService.getTeachingDegreeCredits();
+	    		totalCredits += teacherService.getMasterDegreeServiceCredits();
+	    		totalCredits += teacherService.getTeacherAdviseServiceCredits();
+	    		totalCredits += teacherService.getOtherServiceCredits();
+	    		if(!pastServiceAdded){
+	    			totalCredits += teacherService.getPastServiceCredits();
+	    			pastServiceAdded = true;
+	    		} else {
+	    			totalCredits -= getHoursByCategory(startPeriod.getBeginDate(), startPeriod.getEndDate());
+	    		}
+	    		
+    		}
+    		
+
+    		    		
+    		startPeriod = startPeriod.getNextExecutionPeriod();
+    	}
+    	
+    	return totalCredits;
     }
 }

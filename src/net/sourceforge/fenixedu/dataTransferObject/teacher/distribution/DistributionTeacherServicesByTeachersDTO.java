@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacher.distribution;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			return executionYearsSet;
 		}
 
-		
+				
 		public String getDescription(){
 			StringBuilder finalString = new StringBuilder(getExecutionCourseName());
 			String[] stringArrayDegrees = (String[]) courseDegreesList.toArray(new String[] {});
@@ -122,18 +123,21 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		private Integer teacherRequiredHours;
 
 		private Double teacherSpentCredits;
+		
+		private Double teacherAccumulatedCredits;
 				
 
 		List<ExecutionCourseTeacherServiceDTO> executionCourseTeacherServiceList;
 
 		
-		public TeacherDistributionServiceEntryDTO(Integer internal, Integer teacherNumber, String category,  String name, Integer hours, Double credits) {
+		public TeacherDistributionServiceEntryDTO(Integer internal, Integer teacherNumber, String category,  String name, Integer hours, Double credits, Double accumulatedCredits) {
 			this.teacherNumber = teacherNumber;
 			teacherCategory = category;
 			teacherIdInternal = internal;
 			teacherName = name;
 			teacherRequiredHours = hours;
 			teacherSpentCredits = credits;
+			teacherAccumulatedCredits = accumulatedCredits;
 			
 			executionCourseTeacherServiceList = new ArrayList<ExecutionCourseTeacherServiceDTO>();
 		}
@@ -178,6 +182,24 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			return teacherNumber;
 		}
 		
+		private String getFormattedValue(Double value){
+			StringBuilder sb = new StringBuilder();
+			Formatter formatter = new Formatter(sb);
+			
+			formatter.format("%.1f", value);
+			return sb.toString();
+		}
+		
+		public String getFormattedTeacherSpentCredits() {
+
+			return getFormattedValue(getTeacherSpentCredits());
+		}
+		
+		public String getFormattedTeacherAccumulatedCredits() {
+
+			return getFormattedValue(getAccumulatedCredits());
+		}
+		
 		public Integer getTotalLecturedHours() {
 			int totalHours = 0;
 			
@@ -192,6 +214,10 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			double availability = getTeacherRequiredHours() - getTotalLecturedHours() - getTeacherSpentCredits();
 			
 			return new Double(StrictMath.ceil(StrictMath.abs(availability)) * StrictMath.signum(availability)).intValue();
+		}
+		
+		public Double getAccumulatedCredits() {
+			return teacherAccumulatedCredits;
 		}
 
 		public int compareTo(Object obj) {
@@ -212,8 +238,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	}
 
 	public void addTeacher(Integer key, Integer teacherNumber, String category, String name,
-			Integer hours, Double credits) {
-		TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherNumber, category, name, hours, credits);
+			Integer hours, Double credits, Double accumulatedCredits) {
+		TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherNumber, category, name, hours, credits, accumulatedCredits);
 
 		if(!teachersMap.containsKey(key)) {
 			teachersMap.put(key, t);
