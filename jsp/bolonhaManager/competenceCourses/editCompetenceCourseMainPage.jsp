@@ -104,6 +104,6 @@
 	</h:outputLink>
 	<br/><br/><hr>
 	<h:form>
-	<h:commandLink action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
+	<h:commandButton styleClass="inputbutton" action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
 	</h:form>
 </ft:tilesView>

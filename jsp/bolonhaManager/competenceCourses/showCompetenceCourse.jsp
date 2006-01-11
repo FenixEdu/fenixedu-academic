@@ -102,7 +102,7 @@
 	<br/><hr>
 	<h:form>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.action}">
-			<h:commandLink action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
+			<h:commandButton styleClass="inputbutton" action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
 		</h:panelGroup>
 	</h:form>
 </ft:tilesView>
