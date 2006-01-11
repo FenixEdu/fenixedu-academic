@@ -50,7 +50,11 @@
          class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
          <foreignkey field-ref="keyUnit"/>
     </reference-descriptor>
-
+	<reference-descriptor auto-retrieve="false"
+         name="competenceCourseMembersGroup"
+         class-ref="net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup">
+         <foreignkey field-ref="keyUnit"/>
+    </reference-descriptor>
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
          name="associatedPersons"
          element-class-ref="net.sourceforge.fenixedu.domain.Person"         
