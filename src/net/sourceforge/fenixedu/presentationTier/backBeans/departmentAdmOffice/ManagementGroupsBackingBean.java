@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -18,16 +19,33 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
+
 public class ManagementGroupsBackingBean extends FenixBackingBean {
 
-    private List<Employee> employees = getDepartment().getCurrentActiveWorkingEmployees();
+    private List<Employee> employees = getEmployees();
 
     private Integer[] selectedPersonGroupsIDsToRemove;
 
     private Integer[] selectedPersonsIDsToAdd;
 
     public Department getDepartment() {
-        return getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+        return (getUserView().getPerson().getEmployee() != null) ? getUserView().getPerson()
+                .getEmployee().getCurrentDepartmentWorkingPlace() : null;
+    }
+
+    public List<Employee> getEmployees() {
+        List<Employee> result = (getDepartment() != null) ? new ArrayList<Employee>(getDepartment().getCurrentActiveWorkingEmployees()) : null;
+        
+        if (result != null) {
+            ComparatorChain chainComparator = new ComparatorChain();
+            chainComparator.addComparator(new BeanComparator("person.nome"), false);
+            chainComparator.addComparator(new BeanComparator("employeeNumber"), false);
+            Collections.sort(result, chainComparator);
+        }
+        
+        return result;
     }
 
     public List getDepartmentEmployeesSelectItems() {
@@ -89,7 +107,8 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         }
 
         if (selectedPersonsIDsToAdd != null) {
-            Object[] args = { competenceCourseMembersGroup, selectedPersonsIDsToAdd, null, RoleType.BOLONHA_MANAGER };
+            Object[] args = { competenceCourseMembersGroup, selectedPersonsIDsToAdd, null,
+                    RoleType.BOLONHA_MANAGER };
             ServiceUtils.executeService(getUserView(), "UpdateCompetenceCourseMembersGroup", args);
         }
     }

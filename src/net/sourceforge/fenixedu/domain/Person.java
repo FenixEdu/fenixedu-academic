@@ -9,8 +9,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -547,6 +550,27 @@ public class Person extends Person_Base {
         }
         
         return result;
+    }
+ 
+    public boolean belongsToOtherGroupsWithSameRole(NodeGroup nodeGroupWhoAsks) {
+        boolean belongs = false;
+        
+        if (this.getHookedGroups() != null) {
+            PersonGroup personGroup = this.getHookedGroups().get(0);
+ 
+            for (NodeGroup nodeGroup : personGroup.getAggregators()) {
+    
+                if ((nodeGroup != nodeGroupWhoAsks)) {
+                    // (nodeGroup.getRole() == nodeGroupWhoAsks.getRole())
+                    if (nodeGroup instanceof DegreeCurricularPlanMembersGroup || nodeGroup instanceof CompetenceCourseMembersGroup) {
+                        belongs = true;
+                        break;
+                    }
+                }
+            }
+        }
+            
+        return belongs;
     }
     
 }

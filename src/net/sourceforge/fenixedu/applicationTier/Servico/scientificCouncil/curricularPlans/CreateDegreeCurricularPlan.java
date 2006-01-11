@@ -2,16 +2,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curri
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GradeScale;
-import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -24,26 +26,46 @@ public class CreateDegreeCurricularPlan implements IService {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
+        final Person creator = AccessControl.getUserView().getPerson();
+        
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Degree degree = (Degree) persistentSupport.getICursoPersistente().readByOID(Degree.class, degreeId);
+        
+        assertExistingObjectsToAssociate(creator, degree);
+        assertUniques(degree, name);
+        
+        DomainFactory.makeDegreeCurricularPlan(degree, name, ectsCredits, curricularStage, gradeScale, creator);
+        addBolonhaRoleToCreator(creator);
+    }
+
+    private void assertExistingObjectsToAssociate(Person person, Degree degree) throws ExcepcaoPersistencia, FenixServiceException {
+        if (person == null) {
+            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.creator");
+        } else if (degree == null) {
+            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
+        }
+    }
+
+    private void assertUniques(Degree degree, String name) throws ExcepcaoPersistencia, FenixServiceException {
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readFromNewDegreeStructure();
 
         // assert unique pair name/degree
         for (DegreeCurricularPlan dcp : dcps) {
-            if (dcp.getDegree().getIdInternal().equals(degreeId)
+            if ((dcp.getDegree() == degree)
                     && dcp.getName().equalsIgnoreCase(name)) {
                 throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
             }
         }
+    }
 
-        final ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-        final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
-        if (degree == null) {
-            throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");
+    private void addBolonhaRoleToCreator(Person creator) throws ExcepcaoPersistencia {
+        if (!creator.hasRole(RoleType.BOLONHA_MANAGER)) {
+            final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            final Role bolonhaRole = persistentSuport.getIPersistentRole().readByRoleType(RoleType.BOLONHA_MANAGER);
+            creator.addPersonRoles(bolonhaRole);    
         }
-
-        new DegreeCurricularPlan(degree, name, ectsCredits, curricularStage, gradeScale);
     }
 
 }

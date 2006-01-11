@@ -7,9 +7,7 @@ import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -38,7 +36,13 @@ public class UpdateMembersGroup implements IService {
             for (Integer personID : personIDsToAdd) {
                 Person person = (Person) ps.getIPersistentObject().readByOID(Person.class, personID);
                 if (!membersGroup.isMember(person)) {
-                    DomainFactory.makePersonGroup(creator, person, membersGroup);
+
+                    if (person.hasAnyHookedGroups()) {
+                        PersonGroup personGroup = person.getHookedGroups().get(0);
+                        personGroup.addAggregators(membersGroup);
+                    } else {
+                        DomainFactory.makePersonGroup(creator, person, membersGroup);    
+                    }
                 }
                 if (roleToUpdate != null && !person.hasRole(roleTypeToUpdate)) {
                     person.addPersonRoles(roleToUpdate);
@@ -51,9 +55,10 @@ public class UpdateMembersGroup implements IService {
                 PersonGroup personGroup = (PersonGroup) ps.getIPersistentObject().readByOID(PersonGroup.class,
                         personGroupID);
 
+                Person person = personGroup.getPerson();
                 if (roleToUpdate != null) {
-                    if (personGroup.getPerson().hasRole(roleTypeToUpdate)) {
-                        personGroup.getPerson().removePersonRoles(roleToUpdate);    
+                    if (person.hasRole(roleTypeToUpdate) && !person.belongsToOtherGroupsWithSameRole(membersGroup)) {
+                        person.removePersonRoles(roleToUpdate);    
                     }
                 }
                 
