@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.cu
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -24,6 +25,9 @@ import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -136,8 +140,13 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         Department department = getDepartment();
         if (department != null) {
-            List<Employee> employees = getDepartment().getCurrentActiveWorkingEmployees();
+            List<Employee> employees = new ArrayList<Employee>(getDepartment().getCurrentActiveWorkingEmployees());
 
+            ComparatorChain chainComparator = new ComparatorChain();
+            chainComparator.addComparator(new BeanComparator("person.nome"), false);
+            chainComparator.addComparator(new BeanComparator("employeeNumber"), false);
+            Collections.sort(employees, chainComparator);
+            
             for (Employee departmentEmployee : employees) {
                 Person person = departmentEmployee.getPerson();
                 result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
