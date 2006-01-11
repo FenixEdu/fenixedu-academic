@@ -42,12 +42,14 @@
 			<bean:write name="execution_period" property="semester"/>
 		</a>
 	</li>
+<logic:present name="previousInfoExecutionPeriod">
 	<li><a href="#otherSem">
 			<bean:write name="previousInfoExecutionPeriod" property="infoExecutionYear.year" />,
 			<bean:message bundle="PUBLIC_DEGREE_INFORMATION" key="public.degree.information.label.semester.abbr" />
 			<bean:write name="previousInfoExecutionPeriod" property="semester"/>
 		</a>
 	</li>
+</logic:present>
 </ul>
 
 <p id="currentSem">
@@ -144,6 +146,7 @@
 </table>
 </p>
 
+<logic:present name="previousInfoExecutionPeriod">
 <p id="otherSem">
 <table class="tab_lay" cellspacing="0" width="90%">
 	<tr>
@@ -233,10 +236,8 @@
 		</tr>
 		<% } %>
 	</logic:greaterThan>
-	
-	
 </table>
-
+</p>
 </logic:present>
 
-</p>
+</logic:present>

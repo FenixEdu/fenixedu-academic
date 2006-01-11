@@ -59,7 +59,7 @@ public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements 
                         ExecutionPeriod executionPeriodFromExecutionCourse = executionCourse.getExecutionPeriod();
                        
                         if (executionPeriodFromExecutionCourse.getIdInternal().equals(currentExecutionPeriod.getIdInternal())
-                                || executionPeriodFromExecutionCourse.getIdInternal().equals(previouseExecutionPeriod.getIdInternal())) {
+                                || (previouseExecutionPeriod != null && executionPeriodFromExecutionCourse.getIdInternal().equals(previouseExecutionPeriod.getIdInternal()))) {
                             for (Iterator iteratorCCS = curricularCourse.getScopes().iterator(); iteratorCCS.hasNext();) {
                                 CurricularCourseScope curricularCourseScope = (CurricularCourseScope) iteratorCCS.next();
 

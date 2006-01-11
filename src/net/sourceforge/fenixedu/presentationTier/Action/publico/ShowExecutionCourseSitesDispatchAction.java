@@ -70,32 +70,37 @@ public class ShowExecutionCourseSitesDispatchAction extends FenixContextDispatch
         		ExecutionCourseView executionCourseView = (ExecutionCourseView) iterator.next();    
 
         		int curricularYear = executionCourseView.getCurricularYear().intValue();
-        		boolean previousExecPeriod = executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
+                boolean previousExecPeriod = previousExecutionPeriod != null && executionCourseView.getExecutionPeriodOID().equals(previousExecutionPeriod.getIdInternal());
         		switch (curricularYear) {
         			case 1:
         			case 2:
-        				if (previousExecPeriod) {  
-            				executionCourseViewsTablePrevious1_2.appendToColumn(curricularYear-1,executionCourseView);
-            			} else {
-            				executionCourseViewsTableCurrent1_2.appendToColumn(curricularYear-1,executionCourseView);
-            			}
-        				break;
-        			case 3:
-        			case 4:
-
-        				if (previousExecPeriod) {
-        					executionCourseViewsTablePrevious3_4.appendToColumn(curricularYear-3,executionCourseView);
-        				} else {
-        					executionCourseViewsTableCurrent3_4.appendToColumn(curricularYear-3,executionCourseView);
-        				}
-        				break;
-        			case 5:
-        				if (previousExecPeriod) {
-        					executionCourseViewsTablePrevious5.appendToColumn(curricularYear-5,executionCourseView);
-        				} else {
-        					executionCourseViewsTableCurrent5.appendToColumn(curricularYear-5,executionCourseView);
-        				}
-        				break;
+                        if (previousExecPeriod) {  
+                            if (previousExecutionPeriod != null) {
+                                executionCourseViewsTablePrevious1_2.appendToColumn(curricularYear-1,executionCourseView);
+                            }
+                        } else {
+                            executionCourseViewsTableCurrent1_2.appendToColumn(curricularYear-1,executionCourseView);
+                        }
+                        break;
+                    case 3:
+                    case 4:
+                        if (previousExecPeriod) {
+                            if (previousExecutionPeriod != null) {
+                                executionCourseViewsTablePrevious3_4.appendToColumn(curricularYear-3,executionCourseView);
+                            }
+                        } else {
+                            executionCourseViewsTableCurrent3_4.appendToColumn(curricularYear-3,executionCourseView);
+                        }
+                        break;
+                    case 5:
+                        if (previousExecPeriod) {
+                            if (previousExecutionPeriod != null) {
+                                executionCourseViewsTablePrevious5.appendToColumn(curricularYear-5,executionCourseView);
+                            }
+                        } else {
+                            executionCourseViewsTableCurrent5.appendToColumn(curricularYear-5,executionCourseView);
+                        }
+                        break;
         		}
         	}
         				
