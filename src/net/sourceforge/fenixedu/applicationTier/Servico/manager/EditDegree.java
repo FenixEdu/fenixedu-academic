@@ -36,13 +36,15 @@ public class EditDegree implements IService {
 
             // assert unique degree code and unique pair name/type
             for (Degree degree : degrees) {
-                if (degree.getSigla().equalsIgnoreCase(infoDegree.getSigla())) {
-                    throw new FenixServiceException("error.existing.code");
-                }
-                if ((degree.getNome().equalsIgnoreCase(infoDegree.getNome()) || degree.getNameEn()
-                        .equalsIgnoreCase(infoDegree.getNameEn()))
-                        && degree.getTipoCurso().equals(infoDegree.getTipoCurso())) {
-                    throw new FenixServiceException("error.existing.name.and.type");
+                if (degree != degreeToEdit) {
+                    if (degree.getSigla().equalsIgnoreCase(infoDegree.getSigla())) {
+                        throw new FenixServiceException("error.existing.code");
+                    }
+                    if ((degree.getNome().equalsIgnoreCase(infoDegree.getNome()) || degree.getNameEn()
+                            .equalsIgnoreCase(infoDegree.getNameEn()))
+                            && degree.getTipoCurso().equals(infoDegree.getTipoCurso())) {
+                        throw new FenixServiceException("error.existing.name.and.type");
+                    }
                 }
             }
         }

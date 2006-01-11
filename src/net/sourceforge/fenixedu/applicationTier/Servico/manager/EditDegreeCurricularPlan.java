@@ -33,19 +33,21 @@ public class EditDegreeCurricularPlan implements IService {
             throw new FenixServiceException("message.nonExistingDegreeCurricularPlan");
         }
 
+        final Degree degree = dcpToEdit.getDegree();
+        if (degree == null) {
+            throw new FenixServiceException("message.nonExistingDegree");
+        }
+        
         // assert unique pair name/degree
         final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
         for (DegreeCurricularPlan dcp : dcps) {
-            if (dcp.getDegree().getIdInternal().equals(infoDcp.getInfoDegree().getIdInternal())
-                    && dcp.getName().equalsIgnoreCase(infoDcp.getName())) {
-                throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
+            if (dcp != dcpToEdit) {
+                if (dcp.getDegree().getIdInternal().equals(infoDcp.getInfoDegree().getIdInternal())
+                        && dcp.getName().equalsIgnoreCase(infoDcp.getName())) {
+                    throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
+                }
             }
-        }
-
-        final Degree degree = dcpToEdit.getDegree();
-        if (degree == null) {
-            throw new FenixServiceException("message.nonExistingDegree");
         }
 
         dcpToEdit.edit(infoDcp.getName(), infoDcp.getState(), infoDcp.getInitialDate(), infoDcp

@@ -39,13 +39,15 @@ public class EditDegree implements IService {
 
             // assert unique degree code and unique pair name/type
             for (Degree degree : degrees) {
-                if (degree.getAcronym().equalsIgnoreCase(acronym)) {
-                    throw new FenixServiceException("error.existing.degree.acronym");
-                }
-                if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(
-                        nameEn))
-                        && degree.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
-                    throw new FenixServiceException("error.existing.degree.name.and.type");
+                if (degree != degreeToEdit) {
+                    if (degree.getAcronym().equalsIgnoreCase(acronym)) {
+                        throw new FenixServiceException("error.existing.degree.acronym");
+                    }
+                    if ((degree.getNome().equalsIgnoreCase(name) || degree.getNameEn().equalsIgnoreCase(
+                            nameEn))
+                            && degree.getBolonhaDegreeType().equals(bolonhaDegreeType)) {
+                        throw new FenixServiceException("error.existing.degree.name.and.type");
+                    }
                 }
             }
         }
