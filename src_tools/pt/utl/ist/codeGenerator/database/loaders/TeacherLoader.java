@@ -53,11 +53,9 @@ public class TeacherLoader extends PersonLoader {
             final String username = row.getCell((short) 0).getStringCellValue();
 
 			final Integer teacherNumber = Integer.valueOf(new Double(row.getCell((short) 34).getNumericCellValue()).intValue());
-			final String CATEGORY = row.getCell((short) 35).getStringCellValue();
 
             final Teacher teacher = new Teacher();
             teacher.setTeacherNumber(teacherNumber);
-            //teacher.setCategory(categories.get(CATEGORY));
 
             final Person person = people.get(username);
             teacher.setPerson(person);

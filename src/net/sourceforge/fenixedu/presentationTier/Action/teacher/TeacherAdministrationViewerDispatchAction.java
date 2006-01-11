@@ -76,7 +76,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionEx
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.exceptions.notAuthorizedActionDeleteException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.mapping.SiteManagementActionMapping;
