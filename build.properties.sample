@@ -1,0 +1,373 @@
+#------------------------------------------------------------------------------
+# General Configuration
+#------------------------------------------------------------------------------
+#
+#   htttp.host: host where the application will run
+#   http.port: port on which the application will be available
+#   app.name: name of the application
+#   application: application to install. Valid options are: extranet, intranet
+#   index.html.link: initial page to be displayed from applications root
+#   login.page: absolute path to the login page
+#
+htttp.host=localhost
+http.port=8080
+app.name=ciapl
+app.context=ciapl
+manager.filter.pattern=nothing
+
+index.html.link.localhost=siteMap.do
+index.html.link.localhost.localdomain=siteMap.do
+index.html.link.salad21=loginPage.jsp
+index.html.link.salad21.ist.utl.pt=loginPage.jsp
+login.page=https://fenix.ist.utl.pt/privado
+institution.url=http://www.ist.utl.pt
+#
+#
+#------------------------------------------------------------------------------
+# Web Container Configuration
+#------------------------------------------------------------------------------
+#
+#   app.path: relative path the application will be accesible under
+#   manager.username: username of web container manager for installing the app
+#   manager.password: the password of the web container manager
+#   manager.url: absolute path to the web container managment interface
+#
+app.path=/${app.name}
+manager.username=admin
+manager.password=admin
+manager.url=http://localhost:8080/manager
+#
+#
+#------------------------------------------------------------------------------
+# Data Repository Configuration
+#------------------------------------------------------------------------------
+#
+#   default.persistenceSupport: fully qualified classname of the default
+#                               persistence support class. Available values:
+#         net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB
+#         net.sourceforge.fenixedu.persistenceTier.versionedObjects.VersionedObjectsPersistenceSupport
+#         net.sourceforge.fenixedu.persistenceTier.delegatedObjects.DelegatePersistenceSupport
+#   db.name: name of the database used by the application
+#
+#   db.user: username with necessary authorization to access the database
+#   db.pass: password for indicated username
+#   db.alias: alias used to connect to database
+#
+#   db.assiduousness.name: 
+#   db.assiduousness.platform: 
+#   db.assiduousness.driver: 
+#   db.assiduousness.protocol: 
+#   db.assiduousness.subprotocol: 
+#   db.assiduousness.user: 
+#   db.assiduousness.pass: 
+#   db.assiduousness.alias: 
+#   db.assiduousness.validationQuery: 
+#
+#   db.personFilter.name: 
+#   db.personFilter.platform: 
+#   db.personFilter.driver: 
+#   db.personFilter.protocol: 
+#   db.personFilter.subprotocol: 
+#   db.personFilter.user: 
+#   db.personFilter.pass: 
+#   db.personFilter.alias: 
+#   db.personFilter.validationQuery: 
+#   db.personFilter.other: 
+#   db.personFilter.errorFile: 
+#   db.personFilter.log: 
+#
+#   db.slide.driver: 
+#   db.slide.alias: 
+#   db.slide.user: 
+#   db.slide.pass: 
+#   slide.config: 
+#
+default.persistenceSupport=net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB
+
+db.name=ciapl
+db.user=root
+db.pass=
+db.alias=//localhost:3306/ciapl?useUnicode=true&amp;characterEncoding=latin1
+
+db.assiduousness.name=AssiduidadeOracleTeste
+db.assiduousness.platform=MySQL
+db.assiduousness.driver=com.mysql.jdbc.Driver
+db.assiduousness.protocol=jdbc
+db.assiduousness.subprotocol=mysql
+db.assiduousness.user=root
+db.assiduousness.pass=
+db.assiduousness.alias=//localhost:3306/AssiduidadeOracleTeste
+db.assiduousness.validationQuery=select 1
+
+db.projectManagement.name=AssiduidadeOracleTeste
+db.projectManagement.platform=MySQL
+db.projectManagement.driver=com.mysql.jdbc.Driver
+db.projectManagement.protocol=jdbc
+db.projectManagement.subprotocol=mysql
+db.projectManagement.user=root
+db.projectManagement.pass=
+db.projectManagement.alias=//localhost:3306/AssiduidadeOracleTeste
+db.projectManagement.validationQuery=select 1
+
+db.personFilter.name=personFilter
+db.personFilter.platform=MySQL
+db.personFilter.driver=com.mysql.jdbc.Driver
+db.personFilter.protocol=jdbc
+db.personFilter.subprotocol=mysql
+db.personFilter.user=root
+db.personFilter.pass=
+db.personFilter.alias=//localhost:3306/personFilter
+db.personFilter.validationQuery=select 1
+db.personFilter.other=-1
+db.personFilter.errorFile=FicheiroErros.txt
+db.personFilter.log=true
+
+db.slide.driver=com.mysql.jdbc.Driver
+db.slide.alias=mysql://localhost:3306/slide
+db.slide.user=root
+db.slide.pass=
+slide.config=/home/gedl/workspace/fenix-head/build/WEB-INF/classes/Domain.xml
+
+script.isAlive.check.db=false
+script.isAlive.check.slide=false
+#
+#
+#------------------------------------------------------------------------------
+# Allowed Roles Configuration
+#------------------------------------------------------------------------------
+#
+#  filter.hostnames: comma seperated list of hostnames. The specified hostname
+#                    can is expected to be anything following the http:// 
+#                    string.
+#  filter.hostname.<hostname>: comma seperated list of RoleTypes that are to
+#                              be provided by the server <hostname>.
+#
+filter.hostnames=localhost,localhost.localdomain,salad21,salad21.ist.utl.pt
+filter.hostname.localhost=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
+        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
+    GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER, BOLONHA_MANAGER
+filter.hostname.localhost.localdomain=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
+        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
+    GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER, BOLONHA_MANAGER
+filter.hostname.salad21=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
+        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
+    GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER, BOLONHA_MANAGER
+filter.hostname.salad21.ist.utl.pt=PERSON,STUDENT,TEACHER,TIME_TABLE_MANAGER,MASTER_DEGREE_CANDIDATE, \
+        MASTER_DEGREE_ADMINISTRATIVE_OFFICE,TREASURY,COORDINATOR,EMPLOYEE,MANAGEMENT_ASSIDUOUSNESS, \
+        MANAGER, DEGREE_ADMINISTRATIVE_OFFICE, CREDITS_MANAGER, DEPARTMENT_CREDITS_MANAGER, ERASMUS, \
+    DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER, SCIENTIFIC_COUNCIL, ADMINISTRATOR, OPERATOR, \
+    SEMINARIES_COORDINATOR, WEBSITE_MANAGER, GRANT_OWNER, GRANT_OWNER_MANAGER, DEPARTMENT_MEMBER, DEPARTMENT_ADMINISTRATIVE_OFFICE, \
+    GEP, DIRECTIVE_COUNCIL, DELEGATE, FIRST_TIME_STUDENT, PROJECTS_MANAGER, INSTITUCIONAL_PROJECTS_MANAGER, BOLONHA_MANAGER
+#
+#
+#------------------------------------------------------------------------------
+# FTP Configuration's
+#------------------------------------------------------------------------------
+#
+#   ftp.IST.server.user: 
+#   ftp.IST.server.pass: 
+#   ftp.IST.server.address: 
+#	ftp.IST.scp.command:
+#	ftp.IST.scp.args:
+#   ftp.degree.grades.server.user: 
+#   ftp.degree.grades.server.pass: 
+#   ftp.degree.grades.server.address: 
+#
+ftp.IST.server.user=ciist
+ftp.IST.server.pass=desenvolvimento
+ftp.IST.server.address=saladd2.ist.utl.pt
+ftp.IST.scp.command=command
+ftp.IST.scp.args=args
+
+ftp.degree.grades.server.user=user
+ftp.degree.grades.server.pass=pass
+ftp.degree.grades.server.address=address
+#
+#
+#------------------------------------------------------------------------------
+# Cache Configuration
+#------------------------------------------------------------------------------
+#
+#   ObjectCacheClass: cache implementation to use. Possible values are:
+#                        - org.apache.ojb.broker.cache.ObjectCacheDefaultImpl
+#                        - org.apache.ojb.broker.cache.ObjectCacheEmptyImpl
+#                        - org.apache.ojb.broker.cache.ObjectCachePerBrokerImpl
+#                        - org.apache.ojb.broker.cache.ObjectCacheJCSPerClassImpl
+#                        - org.apache.ojb.broker.cache.ObjectCachePerClassImpl
+#                        - net.sourceforge.fenixedu.persistenceTier.cache.FenixObjectCacheDefaultImpl
+#                        - net.sourceforge.fenixedu.persistenceTier.cache.ObjectCacheOSCacheImpl
+#   cache.event.listeners: set this to:
+#       com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener
+#                          to use javagroups clustering. This must be set for use on 
+#                          distributed systems. Also, ObjectCacheOSCacheImpl must be
+#                          used for the distributed cache to work.
+#   cache.cluster.multicast.ip: multicast ip address to use with javagroups clustering.
+#
+ObjectCacheClass=net.sourceforge.fenixedu.persistenceTier.cache.FenixCacheWrapper
+cache.event.listeners=
+cache.cluster.multicast.ip=231.12.21.132
+#
+#
+#------------------------------------------------------------------------------
+# SMS Configuration
+#------------------------------------------------------------------------------
+#
+#   sms.gateway.host:
+#   sms.gateway.port:
+#   sms.gateway.uri:
+#   sms.gateway.protocol:
+#   sms.gateway.username:
+#   sms.gateway.password:
+#   sms.delivery.host:
+#   sms.delivery.port:
+#   sms.delivery.uri:
+#   sms.delivery.protocol:
+#   sms.delivery.username:
+#   sms.delivery.password:
+#
+sms.gateway.host=localhost
+sms.gateway.port=13013
+sms.gateway.uri=/cgi-bin/sendsms
+sms.gateway.protocol=http
+sms.gateway.username=
+sms.gateway.password=
+sms.delivery.host=localhost
+sms.delivery.port=8080
+sms.delivery.uri=/ciapl/publico/smsController.do
+sms.delivery.protocol=http
+sms.delivery.username=
+sms.delivery.password=
+#
+#
+#------------------------------------------------------------------------------
+# Auto Task Configuration
+#------------------------------------------------------------------------------
+#
+#   gratuity.situation.creator.task.hour: Hour at which the task will be
+#                                         launched to create the gratuity
+#                                         situations. set to -1 to deactivate.
+#
+gratuity.situation.creator.task.hour=-1
+#
+#
+#------------------------------------------------------------------------------
+# FAQ Configuration
+#------------------------------------------------------------------------------
+#
+#   enrollment.faq.url: url to the enrollment FAQ
+#
+enrollment.faq.url=http://fenix-ashes.ist.utl.pt:8080/confluence/display/FAQ/FAQ-Inscri%25E7%25F5es
+#
+#
+#------------------------------------------------------------------------------
+# Logging Configuration
+#------------------------------------------------------------------------------
+#
+#   log.profile.dir: name of dir where profiling log will be stored
+#   log.profile.filename: name of file where profiling log will be stored
+#   log.image.directory: directory to where dynamic images for log reports
+#                        are generated. It must end with the applications
+#                        context followed by images/logs
+#   log4j.email.smtp.host: 
+#   log4j.email.smtp.from: 
+#   log4j.email.smtp.to: 
+#   log4j.email.smtp.subject: 
+#
+log.profile.dir=/tmp
+log.profile.filename=profileing.log
+log.image.directory=/home/gedl/workspace/fenix-head/build/standalone/ciapl/images/logs
+log4j.email.smtp.host=localhost
+log4j.email.smtp.from=Me
+log4j.email.smtp.to=You
+log4j.email.smtp.subject=Hello
+#
+#
+#------------------------------------------------------------------------------
+# ServiceManager Configuration
+#------------------------------------------------------------------------------
+#
+#   application.filterBroker: name of the filter broker that will be used in the application
+#		Possible values are:	- pt.utl.ist.berserk.logic.filterManager.FilterBroker
+#								- net.sourceforge.fenixedu.applicationTier.Filtro.FenixFilterBroker
+#
+application.filterBroker=pt.utl.ist.berserk.logic.filterManager.FilterBroker
+#
+#
+#------------------------------------------------------------------------------
+# Testing Configuration
+#------------------------------------------------------------------------------
+#
+#   JdbcAccessClass: implementation to use for accessing the data repository.
+#                    the default value is
+#                         org.apache.ojb.broker.accesslayer.JdbcAccessImpl
+#                    For testing the application with ClickUnit the following
+#                    implementation should be used:
+#                         net.sourceforge.fenixedu.persistence.persistenceTiercAccessRollbackImpl
+#                    This latter implementation stores the inverse operations
+#                    performed on the database, so that the database state can
+#                    be roled back to the initial state. In production env's
+#                    the default implementation must be used!!! Using this 
+#                    latter implementation in production is a major security
+#                    hole!
+#   roleback.filename: The filename to where the 
+#                         net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
+#                      implementation will write the inverse sql operations. This
+#                      file is generated in cronilogical order. When reverting 
+#                      database state, the sql instructions should be executed
+#                      starting from the end of the file.
+#
+JdbcAccessClass=net.sourceforge.fenixedu.persistenceTier.AccessLayer.JdbcAccessRollbackImpl
+roleback.filename=/tmp/roleback.sql
+#
+#
+#------------------------------------------------------------------------------
+# Validation/Verification Configuration
+#------------------------------------------------------------------------------
+#
+#   verify_serializable: flag that enables/disables serialization checking of
+#                        service results
+#
+struts.validation.doctype.url=file:///home/gedl/workspace/fenix-head/metadata/dtds/validator_1_0.dtd
+#
+#
+#-----------------------------------------------------------------------------
+# Cms Configuration
+#-----------------------------------------------------------------------------
+cms.mailer.username=xptze
+cms.mailer.password=xptze
+#
+#
+#----------------------------------------------
+# Authentication Service
+#----------------------------------------------
+authenticationService=net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
+changePassService=net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword
+#
+#
+#------------------------------------------------------------------------------
+# End of build.properties.sample file
+#------------------------------------------------------------------------------
+
+
+## Characters that can't be used directly in ant build files
+line.seperator=\n
+character.lessthan=<
+character.dollar=$
+
+## Complex constructions that contain characters that's can't
+## be used directly in ant build files
+allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-8859-15"?>\n \
+		\t<project default="generate-properties-file" name="Auto-Generated-Build-File">\n \
+			\t\t<property file="build.properties"/>\n \
+			\t\t<target name="generate-properties-file"> \n\n
+allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
+allowed-roles.newline.instruction=${line.seperator}
