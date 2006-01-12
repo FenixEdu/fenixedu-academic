@@ -250,7 +250,7 @@ margin-bottom: 0.25em;
 		<h:outputText value="<tr><th>#{bundle['label.identification']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.evaluationDate']}</th>" escape="false" />
 		<h:outputText value="<th>#{bundle['label.lesson.room']}</th>" escape="false" />
-		<h:outputText value="<th>#{bundle['label.enrolmentPeriodNoBR']}</th>" escape="false" />
+		<h:outputText value="<th></th>" escape="false" />
 		<h:outputText value="<th></th>" escape="false" />
 		<h:outputText value="<th></th></tr>" escape="false" />
 		
@@ -286,27 +286,8 @@ margin-bottom: 0.25em;
 
 				<h:outputText value="<td>#{manageEvaluationsForStudent.studentRooms[evaluation.idInternal]}</td>" escape="false"/>
 
-				<h:outputText value="<td>" escape="false" />				
-				<h:outputText value=" #{bundle['label.lesson.beginning']}: " escape="false" />
-				<h:panelGroup rendered="#{!empty evaluation.enrollmentBeginDayDate}">
-					<h:outputFormat value="{0, date, dd/MM/yyyy} - " escape="false">
-						<f:param value="#{evaluation.enrollmentBeginDayDate}" />
-					</h:outputFormat>
-					<h:outputFormat value="{0, date, HH:mm}<br/>" escape="false" >
-						<f:param value="#{evaluation.enrollmentBeginTimeDate}" />
-					</h:outputFormat>
-				</h:panelGroup>
-				<h:outputText value=" #{bundle['label.lesson.end']}: " escape="false" />
-				<h:panelGroup rendered="#{!empty evaluation.enrollmentEndDayDate}">
-					<h:outputFormat value="{0, date, dd/MM/yyyy} - " escape="false">
-						<f:param value="#{evaluation.enrollmentEndDayDate}" />
-					</h:outputFormat>				
-					<h:outputFormat value="{0, date, HH:mm}" >
-						<f:param value="#{evaluation.enrollmentEndTimeDate}" />
-					</h:outputFormat>
-				</h:panelGroup>
-				<h:outputText value="</td>" escape="false" />
-				<h:outputText value="<td class='eval_green'>-</td>" escape="false" />
+				<h:outputText value="<td></td>" escape="false" />
+				<h:outputText value="<td></td>" escape="false" />				
 				<h:outputText value="<td></td></tr>" escape="false" />
 			</fc:dataRepeater>
 		</h:panelGroup>
