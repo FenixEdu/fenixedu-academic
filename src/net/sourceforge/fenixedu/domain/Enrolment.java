@@ -95,12 +95,9 @@ public class Enrolment extends Enrolment_Base {
         while (attendsIter.hasNext()) {
             Attends attends = attendsIter.next();
 
-            try {
-                attendsIter.remove();
-                attends.removeEnrolment();
-                attends.delete();
-            } catch (DomainException e) {
-            }
+            attendsIter.remove();
+            attends.removeEnrolment();
+            attends.delete();
         }
 
         Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsIterator();
@@ -392,11 +389,7 @@ public class Enrolment extends Enrolment_Base {
                 });
 
                 if (attend != null) {
-                    try {
-                        attend.delete();
-                    } catch (DomainException e) {
-                        // nothing to be done
-                    }
+                    attend.delete();
                 }
             }
         } else {
