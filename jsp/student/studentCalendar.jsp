@@ -53,14 +53,18 @@
 				<f:selectItem itemLabel="#{bundle['label.evaluation.shortname.project']}" itemValue="net.sourceforge.fenixedu.domain.Project"/>
 			</h:selectOneMenu>
 		</h:panelGrid>
-
 		<h:outputText value="<br/><br/>" escape="false"/>
+		
+		<h:panelGroup rendered="#{empty studentCalendar.calendarStartDate || empty studentCalendar.calendarEndDate}">
+			<h:outputText value="#{bundle['error.noAttendsForStudent']}" styleClass="infoMsg" />
+		</h:panelGroup>
 
-	 	<fc:fenixCalendar
-		 		begin="#{studentCalendar.calendarStartDate}"
-		 		end="#{studentCalendar.calendarEndDate}"
-		 		editLinkPage="#{studentCalendar.applicationContext}/publico/viewSite.do"
-		 		editLinkParameters="#{studentCalendar.calendarLinks}"/>
+		<h:panelGroup rendered="#{!empty studentCalendar.calendarStartDate && !empty studentCalendar.calendarEndDate}">		
+		 	<fc:fenixCalendar
+			 		begin="#{studentCalendar.calendarStartDate}"
+			 		end="#{studentCalendar.calendarEndDate}"
+			 		editLinkPage="#{studentCalendar.applicationContext}/publico/viewSite.do"
+			 		editLinkParameters="#{studentCalendar.calendarLinks}"/>
+		</h:panelGroup>
 	</h:form>
-
 </ft:tilesView>

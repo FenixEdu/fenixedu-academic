@@ -75,7 +75,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	public Collection<ExecutionCourse> getExecutionCourses() throws FenixFilterException, FenixServiceException {
 		final ExecutionPeriod executionPeriod = getExecutionPeriod();
 
-		if (executionCourses == null || executionPeriod != executionCourses.iterator().next().getExecutionPeriod()) {
+		if (executionCourses == null || (!executionCourses.isEmpty() && executionPeriod != executionCourses.iterator().next().getExecutionPeriod())) {
 	        final Student student = getStudent();
 
 	        executionCourses = new TreeSet<ExecutionCourse>(executionCourseComparator);
@@ -129,7 +129,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         		return executionDegree.getPeriodLessonsFirstSemester().getStart();
         	} else if (executionDegree != null && executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodLessonsSecondSemester() != null) {
         		return executionDegree.getPeriodLessonsSecondSemester().getStart();
-        	} else {
+        	} else if (executionPeriod != null) {
         		return executionPeriod.getBeginDate();
         	}
         } else {
@@ -168,7 +168,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         		return executionDegree.getPeriodExamsFirstSemester().getEnd();
         	} else if (executionDegree != null && executionPeriod.getSemester().intValue() == 2 && executionDegree.getPeriodExamsSecondSemester() != null) {
         		return executionDegree.getPeriodExamsSecondSemester().getEnd();
-        	} else {
+        	} else if (executionPeriod != null){
         		return executionPeriod.getEndDate();
         	}
         } else {
@@ -193,7 +193,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     private ExecutionDegree findExecutinDegree(final DegreeCurricularPlan degreeCurricularPlan, final ExecutionPeriod executionPeriod) {
         if (degreeCurricularPlan != null) {
             for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
-                if (executionDegree.getExecutionYear() == executionPeriod.getExecutionYear()) {
+                if (executionPeriod != null && executionDegree.getExecutionYear() == executionPeriod.getExecutionYear()) {
                     return executionDegree;
                 }
             }
