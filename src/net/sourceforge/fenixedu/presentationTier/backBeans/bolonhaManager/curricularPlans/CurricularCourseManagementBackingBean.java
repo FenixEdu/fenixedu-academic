@@ -35,7 +35,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
+    private final ResourceBundle bolonhaBundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
     private final ResourceBundle enumerationBundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
     private final ResourceBundle domainExceptionBundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
     private final Integer NO_SELECTION = 0;    
@@ -148,7 +148,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getCurricularYears() {
         final List<SelectItem> result = new ArrayList<SelectItem>(5);
-        result.add(new SelectItem(this.NO_SELECTION, messages.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         for (int i = 1; i <= 5; i++) {
             result.add(new SelectItem(Integer.valueOf(i), String.valueOf(i) + "º"));
         }
@@ -158,7 +158,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public List<SelectItem> getCurricularSemesters() {
         final List<SelectItem> result = new ArrayList<SelectItem>(2);
         
-        result.add(new SelectItem(this.NO_SELECTION, messages.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         result.add(new SelectItem(Integer.valueOf(1), String.valueOf(1) + "º"));
         result.add(new SelectItem(Integer.valueOf(2), String.valueOf(2) + "º"));
         return result;
@@ -265,27 +265,28 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         try {
             checkCompetenceCourse();
             checkCourseGroup();
+            checkCurricularSemesterAndYear();
             Object args[] = {getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
                     getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID()};
             ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", args);
         } catch (FenixActionException e) {
-            this.addErrorMessage(messages.getString(e.getMessage()));
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
         } catch (FenixFilterException e) {
-            this.addErrorMessage(messages.getString("error.notAuthorized"));
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "buildCurricularPlan";
         } catch (FenixServiceException e) {
-            this.setErrorMessage(messages.getString(e.getMessage()));
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
         } catch (DomainException e) {
             this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(messages.getString("general.error"));
+            this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
         } 
         
-        addInfoMessage(messages.getString("curricularCourseCreated"));
+        addInfoMessage(bolonhaBundle.getString("curricularCourseCreated"));
         return "buildCurricularPlan";
     }
 
@@ -296,12 +297,12 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             ServiceUtils.executeService(getUserView(), "EditCurricularCourse", args);
            
         } catch (FenixServiceException e) {
-            addErrorMessage(messages.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (FenixActionException e) {
-            addErrorMessage(messages.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
         
-        addInfoMessage(messages.getString("curricularCourseEdited"));
+        addInfoMessage(bolonhaBundle.getString("curricularCourseEdited"));
         return "";
     }
     
@@ -325,10 +326,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private void checkCurricularSemesterAndYear() throws FenixFilterException, FenixServiceException, FenixActionException {
         if (getCurricularSemesterID() == null || getCurricularSemesterID().equals(this.NO_SELECTION)) {
-            throw new FenixActionException("choose.request");
+            throw new FenixActionException("error.mustChooseACurricularSemester");
         }
         if (getCurricularYearID() == null || getCurricularYearID().equals(this.NO_SELECTION)) {
-            throw new FenixActionException("choose.request");
+            throw new FenixActionException("error.mustChooseACurricularYear");
         }
     }
     
@@ -341,23 +342,23 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     getCurricularSemesterID() };
             ServiceUtils.executeService(getUserView(), "AddContextToCurricularCourse", args);
         } catch (FenixActionException e) {
-            this.addErrorMessage(messages.getString(e.getMessage()));
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
         } catch (FenixFilterException e) {
-            this.addErrorMessage(messages.getString("error.notAuthorized"));
+            this.addErrorMessage(bolonhaBundle.getString("error.notAuthorized"));
             return "buildCurricularPlan";
         } catch (FenixServiceException e) {
-            this.setErrorMessage(messages.getString(e.getMessage()));
+            this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
         } catch (DomainException e) {
             this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
             return "";
         } catch (Exception e) {
-            this.addErrorMessage(messages.getString("general.error"));
+            this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
         } 
         
-        addInfoMessage(messages.getString("addedNewContextToCurricularCourse"));
+        addInfoMessage(bolonhaBundle.getString("addedNewContextToCurricularCourse"));
         setContextID(0); // resetContextID
         return "buildCurricularPlan";
     }
@@ -372,9 +373,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(messages.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (FenixActionException e) {
-            addErrorMessage(messages.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
         return "";
     }
@@ -394,7 +395,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(messages.getString(e.getMessage()));
+            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
     }
     
@@ -408,7 +409,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readDepartmentUnits() throws FenixFilterException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, messages.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         try {
             Date now = Calendar.getInstance().getTime();
             for (final Unit unit : (List<Unit>) readAllDomainObjects(Unit.class)) {
@@ -429,7 +430,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
     private List<SelectItem> readCompetenceCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, messages.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         final Unit departmentUnit = getDepartmentUnit();
         if (departmentUnit != null) {
             final List<CompetenceCourse> competenceCourses = new ArrayList<CompetenceCourse>();
@@ -450,7 +451,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, messages.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         final DegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
         if (degreeModule instanceof CourseGroup) {
             collectChildCourseGroups(result, (CourseGroup) degreeModule, "");
@@ -474,7 +475,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readCurricularCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(this.NO_SELECTION, messages.getString("choose")));
+        result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
         for (final CurricularCourse curricularCourse : getDegreeCurricularPlan()
                 .getDcpCurricularCourses()) {
             result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));
