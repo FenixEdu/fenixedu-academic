@@ -101,8 +101,12 @@
 	</h:panelGrid>
 	<br/><hr>
 	<h:form>
-		<h:panelGroup rendered="#{empty CompetenceCourseManagement.action}">
+		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.action}">
 			<h:commandButton styleClass="inputbutton" action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />
+		</h:panelGroup>
+		
+		<h:panelGroup rendered="#{empty CompetenceCourseManagement.action}">
+			<h:commandButton styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
 		</h:panelGroup>
 	</h:form>
 </ft:tilesView>

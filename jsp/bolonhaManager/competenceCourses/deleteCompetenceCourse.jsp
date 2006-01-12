@@ -32,7 +32,7 @@
 		<br/>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/><br/>
 		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" styleClass="error"/>
-		<br/><br/>
+		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			action="#{CompetenceCourseManagement.deleteCompetenceCourse}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}"
