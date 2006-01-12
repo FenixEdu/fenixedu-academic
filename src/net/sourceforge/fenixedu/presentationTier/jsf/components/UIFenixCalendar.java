@@ -41,9 +41,9 @@ public class UIFenixCalendar extends UIInput {
         Calendar end = getDateArgument("end");
 
         if (begin == null || end == null) {
-            writer.write("begin and end dates must be specified");
+            writer.write("<!-- begin and end dates must be specified -->");
         } else if (!end.after(begin)) {
-            writer.write("end date must be after begin date");
+            writer.write("<!-- end date must be after begin date -->");
         } else {
             if (begin.get(Calendar.MONTH) == end.get(Calendar.MONTH)) {
                 encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin, end);
