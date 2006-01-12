@@ -36,7 +36,7 @@ public class Attends extends Attends_Base {
 
 	public void delete() throws DomainException {
 		
-		if (!hasAnyStudentGroups() && !hasAnyAssociatedMarks()) {
+		if (!hasAnyShiftEnrolments() && !hasAnyStudentGroups() && !hasAnyAssociatedMarks()) {
 			removeAluno();
 			removeDisciplinaExecucao();
 			removeEnrolment();
@@ -46,7 +46,16 @@ public class Attends extends Attends_Base {
 			throw new DomainException("error.attends.cant.delete");
 	}
 	
-	public FinalMark getFinalMark() {
+	private boolean hasAnyShiftEnrolments() {
+	    for (Shift shift : this.getDisciplinaExecucao().getAssociatedShifts()) {
+            if (shift.getStudents().contains(this.getAluno())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public FinalMark getFinalMark() {
 		for (Mark mark : getAssociatedMarks()) {
 			if(mark instanceof FinalMark) {
 				return (FinalMark) mark;
