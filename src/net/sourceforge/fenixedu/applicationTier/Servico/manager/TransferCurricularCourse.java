@@ -41,10 +41,12 @@ public class TransferCurricularCourse implements IService {
                     }
                 });
 
+        deleteShiftStudents(sourceExecutionCourse, curricularCourse);
+        
         Set<Integer> transferedStudents = new HashSet<Integer>();
         transferAttends(destinationExecutionCourseId, sourceExecutionCourse, destinationExecutionCourse,
                 curricularCourse, transferedStudents);
-        deleteShiftStudents(sourceExecutionCourse, transferedStudents);
+        
 
         sourceExecutionCourse.removeAssociatedCurricularCourses(curricularCourse);
         destinationExecutionCourse.addAssociatedCurricularCourses(curricularCourse);
@@ -91,10 +93,10 @@ public class TransferCurricularCourse implements IService {
 
     /**
      * @param sourceExecutionCourse
-     * @param transferedStudents
+     * @param curricularCourse
      * @throws ExcepcaoPersistencia
      */
-    private void deleteShiftStudents(ExecutionCourse sourceExecutionCourse, Set transferedStudents)
+    private void deleteShiftStudents(ExecutionCourse sourceExecutionCourse, CurricularCourse curricularCourse)
             throws ExcepcaoPersistencia {
         List<Shift> shifts = sourceExecutionCourse.getAssociatedShifts();
 
@@ -102,7 +104,9 @@ public class TransferCurricularCourse implements IService {
             Iterator<Student> iter = shift.getStudentsIterator();
             while (iter.hasNext()) {
                 Student student = iter.next();
-                if (transferedStudents.contains(student.getIdInternal())) {
+                Attends attend = sourceExecutionCourse.getAttendsByStudent(student);
+                
+                if (attend.getEnrolment() != null && attend.getEnrolment().getCurricularCourse() == curricularCourse) {
                     iter.remove();
                 }
             }
