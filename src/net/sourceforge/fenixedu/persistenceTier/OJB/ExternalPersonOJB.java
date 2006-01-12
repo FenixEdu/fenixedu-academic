@@ -82,13 +82,14 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
         Criteria criteria = new Criteria();
         criteria.addEqualTo("person.idDocumentType", IDDocumentType.EXTERNAL);
 
-        externalPerson = (ExternalPerson) queryList(ExternalPerson.class, criteria,
-                "person.numeroDocumentoIdentificacao", false).get(0);
-        String lastIdStr = null;
-        if (externalPerson == null) {
-            lastIdStr = "0";
-        } else {
-            lastIdStr = externalPerson.getPerson().getNumeroDocumentoIdentificacao();
+        String lastIdStr = "0";
+        List<ExternalPerson> externalPeople = queryList(ExternalPerson.class,
+                criteria, "person.numeroDocumentoIdentificacao", false);
+        if (!externalPeople.isEmpty()) {
+            externalPerson = (ExternalPerson) externalPeople.get(0);
+            if (externalPerson != null) {
+                lastIdStr = externalPerson.getPerson().getNumeroDocumentoIdentificacao();
+            }
         }
 
         return lastIdStr;
