@@ -97,7 +97,7 @@ public class PersonRole extends PersonRole_Base {
             removeRoleIfPresent(person, RoleType.COORDINATOR);
             removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
             removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
-            removeRoleIfPresent(person, RoleType.EMPLOYEE);
+            //removeRoleIfPresent(person, RoleType.EMPLOYEE);
             break;
 
         case EMPLOYEE:

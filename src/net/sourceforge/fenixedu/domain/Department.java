@@ -33,7 +33,7 @@ public class Department extends Department_Base {
 
     public List<Employee> getCurrentActiveWorkingEmployees() {
         Unit unit = this.getUnit();
-        List<Employee> employees = new ArrayList<Employee>();
+        Set<Employee> employees = new HashSet<Employee>();
         Date currentDate = Calendar.getInstance().getTime();
 
         if (unit != null) {
@@ -52,13 +52,29 @@ public class Department extends Department_Base {
                 }
             }
         }
-        return employees;
+        return new ArrayList<Employee>(employees);
     }
 
+    public List<Employee> getWorkingEmployees(Date begin, Date end) {
+        Unit unit = this.getUnit();
+        Set<Employee> employees = new HashSet<Employee>();
+
+        if (unit != null) {
+            for (Contract contract : unit.getWorkingContracts(begin, end)) {
+                employees.add(contract.getEmployee());
+            }
+            for (Unit subUnit : unit.getSubUnits()) {
+                for (Contract contract : subUnit.getWorkingContracts(begin, end)) {
+                    employees.add(contract.getEmployee());
+                }
+            }
+        }
+        return new ArrayList<Employee>(employees);
+    }
+    
     public List<Teacher> getCurrentTeachers() {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = this.getCurrentActiveWorkingEmployees();
-
         addTeachers(teachers, employees);
         return teachers;
     }
@@ -80,24 +96,7 @@ public class Department extends Department_Base {
         }
         return allTeachers;
     }
-
-    public List<Employee> getWorkingEmployees(Date begin, Date end) {
-        Unit unit = this.getUnit();
-        Set<Employee> employees = new HashSet<Employee>();
-
-        if (unit != null) {
-            for (Contract contract : unit.getWorkingContracts(begin, end)) {
-                employees.add(contract.getEmployee());
-            }
-            for (Unit subUnit : unit.getSubUnits()) {
-                for (Contract contract : subUnit.getWorkingContracts(begin, end)) {
-                    employees.add(contract.getEmployee());
-                }
-            }
-        }
-        return new ArrayList<Employee>(employees);
-    }
-
+    
     public List<Teacher> getTeachers(Date begin, Date end) {
         List teachers = new ArrayList();
         addTeachers(teachers, this.getWorkingEmployees(begin, end));
