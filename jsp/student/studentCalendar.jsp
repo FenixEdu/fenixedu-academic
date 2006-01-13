@@ -28,18 +28,19 @@
 </style>
 
 	<h:form>
+		<fc:viewState binding="#{studentCalendar.viewState}"/>
 		<h:outputText value="<h2>#{bundle['link.title.calendar']}</h2>" escape="false"/>
 
 		<h:panelGrid styleClass="infoselected" columns="2">
 			<h:outputText value="#{bundle['label.execution.period']}"/>
 			<h:selectOneMenu id="executionPeriodID" value="#{studentCalendar.executionPeriodID}"
-					onchange="this.form.submit();">
+					onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourses}">
 				<f:selectItems value="#{studentCalendar.executionPeriodSelectItems}"/>
 			</h:selectOneMenu>
 
 			<h:outputText value="#{bundle['label.execution.course']}"/>
 			<h:selectOneMenu id="executionCourseID" value="#{studentCalendar.executionCourseID}"
-					onchange="this.form.submit();">
+					onchange="this.form.submit();" valueChangeListener="#{studentCalendar.resetExecutionCourse}">
 				<f:selectItem itemLabel="#{bundle['label.exceution.courses.all']}" itemValue=""/>
 				<f:selectItems value="#{studentCalendar.executionCourseSelectItems}"/>
 			</h:selectOneMenu>

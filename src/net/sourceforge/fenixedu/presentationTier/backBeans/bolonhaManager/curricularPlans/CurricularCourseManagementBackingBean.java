@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaBundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
@@ -425,7 +424,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }    
 
     private final ComparatorChain comparatorChain = new ComparatorChain(); {
-        comparatorChain.addComparator(new ReverseComparator(new BeanComparator("curricularStage")));
+        comparatorChain.addComparator(new BeanComparator("curricularStage"), true);
         comparatorChain.addComparator(new BeanComparator("name"));    
     }
     private List<SelectItem> readCompetenceCourses() throws FenixFilterException, FenixServiceException {

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -56,8 +56,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 	private ExecutionPeriod executionPeriod;
 	private Student student;
 
-	private Integer executionPeriodID;
-	private Integer executionCourseID;
+    boolean setExecutionCourse = true;
     private String evaluationTypeClassname;
 
 	public Collection<ExecutionPeriod> getExecutionPeriods() throws FenixFilterException, FenixServiceException {
@@ -210,7 +209,7 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
         for (final Attends attends : student.getAssociatedAttends()) {
         	final ExecutionCourse executionCourse = attends.getDisciplinaExecucao();
         	if (executionCourse.getExecutionPeriod() == executionPeriod
-                    && (executionCourseID == null || executionCourseID.equals(executionCourse.getIdInternal()))) {
+                    && (getExecutionCourseID() == null || getExecutionCourseID().equals(executionCourse.getIdInternal()))) {
                 for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
                     if (evaluation instanceof WrittenEvaluation) {
                         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
@@ -316,42 +315,33 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     }
 
 	public Integer getExecutionPeriodID() throws FenixFilterException, FenixServiceException {
-		if (executionPeriodID == null) {
+		if (getViewState().getAttribute("executionPeriodID") == null) {
 			final Collection<ExecutionPeriod> executionPeriods = getExecutionPeriods();
 			if (executionPeriods != null) {
 				for (final ExecutionPeriod executionPeriod : executionPeriods) {
 					if (executionPeriod.getState() == PeriodState.CURRENT) {
-						this.executionPeriodID = executionPeriod.getIdInternal();
+						setExecutionPeriodID(executionPeriod.getIdInternal());
 						break;
 					}
 				}
 			}
 		}
-		return executionPeriodID;
+		return (Integer) getViewState().getAttribute("executionPeriodID");
 	}
 
 	public void setExecutionPeriodID(Integer executionPeriodID) {
-		if (this.executionPeriodID != null || !this.executionPeriodID.equals(executionPeriodID)) {
-			this.executionCourseID = null;
-			this.executionCourses = null;
-		}
-		this.executionPeriodID = executionPeriodID;
-	}
+        getViewState().setAttribute("executionPeriodID", executionPeriodID);
+    }
 
 	public Integer getExecutionCourseID() {
-		return executionCourseID;
+		return (Integer) getViewState().getAttribute("executionCourseID");
 	}
 
-	public void setExecutionCourseID(Integer executionCourseID) throws FenixFilterException, FenixServiceException {
-		this.executionCourseID = executionCourseID;
-        final ExecutionCourse executionCourse = getExecutionCourse();
-        this.executionPeriodID = executionCourse.getExecutionPeriod().getIdInternal();
+	public void setExecutionCourseID(Integer executionCourseID) {
+        if (setExecutionCourse) {
+            getViewState().setAttribute("executionCourseID", executionCourseID);
+        }        
 	}
-
-    public ExecutionCourse getExecutionCourse() throws FenixFilterException, FenixServiceException {
-        final Object[] args = { ExecutionCourse.class, getExecutionCourseID() };
-        return (ExecutionCourse) ServiceUtils.executeService(getUserView(), "ReadDomainObject", args);
-    }
 
     public String getEvaluationTypeClassname() {
         return evaluationTypeClassname;
@@ -360,5 +350,16 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
     public void setEvaluationTypeClassname(final String evaluationTypeClassname) {
         this.evaluationTypeClassname = evaluationTypeClassname;
     }
-
+    
+    public void resetExecutionCourses(ValueChangeEvent event) {
+        getViewState().removeAttribute("executionCourseID");
+        setExecutionCourse = false;
+        this.executionCourses = null;
+    }    
+    
+    public void resetExecutionCourse(ValueChangeEvent event) {
+        if (event.getNewValue() == null) {
+            getViewState().removeAttribute("executionCourseID");
+        }
+    }
 }
