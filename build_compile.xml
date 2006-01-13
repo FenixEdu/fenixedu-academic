@@ -885,22 +885,6 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</java>
 	</target>
 
-	<target name="check-oro">
-		<!--		<java classname="net.sourceforge.fenixedu.dataConsistency.CheckOverlappingRoomOccupations"-->
-		<java classname="net.sourceforge.fenixedu.infrastructuralTier.MailSender"
-				fork="true"
-				failonerror="true"
-				maxmemory="1024m"
-				>
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}"/>
-				<fileset dir="${lib}">
-					<include name="**/*.jar"/>
-				</fileset>
-			</classpath>
-		</java>
-	</target>
-
 	<target name="slide">
 		<java classname="net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport"
 				fork="true"
