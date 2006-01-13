@@ -1,0 +1,314 @@
+/* transitional CSS - 09.01.2006 
+   by João Alfaiate @ Fenix */
+
+
+/* ----------------------
+ ---- Headings ----------
+----------------------- */
+
+/*
+h2 { margin: 0.5em 0 0.5em 0; }
+h3 { margin: 1.5em 0 0.5em 0; }
+*/
+
+/* ----------------------
+ ---- Anchors ----------
+----------------------- */
+
+a.action1 {
+padding-left: 10px;
+margin-right: 10px;
+background: url(../pics/bullet07.gif) left no-repeat;
+}
+
+
+/* ----------------------
+ ---- Classes ----------
+----------------------- */
+
+.aleft { text-align: left; }
+.aright { text-align: right; }
+.acenter { text-align: center; }
+.asterisk1 { color: #d42; }
+.hidden { display: none; }
+.bold { font-weight: bold; }
+.nobullet { list-style: none; }
+.noindent { margin-left: 0; padding-left: 0; }
+.attention { background-color: #ffa; }
+
+.mtop0 { margin-top: 0;}
+.mtop1 { margin-top: 1em; }
+.mtop2 { margin-top: 2em; }
+.mtop3 { margin-top: 3em; }
+.mbottom0 { margin-bottom: 0;}
+.mbottom1 { margin-bottom: 1em;}
+.mbottom2 { margin-bottom: 2em;}
+.mbottom3 { margin-bottom: 3em;}
+.mleft0 { margin-left: 0; }
+.mleft1 { margin-left: 1em; }
+.mvert0 { margin-top: 0; margin-bottom: 0; }
+.mvert1 { margin: 1em 0; }
+.mvert2 { margin: 2em 0; }
+.mvert3 { margin: 3em 0; }
+.indent0 { padding: 0; }
+.indent1 { padding-left: 1em; }
+.indent2 { padding-left: 2em; }
+.indent3 { padding-left: 3em; }
+.valigntop { vertical-align: top; }
+
+table.mtop05 { margin-top: 0.5em; }
+table.smallmargin td { padding: 0.25em; }
+
+/* ----------------------
+ ---- Info Blocks ------
+----------------------- */
+
+.breadcumbs { color: #000; margin-top: 2em; margin-bottom: 3em;}
+.breadcumbs span { /*text-decoration: underline;*/ border-bottom: 1px dotted #000; }
+.breadcumbs span.actual { background-color: #fafac0; background-color: #ffa; }
+
+.infoop2 { margin: 0.5em 0;}
+
+.first { margin: 0; }
+.simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4 { margin: 1.5em 2em; padding: 0.5em 1em; }
+
+.simpleblock1  {
+border: 1px solid #cc8;
+background-color: #ffc;
+}
+.simpleblock2  {
+border-top: 8px solid #aaa;
+border-bottom: 8px solid #aaa;
+background: #444;
+color: #fff;
+}
+.simpleblock3  {
+border-top: 4px solid #ddd;
+padding: 0.5em 1em;
+background: #fff url(../pics/grad64-f5-fff.gif) top repeat-x;
+}
+.simpleblock4  {
+border: 1px solid #ddd;
+background: #fafafa url(../pics/grad32-fa-eee.gif) bottom repeat-x;
+}
+
+
+/* ----------------------
+ ---- Lists ------------
+----------------------- */
+
+ul.list1, ul.list2, ul.list3 {
+list-style: none;
+}
+ul.list1 { }
+ul.list1 li { padding-left: 12px; background: url(../pics/bullet07.gif) left no-repeat; }
+ul.list2 { padding-left: 0; }
+ul.list2 li { padding: 0.25em 0; }
+ul.list3 { }
+ul.list3 li { }
+
+
+/* ----------------------
+ ---- Tables -----------
+----------------------- */
+
+table caption {
+padding: 0.5em 1em 0.1em 1em;
+font-style: italic;
+}
+
+.tstyle1a, .tstyle1b, .tstyle1c, .tstyle2 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+.tstyle1a th, .tstyle1b th, .tstyle1c th, .tstyle2 th {
+padding: 0.5em;
+text-align: center;
+/*font-weight: normal;*/
+}
+.tstyle1a th { border: 1px solid #cccccc; }
+.tstyle1b th { border: 1px solid #ccccc2; }
+.tstyle1c th { border: 1px solid #c8cacc; }
+.tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
+
+.tstyle1a th { background: #f8f8f8 url(../pics/back_32gray.gif) left bottom repeat-x; }
+.tstyle1b th { background: #fafaf6 url(../pics/back_32yellow.gif) left bottom repeat-x; }
+.tstyle1c th { background: #f6f8fa url(../pics/back_32blue.gif) left bottom repeat-x; }
+.tstyle2 th { background: #f8f8f8 url(../pics/back_32gray.gif) left bottom repeat-x; }
+
+.tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td {
+background-color: #fff;
+padding: 0.5em;
+text-align: center;
+}
+
+.tstyle1a td { border: 1px solid #cccccc; }
+.tstyle1b td { border: 1px solid #ccccc2; }
+.tstyle1c td { border: 1px solid #c8cacc; }
+.tstyle2 td { border: none; border-bottom: 1px solid #ccc; }
+
+.tstyle2 td {
+border: none;
+border-bottom: 1px solid #ccc;
+}
+.tstyle1a .highlight1, .tstyle1b .highlight1, .tstyle1c .highlight1, .tstyle2 .highlight1 {
+background-color: #ffb;
+}
+
+.tstyle1a .aleft, .tstyle1b .aleft, .tstyle1c .aleft, .tstyle2 .aleft { text-align: left; }
+.tstyle1a .aright, .tstyle1b .aright, .tstyle1c .aright, .tstyle2 .aright { text-align: right; }
+
+
+/* ----------------------
+ ---- Show Info --------
+----------------------- */
+
+.bgcolor1 { background-color: #fafaf6; }
+.bgcolor1 { background-color: #fbfbf2; }
+.bgcolor1 { background-color: #fcfcf0; }
+
+.showinfo1 {
+border-collapse: collapse;
+margin: 1em 0;
+}
+.showinfo1 th {
+border-top: 1px dotted #bbb;
+border-bottom: 1px dotted #bbb;
+text-align: right; 
+vertical-align: top;
+padding: 0.5em;
+font-weight: normal;
+}
+
+.showinfo1 td {
+border-top: 1px dotted #bbb;
+border-bottom: 1px dotted #bbb;
+padding: 0.5em;
+}
+
+.highlight1 th { background: #ffc; }
+.highlight2 th { font-weight: bold; }
+
+.showinfo2 {
+background-color: #f5f5f5;
+border-collapse: collapse;
+margin: 0.5em 0;
+}
+.showinfo2 tr td {
+border: 1px solid #fff;
+padding: 0.3em;
+}
+
+
+.sfloat {
+padding: 0.5em;
+background-color: #eee;
+}
+
+.sfloat label {
+float: left;
+text-align: right;
+width: 10em;
+display: block;
+padding-right: 0.5em;
+}
+.sfloat span{
+margin-left: 11em;
+display: block;
+}
+
+/* ----------------------
+ ---- Tree -------------
+----------------------- */
+
+ul { margin-top: 0.5em; }
+ul li.tree_label ul  { margin-top: 0; margin-bottom: 0.5em; }
+ul li.tree_label span { border-bottom: 1px dotted #aaa; }
+ul.unit1 li {
+background-color: #fff;
+list-style: none;
+}
+ul.unit2 li {
+background-color: #fff;
+list-style: circle;
+}
+
+.color1 { color: #808060; }
+.color2 { color: #806d5b; }
+.color3 { color: #336699; }
+
+ul.padding1 li { padding: 0.25em 0; }
+
+
+/* ----------------------
+ ---- Feedback  --------
+----------------------- */
+
+.feedback {
+margin: 1em 0;
+padding: 0em 0em 0.2em 0em;
+}
+.feedback h4 {
+margin: 0;
+padding: 0.2em 0.5em 0.2em 26px;
+}
+.feedback p {
+margin: 0;
+padding: 0.2em 0.5em 0.2em 0em;
+}
+
+.error0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #ffeadd; color: #c00; }
+.error1, .error2, .error3 { background-color: #fee; color: #c00; }
+.error1 { border: 2px solid #c00; }
+.error1 h4 { border-bottom: 1px dotted #d00; background: #fff url(../pics/error01.gif) 6px 50% no-repeat; color: #c00; }
+.error2 h4 { border-bottom: 1px dotted #d00; background: #fff url(../pics/error01.gif) 6px 50% no-repeat; color: #c00; }
+.error3 { padding: 0.2em 0.5em 0.2em 26px; background: #fee url(../pics/error01.gif) 6px 50% no-repeat; }
+
+.success0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #dfd; color: #070; }
+.success1, .success2, .success3 { background-color: #efe; color: #070; }
+.success1 { border: 2px solid #0a0; }
+.success1 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../pics/success01.gif) 6px 50% no-repeat; }
+.success1 p { background-color: #efe; }
+.success2 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../pics/success01.gif) 6px 50% no-repeat; }
+.success3 { padding: 0.2em 0.5em 0.2em 23px; background: #efe url(../pics/success01.gif) 6px 50% no-repeat; }
+
+
+/* ----------------------
+ ---- Forms ------------
+----------------------- */
+
+form { margin: 0.5em 0; padding: 0.5em 0; }
+form p { clear: both; margin: 0.5em; }
+span.required { color: #d30; }
+
+fieldset {
+margin: 0;
+padding: 0;
+border: none;
+/*background-color: #f5f5f5;*/
+}
+
+label {
+display: block;
+padding-right: 0.5em;
+}
+
+small {
+display: block;
+margin-left: 10em;
+color: #d55;
+}
+
+.lfloat label {
+float: left;
+text-align: right;
+width: 10em;
+}
+
+.lempty {
+color: #fff;
+}
+
+.lfloat .indent105 {
+margin-left: 10.5em;
+}
