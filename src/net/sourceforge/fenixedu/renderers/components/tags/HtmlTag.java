@@ -99,27 +99,6 @@ public class HtmlTag {
         return this.children;
     }
     
-    /**
-     * @deprecated
-     */
-    public void writeOpenTag(Writer writer) throws IOException {
-        writeOpenTag(writer, "");
-    }
-
-    /**
-     * @deprecated 
-     */
-    public void writeBody(Writer writer) throws IOException {
-        writeBody(writer, "");
-    }
-    
-    /**
-     * @deprecated
-     */
-    public void writeCloseTag(Writer writer) throws IOException {
-        writeCloseTag(writer, "");
-    }
-    
     public void writeTag(PageContext context) throws IOException {
         writeTag(context.getOut());
     }
