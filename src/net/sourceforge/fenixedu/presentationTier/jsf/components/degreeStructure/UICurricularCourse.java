@@ -63,7 +63,7 @@ public class UICurricularCourse extends UIDegreeModule {
         
         writer.startElement("td", this);
         writer.startElement("a", this);
-        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + "action=return", null);
+        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + "&action=return", null);
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
             writer.append(this.degreeModule.getName());
         } else {
