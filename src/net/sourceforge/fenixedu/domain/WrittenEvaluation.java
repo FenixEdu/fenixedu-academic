@@ -164,7 +164,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             OccupationPeriod period) {
 
         checkValidHours(beginning, end);
-
+        
         this.setDayDate(day);
         this.setBeginningDate(beginning);
         this.setEndDate(end);
@@ -172,6 +172,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         this.getAssociatedExecutionCourses().addAll(executionCoursesToAssociate);
         this.getAssociatedCurricularCourseScope().addAll(curricularCourseScopesToAssociate);
 
+        deleteAllRoomOccupations();
         if (rooms != null) {
             associateRooms(rooms, period);
         }
@@ -184,6 +185,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return true;
     }
 
+    private void deleteAllRoomOccupations() {
+        for (; !getAssociatedRoomOccupation().isEmpty(); getAssociatedRoomOccupation().get(0).delete());
+    }
+
     private void associateRooms(final List<Room> rooms, final OccupationPeriod period) {
         final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
         for (final Room room : rooms) {
@@ -192,8 +197,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
                         RoomOccupation.DIARIA, null, this);
             }
         }
-
-        deleteRoomOccupationsNotContainedInList(rooms);
     }
 
     private boolean hasOccupationForRoom(Room room) {
@@ -203,14 +206,6 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             }
         }
         return false;
-    }
-
-    protected void deleteRoomOccupationsNotContainedInList(final List<Room> rooms) {
-        for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
-            if (rooms == null || !rooms.contains(roomOccupation.getRoom())) {
-                roomOccupation.delete();
-            }
-        }
     }
 
     protected void edit(Date day, Date beginning, Date end,
@@ -226,7 +221,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
             throw new DomainException("error.notAuthorizedWrittenEvaluationDelete.withStudent");
         }
         getAssociatedExecutionCourses().clear();
-        deleteRoomOccupationsNotContainedInList(null);
+        deleteAllRoomOccupations();
         getAssociatedCurricularCourseScope().clear();
 
         super.deleteDomainObject();
