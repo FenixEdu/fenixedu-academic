@@ -36,7 +36,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaBundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
     private final ResourceBundle enumerationBundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
-    private final ResourceBundle domainExceptionBundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
+    private final ResourceBundle domainExceptionBundle = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
     private final Integer NO_SELECTION = 0;    
     
     private Integer competenceCourseID = null;
@@ -332,7 +332,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         }
     }
     
-    public String addContext() throws FenixFilterException {
+    public void addContext(ActionEvent event) {
+        addContext();
+    }
+    
+    public String addContext() {
         try {
             checkCourseGroup();
             checkCurricularCourse();
@@ -355,8 +359,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (Exception e) {
             this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
-        } 
-        
+        }         
         addInfoMessage(bolonhaBundle.getString("addedNewContextToCurricularCourse"));
         setContextID(0); // resetContextID
         return "buildCurricularPlan";

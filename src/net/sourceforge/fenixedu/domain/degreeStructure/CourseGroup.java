@@ -87,7 +87,7 @@ public class CourseGroup extends CourseGroup_Base {
     protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularSemester curricularSemester) {
         for (final Context context : this.getDegreeModuleContexts()) {
             if (context.getCourseGroup() == parentCourseGroup) {
-                throw new DomainException("error.contextAlreadyExistForCourseGroup");
+                throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }
     }

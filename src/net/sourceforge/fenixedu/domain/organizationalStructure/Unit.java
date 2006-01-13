@@ -34,21 +34,23 @@ public class Unit extends Unit_Base {
         return allTopUnits;
     }
 
-    public Department getDepartmentUnit(){
+    public Unit getDepartmentUnit(){
         List<Unit> parentUnits = this.getParentUnits();
         if (!parentUnits.isEmpty()) {
             for (Unit parentUnit : parentUnits) {
                 if (unitDepartment(parentUnit)) {
-                    return parentUnit.getDepartment();
+                    return parentUnit;
                 } else if (parentUnit.hasAnyParentUnits()) {
-                    Department department = parentUnit.getDepartmentUnit();
-                    if (department != null) {
-                        return department;
+                    Unit departmentUnit = parentUnit.getDepartmentUnit(); 
+                    if (departmentUnit == null) {
+                        continue;                    
+                    } else {
+                        return departmentUnit;
                     }
                 }
-            }
+            }    
         } else if (unitDepartment(this)) {
-            return this.getDepartment();
+            return this;
         }
         return null;        
     }

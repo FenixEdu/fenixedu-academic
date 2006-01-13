@@ -225,7 +225,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public Unit getDepartmentUnit() {
-        final List<Unit> departmentUnits = this.getUnit().getTopUnits(); 
-        return (departmentUnits.isEmpty()) ? null : this.getUnit().getTopUnits().get(0);
+        return this.getUnit().getDepartmentUnit();         
     }
 }
