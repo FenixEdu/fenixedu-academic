@@ -19,6 +19,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 
 public class Department extends Department_Base {
 
@@ -71,11 +72,21 @@ public class Department extends Department_Base {
         }
         return new ArrayList<Employee>(employees);
     }
-    
+
     public List<Teacher> getCurrentTeachers() {
+        Date currentDate = Calendar.getInstance().getTime();
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = this.getCurrentActiveWorkingEmployees();
-        addTeachers(teachers, employees);
+     
+        for (Employee employee : employees) {
+            Teacher teacher = employee.getPerson().getTeacher();
+            if (teacher != null) {
+                TeacherLegalRegimen legalRegimen = teacher.getLastLegalRegimen();
+                if (legalRegimen != null && legalRegimen.isActive(currentDate)) {
+                    teachers.add(teacher);
+                }
+            }
+        }
         return teachers;
     }
 
@@ -96,17 +107,24 @@ public class Department extends Department_Base {
         }
         return allTeachers;
     }
-    
+
     public List<Teacher> getTeachers(Date begin, Date end) {
         List teachers = new ArrayList();
-        addTeachers(teachers, this.getWorkingEmployees(begin, end));
+        List<Employee> employees = this.getWorkingEmployees(begin, end);
+        for (Employee employee : employees) {
+            Teacher teacher = employee.getPerson().getTeacher();
+            if (teacher != null && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
+                teachers.add(teacher);
+            }
+        }
         return teachers;
     }
 
     public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
         for (Employee employee : getWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
-            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)) {
+            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
+                    && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
                 return teacher;
             }
         }

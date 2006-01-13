@@ -142,6 +142,16 @@ public class Teacher extends Teacher_Base {
         }
         return regimenToReturn;
     }
+    
+    public List<TeacherLegalRegimen> getAllLegalRegimensBelongsToPeriod(Date beginDate, Date endDate){
+        List<TeacherLegalRegimen> legalRegimens = new ArrayList<TeacherLegalRegimen>();
+        for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
+            if(legalRegimen.belongsToPeriod(beginDate, endDate)){
+                legalRegimens.add(legalRegimen);
+            }
+        }
+        return legalRegimens;
+    }
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(
             ExecutionYear executionYear) {

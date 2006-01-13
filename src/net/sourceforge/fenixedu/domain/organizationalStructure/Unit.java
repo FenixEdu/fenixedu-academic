@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Contract;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
@@ -33,6 +34,34 @@ public class Unit extends Unit_Base {
         return allTopUnits;
     }
 
+    public Department getDepartmentUnit(){
+        List<Unit> parentUnits = this.getParentUnits();
+        if (!parentUnits.isEmpty()) {
+            for (Unit parentUnit : parentUnits) {
+                if (unitDepartment(parentUnit)) {
+                    return parentUnit.getDepartment();
+                } else if (parentUnit.hasAnyParentUnits()) {
+                    Department department = parentUnit.getDepartmentUnit();
+                    if (department != null) {
+                        return department;
+                    }
+                }
+            }
+        } else if (unitDepartment(this)) {
+            return this.getDepartment();
+        }
+        return null;        
+    }
+    
+    private boolean unitDepartment(Unit unit){
+        if (unit.getType() != null
+                && unit.getType().equals(UnitType.DEPARTMENT)
+                && unit.getDepartment() != null){
+            return true;
+        }
+        return false;
+    }  
+    
     public List<Unit> getInactiveSubUnits(Date currentDate) {
         List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
@@ -79,10 +108,9 @@ public class Unit extends Unit_Base {
     }
 
     public void delete() {
-        if (!hasAnySubUnits()
-                && (!hasAnyParentUnits() || this.getParentUnits().size() == 1)
-                && !hasAnyFunctions() && !hasAnyWorkingContracts()
-                && !hasAnyMailingContracts() && !hasAnySalaryContracts()) {
+        if (!hasAnySubUnits() && (!hasAnyParentUnits() || this.getParentUnits().size() == 1)
+                && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
+                && !hasAnySalaryContracts() && !hasAnyCompetenceCourses()) {
 
             if (hasAnyParentUnits()) {
                 this.removeParentUnits(this.getParentUnits().get(0));
