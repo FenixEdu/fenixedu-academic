@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
@@ -129,8 +130,11 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         DynaActionForm dynaForm = (DynaValidatorForm) form;
 
         Integer oldDegreeCPId = new Integer(request.getParameter("degreeCurricularPlanId"));
+        Integer degreeId = new Integer(request.getParameter("degreeId")); 
 
         InfoDegreeCurricularPlan newInfoDegreeCP = new InfoDegreeCurricularPlan();
+        InfoDegree infoDegree = new InfoDegree();
+        infoDegree.setIdInternal(degreeId);
 
         String name = (String) dynaForm.get("name");
         String stateString = (String) dynaForm.get("state");
@@ -201,6 +205,7 @@ public class EditDegreeCurricularPlanDispatchAction extends FenixDispatchAction 
         newInfoDegreeCP.setIdInternal(oldDegreeCPId);
         newInfoDegreeCP.setAnotation(anotationtring);
         newInfoDegreeCP.setGradeScale(gradeScale);
+        newInfoDegreeCP.setInfoDegree(infoDegree);
 
         Object args[] = { newInfoDegreeCP };
 
