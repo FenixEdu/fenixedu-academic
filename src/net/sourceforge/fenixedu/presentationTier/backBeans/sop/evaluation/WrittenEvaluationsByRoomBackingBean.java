@@ -283,14 +283,19 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
     	final ExecutionDegree executionDegree = findExecutionDegree(executionCourse);
     	final CurricularSemester curricularSemester = findCurricularSemester(executionCourse);
-    	final CurricularYear curricularYear = curricularSemester.getCurricularYear();
+        CurricularYear curricularYear = null;
+        if (curricularSemester != null) {
+            curricularYear = curricularSemester.getCurricularYear(); 
+        }
 
         final Map<String, String> linkParameters = new HashMap<String, String>();
         linkParameters.put("executionCourseID", executionCourse.getIdInternal().toString());
         linkParameters.put("evaluationID", writtenEvaluation.getIdInternal().toString());
         linkParameters.put("executionPeriodID", executionPeriod.getIdInternal().toString());
         linkParameters.put("executionDegreeID", executionDegree.getIdInternal().toString());
-        linkParameters.put("curricularYearID", curricularYear.getIdInternal().toString());
+        if (curricularYear != null) {
+            linkParameters.put("curricularYearID", curricularYear.getIdInternal().toString());    
+        } 
         linkParameters.put("evaluationTypeClassname", writtenEvaluation.getClass().getName());
         linkParameters.put("executionPeriodOID", this.getExecutionPeriodOID().toString());
         return linkParameters;
