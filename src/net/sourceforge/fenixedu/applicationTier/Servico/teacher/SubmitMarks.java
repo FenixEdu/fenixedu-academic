@@ -1,9 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +47,9 @@ public class SubmitMarks implements IService {
 	private static final String IMPROVMENT = "4";
 	private static final String NORMAL = "0";
 	
+	private static final String NORMAL_DIR = "notas/";
+	private static final String IMPROVMENT_DIR = "melhorias/";
+	
 	public void run(Integer executionCourseID, Integer evaluationID, String[] attendsIDs, Date evaluationDate, IUserView userView) throws ExcepcaoPersistencia, InvalidArgumentsServiceException, OutOfPeriodException {
 		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionCourse persistentExecutionCourse = suportePersistente.getIPersistentExecutionCourse();
@@ -90,33 +92,30 @@ public class SubmitMarks implements IService {
 	}
 
 	private void submitMarks(Map<GenericTrio<String, Degree, CurricularCourse>, List<Attends>> attendsMap, ExecutionCourse executionCourse, FinalEvaluation finalEvaluation, Teacher teacher, Date evaluationDate) throws IOException {
-		List<File> normalFileList = new ArrayList<File>();
-		List<File> improvmentFileList = new ArrayList<File>();
+		Map<String, InputStream> normalFileList = new HashMap<String, InputStream>();
+		Map<String, InputStream> improvmentFileList = new HashMap<String, InputStream>();
 		Integer version = finalEvaluation.getGradesListVersion();
 		Date now = new Date();
 		
 		for (Entry<GenericTrio<String, Degree, CurricularCourse>, List<Attends>> mapEntry : attendsMap.entrySet()) {
 			Map<Attends, FinalMark> marksMap = getMarks(mapEntry.getValue(), finalEvaluation, evaluationDate, now, version);
 			if(mapEntry.getKey().getLeft().equals(IMPROVMENT)) {
-				improvmentFileList.add(getFile(finalEvaluation, mapEntry.getKey().getMiddle(), mapEntry.getKey().getRight(), teacher, marksMap, executionCourse.getExecutionPeriod(), version, IMPROVMENT));
+				addMarksFileToMap(improvmentFileList, finalEvaluation, mapEntry.getKey().getMiddle(), mapEntry.getKey().getRight(), teacher, marksMap, executionCourse.getExecutionPeriod(), version, IMPROVMENT);
 			} else {
-				normalFileList.add(getFile(finalEvaluation, mapEntry.getKey().getMiddle(), mapEntry.getKey().getRight(), teacher, marksMap, executionCourse.getExecutionPeriod(), version, NORMAL));
+				addMarksFileToMap(normalFileList, finalEvaluation, mapEntry.getKey().getMiddle(), mapEntry.getKey().getRight(), teacher, marksMap, executionCourse.getExecutionPeriod(), version, NORMAL);
 			}
 		}
 		
-		Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", normalFileList, "notas/");
-		Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", improvmentFileList, "melhorias/");
+		Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", normalFileList, NORMAL_DIR);
+		Ftp.enviarFicheiros("/DegreeGradesFtpServerConfig.properties", improvmentFileList, IMPROVMENT_DIR);
 	}
 	
-	private File getFile(FinalEvaluation finalEvaluation, Degree degree, CurricularCourse curricularCourse, Teacher teacher, Map<Attends, FinalMark> marksMap, ExecutionPeriod executionPeriod, Integer version, String season) throws IOException {
-		
+	
+
+	private void addMarksFileToMap(Map<String, InputStream> fileMap, FinalEvaluation finalEvaluation, Degree degree, CurricularCourse curricularCourse, Teacher teacher, Map<Attends, FinalMark> marksMap, ExecutionPeriod executionPeriod, Integer version, String season) throws IOException {
 		MarksFile marksFile = new MarksFile(degree, teacher, curricularCourse.getCurricularSemesterWithLowerYearBySemester(executionPeriod.getSemester(), executionPeriod.getEndDate()), curricularCourse, version);
-		File file = new File(System.getProperty("java.io.tmpdir") + File.separator + marksFile.getFileName());
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		marksFile.addLines(marksMap, season);
-		writer.write(marksFile.getFileContent());
-		writer.close();
-		return file;
+		fileMap.put(marksFile.getFileName(), new ByteArrayInputStream(marksFile.getFileContent().getBytes()));
 	}
 
 	private Map<Attends, FinalMark> getMarks(List<Attends> attendsList, FinalEvaluation finalEvaluation, Date evaluationDate, Date when, Integer version) {
