@@ -32,7 +32,7 @@ public class Room extends Room_Base {
         }
 	}
 
-    private boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
+    public boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             Integer frequency, Integer week) {
         for (final RoomOccupation roomOccupation : getRoomOccupations()) {
             if (roomOccupation.roomOccupationForDateAndTime(period, startTime, endTime, dayOfWeek,
