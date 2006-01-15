@@ -53,8 +53,6 @@ public class EditarTurno implements IService {
 			throw new ExistingServiceException("Duplicate Entry: " + otherShiftWithSameNewName.getNome());
 		}
 
-		sp.getITurnoPersistente().simpleLockWrite(shiftToEdit);
-
 		shiftToEdit.setNome(infoShiftNew.getNome());
 		shiftToEdit.setTipo(infoShiftNew.getTipo());
 
@@ -71,7 +69,6 @@ public class EditarTurno implements IService {
 		// course
 		if (shiftToEdit.getAssociatedLessons() != null) {
 			for (int i = 0; i < shiftToEdit.getAssociatedLessons().size(); i++) {
-				sp.getIAulaPersistente().simpleLockWrite(shiftToEdit.getAssociatedLessons().get(i));
 				shiftToEdit.getAssociatedLessons().get(i).setTipo(infoShiftNew.getTipo());
 				shiftToEdit.getAssociatedLessons().get(i).setShift(shiftToEdit);
 

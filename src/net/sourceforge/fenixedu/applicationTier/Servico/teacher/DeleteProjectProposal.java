@@ -111,7 +111,6 @@ public class DeleteProjectProposal implements IService {
                 withdrawalPerson, groupingExecutionCourse, groupProperties);
         for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
             final Person person = (Person) iterator.next();
-            persistentSupport.getIPessoaPersistente().simpleLockWrite(person);
 
             person.getAdvisories().add(advisory);
             advisory.getPeople().add(person);

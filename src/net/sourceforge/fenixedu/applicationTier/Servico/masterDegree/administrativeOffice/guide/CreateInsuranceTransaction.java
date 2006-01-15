@@ -66,9 +66,6 @@ public class CreateInsuranceTransaction implements IService {
                 new Timestamp(Calendar.getInstance().getTimeInMillis()), guideEntry.getDescription(),
                 guide.getPaymentType(), TransactionType.INSURANCE_PAYMENT, Boolean.FALSE, responsible,
                 personAccount, guideEntry, guide.getExecutionDegree().getExecutionYear(), student);
-
-        sp.getIPersistentInsuranceTransaction().lockWrite(insuranceTransaction);
-
     }
 
 }

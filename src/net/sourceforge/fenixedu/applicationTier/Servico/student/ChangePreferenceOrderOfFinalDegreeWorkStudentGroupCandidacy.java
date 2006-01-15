@@ -37,16 +37,13 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy impleme
                     int otherOrderOfPreference = otherGroupProposal.getOrderOfPreference().intValue();
                     if (orderOfPreference.intValue() <= otherOrderOfPreference
                             && groupProposal.getOrderOfPreference().intValue() > otherOrderOfPreference) {
-                        persistentFinalDegreeWork.simpleLockWrite(otherGroupProposal);
                         otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference + 1));
                     } else if (orderOfPreference.intValue() >= otherOrderOfPreference
                             && groupProposal.getOrderOfPreference().intValue() < otherOrderOfPreference) {
-                        persistentFinalDegreeWork.simpleLockWrite(otherGroupProposal);
                         otherGroupProposal.setOrderOfPreference(new Integer(otherOrderOfPreference - 1));
                     }
                 }
             }
-            persistentFinalDegreeWork.simpleLockWrite(groupProposal);
             groupProposal.setOrderOfPreference(orderOfPreference);
         }
         return true;

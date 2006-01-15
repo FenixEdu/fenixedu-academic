@@ -28,10 +28,6 @@ import org.apache.ojb.broker.query.QueryBySQL;
 
 public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersistentExecutionCourse {
 
-    public ExecutionCourseOJB() {
-    }
-
-    
     public List readByCurricularYearAndExecutionPeriodAndExecutionDegree(Integer curricularYear,
             Integer executionPeriodSemestre, String degreeCurricularPlanName, String degreeSigla,
             Integer executionPeriodID) throws ExcepcaoPersistencia {
@@ -205,7 +201,6 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         PersistenceBroker pb = getCurrentPersistenceBroker();
         List collection = (List) pb.getCollectionByQuery(query);
 
-        lockRead(collection);
         return collection;
     }
 

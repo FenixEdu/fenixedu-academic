@@ -52,7 +52,6 @@ public class PublishMarks implements IService {
 
             if (!mark.getMark().equals(mark.getPublishedMark())) {
                 // update published mark
-                persistentMark.simpleLockWrite(mark);
                 mark.setPublishedMark(mark.getMark());
                 if (sendSMS != null && sendSMS.booleanValue()) {
                     if (mark.getAttend().getAluno().getPerson().getTelemovel() != null

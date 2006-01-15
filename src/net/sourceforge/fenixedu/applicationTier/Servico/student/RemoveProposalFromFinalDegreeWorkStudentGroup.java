@@ -40,12 +40,10 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup implements IService {
                 if (!groupProposal.equals(otherGroupProposal)
                         && groupProposal.getOrderOfPreference().intValue() < otherGroupProposal
                                 .getOrderOfPreference().intValue()) {
-                    persistentFinalDegreeWork.simpleLockWrite(otherGroupProposal);
                     otherGroupProposal.setOrderOfPreference(new Integer(otherGroupProposal
                             .getOrderOfPreference().intValue() - 1));
                 }
             }
-            persistentFinalDegreeWork.simpleLockWrite(group);
             group.getGroupProposals().remove(groupProposal);
             return true;
         }

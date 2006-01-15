@@ -44,7 +44,6 @@ public class ApproveCandidates implements IService {
             // Create the new Candidate Situation
 
             CandidateSituation candidateSituation = DomainFactory.makeCandidateSituation();
-            sp.getIPersistentCandidateSituation().simpleLockWrite(candidateSituation);
             candidateSituation.setDate(Calendar.getInstance().getTime());
             candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
             candidateSituation.setRemarks(remarks[i]);

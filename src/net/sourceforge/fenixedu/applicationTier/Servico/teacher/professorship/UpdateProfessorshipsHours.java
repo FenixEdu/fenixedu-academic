@@ -39,7 +39,6 @@ public class UpdateProfessorshipsHours implements IService {
                     try {
                         Double ecHours = Double.valueOf(value);
                         Professorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId, executionCourseId);
-                        professorshipDAO.simpleLockWrite(professorship);
                         professorship.setHours(ecHours);
                     } catch (NumberFormatException e1) {
                         // ignored

@@ -92,7 +92,6 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 				Enrolment enrolment = (Enrolment) iterator.next();
 				if (enrolment.getEnrollmentState() == EnrollmentState.ENROLLED
 						|| enrolment.getEnrollmentState() == EnrollmentState.TEMPORARILY_ENROLLED) {
-					persistentEnrolment.simpleLockWrite(enrolment);
 					enrolment.setEnrollmentState(EnrollmentState.ANNULED);
 				}
 			}
@@ -185,7 +184,6 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 			IPersistentEnrollment persistentEnrolment, Enrolment enrolment) throws ExcepcaoPersistencia {
 		if (newState.equals(StudentCurricularPlanState.ACTIVE)) {
 			if (enrolment.getEnrollmentState() == EnrollmentState.ANNULED) {
-				persistentEnrolment.simpleLockWrite(enrolment);
 				enrolment.setEnrollmentState(EnrollmentState.ENROLLED);
 			}
 		}

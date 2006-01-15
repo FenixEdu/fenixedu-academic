@@ -35,21 +35,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 	return Transaction.getOJBBroker();
     }
 
-    protected void lockRead(List list) {
-    }
-
-    public void lockWrite(Object obj) {
-    }
-
-    protected void lockRead(Object obj) {
-    }
-
-    /**
-     * @deprecated
-     */
-    public void simpleLockWrite(DomainObject obj) {
-    }
-
     /**
      * Locks to WRITE and delete the object from database...
      * 

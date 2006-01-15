@@ -65,8 +65,6 @@ public class ChangeMasterDegreeThesisData implements IService {
         }
 
         storedMasterDegreeThesisDataVersion.setCurrentState(new State(State.INACTIVE));
-        sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(
-                storedMasterDegreeThesisDataVersion);
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersionWithChosenDissertationTitle = sp
                 .getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(
@@ -101,12 +99,7 @@ public class ChangeMasterDegreeThesisData implements IService {
         masterDegreeThesisDataVersion.getExternalGuiders().addAll(externalGuiders);
         masterDegreeThesisDataVersion.getExternalAssistentGuiders().addAll(externalAssistentGuiders);
 
-        sp.getIPersistentMasterDegreeThesisDataVersion().simpleLockWrite(masterDegreeThesisDataVersion);
-
         studentCurricularPlan.getMasterDegreeThesis().getMasterDegreeThesisDataVersions().add(
                 masterDegreeThesisDataVersion);
-        sp.getIPersistentMasterDegreeThesis().simpleLockWrite(
-                studentCurricularPlan.getMasterDegreeThesis());
-
     }
 }

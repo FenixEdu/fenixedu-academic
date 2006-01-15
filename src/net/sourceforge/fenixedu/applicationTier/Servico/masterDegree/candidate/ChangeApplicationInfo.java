@@ -73,7 +73,6 @@ public class ChangeApplicationInfo implements IService {
         }
 
         // Change Candidate Information
-        sp.getIPersistentMasterDegreeCandidate().simpleLockWrite(existingMasterDegreeCandidate);
         existingMasterDegreeCandidate.setAverage(newMasterDegreeCandidate.getAverage());
         existingMasterDegreeCandidate.setMajorDegree(newMasterDegreeCandidate.getMajorDegree());
         existingMasterDegreeCandidate.setMajorDegreeSchool(newMasterDegreeCandidate
@@ -87,7 +86,6 @@ public class ChangeApplicationInfo implements IService {
         oldCandidateSituation.setValidation(new State(State.INACTIVE));
 
         CandidateSituation activeCandidateSituation = DomainFactory.makeCandidateSituation();
-        sp.getIPersistentCandidateSituation().simpleLockWrite(activeCandidateSituation);
         activeCandidateSituation.setDate(Calendar.getInstance().getTime());
         activeCandidateSituation.setSituation(SituationName.PENDENT_COM_DADOS_OBJ);
         activeCandidateSituation.setValidation(new State(State.ACTIVE));

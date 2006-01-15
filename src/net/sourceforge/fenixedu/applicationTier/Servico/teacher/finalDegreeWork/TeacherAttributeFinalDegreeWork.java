@@ -43,7 +43,6 @@ public class TeacherAttributeFinalDegreeWork implements IService {
 							.toString());
 				}
 
-				persistentFinalWork.simpleLockWrite(proposal);
 				if (proposal.getGroupAttributedByTeacher() == null
 						|| !proposal.getGroupAttributedByTeacher().equals(group)) {
 					proposal.setGroupAttributedByTeacher(group);
@@ -52,7 +51,6 @@ public class TeacherAttributeFinalDegreeWork implements IService {
 						Proposal otherProposal = otherGroupProposal.getFinalDegreeWorkProposal();
 						if (!otherProposal.getIdInternal().equals(proposal.getIdInternal())
 								&& group.equals(otherProposal.getGroupAttributedByTeacher())) {
-							persistentFinalWork.simpleLockWrite(otherProposal);
 							otherProposal.setGroupAttributedByTeacher(null);
 						}
 					}

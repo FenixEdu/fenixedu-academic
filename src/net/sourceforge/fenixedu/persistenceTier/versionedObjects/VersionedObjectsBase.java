@@ -19,23 +19,11 @@ public abstract class VersionedObjectsBase {
         // Versioned Object DAO's!");
     }
 
-    public void lockWrite(Object obj) throws ExcepcaoPersistencia {
-        throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
-    }
-
     public final DomainObject readByOId(final DomainObject obj, final boolean lockWrite) {
         try {
             return SuportePersistenteOJB.getInstance().getIPersistentObject().readByOId(obj, false);
         } catch (ExcepcaoPersistencia e) {
             return null;
-        }
-    }
-
-    public void simpleLockWrite(DomainObject obj) {
-        try {
-            SuportePersistenteOJB.getInstance().getIPersistentObject().simpleLockWrite(obj);
-        } catch (ExcepcaoPersistencia e) {
-            throw new RuntimeException(e);
         }
     }
 

@@ -63,7 +63,6 @@ public class ChangeMasterDegreeProof implements IService {
                 .getIPersistentMasterDegreeProofVersion().readActiveByStudentCurricularPlan(
                         studentCurricularPlan);
         if (storedMasterDegreeProofVersion != null) {
-            sp.getIPersistentMasterDegreeProofVersion().simpleLockWrite(storedMasterDegreeProofVersion);
             storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
         }
 

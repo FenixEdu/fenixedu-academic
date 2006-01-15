@@ -14,8 +14,6 @@ public interface IPersistentObject {
 
     void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
 
-    void lockWrite(Object obj) throws ExcepcaoPersistencia;
-
     /**
      * Reads an object from db using his <code>Identity</code>.
      * 
@@ -28,17 +26,6 @@ public interface IPersistentObject {
      * @deprecated
      */
     public DomainObject readByOId(DomainObject obj, boolean lockWrite);
-
-    /**
-     * Only locks the object for write. <b>Doesn't do anything else </b>
-     * 
-     * @param obj
-     *            object to lock
-     * @throws ExcepcaoPersistencia
-     *             when can't lock object.
-     * @deprecated
-     */
-    void simpleLockWrite(DomainObject obj) throws ExcepcaoPersistencia;
 
     public DomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
 

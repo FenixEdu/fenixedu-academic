@@ -30,8 +30,7 @@ public class EditSeniorInfo implements IService {
             if (seniorToEdit == null) {
                 throw new NonExistingServiceException("Object doesn't exist!");
             }
-            
-            persistentSenior.simpleLockWrite(seniorToEdit);
+
             copyProperties(changedInfoSenior, seniorToEdit);
     }
 

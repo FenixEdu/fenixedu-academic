@@ -78,7 +78,6 @@ public class EditGroupShift implements IService {
         if (!result) {
             throw new InvalidChangeServiceException();
         }
-        persistentSupport.getIPersistentObject().simpleLockWrite(studentGroup);
         studentGroup.setShift(shift);
 
         return true;

@@ -69,7 +69,6 @@ public class DeleteTeacher implements IService {
             if (summaryList != null && !summaryList.isEmpty()) {
                 for (Iterator iterator = summaryList.iterator(); iterator.hasNext();) {
                     Summary summary = (Summary) iterator.next();
-                    persistentSummary.simpleLockWrite(summary);
                     summary.setProfessorship(null);
                     summary.setKeyProfessorship(null);
                 }

@@ -58,10 +58,7 @@ public class SubmitFinalWorkProposal implements IService {
             proposal = DomainFactory.makeProposal();
             int proposalNumber = scheduleing.getCurrentProposalNumber().intValue();
             proposal.setProposalNumber(new Integer(proposalNumber));
-            persistentFinalWork.simpleLockWrite(scheduleing);
             scheduleing.setCurrentProposalNumber(new Integer(proposalNumber + 1));
-        } else {
-            persistentFinalWork.simpleLockWrite(proposal);
         }
 
         proposal.setCompanionName(infoProposal.getCompanionName());

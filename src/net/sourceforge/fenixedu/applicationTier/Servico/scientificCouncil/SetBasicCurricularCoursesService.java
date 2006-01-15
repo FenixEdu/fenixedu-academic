@@ -48,7 +48,6 @@ public class SetBasicCurricularCoursesService implements IService {
 		while (itBCCourses.hasNext()) {
 
 			basicCourse = (CurricularCourse) itBCCourses.next();
-			persistentCurricularCourse.simpleLockWrite(basicCourse);
 			basicCourse.setBasic(new Boolean(false));
 		}
 

@@ -66,7 +66,6 @@ public class GuideOJB extends PersistentObjectOJB implements IPersistentGuide {
             return null;
         }
 
-        lockRead(result);
         return result;
     }
 

@@ -31,8 +31,6 @@ public class RemoveClasses implements IService {
         Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class,
                 infoShift.getIdInternal());
 
-        sp.getITurnoPersistente().simpleLockWrite(shift);
-
         for (int i = 0; i < classOIDs.size(); i++) {
             SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
                     (Integer) classOIDs.get(i));

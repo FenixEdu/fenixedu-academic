@@ -53,7 +53,6 @@ public class ConfirmAttributionOfFinalDegreeWork implements IService {
                         GroupStudent groupStudent = (GroupStudent) groupStudents.get(i);
                         if (groupStudent != null
                                 && groupStudent.getStudent().getPerson().getUsername().equals(username)) {
-                            persistentFinalDegreeWork.simpleLockWrite(groupStudent);
                             groupStudent.setFinalDegreeWorkProposalConfirmation(groupProposal
                                     .getFinalDegreeWorkProposal());
                         }

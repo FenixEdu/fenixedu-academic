@@ -119,7 +119,6 @@ public class RejectNewProjectProposal implements IService {
 				groupPropertiesExecutionCourse);
 		for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
 			final Person person = (Person) iterator.next();
-			sp.getIPessoaPersistente().simpleLockWrite(person);
 
 			person.getAdvisories().add(advisory);
 			advisory.getPeople().add(person);

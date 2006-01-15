@@ -94,7 +94,6 @@ public class InsertEvaluationMarks implements IService {
 
                     } else {
                         if (!domainMark.getMark().equals(mark)) {
-                            persistentMark.simpleLockWrite(domainMark);
                             domainMark.setMark(mark.toUpperCase());
                         }
                     }

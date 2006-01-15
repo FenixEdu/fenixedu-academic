@@ -52,8 +52,6 @@ public class EstablishFinalDegreeWorkStudentGroup implements IService {
             if (group.getGroupStudents().size() > 1) {
                 throw new GroupStudentCandidaciesExistException();
             }
-
-            persistentFinalDegreeWork.simpleLockWrite(group);
         }
 
         if (group.getExecutionDegree() == null

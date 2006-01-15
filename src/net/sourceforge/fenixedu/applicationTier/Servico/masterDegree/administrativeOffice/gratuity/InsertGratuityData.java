@@ -71,23 +71,16 @@ public class InsertGratuityData implements IService {
 				.readByOID(ExecutionDegree.class,
 						infoGratuityValues.getInfoExecutionDegree().getIdInternal(), true);
 
-		boolean isNew = false;
 		if (gratuityValues == null) // it doesn't exist in database, then
 		// write it
 		{
 			gratuityValues = DomainFactory.makeGratuityValues();
-			persistentGratuityValues.simpleLockWrite(gratuityValues);
-			isNew = true;
 
 			gratuityValues.setExecutionDegree(executionDegree);
-
 		}
 
 		executionDegree.setGratuityValues(gratuityValues);
 
-		if (!isNew) {
-			persistentGratuityValues.simpleLockWrite(gratuityValues);
-		}
 		validatePaymentPhasesWithTransaction(sp, gratuityValues);
 		// validateGratuitySituationWithTransaction(sp, gratuityValues);
 

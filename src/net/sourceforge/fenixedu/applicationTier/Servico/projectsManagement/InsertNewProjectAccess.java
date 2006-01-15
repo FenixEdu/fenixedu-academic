@@ -42,7 +42,6 @@ public class InsertNewProjectAccess implements IService {
             isCostCenter = Boolean.TRUE;
         }
         if (!hasProjectsManagerRole(person, roleType)) {
-            sp.getIPessoaPersistente().simpleLockWrite(person);
             person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(roleType));
         }
         List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorCode, true);
@@ -78,7 +77,6 @@ public class InsertNewProjectAccess implements IService {
         }
 
         if (!hasProjectsManagerRole(person, roleType)) {
-            sp.getIPessoaPersistente().simpleLockWrite(person);
             person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(roleType));
         }
 

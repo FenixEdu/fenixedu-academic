@@ -28,7 +28,6 @@ public class DistributedTestAdvisoryOJB extends PersistentObjectOJB implements I
         criteria.addEqualTo("keyDistributedTest", distributedTest.getIdInternal());
         List<DistributedTestAdvisory> result = queryList(DistributedTestAdvisory.class, criteria);
         for (DistributedTestAdvisory distributedTestAdvisory : result) {
-            simpleLockWrite(distributedTestAdvisory.getAdvisory());
             distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
         }
     }
@@ -40,7 +39,6 @@ public class DistributedTestAdvisoryOJB extends PersistentObjectOJB implements I
         Calendar expiresDate = Calendar.getInstance();
         expiresDate.add(Calendar.DAY_OF_MONTH, -1);
         for (DistributedTestAdvisory distributedTestAdvisory : result) {
-            simpleLockWrite(distributedTestAdvisory.getAdvisory());
             distributedTestAdvisory.getAdvisory().setExpires(expiresDate.getTime());
             delete(distributedTestAdvisory);
         }

@@ -75,8 +75,6 @@ public class AcceptNewProjectProposal implements IService {
 			throw new InvalidSituationServiceException(name);
 		}
 
-		persistentExportGrouping.simpleLockWrite(groupPropertiesExecutionCourse);
-
 		List attendsStudentNumbers = new ArrayList();
 		List attends = groupPropertiesExecutionCourse.getGrouping().getAttends();
 		Iterator iterAttendsInAttendsSet = attends.iterator();
@@ -123,7 +121,6 @@ public class AcceptNewProjectProposal implements IService {
 						groupPropertiesExecutionCourse, receiverPerson, senderPerson);
 				for (final Iterator iterator = groupTeachers.iterator(); iterator.hasNext();) {
 					final Person person = (Person) iterator.next();
-					sp.getIPessoaPersistente().simpleLockWrite(person);
 
 					person.getAdvisories().add(advisory);
 					advisory.getPeople().add(person);
@@ -149,7 +146,6 @@ public class AcceptNewProjectProposal implements IService {
 				groupPropertiesExecutionCourse, receiverPerson, senderPerson);
 		for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
 			final Person person = (Person) iterator.next();
-			sp.getIPessoaPersistente().simpleLockWrite(person);
 
 			person.getAdvisories().add(advisoryAux);
 			advisoryAux.getPeople().add(person);

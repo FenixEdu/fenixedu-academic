@@ -125,7 +125,6 @@ public class NewProjectProposal implements IService {
                     startExecutionCourse, groupProperties, senderPerson);
             for (final Iterator iterator = group.iterator(); iterator.hasNext();) {
                 final Person person = (Person) iterator.next();
-                sp.getIPessoaPersistente().simpleLockWrite(person);
 
                 person.getAdvisories().add(advisory);
                 advisory.getPeople().add(person);
@@ -174,8 +173,6 @@ public class NewProjectProposal implements IService {
                     startExecutionCourse, groupProperties, senderPerson);
             for (final Iterator iterator = allOtherProfessors.iterator(); iterator.hasNext();) {
                 final Person person = (Person) iterator.next();
-                sp.getIPessoaPersistente().simpleLockWrite(person);
-
                 person.getAdvisories().add(advisoryAux);
                 advisoryAux.getPeople().add(person);
             }
@@ -185,8 +182,6 @@ public class NewProjectProposal implements IService {
                     startExecutionCourse, groupProperties, senderPerson);
             for (final Iterator iterator = groupAux.iterator(); iterator.hasNext();) {
                 final Person person = (Person) iterator.next();
-                sp.getIPessoaPersistente().simpleLockWrite(person);
-
                 person.getAdvisories().add(advisoryAux);
                 advisoryAux.getPeople().add(person);
             }

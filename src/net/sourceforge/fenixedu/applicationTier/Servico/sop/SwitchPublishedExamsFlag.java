@@ -41,7 +41,6 @@ public class SwitchPublishedExamsFlag implements IService {
                     .getTemporaryExamMap().booleanValue());
 
             for (final ExecutionDegree executionDegree : executionDegrees) {
-                persistentExecutionDegree.simpleLockWrite(executionDegree);
                 executionDegree.setTemporaryExamMap(examsPublicationState);
             }
         }

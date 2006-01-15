@@ -25,7 +25,6 @@ public class DistributedTestAdvisoryVO extends VersionedObjectsBase implements I
         final List<DistributedTestAdvisory> distributedTestAdvisoryList = (List<DistributedTestAdvisory>) readAll(DistributedTestAdvisory.class);
         for (DistributedTestAdvisory distributedTestAdvisory : distributedTestAdvisoryList) {
             if (distributedTestAdvisory.getKeyDistributedTest().equals(distributedTest)) {
-                simpleLockWrite(distributedTestAdvisory.getAdvisory());
                 distributedTestAdvisory.getAdvisory().setExpires(newExpiresDate);
             }
         }
@@ -36,7 +35,6 @@ public class DistributedTestAdvisoryVO extends VersionedObjectsBase implements I
         Calendar expiresDate = Calendar.getInstance();
         expiresDate.add(Calendar.DAY_OF_MONTH, -1);
         for (DistributedTestAdvisory distributedTestAdvisory : distributedTestAdvisoryList) {
-            simpleLockWrite(distributedTestAdvisory.getAdvisory());
             distributedTestAdvisory.getAdvisory().setExpires(expiresDate.getTime());
             deleteByOID(DistributedTestAdvisory.class, distributedTestAdvisory.getIdInternal());
         }

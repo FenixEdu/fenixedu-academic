@@ -40,8 +40,6 @@ public class RemoveProjectAccess implements IService {
         if (persistentProjectAccess.countByPersonAndCC(person, isCostCenter) == 1) {
             IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
             if (persistentSuportOracle.getIPersistentProject().countUserProject(getUserNumber(sp, person)) == 0) {
-                sp.getIPessoaPersistente().simpleLockWrite(person);
-
                 Iterator iter = person.getPersonRolesIterator();
                 while (iter.hasNext()) {
                     Role role = (Role) iter.next();

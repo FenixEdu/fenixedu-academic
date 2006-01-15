@@ -96,7 +96,6 @@ public class StudentTestQuestionOJB extends PersistentObjectOJB implements IPers
         QueryByCriteria queryCriteria = new QueryByCriteria(StudentTestQuestion.class, criteria, false);
         queryCriteria.addGroupBy("student.number");
         List<StudentTestQuestion> result = queryList(queryCriteria);
-        lockRead(result);
         List<Student> studentList = new ArrayList<Student>();
         for (StudentTestQuestion studentTestQuestion : result) {
             if (!studentList.contains(studentTestQuestion.getStudent()))

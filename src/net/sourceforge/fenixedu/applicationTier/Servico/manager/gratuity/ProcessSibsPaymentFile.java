@@ -153,8 +153,6 @@ public class ProcessSibsPaymentFile implements IService {
                                         new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
                                         TransactionType.INSURANCE_PAYMENT, new Boolean(false),
                                         responsiblePerson, personAccount, null, executionYear, student);
-
-                        insuranceTransactionDAO.lockWrite(insuranceTransaction);
                     }
                 }
                 continue;
