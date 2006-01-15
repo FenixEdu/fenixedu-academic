@@ -194,7 +194,7 @@ public class ReadCoursesInformation implements IService {
         return infoSiteCourseInformation;
     }
 
-    private Integer getNumberOfLessons(List infoLessons, String lessonType, ISuportePersistente sp)
+    public static Integer getNumberOfLessons(List infoLessons, String lessonType, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
         final String lessonTypeForPredicate = lessonType;
         ITurnoPersistente persistentShift = sp.getITurnoPersistente();
@@ -235,11 +235,10 @@ public class ReadCoursesInformation implements IService {
                         temp.add(infoLesson);
                     // }
                     }
-                }
+            }
             return new Integer(temp.size());
         }
         return null;
-
     }
 
     /**

@@ -13,6 +13,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.gep.ReadCoursesInformation;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -53,7 +54,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
@@ -62,7 +62,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 
@@ -133,13 +132,13 @@ public class ReadCourseInformation implements IService {
 
         List infoLessons = getInfoLessons(executionCourse, sp);
         infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
-        infoSiteCourseInformation.setNumberOfTheoLessons(getNumberOfLessons(infoLessons,
+        infoSiteCourseInformation.setNumberOfTheoLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
                 ShiftType.TEORICA.name(), sp));
-        infoSiteCourseInformation.setNumberOfPratLessons(getNumberOfLessons(infoLessons,
+        infoSiteCourseInformation.setNumberOfPratLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
                 ShiftType.PRATICA.name(), sp));
-        infoSiteCourseInformation.setNumberOfTheoPratLessons(getNumberOfLessons(infoLessons,
+        infoSiteCourseInformation.setNumberOfTheoPratLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
                 ShiftType.TEORICO_PRATICA.name(), sp));
-        infoSiteCourseInformation.setNumberOfLabLessons(getNumberOfLessons(infoLessons,
+        infoSiteCourseInformation.setNumberOfLabLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
                 ShiftType.LABORATORIAL.name(), sp));
         IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
         CourseReport courseReport = persistentCourseReport
@@ -337,64 +336,6 @@ public class ReadCourseInformation implements IService {
             infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
         }
         return infoDepartments;
-    }
-
-    /**
-     * @param infoLessons
-     * @param i
-     * @return
-     */
-    private Integer getNumberOfLessons(List infoLessons, String lessonType, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
-
-        final String lessonTypeForPredicate = lessonType;
-        ITurnoPersistente persistentShift = sp.getITurnoPersistente();
-        IAulaPersistente persistentLesson = sp.getIAulaPersistente();
-        List lessonsOfType = (List) CollectionUtils.select(infoLessons, new Predicate() {
-
-            public boolean evaluate(Object arg0) {
-                if (((InfoLesson) arg0).getTipo().name() == lessonTypeForPredicate) {
-                    return true;
-                }
-                return false;
-            }
-        });
-        if (lessonsOfType != null && !lessonsOfType.isEmpty()) {
-
-            Iterator iter = lessonsOfType.iterator();
-            Shift shift = null;
-
-            List temp = new ArrayList();
-            while (iter.hasNext()) {
-                // List shifts;
-                // Shift shift2;
-
-                InfoLesson infoLesson = (InfoLesson) iter.next();
-                Lesson lesson = (Lesson) persistentLesson.readByOID(Lesson.class, infoLesson
-                        .getIdInternal());
-
-                // shifts = persistentShift.readByLesson(lesson);
-                shift = persistentShift.readByLesson(lesson.getIdInternal());
-
-                // if (shifts != null && !shifts.isEmpty()) {
-                if (shift != null) {
-
-                    // Shift aux = (Shift) shifts.get(0);
-                    // Shift aux = (Shift) shift2;
-                    /*
-                     * if (shift == null) { //shift = aux; shift = shift2; } if
-                     * (shift == aux) {
-                     */
-                        temp.add(infoLesson);
-                    // }
-                    }
-
-            }
-            return new Integer(temp.size());
-        }
-
-        return null;
-
     }
 
     /**
