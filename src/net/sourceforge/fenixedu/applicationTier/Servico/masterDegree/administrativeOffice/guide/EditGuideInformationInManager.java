@@ -20,7 +20,7 @@ public class EditGuideInformationInManager implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
+        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
         ExecutionDegree cursoExecucao = sp.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID, executionYear);
 

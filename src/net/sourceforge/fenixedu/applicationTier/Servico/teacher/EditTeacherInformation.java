@@ -62,7 +62,7 @@ public class EditTeacherInformation implements IService {
 			Teacher teacher) throws ExcepcaoPersistencia {
 
         ServiceProviderRegime serviceProviderRegime =
-			(ServiceProviderRegime) persistentObject.readByOID(ServiceProviderRegime.class, infoServiceProviderRegime.getIdInternal(), true);
+			(ServiceProviderRegime) persistentObject.readByOID(ServiceProviderRegime.class, infoServiceProviderRegime.getIdInternal());
 
         if (serviceProviderRegime == null) {
 			serviceProviderRegime = DomainFactory.makeServiceProviderRegime(teacher, infoServiceProviderRegime);
@@ -78,7 +78,7 @@ public class EditTeacherInformation implements IService {
 	private void editWeeklyOcupation(InfoWeeklyOcupation infoWeeklyOcupation, Teacher teacher) throws ExcepcaoPersistencia {
         // Weekly Ocupation
         WeeklyOcupation weeklyOcupation = (WeeklyOcupation) persistentObject.readByOID(
-                WeeklyOcupation.class, infoWeeklyOcupation.getIdInternal(), true);
+                WeeklyOcupation.class, infoWeeklyOcupation.getIdInternal());
 
         if (weeklyOcupation == null) {
 			weeklyOcupation = DomainFactory.makeWeeklyOcupation(teacher, infoWeeklyOcupation);
@@ -94,7 +94,7 @@ public class EditTeacherInformation implements IService {
         // Orientations
         for (InfoOrientation infoOrientation : infoOrientations) {
             Orientation orientation = (Orientation) persistentObject.readByOID(
-                    Orientation.class, infoOrientation.getIdInternal(), true);
+                    Orientation.class, infoOrientation.getIdInternal());
 
             if (orientation == null) {
 				orientation = DomainFactory.makeOrientation(teacher, infoOrientation);
@@ -111,7 +111,7 @@ public class EditTeacherInformation implements IService {
         // Publications Number
         for (InfoPublicationsNumber infoPublicationsNumber : infoPublicationsNumbers) {
             PublicationsNumber publicationsNumber = (PublicationsNumber)
-            	persistentObject.readByOID(PublicationsNumber.class, infoPublicationsNumber.getIdInternal(), true);
+            	persistentObject.readByOID(PublicationsNumber.class, infoPublicationsNumber.getIdInternal());
 
             if (publicationsNumber == null) {
 				publicationsNumber = DomainFactory.makePublicationsNumber(teacher, infoPublicationsNumber);

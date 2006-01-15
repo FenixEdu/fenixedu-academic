@@ -50,7 +50,7 @@ public class ConfigureWebSiteSections implements IService {
 			}
 
 			webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
-					infoWebSiteSection.getIdInternal(), true);
+					infoWebSiteSection.getIdInternal());
 
 			if (webSiteSection == null) {
 				throw new NonExistingServiceException("websiteSection");

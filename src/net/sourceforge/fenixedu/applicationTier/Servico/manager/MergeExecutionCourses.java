@@ -69,7 +69,7 @@ public class MergeExecutionCourses implements IService {
         }
 
         final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentExecutionCourse
-                .readByOID(ExecutionCourse.class, executionCourseDestinationId, true);
+                .readByOID(ExecutionCourse.class, executionCourseDestinationId);
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();
         }

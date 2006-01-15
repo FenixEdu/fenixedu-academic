@@ -24,7 +24,7 @@ public class CreateGuideSituation implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID, true);
+        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
 
         for (GuideSituation guideSituation : guide.getGuideSituations()) {
             guideSituation.setState(new State(State.INACTIVE));

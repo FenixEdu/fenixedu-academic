@@ -57,7 +57,7 @@ public class UpdateAllMoneyCostCenterByYear implements IService {
                 while (iterator.hasNext()) {
                     InfoMoneyCostCenter infoMoneyCostCenter = (InfoMoneyCostCenter) iterator.next();
 
-                    MoneyCostCenter moneyCostCenter = (MoneyCostCenter) moneyCostCenterDAO.readByOID(MoneyCostCenter.class, infoMoneyCostCenter.getIdInternal(), true);
+                    MoneyCostCenter moneyCostCenter = (MoneyCostCenter) moneyCostCenterDAO.readByOID(MoneyCostCenter.class, infoMoneyCostCenter.getIdInternal());
                     Calendar now = Calendar.getInstance();
                     moneyCostCenter.setWhen(now.getTime());
                     moneyCostCenter.setWhoEmployee(employeeWho);

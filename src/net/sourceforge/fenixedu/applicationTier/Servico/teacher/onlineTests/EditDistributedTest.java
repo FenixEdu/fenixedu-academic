@@ -53,7 +53,7 @@ public class EditDistributedTest implements IService {
             throw new InvalidArgumentsServiceException();
 
         IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
-        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId, true);
+        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 

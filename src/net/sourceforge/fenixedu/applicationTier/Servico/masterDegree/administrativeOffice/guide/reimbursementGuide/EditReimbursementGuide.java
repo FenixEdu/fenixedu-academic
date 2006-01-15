@@ -75,7 +75,7 @@ public class EditReimbursementGuide implements IService {
 				.getIPersistentReimbursementGuide();
 
 		ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentReimbursementGuide
-				.readByOID(ReimbursementGuide.class, reimbursementGuideId, true);
+				.readByOID(ReimbursementGuide.class, reimbursementGuideId);
 
 		if (reimbursementGuide == null) {
 			throw new NonExistingServiceException();

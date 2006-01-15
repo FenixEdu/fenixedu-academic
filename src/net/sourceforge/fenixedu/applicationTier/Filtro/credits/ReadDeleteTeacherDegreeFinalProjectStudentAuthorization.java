@@ -32,8 +32,7 @@ public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends
                 .getIPersistentTeacherDegreeFinalProjectStudent();
 
         TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) teacherDegreeFinalProjectStudentDAO
-                .readByOID(TeacherDegreeFinalProjectStudent.class, teacherDegreeFinalProjectStudentId,
-                        false);
+                .readByOID(TeacherDegreeFinalProjectStudent.class, teacherDegreeFinalProjectStudentId);
         return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher()
                 .getIdInternal() : null;
     }

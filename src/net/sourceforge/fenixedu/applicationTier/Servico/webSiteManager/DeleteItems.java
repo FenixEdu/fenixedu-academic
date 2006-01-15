@@ -26,7 +26,7 @@ public class DeleteItems implements IService {
 			Integer itemCode = (Integer) iterItemsCode.next();
 
 			WebSiteItem webSiteItemAux = (WebSiteItem) persistentWebSiteItem.readByOID(
-					WebSiteItem.class, itemCode, true);
+					WebSiteItem.class, itemCode);
 			if (webSiteItemAux != null) {
 				persistentWebSiteItem.delete(webSiteItemAux);
 			}

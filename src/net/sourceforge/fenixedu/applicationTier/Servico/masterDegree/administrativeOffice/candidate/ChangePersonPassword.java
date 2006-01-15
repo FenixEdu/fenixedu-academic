@@ -33,7 +33,7 @@ public class ChangePersonPassword implements IService {
 		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPessoaPersistente personDAO = sp.getIPessoaPersistente();
 
-		person = (Person) personDAO.readByOID(Person.class, personID, true);
+		person = (Person) personDAO.readByOID(Person.class, personID);
 
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person!");

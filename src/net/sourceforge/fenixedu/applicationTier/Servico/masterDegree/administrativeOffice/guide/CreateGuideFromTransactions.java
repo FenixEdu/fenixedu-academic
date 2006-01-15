@@ -111,7 +111,7 @@ public class CreateGuideFromTransactions implements IService {
         while (iterator.hasNext()) {
             transactionId = (Integer) iterator.next();
             transaction = (PaymentTransaction) sp.getIPersistentTransaction().readByOID(
-                    Transaction.class, transactionId, true);
+                    Transaction.class, transactionId);
 
             if (transaction == null) {
                 throw new ExcepcaoInexistente();

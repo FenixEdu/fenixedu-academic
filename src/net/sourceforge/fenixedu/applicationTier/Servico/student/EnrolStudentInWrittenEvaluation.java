@@ -23,7 +23,7 @@ public class EnrolStudentInWrittenEvaluation implements IService {
 
 		final IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
 		final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(
-				WrittenEvaluation.class, writtenEvaluationOID, true);
+				WrittenEvaluation.class, writtenEvaluationOID);
 		if (writtenEvaluation == null || student == null) {
 			throw new InvalidArgumentsServiceException();
 		}

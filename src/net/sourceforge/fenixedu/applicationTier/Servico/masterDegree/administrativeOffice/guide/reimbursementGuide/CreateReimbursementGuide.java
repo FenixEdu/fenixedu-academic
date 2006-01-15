@@ -61,7 +61,7 @@ public class CreateReimbursementGuide implements IService {
 
         ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        Guide guide = (Guide) ps.getIPersistentGuide().readByOID(Guide.class, guideId, true);
+        Guide guide = (Guide) ps.getIPersistentGuide().readByOID(Guide.class, guideId);
 
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException(

@@ -28,7 +28,7 @@ public class EditCurriculum implements IService {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
 		Curriculum curriculum = (Curriculum) persistentCurriculum.readByOID(Curriculum.class,
-				curriculumId, true);
+				curriculumId);
 		if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
 			curriculum.setProgram(program);
 			curriculum.setProgramEn(programEn);

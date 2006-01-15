@@ -69,7 +69,7 @@ public class InsertGratuityData implements IService {
 		// execution Degree
 		ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
 				.readByOID(ExecutionDegree.class,
-						infoGratuityValues.getInfoExecutionDegree().getIdInternal(), true);
+						infoGratuityValues.getInfoExecutionDegree().getIdInternal());
 
 		if (gratuityValues == null) // it doesn't exist in database, then
 		// write it

@@ -41,7 +41,7 @@ public class ConfirmStudentsFinalEvaluation implements IService {
 		Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
-				CurricularCourse.class, curricularCourseCode, false);
+				CurricularCourse.class, curricularCourseCode);
 
 		List enrolments = null;
 		if (yearString != null) {

@@ -42,7 +42,7 @@ public class EditWebSiteItem extends ManageWebSiteItem {
         checkData(infoWebSiteItem, webSiteSection);
 
         WebSiteItem webSiteItem = (WebSiteItem) persistentWebSiteItem.readByOID(WebSiteItem.class,
-                infoWebSiteItem.getIdInternal(), true);
+                infoWebSiteItem.getIdInternal());
 
         InfoWebSiteItem infoItemFromDB = InfoWebSiteItem.newInfoFromDomain(webSiteItem);
         Calendar calendarItemFromDB = Calendar.getInstance();

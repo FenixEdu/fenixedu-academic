@@ -30,7 +30,7 @@ public class ReadDeleteSupportLessonAuthorization extends AbstractTeacherDepartm
         IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
 
         SupportLesson supportLesson = (SupportLesson) supportLessonDAO.readByOID(SupportLesson.class,
-                supportLessonId, false);
+                supportLessonId);
         return supportLesson != null ? supportLesson.getProfessorship().getTeacher().getIdInternal()
                 : null;
     }

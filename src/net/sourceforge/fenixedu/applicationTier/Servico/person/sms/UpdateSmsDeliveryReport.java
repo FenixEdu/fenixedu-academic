@@ -27,7 +27,7 @@ public class UpdateSmsDeliveryReport implements IService {
 		IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
 
 		// read sentSms Object
-		SentSms sentSms = (SentSms) persistentSentSms.readByOID(SentSms.class, smsId, true);
+		SentSms sentSms = (SentSms) persistentSentSms.readByOID(SentSms.class, smsId);
 
 		if (sentSms == null) {
 			throw new FenixServiceException();

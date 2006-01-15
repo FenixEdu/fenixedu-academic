@@ -33,7 +33,7 @@ public class AssociateCurricularCoursesToExecutionCourse implements IService {
 
 		if (curricularCourseIds != null) {
 			ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
-					ExecutionCourse.class, executionCourseId, true);
+					ExecutionCourse.class, executionCourseId);
 
 			if (executionCourse == null) {
 				throw new NonExistingServiceException("noExecutionCourse");

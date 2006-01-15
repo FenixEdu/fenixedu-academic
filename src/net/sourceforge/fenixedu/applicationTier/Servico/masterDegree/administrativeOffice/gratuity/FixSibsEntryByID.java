@@ -22,7 +22,7 @@ public class FixSibsEntryByID implements IService {
 				.getIPersistentSibsPaymentFileEntry();
 
 		SibsPaymentFileEntry sibsPaymentFileEntry = (SibsPaymentFileEntry) persistentSibsPaymentFileEntry
-				.readByOID(SibsPaymentFileEntry.class, sibsEntryId, true);
+				.readByOID(SibsPaymentFileEntry.class, sibsEntryId);
 
 		if (sibsPaymentFileEntry == null) {
 			throw new FenixServiceException();

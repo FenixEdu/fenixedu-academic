@@ -49,7 +49,7 @@ public class EditCurricularCourseScope implements IService {
 
 			
             oldCurricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope.readByOID(
-					CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal(), true);
+					CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal());
 
             if (oldCurricularCourseScope == null) {
                 throw new NonExistingServiceException("message.non.existing.curricular.course.scope",

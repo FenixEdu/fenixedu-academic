@@ -29,8 +29,7 @@ public class EndCurricularCourseScope implements IService {
         final IPersistentCurricularCourseScope persistentCurricularCourseScope = ps
                 .getIPersistentCurricularCourseScope();
         CurricularCourseScope oldCurricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope
-                .readByOID(CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal(),
-                        true);
+                .readByOID(CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal());
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);
         }

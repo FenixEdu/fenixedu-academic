@@ -27,7 +27,7 @@ public class ReadGratuitySituationById implements IService {
 		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
 
 		GratuitySituation gratuitySituation = (GratuitySituation) persistentGratuitySituation
-				.readByOID(GratuitySituation.class, gratuitySituationID, true);
+				.readByOID(GratuitySituation.class, gratuitySituationID);
 
 		if (gratuitySituation == null) {
 			throw new NonExistingServiceException(

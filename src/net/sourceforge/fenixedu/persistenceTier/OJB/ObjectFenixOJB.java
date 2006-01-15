@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.stm.Transaction;
 
-import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
@@ -51,25 +50,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         Object object = queryObject(classToQuery, criteria);
         delete(object);
     }
-
-    /**
-     * @see IPersistentObject#readByOId(DomainObject, boolean)
-     * @deprecated
-     */
-    public DomainObject readByOId(DomainObject obj, boolean lockWrite) {
-        PersistenceBroker broker = getCurrentPersistenceBroker();
-        Identity identity = new Identity(obj, broker);
-
-        return (DomainObject) broker.getObjectByIdentity(identity);
-    }
-
-    //    public Object readDomainObjectByCriteria(Object obj) throws
-    // ExcepcaoPersistencia {
-    //        List result = readByCriteria(obj);
-    //        if (result != null && !result.isEmpty())
-    //            return result.get(0);
-    //        return null;
-    //    }
 
     protected List queryList(Class classToQuery, Criteria criteria) throws ExcepcaoPersistencia {
         return queryList(classToQuery, criteria, false);
@@ -136,13 +116,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
     }
 
     public DomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia {
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("idInternal", oid);
-        return (DomainObject) queryObject(classToQuery, criteria);
-    }
-
-    public DomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
-            throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("idInternal", oid);
         return (DomainObject) queryObject(classToQuery, criteria);

@@ -32,7 +32,7 @@ public class ReadDeleteTeacherInstitutionWorkingTimeAuthorization extends
                 .getIPersistentTeacherInstitutionWorkingTime();
 
         TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) teacherInstitutionWorkingTimeDAO
-                .readByOID(TeacherInstitutionWorkTime.class, teacherInstitutionWorkingTime, false);
+                .readByOID(TeacherInstitutionWorkTime.class, teacherInstitutionWorkingTime);
         return teacherInstitutionWorkTime != null ? teacherInstitutionWorkTime.getTeacher()
                 .getIdInternal() : null;
     }

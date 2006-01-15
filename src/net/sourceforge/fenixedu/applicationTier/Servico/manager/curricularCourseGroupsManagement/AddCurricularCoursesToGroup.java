@@ -27,7 +27,7 @@ public class AddCurricularCoursesToGroup implements IService {
 		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
 				.getIPersistentCurricularCourseGroup();
 		CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup
-				.readByOID(CurricularCourseGroup.class, groupId, true);
+				.readByOID(CurricularCourseGroup.class, groupId);
 		for (int i = 0; i < courseIds.length; i++) {
 			Integer courseId = courseIds[i];
 			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse

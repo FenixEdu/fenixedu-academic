@@ -29,7 +29,7 @@ public class EditMasterDegreeCandidate implements IService {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
-                .getIPersistentObject().readByOID(MasterDegreeCandidate.class, oldCandidateID, true);
+                .getIPersistentObject().readByOID(MasterDegreeCandidate.class, oldCandidateID);
         if (masterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Candidate !!");
         }

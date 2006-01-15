@@ -56,7 +56,7 @@ public class SetBasicCurricularCoursesService implements IService {
 		while (itId.hasNext()) {
 
 			CurricularCourse curricularCourseBasic = (CurricularCourse) persistentCurricularCourse
-					.readByOID(CurricularCourse.class, (Integer) itId.next(), true);
+					.readByOID(CurricularCourse.class, (Integer) itId.next());
 			curricularCourseBasic.setBasic(new Boolean(true));
 
 		}

@@ -22,7 +22,7 @@ public class ReadCurricularCourseByIdInternal implements IService {
 		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
-				CurricularCourse.class, curricularCourseCode, false);
+				CurricularCourse.class, curricularCourseCode);
 
 		infoCurricularCourse = InfoCurricularCourseWithInfoDegree.newInfoFromDomain(curricularCourse);
 		return infoCurricularCourse;

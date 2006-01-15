@@ -40,7 +40,7 @@ public class ResponsibleCoordinators implements IService {
             Coordinator coordinator = (Coordinator) iterator.next();
 
             coordinator = (Coordinator) persistentCoordinator.readByOID(Coordinator.class, coordinator
-                    .getIdInternal(), true);
+                    .getIdInternal());
             if (coordinator == null) {
                 return new Boolean(false);
             }

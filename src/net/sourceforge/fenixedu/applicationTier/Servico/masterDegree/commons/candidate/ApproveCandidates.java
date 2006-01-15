@@ -34,7 +34,7 @@ public class ApproveCandidates implements IService {
 
             CandidateSituation candidateSituationOldFromBD = (CandidateSituation) sp
                     .getIPersistentCandidateSituation().readByOID(CandidateSituation.class,
-                            candidateSituationOld.getIdInternal(), true);
+                            candidateSituationOld.getIdInternal());
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
 
             if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {

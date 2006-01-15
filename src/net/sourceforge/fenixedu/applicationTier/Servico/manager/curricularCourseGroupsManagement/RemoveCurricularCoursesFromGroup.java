@@ -28,7 +28,7 @@ public class RemoveCurricularCoursesFromGroup implements IService {
 		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
 				.getIPersistentCurricularCourseGroup();
 		CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup
-				.readByOID(CurricularCourseGroup.class, groupId, true);
+				.readByOID(CurricularCourseGroup.class, groupId);
 
 		curricularCourseGroup.getCurricularCourses().clear();
 		for (int i = 0; i < courseIds.length; i++) {

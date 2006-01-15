@@ -149,7 +149,7 @@ public abstract class EditDomainObjectService implements IService {
 		// then read by oid to get the object from database.
 		if (objectFromDatabase == null && !isNew(infoObject)) {
 			objectFromDatabase = getIPersistentObject(sp).readByOID(getDomainObjectClass(),
-					infoObject.getIdInternal(), false);
+					infoObject.getIdInternal());
 			// if the object still null then the object doesn't exist.
 			if (objectFromDatabase == null) {
 				throw new NonExistingServiceException("Object doesn't exist!");

@@ -52,7 +52,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 
 		// read curricularCourse by ID
 		CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
-				.readByOID(CurricularCourse.class, curricularCourseID, false);
+				.readByOID(CurricularCourse.class, curricularCourseID);
 
 		final CurricularCourse curricularCourseTemp = curricularCourse;
 
@@ -160,7 +160,7 @@ public class ReadStudentMarksByCurricularCourse implements IService {
 									.readByOID(
 											Person.class,
 											enrolmentEvaluation.getEmployee().getPerson()
-													.getIdInternal(), false);
+													.getIdInternal());
 							infoEnrolmentEvaluation.setInfoEmployee(InfoPersonWithInfoCountry
 									.newInfoFromDomain(person2));
 						}

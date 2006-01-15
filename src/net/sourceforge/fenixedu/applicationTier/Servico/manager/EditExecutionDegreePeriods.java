@@ -24,7 +24,7 @@ public class EditExecutionDegreePeriods implements IService {
 
         final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentSuport
                 .getIPersistentObject().readByOID(ExecutionDegree.class,
-                        infoExecutionDegree.getIdInternal(), false);
+                        infoExecutionDegree.getIdInternal());
 
         OccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree
                 .getInfoPeriodLessonsFirstSemester());

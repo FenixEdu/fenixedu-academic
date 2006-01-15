@@ -38,7 +38,7 @@ public class WriteCandidateEnrolments implements IService {
 
         MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
-                        candidateID, true);
+                        candidateID);
 
         if (masterDegreeCandidate == null) {
             throw new NonExistingServiceException();

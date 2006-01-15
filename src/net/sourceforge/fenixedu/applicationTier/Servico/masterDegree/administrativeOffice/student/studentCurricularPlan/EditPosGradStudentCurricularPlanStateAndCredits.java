@@ -49,7 +49,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits implements IService
 				.getIStudentCurricularPlanPersistente();
 
 		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
-				.readByOID(StudentCurricularPlan.class, studentCurricularPlanId, true);
+				.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
 		if (studentCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}

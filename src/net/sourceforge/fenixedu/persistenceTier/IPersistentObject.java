@@ -14,12 +14,7 @@ public interface IPersistentObject {
 
     void deleteByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
 
-    public DomainObject readByOId(DomainObject obj, boolean lockWrite);
-
     public DomainObject readByOID(Class classToQuery, Integer oid) throws ExcepcaoPersistencia;
-
-    public DomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
-            throws ExcepcaoPersistencia;
 
     public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia;
 

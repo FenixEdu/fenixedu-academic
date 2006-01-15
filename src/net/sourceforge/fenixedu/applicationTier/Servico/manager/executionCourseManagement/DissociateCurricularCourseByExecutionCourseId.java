@@ -36,7 +36,7 @@ public class DissociateCurricularCourseByExecutionCourseId implements IService {
 		}
 
 		ExecutionCourse executionCourse = (ExecutionCourse) executionCourseDAO.readByOID(
-				ExecutionCourse.class, executionCourseId, true);
+				ExecutionCourse.class, executionCourseId);
 		if (executionCourse == null) {
 			throw new NonExistingServiceException("noExecutionCourse");
 		}

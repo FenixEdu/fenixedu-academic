@@ -42,7 +42,7 @@ public class EditCurricularCourse implements IService {
             ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
             oldCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
-                    CurricularCourse.class, newInfoCurricularCourse.getIdInternal(), true);
+                    CurricularCourse.class, newInfoCurricularCourse.getIdInternal());
 
             newName = newInfoCurricularCourse.getName();
             newNameEn = newInfoCurricularCourse.getNameEn();

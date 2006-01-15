@@ -19,22 +19,9 @@ public abstract class VersionedObjectsBase {
         // Versioned Object DAO's!");
     }
 
-    public final DomainObject readByOId(final DomainObject obj, final boolean lockWrite) {
-        try {
-            return SuportePersistenteOJB.getInstance().getIPersistentObject().readByOId(obj, false);
-        } catch (ExcepcaoPersistencia e) {
-            return null;
-        }
-    }
-
     public final DomainObject readByOID(final Class classToQuery, final Integer oid)
             throws ExcepcaoPersistencia {
         return SuportePersistenteOJB.getInstance().getIPersistentObject().readByOID(classToQuery, oid);
-    }
-
-    public final DomainObject readByOID(Class classToQuery, Integer oid, boolean lockWrite)
-            throws ExcepcaoPersistencia {
-        return readByOID(classToQuery, oid);
     }
 
     public Collection readAll(final Class classToQuery) {

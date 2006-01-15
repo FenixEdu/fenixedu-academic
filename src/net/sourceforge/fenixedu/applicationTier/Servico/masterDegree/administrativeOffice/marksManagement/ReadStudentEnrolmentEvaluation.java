@@ -41,7 +41,7 @@ public class ReadStudentEnrolmentEvaluation implements IService {
 				.getIPersistentEnrolmentEvaluation();
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 		enrolmentEvaluation = (EnrolmentEvaluation) persistentEnrolmentEvaluation.readByOID(
-				EnrolmentEvaluation.class, studentEvaluationCode, false);
+				EnrolmentEvaluation.class, studentEvaluationCode);
 
 		infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod
 				.newInfoFromDomain(enrolmentEvaluation.getEnrolment());

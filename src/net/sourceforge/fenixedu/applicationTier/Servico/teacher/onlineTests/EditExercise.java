@@ -30,7 +30,7 @@ public class EditExercise implements IService {
 
 		IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
 
-		Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId, true);
+		Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId);
 		if (metadata == null)
 			throw new InvalidArgumentsServiceException();
 		if (author != null)

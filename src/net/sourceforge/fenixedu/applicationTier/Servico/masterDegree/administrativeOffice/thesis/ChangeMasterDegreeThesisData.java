@@ -54,7 +54,7 @@ public class ChangeMasterDegreeThesisData implements IService {
 
         StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
-                        studentCurricularPlanID, true);
+                        studentCurricularPlanID);
 
         MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp
                 .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
