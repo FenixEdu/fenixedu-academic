@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -166,11 +165,10 @@ public class MergeExecutionCourses implements IService {
         final List<Evaluation> associatedEvaluations = new ArrayList();
         associatedEvaluations.addAll(executionCourseFrom.getAssociatedEvaluations());
 
-        final IPersistentEvaluation persistentEvaluation = persistentSupport.getIPersistentEvaluation();
         for (final Evaluation evaluation : associatedEvaluations) {
             if (evaluation instanceof FinalEvaluation) {
                 if (((FinalEvaluation) evaluation).deleteFrom(executionCourseFrom)) {
-                    persistentEvaluation.deleteByOID(Evaluation.class, evaluation.getIdInternal());
+                    persistentSupport.getIPersistentObject().deleteByOID(Evaluation.class, evaluation.getIdInternal());
                 }
             } else {
                 throw new InvalidArgumentsServiceException();

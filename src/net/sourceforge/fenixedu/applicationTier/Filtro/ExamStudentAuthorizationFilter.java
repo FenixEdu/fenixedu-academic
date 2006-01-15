@@ -62,7 +62,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             }
             final ISuportePersistente persistentSupport = PersistenceSupportFactory
                     .getDefaultPersistenceSupport();
-            final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentEvaluation()
+            final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject()
                     .readByOID(Evaluation.class, evaluationID);
 
             final String studentUsername = (String) args[0];

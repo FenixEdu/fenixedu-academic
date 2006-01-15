@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -45,8 +44,7 @@ public class ValidateSubmitMarks implements IService {
                 ExecutionCourse.class, executionCourseCode);
 
         //evaluation
-        IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-        Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class,
                 evaluationCode);
 
         //attend list

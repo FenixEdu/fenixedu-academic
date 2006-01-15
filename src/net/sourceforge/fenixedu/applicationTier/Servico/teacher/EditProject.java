@@ -21,7 +21,7 @@ public class EditProject implements IService {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        final Project project = (Project) persistentSupport.getIPersistentEvaluation().readByOID(
+        final Project project = (Project) persistentSupport.getIPersistentObject().readByOID(
                 Project.class, projectID);
         if (project == null) {
             throw new FenixServiceException("error.noEvaluation");

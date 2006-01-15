@@ -99,7 +99,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -645,7 +644,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
-		final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentEvaluation()
+		final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject()
 				.readByOID(Evaluation.class, evaluationID);
 
 		if (evaluation instanceof Exam) {
@@ -678,9 +677,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	private ISiteComponent getInfoEvaluation(InfoEvaluation component, Site site, Integer evaluationCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
 
-		Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class,
+		Evaluation evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class,
 				evaluationCode);
 
 		InfoEvaluation infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);

@@ -26,7 +26,7 @@ public class WrittenEvaluationRoomDistribution implements IService {
                 .getDefaultPersistenceSupport();
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
-                .getIPersistentEvaluation().readByOID(Exam.class, evaluationID);
+                .getIPersistentObject().readByOID(Exam.class, evaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

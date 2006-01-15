@@ -35,7 +35,7 @@ public class ReadStudentsEnrolledInWrittenEvaluation implements IService {
                 .getDefaultPersistenceSupport();
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
-                .getIPersistentEvaluation().readByOID(WrittenEvaluation.class, writtenEvaluationID);
+                .getIPersistentObject().readByOID(WrittenEvaluation.class, writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

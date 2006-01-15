@@ -216,8 +216,6 @@ public interface ISuportePersistente
 
 	public IPersistentMark getIPersistentMark();
 
-	public IPersistentEvaluation getIPersistentEvaluation();
-
 	public IPersistentEmployee getIPersistentEmployee();
 
 	public IPersistentEquivalentEnrolmentForEnrolmentEquivalence getIPersistentEquivalentEnrolmentForEnrolmentEquivalence();
@@ -482,8 +480,6 @@ public interface ISuportePersistente
 	public IPersistentStudentPersonalDataAuthorization getIPersistentStudentPersonalDataAuthorization();
 
 	public IPersistentDislocatedStudent getIPersistentDislocatedStudent();
-
-	public IPersistentDistrict getIPersistentDistrict();
 
 	public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation();
 

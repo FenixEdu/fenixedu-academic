@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDistrict;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
@@ -48,7 +47,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentLog;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -683,11 +681,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentMark getIPersistentMark()
 	{
 		return new MarkOJB();
-	}
-
-	public IPersistentEvaluation getIPersistentEvaluation()
-	{
-		return new EvaluationOJB();
 	}
 
 	/*
@@ -1490,11 +1483,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentDislocatedStudent getIPersistentDislocatedStudent()
 	{
 		return new DislocatedStudentOJB();
-	}
-
-	public IPersistentDistrict getIPersistentDistrict()
-	{
-		return new DistrictOJB();
 	}
 
 	public static void fixDescriptors()

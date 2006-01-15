@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,10 +32,8 @@ public class PublishMarks implements IService {
         IPersistentSite siteDAO = sp.getIPersistentSite();
         Site site = siteDAO.readByExecutionCourse(executionCourseCode);
         // find what type of evaluation we are dealing with
-        IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-        Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class,
                 evaluationCode);
-        persistentEvaluation.simpleLockWrite(evaluation);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
             evaluation.setPublishmentMessage(" ");

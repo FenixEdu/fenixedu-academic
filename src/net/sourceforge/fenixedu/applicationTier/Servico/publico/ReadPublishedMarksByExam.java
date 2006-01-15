@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -61,8 +60,7 @@ public class ReadPublishedMarksByExam implements IService {
 
         // Evaluation
 
-        IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
-        evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 

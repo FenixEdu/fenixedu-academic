@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDistrict;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -27,7 +26,6 @@ public class WriteDislocatedStudentAnswer implements IService {
         
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentCountry persistentCountry = sp.getIPersistentCountry();
-        IPersistentDistrict persistentDistrict = sp.getIPersistentDistrict();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
         
         Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
@@ -36,7 +34,7 @@ public class WriteDislocatedStudentAnswer implements IService {
         if(dislocatedCountryID != null){
             dislocatedCountry = (Country) persistentCountry.readByOID(Country.class, dislocatedCountryID);
         }
-        District district = (District) persistentDistrict.readByOID(District.class, districtID);
+        District district = (District) sp.getIPersistentObject().readByOID(District.class, districtID);
         
         DislocatedStudent dislocatedStudent = DomainFactory.makeDislocatedStudent();
         dislocatedStudent.setStudent(student);

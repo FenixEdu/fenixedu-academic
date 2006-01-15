@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
@@ -54,7 +53,6 @@ public class InsertEvaluationMarks implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSite persistentSite = sp.getIPersistentSite();
-        IPersistentEvaluation persistentEvaluation = sp.getIPersistentEvaluation();
         IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
         IPersistentMark persistentMark = sp.getIPersistentMark();
 
@@ -62,7 +60,7 @@ public class InsertEvaluationMarks implements IService {
         site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         //Evaluation
-        evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
 
         //Attend List
         attendList = persistentAttend.readByExecutionCourse(executionCourseCode);

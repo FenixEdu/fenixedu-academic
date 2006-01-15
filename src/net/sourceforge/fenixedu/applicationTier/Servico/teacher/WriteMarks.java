@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -26,10 +25,9 @@ public class WriteMarks implements IService {
             throws ExcepcaoPersistencia, FenixServiceException {
     	final List<DomainException> exceptionList = new ArrayList<DomainException>(); 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentEvaluation persistentEvaluation = persistentSupport.getIPersistentEvaluation();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         
-        final Evaluation evaluation = (Evaluation) persistentEvaluation.readByOID(Evaluation.class, evaluationOID);
+        final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationOID);
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executioCourseOID);
         
         for (final Entry<Integer, String> entry : marks.entrySet()) {

@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -59,8 +58,7 @@ public class ReadStudentsAndMarksByEvaluation implements IService {
 
         //Evaluation
 
-        IPersistentEvaluation evaluationDAO = sp.getIPersistentEvaluation();
-        Evaluation evaluation = (Evaluation) evaluationDAO.readByOID(Evaluation.class, evaluationCode);
+        Evaluation evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 

@@ -24,14 +24,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDistrict;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEquivalence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEquivalentEnrolmentForEnrolmentEquivalence;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -212,14 +210,12 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeCurri
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DegreeInfoVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DepartmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DislocatedStudentVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.DistrictVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrollmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentEvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EnrolmentPeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EquivalentEnrolmentForEnrolmentEquivalenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationMethodVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.EvaluationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExamVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionCourseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExecutionPeriodVO;
@@ -458,10 +454,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSeminaryCaseStudy getIPersistentSeminaryCaseStudy() {
         return new CaseStudyVO();
-    }
-
-    public IPersistentEvaluation getIPersistentEvaluation() {
-        return new EvaluationVO();
     }
 
     public IPersistentSmsTransaction getIPersistentSmsTransaction() {
@@ -1063,10 +1055,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
     
     public IPersistentDislocatedStudent getIPersistentDislocatedStudent() {
         return new DislocatedStudentVO();
-    }
-    
-    public IPersistentDistrict getIPersistentDistrict() {
-        return new DistrictVO();
     }
     
     public IPersistentTeacherPersonalExpectation getIPersistentTeacherPersonalExpectation() {

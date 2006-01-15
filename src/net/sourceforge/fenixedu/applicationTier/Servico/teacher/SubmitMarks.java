@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -53,10 +52,9 @@ public class SubmitMarks implements IService {
 	public void run(Integer executionCourseID, Integer evaluationID, String[] attendsIDs, Date evaluationDate, IUserView userView) throws ExcepcaoPersistencia, InvalidArgumentsServiceException, OutOfPeriodException {
 		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionCourse persistentExecutionCourse = suportePersistente.getIPersistentExecutionCourse();
-		IPersistentEvaluation persistentEvaluation = suportePersistente.getIPersistentEvaluation();
 		
 		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseID);
-		FinalEvaluation finalEvaluation = (FinalEvaluation) persistentEvaluation.readByOID(FinalEvaluation.class, evaluationID);
+		FinalEvaluation finalEvaluation = (FinalEvaluation) suportePersistente.getIPersistentObject().readByOID(FinalEvaluation.class, evaluationID);
 		
 		if(executionCourse == null || finalEvaluation == null) {
 			throw new InvalidArgumentsServiceException();
