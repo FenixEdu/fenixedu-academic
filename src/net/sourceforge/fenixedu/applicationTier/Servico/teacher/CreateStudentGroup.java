@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,10 +42,9 @@ public class CreateStudentGroup implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         
-        final Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class, groupingID);
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingID);
         
         if (grouping == null)
             throw new FenixServiceException();

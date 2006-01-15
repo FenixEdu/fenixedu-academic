@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -27,13 +26,9 @@ public class UnEnrollStudentGroupShift implements IService {
 	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		IPersistentGrouping persistentGrouping = null;
-
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		persistentGrouping = persistentSupport.getIPersistentGrouping();
-
-		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {

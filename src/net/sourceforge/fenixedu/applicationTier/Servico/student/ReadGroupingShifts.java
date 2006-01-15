@@ -42,7 +42,7 @@ public class ReadGroupingShifts implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		StudentGroup studentGroup = null;
-		grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class, groupingCode);
+		grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class, groupingCode);
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}

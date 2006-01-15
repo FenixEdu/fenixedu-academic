@@ -44,10 +44,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGlossaryEntries;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -57,12 +55,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
@@ -224,8 +220,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ExternalPer
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuitySituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityTransactionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GratuityValuesVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GroupingVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.GuideVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InstitutionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.InsuranceTransactionVO;
@@ -235,11 +229,9 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegre
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisDataVersionVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.MasterDegreeThesisVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.NotNeedToEnrollInCurricularCourseVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PaymentPhaseVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PeriodVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PersonAccountVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PessoaVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PrecedenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PriceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ProfessorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.PublicationTeacherVO;
@@ -572,10 +564,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new ExternalPersonVO();
     }
 
-    public IPersistentPaymentPhase getIPersistentPaymentPhase() {
-        return new PaymentPhaseVO();
-    }
-
     public IPersistentStudent getIPersistentStudent() {
         return new StudentVO();
     }
@@ -638,10 +626,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentSeminaryTheme getIPersistentSeminaryTheme() {
         return null;
-    }
-
-    public IPersistentGuideSituation getIPersistentGuideSituation() {
-        return new GuideSituationVO();
     }
 
     public IPersistentGratuityValues getIPersistentGratuityValues() {
@@ -808,10 +792,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
         return new EquivalentEnrolmentForEnrolmentEquivalenceVO();
     }
 
-    public IPersistentGrouping getIPersistentGrouping() {
-        return new GroupingVO();
-    }
-
     public IPersistentMasterDegreeProofVersion getIPersistentMasterDegreeProofVersion() {
         return new MasterDegreeProofVersionVO();
     }
@@ -962,10 +942,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExecutionDegree getIPersistentExecutionDegree() {
         return new CursoExecucaoVO();
-    }
-
-    public IPersistentPrecedence getIPersistentPrecedence() {
-        return new PrecedenceVO();
     }
 
     public IPersistentShiftProfessorship getIPersistentTeacherShiftPercentage() {

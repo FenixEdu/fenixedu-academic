@@ -1100,7 +1100,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		Grouping groupProperties = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(groupProperties)
@@ -1190,7 +1190,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null)
@@ -1241,7 +1241,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 		if (groupProperties == null)
 			return null;
@@ -1330,7 +1330,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		Grouping groupProperties = null;
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		return InfoGroupingWithAttends.newInfoFromDomain(groupProperties);
@@ -1350,7 +1350,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		StudentGroup studentGroup = null;
-		groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 		if (groupProperties == null) {
 			return null;

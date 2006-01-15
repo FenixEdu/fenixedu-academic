@@ -61,10 +61,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGlossaryEntries;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
@@ -74,12 +72,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeProofVers
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesis;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonalDataUseInquiryAnswers;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPrice;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
@@ -623,11 +619,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new GuideOJB();
 	}
 
-	public IPersistentGuideSituation getIPersistentGuideSituation()
-	{
-		return new GuideSituationOJB();
-	}
-
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope()
 	{
 		return new CurricularCourseScopeOJB();
@@ -641,11 +632,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentPersonRole getIPersistentPersonRole()
 	{
 		return new PersonRoleOJB();
-	}
-
-	public IPersistentPrecedence getIPersistentPrecedence()
-	{
-		return new PrecedenceOJB();
 	}
 
 	public IPersistentRestriction getIPersistentRestriction()
@@ -716,11 +702,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment()
 	{
 		return new CandidateEnrolmentOJB();
-	}
-
-	public IPersistentGrouping getIPersistentGrouping()
-	{
-		return new GroupingOJB();
 	}
 
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence()
@@ -1082,11 +1063,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentGratuitySituation getIPersistentGratuitySituation()
 	{
 		return new GratuitySituationOJB();
-	}
-
-	public IPersistentPaymentPhase getIPersistentPaymentPhase()
-	{
-		return new PaymentPhaseOJB();
 	}
 
 	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea()

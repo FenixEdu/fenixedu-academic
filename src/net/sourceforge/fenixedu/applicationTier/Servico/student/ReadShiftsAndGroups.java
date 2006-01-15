@@ -36,7 +36,7 @@ public class ReadShiftsAndGroups implements IService {
     public static ISiteComponent run(Integer groupingCode, String username) throws ExcepcaoPersistencia, FenixServiceException {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final Grouping grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class, groupingCode);
+        final Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class, groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();
         }

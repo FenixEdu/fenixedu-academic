@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -202,12 +201,10 @@ public class InsertGratuityData implements IService {
 
 	private void writePaymentPhases(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
 			GratuityValues gratuityValues) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentPaymentPhase persistentPaymentPhase = sp.getIPersistentPaymentPhase();
-
 		if (gratuityValues.getPaymentPhaseList() != null
 				&& gratuityValues.getPaymentPhaseList().size() > 0) {
 			for (PaymentPhase paymentPhase : gratuityValues.getPaymentPhaseList()) {
-				persistentPaymentPhase.deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
+				sp.getIPersistentObject().deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
 			}
 			gratuityValues.getPaymentPhaseList().clear();
 		}
@@ -228,8 +225,6 @@ public class InsertGratuityData implements IService {
 				paymentPhase.setDescription(infoPaymentPhase.getDescription());
 
 				paymentPhase.setGratuityValues(gratuityValues);
-
-				persistentPaymentPhase.simpleLockWrite(paymentPhase);
 			}
 		}
 	}

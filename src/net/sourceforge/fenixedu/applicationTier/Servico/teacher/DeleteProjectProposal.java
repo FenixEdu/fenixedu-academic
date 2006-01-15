@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -40,13 +39,12 @@ public class DeleteProjectProposal implements IService {
             String withdrawalPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
         Person withdrawalPerson = persistentTeacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class, groupPropertiesCode);
+        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupPropertiesCode);
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseCode);
         ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, objectCode);
 

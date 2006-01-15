@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -160,10 +159,9 @@ public class GroupSiteComponentBuilder {
 		List infoSiteStudentsAndGroupsList = new ArrayList();
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrouping persistentGrouping = sp.getIPersistentGrouping();
 		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
 
-		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 		Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
 
@@ -219,8 +217,7 @@ public class GroupSiteComponentBuilder {
 		List infoSiteStudentsAndGroupsList = new ArrayList();
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrouping persistentGrouping = sp.getIPersistentGrouping();
-		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -274,9 +271,8 @@ public class GroupSiteComponentBuilder {
 		List infoSiteStudentsAndGroupsList = new ArrayList();
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrouping persistentGrouping = sp.getIPersistentGrouping();
 
-		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -375,7 +371,7 @@ public class GroupSiteComponentBuilder {
 			Integer groupPropertiesCode) throws FenixServiceException, ExcepcaoPersistencia {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Grouping grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(grouping).getInfoSiteGroupsByShiftList();
@@ -394,7 +390,7 @@ public class GroupSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping grouping = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);

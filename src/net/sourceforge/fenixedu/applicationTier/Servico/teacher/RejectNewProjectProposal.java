@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -45,11 +44,10 @@ public class RejectNewProjectProposal implements IService {
 		}
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();
 		IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
 		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
 
-		Grouping groupProperties = (Grouping) persistentGroupProperties.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesId);
 
 		if (groupProperties == null) {

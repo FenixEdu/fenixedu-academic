@@ -40,7 +40,7 @@ public class GroupEnrolment implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final Grouping grouping = (Grouping) persistentSupport.getIPersistentGrouping().readByOID(
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(
                 Grouping.class, groupingID);
         if (grouping == null) {
             throw new NonExistingServiceException();

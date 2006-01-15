@@ -194,15 +194,11 @@ public interface ISuportePersistente
 
 	public IPersistentGuide getIPersistentGuide();
 
-	public IPersistentGuideSituation getIPersistentGuideSituation();
-
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
 	public IPersistentRole getIPersistentRole();
 
 	public IPersistentPersonRole getIPersistentPersonRole();
-
-	public IPersistentPrecedence getIPersistentPrecedence();
 
 	public IPersistentRestriction getIPersistentRestriction();
 
@@ -225,8 +221,6 @@ public interface ISuportePersistente
 	public IPersistentQualification getIPersistentQualification();
 
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment();
-
-	public IPersistentGrouping getIPersistentGrouping();
 
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 
@@ -364,8 +358,6 @@ public interface ISuportePersistente
 	public IPersistentGratuityValues getIPersistentGratuityValues();
 
 	public IPersistentGratuitySituation getIPersistentGratuitySituation();
-
-	public IPersistentPaymentPhase getIPersistentPaymentPhase();
 
 	public IPersistentCreditsInAnySecundaryArea getIPersistentCreditsInAnySecundaryArea();
 

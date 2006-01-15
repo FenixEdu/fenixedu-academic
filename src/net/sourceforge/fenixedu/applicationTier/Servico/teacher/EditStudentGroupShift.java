@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -29,14 +28,12 @@ public class EditStudentGroupShift implements IService {
 			ExcepcaoPersistencia {
 
 		ITurnoPersistente persistentShift = null;
-		IPersistentGrouping persistentGroupProperties = null;
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		persistentGroupProperties = persistentSupport.getIPersistentGrouping();
 		persistentShift = persistentSupport.getITurnoPersistente();
 
-		Grouping grouping = (Grouping) persistentGroupProperties.readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null) {

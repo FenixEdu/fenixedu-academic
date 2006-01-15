@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -27,9 +26,8 @@ public class EditGrouping implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
 
-        final Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class,
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
                 infoGroupProperties.getIdInternal());
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();

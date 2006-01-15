@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentPrecedence;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -18,11 +17,10 @@ public class MergePrecedencesForDegreeCurricularPlan implements IService {
 		}
 
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentPrecedence precedenceDAO = persistentSuport.getIPersistentPrecedence();
 
-		Precedence firstPrecedence = (Precedence) precedenceDAO.readByOID(Precedence.class,
+		Precedence firstPrecedence = (Precedence) persistentSuport.getIPersistentObject().readByOID(Precedence.class,
 				firstPrecedenceID);
-		Precedence secondPrecedence = (Precedence) precedenceDAO.readByOID(Precedence.class,
+		Precedence secondPrecedence = (Precedence) persistentSuport.getIPersistentObject().readByOID(Precedence.class,
 				secondPrecedenceID);
 
 		firstPrecedence.mergePrecedences(secondPrecedence);

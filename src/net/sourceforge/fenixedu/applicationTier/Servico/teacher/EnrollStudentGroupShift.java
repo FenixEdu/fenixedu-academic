@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -31,13 +30,10 @@ public class EnrollStudentGroupShift implements IService {
 			ExcepcaoPersistencia {
 
 		ITurnoPersistente persistentShift = null;
-		IPersistentGrouping persistentGrouping = null;
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		persistentGrouping = persistentSupport.getIPersistentGrouping();
-
-		Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null) {

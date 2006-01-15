@@ -144,7 +144,7 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -184,7 +184,7 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentGrouping().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {

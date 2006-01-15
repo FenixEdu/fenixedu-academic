@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -38,9 +37,8 @@ public class ReadStudentsAndGroupsWithoutShift implements IService {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();
 
-        Grouping groupProperties = (Grouping) persistentGroupProperties.readByOID(Grouping.class,
+        Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
                 groupPropertiesId);
 
         if (groupProperties == null) {

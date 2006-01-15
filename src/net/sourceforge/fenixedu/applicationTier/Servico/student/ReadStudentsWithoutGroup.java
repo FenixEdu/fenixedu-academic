@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
@@ -43,11 +42,9 @@ public class ReadStudentsWithoutGroup implements IService {
 			ExcepcaoPersistencia {
 
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final IPersistentGrouping persistentGroupProperties = persistentSupport
-				.getIPersistentGrouping();
 
 		final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-		final Grouping grouping = (Grouping) persistentGroupProperties
+		final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject()
 				.readByOID(Grouping.class, groupPropertiesCode);
 
 		if (grouping == null) {

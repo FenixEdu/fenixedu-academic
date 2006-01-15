@@ -17,12 +17,12 @@ public class DeleteGuideSituationInManager implements IService {
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        GuideSituation guideSituation = (GuideSituation) sp.getIPersistentGuideSituation().readByOID(
+        GuideSituation guideSituation = (GuideSituation) sp.getIPersistentObject().readByOID(
                 GuideSituation.class, guideSituationID);
 
         guideSituation.removeGuide();
 
-        sp.getIPersistentGuideSituation().deleteByOID(GuideSituation.class, guideSituationID);
+        sp.getIPersistentObject().deleteByOID(GuideSituation.class, guideSituationID);
 
     }
 

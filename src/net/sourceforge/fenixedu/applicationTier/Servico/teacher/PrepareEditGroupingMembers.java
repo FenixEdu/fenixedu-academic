@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ProposalState;
@@ -30,8 +29,7 @@ public class PrepareEditGroupingMembers implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();        
-        final IPersistentGrouping persistentGrouping = persistentSupport.getIPersistentGrouping();
-        final Grouping grouping = (Grouping) persistentGrouping.readByOID(Grouping.class, groupingID);
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingID);
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();
         }

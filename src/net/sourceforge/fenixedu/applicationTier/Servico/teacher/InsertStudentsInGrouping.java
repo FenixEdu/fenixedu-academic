@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -34,18 +33,16 @@ public class InsertStudentsInGrouping implements IService {
 	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, String[] selected)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		IPersistentGrouping persistentGrouping = null;
 		IFrequentaPersistente persistentAttend = null;
 		IPersistentStudent persistentStudent = null;
 		List students = new ArrayList();
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		persistentGrouping = persistentSupport.getIPersistentGrouping();
 		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentAttend = persistentSupport.getIFrequentaPersistente();
 
-		Grouping groupProperties = (Grouping) persistentGrouping.readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {

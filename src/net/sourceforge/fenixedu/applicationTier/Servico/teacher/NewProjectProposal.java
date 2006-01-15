@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -48,11 +47,10 @@ public class NewProjectProposal implements IService {
             return result;
         }
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentGrouping persistentGroupProperties = sp.getIPersistentGrouping();   
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
         IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
       
-        Grouping groupProperties = (Grouping) persistentGroupProperties.readByOID(
+        Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(
                 Grouping.class, groupPropertiesId);
         ExecutionCourse goalExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, goalExecutionCourseId);

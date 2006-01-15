@@ -36,7 +36,7 @@ public class PrepareCreateStudentGroup implements IService {
 
         final ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final Grouping grouping = (Grouping) ps.getIPersistentGrouping().readByOID(Grouping.class,
+        final Grouping grouping = (Grouping) ps.getIPersistentObject().readByOID(Grouping.class,
                 groupPropertiesCode);
 
         if (grouping == null) {
