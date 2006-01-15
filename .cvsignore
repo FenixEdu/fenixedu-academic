@@ -67,3 +67,4 @@ development.properties
 build.properties.tests
 plogs
 zbuild
+build.properties.isa
