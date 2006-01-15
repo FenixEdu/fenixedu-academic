@@ -1,13 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -39,15 +36,10 @@ public class EditDegreeCurricularPlan implements IService {
         }
         
         // assert unique pair name/degree
-        final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
-        for (DegreeCurricularPlan dcp : dcps) {
-            if (dcp != dcpToEdit) {
-                if (dcp.getDegree().getIdInternal().equals(infoDcp.getInfoDegree().getIdInternal())
-                        && dcp.getName().equalsIgnoreCase(infoDcp.getName())) {
-                    throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
-                }
-            }
+        for (final DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+        	if (degreeCurricularPlan != dcpToEdit && degreeCurricularPlan.getName().equalsIgnoreCase(infoDcp.getName())) {
+        		throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
+        	}
         }
 
         dcpToEdit.edit(infoDcp.getName(), infoDcp.getState(), infoDcp.getInitialDate(), infoDcp
