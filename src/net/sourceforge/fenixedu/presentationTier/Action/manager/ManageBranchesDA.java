@@ -99,7 +99,7 @@ public class ManageBranchesDA extends FenixDispatchAction {
         try {
             errorCodes = (List) ServiceUtils.executeService(userView, "DeleteBranches", args);
         } catch (FenixServiceException fenixServiceException) {
-            throw new FenixActionException(fenixServiceException.getMessage());
+            throw new FenixActionException(fenixServiceException.getMessage(), fenixServiceException);
         }
 
         if (!errorCodes.isEmpty()) {
