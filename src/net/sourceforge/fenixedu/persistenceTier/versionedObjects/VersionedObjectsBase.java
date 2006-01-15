@@ -52,8 +52,4 @@ public abstract class VersionedObjectsBase {
         throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
-    public DomainObject materialize(DomainObject domainObject) {
-        throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
-    }
-
 }

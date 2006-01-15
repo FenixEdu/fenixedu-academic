@@ -67,7 +67,7 @@ public class SimulateTest implements IService {
                     executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
-            testScope = DomainFactory.makeTestScope(persistentSuport.getIPersistentExecutionCourse().materialize(executionCourse));
+            testScope = DomainFactory.makeTestScope(executionCourse);
         }
 
         InfoDistributedTest infoDistributedTest = new InfoDistributedTest();

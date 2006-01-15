@@ -49,7 +49,7 @@ public class GenetareStudentTestForSimulation implements IService {
                     ExecutionCourse.class, executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
-            testScope = DomainFactory.makeTestScope(persistentSuport.getIPersistentExecutionCourse().materialize(executionCourse));
+            testScope = DomainFactory.makeTestScope(executionCourse);
         }
 
         InfoDistributedTest infoDistributedTest = new InfoDistributedTest();

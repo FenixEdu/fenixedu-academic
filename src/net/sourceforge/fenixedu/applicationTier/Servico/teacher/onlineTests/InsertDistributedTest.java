@@ -75,7 +75,7 @@ public class InsertDistributedTest implements IService {
         TestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
-            testScope = DomainFactory.makeTestScope(persistentExecutionCourse.materialize(executionCourse));
+            testScope = DomainFactory.makeTestScope(executionCourse);
         }
         distributedTest.setTestScope(testScope);
 

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.stm.Transaction;
 
 import org.apache.ojb.broker.Identity;
 import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.core.proxy.ProxyHelper;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
@@ -347,10 +346,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
 
     public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia {
         return iterator.next();
-    }
-
-    public DomainObject materialize(DomainObject domainObject) {
-        return (DomainObject) ProxyHelper.getRealObject(domainObject);
     }
     
     public Collection readAll(Class classToQuery) throws ExcepcaoPersistencia {
