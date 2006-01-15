@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -37,10 +37,8 @@ public class EditStudentGroupsShift implements IService {
 
 		IPersistentGrouping persistentGroupProperties = null;
 		ITurnoPersistente persistentShift = null;
-		IPersistentStudentGroup persistentStudentGroup = null;
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
 		persistentGroupProperties = persistentSupport.getIPersistentGrouping();
 		persistentShift = persistentSupport.getITurnoPersistente();
 
@@ -64,7 +62,7 @@ public class EditStudentGroupsShift implements IService {
 		}
 
 		List<StudentGroup> studentGroups = buildStudentGroupsList(studentGroupsCodes,
-				persistentStudentGroup);
+				persistentSupport.getIPersistentObject());
 
 		for (StudentGroup studentGroup : studentGroups) {
 			if (!studentGroup.getGrouping().equals(grouping)) {
@@ -79,7 +77,7 @@ public class EditStudentGroupsShift implements IService {
 	}
 
 	private List buildStudentGroupsList(List studentGroupsCodes,
-			IPersistentStudentGroup persistentStudentGroup) throws ExcepcaoPersistencia,
+			IPersistentObject persistentObject) throws ExcepcaoPersistencia,
 			InvalidSituationServiceException {
 
 		List studentGroups = new ArrayList();
@@ -87,7 +85,7 @@ public class EditStudentGroupsShift implements IService {
 
 		while (iterStudentGroupsCodes.hasNext()) {
 			Integer studentGroupCode = (Integer) iterStudentGroupsCodes.next();
-			StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
+			StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
 					StudentGroup.class, studentGroupCode);
 
 			if (studentGroup == null)

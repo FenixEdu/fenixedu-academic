@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -23,16 +22,15 @@ public class DeleteStudentGroup implements IService {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentGroup persistentStudentGroup = persistentSuport.getIPersistentStudentGroup();
       
-        StudentGroup deletedStudentGroup = (StudentGroup) persistentStudentGroup.readByOID(
+        StudentGroup deletedStudentGroup = (StudentGroup) persistentSuport.getIPersistentObject().readByOID(
                 StudentGroup.class, studentGroupCode);
         
         if (deletedStudentGroup == null)
             throw new ExistingServiceException();     
 
         deletedStudentGroup.delete();
-        persistentStudentGroup.deleteByOID(StudentGroup.class, deletedStudentGroup.getIdInternal());
+        persistentSuport.getIPersistentObject().deleteByOID(StudentGroup.class, deletedStudentGroup.getIdInternal());
 
         return Boolean.TRUE;
     }

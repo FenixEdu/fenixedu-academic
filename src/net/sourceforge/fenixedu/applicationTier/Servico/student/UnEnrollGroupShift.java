@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -39,7 +38,6 @@ public class UnEnrollGroupShift implements IService {
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentStudentGroup persistentStudentGroup = null;
         IPersistentGrouping persistentGroupProperties = null;
 
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -53,8 +51,7 @@ public class UnEnrollGroupShift implements IService {
             throw new ExistingServiceException();
         }
 
-        persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-        StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
                 StudentGroup.class, studentGroupCode);
 
         if (studentGroup == null)
@@ -85,7 +82,7 @@ public class UnEnrollGroupShift implements IService {
         if (!result) {
             throw new InvalidChangeServiceException();
         }
-        persistentStudentGroup.simpleLockWrite(studentGroup);
+        persistentSupport.getIPersistentObject().simpleLockWrite(studentGroup);
         studentGroup.setShift(shift);
 
         return true;

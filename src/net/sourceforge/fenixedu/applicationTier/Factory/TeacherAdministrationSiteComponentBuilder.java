@@ -1145,7 +1145,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
 		final StudentGroup studentGroup = (StudentGroup) persistentSupport
-				.getIPersistentStudentGroup().readByOID(StudentGroup.class, studentGroupID);
+				.getIPersistentObject().readByOID(StudentGroup.class, studentGroupID);
 
 		if (studentGroup == null) {
 			return null;
@@ -1359,7 +1359,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		}
 		if (studentGroupCode != null) {
 
-			studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
+			studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(StudentGroup.class,
 					studentGroupCode);
 
 			if (studentGroup == null) {

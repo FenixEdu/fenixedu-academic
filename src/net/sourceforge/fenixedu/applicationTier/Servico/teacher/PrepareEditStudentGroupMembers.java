@@ -31,7 +31,7 @@ public class PrepareEditStudentGroupMembers implements IService {
                 .getDefaultPersistenceSupport();
 
         final StudentGroup studentGroup = (StudentGroup) persistentSupport
-                .getIPersistentStudentGroup().readByOID(StudentGroup.class, studentGroupID);
+                .getIPersistentObject().readByOID(StudentGroup.class, studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

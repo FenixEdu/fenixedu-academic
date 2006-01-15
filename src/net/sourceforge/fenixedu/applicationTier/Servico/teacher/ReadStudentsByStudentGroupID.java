@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -36,10 +35,9 @@ public class ReadStudentsByStudentGroupID implements IService {
         List infoStudents = new LinkedList();
         
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentGroup persistentStudentGroup = sp.getIPersistentStudentGroup();
         IPersistentStudent persistentStudent = sp.getIPersistentStudent();
 
-        StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
+        StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
                 StudentGroup.class, groupId);
        
         Iterator iter = studentGroup.getAttends().iterator();

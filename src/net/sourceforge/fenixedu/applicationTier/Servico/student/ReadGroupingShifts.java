@@ -48,7 +48,7 @@ public class ReadGroupingShifts implements IService {
 		}
 		if (studentGroupCode != null) {
 
-			studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
+			studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(StudentGroup.class,
 					studentGroupCode);
 
 			if (studentGroup == null) {

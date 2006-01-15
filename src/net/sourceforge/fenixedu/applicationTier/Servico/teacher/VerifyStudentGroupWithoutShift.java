@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -26,12 +25,9 @@ public class VerifyStudentGroupWithoutShift implements IService {
 	public Integer run(Integer executionCourseCode, Integer studentGroupCode,
 			Integer groupPropertiesCode, String shiftCodeString) throws FenixServiceException, ExcepcaoPersistencia {
 
-		IPersistentStudentGroup persistentStudentGroup = null;
 		IPersistentGrouping persistentGrouping = null;
 
 		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		persistentStudentGroup = ps.getIPersistentStudentGroup();
 
 		persistentGrouping = ps.getIPersistentGrouping();
 
@@ -42,7 +38,7 @@ public class VerifyStudentGroupWithoutShift implements IService {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
+		StudentGroup studentGroup = (StudentGroup) ps.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {

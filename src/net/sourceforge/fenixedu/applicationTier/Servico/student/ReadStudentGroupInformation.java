@@ -41,7 +41,7 @@ public class ReadStudentGroupInformation implements IService {
         List groupAttendsList = null;
 
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(StudentGroup.class,
+        studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(StudentGroup.class,
                 studentGroupCode);
 
         if (studentGroup == null) {

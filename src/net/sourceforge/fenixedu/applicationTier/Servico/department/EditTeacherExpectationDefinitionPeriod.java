@@ -5,9 +5,9 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherExpectationDefinitionPeriod;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -21,12 +21,10 @@ public class EditTeacherExpectationDefinitionPeriod implements IService {
         ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        IPersistentTeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriodDAO = persistenceSupport
-                .getIPersistentTeacherExpectationDefinitionPeriod();
+        IPersistentObject persistentObject = persistenceSupport.getIPersistentObject();
 
-        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (TeacherExpectationDefinitionPeriod) teacherExpectationDefinitionPeriodDAO
-                .readByOID(TeacherExpectationDefinitionPeriod.class,
-                        teacherExpectationDefinitionPeriodID);
+        TeacherExpectationDefinitionPeriod teacherExpectationDefinitionPeriod = (TeacherExpectationDefinitionPeriod)
+        		persistentObject.readByOID(TeacherExpectationDefinitionPeriod.class, teacherExpectationDefinitionPeriodID);
 
         teacherExpectationDefinitionPeriod.edit(startDate, endDate);
     }

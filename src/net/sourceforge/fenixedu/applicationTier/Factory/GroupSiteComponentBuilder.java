@@ -429,7 +429,7 @@ public class GroupSiteComponentBuilder {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		List studentGroupAttendList = studentGroup.getAttends();
@@ -469,7 +469,7 @@ public class GroupSiteComponentBuilder {
 		final ISuportePersistente persistentSupport = PersistenceSupportFactory
 				.getDefaultPersistenceSupport();
 
-		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentStudentGroup()
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject()
 				.readByOID(StudentGroup.class, studentGroupID);
 		infoStudentGroup = InfoStudentGroup.newInfoFromDomain(studentGroup);
 

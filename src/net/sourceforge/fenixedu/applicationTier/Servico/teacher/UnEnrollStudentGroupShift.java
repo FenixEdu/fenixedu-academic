@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGrouping;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -28,7 +27,6 @@ public class UnEnrollStudentGroupShift implements IService {
 	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		IPersistentStudentGroup persistentStudentGroup = null;
 		IPersistentGrouping persistentGrouping = null;
 
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -42,9 +40,7 @@ public class UnEnrollStudentGroupShift implements IService {
 			throw new ExistingServiceException();
 		}
 
-		persistentStudentGroup = persistentSupport.getIPersistentStudentGroup();
-
-		StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
@@ -57,7 +53,6 @@ public class UnEnrollStudentGroupShift implements IService {
 		}
 
 		Shift shift = null;
-		persistentStudentGroup.simpleLockWrite(studentGroup);
 		studentGroup.setShift(shift);
 
 		return new Boolean(true);

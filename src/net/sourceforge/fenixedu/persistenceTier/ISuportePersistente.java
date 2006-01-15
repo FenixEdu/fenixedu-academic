@@ -84,7 +84,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
@@ -177,11 +176,6 @@ public interface ISuportePersistente
 
 	public IPersistentExam getIPersistentExam();
 
-	public IPersistentWrittenTest getIPersistentWrittenTest();
-
-	// public IPersistentWrittenEvaluationCurricularCourseScope
-	// getIPersistentWrittenEvaluationCurricularCourseScope();
-
 	public IPersistentBranch getIPersistentBranch();
 
 	public IPersistentCurricularYear getIPersistentCurricularYear();
@@ -233,8 +227,6 @@ public interface ISuportePersistente
 	public IPersistentQualification getIPersistentQualification();
 
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment();
-
-	public IPersistentStudentGroup getIPersistentStudentGroup();
 
 	public IPersistentGrouping getIPersistentGrouping();
 
@@ -500,8 +492,6 @@ public interface ISuportePersistente
 	public IPersistentCMS getIPersistentCms();
 
 	public IPersistentMailAddressAlias getIPersistentMailAdressAlias();
-
-	public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod();
 
 	public IPersistentMailingList getIPersistentMailingList();
             

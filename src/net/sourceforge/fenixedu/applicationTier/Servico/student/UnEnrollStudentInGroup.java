@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -29,10 +28,9 @@ public class UnEnrollStudentInGroup implements IService {
 
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentStudentGroup persistentStudentGroup = persistentSuport.getIPersistentStudentGroup();
         IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
 
-        StudentGroup studentGroup = (StudentGroup) persistentStudentGroup.readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentSuport.getIPersistentObject().readByOID(
                 StudentGroup.class, studentGroupCode);
 
         if (studentGroup == null) {
@@ -63,7 +61,7 @@ public class UnEnrollStudentInGroup implements IService {
         if (resultEmpty) {
             groupProperties.removeStudentGroups(studentGroup);
             studentGroup.setShift(null);
-            persistentStudentGroup.deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
+            persistentSuport.getIPersistentObject().deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
             return Boolean.FALSE;
         }
 

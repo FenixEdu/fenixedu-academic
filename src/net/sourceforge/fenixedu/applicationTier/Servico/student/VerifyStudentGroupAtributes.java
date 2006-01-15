@@ -36,7 +36,7 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
@@ -72,7 +72,7 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentStudentGroup().readByOID(
+		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(
 				Grouping.class, groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -109,7 +109,7 @@ public class VerifyStudentGroupAtributes implements IService {
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
@@ -151,7 +151,7 @@ public class VerifyStudentGroupAtributes implements IService {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();
@@ -191,7 +191,7 @@ public class VerifyStudentGroupAtributes implements IService {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentStudentGroup().readByOID(
+		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();

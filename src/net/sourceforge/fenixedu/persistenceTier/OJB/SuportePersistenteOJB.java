@@ -97,7 +97,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -107,7 +106,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenEvaluationEnrolment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWrittenTest;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -285,7 +283,6 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublicatio
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOrientation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentPublicationsNumber;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentServiceProviderRegime;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentTeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentWeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
@@ -727,11 +724,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment()
 	{
 		return new CandidateEnrolmentOJB();
-	}
-
-	public IPersistentStudentGroup getIPersistentStudentGroup()
-	{
-		return new StudentGroupOJB();
 	}
 
 	public IPersistentGrouping getIPersistentGrouping()
@@ -1241,11 +1233,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 		return new PeriodOJB();
 	}
 
-	public IPersistentWrittenTest getIPersistentWrittenTest()
-	{
-		return new WrittenTestOJB();
-	}
-
 	public IPersistentReimbursementGuideEntry getIPersistentReimbursementGuideEntry()
 	{
 		return new ReimbursementGuideEntryOJB();
@@ -1553,11 +1540,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentMailAddressAlias getIPersistentMailAdressAlias()
 	{
 		return new PersistentMailAddressAliasOJB();
-	}
-
-	public IPersistentTeacherExpectationDefinitionPeriod getIPersistentTeacherExpectationDefinitionPeriod()
-	{
-		return new TeacherExpectationDefinitionPeriodOJB();
 	}
 
 	public IPersistentMailingList getIPersistentMailingList()
