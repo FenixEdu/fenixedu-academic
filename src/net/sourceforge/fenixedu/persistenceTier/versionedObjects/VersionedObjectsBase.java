@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -29,10 +28,6 @@ public abstract class VersionedObjectsBase {
 	PersistenceBroker pb = SuportePersistenteOJB.getCurrentPersistenceBroker();
         
 	return pb.getCollectionByQuery(queryCriteria);
-    }
-
-    public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia {
-        throw new RuntimeException("This method should not be called by the Versioned Object DAO's!");
     }
 
     public int count(Class classToQuery, Criteria criteria) {

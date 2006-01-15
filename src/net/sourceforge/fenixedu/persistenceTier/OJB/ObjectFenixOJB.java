@@ -317,10 +317,6 @@ public abstract class ObjectFenixOJB implements IPersistentObject {
         return new QueryByCriteria(classToQuery, criteria, distinct.booleanValue());
     }
 
-    public Object lockIteratorNextObj(Iterator iterator) throws ExcepcaoPersistencia {
-        return iterator.next();
-    }
-    
     public Collection readAll(Class classToQuery) throws ExcepcaoPersistencia {
         return queryList(classToQuery, null);
     }
