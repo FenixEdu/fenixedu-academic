@@ -134,7 +134,7 @@ public class InfoSeminary extends InfoObject{
     }
 
     public String printDeadline() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append(this.getEnrollmentEndDate().get(Calendar.DAY_OF_MONTH));
         result.append("-").append(this.getEnrollmentEndDate().get(Calendar.MONTH + 1));
         result.append("-").append(this.getEnrollmentEndDate().get(Calendar.YEAR));

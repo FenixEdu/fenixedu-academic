@@ -63,7 +63,7 @@ public class SeperateExecutionCourseDispatchAction extends FenixDispatchAction {
 
             public Object transform(Object arg0) {
                 InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) arg0;
-                StringBuffer label = new StringBuffer(infoExecutionDegree.getInfoDegreeCurricularPlan()
+                StringBuilder label = new StringBuilder(infoExecutionDegree.getInfoDegreeCurricularPlan()
                         .getInfoDegree().getTipoCurso().toString());
                 label.append(" em ");
                 label

@@ -50,13 +50,13 @@ public class CoordinatorProjectsInformationBackingBean extends
     public List<CalendarLink> getProjectsCalendarLink() {
         if (this.projectsCalendarLink == null) {
             this.projectsCalendarLink = new ArrayList();
-            StringBuffer linkLabel;
+            StringBuilder linkLabel;
             final DateFormat sdf = new SimpleDateFormat("HH:mm");            
             for (final ExecutionCourse executionCourse : this.getExecutionCoursesWithProjects()) {
                 for (final Project project : executionCourse.getAssociatedProjects()) {
                     final CalendarLink calendarLinkBegin = new CalendarLink();
                     calendarLinkBegin.setObjectOccurrence(project.getBegin());
-                    linkLabel = new StringBuffer(20);
+                    linkLabel = new StringBuilder(20);
                     linkLabel.append(executionCourse.getSigla());
                     linkLabel.append(" (").append(sdf.format(project.getBegin())).append(")");
                     linkLabel.append("<br/>").append(messages.getString("label.coordinator.enrolmentBegin"));
@@ -64,7 +64,7 @@ public class CoordinatorProjectsInformationBackingBean extends
                     
                     final CalendarLink calendarLinkEnd = new CalendarLink();
                     calendarLinkEnd.setObjectOccurrence(project.getEnd());
-                    linkLabel = new StringBuffer(20);
+                    linkLabel = new StringBuilder(20);
                     linkLabel.append(executionCourse.getSigla());
                     linkLabel.append(" (").append(sdf.format(project.getEnd())).append(")");
                     linkLabel.append("<br/>").append(messages.getString("label.delivery"));

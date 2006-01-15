@@ -255,7 +255,7 @@ public class MigrationExecutionCourse {
     }
 
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer("");
+        StringBuilder stringBuffer = new StringBuilder("");
         stringBuffer.append("Disciplina Execução (Code: ").append(getInitials()).append(")").append(
                 "\r\n\t(Abreviation: ").append(getAbreviation()).append(")").append("\r\n\t (Nome: ")
                 .append(getName()).append(")\r\n\t").append("(TP:")

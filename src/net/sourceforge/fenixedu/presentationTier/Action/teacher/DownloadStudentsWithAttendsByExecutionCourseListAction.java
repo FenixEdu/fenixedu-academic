@@ -310,7 +310,7 @@ public class DownloadStudentsWithAttendsByExecutionCourseListAction extends Feni
         try {
             ServletOutputStream writer = response.getOutputStream();
             response.setContentType("plain/text");
-            StringBuffer fileName = new StringBuffer();
+            StringBuilder fileName = new StringBuilder();
             Calendar now = new GregorianCalendar();
             fileName.append("listaDeAlunos_");
             fileName.append(infoDTO.getInfoExecutionCourse().getSigla()).append("_").append(

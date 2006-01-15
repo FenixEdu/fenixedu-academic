@@ -26,7 +26,7 @@ public class PersistentProject implements IPersistentProject {
     public List<Project> readByUserLogin(String userLogin) throws ExcepcaoPersistencia {
         List<Project> projects = new ArrayList<Project>();
 
-        StringBuffer query = new StringBuffer();
+        StringBuilder query = new StringBuilder();
         query
                 .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p , web_user_projs up where up.login ='");
         query.append(userLogin);
@@ -68,7 +68,7 @@ public class PersistentProject implements IPersistentProject {
     public List<Project> readByProjectsCodes(List<Integer> projectCodes) throws ExcepcaoPersistencia {
         List<Project> projects = new ArrayList<Project>();
         if (projectCodes != null && projectCodes.size() != 0) {
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer
                     .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p where p.projectCode IN (");
             for (int i = 0; i < projectCodes.size(); i++) {
@@ -109,7 +109,7 @@ public class PersistentProject implements IPersistentProject {
 
     public List<Project> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes) throws ExcepcaoPersistencia {
         List<Project> projects = new ArrayList<Project>();
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer
                 .append("select p.projectCode, p.title, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO from  V_PROJECTOS p , web_user_projs up where up.login = '");
         stringBuffer.append(coordinatorId);
@@ -205,7 +205,7 @@ public class PersistentProject implements IPersistentProject {
 
     public int countUserProject(Integer userCode) throws ExcepcaoPersistencia {
         int result = 0;
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("select count(*) from web_user_projs up where up.login='");
         stringBuffer.append(userCode);
         stringBuffer.append("'");

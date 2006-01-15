@@ -174,7 +174,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public String print() {
         if (!this.getCurricularStage().equals(CurricularStage.OLD)) {
-            StringBuffer dcp = new StringBuffer();
+            StringBuilder dcp = new StringBuilder();
             
             dcp.append("[DCP ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");
             this.getDegreeModule().print(dcp, "", null);

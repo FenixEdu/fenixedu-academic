@@ -17,8 +17,8 @@ public class ExecutionCourseTimeTableLessonContentRenderer implements LessonSlot
     /**
      * @see ServidorApresentacao.TagLib.sop.v3.LessonSlotContentRenderer#render(ServidorApresentacao.TagLib.sop.v3.LessonSlot)
      */
-    public StringBuffer render(LessonSlot lessonSlot) {
-        StringBuffer strBuffer = new StringBuffer();
+    public StringBuilder render(LessonSlot lessonSlot) {
+        StringBuilder strBuffer = new StringBuilder();
         // InfoLesson lesson =
         // lessonSlot.getInfoLessonWrapper().getInfoLesson();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();

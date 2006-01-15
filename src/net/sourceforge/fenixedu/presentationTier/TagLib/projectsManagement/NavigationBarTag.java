@@ -65,7 +65,7 @@ public class NavigationBarTag extends TagSupport {
         int numberOfElements = (new Integer((String) pageContext.findAttribute(this.getNumberOfSpanElements()))).intValue();
 
         int numberOfSpans = (int) Math.ceil((double) infoReport.getLinesSize().intValue() / numberOfElements);
-        StringBuffer navigationBar = new StringBuffer("");
+        StringBuilder navigationBar = new StringBuilder("");
 
         if (numberOfSpans > 1) {
             navigationBar.append("<table class=\"navigation-bar\"><tr><td>Páginas:&nbsp;&nbsp; ");

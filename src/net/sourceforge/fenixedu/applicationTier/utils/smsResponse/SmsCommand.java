@@ -187,7 +187,7 @@ public class SmsCommand {
     private void buildRegexAndVariableInformation(String expressionString)
             throws SmsCommandConfigurationException {
 
-        StringBuffer regex = new StringBuffer();
+        StringBuilder regex = new StringBuilder();
         int nextVariableIndex = 1;
 
         if (expressionString.length() == 0) {
@@ -353,7 +353,7 @@ public class SmsCommand {
             if ((result != null) && (this.replyToSender == true)) {
 
                 ISmsDTO smsDTO = null;
-                StringBuffer responseMessage = new StringBuffer();
+                StringBuilder responseMessage = new StringBuilder();
 
                 if (!(result instanceof Collection)) {
                     smsDTO = (ISmsDTO) result;

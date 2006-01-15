@@ -111,7 +111,7 @@ public class GratuityFile {
      * @return
      */
     protected static String buildPaymentReference(InfoGratuitySituation infoGratuitySituation) {
-        StringBuffer reference = new StringBuffer();
+        StringBuilder reference = new StringBuilder();
 
         //year
         String year = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree()
@@ -145,7 +145,7 @@ public class GratuityFile {
      * @return string
      */
     protected static String addCharToStringUntilMax(char c, String string, int maxlength) {
-        StringBuffer stringComplete = new StringBuffer();
+        StringBuilder stringComplete = new StringBuilder();
 
         int stringLength = 0;
         if (string != null) {

@@ -172,7 +172,7 @@ public class OptionsTag extends TagSupport {
         SelectTag selectTag = (SelectTag) pageContext.getAttribute(Constants.SELECT_KEY);
         if (selectTag == null)
             throw new JspException(messages.getMessage("optionsTag.select"));
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         // If a collection was specified, use that mode to render options
         if (collection != null) {
@@ -270,11 +270,11 @@ public class OptionsTag extends TagSupport {
     // ------------------------------------------------------ Protected Methods
 
     /**
-     * Add an option element to the specified StringBuffer based on the
+     * Add an option element to the specified StringBuilder based on the
      * specified parameters.
      * 
      * @param sb
-     *            StringBuffer accumulating our results
+     *            StringBuilder accumulating our results
      * @param value
      *            Value to be returned to the server for this option
      * @param label
@@ -282,7 +282,7 @@ public class OptionsTag extends TagSupport {
      * @param matched
      *            Should this value be marked as selected?
      */
-    protected void addOption(StringBuffer sb, String value, String label, boolean matched)
+    protected void addOption(StringBuilder sb, String value, String label, boolean matched)
             throws JspException {
 
         sb.append("<option value=\"");

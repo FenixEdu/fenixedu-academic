@@ -34,7 +34,7 @@ public class Precedence extends Precedence_Base {
 	}
 	
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("Precedence:\n");
         stringBuffer.append(this.getCurricularCourse()).append("\n");
         List restrictions = this.getRestrictions();

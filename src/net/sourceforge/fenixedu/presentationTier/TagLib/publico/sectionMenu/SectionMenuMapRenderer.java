@@ -73,8 +73,8 @@ public class SectionMenuMapRenderer {
         this.sectionMenuSlotContentRenderer = sectionMenuSlotContentRenderer;
     }
 
-    public StringBuffer render() {
-        StringBuffer strBuffer = new StringBuffer("");
+    public StringBuilder render() {
+        StringBuilder strBuffer = new StringBuilder("");
         List sections = getSectionMenuMap().getSections();
         if (sections != null && !sections.isEmpty()) {
             int i = 0;
@@ -102,8 +102,8 @@ public class SectionMenuMapRenderer {
         return strBuffer;
     }
 
-    private StringBuffer renderSuffix(List sections, int iterator) {
-        StringBuffer strBuffer = new StringBuffer("");
+    private StringBuilder renderSuffix(List sections, int iterator) {
+        StringBuilder strBuffer = new StringBuilder("");
 
         //section management
         if (renderer != null && renderer.equals("sectionChooser")) {
@@ -133,8 +133,8 @@ public class SectionMenuMapRenderer {
         return strBuffer;
     }
 
-    private StringBuffer getStyle(List sections, int iterator) {
-        StringBuffer strBuffer = new StringBuffer("");
+    private StringBuilder getStyle(List sections, int iterator) {
+        StringBuilder strBuffer = new StringBuilder("");
         if (getSectionMenuMap().getActiveSection() == null
                 || !((InfoSection) sections.get(iterator))
                         .equals(getSectionMenuMap().getActiveSection())) {

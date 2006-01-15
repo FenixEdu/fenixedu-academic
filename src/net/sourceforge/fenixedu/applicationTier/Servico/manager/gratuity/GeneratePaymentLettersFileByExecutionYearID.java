@@ -520,7 +520,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 	 * @return string
 	 */
 	private String addCharToStringUntilMax(char c, String string, int maxlength) {
-		StringBuffer stringComplete = new StringBuffer();
+		StringBuilder stringComplete = new StringBuilder();
 
 		int stringLength = 0;
 		if (string != null) {
@@ -624,7 +624,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 
 			numberOfPhases = new Integer(gratuityLetterFileEntry.getGratuityLetterPaymentPhases().size());
 
-			StringBuffer letterFile = (StringBuffer) letterFiles.get(numberOfPhases);
+			StringBuilder letterFile = (StringBuilder) letterFiles.get(numberOfPhases);
 
 			if (letterFile == null) {
 				letterFile = createLetterFile(gratuityLetterFileEntry.getGratuityLetterPaymentPhases()
@@ -717,7 +717,7 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 			for (Iterator iter = letterFiles.keySet().iterator(); iter.hasNext();) {
 
 				Integer phasesNumber = (Integer) iter.next();
-				StringBuffer letterFile = (StringBuffer) letterFiles.get(phasesNumber);
+				StringBuilder letterFile = (StringBuilder) letterFiles.get(phasesNumber);
 
 				String filename = System.getProperty("java.io.tmpdir") + File.separator + "Cartas"
 						+ year + "-" + phasesNumber + "fases" + ".txt";
@@ -740,8 +740,8 @@ public class GeneratePaymentLettersFileByExecutionYearID implements IService {
 	 * @param numberOfPhases
 	 * @return
 	 */
-	private StringBuffer createLetterFile(int numberOfPhases) {
-		StringBuffer file = new StringBuffer();
+	private StringBuilder createLetterFile(int numberOfPhases) {
+		StringBuilder file = new StringBuilder();
 
 		// add header
 		file.append(STUDENT_NUMBER_COLUMN + COLUMN_SEPARATOR);

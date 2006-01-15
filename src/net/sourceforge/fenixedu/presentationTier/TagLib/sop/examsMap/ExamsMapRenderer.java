@@ -49,8 +49,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         setLocale(locale);
     }
 
-    public StringBuffer render(Locale locale) {
-        StringBuffer strBuffer = new StringBuffer("");
+    public StringBuilder render(Locale locale) {
+        StringBuilder strBuffer = new StringBuilder("");
         ResourceBundle bundle = ResourceBundle
                 .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         // Generate maps for the specified years.
@@ -135,7 +135,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         return result;
     }
 
-    private void renderExecutionCourseListForYear(StringBuffer strBuffer, Integer year) {
+    private void renderExecutionCourseListForYear(StringBuilder strBuffer, Integer year) {
         strBuffer.append("<strong>Disciplinas do " + year + "º ano:</strong><br />");
         for (int i = 0; i < examsMap.getExecutionCourses().size(); i++) {
             InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) examsMap
@@ -295,7 +295,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         strBuffer.append("<br />");
     }
 
-    private void renderExamsMapForFilteredYears(StringBuffer strBuffer, Integer year1, Integer year2) {
+    private void renderExamsMapForFilteredYears(StringBuilder strBuffer, Integer year1, Integer year2) {
         strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='95%'>");
 
         strBuffer.append("<tr>");
@@ -314,7 +314,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         strBuffer.append("</table>");
     }
 
-    private void renderExamsForRowOfDays(StringBuffer strBuffer, int week, Integer year1, Integer year2) {
+    private void renderExamsForRowOfDays(StringBuilder strBuffer, int week, Integer year1, Integer year2) {
         for (int slot = 0; slot < daysOfWeek.length; slot++) {
             ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
                     week * daysOfWeek.length + slot);
@@ -335,7 +335,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         }
     }
 
-    private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week) {
+    private void renderLabelsForRowOfDays(StringBuilder strBuffer, int week) {
         for (int slot = 0; slot < daysOfWeek.length; slot++) {
             ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
                     week * daysOfWeek.length + slot);
@@ -351,9 +351,9 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         }
     }
 
-    private void renderHeader(StringBuffer strBuffer) {
+    private void renderHeader(StringBuilder strBuffer) {
         for (int index = 0; index < this.daysOfWeek.length; index++) {
-            StringBuffer classCSS = new StringBuffer("examMap_header");
+            StringBuilder classCSS = new StringBuilder("examMap_header");
             if (index == 0) {
                 classCSS.append("_first");
             }

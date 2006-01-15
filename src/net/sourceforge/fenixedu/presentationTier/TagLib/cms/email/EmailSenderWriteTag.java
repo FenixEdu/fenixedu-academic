@@ -52,7 +52,7 @@ public class EmailSenderWriteTag extends TagSupport
 		{
 			String from = this.buildSender();
 
-			StringBuffer output = new StringBuffer();
+			StringBuilder output = new StringBuilder();
 			output.append(from);
 			TagUtils.getInstance().write(pageContext, output.toString());
 
@@ -73,7 +73,7 @@ public class EmailSenderWriteTag extends TagSupport
 	 */
 	private String buildSender() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append(this.messageSenders());
 
 		return buffer.toString();
@@ -81,7 +81,7 @@ public class EmailSenderWriteTag extends TagSupport
 
 	private String messageSenders() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		boolean firstAddress = true;
 		for (Iterator<InternetAddress> fromIterator = this.message.getFrom().iterator(); fromIterator.hasNext();)
 		{

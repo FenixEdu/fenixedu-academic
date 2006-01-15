@@ -33,8 +33,8 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
         setAction(action);
     }
 
-    public StringBuffer render(LessonSlot lessonSlot) {
-        StringBuffer strBuffer = new StringBuffer();
+    public StringBuilder render(LessonSlot lessonSlot) {
+        StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
@@ -51,11 +51,11 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
             strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome()).append("</span>");
             return strBuffer;
         }
-        return new StringBuffer("");
+        return new StringBuilder("");
     }
 
-    public StringBuffer lastRender(LessonSlot lessonSlot) {
-        StringBuffer strBuffer = new StringBuffer();
+    public StringBuilder lastRender(LessonSlot lessonSlot) {
+        StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
@@ -71,7 +71,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
      * @return
      */
     private Object getImage() {
-        StringBuffer strBuffer = new StringBuffer();
+        StringBuilder strBuffer = new StringBuilder();
         if(getAction().equalsIgnoreCase("add")){
             strBuffer.append("add1.gif\" title=\"Adicionar\"");
         }else if (getAction().equalsIgnoreCase("remove")){
@@ -84,8 +84,8 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
      * @param lesson
      * @return
      */
-    private StringBuffer getURL(InfoLesson lesson) {
-        StringBuffer strBuffer = new StringBuffer();
+    private StringBuilder getURL(InfoLesson lesson) {
+        StringBuilder strBuffer = new StringBuilder();
         if (getAction().equalsIgnoreCase("add")) {
             strBuffer.append("<a href=\"enrollStudentInShifts.do?studentId=");
         } else if (getAction().equalsIgnoreCase("remove")) {

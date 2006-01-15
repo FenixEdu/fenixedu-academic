@@ -37,7 +37,7 @@ public class InfoGratuityValues extends InfoObject {
     private List infoPaymentPhases;
 
     public String toString() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result = result.append("[InfoGratuityValues: \n").append("idInternal= ").append(getIdInternal())
                 .append("\nanualValue= ").append(getAnualValue()).append("\nscholarShipPart= ").append(
                         getScholarShipValue()).append("\nfinalProofValue= ")

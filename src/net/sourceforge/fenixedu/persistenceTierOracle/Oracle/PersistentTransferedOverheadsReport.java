@@ -30,7 +30,7 @@ public class PersistentTransferedOverheadsReport extends PersistentReport implem
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select \"UE\", \"IDMOV\", \"DATE_AUTOR\", \"TIPO\", \"DESCRICAO\", \"VALOR\" from ");
             stringBuffer.append(tableOrView);
             stringBuffer.append(" where CC_COORD='");

@@ -117,7 +117,7 @@ public class CmsConfigurationManagement extends FenixDispatchAction
 				configurationForm.set("smtpServerAddress", cms.getConfiguration().getSmtpServerAddressToUse());
 				configurationForm.set("filterNonTextualAttachments", cms.getConfiguration().getFilterNonTextualAttachmentsToUse());
 				configurationForm.set("mailingListHost", cms.getConfiguration().getMailingListsHostToUse());
-				StringBuffer commaSeparatedConversationReplyMarkers = new StringBuffer();
+				StringBuilder commaSeparatedConversationReplyMarkers = new StringBuilder();
 				for (int i = 0; i < cms.getConfiguration().getConversationReplyMarkersToUse().length; i++)
 				{
 					if (i > 0) commaSeparatedConversationReplyMarkers.append(",");

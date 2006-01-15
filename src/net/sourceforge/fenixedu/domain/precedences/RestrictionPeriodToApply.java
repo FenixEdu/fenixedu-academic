@@ -22,7 +22,7 @@ public class RestrictionPeriodToApply extends RestrictionPeriodToApply_Base {
 	
 	
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("Restriction(").append(this.getClass()).append("):").append("\n\t");
         stringBuffer.append(this.getPeriodToApplyRestriction()).append("\n");
         return stringBuffer.toString();

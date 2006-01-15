@@ -323,7 +323,7 @@ public class LinkTag extends BaseHandlerTag {
 
         // Special case for name anchors
         if (linkName != null) {
-            StringBuffer results = new StringBuffer("<a name=\"");
+            StringBuilder results = new StringBuilder("<a name=\"");
             results.append(linkName);
             results.append("\">");
             ResponseUtils.write(pageContext, results.toString());
@@ -348,7 +348,7 @@ public class LinkTag extends BaseHandlerTag {
         //até aqui
 
         // Generate the opening anchor element
-        StringBuffer results = new StringBuffer("<a href=\"");
+        StringBuilder results = new StringBuilder("<a href=\"");
         // * @since Struts 1.1
         results.append(calculateURL());
         results.append("\"");
@@ -403,7 +403,7 @@ public class LinkTag extends BaseHandlerTag {
     public int doEndTag() throws JspException {
 
         // Prepare the textual content and ending element of this hyperlink
-        StringBuffer results = new StringBuffer();
+        StringBuilder results = new StringBuilder();
         if (text != null)
             results.append(text);
         results.append("</a>");

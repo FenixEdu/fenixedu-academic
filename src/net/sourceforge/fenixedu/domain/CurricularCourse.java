@@ -57,7 +57,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     }
 	
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("[").append(this.getClass()).append(":").append("idInternal = ").append(
                 this.getIdInternal()).append(";name = ").append(this.getName()).append(";code = ")
                 .append(this.getCode()).append("\n degreeCurricularPlan = ").append(
@@ -65,7 +65,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         return stringBuffer.toString();
     }
     
-    public void print(StringBuffer dcp, String tabs, Context previousContext) {
+    public void print(StringBuilder dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";
         dcp.append(tab);
         dcp.append("[CC ").append(this.getIdInternal()).append("][");
@@ -317,7 +317,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     // -------------------------------------------------------------
 
     private String constructUniqueEnrollmentKey(String code, String name, DegreeType tipoCurso) {
-        StringBuffer stringBuffer = new StringBuffer(50);
+        StringBuilder stringBuffer = new StringBuilder(50);
         stringBuffer.append(code);
         stringBuffer.append(name);
         if (tipoCurso != null) {

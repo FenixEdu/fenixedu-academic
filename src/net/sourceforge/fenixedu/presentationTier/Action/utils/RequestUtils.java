@@ -64,7 +64,7 @@ public class RequestUtils {
                 InfoDegreeCurricularPlan infoDegreeCurricularPlan = infoExecutionDegree.getInfoDegreeCurricularPlan();
                 InfoDegree infoDegree = infoDegreeCurricularPlan.getInfoDegree();
 
-                StringBuffer label = new StringBuffer();
+                StringBuilder label = new StringBuilder();
                 label.append(infoDegree.getTipoCurso().toString());
                 label.append(" em ");
                 label.append(infoDegree.getNome());

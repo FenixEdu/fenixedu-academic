@@ -235,7 +235,7 @@ public class InsertStudentTestResponses implements IService {
     }
 
     private String getLogString(Response[] response) {
-        StringBuffer event = new StringBuffer();
+        StringBuilder event = new StringBuilder();
         event.append("Submeter Teste;");
         for (int questionNumber = 0; questionNumber < response.length; questionNumber++) {
             if (response[questionNumber] instanceof ResponseLID) {

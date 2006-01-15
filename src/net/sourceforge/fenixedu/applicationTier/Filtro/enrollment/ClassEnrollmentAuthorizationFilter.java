@@ -75,7 +75,7 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
                 String startDateString = outputDateFormat.format(startDate);
                 String endDateString = outputDateFormat.format(endDate);
 
-                StringBuffer buffer = new StringBuffer();
+                StringBuilder buffer = new StringBuilder();
                 buffer.append(startDateString);
                 buffer.append(" - ");
                 buffer.append(endDateString);

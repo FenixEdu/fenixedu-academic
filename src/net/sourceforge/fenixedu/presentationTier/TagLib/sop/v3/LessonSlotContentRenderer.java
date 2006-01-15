@@ -5,5 +5,5 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3;
  *  
  */
 public interface LessonSlotContentRenderer {
-    public StringBuffer render(LessonSlot lessonSlot);
+    public StringBuilder render(LessonSlot lessonSlot);
 }

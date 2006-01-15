@@ -58,7 +58,7 @@ public class FormatDoubleValue extends TagSupport {
 
         double doubleValue = getPropertyValue().doubleValue();
 
-        StringBuffer value = new StringBuffer();
+        StringBuilder value = new StringBuilder();
         String color = "";
         if (doubleValue < 0) {
             color = "color:red;";

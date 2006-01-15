@@ -68,7 +68,7 @@ public class MailingListVO extends VersionedObjectsBase implements IPersistentMa
 		boolean result = false;
 		for (MailAddressAlias alias : mailingList.getAliases())
 		{
-			StringBuffer buffer = new StringBuffer().append(alias.getAddress()).append("@").append(mailingListDomain);
+			StringBuilder buffer = new StringBuilder().append(alias.getAddress()).append("@").append(mailingListDomain);
 			for (Address address : recipients)
 			{
 				if (address instanceof InternetAddress)
@@ -89,7 +89,7 @@ public class MailingListVO extends VersionedObjectsBase implements IPersistentMa
 	private boolean isMailingListAddressInReceipients(Collection<Address> recipients,
 			MailingList mailingList, String mailingListDomain)
 	{
-		StringBuffer buffer = new StringBuffer().append(mailingList.getAddress()).append("@").append(mailingListDomain);
+		StringBuilder buffer = new StringBuilder().append(mailingList.getAddress()).append("@").append(mailingListDomain);
 		String mailingListAddress = buffer.toString();
 		boolean result = false;
 

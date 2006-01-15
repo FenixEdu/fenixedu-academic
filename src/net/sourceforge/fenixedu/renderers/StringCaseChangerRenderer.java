@@ -120,7 +120,7 @@ public class StringCaseChangerRenderer extends StringInputRenderer {
         }
 
         private String capitalize(String text) {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             char ch, prevCh;
             
             prevCh = ' ';

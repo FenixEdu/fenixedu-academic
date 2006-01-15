@@ -35,7 +35,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer
                     .append("select \"id Mov.\", \"Membro Cons.\", \"Fornecedor\", \"desc Fornecedor\", \"Tipo Doc.\", \"Nº Doc.\",\"Fonte Financ.\", \"Rubrica\", \"Tipo Mov.\", \"Data Doc\", \"Descrição\", \"pct Iva\",\"Valor\", \"IVA\", \"Total\", \"pct imput.\" from ");
             stringBuffer.append(tableOrView);
@@ -86,7 +86,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer
                     .append("select \"id Mov.\", \"Membro Cons.\", \"Fornecedor\", \"desc Fornecedor\", \"Tipo Doc.\", \"Nº Doc.\",\"Fonte Financ.\", \"Rubrica\", \"Tipo Mov.\", \"Data Doc\", \"Descrição\", \"pct Iva\",\"Valor\", \"IVA\", \"Total\", \"pct imput.\" from ");
             stringBuffer.append(tableOrView);
@@ -138,7 +138,7 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
 
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select distinct r.COD, r.DESCRICAO from ");
             stringBuffer.append(RubricType.EXPENSES_RUBRIC_TABLE_NAME);
             stringBuffer.append(" r, ");

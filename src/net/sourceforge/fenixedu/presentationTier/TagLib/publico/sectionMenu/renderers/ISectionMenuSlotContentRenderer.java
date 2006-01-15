@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.publico.sectionMenu.ren
  *  
  */
 public interface ISectionMenuSlotContentRenderer {
-    public StringBuffer renderSectionLabel(int i, String path, boolean hasChilds);
+    public StringBuilder renderSectionLabel(int i, String path, boolean hasChilds);
     /**
      *  
      */

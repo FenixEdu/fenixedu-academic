@@ -68,7 +68,7 @@ public class PersistentSummaryReport extends PersistentReport implements IPersis
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer queryBuffer = new StringBuffer();
+            StringBuilder queryBuffer = new StringBuilder();
             queryBuffer
                     .append("select \"NºProj\", \"Acrónimo\", \"Unid Expl\", \"Tipo\", \"Orçamento\", \"Máximo Financiável\", \"Receita\", \"Despesa\", \"Adiantamentos por Justificar\" ,\"Saldo Tesouraria\", \"Cabimentos por Executar\", \"Saldo Orçamental\" from ");
             queryBuffer.append(tableOrView);

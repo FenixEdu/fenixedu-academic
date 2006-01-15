@@ -44,7 +44,7 @@ public class ReadDistributedTestMarksToString implements IService {
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
         for (int i = 1; i <= distributedTest.getNumberOfQuestions().intValue(); i++) {
             result.append("P");
@@ -105,7 +105,7 @@ public class ReadDistributedTestMarksToString implements IService {
     public String run(Integer executionCourseId, String[] distributedTestCodes)
             throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente persistentSuport;
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
         persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport

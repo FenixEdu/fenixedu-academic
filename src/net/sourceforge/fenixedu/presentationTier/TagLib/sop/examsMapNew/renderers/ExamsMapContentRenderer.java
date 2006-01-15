@@ -27,9 +27,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
     private ExamsMap examsMap;
 
-    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext) {
+    public StringBuilder renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext) {
         this.examsMap = examsMap;
-        StringBuffer strBuffer = new StringBuffer();
+        StringBuilder strBuffer = new StringBuilder();
 
         boolean isFirstDayOfSeason = ((examsMapSlot.getDay().get(Calendar.DAY_OF_MONTH) == examsMap
                 .getFirstDayOfSeason().get(Calendar.DAY_OF_MONTH))
@@ -84,9 +84,9 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
         }
     }
 
-    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2,
+    public StringBuilder renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2,
             String typeUser,PageContext pageContext) {
-        StringBuffer strBuffer = new StringBuffer();
+        StringBuilder strBuffer = new StringBuilder();
 
         for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
             InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);
@@ -248,8 +248,8 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
      * @see ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer#renderDayContents(ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot,
      *      java.lang.String)
      */
-    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext) {
-        StringBuffer strBuffer = new StringBuffer();
+    public StringBuilder renderDayContents(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext) {
+        StringBuilder strBuffer = new StringBuilder();
 
         for (int i = 0; i < examsMapSlot.getExams().size(); i++) {
             InfoExam infoExam = (InfoExam) examsMapSlot.getExams().get(i);

@@ -40,7 +40,7 @@ public class CourseGroup extends CourseGroup_Base {
         }
     }
 
-    public void print(StringBuffer dcp, String tabs, Context previousContext) {
+    public void print(StringBuilder dcp, String tabs, Context previousContext) {
         String tab = tabs + "\t";
         dcp.append(tab);
         dcp.append("[CG ").append(this.getIdInternal()).append("] ").append(this.getName()).append("\n");

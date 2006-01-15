@@ -201,7 +201,7 @@ SearchBean bean = (SearchBean) viewState.getMetaObject().getObject();
     }
 
     private String capitalize(String text) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         char ch, prevCh;
         
         prevCh = ' ';

@@ -78,7 +78,7 @@ public class SchoolClassForwardFilter implements Filter {
             tokens = tokensTemp;
         }
 
-        StringBuffer forwardURI = new StringBuffer(context);
+        StringBuilder forwardURI = new StringBuilder(context);
         
         if(tokens.length >=2 && !(tokens[1].equalsIgnoreCase("horarios"))){
         	forwardURI.append(notFoundURI);

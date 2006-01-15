@@ -94,7 +94,7 @@ public class ExecutionCourseForwardFilter implements Filter {
             tokens = tokensTemp;
         }
 
-        StringBuffer forwardURI = new StringBuffer(context);
+        StringBuilder forwardURI = new StringBuilder(context);
 
         if (tokens.length >= 2 && !(tokens[1].equalsIgnoreCase("disciplinas"))) {
             forwardURI.append(notFoundURI);
@@ -313,7 +313,7 @@ public class ExecutionCourseForwardFilter implements Filter {
      * @param forwardURI
      * @param infoExecutionCourseRecent
      */
-    private void constructForwardExecutionCourseURI(StringBuffer forwardURI,
+    private void constructForwardExecutionCourseURI(StringBuilder forwardURI,
             InfoExecutionCourse infoExecutionCourseRecent) {
         Integer executionCourseId = infoExecutionCourseRecent.getIdInternal();
         forwardURI.append(forwardExecutionCourse);

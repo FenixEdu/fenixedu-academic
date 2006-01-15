@@ -77,7 +77,7 @@ public class GratuityFileSIBS extends GratuityFile {
     }
 
     private static String nameFile(InfoGratuitySituation infoGratuitySituation) {
-        StringBuffer fileName = new StringBuffer();
+        StringBuilder fileName = new StringBuilder();
 
         String year = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree()
                 .getInfoExecutionYear().getYear().replace('/', '-');
@@ -95,7 +95,7 @@ public class GratuityFileSIBS extends GratuityFile {
      * @param writer
      */
     private static void writeHeader(BufferedWriter writer) throws IOException {
-        StringBuffer header = new StringBuffer();
+        StringBuilder header = new StringBuilder();
         header.append(0); //register type, usually 0
         header.append("AEPS"); //file type
         header.append(90000820); //number with 8 digits
@@ -127,7 +127,7 @@ public class GratuityFileSIBS extends GratuityFile {
      */
     private static void writeLine(BufferedWriter writer, InfoGratuitySituation infoGratuitySituation)
             throws IOException {
-        StringBuffer line = new StringBuffer();
+        StringBuilder line = new StringBuilder();
 
         line.append(1); //register type, usually 1
         line.append(80); //processing type, usually 80 but can be 82
@@ -157,7 +157,7 @@ public class GratuityFileSIBS extends GratuityFile {
      * @param writer
      */
     private static void writeFooter(BufferedWriter writer, int linesNumber) throws IOException {
-        StringBuffer footer = new StringBuffer();
+        StringBuilder footer = new StringBuilder();
 
         footer.append(9); //register type, usually 9
         footer.append(addCharToStringUntilMax(ZERO, String.valueOf(linesNumber), MAX_LINES_NUMBER));
@@ -196,7 +196,7 @@ public class GratuityFileSIBS extends GratuityFile {
      * @return
      */
     private static String buildPaymentValue(double value, int intDigits, int decDigits) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
 
         String valueString = String.valueOf(value);
         String intPart = valueString.substring(0, valueString.indexOf('.'));
@@ -233,7 +233,7 @@ public class GratuityFileSIBS extends GratuityFile {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date.getTime());
 
-        StringBuffer dateString = new StringBuffer();
+        StringBuilder dateString = new StringBuilder();
         dateString.append(calendar.get(Calendar.YEAR));
 
         int month = calendar.get(Calendar.MONTH) + 1;

@@ -206,7 +206,7 @@ public class MonitorRequestLogsDA extends FenixDispatchAction {
             // example
             // log files we experimented with.
             char[] buffer = new char[4096];
-            StringBuffer fileContents = new StringBuffer();
+            StringBuilder fileContents = new StringBuilder();
             int n = 0;
             while ((n = fileReader.read(buffer)) != -1) {
                 fileContents.append(buffer, 0, n);

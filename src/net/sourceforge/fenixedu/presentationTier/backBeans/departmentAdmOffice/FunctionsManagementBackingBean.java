@@ -525,7 +525,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("<ul>");
         if (this.getEmployeeDepartmentUnit() != null
                 && this.getEmployeeDepartmentUnit().isActive(Calendar.getInstance().getTime())) {
@@ -537,7 +537,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    private void getUnitsList(Unit parentUnit, int index, StringBuffer buffer) {
+    private void getUnitsList(Unit parentUnit, int index, StringBuilder buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(

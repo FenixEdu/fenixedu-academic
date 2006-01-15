@@ -30,7 +30,7 @@ public class PersistentProjectBudgetaryBalanceReport extends PersistentReport im
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select \"RUBRICA\", \"DESCRICAORUBRICA\", \"ORÇAMENTADO\", \"EXECUTADO\", \"SALDO\"from ");
             stringBuffer.append(tableOrView);
             stringBuffer.append(" where PROJECTO='");

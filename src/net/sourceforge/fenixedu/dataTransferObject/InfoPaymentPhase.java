@@ -23,7 +23,7 @@ public class InfoPaymentPhase extends InfoObject {
     private List transactionList;
 
     public String toString() {
-        StringBuffer object = new StringBuffer();
+        StringBuilder object = new StringBuilder();
         object = object.append("\n[InfoPaymentPhase: ").append("idInternal= ").append(getIdInternal())
                 .append(" starDate= ").append(startDate).append("; endDate= ").append(endDate).append(
                         "; value= ").append(value).append("; description= ").append(description).append(

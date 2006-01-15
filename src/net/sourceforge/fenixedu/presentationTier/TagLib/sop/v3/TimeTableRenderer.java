@@ -56,8 +56,8 @@ public class TimeTableRenderer {
         this.colorPicker = colorPicker;
     }
 
-    public StringBuffer render(Locale locale, PageContext pageContext, boolean definedWidth) {
-        StringBuffer strBuffer = new StringBuffer("");
+    public StringBuilder render(Locale locale, PageContext pageContext, boolean definedWidth) {
+        StringBuilder strBuffer = new StringBuilder("");
         HashMap slotLessons = new HashMap();
         TimeTableSlot[][] grid = timeTable.getTimeTableGrid();
 
@@ -231,7 +231,7 @@ public class TimeTableRenderer {
      * @param pageContext
      * @param definedWidth 
      */
-    private void renderHeader(StringBuffer strBuffer, Locale locale, PageContext pageContext, boolean definedWidth) {
+    private void renderHeader(StringBuilder strBuffer, Locale locale, PageContext pageContext, boolean definedWidth) {
 
         // strBuffer.append("<th width='15%'>horas/dias</th>\r\n");
         String hourDaysTitle;
@@ -301,8 +301,8 @@ public class TimeTableRenderer {
 
     }
 
-    private StringBuffer getHourLabelByIndex(int hourIndex) {
-        StringBuffer label = new StringBuffer("");
+    private StringBuilder getHourLabelByIndex(int hourIndex) {
+        StringBuilder label = new StringBuilder("");
 
         double startLabelHour = startHour.doubleValue() + new Integer(hourIndex).doubleValue()
                 / (60.0 / slotSize.doubleValue());

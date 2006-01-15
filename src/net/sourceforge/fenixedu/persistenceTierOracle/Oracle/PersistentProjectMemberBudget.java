@@ -33,7 +33,7 @@ public class PersistentProjectMemberBudget extends PersistentReport implements I
             String tableOrView = getTableOrViewName(p, reportType);
             String rubricTableOrView = getTableOrViewName(p, ReportType.RUBRIC_BUDGET_MEMBER);
 
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select \"INSTITUICAO\", \"DESCRICAOINSTITUICAO\", \"TIPO\", \"OVH\", \"GRP\", \"PCTFINANCIAMENTO\" from ");
             stringBuffer.append(tableOrView);
             stringBuffer.append(" where PROJECTO='");
@@ -68,7 +68,7 @@ public class PersistentProjectMemberBudget extends PersistentReport implements I
             throws ExcepcaoPersistencia, SQLException {
         List rubricBudget = new ArrayList();
 
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("select \"RUBRICA\", \"DESCRIPTIONRUBRICA\", \"VALOR\" from ");
         stringBuffer.append(rubricTableOrView);
         stringBuffer.append(" where PROJECTO='");

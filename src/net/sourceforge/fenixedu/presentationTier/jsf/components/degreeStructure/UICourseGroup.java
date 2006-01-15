@@ -31,7 +31,7 @@ public class UICourseGroup extends UIDegreeModule {
             return;
         }
         
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(tabs);
         buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
         buffer.append("[CG ").append(this.degreeModule.getIdInternal()).append("] ").append(this.degreeModule.getName());

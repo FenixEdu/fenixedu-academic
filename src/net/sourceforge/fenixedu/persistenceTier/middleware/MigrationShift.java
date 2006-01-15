@@ -135,7 +135,7 @@ public class MigrationShift {
     }
 
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer("");
+        StringBuilder stringBuffer = new StringBuilder("");
         stringBuffer.append(migrationExecutionCourse.toString());
         return stringBuffer.toString();
     }

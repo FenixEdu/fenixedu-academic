@@ -75,7 +75,7 @@ public class InfoBranch extends InfoObject {
         if (representsCommonBranch().booleanValue()) {
             return new String("");
         }
-        StringBuffer prettyCode = new StringBuffer();
+        StringBuilder prettyCode = new StringBuilder();
         String namePart = null;
         StringTokenizer stringTokenizer = new StringTokenizer(this.name, " ");
         while (stringTokenizer.hasMoreTokens()) {

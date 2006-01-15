@@ -25,8 +25,8 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
         setApplication(application);
     }
 
-    public StringBuffer render(LessonSlot lessonSlot) {
-        StringBuffer strBuffer = new StringBuffer();
+    public StringBuilder render(LessonSlot lessonSlot) {
+        StringBuilder strBuffer = new StringBuilder();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
@@ -47,7 +47,7 @@ public class ClassTimeTableWithLinksLessonContentRenderer implements LessonSlotC
             strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
             return strBuffer;
         }
-        return new StringBuffer("");
+        return new StringBuilder("");
     }
 
     /**

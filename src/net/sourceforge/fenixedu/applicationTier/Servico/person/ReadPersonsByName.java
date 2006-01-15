@@ -17,7 +17,7 @@ public class ReadPersonsByName implements IService {
         IPessoaPersistente persistentPerson = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPessoaPersistente();
 
         String names[] = stringtoSearch.split(" ");
-        StringBuffer authorName = new StringBuffer("%");
+        StringBuilder authorName = new StringBuilder("%");
 
         for (int i = 0; i <= names.length - 1; i++) {
             authorName.append(names[i]);

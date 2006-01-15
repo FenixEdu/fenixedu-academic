@@ -118,7 +118,7 @@ public class HtmlLink extends HtmlComponent {
     }
 
     private String calculateUrl() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         
         if (getUrl() != null) {
             buffer.append(getUrl());

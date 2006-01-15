@@ -43,7 +43,7 @@ public class DMLClassDescriptor
             this.fieldDescriptor = fieldDescriptor;
         }
 
-        public void appendDMLDescription(final StringBuffer stringBuffer)
+        public void appendDMLDescription(final StringBuilder stringBuffer)
         {
             final Class fieldType = fieldDescriptor.getPersistentField().getType();
             if (isSupportedDMLField(fieldType))
@@ -87,7 +87,7 @@ public class DMLClassDescriptor
             this.objectReferenceDescriptor = objectReferenceDescriptor;
         }
 
-        public void appendDMLDescription(final StringBuffer stringBuffer)
+        public void appendDMLDescription(final StringBuilder stringBuffer)
         {
             final String attributeName = objectReferenceDescriptor.getAttributeName();
             final Class fieldType = objectReferenceDescriptor.getPersistentField().getType();
@@ -123,7 +123,7 @@ public class DMLClassDescriptor
             this.collectionDescriptor = collectionDescriptor;
         }
 
-        public void appendDMLDescription(final StringBuffer stringBuffer)
+        public void appendDMLDescription(final StringBuilder stringBuffer)
         {
             final String attributeName = collectionDescriptor.getAttributeName();
             final Class fieldType = collectionDescriptor.getPersistentField().getType();
@@ -192,7 +192,7 @@ public class DMLClassDescriptor
         }
     }
 
-    public void appendDMLDescription(final StringBuffer stringBuffer)
+    public void appendDMLDescription(final StringBuilder stringBuffer)
     {
         stringBuffer.append("\n\nclass ");
         stringBuffer.append(getClassName());

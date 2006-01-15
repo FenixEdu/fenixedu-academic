@@ -41,8 +41,8 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         setUser(typeUser);
     }
 
-    public StringBuffer render(Locale locale, PageContext pageContext) {
-        StringBuffer strBuffer = new StringBuffer("");
+    public StringBuilder render(Locale locale, PageContext pageContext) {
+        StringBuilder strBuffer = new StringBuilder("");
         ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
         strBuffer.append("<table class='examMapContainer' cellspacing='0' cellpadding='3' width='95%'>");
         strBuffer.append("<tr>");
@@ -60,7 +60,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         return strBuffer;
     }
 
-    private void renderExamsMapForRoom(StringBuffer strBuffer,PageContext pageContext,ResourceBundle bundle) {
+    private void renderExamsMapForRoom(StringBuilder strBuffer,PageContext pageContext,ResourceBundle bundle) {
         strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='95%'>");
 
         strBuffer.append("<tr>");
@@ -81,7 +81,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         strBuffer.append("<br style=\"page-break-after:always;\" />");
     }
 
-    private void renderExamsForRowOfDays(StringBuffer strBuffer, int week,PageContext pageContext) {
+    private void renderExamsForRowOfDays(StringBuilder strBuffer, int week,PageContext pageContext) {
         for (int slot = 0; slot < daysOfWeek.length; slot++) {
             ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
                     week * daysOfWeek.length + slot);
@@ -103,7 +103,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         }
     }
 
-    private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week,PageContext pageContext,ResourceBundle bundle) {
+    private void renderLabelsForRowOfDays(StringBuilder strBuffer, int week,PageContext pageContext,ResourceBundle bundle) {
         for (int slot = 0; slot < daysOfWeek.length; slot++) {
             ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
                     week * daysOfWeek.length + slot);
@@ -119,9 +119,9 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         }
     }
 
-    private void renderHeader(StringBuffer strBuffer) {
+    private void renderHeader(StringBuilder strBuffer) {
         for (int index = 0; index < this.daysOfWeek.length; index++) {
-            StringBuffer classCSS = new StringBuffer("examMap_header");
+            StringBuilder classCSS = new StringBuilder("examMap_header");
             if (index == 0) {
                 classCSS.append("_first");
             }
@@ -130,7 +130,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         }
     }
 
-    private void renderExamsTableForRoom(StringBuffer strBuffer) {
+    private void renderExamsTableForRoom(StringBuilder strBuffer) {
         strBuffer.append("<table border='1' cellspacing='0' cellpadding='3' width='95%'>");
 
         renderExamsTableHeader(strBuffer);
@@ -197,7 +197,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
         strBuffer.append("<br style=\"page-break-after:always;\" />");
     }
 
-    private void renderExamsTableHeader(StringBuffer strBuffer) {
+    private void renderExamsTableHeader(StringBuilder strBuffer) {
         strBuffer.append("<tr>");
         strBuffer.append("<td> Disciplina </td>");
         strBuffer.append("<td> Degree e Ano </td>");

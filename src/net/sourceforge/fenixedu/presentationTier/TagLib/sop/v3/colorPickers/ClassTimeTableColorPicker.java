@@ -20,7 +20,7 @@ public class ClassTimeTableColorPicker extends ColorPicker {
      * @see ServidorApresentacao.TagLib.sop.v3.ColorPicker#getColorKeyFromInfoLesson(net.sourceforge.fenixedu.dataTransferObject.InfoLesson)
      */
     protected String getColorKeyFromInfoLesson(InfoShowOccupation infoShowOccupation) {
-        StringBuffer strBuffer = new StringBuffer();
+        StringBuilder strBuffer = new StringBuilder();
 
         if (infoShowOccupation instanceof InfoLesson) {
             InfoLesson infoLesson = (InfoLesson) infoShowOccupation;
@@ -35,7 +35,7 @@ public class ClassTimeTableColorPicker extends ColorPicker {
 
     /*
      * protected String getColorKeyFromInfoLesson(InfoLesson infoLesson) {
-     * StringBuffer strBuffer = new StringBuffer(); strBuffer.append(
+     * StringBuilder strBuffer = new StringBuilder(); strBuffer.append(
      * infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()); return
      * strBuffer.toString(); }
      */

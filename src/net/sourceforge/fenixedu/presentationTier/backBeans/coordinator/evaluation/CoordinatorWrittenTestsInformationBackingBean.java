@@ -53,7 +53,7 @@ public class CoordinatorWrittenTestsInformationBackingBean extends
     private void processWrittenTestAdditionalValues(final List<WrittenTest> associatedWrittenTests) {
         for (final WrittenTest writtenTest : associatedWrittenTests) {
             int totalCapacity = 0;
-            final StringBuffer buffer = new StringBuffer(20);
+            final StringBuilder buffer = new StringBuilder(20);
 
             for (final RoomOccupation roomOccupation : writtenTest.getAssociatedRoomOccupation()) {
                 buffer.append(roomOccupation.getRoom().getNome()).append(";");
@@ -92,7 +92,7 @@ public class CoordinatorWrittenTestsInformationBackingBean extends
 
                     calendarLink.setObjectOccurrence(writtenTestToDisplay.getDay());
 
-                    final StringBuffer linkLabel = new StringBuffer(executionCourse.getSigla());
+                    final StringBuilder linkLabel = new StringBuilder(executionCourse.getSigla());
                     final DateFormat sdf = new SimpleDateFormat("HH:mm");
                     linkLabel.append(" (");
                     linkLabel.append(sdf.format(writtenTestToDisplay.getBeginning().getTime()));

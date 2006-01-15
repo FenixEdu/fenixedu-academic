@@ -43,7 +43,7 @@ public class MaxResponsibleForExceedHandler extends ExceptionHandler {
         args[0] = maxResponsibleForExceedException.getInfoExecutionCourse().getNome();
 
         Iterator iterator = maxResponsibleForExceedException.getInfoResponsiblefors().iterator();
-        StringBuffer arg1 = new StringBuffer();
+        StringBuilder arg1 = new StringBuilder();
         while (iterator.hasNext()) {
             InfoProfessorship infoResponsibleFor = (InfoProfessorship) iterator.next();
             Integer teacherNumber = infoResponsibleFor.getInfoTeacher().getTeacherNumber();

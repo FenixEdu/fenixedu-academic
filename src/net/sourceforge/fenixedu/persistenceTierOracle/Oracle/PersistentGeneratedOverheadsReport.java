@@ -30,7 +30,7 @@ public class PersistentGeneratedOverheadsReport extends PersistentReport impleme
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer
                     .append("select \"UNID_EXPL\", \"ID_PROJ\", \"ACRONIMO\", \"ID_COORD\", \"NOME\", \"TIPO_OVH\", \"DATE_AUTOR\", \"DESCRICAO\", \"VALOR_RECEITA\", \"PCT_OVH\", \"VALOR_OVH\" from ");
             stringBuffer.append(tableOrView);

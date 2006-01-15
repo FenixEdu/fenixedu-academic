@@ -115,7 +115,7 @@ public class MailingListThreadManagement extends FenixDispatchAction
 			throw new FenixActionException(e);
 		}
 		
-		StringBuffer fileNameBuffer = new StringBuffer();
+		StringBuilder fileNameBuffer = new StringBuilder();
 		Calendar now = new GregorianCalendar();
 		fileNameBuffer.append(mailingListToView.getAddress()).append("_").append(now.get(Calendar.DAY_OF_MONTH));
 		fileNameBuffer.append("-").append(now.get(Calendar.MONTH)).append("-").append(now.get(Calendar.YEAR));

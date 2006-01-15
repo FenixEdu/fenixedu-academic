@@ -116,7 +116,7 @@ public class EmailBodyWriteTag extends TagSupport
 			String attachments = this.buildAttachments();
 			String body = this.buildBody();
 			
-			StringBuffer output = new StringBuffer();
+			StringBuilder output = new StringBuilder();
 			output.append(subject);
 			if (this.message.getAllAttachmentsNames().size() > 0)
 			{
@@ -150,7 +150,7 @@ public class EmailBodyWriteTag extends TagSupport
 	 */
 	private String buildBody() throws MessagingException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("<div>").append(this.filter?TagUtils.getInstance().filter(this.messagePlainTextComponents()):this.messagePlainTextComponents()).append("</div>");
 
 		return this.recoverAllowedTags(buffer.toString().replaceAll("\n","<br/>"));
@@ -163,7 +163,7 @@ public class EmailBodyWriteTag extends TagSupport
 	 */
 	private String buildAttachments() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("<p><b>").append(this.getMessage("cms.messaging.mailingConversation.mailMessage.attachments.label")).append(":</b>").append(this.messageAttachments());
 
 		return buffer.toString();
@@ -176,7 +176,7 @@ public class EmailBodyWriteTag extends TagSupport
 	 */
 	private String buildSubject() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("<p><b>").append(this.getMessage("cms.messaging.mailingConversation.mailMessage.subject.label")).append(":</b>").append(this.filter?TagUtils.getInstance().filter(this.messageSubject()):this.messageSubject());
 
 		return buffer.toString();
@@ -184,8 +184,8 @@ public class EmailBodyWriteTag extends TagSupport
 
 	private String recoverAllowedTags(String filteredOutput)
 	{
-		StringBuffer toReplace = new StringBuffer();
-		StringBuffer replacement = new StringBuffer();
+		StringBuilder toReplace = new StringBuilder();
+		StringBuilder replacement = new StringBuilder();
 		String[] allowedTags = this.getAllowedTags().split(this.getAllowedTagsSeparator());
 		for (int i = 0; i < allowedTags.length; i++)
 		{
@@ -201,7 +201,7 @@ public class EmailBodyWriteTag extends TagSupport
 
 	private String messagePlainTextComponents() throws MessagingException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		for (String string : this.message.getAllPlainTextContents())
 		{
 			buffer.append(string);
@@ -211,7 +211,7 @@ public class EmailBodyWriteTag extends TagSupport
 
 	private String messageAttachments() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		boolean firstAddress = true;
 		for (String attachmentName : this.message.getAllAttachmentsNames())
 		{
@@ -226,7 +226,7 @@ public class EmailBodyWriteTag extends TagSupport
 	 * @param attachmentName
 	 * @throws JspException
 	 */
-	private void buildAttachmentLink(StringBuffer buffer, String attachmentName) throws JspException
+	private void buildAttachmentLink(StringBuilder buffer, String attachmentName) throws JspException
 	{
 		Object value = null;
 		if (paramName == null)
@@ -275,7 +275,7 @@ public class EmailBodyWriteTag extends TagSupport
 
 	private String messageSubject() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		String subject = this.message.getSubject();
 		if (subject ==null)
 			subject = this.getMessage("cms.messaging.mailingConversation.mailMessage.noSubject.label");

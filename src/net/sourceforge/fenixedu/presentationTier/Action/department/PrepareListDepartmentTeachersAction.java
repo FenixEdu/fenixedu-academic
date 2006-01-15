@@ -52,7 +52,7 @@ public class PrepareListDepartmentTeachersAction extends Action {
         forwardBuilded.setName(forward.getName());
         forwardBuilded.setContextRelative(forward.getContextRelative());
         forwardBuilded.setRedirect(forward.getRedirect());
-        StringBuffer path = new StringBuffer(forward.getPath());
+        StringBuilder path = new StringBuilder(forward.getPath());
         path.append("&idInternal=").append(infoDepartment.getIdInternal());
         forwardBuilded.setPath(path.toString());
         return forwardBuilded;

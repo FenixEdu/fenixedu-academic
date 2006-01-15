@@ -744,7 +744,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		//
 		// List infoCurricularCourseScopeList;
 		// List infoCurricularCourseList = new ArrayList();
-		// StringBuffer allSiglas = new StringBuffer();
+		// StringBuilder allSiglas = new StringBuilder();
 		//		
 		// if (executionCourse.getAssociatedCurricularCourses() != null) {
 		// for (int i = 0; i <

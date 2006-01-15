@@ -28,7 +28,7 @@ public class PersistentOverheadsSummaryReport extends PersistentReport implement
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer
                     .append("select \"ANO\", \"UE\", \"COST_CENTER\", \"REC_OG\", \"OVH_OG\", \"REC_OA\", \"OVH_OA\",\"REC_OO\", \"OVH_OO\", \"REC_OE\", \"OVH_OE\", \"TOTAL_OVH\", \"OVH_TRANSF\", \"SALDO\" from ");
             stringBuffer.append(tableOrView);

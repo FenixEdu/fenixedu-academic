@@ -124,7 +124,7 @@ public class AccesControlChecksInjector
 			NoGetterAvaliableForSpecifiedSlot, InvalidReturnTypeForGetter
 	{
 		char firstChar = Character.toUpperCase(value.charAt(0));
-		StringBuffer getterNameBuffer = new StringBuffer().append("get").append(firstChar).append(value.substring(1));
+		StringBuilder getterNameBuffer = new StringBuilder().append("get").append(firstChar).append(value.substring(1));
 		String getterName = getterNameBuffer.toString();
 		this.verifyGetterPresence(getterName, className);
 		String codeToInject = generator.getCode(getterName);

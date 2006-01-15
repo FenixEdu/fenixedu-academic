@@ -47,7 +47,7 @@ public class DateTag extends TagSupport {
 
         // Special case for name anchors
         if (date != null) {
-            StringBuffer results = new StringBuffer("");
+            StringBuilder results = new StringBuilder("");
             results.append(date.get(Calendar.DAY_OF_MONTH));
             results.append("/");
             results.append(date.get(Calendar.MONTH));

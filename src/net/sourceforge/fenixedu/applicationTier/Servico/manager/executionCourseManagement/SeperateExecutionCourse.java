@@ -149,7 +149,7 @@ public class SeperateExecutionCourse implements IService {
             throws ExcepcaoPersistencia {
         Set executionCourseCodes = getExecutionCourseCodes(executionPeriod);
 
-        StringBuffer executionCourseCode = new StringBuffer(originalExecutionCourseCode);
+        StringBuilder executionCourseCode = new StringBuilder(originalExecutionCourseCode);
         executionCourseCode.append("-1");
         int startVariablePartIndex = executionCourseCode.length() - 1;
         String destinationExecutionCourseCode = executionCourseCode.toString();

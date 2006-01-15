@@ -64,7 +64,7 @@ public class InfoUnit extends InfoObject {
             setSuperiorUnitsNames(superiorUnits);
         }
         else{
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             int size = unit.getTopUnits().size(), i = 0;
             for (Unit unit2 : unit.getTopUnits()) {
                 buffer.append(unit2.getName());

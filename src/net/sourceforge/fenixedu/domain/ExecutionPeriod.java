@@ -46,7 +46,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
 
 	public String getQualifiedName()
 	{
-		return new StringBuffer().append(this.getName()).append(" ").append(this.getExecutionYear().getYear()).toString();
+		return new StringBuilder().append(this.getName()).append(" ").append(this.getExecutionYear().getYear()).toString();
 	}
 
 }

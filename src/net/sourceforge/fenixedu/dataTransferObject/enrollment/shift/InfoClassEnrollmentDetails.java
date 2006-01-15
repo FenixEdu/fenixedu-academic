@@ -97,7 +97,7 @@ public class InfoClassEnrollmentDetails extends DataTranferObject {
     }
 
     public String toString() {
-        StringBuffer string = new StringBuffer();
+        StringBuilder string = new StringBuilder();
 
         string.append("[InfoClassEnrollmentDetails ");
         string.append("\ninfoStudent: ");

@@ -213,7 +213,7 @@ public class SmsUtil {
      * @param responseLenght
      * @return
      */
-    public List splitMessage(StringBuffer message, int messageLenght) {
+    public List splitMessage(StringBuilder message, int messageLenght) {
         List responseMessagesList = new ArrayList();
         while (message.length() > messageLenght) {
 

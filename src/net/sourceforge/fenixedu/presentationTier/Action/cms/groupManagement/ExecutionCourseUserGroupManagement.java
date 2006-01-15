@@ -148,7 +148,7 @@ public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAc
 		while (iterator.hasNext())
 		{
 			InfoExecutionDegree infoExecutionDegree = iterator.next();
-			StringBuffer readableName = new StringBuffer();
+			StringBuilder readableName = new StringBuilder();
 			String degreeType = resources.getMessage(this.getLocale(request), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso().toString());
 			readableName.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
 			String name = infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome();

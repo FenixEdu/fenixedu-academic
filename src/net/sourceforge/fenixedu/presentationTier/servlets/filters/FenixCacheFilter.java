@@ -113,7 +113,7 @@ public class FenixCacheFilter implements Filter,CommitListener {
 
     public static String getPageURL(HttpServletRequest request) {
         String urlId = MappingUtils.currentURL(request);
-        StringBuffer id = new StringBuffer(urlId);
+        StringBuilder id = new StringBuilder(urlId);
 
         HttpSession httpSession = request.getSession(false);
         if (httpSession == null) {

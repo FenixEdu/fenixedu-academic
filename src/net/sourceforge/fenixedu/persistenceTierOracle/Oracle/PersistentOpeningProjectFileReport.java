@@ -33,7 +33,7 @@ public class PersistentOpeningProjectFileReport extends PersistentReport impleme
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer
                     .append("select \"PROJECTO\", \"ACRONIMO\", \"UNIDEXPL\", \"NUMCOORDENADOR\", \"NOMECOORDENADOR\", \"UNIACAD\", \"UNIACADDESCRICAO\", \"CONTACTO\", \"ORIGEM\", \"TIPO\", \"CUSTOS\", \"COORDENACAO\", \"UNIDOPER\", \"UNIDOPERDESCRICAO\", \"MOEDA\", \"NIB\", \"NUMCONTRACTO\", \"OLDPROJ\", \"DG\", \"PROGRAMA\", \"PROGRAMADESCRICAO\", \"INICIO\", \"DURACAO\", \"TITULO\", \"RESUMO\", \"CONTROLOORCAMMEMB\", \"CONTIVA\", \"CONTIVAILEGIVEL\", \"OVHDATA\", \"OVHGESTAO\", \"OVHUNIDEXPL\", \"OVHUNIDACAD\", \"OVHUNIDOPER\", \"OVHCOORD\" from ");
             stringBuffer.append(tableOrView);
@@ -101,7 +101,7 @@ public class PersistentOpeningProjectFileReport extends PersistentReport impleme
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select \"CODE\", \"DESCRIPTION\"");
             if (getValue)
                 stringBuffer.append(", \"VALUE\"");

@@ -60,7 +60,7 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
             if (DBUserName == null || DBUserPass == null || DBUrl == null) {
                 throw new ExcepcaoPersistencia();
             }
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("jdbc:oracle:thin:");
             stringBuffer.append(DBUserName);
             stringBuffer.append("/");

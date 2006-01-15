@@ -179,7 +179,7 @@ public class InfoExecutionPeriod extends InfoObject implements Serializable {
      * name with execution year name.
      */
     public String getDescription() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         // these ifs are needed due to cloner converting strategy (it looks to
         // all

@@ -13,7 +13,7 @@ import org.apache.struts.util.MessageResources;
 public class PaymentPhase extends PaymentPhase_Base {
 
     public String toString() {
-        StringBuffer object = new StringBuffer();
+        StringBuilder object = new StringBuilder();
         object = object.append("\n[PaymentPhase: ").append("idInternal= ").append(getIdInternal())
                 .append(" starDate= ").append(getStartDate()).append("; endDate= ").append(getEndDate())
                 .append("; value= ").append(getValue()).append("; description= ").append(

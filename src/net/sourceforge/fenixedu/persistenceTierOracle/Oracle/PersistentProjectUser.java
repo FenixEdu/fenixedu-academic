@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentProjectUser;
 public class PersistentProjectUser implements IPersistentProjectUser {
 
     public IRubric readProjectCoordinator(Integer userCode) throws ExcepcaoPersistencia {
-        StringBuffer queryBuffer = new StringBuffer();
+        StringBuilder queryBuffer = new StringBuilder();
         queryBuffer.append("select NOME, IDCOORD from V_COORD where IDCOORD = '");
         queryBuffer.append(userCode);
         queryBuffer.append("'");
@@ -48,7 +48,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
     }
 
     public List<IRubric> getInstitucionalProjectCoordId(Integer userCode) throws ExcepcaoPersistencia {
-        StringBuffer queryBuffer = new StringBuffer();
+        StringBuilder queryBuffer = new StringBuilder();
         queryBuffer.append("select ID_COORD_CC, CC_NAME from v_responsavel_cc where ID_COORD = '");
         queryBuffer.append(userCode);
         queryBuffer.append("'");
@@ -77,7 +77,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
         List<IRubric> result = new ArrayList<IRubric>();
 
         if (ccCodes != null && ccCodes.size() != 0) {
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select ID_COORD_CC, CC_NAME from v_responsavel_cc where ID_COORD_CC IN (");
             for (int i = 0; i < ccCodes.size(); i++) {
                 if (i != 0)
@@ -108,7 +108,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
     }
 
     public String getCCNameByCoordinatorAndCC(Integer userNumber, Integer costCenter) throws ExcepcaoPersistencia {
-        StringBuffer query = new StringBuffer();
+        StringBuilder query = new StringBuilder();
         query.append("select CC_NAME from v_responsavel_cc where ID_COORD_CC = '");
         query.append(costCenter);
         query.append("' and ID_COORD = '");
@@ -131,7 +131,7 @@ public class PersistentProjectUser implements IPersistentProjectUser {
     }
 
     public IRubric getCostCenterByID(Integer costCenter) throws ExcepcaoPersistencia {
-        StringBuffer query = new StringBuffer();
+        StringBuilder query = new StringBuilder();
         query.append("select CC_NAME from v_responsavel_cc where ID_COORD_CC = '");
         query.append(costCenter);
         query.append("'");

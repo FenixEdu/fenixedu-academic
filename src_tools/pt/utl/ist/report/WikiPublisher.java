@@ -37,7 +37,7 @@ public class WikiPublisher {
 
         final FileReader fileReader = new FileReader(filename);
         char[] buffer = new char[4096];
-        final StringBuffer fileContents = new StringBuffer();
+        final StringBuilder fileContents = new StringBuilder();
         int n = 0;
         while ((n = fileReader.read(buffer)) != -1) {
             fileContents.append(buffer, 0, n);

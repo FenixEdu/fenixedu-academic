@@ -87,7 +87,7 @@ public class DMLRelationDescriptor
 
         if ((objectReferenceDescriptor1 != null || collectionDescriptor1 != null)
                 && (objectReferenceDescriptor2 != null || collectionDescriptor2 != null)) {
-            final StringBuffer stringBuffer = new StringBuffer();
+            final StringBuilder stringBuffer = new StringBuilder();
             if (classDescriptor1.getClassNameOfObject().compareTo(classDescriptor2.getClassNameOfObject()) < 0) {
                 stringBuffer.append(classDescriptor1.getClassNameOfObject());
                 stringBuffer.append(".");
@@ -223,7 +223,7 @@ public class DMLRelationDescriptor
         return key;
     }
 
-    public void appendDMLDescription(final StringBuffer stringBuffer)
+    public void appendDMLDescription(final StringBuilder stringBuffer)
     {
         stringBuffer.append("\n\nrelation ");
         stringBuffer.append("???");

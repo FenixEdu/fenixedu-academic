@@ -33,7 +33,7 @@ public class ReadNonAffiliatedTeachersByName implements IService {
                 .getIPersistentNonAffiliatedTeacher();
         
         String names[] = nameToSearch.split(" ");
-        StringBuffer nonAffiliatedTeacherName = new StringBuffer("%");
+        StringBuilder nonAffiliatedTeacherName = new StringBuilder("%");
 
         for (int i = 0; i <= names.length - 1; i++) {
             nonAffiliatedTeacherName.append(names[i]);

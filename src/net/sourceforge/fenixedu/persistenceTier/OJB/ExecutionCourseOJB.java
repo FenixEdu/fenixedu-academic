@@ -186,7 +186,7 @@ public class ExecutionCourseOJB extends PersistentObjectOJB implements IPersiste
         CollectionDescriptor collectionDescriptor = classDescriptor
                 .getCollectionDescriptorByName("associatedCurricularCourses");
 
-        StringBuffer sqlStatement = new StringBuffer();
+        StringBuilder sqlStatement = new StringBuilder();
         sqlStatement.append("select ec.* from ").append(classDescriptor.getFullTableName()).append(
                 " as ec ").append(" left join ").append(collectionDescriptor.getIndirectionTable())
                 .append(" as ccec").append(" on ec.").append(

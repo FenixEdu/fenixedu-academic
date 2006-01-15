@@ -30,15 +30,15 @@ public class SectionMenuContentRenderer extends TagSupport implements ISectionMe
      * 
      * @see ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer#renderSectionLabel(ServidorApresentacao.TagLib.publico.sectionMenu.SectionMenuSlot)
      */
-    public StringBuffer renderSectionLabel(int i, String path, boolean hasChilds) {
-        StringBuffer strBuffer = new StringBuffer();
+    public StringBuilder renderSectionLabel(int i, String path, boolean hasChilds) {
+        StringBuilder strBuffer = new StringBuilder();
         strBuffer.append(renderDepthContent(getInfoSection(), i, path, hasChilds));
         return strBuffer;
     }
 
-    private StringBuffer renderDepthContent(InfoSection infoSection, int i, String path,
+    private StringBuilder renderDepthContent(InfoSection infoSection, int i, String path,
             boolean hasChilds) {
-        StringBuffer strBuffer = new StringBuffer();
+        StringBuilder strBuffer = new StringBuilder();
         int depth = infoSection.getSectionDepth().intValue();
         if (depth == 0) {
             //adds the info

@@ -44,7 +44,7 @@ public class UICurricularCourse extends UIDegreeModule {
             return;
         }
         
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(tabs);
         buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
         buffer.append("[CC ").append(this.degreeModule.getIdInternal()).append("][");

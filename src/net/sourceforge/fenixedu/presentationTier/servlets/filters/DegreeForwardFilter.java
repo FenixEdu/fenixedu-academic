@@ -92,7 +92,7 @@ public class DegreeForwardFilter implements Filter {
             throw new ServletException(e);
         }
 
-        StringBuffer forwardURI = new StringBuffer(context);
+        StringBuilder forwardURI = new StringBuilder(context);
 
         String degreeCode = tokens[0];
         Integer degreeId;

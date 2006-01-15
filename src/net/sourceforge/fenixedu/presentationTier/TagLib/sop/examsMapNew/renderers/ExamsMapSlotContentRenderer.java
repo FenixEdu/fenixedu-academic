@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap
  */
 public interface ExamsMapSlotContentRenderer {
     
-    public StringBuffer renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext);
+    public StringBuilder renderDayLabel(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext);
 
-    public StringBuffer renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2, String typeUser,PageContext pageContext);
+    public StringBuilder renderDayContents(ExamsMapSlot examsMapSlot, Integer year1, Integer year2, String typeUser,PageContext pageContext);
 
-    public StringBuffer renderDayContents(ExamsMapSlot slot, ExamsMap examsMap, String user,PageContext pageContext);
+    public StringBuilder renderDayContents(ExamsMapSlot slot, ExamsMap examsMap, String user,PageContext pageContext);
 }

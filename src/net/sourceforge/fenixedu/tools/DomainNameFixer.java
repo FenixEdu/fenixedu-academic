@@ -21,7 +21,7 @@ public class DomainNameFixer {
 
         logger.info("Repository contains " + descriptorTable.size() + " mapped classes.");
 
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuffer = new StringBuilder();
 
         for (final Iterator iterator = descriptorTable.entrySet().iterator(); iterator.hasNext();)
         {
@@ -49,7 +49,7 @@ public class DomainNameFixer {
 
 	}
 
-	private static void constructUpdateQuery(StringBuffer stringBuffer, final ClassDescriptor classDescriptor, final FieldDescriptor concreteClassField) {
+	private static void constructUpdateQuery(StringBuilder stringBuffer, final ClassDescriptor classDescriptor, final FieldDescriptor concreteClassField) {
 		if (concreteClassField != null) {
 			final String tableName = classDescriptor.getFullTableName();
 			final String columnName = concreteClassField.getColumnName();

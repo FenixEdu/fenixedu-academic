@@ -129,7 +129,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
     }
 
     private Object[] getStudentPercentageExceedArgs(StudentPercentageExceed e) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         final List<InfoTeacherDegreeFinalProjectStudent> infoTeacherDegreeFinalProjectStudentList = e
                 .getInfoTeacherDegreeFinalProjectStudentList();
         for (final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent : infoTeacherDegreeFinalProjectStudentList) {

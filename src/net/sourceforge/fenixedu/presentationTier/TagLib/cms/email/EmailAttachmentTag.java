@@ -74,7 +74,7 @@ public class EmailAttachmentTag extends TagSupport
 		{
 			String attachments = this.buildAttachments();
 
-			StringBuffer output = new StringBuffer();
+			StringBuilder output = new StringBuilder();
 			if (this.message.getAllAttachmentsNames().size() > 0)
 			{
 				output.append(attachments);
@@ -98,7 +98,7 @@ public class EmailAttachmentTag extends TagSupport
 	 */
 	private String buildAttachments() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("<p><b>").append(this.getMessage("cms.messaging.mailingConversation.mailMessage.attachments.label")).append(":</b>").append(this.messageAttachments());
 
 		return buffer.toString();
@@ -106,7 +106,7 @@ public class EmailAttachmentTag extends TagSupport
 
 	private String messageAttachments() throws MessagingException, JspException
 	{
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		boolean firstAddress = true;
 		for (String attachmentName : this.message.getAllAttachmentsNames())
 		{
@@ -122,7 +122,7 @@ public class EmailAttachmentTag extends TagSupport
 	 * @param attachmentName
 	 * @throws JspException
 	 */
-	private void buildAttachmentLink(StringBuffer buffer, String attachmentName) throws JspException
+	private void buildAttachmentLink(StringBuilder buffer, String attachmentName) throws JspException
 	{
 		Object value = null;
 		if (paramName == null)

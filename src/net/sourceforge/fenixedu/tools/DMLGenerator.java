@@ -102,7 +102,7 @@ public class DMLGenerator
     protected static void generateDMLFile(final String filename, final Map dmlDescriptorTable, Map relationsTable, Set incompleteRelationsTable)
             throws IOException
     {
-        final StringBuffer stringBuffer = new StringBuffer(dmlDescriptorTable.size() * 5 * 80);
+        final StringBuilder stringBuffer = new StringBuilder(dmlDescriptorTable.size() * 5 * 80);
 
         // TODO : add the Domain class
         stringBuffer.append("");

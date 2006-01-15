@@ -35,7 +35,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
-            StringBuffer query = new StringBuffer();
+            StringBuilder query = new StringBuilder();
             query.append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from ");
             query.append(tableOrView);
             query.append(" where PROJECTCODE='");
@@ -77,7 +77,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
 
-            StringBuffer query = new StringBuffer();
+            StringBuilder query = new StringBuilder();
             query.append("select \"idMov\", \"Membro\", \"Rubrica\", \"Tipo\", \"data\", \"Descrição\", \"Valor\", \"Iva\", \"Total\" from ");
             query.append(tableOrView);
             query.append(" where PROJECTCODE='");
@@ -118,7 +118,7 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
         try {
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
-            StringBuffer query = new StringBuffer();
+            StringBuilder query = new StringBuilder();
             query.append("select distinct r.COD, r.DESCRICAO from ");
             query.append(RubricType.EXPENSES_RUBRIC_TABLE_NAME);
             query.append(" r, ");

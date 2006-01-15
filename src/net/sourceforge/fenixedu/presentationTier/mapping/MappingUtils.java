@@ -10,7 +10,7 @@ public class MappingUtils {
         // customize to match parameters
         String queryString = constructQueryString(request);
 
-        StringBuffer id = new StringBuffer(request.getRequestURL());
+        StringBuilder id = new StringBuilder(request.getRequestURL());
 
         if (queryString != null) {
             id.append("?");
@@ -21,7 +21,7 @@ public class MappingUtils {
     }
 
     private static String constructQueryString(HttpServletRequest request) {
-        StringBuffer queryString = new StringBuffer();
+        StringBuilder queryString = new StringBuilder();
 
         String requestQueryString = request.getQueryString();
         if (requestQueryString != null) {

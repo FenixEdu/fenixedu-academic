@@ -32,7 +32,7 @@ public class PersistentMovementReport extends PersistentReport implements IPersi
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer
                     .append("select \"PAI_IDMOV\", \"PAI_IDPROJ\", \"PAI_IDRUB\", \"PAI_TIPO\", \"PAI_DATA\", \"PAI_DESCRICAO\", \"PAI_VALOR_TOTAL\",\"FILHO_IDMOV\", \"FILHO_IDRUB\", \"FILHO_TIPO\", \"FILHO_DATA\", \"FILHO_DESCRICAO\", \"FILHO_VALOR\", \"FILHO_IVA\" from ");
             stringBuffer.append(tableOrView);

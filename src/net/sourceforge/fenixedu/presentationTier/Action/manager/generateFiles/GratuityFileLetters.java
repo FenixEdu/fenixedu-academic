@@ -68,7 +68,7 @@ public class GratuityFileLetters extends GratuityFile {
     }
 
     private static String nameFile(InfoGratuitySituation infoGratuitySituation) {
-        StringBuffer fileName = new StringBuffer();
+        StringBuilder fileName = new StringBuilder();
 
         String year = infoGratuitySituation.getInfoGratuityValues().getInfoExecutionDegree()
                 .getInfoExecutionYear().getYear().replace('/', '-');
@@ -86,7 +86,7 @@ public class GratuityFileLetters extends GratuityFile {
      * @param writer
      */
     private static void writeHeader(BufferedWriter writer) throws IOException {
-        StringBuffer header = new StringBuffer();
+        StringBuilder header = new StringBuilder();
         header.append("NOME");
         header.append(SEPARATOR);
         header.append("MORADA");
@@ -119,7 +119,7 @@ public class GratuityFileLetters extends GratuityFile {
      */
     private static void writeLine(BufferedWriter writer, InfoGratuitySituation infoGratuitySituation)
             throws IOException {
-        StringBuffer line = new StringBuffer();
+        StringBuilder line = new StringBuilder();
         //student´s name
         line.append(infoGratuitySituation.getInfoStudentCurricularPlan().getInfoStudent()
                 .getInfoPerson().getNome());

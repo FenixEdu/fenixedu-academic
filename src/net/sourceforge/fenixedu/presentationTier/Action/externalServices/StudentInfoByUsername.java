@@ -65,7 +65,7 @@ public class StudentInfoByUsername extends FenixAction
                 result = "-1";
         } catch (Exception e)
         {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             buffer.append("<error><cause>");
             buffer.append(e.getMessage());
             buffer.append("</cause></error>");
@@ -112,7 +112,7 @@ public class StudentInfoByUsername extends FenixAction
 
     private String getStyleFilename()
     {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("/xslt/external/studentInfoByUsername/").append(this.xslt).append(".xslt");
         
         return buffer.toString();

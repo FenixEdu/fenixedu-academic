@@ -186,7 +186,7 @@ public class InfoShiftEnrollment extends DataTranferObject {
     }
 
     public String toString() {
-        StringBuffer string = new StringBuffer();
+        StringBuilder string = new StringBuilder();
 
         string.append("[InfoShiftEnrollment ");
         string.append("\ninfoStudent: ");

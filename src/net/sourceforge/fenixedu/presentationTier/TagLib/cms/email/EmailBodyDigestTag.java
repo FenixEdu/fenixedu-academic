@@ -121,7 +121,7 @@ public class EmailBodyDigestTag extends TagSupport
 		{
 			String body = this.buildBody();
 
-			StringBuffer output = new StringBuffer();
+			StringBuilder output = new StringBuilder();
 			output.append(body).append("<br/>");			
 			TagUtils.getInstance().write(pageContext, output.toString());
 
@@ -142,8 +142,8 @@ public class EmailBodyDigestTag extends TagSupport
 
 	private String recoverAllowedTags(String filteredOutput)
 	{
-		StringBuffer toReplace = new StringBuffer();
-		StringBuffer replacement = new StringBuffer();
+		StringBuilder toReplace = new StringBuilder();
+		StringBuilder replacement = new StringBuilder();
 		String[] allowedTags = this.getAllowedTags().split(this.getAllowedTagsSeparator());
 		for (int i = 0; i < allowedTags.length; i++)
 		{
@@ -159,7 +159,7 @@ public class EmailBodyDigestTag extends TagSupport
 
 	private String buildBody() throws MessagingException, JspException
 	{
-		StringBuffer messageDigest = new StringBuffer();
+		StringBuilder messageDigest = new StringBuilder();
 		String originalMessageDigest = this.message.getFirstPlainTextContent();
 		if (originalMessageDigest==null || originalMessageDigest.equalsIgnoreCase("") || originalMessageDigest.trim().equalsIgnoreCase(""))
 		{

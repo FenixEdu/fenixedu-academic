@@ -19,7 +19,7 @@
 <logic:present name="mailingList">
 <%
 	Map params = new HashMap();
-	StringBuffer replyToTopic = new StringBuffer();
+	StringBuilder replyToTopic = new StringBuilder();
 %>
 	<logic:present name="mailConversation">
 		<bean:define id="mailingList" name="mailingList" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailingList"/>
@@ -50,7 +50,7 @@
 			<td>
 				<logic:iterate indexId="index" name="mailingList" id="alias" property="aliasesIterator" type="net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias">
 					<%
-					replyToTopic = new StringBuffer().append("mailto:").append(alias.getAddress());
+					replyToTopic = new StringBuilder().append("mailto:").append(alias.getAddress());
 					replyToTopic.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 					replyToTopic.append("?subject=").append(mailConversation.getSubject());
 					 %>
@@ -62,7 +62,7 @@
 					</html:link>
 				</logic:iterate>
 				<%
-				replyToTopic = new StringBuffer().append("mailto:").append(mailingList.getAddress());
+				replyToTopic = new StringBuilder().append("mailto:").append(mailingList.getAddress());
 				replyToTopic.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 				replyToTopic.append("?subject=").append(mailConversation.getSubject());
 				 %>				
@@ -202,7 +202,7 @@
 
 	<h3>Respostas</h3>
 	<%
-		StringBuffer targetUrl = new StringBuffer();
+		StringBuilder targetUrl = new StringBuilder();
 		Collection<Integer> allMessagesToExpand = new ArrayList<Integer>();
 		targetUrl.append("/mailingListThreadManagement.do?").append("method=messagesVisibilityManagement");
 		targetUrl.append("&mailingListID=").append(mailingList.getIdInternal());
@@ -220,7 +220,7 @@
 		request.setAttribute("alreadyExpanded",allMessagesToExpand.toArray());
 	 %>	
 	<%
-	replyToTopic = new StringBuffer().append("mailto:").append(mailingList.getAddress());
+	replyToTopic = new StringBuilder().append("mailto:").append(mailingList.getAddress());
 	replyToTopic.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 	replyToTopic.append("?subject=").append(mailConversation.getSubject());
 	 %>
@@ -282,7 +282,7 @@
 							expandedMessages = new Integer[]{currentMailMessageID};
 						}						
 	
-						targetUrl = new StringBuffer();
+						targetUrl = new StringBuilder();
 						targetUrl.append("/mailingListThreadManagement.do?").append("method=messagesVisibilityManagement");
 						targetUrl.append("&mailingListID=").append(mailingList.getIdInternal());
 						targetUrl.append("&threadId=").append(mailConversation.getIdInternal());

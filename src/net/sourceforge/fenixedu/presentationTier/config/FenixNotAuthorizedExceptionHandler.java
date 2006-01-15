@@ -60,7 +60,7 @@ public class FenixNotAuthorizedExceptionHandler extends ExceptionHandler {
 
             ActionForward newForward = new ActionForward();
             PropertyUtils.copyProperties(newForward, forward);
-            StringBuffer path = new StringBuffer();
+            StringBuilder path = new StringBuilder();
             path.append("/teacherAdministrationViewer.do?method=instructions").append("&objectCode=")
                     .append(request.getParameter("executionCourseId"));
             newForward.setPath(path.toString());

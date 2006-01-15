@@ -50,7 +50,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             if (organizeBy != null && organizeBy.equalsIgnoreCase("years")) {
                 encodeByYears(facesContext,dcp);
             } else {
-                StringBuffer dcpBuffer = new StringBuffer();
+                StringBuilder dcpBuffer = new StringBuilder();
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
                 System.out.println(dcpBuffer);
                 

@@ -36,7 +36,7 @@ public class CellInfo {
     }
 
     public String getContent() {
-        StringBuffer buffer = new StringBuffer("");
+        StringBuilder buffer = new StringBuilder("");
 
         if (lessonViewList.isEmpty()) {
             buffer = buffer.append("&nbsp;");

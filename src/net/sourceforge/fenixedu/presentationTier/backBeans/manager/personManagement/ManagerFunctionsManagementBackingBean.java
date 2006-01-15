@@ -74,7 +74,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
         
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         List<Unit> allUnits = readAllDomainObjects(Unit.class);
 
         Date currentDate = Calendar.getInstance().getTime();
@@ -87,13 +87,13 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuffer buffer, Unit parentUnit) {
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
         buffer.append("<ul>");
         getUnitsList(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(Unit parentUnit, StringBuffer buffer) {
+    private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/manager/functionsManagement/chooseFunction.faces?personID=").append(personID).append(

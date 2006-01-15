@@ -44,7 +44,7 @@ public class InfoGroupsByExecutionCourse extends FenixAction
 
         this.readRequestInformation(request);
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         try
         {
 
@@ -55,13 +55,13 @@ public class InfoGroupsByExecutionCourse extends FenixAction
                 buffer.append(this.buildInfo(this.executionCourseIds[i], userView));
             }
             if (buffer.toString().equals(""))
-                buffer = new StringBuffer("-1");
+                buffer = new StringBuilder("-1");
 
         }
         catch (Exception e)
         {
-            buffer = new StringBuffer();
-            buffer = new StringBuffer();
+            buffer = new StringBuilder();
+            buffer = new StringBuilder();
             buffer.append("<error><cause>");
             buffer.append(e.getMessage());
             buffer.append("</cause></error>");

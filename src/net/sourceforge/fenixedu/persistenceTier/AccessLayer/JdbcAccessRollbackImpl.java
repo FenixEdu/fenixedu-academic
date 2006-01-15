@@ -77,7 +77,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
     private void concatSQLInstructionUpdate(ClassDescriptor arg0, Object arg1) {
         ResultSetAndStatement resultSetAndStatement = getOriginalResultSet(arg0, arg1);
 
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("update ");
         stringBuffer.append(arg0.getFullTableName());
         stringBuffer.append(" set ");
@@ -123,7 +123,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
      * @return
      */
     private ResultSetAndStatement getOriginalResultSet(ClassDescriptor arg0, Object arg1) {
-        StringBuffer selectInstructionSQL = new StringBuffer();
+        StringBuilder selectInstructionSQL = new StringBuilder();
         selectInstructionSQL.append("select * from ");
         selectInstructionSQL.append(arg0.getFullTableName());
         selectInstructionSQL.append(" where ");
@@ -149,7 +149,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
 
         ValueContainer[] valueContainers = joinValueContainers(valueContainers1, valueContainers2);
 
-        StringBuffer selectInstructionSQL = new StringBuffer();
+        StringBuilder selectInstructionSQL = new StringBuilder();
         selectInstructionSQL.append("select * from ");
         selectInstructionSQL.append(tokens[2]);
         selectInstructionSQL.append(" where ");
@@ -181,7 +181,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
      * @param arg1
      */
     private void concatSQLInstructionInsert(ClassDescriptor arg0, Object arg1) {
-        StringBuffer insertInstruction = new StringBuffer();
+        StringBuilder insertInstruction = new StringBuilder();
         insertInstruction.append("insert into ");
 
         try {
@@ -199,7 +199,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
      * @param arg1
      */
     private void concatSQLInstructionDelete(ClassDescriptor arg0, Object arg1) {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("delete from ");
         stringBuffer.append(arg0.getFullTableName());
         stringBuffer.append(" where ");
@@ -224,7 +224,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
      * @param arg1
      */
     private void addCriteria(ClassDescriptor arg0, FieldDescriptor[] fieldDescriptors,
-            StringBuffer stringBuffer, Object arg1, String separator) {
+            StringBuilder stringBuffer, Object arg1, String separator) {
         try {
             for (int i = 0; i < fieldDescriptors.length; i++) {
                 String columnName = fieldDescriptors[i].getColumnName();
@@ -263,9 +263,9 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
      * @throws IllegalAccessException
      */
     private void constructSQLInstructionBody(ClassDescriptor arg0, Object arg1,
-            StringBuffer insertInstruction) throws IllegalAccessException, InvocationTargetException,
+            StringBuilder insertInstruction) throws IllegalAccessException, InvocationTargetException,
             NoSuchMethodException {
-        StringBuffer insertInstructionValues = new StringBuffer();
+        StringBuilder insertInstructionValues = new StringBuilder();
         insertInstruction.append(arg0.getFullTableName());
         insertInstruction.append(" (");
 
@@ -310,7 +310,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
     private void concatInverseSQLInstruction(String sqlStatement, ClassDescriptor classDescriptor,
             ValueContainer[] valueContainers1, ValueContainer[] valueContainers2) {
         try {
-            StringBuffer inverseSQLInstruction = new StringBuffer();
+            StringBuilder inverseSQLInstruction = new StringBuilder();
 
             // INSERT INTO PERSON_ROLE (KEY_PERSON,KEY_ROLE) VALUES (?,?)
             if (sqlStatement.startsWith("INSERT") || sqlStatement.startsWith("insert")) {
@@ -345,7 +345,7 @@ public class JdbcAccessRollbackImpl extends JdbcAccessImpl {
                     inverseSQLInstruction.append(getTableNameFromInsertInstruction(sqlStatement));
                     inverseSQLInstruction.append(" (");
 
-                    StringBuffer values = new StringBuffer();
+                    StringBuilder values = new StringBuilder();
                     for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
                         inverseSQLInstruction.append(resultSetMetaData.getColumnName(i));
                         values.append("'");

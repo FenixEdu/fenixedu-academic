@@ -85,7 +85,7 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select \"ADIANTAMENTOS\", \"JUST_ADIANTAMENTOS\", \"TOTAL\" from ");
             stringBuffer.append(tableOrView);
             stringBuffer.append(" where PROJECTCODE='");
@@ -115,7 +115,7 @@ public class PersistentExpensesResume extends PersistentReport implements IPersi
             PersistentSuportOracle p = PersistentSuportOracle.getInstance();
             p.startTransaction();
             String tableOrView = getTableOrViewName(p, reportType);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             stringBuffer.append("select \"CABIMENTOS\", \"JUST_CABIMENTOS\", \"TOTAL\" from ");
             stringBuffer.append(tableOrView);
             stringBuffer.append(" where PROJECTCODE='");

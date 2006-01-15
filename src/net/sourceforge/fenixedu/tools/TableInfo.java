@@ -141,7 +141,7 @@ public class TableInfo {
     }
 
     public String toSql() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("SELECT " + this.columns);
         sb.append(" FROM " + this.tableName);
 

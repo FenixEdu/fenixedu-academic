@@ -16,7 +16,7 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         List<Unit> allUnits = readAllDomainObjects(Unit.class);
         
         for (Unit unit : allUnits) {
@@ -28,13 +28,13 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuffer buffer, Unit parentUnit) {
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
         buffer.append("<ul>");
         getUnitsList(parentUnit, 0, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(Unit parentUnit, int index, StringBuffer buffer) {
+    private void getUnitsList(Unit parentUnit, int index, StringBuilder buffer) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
                 "/facultyAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID)

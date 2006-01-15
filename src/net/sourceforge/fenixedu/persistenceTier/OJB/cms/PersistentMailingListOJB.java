@@ -43,8 +43,8 @@ public class PersistentMailingListOJB extends PersistentObjectOJB implements IPe
 	public Collection<MailingList> readReceptorMailingListsForAddress(Collection<Address> addresses, String mailingListDomain)
 			throws ExcepcaoPersistencia
 	{
-		StringBuffer sqlQueryAliases= new StringBuffer();
-		StringBuffer sqlQueryAddresses = new StringBuffer();
+		StringBuilder sqlQueryAliases= new StringBuilder();
+		StringBuilder sqlQueryAddresses = new StringBuilder();
 		sqlQueryAliases.append("select CMS_MAILING_LIST.* from CMS_MAILING_LIST inner join CMS_MAIL_ADDRESS_ALIAS_MAILING_LIST on CMS_MAILING_LIST.ID_INTERNAL=CMS_MAIL_ADDRESS_ALIAS_MAILING_LIST.KEY_MAILING_LIST inner join CMS_MAIL_ADDRESS_ALIAS on CMS_MAIL_ADDRESS_ALIAS.ID_INTERNAL=CMS_MAIL_ADDRESS_ALIAS.ID_INTERNAL ");
 		sqlQueryAddresses.append("select CMS_MAILING_LIST.* from CMS_MAILING_LIST ");
 		boolean firstAddress = true;

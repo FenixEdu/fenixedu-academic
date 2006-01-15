@@ -61,7 +61,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 */
 	public void run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
 
-		StringBuffer outgoingSibsPaymentFile = new StringBuffer();
+		StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
 		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
@@ -167,7 +167,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @throws FileNotCreatedServiceException
 	 */
 	private void writeOutgoingSibsPaymentFile(ExecutionYear executionYear,
-			StringBuffer outgoingSibsPaymentFile) throws FileNotCreatedServiceException {
+			StringBuilder outgoingSibsPaymentFile) throws FileNotCreatedServiceException {
 		String year = executionYear.getYear().replace('/', '-');
 		try {
 			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System
@@ -184,7 +184,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	/**
 	 * @param outgoingSibsPaymentFile
 	 */
-	private void addHeader(StringBuffer outgoingSibsPaymentFile) {
+	private void addHeader(StringBuilder outgoingSibsPaymentFile) {
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.HEADER_REGISTER_TYPE);
@@ -212,7 +212,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * 
 	 * @param totalLines
 	 */
-	private void addFooter(StringBuffer outgoingSibsPaymentFile, int totalLines) {
+	private void addFooter(StringBuilder outgoingSibsPaymentFile, int totalLines) {
 
 		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.FOOTER_REGISTER_TYPE);
 		outgoingSibsPaymentFile.append(addCharToStringUntilMax(
@@ -234,7 +234,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @param shortYear
 	 * @throws InsufficientSibsPaymentPhaseCodesServiceException
 	 */
-	private int addGratuityLines(StringBuffer outgoingSibsPaymentFile,
+	private int addGratuityLines(StringBuilder outgoingSibsPaymentFile,
 			GratuitySituation gratuitySituation, String shortYear)
 			throws InsufficientSibsPaymentPhaseCodesServiceException {
 
@@ -356,7 +356,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @param maxValue
 	 */
 
-	public void addLine(StringBuffer outgoingSibsPaymentFile, String registerType,
+	public void addLine(StringBuilder outgoingSibsPaymentFile, String registerType,
 			String processingCode, String shortYear, Integer studentNumber, String sibsPaymentCode,
 			Date startDate, Date endDate, Double minValue, Double maxValue) {
 
@@ -411,7 +411,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @return string
 	 */
 	private String addCharToStringUntilMax(char c, String string, int maxlength) {
-		StringBuffer stringComplete = new StringBuffer();
+		StringBuilder stringComplete = new StringBuilder();
 
 		int stringLength = 0;
 		if (string != null) {
@@ -433,7 +433,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IServic
 	 * @return
 	 */
 	private String buildPaymentValue(double value, int intDigits, int decDigits) {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuffer = new StringBuilder();
 
 		String valueString = String.valueOf(value);
 		String intPart = valueString.substring(0, valueString.indexOf('.'));

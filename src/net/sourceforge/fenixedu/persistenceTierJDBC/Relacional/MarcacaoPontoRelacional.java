@@ -173,8 +173,8 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistenteOracle;
  * //Acesso a BD da nossa Aplicacao List marcacoesPonto = null;
  *
  * try { PreparedStatement sql = null; ResultSet resultado = null; //
- * obtem as marcacoes no intervalo de datas StringBuffer query = new
- * StringBuffer( FROM marcacao_ponto WHERE " + "((dataMarcacao IS NULL)
+ * obtem as marcacoes no intervalo de datas StringBuilder query = new
+ * StringBuilder( FROM marcacao_ponto WHERE " + "((dataMarcacao IS NULL)
  * OR (dataMarcacao BETWEEN ? AND ?))");
  *
  * if (listaFuncionarios != null) { if (listaFuncionarios.size() > 0) {
@@ -264,7 +264,7 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistenteOracle;
  try {
 
  // procura de marcacoes de ponto normais
- StringBuffer query = new StringBuffer(
+ StringBuilder query = new StringBuilder(
  "SELECT * FROM ASS_MARCAS WHERE ((ASS_MARDHMARCA IS NULL) OR "
  + "(ASS_MARDHMARCA BETWEEN TO_DATE(?, 'YYYY-MM-DD HH24:MI:SS') AND TO_DATE(?, 'YYYY-MM-DD HH24:MI:SS')))");
  if (listaFuncionarios != null) {
@@ -1463,8 +1463,8 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistenteOracle;
 //         * //Acesso a BD da nossa Aplicacao List marcacoesPonto = null;
 //         * 
 //         * try { PreparedStatement sql = null; ResultSet resultado = null;
-//         *  // obtem as marcacoes no intervalo de datas StringBuffer query = new
-//         * StringBuffer( "SELECT * FROM marcacao_ponto WHERE " + "((dataMarcacao
+//         *  // obtem as marcacoes no intervalo de datas StringBuilder query = new
+//         * StringBuilder( "SELECT * FROM marcacao_ponto WHERE " + "((dataMarcacao
 //         * IS NULL) OR (dataMarcacao BETWEEN ? AND ?))");
 //         * 
 //         * if (listaFuncionarios != null) { if (listaFuncionarios.size() > 0) {
@@ -1556,8 +1556,8 @@ import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistenteOracle;
 //			try {
 //
 //				// procura de marcacoes de ponto normais
-//				StringBuffer query =
-//					new StringBuffer(
+//				StringBuilder query =
+//					new StringBuilder(
 //						"SELECT * FROM ASS_MARCAS WHERE ((ASS_MARDHMARCA IS NULL) OR " + "(ASS_MARDHMARCA BETWEEN ? AND ?))");
 //				if (listaFuncionarios != null) {
 //					if (listaFuncionarios.size() > 0) {

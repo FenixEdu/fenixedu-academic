@@ -14,7 +14,7 @@
 
 <%
 		Map params = new HashMap();
-		StringBuffer replyToList = new StringBuffer();
+		StringBuilder replyToList = new StringBuilder();
 %>
 
 <span class="error"><html:errors/></span>
@@ -124,7 +124,7 @@
 				<td>
 					<logic:iterate indexId="index" name="mailingList" id="alias" property="aliasesIterator" type="net.sourceforge.fenixedu.domain.cms.infrastructure.IMailAddressAlias">
 						<%
-						replyToList = new StringBuffer().append("mailto:").append(alias.getAddress());
+						replyToList = new StringBuilder().append("mailto:").append(alias.getAddress());
 						replyToList.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 						 %>
 						 <html:link  href="<%=replyToList.toString()%>">
@@ -135,7 +135,7 @@
 						 </logic:greaterThan>
 					</logic:iterate>
 					<%
-					replyToList = new StringBuffer().append("mailto:").append(mailingList.getAddress());
+					replyToList = new StringBuilder().append("mailto:").append(mailingList.getAddress());
 					replyToList.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 					 %>				
 					<html:link  href="<%=replyToList.toString()%>">
@@ -186,7 +186,7 @@
 	
 	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversations.title"/></h3>
 	<%
-	replyToList = new StringBuffer().append("mailto:").append(mailingList.getAddress());
+	replyToList = new StringBuilder().append("mailto:").append(mailingList.getAddress());
 	replyToList.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
 	 %>
 

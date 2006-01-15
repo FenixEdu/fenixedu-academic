@@ -58,7 +58,7 @@ public class CaptureFilter implements Filter {
 
         // customize to match parameters
         String queryString = constructQueryString(request);
-        StringBuffer id = new StringBuffer(request.getRequestURI());
+        StringBuilder id = new StringBuilder(request.getRequestURI());
         if (queryString != null) {
             id.append("?");
             id.append(queryString);
@@ -92,7 +92,7 @@ public class CaptureFilter implements Filter {
     }
 
     private String constructQueryString(HttpServletRequest request) {
-        StringBuffer queryString = new StringBuffer();
+        StringBuilder queryString = new StringBuilder();
 
         String requestQueryString = request.getQueryString();
         if (requestQueryString != null) {
@@ -123,8 +123,8 @@ public class CaptureFilter implements Filter {
 
     }
 
-    private void storeRequest(String username, StringBuffer requestString) {
-        StringBuffer buffer = new StringBuffer();
+    private void storeRequest(String username, StringBuilder requestString) {
+        StringBuilder buffer = new StringBuilder();
         buffer.append(username);
         buffer.append(' ');
         buffer.append(requestString);

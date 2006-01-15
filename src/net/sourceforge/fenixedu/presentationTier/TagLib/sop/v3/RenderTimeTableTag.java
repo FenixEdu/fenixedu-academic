@@ -201,8 +201,8 @@ public final class RenderTimeTableTag extends TagSupport {
         }
     }
 
-    private StringBuffer legenda(List listaAulas, Locale locale) {
-        StringBuffer result = new StringBuffer("");
+    private StringBuilder legenda(List listaAulas, Locale locale) {
+        StringBuilder result = new StringBuilder("");
         List listaAuxiliar = new ArrayList();
         Iterator iterator = listaAulas.iterator();
         while (iterator.hasNext()) {

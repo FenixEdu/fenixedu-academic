@@ -59,7 +59,7 @@ public class AccessControl
 		
 		if (!result)
 		{
-			StringBuffer message = new StringBuffer();
+			StringBuilder message = new StringBuilder();
 			message.append("User ").append(requester.getUsername()).append(" tried to execute access content instance number").append(c.getIdInternal());
 			message.append("but he/she is not authorized to do so");
 

@@ -45,8 +45,8 @@ public class MailingListManagement extends FenixDispatchAction
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
 	{
 		MessageResources resources = this.getResources(request, "CMS_RESOURCES");
-		StringBuffer mailingListDefaultName = new StringBuffer(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.abbreviation.label"));
-		StringBuffer mailingListDefaultDescription = new StringBuffer(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.mailingList.label"));
+		StringBuilder mailingListDefaultName = new StringBuilder(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.abbreviation.label"));
+		StringBuilder mailingListDefaultDescription = new StringBuilder(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.mailingList.label"));
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer groupID = new Integer((String) request.getParameter("groupId"));
 		mailingListForm.set("groupID", groupID);
@@ -155,7 +155,7 @@ public class MailingListManagement extends FenixDispatchAction
 			throw new FenixActionException(e);
 		}
 
-		StringBuffer fileNameBuffer = new StringBuffer();
+		StringBuilder fileNameBuffer = new StringBuilder();
 		Calendar now = new GregorianCalendar();
 		fileNameBuffer.append(mailingListToView.getAddress()).append("_").append(now.get(Calendar.DAY_OF_MONTH));
 		fileNameBuffer.append("-").append(now.get(Calendar.MONTH)).append("-").append(now.get(Calendar.YEAR));		

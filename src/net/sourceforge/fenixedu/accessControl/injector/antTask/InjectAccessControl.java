@@ -135,7 +135,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (NotFoundException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("C %s not found.\nCause:", files[i], e);
 					System.err.printf(message.toString());
@@ -143,7 +143,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (CannotCompileException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Could not compile file %s with the injected code.\nCause:", files[i], e);
 					System.err.printf(message.toString());
@@ -151,7 +151,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (IOException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("IO Exception: %s.", e);
 					System.err.printf(message.toString());
@@ -160,7 +160,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (ClassNotFoundException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("ClassNotFound Exception: %s.", e);
 					System.err.printf(message.toString());
@@ -168,7 +168,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (ClassCastException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Provided generator does not implement AccessControlCodeGenerator.\n Exception: %s.", e);
 					System.err.printf(message.toString());
@@ -176,7 +176,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (InstantiationException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Provided generator does not have an empty public constructor.\n Exception: %s.", e);
 					System.err.printf(message.toString());
@@ -184,7 +184,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (IllegalAccessException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Illegal access to class constructor.\n Exception: %s.", e);
 					System.err.printf(message.toString());
@@ -192,7 +192,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (SecurityException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Not allowed to access the \"value\" field for the specified annotation.\n Exception: %s.", e);
 					System.err.printf(message.toString());
@@ -200,7 +200,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (IllegalArgumentException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Error accessing the present \"value\" in the specified annotation. This really should not happen.\n Exception: %s", e);
 					System.err.printf(message.toString());
@@ -208,7 +208,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (NoSuchMethodException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("The specified annotation does not have the needed \"value\" (specifies the getter for the allowed group).\n Exception: %s.", e);
 					System.err.printf(message.toString());
@@ -216,7 +216,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (InvocationTargetException e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Error accessing the present \"value\" in the specified annotation. This really should not happen.\n Exception: %s", e);
 					System.err.printf(message.toString());
@@ -224,7 +224,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (NoGetterAvaliableForSpecifiedSlot e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Could not access the property getter for the specified slot (please verify the value you gave to the checker annotation.\n Example: \"@Checked(\"xpto\")\". In this example getXpto() must exist in the class (or any superclass) that declares the annotated method.\n Exception: %s", e);
 					System.err.printf(message.toString());
@@ -232,7 +232,7 @@ public class InjectAccessControl extends Task
 				}
 				catch (InvalidReturnTypeForGetter e)
 				{
-					StringBuffer message = new StringBuffer();
+					StringBuilder message = new StringBuilder();
 					Formatter f = new Formatter(message);
 					f.format("Invalid return type for access control slot.\n Exception: %s", e);
 					System.err.printf(message.toString());
@@ -261,7 +261,7 @@ public class InjectAccessControl extends Task
 		minutes = timeInSeconds / 60;
 		timeInSeconds = timeInSeconds - (minutes * 60);
 		seconds = timeInSeconds;
-		StringBuffer format = new StringBuffer();
+		StringBuilder format = new StringBuilder();
 		Formatter f = new Formatter(format);
 		f.format("%d minute%s, %d second%s", minutes, minutes > 0 || minutes == 0 ? "s" : "", seconds, seconds > 0
 				|| seconds == 0 ? "s" : "");

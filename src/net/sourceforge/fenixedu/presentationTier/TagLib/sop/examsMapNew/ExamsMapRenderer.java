@@ -76,8 +76,8 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
         }
     }
 
-	public StringBuffer render(Locale locale, PageContext pageContext) {
-		StringBuffer strBuffer = new StringBuffer("");
+	public StringBuilder render(Locale locale, PageContext pageContext) {
+		StringBuilder strBuffer = new StringBuilder("");
 		
 		// Generate maps for the specified years.
 //        ResourceBundle bundle = ResourceBundle
@@ -198,7 +198,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		return result;
 	}
 	
-	private void renderExecutionCourseListForYear(StringBuffer strBuffer, Integer year,PageContext pageContext) {
+	private void renderExecutionCourseListForYear(StringBuilder strBuffer, Integer year,PageContext pageContext) {
 		
 		if (user.equals("public")) {
 			strBuffer.append("<table class='tab_exams_details' cellspacing='0px'>");
@@ -662,7 +662,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	}
 	
 
-	private void renderExamsMapForFilteredYears(StringBuffer strBuffer, Integer year1, Integer year2,PageContext pageContext) {
+	private void renderExamsMapForFilteredYears(StringBuilder strBuffer, Integer year1, Integer year2,PageContext pageContext) {
         strBuffer.append("<table class='examMap' cellspacing='0' cellpadding='3' width='100%'>");
        
 		strBuffer.append("<tr>");
@@ -683,7 +683,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		strBuffer.append("<br />");
 	}
 	
-	private void renderExamsForRowOfDays(StringBuffer strBuffer, int week, Integer year1, Integer year2, PageContext pageContext) {
+	private void renderExamsForRowOfDays(StringBuilder strBuffer, int week, Integer year1, Integer year2, PageContext pageContext) {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
 			ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
 					week * daysOfWeek.length + slot);
@@ -704,7 +704,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		}
 	}
 	
-	private void renderLabelsForRowOfDays(StringBuffer strBuffer, int week,PageContext pageContext) {
+	private void renderLabelsForRowOfDays(StringBuilder strBuffer, int week,PageContext pageContext) {
 		for (int slot = 0; slot < daysOfWeek.length; slot++) {
 			ExamsMapSlot examsMapSlot = (ExamsMapSlot) examsMap.getDays().get(
 					week * daysOfWeek.length + slot);				
@@ -720,7 +720,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		}
 	}
 	
-	private void renderHeader(StringBuffer strBuffer, PageContext pageContext) {
+	private void renderHeader(StringBuilder strBuffer, PageContext pageContext) {
         String makeLocale =  getMessageResource(pageContext, "public.degree.information.label.monday") + "," + getMessageResource(pageContext, "public.degree.information.label.tusday") 
                              + "," + getMessageResource(pageContext, "public.degree.information.label.wednesday") + "," + getMessageResource(pageContext, "public.degree.information.label.thursday")+ "," + getMessageResource(pageContext, "public.degree.information.label.friday")
                              + "," + getMessageResource(pageContext, "public.degree.information.label.saturday");
@@ -729,7 +729,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
        //Segunda", "Ter&ccedil;a", "Quarta", "Quinta", "Sexta", "S&aacute;bado" };
        
 		for (int index = 0; index < this.daysOfWeek.length; index++) {
-			StringBuffer classCSS = new StringBuffer("examMap_header");
+			StringBuilder classCSS = new StringBuilder("examMap_header");
 			if (index == 0) {
 				classCSS.append("_first");
 			}
@@ -738,7 +738,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		}
 	}
 	
-	private void renderExamsExecutionCourseTableForYear(StringBuffer strBuffer, Integer year, PageContext pageContext) {
+	private void renderExamsExecutionCourseTableForYear(StringBuilder strBuffer, Integer year, PageContext pageContext) {
 		// PRINT EXECUTION DEGREE
 		strBuffer.append("<strong>"
 				+ examsMap.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
@@ -784,7 +784,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		strBuffer.append("</table>");
 	}
 	
-	private void writeLineForExecutionCourseAndExamOfSeason(StringBuffer strBuffer,
+	private void writeLineForExecutionCourseAndExamOfSeason(StringBuilder strBuffer,
 			InfoExecutionCourse infoExecutionCourse, int season) {
 		for (int j = 0; j < infoExecutionCourse.getAssociatedInfoExams().size(); j++) {
 			InfoExam infoExam = (InfoExam) infoExecutionCourse.getAssociatedInfoExams().get(j);
@@ -813,7 +813,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 		}
 	}
 	
-	private void renderExamsTableHeader(StringBuffer strBuffer,PageContext pageContext) {
+	private void renderExamsTableHeader(StringBuilder strBuffer,PageContext pageContext) {
 		strBuffer.append("<tr>");
 		strBuffer.append("<td> ");
         strBuffer.append(getMessageResource(pageContext, "public.degree.information.label.course"));

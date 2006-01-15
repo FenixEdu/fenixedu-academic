@@ -58,7 +58,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
 
     public abstract Double computeEctsCredits();
 
-    public abstract void print(StringBuffer stringBuffer, String tabs, Context previousContext);
+    public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
 
 	public abstract Boolean getCanBeDeleted();
 

@@ -138,7 +138,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public String getExecutionPeriodLabel() {
         ExecutionPeriod executionPeriodSelected = getExecutionPeriod();
 
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append(executionPeriodSelected.getName());
         stringBuffer.append(" - ");
         stringBuffer.append(executionPeriodSelected.getExecutionYear().getYear());
@@ -216,7 +216,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public String getExecutionDegreeLabel() {
         ExecutionDegree executionDegreeSelected = getExecutionDegree();
 
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append(enumerations.getMessage(executionDegreeSelected.getDegreeCurricularPlan()
                 .getDegree().getTipoCurso().toString()));
         stringBuffer.append(" em ");
@@ -439,7 +439,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         List<SelectItem> result = new ArrayList<SelectItem>(infoExecutionDegrees.size());
         result.add(new SelectItem(0, this.chooseMessage));
         for (InfoExecutionDegree infoExecutionDegree : (List<InfoExecutionDegree>) infoExecutionDegrees) {
-            StringBuffer label = new StringBuffer();
+            StringBuilder label = new StringBuilder();
             label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan()
                     .getInfoDegree().getTipoCurso().toString()));
             label.append(" em ");
@@ -660,7 +660,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         
         for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
             int totalCapacity = 0;
-            final StringBuffer buffer = new StringBuffer(20);
+            final StringBuilder buffer = new StringBuilder(20);
             for (final Room room : writtenTest.getAssociatedRooms()) {
                 buffer.append(room.getNome()).append("; ");
                 totalCapacity += room.getCapacidadeExame();
@@ -837,7 +837,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         List<SelectItem> items = new ArrayList<SelectItem>(availableInfoRoom.size());
         for (InfoRoom infoRoom : (List<InfoRoom>) availableInfoRoom) {
-            StringBuffer label = new StringBuffer();
+            StringBuilder label = new StringBuilder();
             label.append(infoRoom.getNome());
             label.append("  ( ");
             label.append(infoRoom.getCapacidadeExame());
@@ -856,7 +856,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     }
 
     public String getAssociatedRooms() throws FenixFilterException, FenixServiceException {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
@@ -1050,7 +1050,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
             }
             for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
                 for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-                    StringBuffer label = new StringBuffer();
+                    StringBuilder label = new StringBuilder();
                     label.append(curricularCourse.getDegreeCurricularPlan().getName());
                     label.append(" ");
                     label.append(curricularCourseScope.getCurricularSemester().getCurricularYear()

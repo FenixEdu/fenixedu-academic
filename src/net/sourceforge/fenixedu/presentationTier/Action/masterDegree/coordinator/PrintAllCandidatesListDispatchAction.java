@@ -215,7 +215,7 @@ public class PrintAllCandidatesListDispatchAction extends DispatchAction {
 	}
 
 	private String exportToCSV(List candidates) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		sb.append(HEADER_H1);
 		sb.append("\n");
 		sb.append(HEADER_H2);

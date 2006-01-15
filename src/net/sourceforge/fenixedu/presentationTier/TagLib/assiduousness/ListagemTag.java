@@ -182,7 +182,7 @@ public class ListagemTag extends TagSupport {
         List h = (ArrayList) RequestUtils.lookup(pageContext, name, headers, scope);
         List c = (ArrayList) RequestUtils.lookup(pageContext, name, body, scope);
 
-        StringBuffer results = new StringBuffer("<table ");
+        StringBuilder results = new StringBuilder("<table ");
         results.append(" border=\"");
         results.append(border);
         results.append("\"");
@@ -279,7 +279,7 @@ public class ListagemTag extends TagSupport {
     }
 
     public int doEndTag() throws JspException {
-        StringBuffer results = new StringBuffer("</table>");
+        StringBuilder results = new StringBuilder("</table>");
 
         ResponseUtils.write(pageContext, results.toString());
 

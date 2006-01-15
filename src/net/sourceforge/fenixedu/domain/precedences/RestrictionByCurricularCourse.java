@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.domain.precedences;
 public abstract class RestrictionByCurricularCourse extends RestrictionByCurricularCourse_Base {
 
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
         stringBuffer.append("Restriction(").append(this.getClass()).append("):").append("\n\t");
         stringBuffer.append(this.getPrecedentCurricularCourse()).append("\n");
         return stringBuffer.toString();

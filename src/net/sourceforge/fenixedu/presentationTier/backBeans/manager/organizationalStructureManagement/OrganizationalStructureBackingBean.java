@@ -131,7 +131,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         for (Unit unit : allUnitsWithoutParent) {
@@ -144,14 +144,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTreeToChooseParentUnit(StringBuffer buffer, Unit parentUnit)
+    public void getUnitTreeToChooseParentUnit(StringBuilder buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
         buffer.append("<ul>");
         getUnitsListToChooseParentUnit(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuffer buffer)
+    private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer)
             throws FenixFilterException, FenixServiceException {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
@@ -173,7 +173,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
 
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         Date currentDate = Calendar.getInstance().getTime();
@@ -191,14 +191,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuffer buffer, Unit parentUnit, List<Unit> subUnits,
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits,
             Date currentDate, boolean active) {
         buffer.append("<ul>");
         getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuffer buffer,
+    private void getUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuilder buffer,
             Date currentDate, boolean active) {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
@@ -220,7 +220,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     public String getUnitsToChoosePrincipalFunction() throws FenixFilterException, FenixServiceException {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
@@ -233,14 +233,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTreeToChoosePrincipalFunction(StringBuffer buffer, Unit parentUnit)
+    public void getUnitTreeToChoosePrincipalFunction(StringBuilder buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
         buffer.append("<ul>");
         getUnitsListToChoosePrincipalFunction(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsListToChoosePrincipalFunction(Unit parentUnit, StringBuffer buffer)
+    private void getUnitsListToChoosePrincipalFunction(Unit parentUnit, StringBuilder buffer)
             throws FenixFilterException, FenixServiceException {
 
         buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
