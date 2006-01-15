@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -36,7 +35,6 @@ public class CriarSala implements IService {
     public Object run(InfoRoom infoSala) throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
-        final IPersistentBuilding persistentBuilding = persistentSupport.getIPersistentBuilding();
 
         final Room existingRoom = roomDAO.readByName(infoSala.getNome());
 
@@ -44,7 +42,7 @@ public class CriarSala implements IService {
             throw new ExistingServiceException("Duplicate Entry: " + infoSala.getNome());
         }
 
-        final Building building = findBuilding(persistentBuilding, infoSala.getEdificio());
+        final Building building = findBuilding(persistentSupport, infoSala.getEdificio());
 
         final Room room = writeRoom(roomDAO, infoSala, building);
 
@@ -52,9 +50,9 @@ public class CriarSala implements IService {
 
     }
 
-    protected Building findBuilding(final IPersistentBuilding persistentBuilding, final String edificio)
+    protected Building findBuilding(final ISuportePersistente persistentSupport, final String edificio)
             throws ExcepcaoPersistencia {
-        final List buildings = persistentBuilding.readAll();
+        final List buildings = (List) persistentSupport.getIPersistentObject().readAll(Building.class);
         return (Building) CollectionUtils.find(buildings, new Predicate() {
             public boolean evaluate(Object arg0) {
                 final Building building = (Building) arg0;

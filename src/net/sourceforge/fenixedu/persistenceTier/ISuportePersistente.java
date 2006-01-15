@@ -469,8 +469,6 @@ public interface ISuportePersistente
 
 	public IPersistentProjectAccess getIPersistentProjectAccess();
 
-	public IPersistentBuilding getIPersistentBuilding();
-
 	public IPersistentOldInquiriesCoursesRes getIPersistentOldInquiriesCoursesRes();
 
 	public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher();

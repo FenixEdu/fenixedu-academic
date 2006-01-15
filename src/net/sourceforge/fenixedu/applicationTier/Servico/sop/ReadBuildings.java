@@ -9,7 +9,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBuilding;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -22,9 +21,8 @@ public class ReadBuildings implements IService {
 
     public List run() throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentBuilding persistentBuilding = persistentSupport.getIPersistentBuilding();
 
-        return (List) CollectionUtils.collect(persistentBuilding.readAll(), new Transformer() {
+        return (List) CollectionUtils.collect(persistentSupport.getIPersistentObject().readAll(Building.class), new Transformer() {
             public Object transform(Object arg0) {
                 final Building building = (Building) arg0;
                 return InfoBuilding.newInfoFromDomain(building);

@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
@@ -194,7 +193,6 @@ import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BranchVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BuildingVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateEnrolmentVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.CandidateSituationVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.ContributorVO;
@@ -620,10 +618,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentMetadata getIPersistentMetadata() {
         return new MetadataVO();
-    }
-
-    public IPersistentBuilding getIPersistentBuilding() {
-        return new BuildingVO();
     }
 
     public IPersistentSentSms getIPersistentSentSms() {

@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBuilding;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
@@ -1456,11 +1455,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentProjectAccess getIPersistentProjectAccess()
 	{
 		return new ProjectAccessOJB();
-	}
-
-	public IPersistentBuilding getIPersistentBuilding()
-	{
-		return new BuildingOJB();
 	}
 
 	public IPersistentInstitution getIPersistentInstitution()
