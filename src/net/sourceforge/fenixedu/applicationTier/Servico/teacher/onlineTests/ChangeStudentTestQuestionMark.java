@@ -110,10 +110,13 @@ public class ChangeStudentTestQuestionMark implements IService {
                     Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                             studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());
                     Mark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
-                    if (mark != null) {
-                        mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
-                        mark.setPublishedMark(mark.getMark());
+                    final String markValue = getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent());
+                    if (mark == null) {
+                        mark = DomainFactory.makeMark(attend, onlineTest, markValue);
+                    } else {
+                        mark.setMark(markValue);                        
                     }
+                    mark.setPublishedMark(markValue);
                 }
             }
             StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
