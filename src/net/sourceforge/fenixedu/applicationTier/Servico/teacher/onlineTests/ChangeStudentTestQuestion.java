@@ -149,6 +149,7 @@ public class ChangeStudentTestQuestion implements IService {
                         if (mark != null) {
                             mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion
                                     .getStudent(), oldMark));
+                            mark.setPublishedMark(mark.getMark());
                         }
                     }
                     StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();

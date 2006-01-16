@@ -87,6 +87,7 @@ public class ChangeStudentTestQuestionValue implements IService {
                 Mark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
                 if (mark != null) {
                     mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent()));
+                    mark.setPublishedMark(mark.getMark());
                 }
             }
             studentTestQuestion.setTestQuestionValue(newValue);
