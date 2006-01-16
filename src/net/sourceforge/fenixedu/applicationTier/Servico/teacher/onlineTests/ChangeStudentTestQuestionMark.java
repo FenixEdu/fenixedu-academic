@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -139,8 +140,10 @@ public class ChangeStudentTestQuestionMark implements IService {
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();
         }
-        DecimalFormat df = new DecimalFormat("#0.##");
-        df.getDecimalFormatSymbols().setDecimalSeparator('.');
+        DecimalFormat df =new DecimalFormat("#0.##");
+        DecimalFormatSymbols decimalFormatSymbols = df.getDecimalFormatSymbols();
+        decimalFormatSymbols.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(decimalFormatSymbols);
         return (df.format(Math.max(0, totalMark)));
     }
 }
