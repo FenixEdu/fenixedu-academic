@@ -114,16 +114,27 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
-	 <field-descriptor
+	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
         jdbc-type="BLOB"
         conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
     />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>	
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -290,10 +301,27 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+        name="curricularPlanMembersGroup"
+        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>		
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -459,10 +487,27 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+        name="curricularPlanMembersGroup"
+        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>			
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -628,10 +673,27 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+        name="curricularPlanMembersGroup"
+        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>		
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -798,10 +860,27 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+        name="curricularPlanMembersGroup"
+        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>		
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -968,10 +1047,27 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+        name="curricularPlanMembersGroup"
+        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>		
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -1135,12 +1231,29 @@
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
-	/>
+	/>	
+	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
 	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+        name="curricularPlanMembersGroup"
+        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>		
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
@@ -1306,10 +1419,27 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_DEGREE_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
 		name="ectsCredits"
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+        name="curricularPlanMembersGroup"
+        column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />
+	<reference-descriptor auto-retrieve="false"
+			name="degreeStructure"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
+			>
+		<foreignkey field-ref="keyCurricularPeriod"/>
+	</reference-descriptor>		
 	<reference-descriptor auto-retrieve="false"
 			name="degreeModule"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule"
