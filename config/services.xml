@@ -9253,6 +9253,15 @@
         </filterChains>     
     </service>
     <service>
+    	<name>CreateCourseGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCourseGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>    
+    <service>
     	<name>EditCourseGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup</implementationClass>
         <description></description>
