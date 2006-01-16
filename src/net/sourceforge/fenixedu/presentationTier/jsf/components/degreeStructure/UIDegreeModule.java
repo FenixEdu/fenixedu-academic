@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.faces.component.UIInput;
@@ -77,8 +78,12 @@ public class UIDegreeModule extends UIInput {
     }
 
     protected String getBundleValue(FacesContext facesContext, String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, facesContext.getViewRoot().getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, getLocale());
         return bundle.getString(bundleKey);
+    }
+
+    protected Locale getLocale() {
+        return facesContext.getViewRoot().getLocale();
     }
 
     protected void encodeLink(String href, String bundleKey) throws IOException {

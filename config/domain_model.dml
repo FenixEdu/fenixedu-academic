@@ -96,8 +96,10 @@ valueType net.sourceforge.fenixedu.domain.GradeScale												as GradeScale;
 valueType net.sourceforge.fenixedu.util.EvaluationType											as EvaluationType;
 valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
 valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
-valueType net.sourceforge.fenixedu.util.WeekDay															as WeekDay;
+valueType net.sourceforge.fenixedu.util.WeekDay													as WeekDay;
+valueType net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType					as CurricularPeriodType;
 valueType net.sourceforge.fenixedu.domain.accessControl.Group                                   as Group;
+
 
 /*
 *
@@ -300,8 +302,8 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
     }
     
     class net.sourceforge.fenixedu.domain.cms.website.WebsiteItem extends net.sourceforge.fenixedu.domain.cms.Content {
-    }        
-
+    }    
+    
 class net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue extends net.sourceforge.fenixedu.domain.DomainObject
 {
     	   Integer keyMailingList;
@@ -330,6 +332,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.Context extends net.source
 	Integer courseGroupKey;
 	Integer beginExecutionPeriodKey;
 	Integer endExecutionPeriodKey;
+	Integer keyCurricularPeriod;
 }
 
 
@@ -411,7 +414,6 @@ class net.sourceforge.fenixedu.domain.CreditsInScientificArea extends net.source
 }
 
 
-
 class net.sourceforge.fenixedu.domain.CurricularCourseEquivalence extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer oldCurricularCourseKey;
 	Integer equivalentCurricularCourseKey;
@@ -440,6 +442,14 @@ class net.sourceforge.fenixedu.domain.CurricularCourseScope extends net.sourcefo
     String anotation;
     Date begin;
     Date end;
+}
+
+class net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod extends net.sourceforge.fenixedu.domain.DomainObject {
+    Integer keyParent;
+    Integer keyDegreeCurricularPlan;
+    Integer order;
+	CurricularPeriodType periodType;
+
 }
 
 class net.sourceforge.fenixedu.domain.CurricularSemester extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -471,7 +481,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
 	String sigla;
 	String acronym;
     DegreeType tipoCurso;
-	BolonhaDegreeType bolonhaDegreeType;
+    BolonhaDegreeType bolonhaDegreeType;
     Integer keyUnit;
     GradeScale gradeScale;
     Double ectsCredits;
@@ -497,8 +507,9 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     GradeScale gradeScale;
     CurricularStage curricularStage;
     Integer degreeModuleKey;
-	Group curricularPlanMembersGroup;
-    Double ectsCredits;    
+   	Group curricularPlanMembersGroup;
+   	Integer keyCurricularPeriod;
+	Double ectsCredits;
 }
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
@@ -592,7 +603,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 		Integer keyCompetenceCourse;
 		Integer keyStudentCourseReport;
 		Integer degreeCurricularPlanKey;
-	
+		
 	    GradeScale gradeScale;
 	}
 
@@ -614,7 +625,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String realName;
 	String name;
 	Integer keyUnit;
-	Integer keyCompetenceCourseMembersGroup;
+	Integer keyCompetenceCourseMembersGroup;	
 }
 
 
@@ -642,7 +653,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformatio
     String evaluationMethodEn;
     Date endDate;
 }
-
+	
 class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCompetenceCourseInformation;
     Double theoreticalHours;
@@ -656,6 +667,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad exten
 	Double ectsCredits;
 	Integer order;
 }
+
 
 class net.sourceforge.fenixedu.domain.DislocatedStudent extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCountry;
@@ -786,6 +798,7 @@ class net.sourceforge.fenixedu.domain.Evaluation extends net.sourceforge.fenixed
 	String publishmentMessage;
 }
 
+
 	class net.sourceforge.fenixedu.domain.FinalEvaluation extends net.sourceforge.fenixedu.domain.Evaluation {		
 	}
 	
@@ -826,6 +839,8 @@ class net.sourceforge.fenixedu.domain.EvaluationMethod extends net.sourceforge.f
 	Integer keyExecutionCourse;
 }
 
+
+	
 
 class net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyRoom;
@@ -1821,7 +1836,7 @@ class net.sourceforge.fenixedu.domain.student.ResidenceCandidacies extends net.s
 
 class net.sourceforge.fenixedu.domain.precedences.Restriction extends net.sourceforge.fenixedu.domain.DomainObject {
     String ojbConcreteClass;
-	Integer keyPrecedence;
+	Integer keyPrecedence;	
 }
 
 
@@ -2009,7 +2024,7 @@ class net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem extends net.sou
 	
 	class net.sourceforge.fenixedu.domain.teacher.OtherService extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
 		Double credits;
-		String reason;
+		String reason; 
 	}
 	
 	class net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime extends net.sourceforge.fenixedu.domain.teacher.TeacherServiceItem {
@@ -2294,7 +2309,7 @@ class net.sourceforge.fenixedu.domain.organizationalStructure.Unit extends net.s
 	Date endDate;
 	UnitType type;
 	Integer costCenterCode;
-	Integer keyDepartment;
+	Integer keyDepartment;	
 	Integer keyDegree;
 }
 
@@ -2897,6 +2912,24 @@ relation CurricularCourseUniversity {
 	net.sourceforge.fenixedu.domain.University playsRole university;
 }
 
+relation CurricularPeriodContext {
+	net.sourceforge.fenixedu.domain.degreeStructure.Context playsRole contexts {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod playsRole curricularPeriod;
+}
+
+relation CurricularPeriodDegreeCurricularPlan {
+	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
+	net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod playsRole degreeStructure;
+}
+
+relation CurricularPeriodParentChilds {
+	net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod playsRole childs {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod playsRole parent;
+}
 
 relation CurricularSemesterContext {
 	net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemester;
@@ -2905,7 +2938,6 @@ relation CurricularSemesterContext {
 		multiplicity *;
 	}
 }
-
 
 relation CurricularSemesterCurricularYear {
     net.sourceforge.fenixedu.domain.CurricularSemester playsRole curricularSemesters {
@@ -3705,7 +3737,7 @@ relation GratuityValuesExecutionDegree {
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
- 
+
 relation GroupProposal {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributed;
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groupAttributed;
@@ -5121,7 +5153,7 @@ relation TeacherPersonalExpectationExecutionYear {
  		multiplicity *;
  	}
  }
-
+ 
 relation ContentCreation
 {
 	net.sourceforge.fenixedu.domain.Person playsRole creator;

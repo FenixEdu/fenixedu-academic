@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class Context extends Context_Base {
@@ -11,7 +12,7 @@ public class Context extends Context_Base {
     }
 
     public Context(CourseGroup courseGroup, DegreeModule degreeModule,
-            CurricularSemester curricularSemester, ExecutionPeriod beginExecutionPeriod,
+            CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
             ExecutionPeriod endExecutionPeriod) {
         super();
         if (courseGroup == null || degreeModule == null || beginExecutionPeriod == null) {
@@ -19,19 +20,19 @@ public class Context extends Context_Base {
         }
         setCourseGroup(courseGroup);
         setDegreeModule(degreeModule);
-        setCurricularSemester(curricularSemester);
+        setCurricularPeriod(curricularPeriod);
         setBeginExecutionPeriod(beginExecutionPeriod);
         setEndExecutionPeriod(endExecutionPeriod);
     }
     
-    public void edit(CourseGroup courseGroup, DegreeModule degreeModule, CurricularSemester curricularSemester) {
+    public void edit(CourseGroup courseGroup, DegreeModule degreeModule, CurricularPeriod curricularPeriod) {
         setCourseGroup(courseGroup);
         setDegreeModule(degreeModule);
-        setCurricularSemester(curricularSemester);
+        setCurricularPeriod(curricularPeriod);
     }
 
     public void delete() {
-        setCurricularSemester(null);
+        removeCurricularPeriod();
         setDegreeModule(null);
         setCourseGroup(null);
         setBeginExecutionPeriod(null);

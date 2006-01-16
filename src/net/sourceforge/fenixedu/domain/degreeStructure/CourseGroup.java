@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CourseGroup extends CourseGroup_Base {
@@ -84,11 +85,12 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
     
-    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularSemester curricularSemester) {
+    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getDegreeModuleContexts()) {
             if (context.getCourseGroup() == parentCourseGroup) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }
     }
+
 }

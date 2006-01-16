@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.branch.BranchType;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -40,7 +42,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
             CurricularStage curricularStage, CompetenceCourse competenceCourse,
-            CourseGroup courseGroup, CurricularSemester curricularSemester,
+            CourseGroup courseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod) {
         
         this();       
@@ -49,7 +51,7 @@ public class CurricularCourse extends CurricularCourse_Base {
         setPrerequisitesEn(prerequisitesEn);
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
-        new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, null);
+        new Context(courseGroup, this, curricularPeriod, beginExecutionPeriod, null);
     }
     
 	public GradeScale getGradeScaleChain() {
@@ -69,8 +71,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         String tab = tabs + "\t";
         dcp.append(tab);
         dcp.append("[CC ").append(this.getIdInternal()).append("][");
-        dcp.append(previousContext.getCurricularSemester().getCurricularYear().getYear()).append("Y,");
-        dcp.append(previousContext.getCurricularSemester().getSemester()).append("S] ");
+        dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
+        dcp.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
         dcp.append(this.getName()).append("\n");
     }
 
@@ -433,9 +435,9 @@ public class CurricularCourse extends CurricularCourse_Base {
         return results;
     }
     
-    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularSemester curricularSemester) {
+    protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getDegreeModuleContexts()) {
-            if (context.getCourseGroup() == parentCourseGroup && context.getCurricularSemester() == curricularSemester) {
+            if (context.getCourseGroup() == parentCourseGroup && context.getCurricularPeriod() == curricularPeriod) {
                 throw new DomainException("courseGroup.contextAlreadyExistForCourseGroup");
             }
         }
@@ -447,9 +449,9 @@ public class CurricularCourse extends CurricularCourse_Base {
             return this.getCompetenceCourse().getName();
         }
         return super.getName();
-    }
-
-    @Override
+    }        
+    
+        @Override
     public String getNameEn() {
         if ((super.getNameEn() == null || super.getNameEn().length() == 0) && this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getNameEn();

@@ -126,11 +126,6 @@
 		autoincrement="true"
 	/>
 	<field-descriptor
-		name="curricularSemesterKey"
-		column="KEY_CURRICULAR_SEMESTER"
-		jdbc-type="INTEGER"
-	/>
-	<field-descriptor
 		name="degreeModuleKey"
 		column="KEY_DEGREE_MODULE"
 		jdbc-type="INTEGER"
@@ -152,11 +147,17 @@
 		jdbc-type="INTEGER"
 	/>
 	
+	<field-descriptor
+		name="keyCurricularPeriod"
+		column="KEY_CURRICULAR_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	
 	<reference-descriptor auto-retrieve="false"
-			name="curricularSemester"
-			class-ref="net.sourceforge.fenixedu.domain.CurricularSemester"
+			name="curricularPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod"
             >
-		<foreignkey field-ref="curricularSemesterKey"/>
+		<foreignkey field-ref="keyCurricularPeriod"/>
 	</reference-descriptor>
 	
 	<reference-descriptor auto-retrieve="false"
@@ -206,7 +207,7 @@
 		jdbc-type="INTEGER"
 		primarykey="true"
 		autoincrement="true"
-	/>	
+	/>
 	<field-descriptor
 		name="name"
 		column="NAME"
@@ -262,7 +263,7 @@
         name="evaluationMethodEn"
         column="EVALUATION_METHOD_EN"
         jdbc-type="LONGVARCHAR"
-	/>	
+	/>
 	<field-descriptor
         name="endDate"
         column="END_DATE"
@@ -352,5 +353,5 @@
 			name="competenceCourseInformation"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">
 		<foreignkey field-ref="keyCompetenceCourseInformation"/>
-	</reference-descriptor>
+	</reference-descriptor>		
 </class-descriptor>

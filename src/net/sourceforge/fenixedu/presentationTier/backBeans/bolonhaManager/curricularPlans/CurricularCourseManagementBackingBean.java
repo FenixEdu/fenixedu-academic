@@ -240,8 +240,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCurricularYearID() throws FenixFilterException, FenixServiceException {
         if (curricularYearID == null && getContext(getContextID()) != null) {
-            curricularYearID = getContext(getContextID()).getCurricularSemester().getCurricularYear()
-                    .getYear();
+//            curricularYearID = getContext(getContextID()).getCurricularSemester().getCurricularYear()
+//                    .getYear();
+            
+            getContext(getContextID()).getCurricularPeriod().getOrder();
         }
         return curricularYearID;
     }
@@ -252,7 +254,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCurricularSemesterID() throws FenixFilterException, FenixServiceException {
         if (curricularSemesterID == null && getContext(getContextID()) != null) {
-            curricularSemesterID = getContext(getContextID()).getCurricularSemester().getSemester();
+            //curricularSemesterID = getContext(getContextID()).getCurricularSemester().getSemester();
         }
         return curricularSemesterID;
     }
@@ -267,7 +269,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             checkCourseGroup();
             checkCurricularSemesterAndYear();
             Object args[] = {getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
-                    getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID()};
+                    getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(), getDegreeCurricularPlanID()};
             ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", args);
         } catch (FenixActionException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -277,15 +279,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             return "buildCurricularPlan";
         } catch (FenixServiceException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-            return "";
+        return "";
         } catch (DomainException e) {
             this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
             return "";
         } catch (Exception e) {
             this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
-        } 
-        
+    }
+
         addInfoMessage(bolonhaBundle.getString("curricularCourseCreated"));
         return "buildCurricularPlan";
     }
@@ -360,7 +362,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (Exception e) {
             this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
-        }         
+        }
+        
         addInfoMessage(bolonhaBundle.getString("addedNewContextToCurricularCourse"));
         setContextID(0); // resetContextID
         return "buildCurricularPlan";
@@ -425,7 +428,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             addErrorMessage("error.gettingDepartmentUnits");
         }
         return result;
-    }    
+    }
 
     private final ComparatorChain comparatorChain = new ComparatorChain(); {
         comparatorChain.addComparator(new BeanComparator("curricularStage"), true);
@@ -438,10 +441,10 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         if (departmentUnit != null) {
             final List<CompetenceCourse> competenceCourses = new ArrayList<CompetenceCourse>();
             for (final Unit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
-                for (final Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {                    
+                for (final Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
                     competenceCourses.addAll(competenceCourseGroupUnit.getCompetenceCourses());                    
+                    }
                 }
-            }
             Collections.sort(competenceCourses, comparatorChain);
             for (final CompetenceCourse competenceCourse : competenceCourses) {
                 result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("

@@ -28,7 +28,7 @@ public class CreateCourseGroup implements IService {
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
         final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
-                .readExecutionYearByName("2006/2007");
+                .readExecutionYearByName("2005/2006");
         final ExecutionPeriod beginExecutionPeriod = executionYear
                 .getExecutionPeriodForSemester(Integer.valueOf(1));
 

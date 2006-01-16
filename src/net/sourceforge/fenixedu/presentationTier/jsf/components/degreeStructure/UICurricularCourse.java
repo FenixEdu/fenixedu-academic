@@ -6,8 +6,11 @@ import java.util.Locale;
 import javax.faces.context.FacesContext;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
 public class UICurricularCourse extends UIDegreeModule {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
@@ -48,8 +51,8 @@ public class UICurricularCourse extends UIDegreeModule {
         buffer.append(tabs);
         buffer.append("[LEVEL ").append(new Integer(this.depth)).append("]");
         buffer.append("[CC ").append(this.degreeModule.getIdInternal()).append("][");
-        buffer.append(previousContext.getCurricularSemester().getCurricularYear().getYear()).append("Y,");
-        buffer.append(previousContext.getCurricularSemester().getSemester()).append("S] ");
+        buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR)).append("Y,");
+        buffer.append(previousContext.getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER)).append("S] ");
         buffer.append(this.degreeModule.getName());
         System.out.println(buffer.toString());
 
@@ -65,7 +68,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.startElement("a", this);
         writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + "&action=return", null);
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
-            writer.append(this.degreeModule.getName());
+            writer.append(this.degreeModule.getName());    
         } else {
             writer.append(this.degreeModule.getNameEn());
         }
@@ -76,11 +79,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("align", "center", null);
         if (!byYears) {
             writer.writeAttribute("width", "100px", null);
-            writer.append(previousContext.getCurricularSemester().getCurricularYear().getYear().toString()).append("º ");
-            writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "year"));
-            writer.append(", ");
-            writer.append(previousContext.getCurricularSemester().getSemester().toString()).append("º ");
-            writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "semester"));
+            writer.append(CurricularPeriodLabelFormatter.getFullLabel((CurricularPeriod)previousContext.getCurricularPeriod(), getLocale()));
         } else {
             //writer.writeAttribute("width", "300px", null);
             writer.append(previousContext.getCourseGroup().getName());

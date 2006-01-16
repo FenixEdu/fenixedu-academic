@@ -4,10 +4,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -21,12 +23,18 @@ public class AddContextToCurricularCourse implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        // TODO: check CurricularSemesterID for null value
-        final CurricularSemester curricularSemester = persistentSupport
-                .getIPersistentCurricularSemester().readCurricularSemesterBySemesterAndCurricularYear(
-                        semester, year);
-        if (curricularSemester == null) {
-            throw new FenixServiceException("error.noCurricularSemesterGivenYearAndSemester");
+        // // TODO: check CurricularSemesterID for null value
+
+        CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) curricularCourse
+                .getDegreeCurricularPlan().getDegreeStructure();
+        CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
+                new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR),
+                new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER));
+
+        if (curricularPeriod == null) {
+            curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(new CurricularPeriodInfoDTO(year,
+                    CurricularPeriodType.YEAR), new CurricularPeriodInfoDTO(semester,
+                    CurricularPeriodType.SEMESTER));
         }
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
@@ -35,6 +43,6 @@ public class AddContextToCurricularCourse implements IService {
         final ExecutionPeriod beginExecutionPeriod = executionYear
                 .getExecutionPeriodForSemester(Integer.valueOf(1));
 
-        curricularCourse.addContext(courseGroup, curricularSemester, beginExecutionPeriod, null);
+         curricularCourse.addContext(courseGroup, curricularPeriod, beginExecutionPeriod, null);
     }
 }

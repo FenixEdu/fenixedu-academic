@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
-import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 
 
 public abstract class DegreeModule extends DegreeModule_Base {
@@ -12,16 +12,16 @@ public abstract class DegreeModule extends DegreeModule_Base {
         for (;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
     }
     
-    public Context addContext(CourseGroup courseGroup, CurricularSemester curricularSemester,
+    public Context addContext(CourseGroup courseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-        checkContextsFor(courseGroup, curricularSemester);
-        return new Context(courseGroup, this, curricularSemester, beginExecutionPeriod, endExecutionPeriod);
+        checkContextsFor(courseGroup, curricularPeriod);
+        return new Context(courseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
     
-    public void editContext(Context context, CourseGroup courseGroup, CurricularSemester curricularSemester) {
-        if (context.getCourseGroup() != courseGroup || context.getCurricularSemester() != curricularSemester) {
-            checkContextsFor(courseGroup, curricularSemester);
-            context.edit(courseGroup, this, curricularSemester);
+    public void editContext(Context context, CourseGroup courseGroup, CurricularPeriod curricularPeriod) {
+        if (context.getCourseGroup() != courseGroup || context.getCurricularPeriod() != curricularPeriod) {
+            checkContextsFor(courseGroup, curricularPeriod);
+            context.edit(courseGroup, this, curricularPeriod);
         }
     }
     
@@ -34,7 +34,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
         }
     }
     
-    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularSemester curricularSemester);
+    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
     
     public boolean isRoot() {
         return (getNewDegreeCurricularPlan() != null);
@@ -42,8 +42,8 @@ public abstract class DegreeModule extends DegreeModule_Base {
     
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
         return searchParentDegreeCurricularPlan(getFirstParent());
-    }
-    
+}
+
     private DegreeCurricularPlan searchParentDegreeCurricularPlan(DegreeModule degreeModule) {        
         if (degreeModule.isRoot()) {
             return degreeModule.getNewDegreeCurricularPlan();
