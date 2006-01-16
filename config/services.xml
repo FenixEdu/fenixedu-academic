@@ -8919,7 +8919,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeOrManagerAuthorizationChain"></chain>
+        	<chain name="CreditsManagerOrManagerAuthorization"></chain>
         </filterChains>     
     </service>  
     <service>
@@ -8928,7 +8928,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeOrManagerAuthorizationChain"></chain>
+        	<chain name="CreditsManagerOrManagerAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -8937,7 +8937,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeOrManagerAuthorizationChain"></chain>
+        	<chain name="CreditsManagerOrManagerAuthorization"></chain>
         </filterChains>     
     </service>
    <service>
