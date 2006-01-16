@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
-import net.sourceforge.fenixedu.domain.curricularPeriod.ICurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CurricularPeriodTest extends DomainTestBase {
@@ -178,10 +177,10 @@ public class CurricularPeriodTest extends DomainTestBase {
                 CurricularPeriodType.SEMESTER),
                 new CurricularPeriodInfoDTO(3, CurricularPeriodType.YEAR));
 
-        ICurricularPeriod thirdYearPeriod = curricularPeriodThreeYear.getChildByOrder(3);
+        CurricularPeriod thirdYearPeriod = curricularPeriodThreeYear.getChildByOrder(3);
         assertEquals(thirdYearPeriod.getPeriodType(), CurricularPeriodType.YEAR);
 
-        ICurricularPeriod secondSemesterPeriod = thirdYearPeriod.getChildByOrder(2);
+        CurricularPeriod secondSemesterPeriod = thirdYearPeriod.getChildByOrder(2);
         assertEquals(secondSemesterPeriod.getPeriodType(), CurricularPeriodType.SEMESTER);
         assertNull(thirdYearPeriod.getChildByOrder(1));
 
