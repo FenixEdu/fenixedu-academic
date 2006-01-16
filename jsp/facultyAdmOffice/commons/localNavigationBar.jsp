@@ -2,10 +2,14 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<!-- Import new CSS for this section: #navlateral  -->
+<style>@import url(<%= request.getContextPath() %>/CSS/navlateralnew.css);</style>
+
 <logic:present role="GRANT_OWNER_MANAGER">
 	<%-- GRANT OWNER MANAGEMENT APPLICATIONS  --%>
 	
-	<strong>&raquo; <bean:message key="link.group.grantsManagement.title"/></strong>
+	<strong><bean:message key="link.group.grantsManagement.title"/></strong>
 	<ul>
 		<li>
 			<html:link page="/searchGrantOwner.do?method=searchForm">
@@ -22,7 +26,7 @@
 	</ul>
 	
 	<br/>
-	<strong>&raquo; <bean:message key="ling.group.grantPropertiesManagement.title"/></strong>
+	<strong><bean:message key="ling.group.grantPropertiesManagement.title"/></strong>
 	<ul>
 		<li>
 			<html:link page="/manageGrantType.do?method=prepareManageGrantTypeForm">
@@ -46,7 +50,7 @@
 	</ul>
 
 	<br/>
-	<strong>&raquo; <bean:message key="link.grant.list"/></strong>	
+	<strong><bean:message key="link.grant.list"/></strong>	
 	<ul>
 		<li>
 			<html:link page="/listGrantOwner.do?method=prepareFirstTimeListGrantOwner&amp;spanNumber=1&amp;orderBy=orderByNumber">
@@ -63,7 +67,7 @@
 	</ul>
 	
 	<br/>
-	<strong>&raquo; <bean:message key="link.grant.stats"/></strong>	
+	<strong><bean:message key="link.grant.stats"/></strong>	
 	<ul>
 		<li>
 			<html:link page="/grantOwnerStats.do?method=actionStart">
@@ -73,7 +77,7 @@
 	</ul>
 	
 	<br/>
-	<strong>&raquo; <bean:message key="link.grant.correction"/></strong>	
+	<strong><bean:message key="link.grant.correction"/></strong>	
 	<ul>
 		<li>
 			<html:link page="/correctGrantOwner.do?method=prepareForm">
@@ -107,30 +111,32 @@
 
 <logic:present role="CREDITS_MANAGER">
 	<%-- TEACHER CREDITS MANAGEMENT APPLICATIONS --%>
-	<strong>&raquo; <bean:message key="link.group.creditsManagement.title"/></strong>
+	<strong><bean:message key="link.group.creditsManagement.title"/></strong>
 	<ul>
 		<li>
 			<html:link page="/teacherSearchForExecutionCourseAssociation.do?method=searchForm&amp;page=0" >
 				<bean:message key="link.professorships.management"/>
 			</html:link>
 		</li>	
-		<!-- 				
+		<%-- 
 		<li>
 			<html:link page="/prepareManagementPositionsManagement.do?method=searchForm&amp;page=0" >
 				<bean:message key="link.managementPositions.management"/>
 			</html:link>
-		</li>		 
+		</li>
+		--%>		 						 
 		<li>
 			<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces" >
 				<bean:message key="link.managementPositions.management"/>
 			</html:link>
-		</li>		
+		</li>
+		<%-- 	
 		<li>
 			<html:link page="/prepareServiceExemptionsManagement.do?method=searchForm&amp;page=0" >
 				<bean:message key="link.serviceExemptions.management"/>
 			</html:link>
 		</li>
-		-->
+		--%>					
 		<li>
 			<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=searchForm&amp;page=0" > 
 				<bean:message key="link.creditsSheet.view"/>  
