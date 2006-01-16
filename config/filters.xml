@@ -839,12 +839,6 @@
 	<isTransactional>true</isTransactional>
 </filter>
 <filter>
-	<name>RequesterIsGroupOwner</name>
-	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.RequesterIsGroupOwner</implementationClass>
-	<description/>
-	<isTransactional>true</isTransactional>
-</filter>
-<filter>
 	<name>MailerAuthenticated</name>
 	<implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.MailerAuthenticated</implementationClass>
 	<description/>

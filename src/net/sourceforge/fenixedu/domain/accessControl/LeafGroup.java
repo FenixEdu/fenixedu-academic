@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-public abstract class LeafGroup extends LeafGroup_Base {
-    
+/**
+ * A <code>LeafGroup</code> provides a concrete selection of persons.
+ */
+public abstract class LeafGroup extends Group {
+
     public LeafGroup() {
         super();
     }
+    
 }

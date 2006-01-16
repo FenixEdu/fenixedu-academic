@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.cu
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -16,13 +17,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -58,30 +57,31 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
 
-        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = degreeCurricularPlan
-                .getCurricularPlanMembersGroup();
-
-        if (curricularPlanMembersGroup == null) {
-            Object[] argsCreateGroup = { degreeCurricularPlan };
-            curricularPlanMembersGroup = (DegreeCurricularPlanMembersGroup) ServiceUtils
-                    .executeService(getUserView(), "CreateCurricularPlanMembersGroup", argsCreateGroup);
-        }
-
-        if (selectedPersonsIDsToAdd != null) {
-            Object[] argsUpdateGroup = { curricularPlanMembersGroup, selectedPersonsIDsToAdd, null, RoleType.BOLONHA_MANAGER };
-            ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup",
-                    argsUpdateGroup);
-        }
+// TODO: check this with Luís Egídio
+//        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+//        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = degreeCurricularPlan
+//                .getCurricularPlanMembersGroup();
+//
+//        if (curricularPlanMembersGroup == null) {
+//            Object[] argsCreateGroup = { degreeCurricularPlan };
+//            curricularPlanMembersGroup = (DegreeCurricularPlanMembersGroup) ServiceUtils
+//                    .executeService(getUserView(), "CreateCurricularPlanMembersGroup", argsCreateGroup);
+//        }
+//
+//        if (selectedPersonsIDsToAdd != null) {
+//            Object[] argsUpdateGroup = { curricularPlanMembersGroup, selectedPersonsIDsToAdd, null, RoleType.BOLONHA_MANAGER };
+//            ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup",
+//                    argsUpdateGroup);
+//        }
     }
 
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-
-        if (selectedPersonGroupsIDsToRemove != null) {
-            Object[] args = { getDegreeCurricularPlan().getCurricularPlanMembersGroup(), null,
-                    selectedPersonGroupsIDsToRemove, RoleType.BOLONHA_MANAGER };
-            ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup", args);
-        }
+// TODO: check this with Luís Egídio
+//        if (selectedPersonGroupsIDsToRemove != null) {
+//            Object[] args = { getDegreeCurricularPlan().getCurricularPlanMembersGroup(), null,
+//                    selectedPersonGroupsIDsToRemove, RoleType.BOLONHA_MANAGER };
+//            ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup", args);
+//        }
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException,
@@ -122,15 +122,16 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = getDegreeCurricularPlan()
-                .getCurricularPlanMembersGroup();
-        if (curricularPlanMembersGroup != null) {
-            for (UserGroup member : curricularPlanMembersGroup.getParts()) {
-                Person person = ((PersonGroup) member).getPerson();
-                result.add(new SelectItem(member.getIdInternal(), person.getNome() + " ("
-                        + person.getUsername() + ")"));
-            }
-        }
+// TODO: check this with Luís Egídio
+//        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = getDegreeCurricularPlan()
+//                .getCurricularPlanMembersGroup();
+//        if (curricularPlanMembersGroup != null) {
+//            for (Group member : curricularPlanMembersGroup.getChildren()) {
+//                Person person = ((PersonGroup) member).getPerson();
+//                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
+//                        + person.getUsername() + ")"));
+//            }
+//        }
 
         return result;
     }
@@ -138,10 +139,12 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     public List<String> getGroupMembersLabels() throws FenixFilterException, FenixServiceException {
         List<String> result = new ArrayList<String>();
 
-        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
+        Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
         if (curricularPlanMembersGroup != null) {
-            for (UserGroup member : curricularPlanMembersGroup.getParts()) {
-                Person person = ((PersonGroup) member).getPerson();
+            Iterator<Person> personIterator = curricularPlanMembersGroup.getElementsIterator();
+            
+            while (personIterator.hasNext()) {
+                Person person = personIterator.next();
                 result.add(person.getNome() + " (" + person.getUsername() + ")");
             }
         }

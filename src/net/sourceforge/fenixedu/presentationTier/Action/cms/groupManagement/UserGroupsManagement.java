@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -72,17 +72,18 @@ public class UserGroupsManagement extends FenixDispatchAction
 	{
 		Person person = this.getLoggedPerson(request);
 		Integer groupId = new Integer((String) request.getParameter("groupId"));
-		UserGroup groupToShow = null;
-		for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
-		{
-			UserGroup group = (UserGroup) iter.next();
-
-			if (group.getIdInternal().equals(groupId))
-			{
-				groupToShow = group;
-				break;
-			}
-		}
+		Group groupToShow = null;
+// FIXME: needs to be implemented in a different way
+//		for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+//		{
+//			UserGroup group = (UserGroup) iter.next();
+//
+//			if (group.getIdInternal().equals(groupId))
+//			{
+//				groupToShow = group;
+//				break;
+//			}
+//		}
 
 		request.setAttribute("group", groupToShow);
 		return mapping.findForward("showElements");

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -313,10 +313,6 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 				;
 
 			getNonAffiliatedTeachers().clear();
-
-			for (UserGroup userGroup : this.getHookedGroups()) {
-				userGroup.delete();
-			}
 
 			super.deleteDomainObject();
 		} else

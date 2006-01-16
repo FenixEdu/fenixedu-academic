@@ -21,7 +21,7 @@ import javassist.CtMethod;
 import javassist.NotFoundException;
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.accessControl.FenixAccessControlCallsGenerator;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -152,9 +152,9 @@ public class AccesControlChecksInjector
 		{
 			Method m = clazz.getMethod(getterName, new Class[] {});
 			Class returnType = m.getReturnType();
-			if (!UserGroup.class.isAssignableFrom(returnType))
+			if (!Group.class.isAssignableFrom(returnType))
 			{
-				throw new InvalidReturnTypeForGetter(m.getName() + " must return an instance of " + UserGroup.class.getName()+ " and its returning an instance of " + returnType.getClass().getName());
+				throw new InvalidReturnTypeForGetter(m.getName() + " must return an instance of " + Group.class.getName()+ " and its returning an instance of " + returnType.getClass().getName());
 			}
 		}
 		catch (SecurityException e)

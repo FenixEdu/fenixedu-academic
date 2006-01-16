@@ -4,11 +4,14 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants"%>
-<%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroup" %>
+<%@ page import="net.sourceforge.fenixedu.domain.accessControl.Group" %>
 <%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes"%>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
 
+<h2>FIME: Groups are no longer domain objects so interfaces must be changed.</h2>
+
+<%--
 <logic:present name="person">
 	<bean:define id="groupsIterator" type="java.util.Iterator" scope="request" property="userGroupsIterator" name="person"/>
 	<bean:define id="numberOfGroups" type="java.lang.Integer" property="userGroupsCount" name="person"/>	
@@ -34,7 +37,7 @@
 			<td class="listClasses-header">&nbsp;
 			</td>			
 		</tr>			
-		<logic:iterate id="group" name="groupsIterator" type="net.sourceforge.fenixedu.domain.accessControl.IUserGroup">
+		<logic:iterate id="group" name="groupsIterator" type="net.sourceforge.fenixedu.domain.accessControl.Group">
 			<bean:define id="readableGroupType" value="<%=UserGroupTypes.userGroupTypeByClass(group.getClass()).toString()%>"/>
 			<tr>
 				<td class="listClasses"><bean:write name="group" property="name"/></td>
@@ -43,7 +46,7 @@
 				<%
 				Map params = new HashMap();
 				params.put("method","viewElements");
-				params.put("groupId",group.getIdInternal());
+				//params.put("groupId",group.getIdInternal());
 				request.setAttribute("params",params);
 				Integer size = new Integer(group.getElementsCount());
 				request.setAttribute("groupSize",size);
@@ -55,7 +58,7 @@
 					<%
 					params.clear();
 					params.put("method","prepareCreate");
-					params.put("groupId",group.getIdInternal());
+					//params.put("groupId",group.getIdInternal());
 					request.setAttribute("params",params);
 					 %>				
 					<td width="0%" class="listClasses"><html:link  name="params" module="/cms" action="/mailingListManagement" ><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.createMailingList.label"/></html:link></td>
@@ -64,7 +67,7 @@
 					<%
 					params.clear();
 					params.put("method","viewMailingList");
-					params.put("mailingListID",group.getKeyMailingList());
+					//params.put("mailingListID",group.getKeyMailingList());
 					request.setAttribute("params",params);
 					 %>				 
  					<td width="0%" class="listClasses"><html:link  name="params" module="/cms" action="/mailingListManagement" ><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewMailingList.label"/></html:link></td>
@@ -93,3 +96,4 @@
 		</table>
 	</html:form>
 </logic:present>
+--%>

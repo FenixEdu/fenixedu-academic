@@ -402,12 +402,6 @@
 		<inverse-foreignkey field-ref="keyCreator"/>
 	</collection-descriptor>					
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="createdGroups"
-			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyCreator"/>
-	</collection-descriptor>						
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="ownedContents"
 			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
 			refresh="true" 
@@ -415,14 +409,6 @@
 		<fk-pointing-to-element-class column="KEY_CONTENT"/>
 		<fk-pointing-to-this-class column="KEY_OWNER" />	
 	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="ownedGroups"
-			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup"
-			refresh="true" 
-			indirection-table="AC_GROUP_OWNERSHIP">
-		<fk-pointing-to-element-class column="KEY_GROUP"/>
-		<fk-pointing-to-this-class column="KEY_OWNER" />	
-	</collection-descriptor>						
 	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="associatedQualifications"
 			element-class-ref="net.sourceforge.fenixedu.domain.Qualification"
@@ -439,10 +425,4 @@
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
 	    <foreignkey field-ref="keyCms"/>
 	</reference-descriptor>
-	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-			name="hookedGroups"
-			element-class-ref="net.sourceforge.fenixedu.domain.accessControl.PersonGroup"
-			refresh="true" >
-		<inverse-foreignkey field-ref="keyPerson"/>
-	</collection-descriptor>	
 </class-descriptor>

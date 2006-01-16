@@ -6,8 +6,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.iterators.ArrayListIterator;
-public class PublicRequestersGroup extends PublicRequestersGroup_Base {
+public class PublicRequestersGroup extends LeafGroup {
     
+    private static final long serialVersionUID = 1L;
+
     public PublicRequestersGroup() {
         super();
     }
@@ -23,5 +25,9 @@ public class PublicRequestersGroup extends PublicRequestersGroup_Base {
 	{
 		return userView.isPublicRequester();
 	}
-    
+
+    @Override
+    public boolean isMember(Person person) {
+        return true;
+    }
 }

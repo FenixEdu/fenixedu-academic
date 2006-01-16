@@ -22,7 +22,6 @@ public class MailingList extends MailingList_Base
 		super();
 	}
 
-	
 	private class LastConversationsFirstComparator implements Comparator
 	{
 		public int compare(Object arg0, Object arg1)

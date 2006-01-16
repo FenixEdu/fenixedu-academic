@@ -72,25 +72,17 @@
         jdbc-type="INTEGER"
     />
 	 <field-descriptor
-        name="keyReadersGroup"
-        column="KEY_READERS_GROUP"
-        jdbc-type="INTEGER"
+        name="readersGroup"
+        column="READERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
     />                  
     <field-descriptor
-        name="keyWritersGroup"
-        column="KEY_WRITERS_GROUP"
-        jdbc-type="INTEGER"
+        name="writersGroup"
+        column="WRITERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
     />
-	 <reference-descriptor auto-retrieve="false"
-    	name="readers"
-        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
-	    <foreignkey field-ref="keyReadersGroup"/>
-	</reference-descriptor>	
-	 <reference-descriptor auto-retrieve="false"
-    	name="writers"
-        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
-	    <foreignkey field-ref="keyWritersGroup"/>
-	</reference-descriptor>		                
 	<reference-descriptor auto-retrieve="false"
     	name="cms"
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
@@ -155,25 +147,17 @@
         jdbc-type="INTEGER"
     />     
      <field-descriptor
-        name="keyReadersGroup"
-        column="KEY_READERS_GROUP"
-        jdbc-type="INTEGER"
+        name="readersGroup"
+        column="READERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
     />                  
     <field-descriptor
-        name="keyWritersGroup"
-        column="KEY_WRITERS_GROUP"
-        jdbc-type="INTEGER"
+        name="writersGroup"
+        column="WRITERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
     />        
-	 <reference-descriptor auto-retrieve="false"
-    	name="readers"
-        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
-	    <foreignkey field-ref="keyReadersGroup"/>
-	</reference-descriptor>	
-	 <reference-descriptor auto-retrieve="false"
-    	name="writers"
-        class-ref="net.sourceforge.fenixedu.domain.accessControl.UserGroup">
-	    <foreignkey field-ref="keyWritersGroup"/>
-	</reference-descriptor>		    
 	<reference-descriptor auto-retrieve="false"
     	name="cms"
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">

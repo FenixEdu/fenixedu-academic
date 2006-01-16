@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -236,7 +236,7 @@ public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAc
 		Integer executionCourseID = (Integer) addGroupForm.get("executionCourseID");
 		String userGroupTypeString = (String) addGroupForm.get("userGroupType");
 		UserGroupTypes userGroupType = UserGroupTypes.valueOf(userGroupTypeString);
-		UserGroup group = null;
+		Group group = null;
 		
 		try
 		{
@@ -244,7 +244,7 @@ public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAc
 			ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(userView,"ReadDomainExecutionCourseByID",new Object[] {executionCourseID});
 			Object writeArgs[] =
 			{ executionCourse,name,description,person, userGroupType};			
-			group = (UserGroup) ServiceUtils.executeService(userView, "WriteExecutionCourseUserGroup", writeArgs);
+			group = (Group) ServiceUtils.executeService(userView, "WriteExecutionCourseUserGroup", writeArgs);
 		}
 		catch (FenixServiceException e)
 		{

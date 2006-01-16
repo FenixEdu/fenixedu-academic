@@ -10,8 +10,8 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -479,22 +479,22 @@ public class Person extends Person_Base {
         }
     }
 
-    public Iterator<UserGroup> getUserGroupsIterator()
-    {
-    	return this.getOwnedGroupsIterator();
-    }
-
-	public int getUserGroupsCount()
-	{
-		int groupsCount = 0;
-		Iterator<UserGroup> iterator = this.getUserGroupsIterator();
-		while (iterator.hasNext())
-		{
-			iterator.next();
-			groupsCount++;
-		}
-		return groupsCount;
-	}
+//    public Iterator<UserGroup> getUserGroupsIterator()
+//    {
+//    	return this.getOwnedGroupsIterator();
+//    }
+//
+//	public int getUserGroupsCount()
+//	{
+//		int groupsCount = 0;
+//		Iterator<UserGroup> iterator = this.getUserGroupsIterator();
+//		while (iterator.hasNext())
+//		{
+//			iterator.next();
+//			groupsCount++;
+//		}
+//		return groupsCount;
+//	}
 	
     public List<PersonFunction> getActiveFunctions() {
 
@@ -551,26 +551,33 @@ public class Person extends Person_Base {
         
         return result;
     }
- 
-    public boolean belongsToOtherGroupsWithSameRole(NodeGroup nodeGroupWhoAsks) {
-        boolean belongs = false;
-        
-        if (this.getHookedGroups() != null) {
-            PersonGroup personGroup = this.getHookedGroups().get(0);
- 
-            for (NodeGroup nodeGroup : personGroup.getAggregators()) {
+
+// TODO: check this with Luís Egídio
+//    public boolean belongsToOtherGroupsWithSameRole(NodeGroup nodeGroupWhoAsks) {
+//        boolean belongs = false;
+//        
+//        if (this.getHookedGroups() != null) {
+//            PersonGroup personGroup = this.getHookedGroups().get(0);
+// 
+//            for (NodeGroup nodeGroup : personGroup.getAggregators()) {
+//    
+//                if ((nodeGroup != nodeGroupWhoAsks)) {
+//                    // (nodeGroup.getRole() == nodeGroupWhoAsks.getRole())
+//                    if (nodeGroup instanceof DegreeCurricularPlanMembersGroup || nodeGroup instanceof CompetenceCourseMembersGroup) {
+//                        belongs = true;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//            
+//        return belongs;
+//    }
     
-                if ((nodeGroup != nodeGroupWhoAsks)) {
-                    // (nodeGroup.getRole() == nodeGroupWhoAsks.getRole())
-                    if (nodeGroup instanceof DegreeCurricularPlanMembersGroup || nodeGroup instanceof CompetenceCourseMembersGroup) {
-                        belongs = true;
-                        break;
-                    }
-                }
-            }
-        }
-            
-        return belongs;
+    /**
+     * @return a group that only contains this person
+     */
+    public PersonGroup getPersonGroup() {
+        return new PersonGroup(this);
     }
-    
 }

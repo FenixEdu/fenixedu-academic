@@ -1,17 +1,14 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
-import relations.ExecutionCourseUserGroupHook;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
-public abstract class ExecutionCourseUserGroup extends ExecutionCourseUserGroup_Base {
-    
-    public ExecutionCourseUserGroup() {
-        super();
+public abstract class ExecutionCourseUserGroup extends DomainBackedGroup<ExecutionCourse> {
+
+    public ExecutionCourseUserGroup(ExecutionCourse executionCourse) {
+        super(executionCourse);
     }
     
-    public void delete()
-    {
-    	ExecutionCourseUserGroupHook.remove(this.getExecutionCourse(),this);
-    	super.delete();
+    public ExecutionCourse getExecutionCourse() {
+        return getObject();
     }
-    
 }

@@ -963,15 +963,6 @@
 	<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsAccessControlFilter</filterClass>
 </filterChain>
 
-<filterChain>
-	<name>DeleteUserGroupPreFilterChain</name>
-	<expression>RequesterIsGroupOwner</expression>	
-	<description/>
-	<invocationTiming>1</invocationTiming>
-	<filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsAccessControlFilter</filterClass>
-</filterChain>
-
-
 <!-- ======================================  --> 
 
 <!--######################################-->

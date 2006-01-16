@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
@@ -113,38 +113,33 @@ public class ProcessReceivedMail extends CmsService
 	 * @return
 	 * @throws MessagingException
 	 */
-	private boolean senderIsAllowedToSendMessage(MimeMessage mailMessage, MailingList mailingList)
-			throws MessagingException
-	{
-		boolean result = false;
-		if (mailingList.getMembersOnly())
-		{
-			Iterator<UserGroup> groups = mailingList.getGroupsIterator();
-			while (groups.hasNext())
-			{
-				UserGroup group = groups.next();
-				Iterator<Person> persons = group.getElementsIterator();
-				while (persons.hasNext())
+	private boolean senderIsAllowedToSendMessage(MimeMessage mailMessage, MailingList mailingList) throws MessagingException {
+		if (! mailingList.getMembersOnly()) {
+            // FIXME: must check if the email exists is a valid fenix person email, that is, exists in the database
+            return true;
+        }
+        
+		Group group = mailingList.getGroup();
+		Iterator<Person> persons = group.getElementsIterator();
+        
+		while (persons.hasNext()) {
+			Person person = persons.next();
+			Address[] senders = mailMessage.getFrom();
+            
+			for (int i = 0; i < senders.length; i++) {
+				if (senders[i] instanceof InternetAddress)
 				{
-					Person person = persons.next();
-					Address[] senders = mailMessage.getFrom();
-					for (int i = 0; i < senders.length; i++)
+					InternetAddress address = (InternetAddress) senders[i];
+					if (address.getAddress() != null
+							&& address.getAddress().equalsIgnoreCase(person.getEmail()))
 					{
-						if (senders[i] instanceof InternetAddress)
-						{
-							InternetAddress address = (InternetAddress) senders[i];
-							if (address.getAddress() != null
-									&& address.getAddress().equalsIgnoreCase(person.getEmail()))
-							{
-								result = true;
-								break;
-							}
-						}
+						return true;
 					}
 				}
 			}
 		}
-		return result;
+        
+        return false;
 	}
 
 	/**

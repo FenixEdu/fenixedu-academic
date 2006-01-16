@@ -64,7 +64,6 @@
 <!ENTITY unit SYSTEM "repository_unit.xml">
 <!ENTITY cms SYSTEM "cms/repository_cms.xml">
 <!ENTITY cmsBasic SYSTEM "cms/repository_cms_basic.xml">
-<!ENTITY accessControlGroups SYSTEM "repository_accessControlGroups.xml">
 <!ENTITY cmsMessaging SYSTEM "cms/repository_cms_messaging.xml">
 <!ENTITY contract SYSTEM "repository_contract.xml">
 <!ENTITY function SYSTEM "repository_function.xml">
@@ -142,7 +141,6 @@
 	&projectsManagement;
 	&unit;
 	&cms;
-	&accessControlGroups;
 	&contract;
 	&function;
 	&person_function;

@@ -1,33 +1,30 @@
-
-
 package net.sourceforge.fenixedu.domain.accessControl;
 
-
-import java.util.Date;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.iterators.TransformIterator;
 
-public class ExecutionCourseStudentsGroup extends ExecutionCourseStudentsGroup_Base
+public class ExecutionCourseStudentsGroup extends ExecutionCourseUserGroup
 {
-	private class AttendPersonTransformer implements Transformer
+    private static final long serialVersionUID = 1L;
+
+    private class AttendPersonTransformer implements Transformer
 	{
 
-		public Object transform(Object arg0)
+		public Object transform(Object object)
 		{
-			Attends attend = (Attends) arg0;
+			Attends attend = (Attends) object;
 			return attend.getAluno().getPerson();
 		}		
 	}
 	
-	public ExecutionCourseStudentsGroup()
-	{
-		super();
-		this.setCreationDate(new Date(System.currentTimeMillis()));
+	public ExecutionCourseStudentsGroup(ExecutionCourse executionCourse) {
+        super(executionCourse);
 	}
 
 	@Override
@@ -39,9 +36,10 @@ public class ExecutionCourseStudentsGroup extends ExecutionCourseStudentsGroup_B
 	@Override
 	public Iterator<Person> getElementsIterator()
 	{
-		return new TransformIterator(this.getExecutionCourse().getAttendsIterator(),new AttendPersonTransformer());
+		return new TransformIterator(this.getExecutionCourse().getAttendsIterator(), new AttendPersonTransformer());
 		
-	}	
+	}
+
 }
 
 

@@ -33,11 +33,12 @@
 		column="KEY_UNIT"
 		jdbc-type="INTEGER"
 	 />
-	<field-descriptor
-		name="keyCompetenceCourseMembersGroup"
-		column="KEY_COMPETENCE_COURSE_MEMBERS_GROUP"
-		jdbc-type="INTEGER"
-	 />	 	 
+    <field-descriptor
+        name="competenceCourseMembersGroup"
+        column="COMPETENCE_COURSE_MEMBERS_GROUP"
+        jdbc-type="BLOB"
+        conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
+    />                  
      <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
@@ -48,11 +49,6 @@
 	<reference-descriptor auto-retrieve="false"
          name="unit"
          class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">
-         <foreignkey field-ref="keyUnit"/>
-    </reference-descriptor>
-	<reference-descriptor auto-retrieve="false"
-         name="competenceCourseMembersGroup"
-         class-ref="net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup">
          <foreignkey field-ref="keyUnit"/>
     </reference-descriptor>
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"

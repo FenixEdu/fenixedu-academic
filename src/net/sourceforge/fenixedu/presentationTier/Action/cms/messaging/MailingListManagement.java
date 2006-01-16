@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
@@ -50,27 +50,27 @@ public class MailingListManagement extends FenixDispatchAction
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer groupID = new Integer((String) request.getParameter("groupId"));
 		mailingListForm.set("groupID", groupID);
-		UserGroup group = null;
+		Group group = null;
 		try
 		{
 			Person person = this.getLoggedPerson(request);
-			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
-			{
-				UserGroup currentGroup = iter.next();
-				if (currentGroup.getIdInternal().equals(groupID))
-				{
-					group = currentGroup;
-					break;
-				}
-			}
+// FIXME: needs to be implemented in a different way
+//			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+//			{
+//				UserGroup currentGroup = iter.next();
+//				if (currentGroup.getIdInternal().equals(groupID))
+//				{
+//					group = currentGroup;
+//					break;
+//				}
+//			}
 		}
 		catch (Exception e)
 		{
 			throw new FenixActionException(e);
 		}
-		mailingListDefaultName.append("_").append(group.getName());
 		mailingListForm.set("name", mailingListDefaultName.toString());
-		mailingListDefaultDescription.append(" ").append(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.for.label")).append(" ").append(group.getName());
+		mailingListDefaultDescription.append(" ").append(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.for.label"));
 		mailingListForm.set("description", mailingListDefaultDescription.toString());
 		mailingListForm.set("address", mailingListDefaultName.toString().replace(" ", "_"));
 
@@ -113,17 +113,18 @@ public class MailingListManagement extends FenixDispatchAction
 		try
 		{
 			Person person = this.getLoggedPerson(request);
-			Collection<UserGroup> mailingListUserGroups = new ArrayList<UserGroup>();
+			Collection<Group> mailingListUserGroups = new ArrayList<Group>();
 
-			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
-			{
-				UserGroup group = iter.next();
-				if (group.getIdInternal().equals(groupId))
-				{
-					mailingListUserGroups.add(group);
-				}
-
-			}
+// FIXME: needs to be implemented in a different way
+//			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+//			{
+//				UserGroup group = iter.next();
+//				if (group.getIdInternal().equals(groupId))
+//				{
+//					mailingListUserGroups.add(group);
+//				}
+//
+//			}
 			Object writeArgs[] =
 			{ name, description, address, aliases, mailingListUserGroups,true,true, person };
 			mailingList = (MailingList) ServiceUtils.executeService(userView, "WriteMailingList", writeArgs);

@@ -97,6 +97,7 @@ valueType net.sourceforge.fenixedu.util.EvaluationType											as EvaluationTy
 valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
 valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
 valueType net.sourceforge.fenixedu.util.WeekDay															as WeekDay;
+valueType net.sourceforge.fenixedu.domain.accessControl.Group                                   as Group;
 
 /*
 *
@@ -259,8 +260,8 @@ class net.sourceforge.fenixedu.domain.cms.Cms extends net.sourceforge.fenixedu.d
 
 class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixedu.domain.DomainObject
 {
- 	Integer keyReadersGroup;
- 	Integer keyWritersGroup;
+ 	Group readersGroup;
+ 	Group writersGroup;
 	String name;
 	String description;
 	Integer keyCms;
@@ -275,6 +276,7 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
        Boolean closed;
        Boolean membersOnly;
        Boolean replyToList;
+       Group group;
        }
        
        class net.sourceforge.fenixedu.domain.cms.messaging.MailConversation extends net.sourceforge.fenixedu.domain.cms.Bin {
@@ -298,49 +300,7 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
     }
     
     class net.sourceforge.fenixedu.domain.cms.website.WebsiteItem extends net.sourceforge.fenixedu.domain.cms.Content {
-    }    
-    
- class net.sourceforge.fenixedu.domain.accessControl.UserGroup extends net.sourceforge.fenixedu.domain.DomainObject{
- 	Integer keyReadersGroup;
- 	Integer keyWritersGroup;
-	Integer keyMailingList; 
-	Integer keyCreator;
-	String name;
-	Date creationDate;
-	String description;   
-	}
-	class net.sourceforge.fenixedu.domain.accessControl.NodeGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup{	
-    	}
-    	class net.sourceforge.fenixedu.domain.accessControl.GroupDifference extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
-	    }			
-   		class net.sourceforge.fenixedu.domain.accessControl.GroupUnion extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
-    	}
-    		class net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion{
-    			Integer keyDepartment;
-	    	}		    	
-    		class net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup extends net.sourceforge.fenixedu.domain.accessControl.GroupUnion{
-    			Integer keyDegreeCurricularPlan;
-	    	}		    	
-	    class net.sourceforge.fenixedu.domain.accessControl.GroupIntersection extends net.sourceforge.fenixedu.domain.accessControl.NodeGroup{
-   		}
-	class net.sourceforge.fenixedu.domain.accessControl.LeafGroup extends net.sourceforge.fenixedu.domain.accessControl.UserGroup{    
-        }
-   	    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup {
-   	    Integer keyExecutionCourse;
-   	    }
-	   	    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup extends net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup{    	
-	   	    }    	
-		    class net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup extends net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup{
-	   	    }    	
-   	    class net.sourceforge.fenixedu.domain.accessControl.PersonGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup{
-   	    Integer keyPerson;
-   	    }
-		class net.sourceforge.fenixedu.domain.accessControl.RoleGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup{
-		Integer keyRole;
-   	    }   	    
-		class net.sourceforge.fenixedu.domain.accessControl.PublicRequestersGroup extends net.sourceforge.fenixedu.domain.accessControl.LeafGroup{
-   	    }   	       	    
-    
+    }        
 
 class net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue extends net.sourceforge.fenixedu.domain.DomainObject
 {
@@ -537,7 +497,7 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     GradeScale gradeScale;
     CurricularStage curricularStage;
     Integer degreeModuleKey;
-   	Integer keyDegreeCurricularPlanMembersGroup;
+	Group curricularPlanMembersGroup;
     Double ectsCredits;    
 }
 
@@ -654,7 +614,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String realName;
 	String name;
 	Integer keyUnit;
-	Integer keyCompetenceCourseMembersGroup;	
+	Integer keyCompetenceCourseMembersGroup;
 }
 
 
@@ -2729,38 +2689,6 @@ relation ContentHierarchy {
 	}
 }
 
-relation ContentAllowedReadersGroup {
-	net.sourceforge.fenixedu.domain.cms.Content playsRole readableContents
-	{
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole readers;
-}
-
-relation ContentAllowedWritersGroup {
-	net.sourceforge.fenixedu.domain.cms.Content playsRole writableContents
-	{
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole writers;
-}
-
-relation UserGroupAllowedReadersGroup {
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole readableGroups
-	{
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole readers;
-}
-
-relation UserGroupAllowedWritersGroup {
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole writableGroups
-	{
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole writers;
-}
-
 relation CourseEquivalencyTheme {
     net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency playsRole courseEquivalencies {
         multiplicity *;
@@ -3031,12 +2959,6 @@ relation DegreeCurricularPlanCurricularCourse {
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
 }
 
-relation DegreeCurricularPlanMembersGroup {
-	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlan;
-	net.sourceforge.fenixedu.domain.DegreeCurricularPlanMembersGroup playsRole curricularPlanMembersGroup;
-}
-
-
 relation DegreeDegreeCurricularPlan {
 	net.sourceforge.fenixedu.domain.DegreeCurricularPlan playsRole degreeCurricularPlans {
 		multiplicity *;
@@ -3100,11 +3022,6 @@ relation CompetenceCourseUnit {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole unit;
-}
-
-relation DepartmentCompetenceCourseMembersGroup {
-	net.sourceforge.fenixedu.domain.Department playsRole department;
-	net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup playsRole competenceCourseMembersGroup;
 }
 
 relation DislocatedStudentCountry {
@@ -3788,50 +3705,7 @@ relation GratuityValuesExecutionDegree {
 	net.sourceforge.fenixedu.domain.GratuityValues playsRole gratuityValues;
 	net.sourceforge.fenixedu.domain.ExecutionDegree playsRole executionDegree;
 }
-
-relation GroupComposition {
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole parts
-	{
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.accessControl.NodeGroup playsRole aggregators
-	{
-	   multiplicity *;
-	}
- }
  
- relation GroupMailingList {
-   net.sourceforge.fenixedu.domain.cms.messaging.MailingList playsRole mailingList;
-   net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole groups
-   {
-      multiplicity *;
-   }
- }
-   
-relation ExecutionCourseUserGroupHook {
- 	net.sourceforge.fenixedu.domain.ExecutionCourse playsRole executionCourse;
- 	net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup playsRole hookedGroups
- 	{
- 		multiplicity *;
- 	}
-}
-
-relation RoleUserGroupHook {
- 	net.sourceforge.fenixedu.domain.Role playsRole role;
- 	net.sourceforge.fenixedu.domain.accessControl.RoleGroup playsRole hookedGroups
- 	{
- 		multiplicity *;
- 	}
-}
-
-relation PersonUserGroupHook{
- 	net.sourceforge.fenixedu.domain.Person playsRole person;
- 	net.sourceforge.fenixedu.domain.accessControl.PersonGroup playsRole hookedGroups
- 	{
- 		multiplicity *;
- 	}
-}
-
 relation GroupProposal {
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal playsRole proposalAttributed;
 	net.sourceforge.fenixedu.domain.finalDegreeWork.Group playsRole groupAttributed;
@@ -5247,27 +5121,7 @@ relation TeacherPersonalExpectationExecutionYear {
  		multiplicity *;
  	}
  }
- 
- relation GroupOwnership {
- 	net.sourceforge.fenixedu.domain.Person playsRole owners
- 	{
- 		multiplicity *;
- 	}
- 	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole ownedGroups
- 	{
- 		multiplicity *;
- 	}
- } 
- 
-relation GroupCreation
-{
-	net.sourceforge.fenixedu.domain.Person playsRole creator;
-	net.sourceforge.fenixedu.domain.accessControl.UserGroup playsRole createdGroups
-	{
-		multiplicity *;
-	}
-}
- 
+
 relation ContentCreation
 {
 	net.sourceforge.fenixedu.domain.Person playsRole creator;

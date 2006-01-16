@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.accessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.Content;
 
 /**
@@ -47,7 +47,7 @@ public class AccessControl
 		AccessControl.userView.set(userView);
 	}
 
-	public static void check(DomainObject c, UserGroup group)
+	public static void check(DomainObject c, Group group)
 	{
 		Person requester = AccessControl.getUserView().getPerson();
 		boolean result = false;

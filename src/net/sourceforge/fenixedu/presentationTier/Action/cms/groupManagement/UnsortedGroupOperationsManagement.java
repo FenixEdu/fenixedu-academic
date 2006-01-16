@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -58,25 +58,26 @@ public class UnsortedGroupOperationsManagement extends FenixDispatchAction
 		Integer[] groupIds = (Integer[]) addGroupForm.get("selectedGroups");
 		String userGroupTypeString = (String) addGroupForm.get("userGroupType");
 		UserGroupTypes userGroupType = UserGroupTypes.valueOf(userGroupTypeString);
-		Collection<UserGroup> groups = new HashSet<UserGroup>();
-		UserGroup group=null;
-		for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
-		{
-			UserGroup currentGroup = iter.next();
-			for (int i = 0; i < groupIds.length; i++)
-			{
-				if (currentGroup.getIdInternal().equals(groupIds[i]))
-				{
-					groups.add(currentGroup);
-				}
-			}
-		}			
+		Collection<Group> groups = new HashSet<Group>();
+		Group group=null;
+// FIXME: needs to be implemented in a different way
+//		for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+//		{
+//			UserGroup currentGroup = iter.next();
+//			for (int i = 0; i < groupIds.length; i++)
+//			{
+//				if (currentGroup.getIdInternal().equals(groupIds[i]))
+//				{
+//					groups.add(currentGroup);
+//				}
+//			}
+//		}			
 	
 		try
 		{
 			Object writeArgs[] =
 			{ groups, name, description, person, userGroupType };
-			group = (UserGroup) ServiceUtils.executeService(userView, "WriteGroupAggregator", writeArgs);
+			group = (Group) ServiceUtils.executeService(userView, "WriteGroupAggregator", writeArgs);
 		}
 		catch (FenixServiceException e)
 		{

@@ -9,7 +9,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import relations.CmsContents;
 import relations.CmsUsers;
 import relations.ContentCreation;
-import relations.GroupMailingList;
 import relations.MailingListAlias;
 import relations.MailingListQueue;
 
@@ -30,7 +29,7 @@ import relations.MailingListQueue;
 public class WriteMailingList extends CmsService
 {
 	public MailingList run(String name, String description, String address,
-			Collection<String> aliasAdresses, Collection<UserGroup> mailingListGroups,
+			Collection<String> aliasAdresses, Group mailingListGroup,
 			boolean membersOnly, boolean replyToList, Person owner) throws FenixServiceException,
 			ExcepcaoPersistencia
 	{
@@ -60,10 +59,8 @@ public class WriteMailingList extends CmsService
 		{
 			MailingListAlias.add(mailingList, alias);
 		}
-		for (UserGroup group : mailingListGroups)
-		{
-			GroupMailingList.add(mailingList, group);
-		}
+        
+        mailingList.setGroup(mailingListGroup);
 
 		this.updateRootObjectReferences(mailingList);
 		return mailingList;

@@ -9052,35 +9052,6 @@
 		<description/>
 		<isTransactional>true</isTransactional>
 	</service>
-    	<service>
-		<name>WriteExecutionCourseUserGroup</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.WriteExecutionCourseUserGroup
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains/>
-	</service>
-   	<service>
-		<name>DeleteUserGroup</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.DeleteUserGroup
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains>
-			<chain name="DeleteUserGroupPreFilterChain" />
-		</filterChains>				
-	</service>
-    <service>
-		<name>WriteGroupAggregator</name>
-		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.groupManagement.WriteGroupAggregator
-		</implementationClass>
-		<description/>
-		<isTransactional>true</isTransactional>
-		<filterChains/>
-	</service>
     <!-- ======================================  -->  
  <!-- =========by gedl 15-11-2005============  -->
     <service>
@@ -9282,15 +9253,6 @@
         </filterChains>     
     </service>
     <service>
-    	<name>CreateCourseGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.CreateCourseGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
-        </filterChains>     
-    </service>
-    <service>
     	<name>EditCourseGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup</implementationClass>
         <description></description>
@@ -9308,40 +9270,6 @@
         	<chain name="BolonhaManagerAuthorization"></chain>
         </filterChains>     
     </service>
-    <service>
-    	<name>CreateCompetenceCourseMembersGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.CreateCompetenceCourseMembersGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
-        </filterChains>     
-    </service>        
-    <service>
-    	<name>CreateCurricularPlanMembersGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.CreateCurricularPlanMembersGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        </filterChains>     
-    </service>                
-    <service>
-    	<name>UpdateCompetenceCourseMembersGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.UpdateMembersGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
-        </filterChains>     
-    </service>       
-    <service>
-    	<name>UpdateCurricularPlanMembersGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.UpdateMembersGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        </filterChains>     
-    </service>           
     <service>
     <name>ComputeCompetenceCourseStatistics</name>
         <implementationClass> net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>

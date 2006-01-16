@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -62,6 +62,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         return employees.size();
     }
 
+    // TODO: check this with Luís Egídio
     public List<SelectItem> getSelectedDepartmentEmployeesSelectItems() throws FenixFilterException,
             FenixServiceException {
 
@@ -70,9 +71,9 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         CompetenceCourseMembersGroup competenceCourseMembersGroup = getDepartment()
                 .getCompetenceCourseMembersGroup();
         if (competenceCourseMembersGroup != null) {
-            for (UserGroup member : competenceCourseMembersGroup.getParts()) {
+            for (Group member : competenceCourseMembersGroup.getChildren()) {
                 Person person = ((PersonGroup) member).getPerson();
-                result.add(new SelectItem(member.getIdInternal(), person.getNome() + " ("
+                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
                         + person.getUsername() + ")"));
             }
         }
@@ -109,6 +110,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         if (selectedPersonsIDsToAdd != null) {
             Object[] args = { competenceCourseMembersGroup, selectedPersonsIDsToAdd, null,
                     RoleType.BOLONHA_MANAGER };
+            // TODO: check this with Luís Egídio
             ServiceUtils.executeService(getUserView(), "UpdateCompetenceCourseMembersGroup", args);
         }
     }
@@ -118,6 +120,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         if (selectedPersonGroupsIDsToRemove != null) {
             Object[] args = { getDepartment().getCompetenceCourseMembersGroup(), null,
                     selectedPersonGroupsIDsToRemove, RoleType.BOLONHA_MANAGER };
+            // TODO: check this with Luís Egídio
             ServiceUtils.executeService(getUserView(), "UpdateCompetenceCourseMembersGroup", args);
         }
     }

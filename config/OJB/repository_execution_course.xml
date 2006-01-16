@@ -227,10 +227,4 @@
 		<fk-pointing-to-this-class column="KEY_EXECUTION_COURSE"/>
 		<fk-pointing-to-element-class column="KEY_EVALUATION"/>
 	</collection-descriptor>
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
-		name="hookedGroups" 
-		element-class-ref="net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseUserGroup"
-		>
-		<inverse-foreignkey field-ref="keyExecutionCourse"/>
-	</collection-descriptor>	
 </class-descriptor>

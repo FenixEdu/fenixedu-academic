@@ -62,12 +62,6 @@
 		>
 		<inverse-foreignkey field-ref="keyRole"/>
 	</collection-descriptor> 
-	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
-		name="hookedGroups"
-		element-class-ref="net.sourceforge.fenixedu.domain.accessControl.RoleGroup"
-		>
-		<inverse-foreignkey field-ref="keyRole"/>
-	</collection-descriptor>
 </class-descriptor>
 
 

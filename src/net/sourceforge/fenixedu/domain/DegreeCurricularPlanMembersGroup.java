@@ -1,38 +1,41 @@
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 
-public class DegreeCurricularPlanMembersGroup extends DegreeCurricularPlanMembersGroup_Base {
+public class DegreeCurricularPlanMembersGroup extends GroupUnion {
 
-    public DegreeCurricularPlanMembersGroup() {
+    private DomainReference<DegreeCurricularPlan> curricularPlan;
+
+    public DegreeCurricularPlanMembersGroup(DegreeCurricularPlan degreeCurricularPlan) {
         super();
+        
+        curricularPlan = new DomainReference<DegreeCurricularPlan>(degreeCurricularPlan);
     }
 
-    public DegreeCurricularPlanMembersGroup(Person creator, DegreeCurricularPlan degreeCurricularPlan) {
-        super();
-        setCreator(creator);
-        setDegreeCurricularPlan(degreeCurricularPlan);
+    public DegreeCurricularPlan getCurricularPlan() {
+        return this.curricularPlan.getObject();
     }
-
-    @Override
-    public void delete() {
-        for (UserGroup part : this.getParts()) {
-            this.removePart(part);            
-            
-            Person person = ((PersonGroup) part).getPerson();
-            if (person.hasRole(RoleType.BOLONHA_MANAGER)) {
-                if (!person.belongsToOtherGroupsWithSameRole(this)) {
-                    person.removeRoleByType(RoleType.BOLONHA_MANAGER);
-                }
-            }
-            
-            if (!part.hasAnyAggregators()) {
-                part.delete();
-            }
-        }
-        super.deleteDomainObject();
-    }
+    
+    /**
+     * FIXME: check this with Luís Egídio
+     */
+//    @Override
+//    public void delete() {
+//        for (UserGroup part : this.getParts()) {
+//            this.removePart(part);            
+//            
+//            Person person = ((PersonGroup) part).getPerson();
+//            if (person.hasRole(RoleType.BOLONHA_MANAGER)) {
+//                if (!person.belongsToOtherGroupsWithSameRole(this)) {
+//                    person.removeRoleByType(RoleType.BOLONHA_MANAGER);
+//                }
+//            }
+//            
+//            if (!part.hasAnyAggregators()) {
+//                part.delete();
+//            }
+//        }
+//        super.deleteDomainObject();
+//    }
 
 }

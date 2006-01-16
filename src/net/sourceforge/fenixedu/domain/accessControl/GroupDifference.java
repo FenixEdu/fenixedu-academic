@@ -4,10 +4,13 @@ import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.NotImplementedException;
 import net.sourceforge.fenixedu.domain.Person;
-public class GroupDifference extends GroupDifference_Base {
+
+public class GroupDifference extends NodeGroup {
     
-    public GroupDifference() {
-        super();
+    private static final long serialVersionUID = 1L;
+
+    public GroupDifference(Group ... groups) {
+        super(groups);
     }
 
 	@Override
@@ -21,11 +24,4 @@ public class GroupDifference extends GroupDifference_Base {
 	{
 		throw new NotImplementedException();
 	}
-	
-	@Override
-	public void delete()
-	{
-		throw new NotImplementedException();
-	}
-    
 }

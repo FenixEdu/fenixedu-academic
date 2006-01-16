@@ -52,7 +52,9 @@ public enum UserGroupTypes
 	{
 		public Class getImplementationClass()
 		{
-			return PersonGroup.class;
+			//return PersonGroup.class;
+            // FIXME: implement PersonGroup?
+            return null;
 		}
 	},
 	ROLE_GROUP

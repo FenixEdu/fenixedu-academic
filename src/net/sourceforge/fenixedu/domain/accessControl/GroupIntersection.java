@@ -6,26 +6,27 @@ import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.UniqueFilterIterator;
-public class GroupIntersection extends GroupIntersection_Base {
-    	
-    public GroupIntersection() {
-        super();
+
+public class GroupIntersection extends NodeGroup {
+
+    private static final long serialVersionUID = 1L;
+
+    public GroupIntersection(Group ... groups) {
+        super(groups);
     }
 
-	@Override
-	public Iterator<Person> getElementsIterator()
-	{
-		IteratorChain iteratorChain = new IteratorChain();
-		
-		for (UserGroup part : this.getParts())
-		{	
-			iteratorChain.addIterator(part.getElementsIterator());
-		}
-		
-		Iterator<Person> uniqueFilterIterator = new UniqueFilterIterator(iteratorChain);
-		
-		return uniqueFilterIterator;
-		
-	}
-    
+    @Override
+    public Iterator<Person> getElementsIterator() {
+        IteratorChain iteratorChain = new IteratorChain();
+
+        for (Group part : this.getChildren()) {
+            iteratorChain.addIterator(part.getElementsIterator());
+        }
+
+        Iterator<Person> uniqueFilterIterator = new UniqueFilterIterator(iteratorChain);
+
+        return uniqueFilterIterator;
+
+    }
+
 }
