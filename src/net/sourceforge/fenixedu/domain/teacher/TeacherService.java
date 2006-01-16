@@ -150,13 +150,13 @@ public class TeacherService extends TeacherService_Base {
     }
 
     public DegreeTeachingService getDegreeTeachingServiceByShiftAndExecutionCourse(final Shift shift,
-            final ExecutionCourse executionCourse) {
+            final Professorship professorship) {
         return (DegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
                 new Predicate() {
                     public boolean evaluate(Object arg0) {
                         DegreeTeachingService degreeTeachingService = (DegreeTeachingService) arg0;
                         return (degreeTeachingService.getShift() == shift)
-                                && (degreeTeachingService.getProfessorship().getExecutionCourse() == executionCourse);
+                                && (degreeTeachingService.getProfessorship() == professorship);
                     }
                 });
     }
