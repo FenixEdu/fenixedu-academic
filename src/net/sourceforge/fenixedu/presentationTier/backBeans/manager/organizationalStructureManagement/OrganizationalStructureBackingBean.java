@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -191,8 +192,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits,
-            Date currentDate, boolean active) {
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits, Date currentDate,
+            boolean active) {
         buffer.append("<ul>");
         getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
@@ -302,11 +303,23 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         for (Degree degree : allDegrees) {
             selectItem = new SelectItem();
-            if (degree.getTipoCurso().equals(DegreeType.DEGREE)) {
-                selectItem.setLabel("(L) " + degree.getNome());
-            } else if (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
-                selectItem.setLabel("(M) " + degree.getNome());
+            if (degree.getTipoCurso() != null) {
+                if (degree.getTipoCurso().equals(DegreeType.DEGREE)) {
+                    selectItem.setLabel("(L) " + degree.getNome());
+                } else if (degree.getTipoCurso().equals(DegreeType.MASTER_DEGREE)) {
+                    selectItem.setLabel("(M) " + degree.getNome());
+                }
+            } else if (degree.getBolonhaDegreeType() != null) {
+                if (degree.getBolonhaDegreeType().equals(BolonhaDegreeType.DEGREE)) {
+                    selectItem.setLabel("(L) " + degree.getNome());
+                } else if (degree.getBolonhaDegreeType().equals(BolonhaDegreeType.MASTER_DEGREE)) {
+                    selectItem.setLabel("(M) " + degree.getNome());
+                } else if (degree.getBolonhaDegreeType().equals(
+                        BolonhaDegreeType.INTEGRATED_MASTER_DEGREE)) {
+                    selectItem.setLabel("(MI) " + degree.getNome());
+                }
             }
+
             selectItem.setValue(degree.getIdInternal().toString());
             list.add(selectItem);
         }
