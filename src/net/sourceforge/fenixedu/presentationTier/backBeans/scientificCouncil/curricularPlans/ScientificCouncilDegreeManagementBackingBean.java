@@ -108,9 +108,9 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
         List<SelectItem> result = new ArrayList<SelectItem>();
         
         result.add(new SelectItem(this.NO_SELECTION, scouncilBundle.getString("choose")));
-        result.add(new SelectItem(BolonhaDegreeType.DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.DEGREE.getName()) + " (3 anos)"));
-        result.add(new SelectItem(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.getName())  + " (5 anos)"));
-        result.add(new SelectItem(BolonhaDegreeType.MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.MASTER_DEGREE.getName())  + " (2 anos)"));
+        result.add(new SelectItem(BolonhaDegreeType.DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.DEGREE.getName()) + " (" + BolonhaDegreeType.DEGREE.getYears() + " anos)"));
+        result.add(new SelectItem(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.getName())  + " (" + BolonhaDegreeType.INTEGRATED_MASTER_DEGREE.getYears() + " anos)"));
+        result.add(new SelectItem(BolonhaDegreeType.MASTER_DEGREE.name(), enumerationBundle.getString(BolonhaDegreeType.MASTER_DEGREE.getName())  + " (" + BolonhaDegreeType.MASTER_DEGREE.getYears() + " anos)"));
         
         return result;
     }

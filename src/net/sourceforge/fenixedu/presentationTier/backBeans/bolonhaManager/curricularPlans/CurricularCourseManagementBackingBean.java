@@ -145,10 +145,11 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return (curricularCourses == null) ? (curricularCourses = readCurricularCourses()) : curricularCourses;
     }
 
-    public List<SelectItem> getCurricularYears() {
-        final List<SelectItem> result = new ArrayList<SelectItem>(5);
+    public List<SelectItem> getCurricularYears() throws FenixFilterException, FenixServiceException {
+        final int years = getDegreeCurricularPlan().getDegree().getBolonhaDegreeType().getYears();
+        final List<SelectItem> result = new ArrayList<SelectItem>(years);
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= years; i++) {
             result.add(new SelectItem(Integer.valueOf(i), String.valueOf(i) + "º"));
         }
         return result;
