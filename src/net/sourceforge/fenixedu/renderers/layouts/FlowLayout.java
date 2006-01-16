@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers.layouts;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 
 public abstract class FlowLayout extends Layout {
@@ -66,7 +67,7 @@ public abstract class FlowLayout extends Layout {
 
         while (hasMoreComponents()) {
             HtmlComponent component = getNextComponent();
-            
+
             addComponent(container, component);
         }
 
@@ -81,7 +82,9 @@ public abstract class FlowLayout extends Layout {
 
     protected abstract HtmlComponent getNextComponent();
 
-    protected abstract void addComponent(HtmlComponent container, HtmlComponent component);
+    protected void addComponent(HtmlComponent component, HtmlComponent child) {
+        ((HtmlContainer) component).addChild(child);
+    }
 
     @Override
     public void applyStyle(HtmlComponent component) {

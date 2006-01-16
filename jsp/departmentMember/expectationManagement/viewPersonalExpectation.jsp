@@ -13,7 +13,7 @@
 			.header {
 			background-color: #eee;
 			padding: 0.5em;
-			font-size: 1.1em;
+			font-size: 1.4em;
 			}
 			.block {
 			padding: 0 0.5em;
@@ -26,14 +26,15 @@
 			
 			}
 		</style>
+		
 	</f:verbatim>
 		
-	<h:outputText value="<h2>#{bundle['label.personalExpectationsManagement.title']}</h2>" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
+	<h:outputText value="<h2 class=\"invisible\">#{bundle['label.personalExpectationsManagement.title']}</h2>" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 
 	<h:form>
 		<fc:viewState binding="#{teacherExpectationManagement.viewState}"/>
 
-		<h:panelGroup rendered="#{!(empty teacherExpectationManagement.executionYears)}">
+		<h:panelGroup styleClass="invisible" rendered="#{!(empty teacherExpectationManagement.executionYears)}">
 			<h:panelGrid columns="2">
 				<h:outputText value="#{bundle['label.common.executionYear']}:" />
 				<fc:selectOneMenu id="dropDownListExecutionYearID" value="#{teacherExpectationManagement.selectedExecutionYearID}" onchange="this.form.submit();" valueChangeListener="#{teacherExpectationManagement.onExecutionYearChanged}">

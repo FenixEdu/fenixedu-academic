@@ -1,0 +1,68 @@
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+
+<style>
+	.header {
+	background-color: #eee;
+	padding: 0.5em;
+	font-size: 1.4em;
+	}
+	.block {
+	padding: 0 0.5em;
+	}
+	.indent {
+	padding: 0 2em;
+	}
+	.limbottom li {
+	padding-bottom: 8px;			
+	
+	}
+</style>
+
+<html:form
+	action="/viewDepartmentTeachersExpectations.do">
+	<input type="hidden" name="method" value="changeExecutionYear"/>
+	<logic:notEmpty name="executionYears" scope="request">
+		<table class="showinfo2 invisible">
+			<tr>
+				<td class="aright"><bean:message key="label.common.chooseExecutionYear" />:</td>
+				<td><html:select property="executionYearID"
+					onchange="this.form.method.value='changeExecutionYear';this.form.submit();">
+					<html:options collection="executionYears" property="value"
+						labelProperty="label" />
+				</html:select></td>
+			</tr>
+			<tr>
+				<td class="aright"><bean:message
+					key="label.viewDepartmentTeachersExpectations.chooseTeacher" />:</td>
+				<td><html:select property="teacherID" onchange="this.form.method.value='changeTeacher';this.form.submit();">
+					<html:option value="-1" key="label.common.allTeachers" />
+					<html:options collection="departmentTeachers" property="value"
+						labelProperty="label" />
+				</html:select></td>
+			</tr>
+		</table>
+		<br/>
+		<logic:notEmpty name="teacherPersonalExpectations" scope="request">
+			<fr:view name="teacherPersonalExpectations" scope="request">
+	  			<fr:layout name="flowLayout">
+					<fr:property name="eachLayout" value="nestedTemplateLayout" />
+					<fr:property name="htmlSeparator" value="<br/><br/><hr/><br/>"/>
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+		<logic:empty name="teacherPersonalExpectations" scope="request">
+			<span class="error"><bean:message key="label.viewDepartmentTeachersExpectations.noTeacherExpectationsMatchingCriteriaFound"/></span>
+		</logic:empty>
+	</logic:notEmpty>
+	<logic:empty name="executionYears" scope="request">
+		<span class="error"><bean:message key="label.common.noExecutionsYearsDefined"/></span>
+	</logic:empty>
+</html:form>
+
+
+
+

@@ -50,7 +50,7 @@ public class FenixViewObjectTag extends ViewObjectTag {
                 Class type = Class.forName(getType());
                 Object[] args = { type, Integer.valueOf(getOid())};
 
-                return ServiceUtils.executeService(userView, "ReadDomainObjec", args);
+                return ServiceUtils.executeService(userView, "ReadDomainObject", args);
             } catch (Exception e) {
                 throw new JspException(e);
             } 

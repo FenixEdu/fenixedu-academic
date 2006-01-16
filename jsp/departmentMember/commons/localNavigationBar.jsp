@@ -25,7 +25,12 @@
 			<html:link page="/expectationManagement/viewPersonalExpectation.faces">
 				<bean:message key="link.personalExpectationsManagement"/>
 			</html:link>
-		</li>		
+		</li>
+  		<li>
+		  	<html:link page="/viewDepartmentTeachersExpectations.do?method=prepare">
+		  		<bean:message key="link.departmentTeachersExpectations"/>
+		  	</html:link>  
+		</li> 				
 		</logic:equal>
 		<li>
 			<html:link page="/viewTeacherService/viewTeacherService.faces">
@@ -37,7 +42,7 @@
 		  	<html:link page="/showAllTeacherCreditsResume.do">
 		  		<bean:message key="link.teacher.credits"/>
 		  	</html:link>  
-		</li> 		
+		</li>
 	</ul>
 	
 	<br />

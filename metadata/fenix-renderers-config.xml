@@ -66,10 +66,17 @@
         <property name="subSchema" value="DomainObject.oid"/>
         <property name="destinyLayout" value="tabular"/>
     </renderer>
-  
+    
+    <renderer layout="nestedTemplateLayout" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.TemplateRenderer">
+        <property name="template" value="/departmentMember/viewDepartmentTeachersExpectations/renderers/layouts/showPersonalExpectationTemplate.jsp"/>
+    </renderer>
+    
+ 
     <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
     <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.renderers.CollectionRenderer"/>
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
+    <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowRenderer" />
+    
 
     <!-- input -->
   

@@ -20,6 +20,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 
 public class Department extends Department_Base {
@@ -192,7 +193,7 @@ public class Department extends Department_Base {
         }
         return competenceCoursesByExecutionYear;
     }
-
+    
     public CompetenceCourseMembersGroup getCompetenceCourseMembersGroup() {
         return this.competenceCourseMembersGroup;
     }
@@ -200,5 +201,24 @@ public class Department extends Department_Base {
     public void setCompetenceCourseMembersGroup(CompetenceCourseMembersGroup competenceCourseMembersGroup) {
         this.competenceCourseMembersGroup = competenceCourseMembersGroup;
     }
-    
+
+    public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(
+            ExecutionYear executionYear) {
+        List<Teacher> teachersFromDepartment = getTeachers(executionYear.getBeginDate(), executionYear
+                .getEndDate());
+        List<TeacherPersonalExpectation> personalExpectations = new ArrayList<TeacherPersonalExpectation>();
+
+        for (Teacher teacher : teachersFromDepartment) {
+            TeacherPersonalExpectation teacherPersonalExpectation = teacher
+                    .getTeacherPersonalExpectationByExecutionYear(executionYear);
+
+            if (teacherPersonalExpectation != null) {
+                personalExpectations.add(teacherPersonalExpectation);
+            }
+
+        }
+
+        return personalExpectations;
+    }
+
 }

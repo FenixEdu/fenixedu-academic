@@ -46,7 +46,7 @@ public class SimpleMetaSlot implements MetaSlot {
     }
 
     public String getLabel() {
-        return RenderUtils.getSlotLabel(getType(), getName(), getLabelKey());
+        return RenderUtils.getSlotLabel(getMetaObject().getType(), getName(), getLabelKey());
     }
 
     public void setLabelKey(String key) {

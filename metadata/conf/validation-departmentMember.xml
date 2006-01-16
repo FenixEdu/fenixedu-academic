@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Struts Validation Configuration 1.1//EN" "@validation.doctype.url@">
 <form-validation>
+	<formset>
+		<form name="viewDepartmentTeachersPersonalExpectationsForm">
+			<field property="executionYearID" depends="integer" page="1" >
+				<arg0 key="label.common.executionYear"/>
+			</field>
+		</form>    
+	</formset>
 </form-validation>
 

@@ -19,5 +19,6 @@
 	
 	<definition name="creditsResumeLine" page="/credits/commons/creditsResumeLine.jsp">
 		<put name="creditLineDTO"/>
-	</definition>	
+	</definition>
+
 </tiles-definitions>
