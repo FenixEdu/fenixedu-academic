@@ -420,20 +420,22 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public Integer getFinalGrade() {
-        
-        EnrolmentEvaluation enrolmentEvaluation = null;
-        
-        for (EnrolmentEvaluation evaluation : getEvaluations()) {
-            if(evaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ)){
-                if(enrolmentEvaluation == null || evaluation.compareTo(enrolmentEvaluation) > 0) {
-                    enrolmentEvaluation = evaluation;
-                }
-            }
-        }
-        
+        final EnrolmentEvaluation enrolmentEvaluation = getFinalEnrolmentEvaluation();        
         return (enrolmentEvaluation == null || !StringUtils.isNumeric(enrolmentEvaluation.getGrade())) ? null : Integer
                 .valueOf(enrolmentEvaluation.getGrade());
 
+    }
+
+    public EnrolmentEvaluation getFinalEnrolmentEvaluation() {
+        EnrolmentEvaluation finalEnrolmentEvaluation = null;
+        for (final EnrolmentEvaluation enrolmentEvaluation : getEvaluations()) {
+            if (enrolmentEvaluation.getEnrolmentEvaluationState().equals(EnrolmentEvaluationState.FINAL_OBJ)) {
+                if(finalEnrolmentEvaluation == null || enrolmentEvaluation.compareTo(finalEnrolmentEvaluation) > 0) {
+                    finalEnrolmentEvaluation = enrolmentEvaluation;
+                }
+            }
+        }
+        return finalEnrolmentEvaluation;
     }
 
     public Boolean isFirstTime() {
