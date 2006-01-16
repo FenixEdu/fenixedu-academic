@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 
 /**
@@ -33,7 +34,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
  * several groups, that is, implement the intersection or union of groups.
  * <p>
  * Groups are considered a value type. Because of this no group should provide a mutator (or setter). All
- * the required information is passed to the group in the consruction. New groups are formed though the
+ * the required information is passed to the group in the construction. New groups are formed though the
  * composition of existing groups in a
  * {@link net.sourceforge.fenixedu.domain.accessControl.NodeGroup NodeGroup}. 
  * <p>
@@ -88,7 +89,7 @@ public abstract class Group implements Serializable {
             }
 
             if (this.object == null) {
-                throw new RuntimeException("Reference to unexisting domain object "
+                throw new DomainException("Reference to unexisting domain object "
                         + getType().getName() + "/" + getOid());
             }
 
