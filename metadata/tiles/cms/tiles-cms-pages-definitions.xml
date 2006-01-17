@@ -7,32 +7,32 @@
     </definition>
     
     	<!-- ================= by gedl 21-9-2005 =========== -->
-	<definition name="showPersonUserGroups" extends="cms.masterPage" >
-		<put name="body" value="/cms/groupManagement/showPersonUserGroups.jsp" />
+	<definition name="showPersonalGroups" extends="cms.masterPage" >
+		<put name="body" value="/cms/groupManagement/showPersonalGroups.jsp" />
 	</definition>
 	<!-- =============================================== -->	
 	<!-- ================= by gedl 23-9-2005 =========== -->
 	<definition name="showInitialUserGroupOptions" extends="cms.masterPage" >
-		<put name="body" value="/cms/groupManagement/showInitialUserGroupOptions.jsp" />
+		<put name="body" value="/cms/groupManagement/showInitialGroupOptions.jsp" />
 	</definition>	
 		<!-- =============================================== -->	
 	
 		<!-- ================= by gedl 26-9-2005 =========== -->
 	<definition name="showStudentsInExecutionCourse" extends="cms.masterPage" >
 		<put name="body" value="/cms/groupManagement/showStudentsInExecutionCourse.jsp" />
-	</definition>	
-	<definition name="showExecutionCourseUserGroupOptions" extends="cms.masterPage" >
+	</definition>
+    <definition name="showExecutionCourseUserGroupOptions" extends="cms.masterPage" >
 		<put name="body" value="/cms/groupManagement/showExecutionCourseUserGroupOptions.jsp" />
 	</definition>		
 	<!-- =============================================== -->	
 	
 	<!-- ================= by gedl 29-9-2005 =========== -->
 	<definition name="addGroup" extends="cms.masterPage" >
-		<put name="body" value="/cms/groupManagement/addUserGroup.jsp" />
-	</definition>	
+		<put name="body" value="/cms/groupManagement/addGroup.jsp" />
+	</definition>
 	<definition name="showTeachersInExecutionCourse" extends="cms.masterPage" >
 		<put name="body" value="/cms/groupManagement/showTeachersInExecutionCourse.jsp" />
-	</definition>		
+	</definition>	
 	<!-- =============================================== -->	
 
 	<!-- ================= by gedl 3-10-2005 =========== -->

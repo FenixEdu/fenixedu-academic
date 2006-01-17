@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.iterators.TransformIterator;
 
-public class ExecutionCourseTeachersGroup extends ExecutionCourseUserGroup {
+public class ExecutionCourseTeachersGroup extends ExecutionCourseGroup {
 
     private static final long serialVersionUID = 1L;
 

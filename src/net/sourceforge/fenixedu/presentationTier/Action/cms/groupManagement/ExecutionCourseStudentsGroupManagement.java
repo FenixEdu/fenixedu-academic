@@ -1,10 +1,4 @@
-/**
- * 
- */
-
-
 package net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement;
-
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,20 +25,24 @@ import org.apache.struts.action.ActionMapping;
  *         <br/> Created on 12:49:20,26/Set/2005
  * @version $Id$
  */
-public class ExecutionCourseStudentsGroupManagement extends ExecutionCourseUserGroupManagement
+public class ExecutionCourseStudentsGroupManagement extends ExecutionCoursePersonalGroupManagement
 {
 	public ActionForward viewExecutionCourseGroupElements(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 			FenixFilterException, FenixServiceException
 	{
 		IUserView userView = SessionUtils.getUserView(request);
+        
 		Collection<Person> students = new ArrayList<Person>();
 		Integer executionCourseID = new Integer((String) request.getParameter("executionCourseID"));
+        
 		ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadDomainExecutionCourseByID", new Object[]
 		{ executionCourseID });
 
-		for (Attends attend : executionCourse.getAttends())
+		for (Attends attend : executionCourse.getAttends()) {
 			students.add(attend.getAluno().getPerson());
+        }
+        
 		request.setAttribute("elements", students);
 		return mapping.findForward("showStudents");
 	}

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,12 +13,25 @@ public abstract class NodeGroup extends Group {
     
     private List<Group> children;
     
-    public NodeGroup(Group ... groups) {
+    protected NodeGroup() {
         super();
         
         this.children = new ArrayList<Group>();
-        for (int i = 0; i < groups.length; i++) {
-            this.children.add(groups[i]);
+    }
+    
+    public NodeGroup(Group ... groups) {
+        this();
+        
+        for (Group group : groups) {
+            this.children.add(group);
+        }
+    }
+    
+    public NodeGroup(Collection<Group> groups) {
+        this();
+        
+        for (Group group : groups) {
+            this.children.add(group);
         }
     }
     

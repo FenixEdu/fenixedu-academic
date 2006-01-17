@@ -9486,7 +9486,7 @@
         	<chain name="PersonAuthorization"></chain>
         </filterChains>     
     </service>
-    <service>
+	<service>
    	 	<name>SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID</implementationClass>
         <description></description>
@@ -9494,5 +9494,19 @@
         <filterChains>
         	<chain name="PersonAuthorization"></chain>
         </filterChains>     
-    </service>	
-</serviceDefinitions>    
+    </service>
+	<service>
+        <name>CreatePersonalGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.groups.CreatePersonalGroup</implementationClass>
+        <description>Creates a new PersonalGroup associated with a person</description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>     
+    </service>
+    <service>
+        <name>DeletePersonalGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.groups.DeletePersonalGroup</implementationClass>
+        <description>Deletes an existing PersonalGroup associated with a person</description>
+        <isTransactional>true</isTransactional>  
+        <filterChains/>     
+    </service>
+</serviceDefinitions>

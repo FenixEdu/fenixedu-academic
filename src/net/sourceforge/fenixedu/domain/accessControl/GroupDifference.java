@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import net.sourceforge.fenixedu.domain.NotImplementedException;
@@ -13,7 +14,11 @@ public final class GroupDifference extends NodeGroup {
         super(groups);
     }
 
-	@Override
+	public GroupDifference(Collection<Group> groups) {
+        super(groups);
+    }
+
+    @Override
 	public int getElementsCount()
 	{
 		throw new NotImplementedException();

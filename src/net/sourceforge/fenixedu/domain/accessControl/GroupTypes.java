@@ -11,7 +11,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
  *         <br/> Created on 0:35:00,22/Set/2005
  * @version $Id$
  */
-public enum UserGroupTypes
+public enum GroupTypes
 {
 	UNION_GROUP
 	{
@@ -52,9 +52,7 @@ public enum UserGroupTypes
 	{
 		public Class getImplementationClass()
 		{
-			//return PersonGroup.class;
-            // FIXME: implement PersonGroup?
-            return null;
+            return PersonGroup.class;
 		}
 	},
 	ROLE_GROUP
@@ -74,10 +72,10 @@ public enum UserGroupTypes
 	;
 	abstract public Class getImplementationClass();
 
-	public static UserGroupTypes userGroupTypeByClass(Class clazz) throws InvalidUserGroupTypeException
+	public static GroupTypes userGroupTypeByClass(Class clazz) throws InvalidUserGroupTypeException
 	{
-		UserGroupTypes result = null;
-		UserGroupTypes[] types = UserGroupTypes.values();
+		GroupTypes result = null;
+		GroupTypes[] types = GroupTypes.values();
 		for (int i = 0; i < types.length; i++)
 		{
 			if (types[i].getImplementationClass().equals(clazz)) result = types[i];

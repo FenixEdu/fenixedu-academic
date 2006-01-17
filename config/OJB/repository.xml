@@ -75,6 +75,7 @@
 <!ENTITY degreeStructure SYSTEM "repository_degree_structure.xml">
 <!ENTITY teacherLegalRegimen SYSTEM "repository_teacher_legal_regimen.xml">
 <!ENTITY curricularPeriod SYSTEM "repository_curricularPeriod.xml">
+<!ENTITY groups SYSTEM "repository_groups.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -154,5 +155,6 @@
 	&degreeStructure;
 	&teacherLegalRegimen;
 	&curricularPeriod;
+    &groups;
 	
 </descriptor-repository>

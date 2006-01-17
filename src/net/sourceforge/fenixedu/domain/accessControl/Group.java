@@ -117,7 +117,7 @@ public abstract class Group implements Serializable {
 
     private Date creationDate;
 
-    public Group() {
+    protected Group() {
         super();
 
         this.creationDate = new Date();

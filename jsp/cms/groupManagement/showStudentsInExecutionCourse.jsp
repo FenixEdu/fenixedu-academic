@@ -6,7 +6,7 @@
 <%@ page import="java.util.TreeMap" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.TreeSet" %>
-<%@ page import="net.sourceforge.fenixedu.domain.IStudent" %>
+<%@ page import="net.sourceforge.fenixedu.domain.Student" %>
 
 <span class="error"><html:errors/></span>
 	<logic:present name="elements">
@@ -16,20 +16,17 @@
 		<table>
 			<tr>
 				<td class="listClasses-header">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.label.name"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
 				</td>
 				<td class="listClasses-header">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.label.number"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.number.label"/>
 				</td>
 				<td class="listClasses-header">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.label.email"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.email.label"/>
 				</td>
 			</tr>
-			<logic:iterate id="person" name="elements" type="net.sourceforge.fenixedu.domain.IPerson">
-			<%
-				Student student = (Student) person.getStudents().get(0);
-				request.setAttribute("student",student);
-			 %>
+			<logic:iterate id="person" name="elements" type="net.sourceforge.fenixedu.domain.Person">
+                <bean:define id="student" name="person" property="students[0]"/>
 				<tr>
 					<td class="listClasses">
 						<bean:write name="student" property="person.nome"/>

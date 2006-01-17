@@ -425,4 +425,9 @@
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
 	    <foreignkey field-ref="keyCms"/>
 	</reference-descriptor>
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+        name="personalGroups"
+        element-class-ref="net.sourceforge.fenixedu.domain.PersonalGroup">
+        <inverse-foreignkey field-ref="keyPerson"/>
+    </collection-descriptor>
 </class-descriptor>

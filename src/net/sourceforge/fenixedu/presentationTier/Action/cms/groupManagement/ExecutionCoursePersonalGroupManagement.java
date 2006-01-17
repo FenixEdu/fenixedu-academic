@@ -1,6 +1,3 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement;
 
 import java.util.Collections;
@@ -18,8 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.PersonalGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes;
+import net.sourceforge.fenixedu.domain.accessControl.GroupTypes;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -47,7 +47,7 @@ import org.apache.struts.util.MessageResources;
  * Created on 12:10:28,29/Set/2005
  * @version $Id$
  */
-public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAction
+public abstract class ExecutionCoursePersonalGroupManagement extends FenixDispatchAction
 {
 	public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
@@ -56,7 +56,7 @@ public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAc
 		IUserView userView = SessionUtils.getUserView(request);
 		DynaActionForm mailManagementForm = (DynaActionForm) actionForm;
 		String userGroupTypeString = (String) mailManagementForm.get("userGroupType");
-		UserGroupTypes userGroupType = UserGroupTypes.valueOf(userGroupTypeString);
+		GroupTypes userGroupType = GroupTypes.valueOf(userGroupTypeString);
 
 		List infoExecutionPeriods = null;
 
@@ -216,8 +216,9 @@ public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAc
 		Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
 		
 		request.setAttribute("targetAction",mapping.getPath());
+        request.setAttribute("viewAction",mapping.getPath());
 		request.setAttribute("courses", infoExecutionCourses);
-		request.setAttribute("viewAction",mapping.getPath());
+        
 		return prepareChooseExecDegreeAndCurYear(mapping, form, request, response);
 	}
 
@@ -233,27 +234,36 @@ public abstract class ExecutionCourseUserGroupManagement extends FenixDispatchAc
 		
 		String name = (String) addGroupForm.get("name");
 		String description = (String) addGroupForm.get("description");
+        
 		Integer executionCourseID = (Integer) addGroupForm.get("executionCourseID");
 		String userGroupTypeString = (String) addGroupForm.get("userGroupType");
-		UserGroupTypes userGroupType = UserGroupTypes.valueOf(userGroupTypeString);
-		Group group = null;
-		
-		try
-		{
-			Person person  = this.getLoggedPerson(request);
-			ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(userView,"ReadDomainExecutionCourseByID",new Object[] {executionCourseID});
-			Object writeArgs[] =
-			{ executionCourse,name,description,person, userGroupType};			
-			group = (Group) ServiceUtils.executeService(userView, "WriteExecutionCourseUserGroup", writeArgs);
-		}
-		catch (FenixServiceException e)
-		{
-			throw new FenixActionException(e);
-		}
+		GroupTypes userGroupType = GroupTypes.valueOf(userGroupTypeString);
+               
+        PersonalGroup personalGroup = null;
+        
+        try {
+            ExecutionCourse executionCourse = (ExecutionCourse) ServiceManagerServiceFactory.executeService(userView, "ReadDomainExecutionCourseByID", new Object[] {executionCourseID});
+
+            Group group = null;
+            if (userGroupType.equals(GroupTypes.EXECUTION_COURSE_TEACHERS_GROUP)) {
+                group = new ExecutionCourseTeachersGroup(executionCourse);
+            }
+            else if (userGroupType.equals(GroupTypes.EXECUTION_COURSE_STUDENTS_GROUP)) {
+                group = new ExecutionCourseStudentsGroup(executionCourse);
+            }
+
+            Person person = getLoggedPerson(request);
+            personalGroup = (PersonalGroup) ServiceManagerServiceFactory.executeService(userView, "CreatePersonalGroup", new Object[] { person, name, description, group });
+        } catch (FenixFilterException e) {
+            e.printStackTrace();
+        } catch (FenixServiceException e) {
+            e.printStackTrace();
+        }
 		
 		request.setAttribute("executionCourseID",executionCourseID);
 		request.setAttribute("viewAction",mapping.getPath());
-		request.setAttribute("group",group);		
+		request.setAttribute("group", personalGroup);		
+        
 		return mapping.findForward("addGroup");
 		
 	}

@@ -89,12 +89,12 @@
         </action>       
         <!--  ============= by gedl 24-9-2005  ================-->
 		<action path="/userGroupsManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.UserGroupsManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.PersonalGroupsManagement"
 			parameter="method"
 			scope="request"
 			name="userGroupForm"
 			>
-			<forward name="showPersonUserGroups" path="showPersonUserGroups"/>
+			<forward name="showPersonalGroups" path="showPersonalGroups"/>
 			<forward name="showInitialUserGroupOptions" path="showInitialUserGroupOptions"/>
 			<forward name="selectOptionsFor_EXECUTION_COURSE_STUDENTS_GROUP" path="/executionCourseStudentsGroupManagement.do?method=prepareChooseExecutionPeriod"/>
 			<forward name="selectOptionsFor_EXECUTION_COURSE_TEACHERS_GROUP" path="/executionCourseTeachersGroupManagement.do?method=prepareChooseExecutionPeriod"/>							
@@ -111,20 +111,12 @@
 			name="userGroupForm"
 			>
 			<forward name="selectOptionsFor_EXECUTION_COURSE_STUDENTS_GROUP" path="showExecutionCourseUserGroupOptions"/>			
-			<forward name="showStudents" path="showStudentsInExecutionCourse"/>	
+            <forward name="showStudents" path="showStudentsInExecutionCourse"/>  
 			<forward name="addGroup" path="addGroup"/>	
-		</action>		
+		</action>
 		<!--  =================================================-->		
 				
 		<!--  ============= by gedl 29-9-2005  ================-->
-		<action path="/deleteUserGroup"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.DeleteUserGroup"
-			parameter="method"
-			scope="request"
-			name="userGroupForm"
-			>
-			<forward name="userGroupsManagement" path="/userGroupsManagement.do?method=prepare"/>			
-		</action>		
 		<action path="/executionCourseTeachersGroupManagement"
 			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.ExecutionCourseTeachersGroupManagement"
 			parameter="method"
@@ -132,7 +124,7 @@
 			name="userGroupForm"
 			>
 			<forward name="selectOptionsFor_EXECUTION_COURSE_TEACHERS_GROUP" path="showExecutionCourseUserGroupOptions"/>
-			<forward name="showTeachers" path="showTeachersInExecutionCourse"/>	
+            <forward name="showTeachers" path="showTeachersInExecutionCourse"/>  
 			<forward name="addGroup" path="addGroup"/>	
 		</action>						
 		<!--  =================================================-->	

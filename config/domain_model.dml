@@ -254,6 +254,13 @@ class net.sourceforge.fenixedu.domain.teacher.Category extends net.sourceforge.f
 	String shortName;
 }
 
+class net.sourceforge.fenixedu.domain.PersonalGroup extends net.sourceforge.fenixedu.domain.DomainObject {
+	String name;
+	String description;
+	Group group;
+	Integer keyPerson;
+}
+
 class net.sourceforge.fenixedu.domain.cms.Cms extends net.sourceforge.fenixedu.domain.DomainObject
 {
 	Integer keyConfiguration;
@@ -2595,6 +2602,14 @@ relation BuildingRoom {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.space.Building playsRole building;
+}
+
+relation PersonHasPersonalGroups {
+	net.sourceforge.fenixedu.domain.Person playsRole person;
+	net.sourceforge.fenixedu.domain.PersonalGroup playsRole personalGroups 
+	{
+		multiplicity *;
+	}
 }
 
 relation CmsConfiguration

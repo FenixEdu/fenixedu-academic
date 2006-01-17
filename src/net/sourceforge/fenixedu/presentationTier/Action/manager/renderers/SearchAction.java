@@ -1,15 +1,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.renderers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 
@@ -23,15 +20,6 @@ public class SearchAction extends DispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         SearchBean bean = new SearchBean();
         bean.setDate(new Date());
-        
-        Collection c;
-        try {
-            c = (Collection) ServiceUtils.executeService(null, "ReadAllDomainObjects", new Object[] { MailingList.class });
-        }
-        catch (Exception e) {
-            c = null;
-            e.printStackTrace();
-        }
         
         request.setAttribute("bean", bean);
         return mapping.findForward("input");

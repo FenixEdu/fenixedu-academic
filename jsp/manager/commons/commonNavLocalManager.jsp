@@ -188,18 +188,6 @@
 	</html:link>
 	
 </strong></p>
-<br />
-<strong>Gestão de CMS</strong>
-<p><strong>&raquo; 
-	<html:link module="/manager" module="/cms" action="/userGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
-	</html:link>
-	</strong></p>
-<p><strong>&raquo;
-	<html:link module="/manager" module="/cms" action="/cmsConfigurationManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.cmsConfiguration" />
-	</html:link>	
-</strong></p>
 
 <br />
 <strong>Renderers</strong>

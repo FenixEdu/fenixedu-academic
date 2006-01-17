@@ -1,0 +1,20 @@
+<!--
+  Definitions for groups related mappings 
+  -->
+  
+<class-descriptor class="net.sourceforge.fenixedu.domain.PersonalGroup" table="PERSONAL_GROUP">
+    <field-descriptor name="idInternal" column="ID_INTERNAL" jdbc-type="INTEGER" primarykey="true" autoincrement="true"/>
+    <field-descriptor name="ackOptLock" column="ACK_OPT_LOCK" jdbc-type="INTEGER" locking="false"/>
+    
+    <field-descriptor name="name" column="NAME" jdbc-type="VARCHAR"/>
+    <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR"/>
+    <field-descriptor name="group" column="CONCRETE_GROUP" jdbc-type="BLOB" 
+                      conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"/>  
+    
+    <field-descriptor name="keyPerson" column="KEY_PERSON" jdbc-type="INTEGER"/>
+    <reference-descriptor auto-retrieve="false"
+        name="person"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+        <foreignkey field-ref="keyPerson"/>
+    </reference-descriptor>
+</class-descriptor>

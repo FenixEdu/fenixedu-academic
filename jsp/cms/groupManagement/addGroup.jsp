@@ -3,20 +3,22 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
-<%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes"%>
-<%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroup"%>
+<%@ page import="net.sourceforge.fenixedu.domain.accessControl.GroupTypes"%>
+<%@ page import="net.sourceforge.fenixedu.domain.accessControl.Group"%>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
 
-<bean:define id="viewAction" name="viewAction" type="java.lang.String"/>
 <h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>
 <bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.saved.info"/>
-<bean:define id="group" type="net.sourceforge.fenixedu.domain.accessControl.UserGroup" name="group"/>
+
+<bean:define id="group" type="net.sourceforge.fenixedu.domain.PersonalGroup" name="group"/>
 <%
-UserGroupTypes groupType = UserGroupTypes.userGroupTypeByClass(group.getClass());
-request.setAttribute("groupType",groupType);
+    GroupTypes groupType = GroupTypes.userGroupTypeByClass(group.getGroup().getClass());
+    request.setAttribute("groupType", groupType);
 %>
+
 <e:define id="readableGroupType" enumeration="groupType" bundle="ENUMERATION_RESOURCES"/>
+
 <table>
 	<tr>
 		<td>
@@ -48,8 +50,8 @@ request.setAttribute("groupType",groupType);
 </table>
 	<%
 	Map params = new HashMap();
-	params.put("method","viewElements");
-	params.put("groupId",group.getIdInternal());
+	params.put("method", "viewElements");
+	params.put("groupId", group.getIdInternal());
 	request.setAttribute("params",params);
 	 %>
 <html:link  name="params" module="/cms" action="/userGroupsManagement" target="_blank" ><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewElements.link"/></html:link><br/>

@@ -7,7 +7,7 @@
 <%@ page import="java.util.HashMap" %>
 
 <bean:define id="targetAction" name="targetAction" type="java.lang.String"/>
-<bean:define id="userGroupTypeToAdd" type="net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes" name="userGroupTypeToAdd"/>
+<bean:define id="userGroupTypeToAdd" type="net.sourceforge.fenixedu.domain.accessControl.GroupTypes" name="userGroupTypeToAdd"/>
 <e:define id="userGroupTypeToAddString" enumeration="userGroupTypeToAdd" bundle="ENUMERATION_RESOURCES"/>
 <h2><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>
 <bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.label"/> <b><bean:write name="userGroupTypeToAddString"/></b><br/>

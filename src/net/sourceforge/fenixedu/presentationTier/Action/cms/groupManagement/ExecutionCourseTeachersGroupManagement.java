@@ -31,7 +31,7 @@ import org.apache.struts.action.ActionMapping;
  * Created on 12:10:06,29/Set/2005
  * @version $Id$
  */
-public class ExecutionCourseTeachersGroupManagement extends ExecutionCourseUserGroupManagement
+public class ExecutionCourseTeachersGroupManagement extends ExecutionCoursePersonalGroupManagement
 {	
 	public ActionForward viewExecutionCourseGroupElements(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,

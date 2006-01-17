@@ -2,8 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.TreeMap" %>
 
 <span class="error"><html:errors/></span>
 	<logic:present name="elements">
@@ -13,17 +11,17 @@
 		<table>
 			<tr>
 				<td class="listClasses-header">
-					<bean:message  bundle="CMS_RESOURCES" key="label.name"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>
 				</td>
 				<td class="listClasses-header">
-					<bean:message  bundle="CMS_RESOURCES" key="label.teacher.category"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.teacher.category.label"/>
 				</td>
 				<td class="listClasses-header">
-					<bean:message  bundle="CMS_RESOURCES" key="label.email"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.email.label"/>
 				</td>
 			</tr>
-			<logic:iterate id="person" name="elements" type="net.sourceforge.fenixedu.domain.IPerson">
-			<bean:define id="teacher" name="person" property="teacher"/>
+			<logic:iterate id="person" name="elements" type="net.sourceforge.fenixedu.domain.Person">
+			    <bean:define id="teacher" name="person" property="teacher"/>
 				<tr>
 					<td class="listClasses">
 						<bean:write name="teacher" property="person.nome"/>
