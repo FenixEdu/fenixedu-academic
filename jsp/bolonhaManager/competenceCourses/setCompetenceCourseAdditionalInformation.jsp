@@ -13,57 +13,58 @@
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}" style="font-style:italic"/>
-	<h:outputText value="<h2>#{bolonhaBundle['setData']}</h2>" escape="false"/>	
-	<h:outputText value="#{bolonhaBundle['step']} 1: "/>
-	<h:outputFormat value="#{bolonhaBundle['create.param']}">
+	<h:outputText value="<p class='breadcumbs'><span>#{bolonhaBundle['step']} 1: </strong>" escape="false"/>
+	<h:outputFormat value="#{bolonhaBundle['create.param']}</span>" escape="false">
 		<f:param value=" #{bolonhaBundle['competenceCourse']}"/>
 	</h:outputFormat>
-	<h:outputText value=" > #{bolonhaBundle['step']} 2: #{bolonhaBundle['setCompetenceCourseLoad']}"/>
 	<h:outputText value=" > "/>
-	<h:outputText value="#{bolonhaBundle['step']} 3: #{bolonhaBundle['setData']}" style="font-weight: bold"/>
-	<br/>
+	<h:outputText value="<span><strong>#{bolonhaBundle['step']} 2:</strong> #{bolonhaBundle['setCompetenceCourseLoad']}</span>" escape="false"/>
+	<h:outputText value=" > <span  class='actual'><strong>#{bolonhaBundle['step']} 3:</strong> #{bolonhaBundle['setData']}</span>" escape="false"/>
+	<h:outputText value="</p>" escape="false"/>
 	<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
-	<br/>
-	<h:outputText value="#{bolonhaBundle['department']}: " style="font-weight: bold"/>
-	<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}" style="font-style:italic"/><br/>
+	
+	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
+	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}</li>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
-		<h:outputText value="#{bolonhaBundle['area']}: " style="font-weight: bold"/>
-		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}<br/>" escape="false"/>
-	</fc:dataRepeater>
-	<br/>
-	<h:outputText value="#{bolonhaBundle['name']} (pt): " style="font-weight: bold"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}"/><br/>
-	<h:outputText value="#{bolonhaBundle['nameEn']} (en): " style="font-weight: bold"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}" /><br/>
-	<h:outputText value="#{bolonhaBundle['acronym']}: " style="font-weight: bold"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}" /><br/>	
-	<h:outputText value="#{bolonhaBundle['type']}: " style="font-weight: bold"/>
-	<h:outputText value="#{bolonhaBundle['basic']}<br/>" rendered="#{CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
-	<h:outputText value="#{bolonhaBundle['nonBasic']}<br/>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
-	<br/>
-	<h:form>
-		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/><br/>
-		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
+		<h:outputText value="<li><strong>#{bolonhaBundle['area']}: </strong>" escape="false"/>
+		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}</li>" escape="false"/>
+	</fc:dataRepeater>		
+	<h:outputText value="</ul>" escape="false"/>
+	
+	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
+	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>	
+	<h:outputText value="<li><strong>#{bolonhaBundle['name']} (pt): </strong>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
+	<h:outputText value="<li><strong>#{bolonhaBundle['nameEn']} (en): </strong>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
+	<h:outputText value="<li><strong>#{bolonhaBundle['acronym']}: </strong>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>	
+	<h:outputText value="<li><strong>#{bolonhaBundle['type']}: </strong>" escape="false"/>
+	<h:outputText value="#{bolonhaBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
+	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
+	<h:outputText value="</ul></div>" escape="false"/>	
+	<h:form>				
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<a name='portuguese'><h4 class='first'>#{bolonhaBundle['portuguese']}: </h4></a><fieldset class='lfloat'>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['objectives']}: </label>" escape="false"/>
+		<h:inputTextarea id="generalObjectives" cols="80" rows="5" value="#{CompetenceCourseManagement.objectives}"/>
+		<h:outputText value="</p>" escape="false"/>			
+		<h:outputText value="<p><label>#{bolonhaBundle['program']}: </label>" escape="false"/>
+		<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>			
+		<h:outputText value="</p></fieldset></div>" escape="false"/>
 		
-		<h:outputText value="#{bolonhaBundle['portuguese']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
-			<h:outputText value="<a name='objectives'>#{bolonhaBundle['objectives']}: </a>" escape="false"/>
-			<h:inputTextarea id="generalObjectives" cols="80" rows="5" value="#{CompetenceCourseManagement.objectives}"/>
-			
-			<h:outputText value="<a name='program'>#{bolonhaBundle['program']}: </a>" escape="false"/>
-			<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>			
-		</h:panelGrid>
-		<br/>
-		<h:outputText value="#{bolonhaBundle['english']}: " />
-		<h:panelGrid columnClasses="alignRight infocell,infocell" columns="2" border="0" >
-			<h:outputText value="<a name='objectivesEn'>#{bolonhaBundle['objectivesEn']}: </a>" escape="false"/>
-			<h:inputTextarea id="generalObjectivesEn" cols="80" rows="5" value="#{CompetenceCourseManagement.objectivesEn}"/>
-			
-			<h:outputText value="<a name='programEn'>#{bolonhaBundle['programEn']}: </a>" escape="false"/>
-			<h:inputTextarea id="programEn" cols="80" rows="5" value="#{CompetenceCourseManagement.programEn}"/>			
-		</h:panelGrid>
-		<br/><hr>
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<a name='english'><h4 class='first'>#{bolonhaBundle['english']}: </h4></a><fieldset class='lfloat'>" escape="false"/>	
+		<h:outputText value="<p><label>#{bolonhaBundle['objectivesEn']}: </a></label>" escape="false"/>
+		<h:inputTextarea id="generalObjectivesEn" cols="80" rows="5" value="#{CompetenceCourseManagement.objectivesEn}"/>
+		<h:outputText value="</p>" escape="false"/>			
+		<h:outputText value="<p><label>#{bolonhaBundle['programEn']}: </label>" escape="false"/>
+		<h:inputTextarea id="programEn" cols="80" rows="5" value="#{CompetenceCourseManagement.programEn}"/>			
+		<h:outputText value="</p></fieldset></div>" escape="false"/>
+		
+		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>		
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
 			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}"
 				action="#{CompetenceCourseManagement.createCompetenceCourseAdditionalInformation}"/>
