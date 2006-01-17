@@ -4217,6 +4217,16 @@
 		</filterChains>
 	</service>
 	<service>
+		<name>UpdateDegreeCurricularPlanMembersGroup</name>
+		<implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.UpdateDegreeCurricularPlanMembersGroup</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains>
+			<chain name="ScientificCouncilAuthorization" />
+		</filterChains>
+	</service>
+	<service>
 		<name>ReadMetadatas</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests.ReadMetadatas</implementationClass>
 		<description />
@@ -8941,6 +8951,15 @@
         </filterChains>     
     </service>
    <service>
+    	<name>UpdateDepartmentsCompetenceCourseManagementGroup</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice.UpdateDepartmentsCompetenceCourseManagementGroup</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="DepartmentAdministrativeOfficeAuthorization"></chain>
+        </filterChains>     
+    </service>   
+   <service>
     	<name>CreateTeacherExpectationDefinitionPeriod</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.CreateTeacherExpectationDefinitionPeriod</implementationClass>
         <description></description>
@@ -9280,7 +9299,7 @@
         </filterChains>     
     </service>
     <service>
-    <name>ComputeCompetenceCourseStatistics</name>
+	    <name>ComputeCompetenceCourseStatistics</name>
         <implementationClass> net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  

@@ -10,6 +10,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -105,11 +106,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
         this.setDegreeModule(dcpRoot);
         this.setDegreeStructure(curricularPeriod);
-        
-        // create degree curricular plan management group and add creator
-        // TODO: check this with Luís Egídio
-        //DegreeCurricularPlanMembersGroup managementGroup = new DegreeCurricularPlanMembersGroup(null, null, this);
-        //addCreatorToManagementGroup(creator, managementGroup);
+
+        setCurricularPlanMembersGroup(new FixedSetGroup(creator));
     }
 
     private void newStructureFieldsChange(Double ectsCredits, CurricularStage curricularStage) {
@@ -123,16 +121,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setCurricularStage(curricularStage);
     }
 
-    //TODO: check this with Luís Egídio
-//    private void addCreatorToManagementGroup(Person creator, DegreeCurricularPlanMembersGroup managementGroup) {
-//        if (creator.getHookedGroups() != null) {
-//            PersonGroup personGroup = creator.getHookedGroups().get(0);
-//            personGroup.addAggregators(managementGroup);
-//        } else {
-//            new PersonGroup(creator, creator, managementGroup);
-//        }
-//    }
-    
     public void edit(String name, DegreeCurricularPlanState state, Date inicialDate, Date endDate,
             Integer degreeDuration, Integer minimalYearForOptionalCourses, Double neededCredits,
             MarkType markType, Integer numerusClausus, String annotation, GradeScale gradeScale) {

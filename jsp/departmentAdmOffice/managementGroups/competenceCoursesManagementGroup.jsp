@@ -20,7 +20,7 @@
 		<h:form>
 			<h:panelGroup rendered="#{!empty ManagementGroupsBackingBean.selectedDepartmentEmployeesSelectItems}">
 				<h:outputText value="<b>#{bundleDEP['label.group.members']}</b> #{bundleDEP['label.group.members.explanation']}<br/>" escape="false" />		
-				<h:selectManyCheckbox value="#{ManagementGroupsBackingBean.selectedPersonGroupsIDsToRemove}" layout="pageDirection">
+				<h:selectManyCheckbox value="#{ManagementGroupsBackingBean.selectedPersonsIDsToRemove}" layout="pageDirection">
 					<f:selectItems value="#{ManagementGroupsBackingBean.selectedDepartmentEmployeesSelectItems}"  />
 				</h:selectManyCheckbox>
 				<h:commandLink value="#{bundleDEP['link.group.removeMembers']}" actionListener="#{ManagementGroupsBackingBean.removeMembers}" />
@@ -31,7 +31,7 @@
 			<h:outputText value="#{bundleDEP['number.of.persons']}: #{ManagementGroupsBackingBean.departmentEmployeesSize}<br/>" escape="false" />
 			<h:outputText value="<br/>" escape="false" />
 			
-			<h:selectManyCheckbox value="#{ManagementGroupsBackingBean.selectedPersonsIDs}" layout="pageDirection">
+			<h:selectManyCheckbox value="#{ManagementGroupsBackingBean.selectedPersonsIDsToAdd}" layout="pageDirection">
 				<f:selectItems value="#{ManagementGroupsBackingBean.departmentEmployeesSelectItems}"  />
 			</h:selectManyCheckbox>
 					

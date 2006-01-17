@@ -6,10 +6,7 @@ import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.iterators.IteratorChain;
 
-/**
- * TODO: make final
- */
-public class GroupUnion extends NodeGroup {
+public final class GroupUnion extends NodeGroup {
 
     public GroupUnion(Group ... groups) {
         super(groups);

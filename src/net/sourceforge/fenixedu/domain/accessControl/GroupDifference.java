@@ -5,7 +5,7 @@ import java.util.Iterator;
 import net.sourceforge.fenixedu.domain.NotImplementedException;
 import net.sourceforge.fenixedu.domain.Person;
 
-public class GroupDifference extends NodeGroup {
+public final class GroupDifference extends NodeGroup {
     
     private static final long serialVersionUID = 1L;
 

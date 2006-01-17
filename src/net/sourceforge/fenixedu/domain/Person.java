@@ -3,17 +3,13 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
-import net.sourceforge.fenixedu.domain.accessControl.NodeGroup;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -552,28 +548,6 @@ public class Person extends Person_Base {
         return result;
     }
 
-// TODO: check this with Luís Egídio
-//    public boolean belongsToOtherGroupsWithSameRole(NodeGroup nodeGroupWhoAsks) {
-//        boolean belongs = false;
-//        
-//        if (this.getHookedGroups() != null) {
-//            PersonGroup personGroup = this.getHookedGroups().get(0);
-// 
-//            for (NodeGroup nodeGroup : personGroup.getAggregators()) {
-//    
-//                if ((nodeGroup != nodeGroupWhoAsks)) {
-//                    // (nodeGroup.getRole() == nodeGroupWhoAsks.getRole())
-//                    if (nodeGroup instanceof DegreeCurricularPlanMembersGroup || nodeGroup instanceof CompetenceCourseMembersGroup) {
-//                        belongs = true;
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//            
-//        return belongs;
-//    }
-    
     /**
      * @return a group that only contains this person
      */

@@ -19,7 +19,7 @@
 				
 		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembers}">		
 			<h:outputText value="<b>#{scouncilBundle['groupMembers']}</b> (#{scouncilBundle['groupMembersExplanation']})<br/>" escape="false" />		
-			<h:selectManyCheckbox value="#{CurricularPlansMembersManagementBackingBean.selectedPersonGroupsIDsToRemove}" layout="pageDirection">
+			<h:selectManyCheckbox value="#{CurricularPlansMembersManagementBackingBean.selectedPersonsIDsToRemove}" layout="pageDirection">
 				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.groupMembers}"  />
 			</h:selectManyCheckbox>
 			<h:commandLink value="#{scouncilBundle['removeMembers']}" actionListener="#{CurricularPlansMembersManagementBackingBean.removeMembers}" />

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.event.ActionEvent;
@@ -12,10 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -26,9 +24,8 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
 
     private List<Employee> employees = getEmployees();
 
-    private Integer[] selectedPersonGroupsIDsToRemove;
-
     private Integer[] selectedPersonsIDsToAdd;
+    private Integer[] selectedPersonsIDsToRemove;
 
     public Department getDepartment() {
         return (getUserView().getPerson().getEmployee() != null) ? getUserView().getPerson()
@@ -52,8 +49,7 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         List<SelectItem> result = new ArrayList<SelectItem>(employees.size());
         for (Employee departmentEmployee : employees) {
             Person person = departmentEmployee.getPerson();
-            result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
-                    + person.getUsername() + ")"));
+            result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
         }
         return result;
     }
@@ -62,66 +58,51 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
         return employees.size();
     }
 
-    // TODO: check this with Luís Egídio
     public List<SelectItem> getSelectedDepartmentEmployeesSelectItems() throws FenixFilterException,
             FenixServiceException {
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-        CompetenceCourseMembersGroup competenceCourseMembersGroup = getDepartment()
-                .getCompetenceCourseMembersGroup();
-        if (competenceCourseMembersGroup != null) {
-            for (Group member : competenceCourseMembersGroup.getChildren()) {
-                Person person = ((PersonGroup) member).getPerson();
-                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
-                        + person.getUsername() + ")"));
+        Group competenceCoursesManagementGroup = getDepartment().getCompetenceCourseMembersGroup();
+        if (competenceCoursesManagementGroup != null) {
+            Iterator<Person> personIterator = competenceCoursesManagementGroup.getElementsIterator();
+            
+            while (personIterator.hasNext()) {
+                Person person = personIterator.next();
+                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
             }
         }
 
         return result;
     }
 
-    public Integer[] getSelectedPersonsIDs() {
-        return null;
-    }
-
-    public void setSelectedPersonsIDs(Integer[] selectedPersonsIDs) {
+    public void setSelectedPersonsIDsToAdd(Integer[] selectedPersonsIDs) {
         this.selectedPersonsIDsToAdd = selectedPersonsIDs;
     }
-
-    public Integer[] getSelectedPersonGroupsIDsToRemove() {
-        return null;
+    
+    public Integer[] getSelectedPersonsIDsToAdd() {
+        return selectedPersonsIDsToAdd;
     }
 
-    public void setSelectedPersonGroupsIDsToRemove(Integer[] selectedPersonGroupsIDsToRemove) {
-        this.selectedPersonGroupsIDsToRemove = selectedPersonGroupsIDsToRemove;
+    public void setSelectedPersonsIDsToRemove(Integer[] selectedPersonsIDsToRemove) {
+        this.selectedPersonsIDsToRemove = selectedPersonsIDsToRemove;
+    }
+    
+    public Integer[] getSelectedPersonsIDsToRemove() {
+        return selectedPersonsIDsToRemove;
     }
 
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-        
-        CompetenceCourseMembersGroup competenceCourseMembersGroup = getDepartment()
-                .getCompetenceCourseMembersGroup();
-        if (competenceCourseMembersGroup == null) {
-            Object[] args = { getDepartment() };
-            competenceCourseMembersGroup = (CompetenceCourseMembersGroup) ServiceUtils.executeService(
-                    getUserView(), "CreateCompetenceCourseMembersGroup", args);
-        }
-
         if (selectedPersonsIDsToAdd != null) {
-            Object[] args = { competenceCourseMembersGroup, selectedPersonsIDsToAdd, null,
-                    RoleType.BOLONHA_MANAGER };
-            // TODO: check this with Luís Egídio
-            ServiceUtils.executeService(getUserView(), "UpdateCompetenceCourseMembersGroup", args);
+            Object[] args = { getDepartment(), selectedPersonsIDsToAdd, null };
+            ServiceUtils.executeService(getUserView(), "UpdateDepartmentsCompetenceCourseManagementGroup", args);
         }
     }
 
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-
-        if (selectedPersonGroupsIDsToRemove != null) {
-            Object[] args = { getDepartment().getCompetenceCourseMembersGroup(), null,
-                    selectedPersonGroupsIDsToRemove, RoleType.BOLONHA_MANAGER };
-            // TODO: check this with Luís Egídio
-            ServiceUtils.executeService(getUserView(), "UpdateCompetenceCourseMembersGroup", args);
+        if (selectedPersonsIDsToRemove != null) {
+            Object[] args = { getDepartment(), null, selectedPersonsIDsToRemove };
+            ServiceUtils.executeService(getUserView(), "UpdateDepartmentsCompetenceCourseManagementGroup", args);
         }
     }
 

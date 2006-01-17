@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.UniqueFilterIterator;
 
-public class GroupIntersection extends NodeGroup {
+public final class GroupIntersection extends NodeGroup {
 
     private static final long serialVersionUID = 1L;
 

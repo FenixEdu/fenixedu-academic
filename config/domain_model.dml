@@ -625,7 +625,7 @@ class net.sourceforge.fenixedu.domain.Department extends net.sourceforge.fenixed
 	String realName;
 	String name;
 	Integer keyUnit;
-	Integer keyCompetenceCourseMembersGroup;	
+	Group competenceCourseMembersGroup;
 }
 
 

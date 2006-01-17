@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -35,9 +34,8 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class CurricularPlansMembersManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle scouncilBundle = getResourceBundle("ServidorApresentacao/ScientificCouncilResources");
     
-    private Integer[] selectedPersonGroupsIDsToRemove;
-
     private Integer[] selectedPersonsIDsToAdd;
+    private Integer[] selectedPersonsIDsToRemove;
 
     public Collection<SelectItem> getDegreeCurricularPlans() throws FenixFilterException,
             FenixServiceException {
@@ -56,32 +54,17 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     }
 
     public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-
-// TODO: check this with Luís Egídio
-//        DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-//        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = degreeCurricularPlan
-//                .getCurricularPlanMembersGroup();
-//
-//        if (curricularPlanMembersGroup == null) {
-//            Object[] argsCreateGroup = { degreeCurricularPlan };
-//            curricularPlanMembersGroup = (DegreeCurricularPlanMembersGroup) ServiceUtils
-//                    .executeService(getUserView(), "CreateCurricularPlanMembersGroup", argsCreateGroup);
-//        }
-//
-//        if (selectedPersonsIDsToAdd != null) {
-//            Object[] argsUpdateGroup = { curricularPlanMembersGroup, selectedPersonsIDsToAdd, null, RoleType.BOLONHA_MANAGER };
-//            ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup",
-//                    argsUpdateGroup);
-//        }
+        if (selectedPersonsIDsToAdd != null) {
+            Object[] args = { getDegreeCurricularPlan(), selectedPersonsIDsToAdd, null };
+            ServiceUtils.executeService(getUserView(), "UpdateDegreeCurricularPlanMembersGroup", args);
+        }
     }
 
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-// TODO: check this with Luís Egídio
-//        if (selectedPersonGroupsIDsToRemove != null) {
-//            Object[] args = { getDegreeCurricularPlan().getCurricularPlanMembersGroup(), null,
-//                    selectedPersonGroupsIDsToRemove, RoleType.BOLONHA_MANAGER };
-//            ServiceUtils.executeService(getUserView(), "UpdateCurricularPlanMembersGroup", args);
-//        }
+        if (selectedPersonsIDsToRemove != null) {
+            Object[] args = { getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove };
+            ServiceUtils.executeService(getUserView(), "UpdateDegreeCurricularPlanMembersGroup", args);
+        }
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException,
@@ -122,16 +105,15 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
         List<SelectItem> result = new ArrayList<SelectItem>();
 
-// TODO: check this with Luís Egídio
-//        DegreeCurricularPlanMembersGroup curricularPlanMembersGroup = getDegreeCurricularPlan()
-//                .getCurricularPlanMembersGroup();
-//        if (curricularPlanMembersGroup != null) {
-//            for (Group member : curricularPlanMembersGroup.getChildren()) {
-//                Person person = ((PersonGroup) member).getPerson();
-//                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
-//                        + person.getUsername() + ")"));
-//            }
-//        }
+        Group curricularPlanMembersGroup = getDegreeCurricularPlan().getCurricularPlanMembersGroup();
+        if (curricularPlanMembersGroup != null) {
+            Iterator<Person> personIterator = curricularPlanMembersGroup.getElementsIterator();
+            
+            while (personIterator.hasNext()) {
+                Person person = personIterator.next();
+                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
+            }
+        }
 
         return result;
     }
@@ -174,12 +156,12 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         return result;
     }
 
-    public Integer[] getSelectedPersonGroupsIDsToRemove() {
-        return selectedPersonGroupsIDsToRemove;
+    public Integer[] getSelectedPersonsIDsToRemove() {
+        return selectedPersonsIDsToRemove;
     }
 
-    public void setSelectedPersonGroupsIDsToRemove(Integer[] selectedPersonGroupsIDsToRemove) {
-        this.selectedPersonGroupsIDsToRemove = selectedPersonGroupsIDsToRemove;
+    public void setSelectedPersonsIDsToRemove(Integer[] selectedPersonsIDsToRemove) {
+        this.selectedPersonsIDsToRemove = selectedPersonsIDsToRemove;
     }
 
     public Integer[] getSelectedPersonsIDsToAdd() {

@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.department.CompetenceCourseMembersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
@@ -25,8 +24,6 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 
 public class Department extends Department_Base {
 
-    private CompetenceCourseMembersGroup competenceCourseMembersGroup;
-    
     public String toString() {
         String result = "[DEPARTAMENT";
         result += ", codInt=" + getIdInternal();
@@ -192,14 +189,6 @@ public class Department extends Department_Base {
 
         }
         return competenceCoursesByExecutionYear;
-    }
-    
-    public CompetenceCourseMembersGroup getCompetenceCourseMembersGroup() {
-        return this.competenceCourseMembersGroup;
-    }
-
-    public void setCompetenceCourseMembersGroup(CompetenceCourseMembersGroup competenceCourseMembersGroup) {
-        this.competenceCourseMembersGroup = competenceCourseMembersGroup;
     }
 
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(
