@@ -400,7 +400,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         UnitType type = getUnitType();
-        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, null, this.getUnitName(), this.getUnitCostCenter(),
                 datesResult.getBeginDate(), datesResult.getEndDate(), type,
@@ -421,7 +421,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         UnitType type = getUnitType();
-        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { null, this.getUnit().getIdInternal(), this.getUnitName(),
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
@@ -442,7 +442,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         UnitType type = getUnitType();
-        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 1);
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 1);
 
         final Object[] argsToRead = { this.getChooseUnit().getIdInternal(), null, this.getUnitName(),
                 this.getUnitCostCenter(), datesResult.getBeginDate(), datesResult.getEndDate(), type,
@@ -463,7 +463,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         String costCenterCodeString = getValidCosteCenterCode();
 
-        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 2);
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 2);
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
@@ -477,7 +477,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         String costCenterCodeString = getValidCosteCenterCode();
 
-        CreateNewUnitParameters parameters = new CreateNewUnitParameters(departmentID, degreeID, this, 2);
+        CreateNewUnitParameters parameters = new CreateNewUnitParameters(this, 2);
 
         final Object[] argsToRead = { this.getUnit().getIdInternal(),
                 this.getChooseUnit().getIdInternal(), this.getUnit().getName(), costCenterCodeString,
@@ -991,8 +991,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         private Integer degreeID, departmentID;
 
-        public CreateNewUnitParameters(String departmentID, String degreeID,
-                OrganizationalStructureBackingBean bean, int mode) throws NumberFormatException,
+        public CreateNewUnitParameters(OrganizationalStructureBackingBean bean, int mode) throws NumberFormatException,
                 FenixFilterException, FenixServiceException {
 
             if (mode == 1) {

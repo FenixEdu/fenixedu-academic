@@ -88,9 +88,8 @@ public class CreateNewUnit implements IService {
                     Department.class, departmentID);
             unit.setDepartment(department);
 
-        } else if (((departmentID != null && unit.getType() != null) || departmentID == null)
-                && unit.getDepartment() != null) {
-            unit.removeDepartment();
+        } else if (unit.getDepartment() != null) {
+            unit.removeDepartment();        
         }
     }
 

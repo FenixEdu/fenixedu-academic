@@ -28,7 +28,7 @@ public class Employee extends Employee_Base {
 
         Contract contract = getCurrentContract();
         if (contract != null && contract.getWorkingUnit() != null) {
-            return getEmployeeUnitDepartment(contract.getWorkingUnit(), true);
+            return getEmployeeDepartmentUnit(contract.getWorkingUnit(), true);
         }
         return null;
     }
@@ -36,7 +36,7 @@ public class Employee extends Employee_Base {
     public Department getLastDepartmentWorkingPlace() {
         Contract contract = getLastContract();
         if (contract != null && contract.getWorkingUnit() != null) {
-            return getEmployeeUnitDepartment(contract.getWorkingUnit(), false);
+            return getEmployeeDepartmentUnit(contract.getWorkingUnit(), false);
         }
         return null;
     }
@@ -64,14 +64,14 @@ public class Employee extends Employee_Base {
         return contractToReturn;
     }
 
-    private Department getEmployeeUnitDepartment(Unit unit, boolean onlyActiveEmployees) {
+    private Department getEmployeeDepartmentUnit(Unit unit, boolean onlyActiveEmployees) {
         List<Unit> parentUnits = unit.getParentUnits();
         if (!parentUnits.isEmpty()) {
             for (Unit parentUnit : parentUnits) {
                 if (unitDepartment(parentUnit, onlyActiveEmployees)) {
                     return parentUnit.getDepartment();
                 } else if (parentUnit.hasAnyParentUnits()) {
-                    Department department = getEmployeeUnitDepartment(parentUnit, onlyActiveEmployees);
+                    Department department = getEmployeeDepartmentUnit(parentUnit, onlyActiveEmployees);
                     if (department != null) {
                         return department;
                     }
