@@ -71,21 +71,8 @@ public class EnumTagLib extends BodyTagSupport {
     }
 
     public Collection<LabelValueBean> getLabelValues() {
-        Map<String, Collection<LabelValueBean>> map = labelValueBeansMap.get(this.enumeration);
-        if (map == null) {
-            map = new HashMap<String, Collection<LabelValueBean>>();
-            labelValueBeansMap.put(this.enumeration, map);
-        } else {
-            Collection<LabelValueBean> labelValueBeans = map.get(this.locale + this.bundle);
-            if (labelValueBeans != null) {
-                return labelValueBeans;
-            }
-        }
 
-        Collection<LabelValueBean> labelValueBeans = getLabelValuesLookup();
-        map.put(this.locale + this.bundle, labelValueBeans);
-
-        return labelValueBeans;
+        return getLabelValuesLookup();
     }
 
     public Collection<LabelValueBean> getLabelValuesLookup() {
