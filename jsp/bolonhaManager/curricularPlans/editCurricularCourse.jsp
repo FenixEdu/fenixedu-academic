@@ -16,7 +16,7 @@
 	<h2><h:outputText value="#{bolonhaBundle['editCurricularCourse']}"/></h2>
 	<h:outputText styleClass="error" rendered="#{!empty CurricularCourseManagement.errorMessage}"
 			value="#{bolonhaBundle[CurricularCourseManagement.errorMessage]}<br/>" escape="false"/>			
-	<h:messages styleClass="infomsg"/>
+	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
 	<br/>
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}" />
@@ -82,11 +82,8 @@
 					<h:outputText value="#{bolonhaBundle['courseGroup']}: "/>
 					<h:outputText value="#{context.courseGroup.name}"/>
 					
-					<h:outputText value="#{bolonhaBundle['curricularYear']}: " />
-					<h:outputText value="#{context.curricularSemester.curricularYear.year}"/>
-					
-					<h:outputText value="#{bolonhaBundle['semester']}: " />
-					<h:outputText value="#{context.curricularSemester.semester}"/>
+					<h:outputText value="#{bolonhaBundle['curricularPeriod']}: " />
+					<h:outputText value="#{context.curricularPeriod.fullLabel}"/>
 					
 					<h:outputText value=" " escape="false"/>
 					<h:panelGroup>

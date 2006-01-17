@@ -23,26 +23,25 @@ public class AddContextToCurricularCourse implements IService {
 
         final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        // // TODO: check CurricularSemesterID for null value
 
-        CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) curricularCourse
-                .getDegreeCurricularPlan().getDegreeStructure();
+        CurricularPeriod degreeCurricularPeriod = courseGroup.getParentDegreeCurricularPlan()
+                .getDegreeStructure();
         CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
                 new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR),
                 new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER));
 
         if (curricularPeriod == null) {
-            curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(new CurricularPeriodInfoDTO(year,
-                    CurricularPeriodType.YEAR), new CurricularPeriodInfoDTO(semester,
+            curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(new CurricularPeriodInfoDTO(
+                    year, CurricularPeriodType.YEAR), new CurricularPeriodInfoDTO(semester,
                     CurricularPeriodType.SEMESTER));
         }
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
         final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
                 .readExecutionYearByName("2006/2007");
-        final ExecutionPeriod beginExecutionPeriod = executionYear
-                .getExecutionPeriodForSemester(Integer.valueOf(1));
+        final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
+                .valueOf(1));
 
-         curricularCourse.addContext(courseGroup, curricularPeriod, beginExecutionPeriod, null);
+        curricularCourse.addContext(courseGroup, curricularPeriod, beginExecutionPeriod, null);
     }
 }

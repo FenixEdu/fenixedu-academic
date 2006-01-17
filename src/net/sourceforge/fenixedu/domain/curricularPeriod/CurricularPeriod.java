@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
 
 /**
  * 
@@ -31,7 +32,7 @@ public class CurricularPeriod extends CurricularPeriod_Base {
     public CurricularPeriod getChildByOrder(Integer order) {
 
         for (CurricularPeriod curricularPeriod : getChilds()) {
-            if (curricularPeriod.getOrder() == order) {
+            if (curricularPeriod.getOrder().equals(order)) {
                 return curricularPeriod;
             }
         }
@@ -42,7 +43,7 @@ public class CurricularPeriod extends CurricularPeriod_Base {
     private CurricularPeriod findChild(CurricularPeriodType periodType, Integer order) {
 
         for (CurricularPeriod curricularPeriod : getChilds()) {
-            if (curricularPeriod.getOrder() == order && curricularPeriod.getPeriodType() == periodType) {
+            if (curricularPeriod.getOrder().equals(order) && curricularPeriod.getPeriodType() == periodType) {
                 return curricularPeriod;
             }
         }
@@ -131,5 +132,12 @@ public class CurricularPeriod extends CurricularPeriod_Base {
         deleteDomainObject();
         
     }
+
+    public String getLabel() {
+        return CurricularPeriodLabelFormatter.getLabel(this);
+    }
     
+    public String getFullLabel() {
+        return CurricularPeriodLabelFormatter.getFullLabel(this);
+    }
 }

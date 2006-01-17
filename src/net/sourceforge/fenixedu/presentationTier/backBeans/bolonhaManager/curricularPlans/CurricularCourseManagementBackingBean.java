@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -239,11 +240,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getCurricularYearID() throws FenixFilterException, FenixServiceException {
-        if (curricularYearID == null && getContext(getContextID()) != null) {
-//            curricularYearID = getContext(getContextID()).getCurricularSemester().getCurricularYear()
-//                    .getYear();
-            
-            getContext(getContextID()).getCurricularPeriod().getOrder();
+        if (curricularYearID == null && getContext(getContextID()) != null) {            
+            curricularYearID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR);
         }
         return curricularYearID;
     }
@@ -254,7 +252,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public Integer getCurricularSemesterID() throws FenixFilterException, FenixServiceException {
         if (curricularSemesterID == null && getContext(getContextID()) != null) {
-            //curricularSemesterID = getContext(getContextID()).getCurricularSemester().getSemester();
+            curricularSemesterID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER);
         }
         return curricularSemesterID;
     }
@@ -362,8 +360,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (Exception e) {
             this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
-        }
-        
+        }        
         addInfoMessage(bolonhaBundle.getString("addedNewContextToCurricularCourse"));
         setContextID(0); // resetContextID
         return "buildCurricularPlan";
@@ -379,7 +376,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
@@ -401,7 +398,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
-            addErrorMessage(bolonhaBundle.getString(e.getMessage()));
+            addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
         }
     }
     

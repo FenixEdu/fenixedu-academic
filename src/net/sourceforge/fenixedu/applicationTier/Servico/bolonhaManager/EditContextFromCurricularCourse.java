@@ -18,7 +18,6 @@ public class EditContextFromCurricularCourse implements IService {
     public void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup,
             Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
 
-        // TODO: check CurricularSemesterID for null value
         CurricularPeriod degreeCurricularPeriod = context.getCourseGroup()
                 .getParentDegreeCurricularPlan().getDegreeStructure();
 

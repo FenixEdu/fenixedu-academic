@@ -39,7 +39,6 @@ public class CreateCurricularCourse implements IService {
 
         DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentObject().readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
-        // TODO: check CurricularSemesterID for null value
 
         CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan.getDegreeStructure();
         CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
@@ -55,7 +54,7 @@ public class CreateCurricularCourse implements IService {
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
         ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
-                .readExecutionYearByName("2005/2006");
+                .readExecutionYearByName("2006/2007");
         ExecutionPeriod executionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 
