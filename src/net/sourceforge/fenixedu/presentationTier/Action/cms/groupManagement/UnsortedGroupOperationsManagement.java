@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,8 +53,7 @@ public class UnsortedGroupOperationsManagement extends FenixDispatchAction
 		DynaActionForm addGroupForm = (DynaActionForm) form;
 		Person person = this.getLoggedPerson(request);
 		String name = (String) addGroupForm.get("name");
-		String description = (String) addGroupForm.get("description");
-		Integer[] groupIds = (Integer[]) addGroupForm.get("selectedGroups");
+		String description = (String) addGroupForm.get("description");		
 		String userGroupTypeString = (String) addGroupForm.get("userGroupType");
 		UserGroupTypes userGroupType = UserGroupTypes.valueOf(userGroupTypeString);
 		Collection<Group> groups = new HashSet<Group>();

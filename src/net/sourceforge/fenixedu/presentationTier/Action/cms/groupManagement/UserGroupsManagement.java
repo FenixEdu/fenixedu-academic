@@ -6,8 +6,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement;
 
 
-import java.util.Iterator;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
