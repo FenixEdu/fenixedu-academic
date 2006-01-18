@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 public class StudentCurricularPlanTest extends DomainTestBase {
 
@@ -114,7 +116,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 
 
 
-	private void setUpCreate(Student student, DegreeCurricularPlan degreeCurricularPlan) {
+	private void setUpCreate(Student student, DegreeCurricularPlan degreeCurricularPlan) throws ParseException {
 		newStudentCurricularPlan = new StudentCurricularPlan(student, degreeCurricularPlan,
 												StudentCurricularPlanState.ACTIVE, new Date());
 		
@@ -122,7 +124,7 @@ public class StudentCurricularPlanTest extends DomainTestBase {
 		studentForNewStudentCurricularPlan = new Student();
 		degreeCurricularPlanForNewStudentCurricularPlan = new DegreeCurricularPlan();
 		branchForNewStudentCurricularPlan = new Branch();
-		startDateForNewStudentCurricularPlan = new Date(2002,4,13);
+		startDateForNewStudentCurricularPlan = DateFormatUtil.parse("yyyy/mm/dd", "2002/04/13");
 		stateForNewStudentCurricularPlan = StudentCurricularPlanState.CONCLUDED;
 		givenCreditsForNewStudentCurricularPlan = 10.0;
 		specializationForNewStudentCurricularPlan = Specialization.MASTER_DEGREE; 
