@@ -438,6 +438,21 @@ public class Enrolment extends Enrolment_Base {
         return finalEnrolmentEvaluation;
     }
 
+    public boolean isNotEvaluated() {
+        final EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+        return finalEnrolmentEvaluation == null || finalEnrolmentEvaluation.isNotEvaluated();
+    }
+
+    public boolean isFlunked() {
+        final EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+        return finalEnrolmentEvaluation != null && finalEnrolmentEvaluation.isFlunked();
+    }
+
+    public boolean isApproved() {
+        final EnrolmentEvaluation finalEnrolmentEvaluation = getFinalEnrolmentEvaluation();
+        return finalEnrolmentEvaluation != null && finalEnrolmentEvaluation.isApproved();
+    }
+
     public Boolean isFirstTime() {
         return this.getStudentCurricularPlan().getEnrolments(this.getCurricularCourse()).size() == 1;
     }

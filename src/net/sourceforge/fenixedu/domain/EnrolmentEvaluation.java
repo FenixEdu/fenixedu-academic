@@ -176,20 +176,29 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
     }
 
     public boolean isNormal() {
-        if (getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.NORMAL))
-            return true;
-        return false;
+        return getEnrolmentEvaluationType() == EnrolmentEvaluationType.NORMAL;
     }
 
     public boolean isImprovment() {
-        if (getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.IMPROVEMENT))
-            return true;
-        return false;
+        return getEnrolmentEvaluationType() == EnrolmentEvaluationType.IMPROVEMENT;
     }
-	
-	
-	
-	
+
+    public boolean isSpecialSeason() {
+        return getEnrolmentEvaluationType() == EnrolmentEvaluationType.SPECIAL_SEASON;
+    }
+
+    public boolean isNotEvaluated() {
+        return getEnrollmentStateByGrade() == EnrollmentState.NOT_EVALUATED;
+    }
+
+    public boolean isFlunked() {
+        return getEnrollmentStateByGrade() == EnrollmentState.NOT_APROVED;
+    }
+
+    public boolean isApproved() {
+        return getEnrollmentStateByGrade() == EnrollmentState.APROVED;
+    }
+
 	public void edit(Person responsibleFor, String grade, Date availableDate, Date examDate, String checksum) {
 		
         setCheckSum(checksum);
