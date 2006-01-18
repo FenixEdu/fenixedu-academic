@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -293,24 +292,19 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 
 	public void delete() {
 		if (canBeDeleted()) {
-			setExecutionPeriod(null);
+            removeExecutionPeriod();
 
 			if (getSite() != null) {
 				getSite().delete();
 			}
 
-			for (; !getProfessorships().isEmpty(); getProfessorships().get(0)
-					.delete())
-				;
-
+			for (; !getProfessorships().isEmpty(); getProfessorships().get(0).delete());
+            
 			getAssociatedCurricularCourses().clear();
 
-			for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties()
-					.get(0).delete())
-				;
+			for (; !getExecutionCourseProperties().isEmpty(); getExecutionCourseProperties().get(0).delete());
 
-			for (; !getAttends().isEmpty(); getAttends().get(0).delete())
-				;
+			for (; !getAttends().isEmpty(); getAttends().get(0).delete());
 
 			getNonAffiliatedTeachers().clear();
 
