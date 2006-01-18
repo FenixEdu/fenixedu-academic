@@ -98,7 +98,7 @@ public class TeacherTest extends DomainTestBase {
         } 
     
         
-        List newResponsabilities = new ArrayList();
+        List<Integer> newResponsabilities = new ArrayList<Integer>();
         newResponsabilities.add(1);
         
         ///////////////////////////
@@ -170,7 +170,7 @@ public class TeacherTest extends DomainTestBase {
         }
         assertTrue(publications.contains(publication));
         assertEquals(publication.getPublicationTeachersCount(), 1);
-        assertTrue(publication.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.CIENTIFIC));
+        assertTrue(publication.getPublicationTeachers().get(0).getPublicationArea() == PublicationArea.CIENTIFIC);
         
     }
     
@@ -194,7 +194,7 @@ public class TeacherTest extends DomainTestBase {
         }
         assertTrue(publications.contains(publication));
         assertEquals(publication.getPublicationTeachersCount(), 1);
-        assertTrue(publication.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.CIENTIFIC));
+        assertTrue(publication.getPublicationTeachers().get(0).getPublicationArea() == PublicationArea.CIENTIFIC);
         
         
         try {
@@ -211,7 +211,7 @@ public class TeacherTest extends DomainTestBase {
         assertTrue(publications.contains(publication2));
         assertEquals(publication.getPublicationTeachersCount(), 1);
         assertEquals(publication2.getPublicationTeachersCount(), 1);
-        assertTrue(publication2.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.DIDATIC));
+        assertTrue(publication2.getPublicationTeachers().get(0).getPublicationArea() == PublicationArea.DIDATIC);
         
         
         try {
@@ -230,7 +230,7 @@ public class TeacherTest extends DomainTestBase {
         assertEquals(publication.getPublicationTeachersCount(), 1);
         assertEquals(publication2.getPublicationTeachersCount(), 1);
         assertEquals(publication3.getPublicationTeachersCount(), 1);
-        assertTrue(publication3.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.DIDATIC));
+        assertTrue(publication3.getPublicationTeachers().get(0).getPublicationArea() == PublicationArea.DIDATIC);
         
         
         try {
@@ -251,7 +251,7 @@ public class TeacherTest extends DomainTestBase {
         assertEquals(publication2.getPublicationTeachersCount(), 1);
         assertEquals(publication3.getPublicationTeachersCount(), 1);
         assertEquals(publication4.getPublicationTeachersCount(), 1);
-        assertTrue(publication4.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.DIDATIC));
+        assertTrue(publication4.getPublicationTeachers().get(0).getPublicationArea() == PublicationArea.DIDATIC);
         
         
         try {
@@ -274,7 +274,7 @@ public class TeacherTest extends DomainTestBase {
         assertEquals(publication3.getPublicationTeachersCount(), 1);
         assertEquals(publication4.getPublicationTeachersCount(), 1);
         assertEquals(publication5.getPublicationTeachersCount(), 1);
-        assertTrue(publication5.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.DIDATIC));
+        assertTrue(publication5.getPublicationTeachers().get(0).getPublicationArea() == PublicationArea.DIDATIC);
         
         
         try {
@@ -299,7 +299,7 @@ public class TeacherTest extends DomainTestBase {
         assertEquals(publication4.getPublicationTeachersCount(), 1);
         assertEquals(publication5.getPublicationTeachersCount(), 1);
         assertEquals(publication6.getPublicationTeachersCount(), 1);
-        assertTrue(publication6.getPublicationTeachers().get(0).getPublicationArea().equals(PublicationArea.DIDATIC));
+        assertTrue(publication6.getPublicationTeachers().get(0).getPublicationArea() == PublicationArea.DIDATIC);
         
         
         try {
