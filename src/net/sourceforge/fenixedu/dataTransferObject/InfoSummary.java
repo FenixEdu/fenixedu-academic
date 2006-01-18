@@ -343,6 +343,7 @@ public class InfoSummary extends InfoObject implements Comparable {
             dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
             dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
             dateAndHourSummary.set(Calendar.SECOND, 00);
+            dateAndHourSummary.set(Calendar.MILLISECOND, 00);
 
             Calendar beginLesson = Calendar.getInstance();
             beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
@@ -362,10 +363,12 @@ public class InfoSummary extends InfoObject implements Comparable {
                     beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(Calendar.HOUR_OF_DAY));
                     beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
                     beginLesson.set(Calendar.SECOND, 00);
+                    beginLesson.set(Calendar.MILLISECOND, 00);
 
                     endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
                     endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
                     endLesson.set(Calendar.SECOND, 00);
+                    endLesson.set(Calendar.MILLISECOND, 00);
 
                     if (infoShift.getTipo().equals(lesson.getTipo())
                             && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
@@ -388,7 +391,6 @@ public class InfoSummary extends InfoObject implements Comparable {
                         result += endLesson.get(Calendar.MINUTE);
                         result += " ";
                         result += lesson.getInfoSala().getNome();
-
                     }
                 }
             }
@@ -414,6 +416,7 @@ public class InfoSummary extends InfoObject implements Comparable {
                 dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
                 dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
                 dateAndHourSummary.set(Calendar.SECOND, 00);
+                dateAndHourSummary.set(Calendar.MILLISECOND, 00);
 
                 Calendar beginLesson = Calendar.getInstance();
                 beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
@@ -434,10 +437,12 @@ public class InfoSummary extends InfoObject implements Comparable {
                                 Calendar.HOUR_OF_DAY));
                         beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
                         beginLesson.set(Calendar.SECOND, 00);
-
+                        beginLesson.set(Calendar.MILLISECOND, 00);
+                        
                         endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
                         endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
                         endLesson.set(Calendar.SECOND, 00);
+                        endLesson.set(Calendar.MILLISECOND, 00);
 
                         if (infoShift.getTipo().equals(lesson.getTipo())
                                 && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
@@ -468,6 +473,7 @@ public class InfoSummary extends InfoObject implements Comparable {
             dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
             dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
             dateAndHourSummary.set(Calendar.SECOND, 00);
+            dateAndHourSummary.set(Calendar.MILLISECOND, 00);
 
             result += new DiaSemana(dateAndHourSummary.get(Calendar.DAY_OF_WEEK)).toString();
             result += " ";

@@ -25,11 +25,12 @@ import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author João Mota
- *  
+ * 
  */
 public class SummaryUtils {
 
-    public static boolean verifyValidDateSummary(Lesson lesson, Calendar summaryDate, Calendar summaryHour) {
+    public static boolean verifyValidDateSummary(Lesson lesson, Calendar summaryDate,
+            Calendar summaryHour) {
         Calendar dateAndHourSummary = Calendar.getInstance();
         dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
         dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
@@ -37,6 +38,7 @@ public class SummaryUtils {
         dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
         dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
         dateAndHourSummary.set(Calendar.SECOND, 00);
+        dateAndHourSummary.set(Calendar.MILLISECOND, 00);
 
         Calendar beginLesson = Calendar.getInstance();
         beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
@@ -51,10 +53,12 @@ public class SummaryUtils {
         beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(Calendar.HOUR_OF_DAY));
         beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
         beginLesson.set(Calendar.SECOND, 00);
+        beginLesson.set(Calendar.MILLISECOND, 00);
 
         endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
         endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
         endLesson.set(Calendar.SECOND, 00);
+        endLesson.set(Calendar.MILLISECOND, 00);
 
         return dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana().getDiaSemana()
                 .intValue()
@@ -74,7 +78,7 @@ public class SummaryUtils {
         }
         return null;
     }
-    
+
     public static Teacher getTeacher(final ISuportePersistente persistentSupport,
             final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
         if (infoSummary.getInfoTeacher() != null
@@ -108,9 +112,10 @@ public class SummaryUtils {
 
     public static Shift getShift(final ISuportePersistente persistentSupport, final Summary summary,
             final InfoSummary infoSummary) throws ExcepcaoPersistencia, FenixServiceException {
-        
+
         Shift shift = null;
-        if (summary != null && summary.getShift().getIdInternal().equals(infoSummary.getInfoShift().getIdInternal())) {
+        if (summary != null
+                && summary.getShift().getIdInternal().equals(infoSummary.getInfoShift().getIdInternal())) {
             shift = summary.getShift();
         } else {
             final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
@@ -128,7 +133,9 @@ public class SummaryUtils {
             FenixServiceException {
         Room room = null;
         if (infoSummary.getIsExtraLesson()) {
-            if (summary != null && summary.getRoom().getIdInternal().equals(infoSummary.getInfoRoom().getIdInternal())) {
+            if (summary != null
+                    && summary.getRoom().getIdInternal().equals(
+                            infoSummary.getInfoRoom().getIdInternal())) {
                 room = summary.getRoom();
             } else {
                 final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
@@ -140,8 +147,7 @@ public class SummaryUtils {
             if (lesson == null) {
                 throw new FenixServiceException("error.summary.no.shift");
             }
-            if (!verifyValidDateSummary(lesson, infoSummary.getSummaryDate(), lesson
-                    .getInicio())) {
+            if (!verifyValidDateSummary(lesson, infoSummary.getSummaryDate(), lesson.getInicio())) {
                 throw new FenixServiceException("error.summary.invalid.date");
             }
             room = lesson.getRoomOccupation().getRoom();
@@ -152,8 +158,59 @@ public class SummaryUtils {
         }
         return room;
     }
-    
-    
+
+    public static Lesson getSummaryLesson(Summary summary) {
+        if (summary.getIsExtraLesson() != null && summary.getIsExtraLesson().equals(Boolean.FALSE)) {
+            if (summary.getSummaryDate() != null && summary.getSummaryHour() != null) {
+
+                Calendar dateAndHourSummary = Calendar.getInstance();
+                Calendar summaryDate = Calendar.getInstance();
+                summaryDate.setTime(summary.getSummaryDate());
+                dateAndHourSummary.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
+                dateAndHourSummary.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                dateAndHourSummary.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
+
+                Calendar summaryHour = Calendar.getInstance();
+                summaryHour.setTime(summary.getSummaryHour());
+                dateAndHourSummary.set(Calendar.HOUR_OF_DAY, summaryHour.get(Calendar.HOUR_OF_DAY));
+                dateAndHourSummary.set(Calendar.MINUTE, summaryHour.get(Calendar.MINUTE));
+                dateAndHourSummary.set(Calendar.SECOND, 00);
+                dateAndHourSummary.set(Calendar.MILLISECOND, 00);
+
+                Calendar beginLesson = Calendar.getInstance();
+                beginLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
+                beginLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                beginLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
+
+                Calendar endLesson = Calendar.getInstance();
+                endLesson.set(Calendar.DAY_OF_MONTH, summaryDate.get(Calendar.DAY_OF_MONTH));
+                endLesson.set(Calendar.MONTH, summaryDate.get(Calendar.MONTH));
+                endLesson.set(Calendar.YEAR, summaryDate.get(Calendar.YEAR));
+
+                for (Lesson lesson : summary.getShift().getAssociatedLessons()) {
+                    beginLesson.set(Calendar.HOUR_OF_DAY, lesson.getInicio().get(Calendar.HOUR_OF_DAY));
+                    beginLesson.set(Calendar.MINUTE, lesson.getInicio().get(Calendar.MINUTE));
+                    beginLesson.set(Calendar.SECOND, 00);
+                    beginLesson.set(Calendar.MILLISECOND, 00);
+
+                    endLesson.set(Calendar.HOUR_OF_DAY, lesson.getFim().get(Calendar.HOUR_OF_DAY));
+                    endLesson.set(Calendar.MINUTE, lesson.getFim().get(Calendar.MINUTE));
+                    endLesson.set(Calendar.SECOND, 00);
+                    endLesson.set(Calendar.MILLISECOND, 00);
+                                       
+                    if (summary.getShift().getTipo().equals(lesson.getTipo())
+                            && dateAndHourSummary.get(Calendar.DAY_OF_WEEK) == lesson.getDiaSemana()
+                                    .getDiaSemana().intValue() && !beginLesson.after(dateAndHourSummary)
+                            && !endLesson.before(dateAndHourSummary)) {
+                        return lesson;
+                    }
+                }
+            }
+        }
+
+        return null;// extra lesson
+    }
+
     public static Date createSummaryDate(int year, int month, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
