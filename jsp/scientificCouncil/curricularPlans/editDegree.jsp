@@ -39,7 +39,8 @@
 			
 			<h:outputText value="#{scouncilBundle['degreeType']}: " />
 			<h:panelGroup>
-				<h:selectOneMenu id="bolonhaDegreeType" value="#{ScientificCouncilDegreeManagement.bolonhaDegreeType}">
+				<h:selectOneMenu id="bolonhaDegreeType" value="#{ScientificCouncilDegreeManagement.bolonhaDegreeType}"
+						disabled="#{ScientificCouncilDegreeManagement.degree.degreeCurricularPlansCount > 0}">
 					<f:selectItems value="#{ScientificCouncilDegreeManagement.bolonhaDegreeTypes}" />
 				</h:selectOneMenu>
 				<h:message for="bolonhaDegreeType" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
@@ -50,7 +51,6 @@
 				<h:inputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}" required="true" maxlength="100" size="10"/>
 				<h:message for="ectsCredits" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
 			</h:panelGroup>
-
 <%-- 
  			<h:outputText value="#{scouncilBundle['gradeTypes']}: " />
 			<h:panelGroup>

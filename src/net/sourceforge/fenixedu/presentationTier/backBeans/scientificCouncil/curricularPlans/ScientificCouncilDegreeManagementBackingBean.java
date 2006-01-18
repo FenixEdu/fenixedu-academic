@@ -135,13 +135,13 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
         return changeDegree("CreateDegree", args, "degree.created", "error.creatingDegree");
     }
     
-    public String editDegree() {
-        if (this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// || this.gradeScale.equals(this.NO_SELECTION)) {
+    public String editDegree() throws FenixFilterException, FenixServiceException {
+        if (this.bolonhaDegreeType != null && this.bolonhaDegreeType.equals(this.NO_SELECTION)) {// || this.gradeScale.equals(this.NO_SELECTION)) {
             this.setErrorMessage(scouncilBundle.getString("choose.request"));
             return "";
         }
 
-        Object[] args = { this.getDegreeId(), this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(this.bolonhaDegreeType), this.ectsCredits, null }; //GradeScale.valueOf(this.gradeScale) };
+        Object[] args = { this.getDegreeId(), this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(getBolonhaDegreeType()), this.ectsCredits, null }; //GradeScale.valueOf(this.gradeScale) };
         return changeDegree("EditDegree", args, "degree.edited", "error.editingDegree");
     }
     

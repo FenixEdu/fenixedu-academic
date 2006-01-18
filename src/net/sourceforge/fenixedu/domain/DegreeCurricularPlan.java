@@ -60,9 +60,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
 
         this.setCurricularStage(CurricularStage.OLD);
-        this
-                .setConcreteClassForStudentCurricularPlans(degree
-                        .getConcreteClassForDegreeCurricularPlans());
+        this.setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
     }
 
     private void commonFieldsChange(String name, GradeScale gradeScale) {

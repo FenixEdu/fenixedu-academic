@@ -84,10 +84,17 @@ public class Degree extends Degree_Base {
 
     public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
             Double ectsCredits, GradeScale gradeScale) {
+        checkIfCanEdit(bolonhaDegreeType);
         commonFieldsChange(name, nameEn, gradeScale);
         newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits);
     }
     
+    private void checkIfCanEdit(final BolonhaDegreeType bolonhaDegreeType) {
+        if (! this.getBolonhaDegreeType().equals(bolonhaDegreeType) && hasAnyDegreeCurricularPlans()) {
+            throw new DomainException("degree.cant.edit.bolonhaDegreeType");
+        }
+    }
+
     public Boolean getCanBeDeleted() {
         return !hasAnyDegreeCurricularPlans();
     }
