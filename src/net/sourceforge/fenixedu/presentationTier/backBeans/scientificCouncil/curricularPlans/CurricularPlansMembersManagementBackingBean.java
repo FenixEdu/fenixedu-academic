@@ -58,6 +58,9 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
             Object[] args = { getDegreeCurricularPlan(), selectedPersonsIDsToAdd, null };
             ServiceUtils.executeService(getUserView(), "UpdateDegreeCurricularPlanMembersGroup", args);
         }
+        // avoid preset check-boxes after action
+        selectedPersonsIDsToAdd = null;
+        selectedPersonsIDsToRemove = null;
     }
 
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
@@ -65,6 +68,9 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
             Object[] args = { getDegreeCurricularPlan(), null, selectedPersonsIDsToRemove };
             ServiceUtils.executeService(getUserView(), "UpdateDegreeCurricularPlanMembersGroup", args);
         }
+        // avoid preset check-boxes after action
+        selectedPersonsIDsToAdd = null;
+        selectedPersonsIDsToRemove = null;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixServiceException,

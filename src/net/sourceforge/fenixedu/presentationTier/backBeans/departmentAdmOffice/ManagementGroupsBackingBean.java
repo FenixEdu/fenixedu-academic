@@ -97,6 +97,9 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
             Object[] args = { getDepartment(), selectedPersonsIDsToAdd, null };
             ServiceUtils.executeService(getUserView(), "UpdateDepartmentsCompetenceCourseManagementGroup", args);
         }
+        // avoid preset check-boxes after action
+        selectedPersonsIDsToAdd = null;
+        selectedPersonsIDsToRemove = null;
     }
 
     public void removeMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
@@ -104,6 +107,9 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
             Object[] args = { getDepartment(), null, selectedPersonsIDsToRemove };
             ServiceUtils.executeService(getUserView(), "UpdateDepartmentsCompetenceCourseManagementGroup", args);
         }
+        // avoid preset check-boxes after action
+        selectedPersonsIDsToAdd = null;
+        selectedPersonsIDsToRemove = null;
     }
 
 }
