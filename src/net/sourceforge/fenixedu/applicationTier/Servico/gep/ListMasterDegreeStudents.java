@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithFirstTimeEnrolment;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -31,6 +33,8 @@ import pt.utl.ist.berserk.logic.serviceManager.IService;
  */
 public class ListMasterDegreeStudents implements IService {
 
+    private Map<DegreeCurricularPlan, ExecutionDegree> firstExecutionDegrees = new HashMap<DegreeCurricularPlan, ExecutionDegree>();
+
     public Collection run(String executionYearName) throws ExcepcaoPersistencia {
 
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
@@ -40,15 +44,14 @@ public class ListMasterDegreeStudents implements IService {
         final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
         final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();
         final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = sp
-                .getIPersistentDegreeCurricularPlan().readByDegreeTypeAndState(
-                        DegreeType.MASTER_DEGREE, DegreeCurricularPlanState.ACTIVE);
+                .getIPersistentDegreeCurricularPlan().readByDegreeTypeAndState(DegreeType.MASTER_DEGREE,
+                        DegreeCurricularPlanState.ACTIVE);
 
         CollectionUtils.filter(masterDegreeCurricularPlans, new Predicate() {
 
             public boolean evaluate(Object arg0) {
                 DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) arg0;
-                for (ExecutionDegree executionDegree : degreeCurricularPlan
-                        .getExecutionDegrees()) {
+                for (ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
                     if (executionDegree.getExecutionYear().equals(executionYear)) {
                         return true;
                     }
@@ -86,27 +89,16 @@ public class ListMasterDegreeStudents implements IService {
                         break;
                     }
                 }
+            } else if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+                if (!getFirstExecutionDegree(studentCurricularPlan.getDegreeCurricularPlan())
+                        .getExecutionYear().equals(executionYear)) {
+                    continue;
+                }
             }
-            
+
             if (firstTimeEnrolment) {
-
-                DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan
-                        .getDegreeCurricularPlan();
-                List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
-
-                ExecutionDegree executionDegree = (ExecutionDegree) Collections.min(executionDegrees, new Comparator() {
-
-                    public int compare(Object o1, Object o2) {
-                        ExecutionDegree executionDegree1 = (ExecutionDegree) o1;
-                        ExecutionDegree executionDegree2 = (ExecutionDegree) o2;
-
-                        return executionDegree1.getExecutionYear().getYear().compareTo(
-                                executionDegree2.getExecutionYear().getYear());
-                    }
-
-                });
-
-                if (!executionDegree.getExecutionYear().equals(executionYear)) {
+                if (!getFirstExecutionDegree(studentCurricularPlan.getDegreeCurricularPlan())
+                        .getExecutionYear().equals(executionYear)) {
                     firstTimeEnrolment = false;
                 }
             }
@@ -119,6 +111,32 @@ public class ListMasterDegreeStudents implements IService {
 
         return infoStudentCurricularPlans;
 
+    }
+
+    private ExecutionDegree getFirstExecutionDegree(DegreeCurricularPlan degreeCurricularPlan) {
+
+        if (this.firstExecutionDegrees.containsKey(degreeCurricularPlan)) {
+            return this.firstExecutionDegrees.get(degreeCurricularPlan);
+        }
+
+        List<ExecutionDegree> executionDegrees = degreeCurricularPlan.getExecutionDegrees();
+
+        ExecutionDegree executionDegree = (ExecutionDegree) Collections.min(executionDegrees,
+                new Comparator() {
+
+                    public int compare(Object o1, Object o2) {
+                        ExecutionDegree executionDegree1 = (ExecutionDegree) o1;
+                        ExecutionDegree executionDegree2 = (ExecutionDegree) o2;
+
+                        return executionDegree1.getExecutionYear().getYear().compareTo(
+                                executionDegree2.getExecutionYear().getYear());
+                    }
+
+                });
+
+        this.firstExecutionDegrees.put(degreeCurricularPlan, executionDegree);
+
+        return executionDegree;
     }
 
 }
