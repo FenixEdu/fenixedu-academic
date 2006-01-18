@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.layouts.TabularLayout;
@@ -23,6 +24,10 @@ public class CollectionRenderer extends OutputRenderer {
 
     private String headerClasses;
 
+    private String prefixes;
+    
+    private String suffixes;
+    
     public String getCaption() {
         return caption;
     }
@@ -53,6 +58,31 @@ public class CollectionRenderer extends OutputRenderer {
 
     public void setRowClasses(String rowClasses) {
         this.rowClasses = rowClasses;
+    }
+    
+    public String getPrefixes() {
+        return this.prefixes;
+    }
+
+    public void setPrefixes(String prefixes) {
+        this.prefixes = prefixes;
+    }
+
+    public String getSuffixes() {
+        return this.suffixes;
+    }
+
+    public void setSuffixes(String suffixes) {
+        this.suffixes = suffixes;
+    }
+
+    private String getStringPart(String string, int index) {
+        if (string == null) {
+            return null;
+        }
+        
+        String[] stringParts = string.split(",");
+        return stringParts[index % stringParts.length];
     }
     
     @Override
@@ -116,7 +146,58 @@ public class CollectionRenderer extends OutputRenderer {
             MetaObject object = getObject(rowIndex);
             getContext().setMetaObject(object);
             
-            return renderSlot(object.getSlots().get(columnIndex));
+            HtmlComponent component = renderSlot(object.getSlots().get(columnIndex));
+            HtmlInlineContainer container = null;
+            
+            String prefix = getStringPart(getPrefixes(), columnIndex);
+            if (prefix != null && prefix.length() > 0) {
+                container = new HtmlInlineContainer();
+                container.addChild(new HtmlText(prefix));
+                container.addChild(component);
+                
+                component = container;
+            }
+            
+            String suffix = getStringPart(getSuffixes(), columnIndex);
+            if (suffix != null && suffix.length() > 0) {
+                if (container != null) {
+                    container.addChild(new HtmlText(suffix));
+                }
+                else {
+                    container = new HtmlInlineContainer();
+                    container.addChild(component);
+                    container.addChild(new HtmlText(suffix));
+                }
+                
+                component = container;
+            }
+            
+            return component;
+        }
+        
+        protected HtmlComponent wrapPrefixAndSuffix(HtmlComponent component, int columnIndex) {
+            HtmlInlineContainer container = null;
+            
+            String prefix = getStringPart(getPrefixes(), columnIndex);
+            if (prefix != null) {
+                container = new HtmlInlineContainer();
+                container.addChild(new HtmlText(prefix));
+                container.addChild(component);
+            }
+            
+            String suffix = getStringPart(getSuffixes(), columnIndex);
+            if (suffix != null) {
+                if (container != null) {
+                    container.addChild(new HtmlText(suffix));
+                }
+                else {
+                    container = new HtmlInlineContainer();
+                    container.addChild(component);
+                    container.addChild(new HtmlText(suffix));
+                }
+            }
+            
+            return container != null ? container : component;
         }
 
     }
