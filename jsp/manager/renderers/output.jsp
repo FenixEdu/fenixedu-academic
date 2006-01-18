@@ -145,10 +145,12 @@
 
 <p>
     Glad you ask. As you won't believe in magic I'm forced to tell you that there is a new resource bundle
-    in town: <code>RendererResources</code>. The text that appears in the left side is fetched from the
-    resources using a simple convention. Each row correspondes to a slot of the object. For example,
-    <code>nome</code> is one of the person's slots because we have the <code>getNome</code> getter. When
-    the label for a slot is needed we search the renderer's resources for a key using the following order:
+    in town: <code>RendererResources</code>. The text that appears in the left side is fetched from this
+    resource bundle or from the default resource bundle associated with the module, that is, in the last case
+    the <code>ApplicationResources</code> is used. Labels are searched in the resources using a simple
+    convention. Each row correspondes to a slot of the object. For example, <code>nome</code> is one of the 
+    person's slots because we have the <code>getNome</code> getter. When the label for a slot is needed we 
+    search the renderer's resources for a key using the following order:
 </p>
 
     <ol>

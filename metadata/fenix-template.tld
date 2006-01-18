@@ -62,10 +62,19 @@
 
     <attribute>
       <name>property</name>
-      <required>true</required>
+      <required>false</required>
       <rtexprvalue>true</rtexprvalue>
       <description>
         The name of the target property.
+      </description>
+    </attribute>
+
+    <attribute>
+      <name>bundle</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+            The name of the resource bundle to use.
       </description>
     </attribute>
 

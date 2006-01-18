@@ -11,6 +11,7 @@ public interface MetaSlot extends MetaObject, Serializable {
     public String getSchema();
     public String getLayout();
     public MetaSlotKey getKey();
+    public String getLabelKey();
     public boolean hasValidator();
     public String getLabel();
     public Class<HtmlValidator> getValidator();

@@ -34,7 +34,7 @@ public class RegexpValidator extends HtmlValidator {
 
     @Override
     protected String getResourceMessage(String message) {
-        return RenderUtils.getResourceString(message, getRegexp());
+        return RenderUtils.getFormatedResourceString(message, getRegexp());
     }
 
     @Override

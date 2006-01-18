@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.renderers;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenu;
 import net.sourceforge.fenixedu.renderers.components.HtmlMenuOption;
@@ -12,27 +9,37 @@ import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 import org.apache.log4j.Logger;
+import org.apache.struts.util.MessageResources;
 
 public class EnumInputRenderer extends InputRenderer {
 
     private static Logger logger = Logger.getLogger(EnumInputRenderer.class);
     
+    // NOTE: duplicate code with EnumRenderer
     protected String getEnumDescription(Enum enumerate) {
-        ResourceBundle bundle = getEnumerationBundle();
-        
         String description = enumerate.toString();
         
-        try {
-            description = bundle.getString(enumerate.toString());
-        } catch (MissingResourceException e) {
-            logger.warn("could not get name of enumeration: " + enumerate.toString());
+        MessageResources resources = getEnumerationResources();
+        if (resources != null) {
+            String message = resources.getMessage(enumerate.toString());
+            
+            if (message != null) {
+                description = message;
+            }
         }
-        
+            
         return description;
     }
 
-    protected ResourceBundle getEnumerationBundle() {
-        return ResourceBundle.getBundle("ServidorApresentacao.EnumerationResources");
+    protected MessageResources getEnumerationResources() {
+        // TODO: allow the name to be configured or fetch the resources in other way
+        MessageResources resources = RenderUtils.getMessageResources("ENUMERATION_RESOURCES");
+        
+        if (resources == null) {
+            resources = RenderUtils.getMessageResources();
+        }
+        
+        return resources;
     }
 
     @Override

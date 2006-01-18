@@ -130,7 +130,7 @@ public class ConfigurationReader {
                         schema.addSlotDescription(slotDescription);
                     }
 
-                    logger.info("adding new schema: " + schema.getName());
+                    logger.debug("adding new schema: " + schema.getName());
                     RenderKit.getInstance().registerSchema(schema);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -182,7 +182,7 @@ public class ConfigurationReader {
                     
                     RenderMode mode = RenderMode.getMode(modeName);
                     
-                    logger.info("[" + modeName + "] adding new renderer: " + objectClass + "/" + layout + "/"
+                    logger.debug("[" + modeName + "] adding new renderer: " + objectClass + "/" + layout + "/"
                             + rendererClass + "/" + rendererProperties);
                     RenderKit.getInstance().registerRenderer(mode, objectClass, layout, rendererClass,
                             rendererProperties);
