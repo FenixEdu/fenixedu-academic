@@ -70,9 +70,10 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
                 executionCourseIds.add(executionCourseId);
             }
             if (dps.getMasterDegreeOnly().booleanValue()) {
-                hours
-                        .put(executionCourseId.toString(), dps.getInfoProfessorship().getHours()
-                                .toString());
+                if(dps.getInfoProfessorship().getHours() != null){
+                    hours.put(executionCourseId.toString(), dps.getInfoProfessorship().getHours()
+                                    .toString());
+                }
             }
         }
 

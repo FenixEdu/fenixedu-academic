@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
@@ -612,7 +613,7 @@ public class SummaryManagerAction extends FenixDispatchAction {
         } catch (Exception e) {
             e.printStackTrace();
             ActionErrors actionErrors = new ActionErrors();
-            if (e.getMessage() == null && e instanceof NotAuthorizedException) {
+            if (e.getMessage() == null && e instanceof NotAuthorizedFilterException) {
                 actionErrors.add("error.editSummary", new ActionError("error.summary.not.authorized"));
             } else {
                 actionErrors.add("error.editSummary", new ActionError(e.getMessage()));

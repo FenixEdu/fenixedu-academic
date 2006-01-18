@@ -110,7 +110,7 @@ public class Department extends Department_Base {
     }
 
     public List<Teacher> getTeachers(Date begin, Date end) {
-        List teachers = new ArrayList();
+        List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = this.getWorkingEmployees(begin, end);
         for (Employee employee : employees) {
             Teacher teacher = employee.getPerson().getTeacher();
