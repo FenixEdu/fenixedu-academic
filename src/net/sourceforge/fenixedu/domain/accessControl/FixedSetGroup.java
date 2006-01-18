@@ -7,7 +7,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 
 public class FixedSetGroup extends LeafGroup {
-
+    
+    private static final long serialVersionUID = 1L;
+    
     private List<DomainReference<Person>> persons;
     
     protected FixedSetGroup() {
