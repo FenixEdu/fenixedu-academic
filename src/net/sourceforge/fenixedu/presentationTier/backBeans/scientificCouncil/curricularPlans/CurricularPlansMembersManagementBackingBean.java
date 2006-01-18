@@ -146,16 +146,18 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
         Department department = getDepartment();
         if (department != null) {
             List<Employee> employees = new ArrayList<Employee>(getDepartment().getCurrentActiveWorkingEmployees());
-
             ComparatorChain chainComparator = new ComparatorChain();
             chainComparator.addComparator(new BeanComparator("person.nome"), false);
             chainComparator.addComparator(new BeanComparator("employeeNumber"), false);
             Collections.sort(employees, chainComparator);
             
+            Group curricularPlanMembersGroup = this.getDegreeCurricularPlan().getCurricularPlanMembersGroup();
             for (Employee departmentEmployee : employees) {
                 Person person = departmentEmployee.getPerson();
-                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
-                        + person.getUsername() + ")"));
+                if (!curricularPlanMembersGroup.isMember(person)) {
+                    result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
+                            + person.getUsername() + ")"));
+                }
             }
         }
 

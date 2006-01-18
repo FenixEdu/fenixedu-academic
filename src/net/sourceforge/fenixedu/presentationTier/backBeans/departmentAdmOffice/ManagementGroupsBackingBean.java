@@ -46,12 +46,17 @@ public class ManagementGroupsBackingBean extends FenixBackingBean {
     }
 
     public List getDepartmentEmployeesSelectItems() {
+        Group competenceCoursesManagementGroup = getDepartment().getCompetenceCourseMembersGroup();
+        
         List<SelectItem> result = new ArrayList<SelectItem>(employees.size());
         for (Employee departmentEmployee : employees) {
             Person person = departmentEmployee.getPerson();
-            result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));
+            if (competenceCoursesManagementGroup == null || !competenceCoursesManagementGroup.isMember(person)) {
+                result.add(new SelectItem(person.getIdInternal(), person.getNome() + " (" + person.getUsername() + ")"));    
+            }
         }
         return result;
+        
     }
 
     public int getDepartmentEmployeesSize() {
