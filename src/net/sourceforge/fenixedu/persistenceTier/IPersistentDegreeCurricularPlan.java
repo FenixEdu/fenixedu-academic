@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 
 public interface IPersistentDegreeCurricularPlan extends IPersistentObject {
 
-    public List readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia;
+    public List<DegreeCurricularPlan> readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia;
 
     public List<DegreeCurricularPlan> readFromNewDegreeStructure() throws ExcepcaoPersistencia;
     

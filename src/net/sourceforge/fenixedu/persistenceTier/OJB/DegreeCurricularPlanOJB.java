@@ -11,21 +11,17 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 import org.apache.ojb.broker.query.Criteria;
 
-/**
- * @author dcs-rjao 19/Mar/2003
- */
-
 public class DegreeCurricularPlanOJB extends PersistentObjectOJB implements
         IPersistentDegreeCurricularPlan {
 
-    public List readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
+    public List<DegreeCurricularPlan> readByCurricularStage(CurricularStage curricularStage) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addEqualTo("curricularStage", curricularStage);
 
         return queryList(DegreeCurricularPlan.class, criteria);
     }
 
-    public List readFromNewDegreeStructure() throws ExcepcaoPersistencia {
+    public List<DegreeCurricularPlan> readFromNewDegreeStructure() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("curricularStage", CurricularStage.OLD);
 
