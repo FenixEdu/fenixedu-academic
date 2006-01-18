@@ -44,23 +44,23 @@
 	<h:outputText value="#{bolonhaBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
 	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
 	<h:outputText value="</ul></div>" escape="false"/>	
-	<h:form>				
+	<h:form onsubmit="updateRTEs();">				
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<a name='portuguese'><h4 class='first'>#{bolonhaBundle['portuguese']}: </h4></a><fieldset class='lfloat'>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['objectives']}: </label>" escape="false"/>
-		<h:inputTextarea id="generalObjectives" cols="80" rows="5" value="#{CompetenceCourseManagement.objectives}"/>
+		<fc:htmlEditor width="800" height="140" id="objectives" value="#{CompetenceCourseManagement.objectives}" required="false" showButtons="false"/>
 		<h:outputText value="</p>" escape="false"/>			
 		<h:outputText value="<p><label>#{bolonhaBundle['program']}: </label>" escape="false"/>
-		<h:inputTextarea id="program" cols="80" rows="5" value="#{CompetenceCourseManagement.program}"/>			
+		<fc:htmlEditor width="800" height="140" id="program" value="#{CompetenceCourseManagement.program}" required="false" showButtons="false"/>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<a name='english'><h4 class='first'>#{bolonhaBundle['english']}: </h4></a><fieldset class='lfloat'>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['objectivesEn']}: </a></label>" escape="false"/>
-		<h:inputTextarea id="generalObjectivesEn" cols="80" rows="5" value="#{CompetenceCourseManagement.objectivesEn}"/>
+		<fc:htmlEditor width="800" height="140" id="objectivesEn" value="#{CompetenceCourseManagement.objectivesEn}" required="false" showButtons="false"/>
 		<h:outputText value="</p>" escape="false"/>			
 		<h:outputText value="<p><label>#{bolonhaBundle['programEn']}: </label>" escape="false"/>
-		<h:inputTextarea id="programEn" cols="80" rows="5" value="#{CompetenceCourseManagement.programEn}"/>			
+		<fc:htmlEditor width="800" height="140" id="programEn" value="#{CompetenceCourseManagement.programEn}" required="false" showButtons="false"/>		
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
 		
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
