@@ -9486,7 +9486,7 @@
         	<chain name="PersonAuthorization"></chain>
         </filterChains>     
     </service>
-	<service>
+    <service>
    	 	<name>SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.department.SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID</implementationClass>
         <description></description>
@@ -9509,4 +9509,11 @@
         <isTransactional>true</isTransactional>  
         <filterChains/>     
     </service>
-</serviceDefinitions>
+	<service>
+   	 	<name>ReadDomainTeacherByNumber</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.ReadDomainTeacherByNumber</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains></filterChains>     
+    </service>	
+</serviceDefinitions>    
