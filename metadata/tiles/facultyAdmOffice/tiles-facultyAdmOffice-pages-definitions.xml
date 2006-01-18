@@ -194,4 +194,17 @@
 		<put name="body" value="/teacher/credits/listTeacherCredits.jsp"></put>
 	</definition>
 	
+	
+    <definition name="search-teacher-resume-credits" extends="creditsManagement.masterPage">
+        <put name="body" value="search-teacher-resume-credits-body"/>
+    </definition>
+    <definition name="search-teacher-resume-credits-body" extends="teacher-search-layout">
+        <put name="searchInfo" value="message.teacherCredit.teacherSearch"/>
+    </definition>	
+	<definition name="show-all-credits-resume" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/departmentMember/viewTeacherService/credits/listAllTeacherCreditsResume.jsp"/>
+	</definition>
+	<definition name="show-teacher-credits" extends="facultyAdmOffice.masterPage">
+		<put name="body" value="/departmentMember/viewTeacherService/credits/showTeacherCredits.jsp"/>
+	</definition>	
 </tiles-definitions>

@@ -138,7 +138,7 @@
 		</li>
 		--%>					
 		<li>
-			<html:link page="/teacherSearchForTeacherCreditsSheet.do?method=searchForm&amp;page=0" > 
+			<html:link page="/readAllTeacherCreditsResume.do?method=prepareTeacherSearch&amp;page=0" > 
 				<bean:message key="link.creditsSheet.view"/>  
 			</html:link> 
 		</li>

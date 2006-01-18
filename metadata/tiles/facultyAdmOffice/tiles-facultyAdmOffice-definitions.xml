@@ -13,4 +13,9 @@
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
+	
+	<definition name="creditsManagement.masterPage" extends="facultyAdmOffice.masterPage">
+	  <put name="navLocal" value="/facultyAdmOffice/commons/localNavigationBar.jsp" />
+	</definition>
+	
 </tiles-definitions>

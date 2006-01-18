@@ -17,8 +17,10 @@
 			<form-bean name="teacherSearchForm" 
 				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 				<form-property name="teacherNumber" type="java.lang.String"/>
+				<form-property name="teacherId" type="java.lang.Integer"/>
 				<form-property name="executionPeriodId" type="java.lang.Integer"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="method" type="java.lang.String"/>
 			</form-bean>
 			
 			<form-bean name="ManagementPositionForm" 
@@ -456,6 +458,30 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.credits.ReadTeacherCreditsSheetAction">
             <forward name="successfull-read" path="showTeacherCreditsSheet"/>
         </action>
+        
+        
+		<action path="/readAllTeacherCreditsResume" 
+        	input="/readAllTeacherCreditsResume.do?method=prepareTeacherSearch" 
+            name="teacherSearchForm"
+            scope="request"
+            parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ReadAllTeacherCreditsResumeDispatchAction">
+            <exception type="java.lang.NumberFormatException" 
+                key="errors.invalid.teacher-number" 
+                path="/readAllTeacherCreditsResume.do?method=prepareTeacherSearch"/>                
+			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixExceptionMessageHandler"/>                             
+			<forward name="search-teacher-form" path="search-teacher-resume-credits"/>
+            <forward name="show-all-credits-resume" path="show-all-credits-resume"/>
+        </action>
+        <action path="/showFullTeacherCreditsSheet"  
+            name="teacherSearchForm"
+            scope="request"
+            parameter="method" 
+            type="net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction">
+            <forward name="show-teacher-credits" path="show-teacher-credits"/>
+		</action>
         <!-- =======================================================================  -->
     	<!-- ==  USE CASE : Manage Professorships ================================== -->
         <action path="/teacherSearchForExecutionCourseAssociation" input="search-for-teacherExecutionCourseAssociation-management" 
@@ -866,7 +892,7 @@
 	</plug-in>
 	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-pages-definitions.xml" />
+					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-pages-definitions.xml,/WEB-INF/tiles/departmentMember/tiles-departmentMember-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    

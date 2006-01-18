@@ -1,7 +1,7 @@
 /**
-* Dec 13, 2005
+* Jan 16, 2006
 */
-package net.sourceforge.fenixedu.presentationTier.Action.teacher.credits;
+package net.sourceforge.fenixedu.presentationTier.Action.credits;
 
 import java.util.Iterator;
 import java.util.List;
@@ -10,31 +10,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.CreditLine;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 /**
  * @author Ricardo Rodrigues
  *
  */
 
-public class ShowAllTeacherCreditsResumeAction extends FenixAction {
+public class ReadAllTeacherCreditsResumeDispatchAction extends FenixDispatchAction{
 
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws NumberFormatException,
+            FenixFilterException, FenixServiceException {
+
+        DynaActionForm dynaForm = (DynaActionForm) form;
+        dynaForm.set("method", "showTeacherCreditsResume");
+        return mapping.findForward("search-teacher-form");
+    }
+    
+    public ActionForward showTeacherCreditsResume(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws NumberFormatException, FenixServiceException, Exception {
         IUserView userView = SessionUtils.getUserView(request);
         
-        Teacher teacher = userView.getPerson().getTeacher();
+        DynaActionForm dynaForm = (DynaActionForm) form;        
+        Integer teacherNumber = Integer.parseInt(dynaForm.getString("teacherNumber")); 
+        
+        Teacher teacher = (Teacher) ServiceUtils.executeService(userView, "ReadDomainTeacherByNumber",
+                new Object[] { teacherNumber });
+        dynaForm.set("teacherId",teacher.getIdInternal());
         request.setAttribute("teacher", teacher);
 
         Object[] args = new Object[] {teacher.getIdInternal()};
@@ -47,6 +63,7 @@ public class ShowAllTeacherCreditsResumeAction extends FenixAction {
         request.setAttribute("creditsLines", orderedCreditsLines);
         return mapping.findForward("show-all-credits-resume");
     }
+    
 }
 
 
