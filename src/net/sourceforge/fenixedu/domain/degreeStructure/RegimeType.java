@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 
 public enum RegimeType {
     
-    SEMESTER,
+    SEMESTRIAL,
     
     ANUAL;
     

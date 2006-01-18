@@ -27,11 +27,9 @@
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}" /><br/>
 		<h:outputText value="#{bolonhaBundle['acronym']}: " style="font-weight: bold"/>
 		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}" /><br/>	
-		<br/>
-		<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
-		<br/>
+		<h:messages infoClass="infoMsg" errorClass="error0" layout="table"/>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/><br/>
-		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" styleClass="error"/>
+		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" styleClass="error0"/>
 		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			action="#{CompetenceCourseManagement.deleteCompetenceCourse}"/>

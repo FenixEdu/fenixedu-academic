@@ -126,7 +126,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             if (getCompetenceCourse() != null) {
                 setRegime(getCompetenceCourse().getRegime().name());
             } else {
-                setRegime("SEMESTER");
+                setRegime("SEMESTRIAL");
             }            
         }
         return (String) getViewState().getAttribute("regime");
@@ -215,7 +215,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             } else {
                 removeCourseLoad(courseLoads);
             }            
-        } else if (regime.equals("SEMESTER")) {
+        } else if (regime.equals("SEMESTRIAL")) {
             removeCourseLoad(courseLoads);
             setNumberOfPeriods(Integer.valueOf(1));
             // prevent application to reset the value

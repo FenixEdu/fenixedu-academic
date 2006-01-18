@@ -24,7 +24,7 @@
 	<h:outputText value="<span><strong>#{bolonhaBundle['step']} 2:</strong> #{bolonhaBundle['setCompetenceCourseLoad']}</span>" escape="false"/>
 	<h:outputText value=" > " escape="false"/>
 	<h:outputText value="<span><strong>#{bolonhaBundle['step']} 3:</strong> #{bolonhaBundle['setData']}</span></p>" escape="false"/>	
-	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	
 	<h:outputText value="<div class='simpleblock4'> " escape="false"/>
 	<h:outputFormat value="<h4 class='first'>#{bolonhaBundle['create.param']}</h4>" escape="false">
@@ -57,7 +57,7 @@
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['regime']}: </label>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.regime}">
-			<f:selectItem itemValue="SEMESTER" itemLabel="#{enumerationBundle['SEMESTER']}"/>
+			<f:selectItem itemValue="SEMESTRIAL" itemLabel="#{enumerationBundle['SEMESTRIAL']}"/>
 			<f:selectItem itemValue="ANUAL" itemLabel="#{enumerationBundle['ANUAL']}"/>
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>	

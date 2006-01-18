@@ -35,16 +35,19 @@
 		<h:outputText value="#{bolonhaBundle['courseGroup']}: "/>
 		<h:outputText value="#{context.courseGroup.name}<br/>" escape="false"/>
 		
-		<h:outputText value="#{bolonhaBundle['curricularYear']}: " />
-		<h:outputText value="#{context.curricularSemester.curricularYear.year}<br/>" escape="false"/>
-		
-		<h:outputText value="#{bolonhaBundle['semester']}: " />
-		<h:outputText value="#{context.curricularSemester.semester}<br/><br/>" escape="false"/>
+		<h:outputText value="#{bolonhaBundle['curricularPeriod']}: " />
+		<h:outputText value="#{context.curricularPeriod.fullLabel}<br/><br/>" escape="false"/>
 	</fc:dataRepeater>
 	<hr>
 	<h:form>
-		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'view'}">
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.curricularCourse.parentDegreeCurricularPlan.idInternal}'/>"/>
+		
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'return'}">
 			<h:commandLink immediate="true" value="#{bolonhaBundle['back']}" action="buildCurricularPlan"/>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'close'}">
+			<h:commandButton immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{bolonhaBundle['close']}" />
 		</h:panelGroup>
 	</h:form>
 </ft:tilesView>

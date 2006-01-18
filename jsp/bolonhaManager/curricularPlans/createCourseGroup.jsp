@@ -16,9 +16,7 @@
 	<h:outputFormat value="<h2>#{bolonhaBundle['create.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['courseGroup']}"/>
 	</h:outputFormat>
-	<h:outputText styleClass="error" rendered="#{!empty CourseGroupManagement.errorMessage}"
-			value="#{bolonhaBundle[CourseGroupManagement.errorMessage]}<br/>" escape="false"/>
-
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'"/>
 		<h:outputText escape="false" value="<input id='parentCourseGroupID' name='parentCourseGroupID' type='hidden' value='#{CourseGroupManagement.parentCourseGroupID}'"/>
@@ -27,7 +25,7 @@
 			<h:outputText value="#{bolonhaBundle['name']}: "/>
 			<h:panelGroup>
 				<h:inputText id="name" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.name}"/>
-				<h:message for="name"/>
+				<h:message for="name" styleClass="error0"/>
 			</h:panelGroup>
 		</h:panelGrid>
 		<br/>

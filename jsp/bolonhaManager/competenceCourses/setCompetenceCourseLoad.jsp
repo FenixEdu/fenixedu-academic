@@ -3,11 +3,9 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <style>
-<!--
-.alignRight {
-	text-align: right;
+table.nospace label {
+width: auto;
 }
--->
 </style>
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
@@ -24,7 +22,7 @@
 	<h:outputText value="<span class='actual'><strong>#{bolonhaBundle['step']} 2:</strong> #{bolonhaBundle['setCompetenceCourseLoad']}</span>" escape="false"/>
 	<h:outputText value=" > <span><strong>#{bolonhaBundle['step']} 3:</strong> #{bolonhaBundle['setData']}</span>" escape="false"/>
 	<h:outputText value="</p>" escape="false"/>
-	<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table"/>
 
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>
@@ -60,13 +58,13 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['regime']}: </label>" escape="false"/>
 		<fc:selectOneMenu value="#{CompetenceCourseManagement.regime}"
 				onchange="this.form.submit();" valueChangeListener="#{CompetenceCourseManagement.resetCourseLoad}">
-			<f:selectItem itemValue="SEMESTER" itemLabel="#{enumerationBundle['SEMESTER']}"/>
+			<f:selectItem itemValue="SEMESTRIAL" itemLabel="#{enumerationBundle['SEMESTRIAL']}"/>
 			<f:selectItem itemValue="ANUAL" itemLabel="#{enumerationBundle['ANUAL']}"/>
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 
 		<h:outputText value="<p><label>#{bolonhaBundle['periods']}: </label>" escape="false"/>
-		<h:selectOneRadio value="#{CompetenceCourseManagement.numberOfPeriods}"
+		<h:selectOneRadio value="#{CompetenceCourseManagement.numberOfPeriods}" styleClass="nospace"
 				onchange="this.form.submit();" valueChangeListener="#{CompetenceCourseManagement.resetCorrespondentCourseLoad}">
 			<f:selectItems value="#{CompetenceCourseManagement.periods}"/>
 		</h:selectOneRadio>
@@ -75,7 +73,7 @@
 		<h:dataTable value="#{CompetenceCourseManagement.courseLoads}" var="courseLoad">
 			<h:column>								
 				<h:outputText value="<p><label>#{bolonhaBundle['lessonHours']}: </label>" escape="false"/>				
-				<h:panelGrid columns="2" style="background-color: #fff; padding: 0.5em; border: 1px solid #ccc;" 
+				<h:panelGrid columns="2" style="background-color: #fff; padding: 0.5em; border: 1px solid #ccc;"
 						rendered="#{courseLoad.action != 'delete'}">
 					<f:facet name="header">					
 						<h:outputText value="<strong>#{courseLoad.order}º #{bolonhaBundle['semester']}</strong>" escape="false"

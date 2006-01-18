@@ -21,7 +21,7 @@
 	<h:outputText value="<span><strong>#{bolonhaBundle['step']} 2:</strong> #{bolonhaBundle['setCompetenceCourseLoad']}</span>" escape="false"/>
 	<h:outputText value=" > <span  class='actual'><strong>#{bolonhaBundle['step']} 3:</strong> #{bolonhaBundle['setData']}</span>" escape="false"/>
 	<h:outputText value="</p>" escape="false"/>
-	<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table"/>
 	
 	<h:outputText value="<ul class='nobullet padding1 indent0 mtop3'>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>

@@ -42,8 +42,12 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
         super.deleteDomainObject();
     }
     
-    public double getTotalEctsCredits() {
-        double result = 0;
+    public double getEctsCredits() {
+        return getTotalEctsCredits();
+    }
+    
+    private double getTotalEctsCredits() {
+        double result = 0.0;
         for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourseLoads()) {
             result += competenceCourseLoad.getEctsCredits().doubleValue();
         }

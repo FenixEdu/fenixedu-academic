@@ -673,6 +673,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad exten
 	Double autonomousWorkHours;
 	Double ectsCredits;
 	Integer order;
+	CurricularPeriodType curricularPeriodType;
 }
 
 

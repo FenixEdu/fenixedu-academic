@@ -15,7 +15,7 @@
 		<h:outputText value="#{bolonhaBundle['area']}: " style="font-weight: bold"/>
 		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourseGroupUnit.name}<br/>" escape="false"/>
 	</fc:dataRepeater>
-	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	
 	<h:outputText value="<div class='simpleblock4'> " escape="false"/>
 	<h:outputFormat value="<h4 class='first'>#{bolonhaBundle['edit.param']}</h4>" escape="false">

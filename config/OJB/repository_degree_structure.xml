@@ -349,6 +349,12 @@
 		column="LOAD_ORDER"
 		jdbc-type="INTEGER"
 	/>
+	<field-descriptor
+		name="curricularPeriodType"
+		column="CURRICULAR_PERIOD_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularPeriodType2SqlCurricularPeriodTypeFieldConversion"
+	/>
 	<reference-descriptor auto-retrieve="false"
 			name="competenceCourseInformation"
 			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation">

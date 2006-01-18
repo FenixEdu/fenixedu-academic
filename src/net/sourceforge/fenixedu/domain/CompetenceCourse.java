@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -43,12 +44,12 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public void addCompetenceCourseLoad(Double theoreticalHours, Double problemsHours,
             Double laboratorialHours, Double seminaryHours, Double fieldWorkHours,
             Double trainingPeriodHours, Double tutorialOrientationHours, Double autonomousWorkHours,
-            Double ectsCredits, Integer order) {
+            Double ectsCredits, Integer order, CurricularPeriodType curricularPeriodType) {
 
         getRecentCompetenceCourseInformation().addCompetenceCourseLoads(
                 new CompetenceCourseLoad(theoreticalHours, problemsHours, laboratorialHours,
                         seminaryHours, fieldWorkHours, trainingPeriodHours, tutorialOrientationHours,
-                        autonomousWorkHours, ectsCredits, order));
+                        autonomousWorkHours, ectsCredits, order, curricularPeriodType));
     }
     
     private void fillFields(String code, String name) {
@@ -154,7 +155,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public RegimeType getRegime() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getRegime() : null;
+        return getRecentCompetenceCourseInformation().getRegime();
     }
     
     public void setRegime(RegimeType regimeType) {
@@ -162,23 +163,23 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public List<CompetenceCourseLoad> getCompetenceCourseLoads() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getCompetenceCourseLoads() : null;
+        return getRecentCompetenceCourseInformation().getCompetenceCourseLoads();
     }
     
     public String getObjectives() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getObjectives() : null;
+        return getRecentCompetenceCourseInformation().getObjectives();
     }
 
     public String getProgram() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getProgram() : null;
+        return getRecentCompetenceCourseInformation().getProgram();
     }
 
     public String getEvaluationMethod() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getEvaluationMethod() : null;
+        return getRecentCompetenceCourseInformation().getEvaluationMethod();
     }
 
     public String getObjectivesEn() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getObjectivesEn() : null;
+        return getRecentCompetenceCourseInformation().getObjectivesEn();
     }
 
     public String getProgramEn() {
@@ -186,7 +187,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public String getEvaluationMethodEn() {
-        return (getRecentCompetenceCourseInformation() != null) ? getRecentCompetenceCourseInformation().getEvaluationMethodEn() : null;
+        return getRecentCompetenceCourseInformation().getEvaluationMethodEn();
+    }
+    
+    public double getEctsCredits() {
+        return getRecentCompetenceCourseInformation().getEctsCredits();
     }
     
     public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {

@@ -20,8 +20,13 @@
 	<h:outputText value="<br/><br/><hr/>" escape="false"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
-		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}"
-			action="curricularPlansManagement"/>
+		<h:panelGroup rendered="#{empty CurricularCourseManagement.action}">
+			<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}"
+				action="curricularPlansManagement"/>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'close'}">
+			<h:commandButton immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{scouncilBundle['close']}" />
+		</h:panelGroup>
 	</h:form>
 	
 </ft:tilesView>

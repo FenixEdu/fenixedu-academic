@@ -26,17 +26,19 @@
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
 		<h:outputText value="<ul class='mtop0 mbottom3'>" escape="false"/>
 		<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}" var="curricularCourse">			
+			<h:outputText value="<li>" escape="false"/>
 			<h:outputLink value="../curricularPlans/viewCurricularPlan.faces" target="_blank">
-				<h:outputText value="<li>#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
+				<h:outputText value="#{curricularCourse.parentDegreeCurricularPlan.name}" escape="false"/>
+				<f:param name="action" value="close"/>
 				<f:param name="degreeCurricularPlanID" value="#{curricularCourse.parentDegreeCurricularPlan.idInternal}"/>
-				<f:param name="action" value="viewccm"/>
 			</h:outputLink>
 			<h:outputText value=" > "/>
 			<h:outputLink value="../curricularPlans/viewCurricularCourse.faces" target="_blank">
-				<h:outputText value="#{curricularCourse.name}</li>" escape="false"/>
+				<h:outputText value="#{curricularCourse.name}" escape="false"/>
+				<f:param name="action" value="close"/>
 				<f:param name="curricularCourseID" value="#{curricularCourse.idInternal}"/>
-				<f:param name="action" value="viewccm"/>
 			</h:outputLink>
+			<h:outputText value="</li>" escape="false"/>
 		</fc:dataRepeater>
 		<h:outputText value="</ul>" escape="false"/>
 	</h:panelGroup>	

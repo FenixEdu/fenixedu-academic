@@ -16,19 +16,17 @@
 	<h:outputFormat value="<h2>#{bolonhaBundle['delete.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['courseGroup']}"/>
 	</h:outputFormat>
-	<h:outputText styleClass="error" rendered="#{!empty CourseGroupManagement.errorMessage}"
-			value="#{bolonhaBundle[CourseGroupManagement.errorMessage]}<br/>" escape="false"/>
-
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'"/>
 		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'"/>
 		<br/>
-		<h:panelGroup styleClass="infoselected">
+		<h:panelGroup styleClass="bgcolor1">
 			<h:outputText style="font-weight: bold" value="#{bolonhaBundle['name']}: "/>
 			<h:outputText value="#{CourseGroupManagement.name}<br/>" escape="false"/>
 		</h:panelGroup>
 		<br/><br/>
-		<h:outputText styleClass="error" value="#{bolonhaBundle['confirmDeleteMessage']}"/>
+		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}"/>
 		<br/>
 		<hr>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"

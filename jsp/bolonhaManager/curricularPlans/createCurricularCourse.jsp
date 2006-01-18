@@ -8,7 +8,7 @@
 
 	<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.name}" style="font-style: italic"/>
 	<h2><h:outputText value="#{bolonhaBundle['createCurricularCourse']}"/></h2>
-	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}" />
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
@@ -37,7 +37,10 @@
 		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['curricularCourseInformation']}: <br/>"  escape="false"/>
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['weight']}: "/>
-			<h:inputText id="weight" maxlength="5" size="5" value="#{CurricularCourseManagement.weight}" />
+			<h:panelGroup>
+				<h:inputText id="weight" maxlength="5" size="5" value="#{CurricularCourseManagement.weight}" />
+				<h:message for="weight" styleClass="error0"/>
+			</h:panelGroup>
 			
 			<h:outputText value="#{bolonhaBundle['prerequisites']}: "/>
 			<h:inputTextarea id="prerequisites" cols="80" rows="5" value="#{CurricularCourseManagement.prerequisites}"/>
