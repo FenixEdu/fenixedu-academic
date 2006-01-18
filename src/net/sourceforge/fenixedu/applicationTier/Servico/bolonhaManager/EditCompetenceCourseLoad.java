@@ -59,7 +59,7 @@ public class EditCompetenceCourseLoad implements IService {
     }
 
     private CurricularPeriodType getCurricularPeriodType(final RegimeType regimeType) {
-        if (regimeType.getName().equals("SEMESTER")) {
+        if (regimeType.getName().equals("SEMESTRIAL")) {
             return CurricularPeriodType.SEMESTER;
         } else if (regimeType.getName().equals("ANUAL")) {
             return CurricularPeriodType.YEAR;
