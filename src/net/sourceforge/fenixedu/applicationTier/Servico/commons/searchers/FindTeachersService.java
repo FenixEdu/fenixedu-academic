@@ -1,7 +1,3 @@
-/*
- * Created on Nov 19, 2003 by jpvl
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers;
 
 import java.util.ArrayList;
@@ -16,9 +12,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
-/**
- * @author jpvl
- */
 public class FindTeachersService extends SearchService {
 
     @Override
@@ -30,15 +23,10 @@ public class FindTeachersService extends SearchService {
     protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
             throws ExcepcaoPersistencia {
 
-        Teacher teacher = null;
-        try {
-            teacher = sp.getIPersistentTeacher().readByNumber(
-                    new Integer(searchParameters.get("teacherNumber").toString()));
-        } catch (NumberFormatException e) {
-            // ignored
-        }
+        Teacher teacher = sp.getIPersistentTeacher().readByNumber(
+                Integer.valueOf((String) searchParameters.get("teacherNumber")));
 
-        List returnList = new ArrayList();
+        List<Teacher> returnList = new ArrayList<Teacher>();
         if (teacher != null) {
             returnList.add(teacher);
         }
