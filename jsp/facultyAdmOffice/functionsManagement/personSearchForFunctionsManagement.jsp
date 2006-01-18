@@ -23,7 +23,7 @@
 	
 	<h:form>
 		<h:outputText value="<p><strong>#{bundle['label.find.person.number']}</strong></p>" escape="false"/>
-	    <h:panelGrid columns="5" styleClass="infoop">	    	 
+	    <h:panelGrid columns="5" styleClass="infoop" width="36%">	    	 
 	    	<h:outputText value="#{bundle['label.type']}" escape="false"/>
 	    	<fc:selectOneMenu value="#{managerFunctionsManagementBackingBean.personType}">
 				<f:selectItems value="#{managerFunctionsManagementBackingBean.personTypes}"/>

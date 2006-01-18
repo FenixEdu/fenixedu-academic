@@ -165,4 +165,16 @@
 	<slot name="companyPositions" />
 	<slot name="professionalActivityMainFocus" />
   </schema>
+  
+  <schema name="summaries.control.list" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction$ListElementDTO">
+  	<slot name="teacherName" />
+  	<slot name="teacherNumber" />
+  	<slot name="categoryName" />
+  	<slot name="executionCourseName" />
+  	<slot name="lessonHours" />
+   	<slot name="summaryHours" />	
+   	<slot name="totalSummaryHours" />	
+   	<slot name="difference" />	   	   	  	
+  </schema>
+  
 </schemas>

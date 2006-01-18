@@ -11,4 +11,8 @@
 	<definition name="studentsGratuityList" extends="definition.directiveCouncil.gratuity">
 		<put name="body" value="/posGraduacao/gratuity/studentsGratuityList.jsp"/>
 	</definition>
+	
+	<definition name="teacherSummariesControlList" extends="definition.directiveCouncil.masterPage">
+		<put name="body" value="/directiveCouncil/summariesControl/listTeacherSummariesControl.jsp"/>
+	</definition>
 </tiles-definitions>

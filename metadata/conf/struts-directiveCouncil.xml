@@ -9,7 +9,7 @@
     
 	<!-- ========== Form Bean Definitions ================================== -->
 	<form-beans type="org.apache.struts.action.ActionFormBean">
-	       <form-bean name="studentsGratuityListForm" 
+		<form-bean name="studentsGratuityListForm" 
 	  			 type="org.apache.struts.validator.DynaValidatorForm"
                  dynamic="true">
             <form-property name="page" type="java.lang.Integer" initial="0" />
@@ -17,8 +17,14 @@
             <form-property name="specialization" type="java.lang.String"/>
             <form-property name="degree" type="java.lang.String"/>
             <form-property name="situation" type="java.lang.String" />
-       </form-bean>
- 		
+    	</form-bean>
+    	<form-bean name="summariesControlForm" 
+	  			 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+            <form-property name="page" type="java.lang.Integer" initial="0" />
+            <form-property name="executionPeriod" type="java.lang.String"/>
+            <form-property name="department" type="java.lang.String"/>           
+    	</form-bean> 		
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -47,9 +53,8 @@
       		  forward="/index.jsp"/>
     
     <action path="/gratuitySection"
-	type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
-	parameter="method"
-	>
+		type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction"
+		parameter="method">
 		<forward name="Success" path="firstPageGratuitySection"/>
 	</action>
 	
@@ -58,11 +63,19 @@
 		parameter="method"
 		name="studentsGratuityListForm"
 		scope="request"
-		input="/studentsGratuityList.do?method=prepareChooseDegree&amp;page=0"
-	>
+		input="/studentsGratuityList.do?method=prepareChooseDegree&amp;page=0">
 		<forward name="choose" path="/studentsGratuityList.do?method=chooseExecutionYear&amp;page=0" />
 		<forward name="chooseStudentsGratuityList" path="chooseStudentsGratuityList"/>
 		<forward name="studentsGratuityList" path="studentsGratuityList" />
+	</action>
+		
+	<action path="/summariesControl"
+		type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction"
+		parameter="method"
+		name="summariesControlForm"
+		scope="request"
+		input="/index.do">
+		<forward name="success" path="teacherSummariesControlList" />			
 	</action>
       		  
  	</action-mappings>
