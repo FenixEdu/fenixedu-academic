@@ -26,14 +26,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Luis Cruz
  *  
  */
-public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID implements IService {
+public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Service {
 
     public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
 

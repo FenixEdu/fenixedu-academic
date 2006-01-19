@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Sessi
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -35,7 +35,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 
  */
 
-public class ReadGratuitySituationListByExecutionDegreeAndSpecialization implements IService {
+public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends Service {
 
     /**
      * Constructor

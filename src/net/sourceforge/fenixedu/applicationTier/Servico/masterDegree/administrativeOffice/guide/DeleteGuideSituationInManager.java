@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
-public class DeleteGuideSituationInManager implements IService {
+public class DeleteGuideSituationInManager extends Service {
 
     public void run(Integer guideSituationID) throws ExcepcaoPersistencia {
 

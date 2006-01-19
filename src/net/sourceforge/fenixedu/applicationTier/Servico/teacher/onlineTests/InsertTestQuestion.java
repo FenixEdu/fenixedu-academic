@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class InsertTestQuestion implements IService {
+public class InsertTestQuestion extends Service {
 
 	private String path = new String();
 

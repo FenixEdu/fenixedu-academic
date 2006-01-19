@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
-public class ReadAvailableClassesForShift implements IService {
+public class ReadAvailableClassesForShift extends Service {
 
     public List run(Integer shiftOID) throws ExcepcaoPersistencia {
 

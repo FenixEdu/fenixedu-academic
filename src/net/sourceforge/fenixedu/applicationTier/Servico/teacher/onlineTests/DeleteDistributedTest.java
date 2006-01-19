@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.TestType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class DeleteDistributedTest implements IService {
+public class DeleteDistributedTest extends Service {
     public void run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();

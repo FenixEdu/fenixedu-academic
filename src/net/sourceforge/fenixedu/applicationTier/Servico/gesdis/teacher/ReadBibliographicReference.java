@@ -25,14 +25,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author PTRLV
  * 
  * 
  */
-public class ReadBibliographicReference implements IService {
+public class ReadBibliographicReference extends Service {
 
 	public List run(InfoExecutionCourse infoExecutionCourse, Boolean optional)
 			throws FenixServiceException, ExcepcaoPersistencia {

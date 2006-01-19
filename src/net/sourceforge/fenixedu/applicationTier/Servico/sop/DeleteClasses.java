@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DeleteClasses implements IService {
+public class DeleteClasses extends Service {
 
     public Object run(List classOIDs) throws ExcepcaoPersistencia {
 

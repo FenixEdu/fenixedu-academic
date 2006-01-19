@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 5/Dez/2003
  *  
  */
-public class ReadInfoTeacherByTeacherNumber implements IService {
+public class ReadInfoTeacherByTeacherNumber extends Service {
 
     public InfoTeacher run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
 

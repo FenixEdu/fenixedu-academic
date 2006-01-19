@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -38,7 +38,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class CreateGuideFromTransactions implements IService {
+public class CreateGuideFromTransactions extends Service {
 
     public InfoGuide run(InfoGuide infoGuide, String remarks, GuideState situationOfGuide,
             List transactionsIDs) throws FenixServiceException, ExcepcaoPersistencia {

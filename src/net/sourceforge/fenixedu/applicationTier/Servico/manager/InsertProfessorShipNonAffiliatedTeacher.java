@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class InsertProfessorShipNonAffiliatedTeacher implements IService {
+public class InsertProfessorShipNonAffiliatedTeacher extends Service {
 
     public void run(Integer nonAffiliatedTeacherID, Integer executionCourseID) throws Exception {
 

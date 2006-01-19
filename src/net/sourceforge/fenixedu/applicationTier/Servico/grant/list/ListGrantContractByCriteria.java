@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRe
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.NameUtils;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ListGrantContractByCriteria implements IService {
+public class ListGrantContractByCriteria extends Service {
 
 	public ListGrantContractByCriteria() {
 	}

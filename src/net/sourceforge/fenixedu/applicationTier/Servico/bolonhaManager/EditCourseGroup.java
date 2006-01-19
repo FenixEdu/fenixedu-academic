@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditCourseGroup implements IService {
+public class EditCourseGroup extends Service {
 
     public void run(final Integer courseGroupID, final String name) throws ExcepcaoPersistencia,
             FenixServiceException {

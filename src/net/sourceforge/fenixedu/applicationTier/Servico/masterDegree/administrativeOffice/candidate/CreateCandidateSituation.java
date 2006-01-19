@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateCandidateSituation implements IService {
+public class CreateCandidateSituation extends Service {
 
     public void run(Integer executionDegreeID, Integer personID, SituationName newSituation)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -34,13 +34,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  *  
  */
-public class InsertEvaluationMarks implements IService {
+public class InsertEvaluationMarks extends Service {
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, HashMap hashMarks)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {

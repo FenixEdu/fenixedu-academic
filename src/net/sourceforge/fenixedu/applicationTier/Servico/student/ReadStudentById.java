@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 28/Ago/2003, 7:57:10
  * 
  */
-public class ReadStudentById implements IService {
+public class ReadStudentById extends Service {
 
 	public Object run(Integer id) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoStudent infoStudent = null;

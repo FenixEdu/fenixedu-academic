@@ -29,9 +29,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadShiftsAndGroups implements IService {
+public class ReadShiftsAndGroups extends Service {
 
     public static ISiteComponent run(Integer groupingCode, String username) throws ExcepcaoPersistencia, FenixServiceException {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

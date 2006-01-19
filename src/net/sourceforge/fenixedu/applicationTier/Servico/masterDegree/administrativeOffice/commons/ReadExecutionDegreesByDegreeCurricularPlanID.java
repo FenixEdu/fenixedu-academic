@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @return List containing all InfoExecutionDegrees, corresponding to Degree
  *         Curricular Plan
  */
-public class ReadExecutionDegreesByDegreeCurricularPlanID implements IService {
+public class ReadExecutionDegreesByDegreeCurricularPlanID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 

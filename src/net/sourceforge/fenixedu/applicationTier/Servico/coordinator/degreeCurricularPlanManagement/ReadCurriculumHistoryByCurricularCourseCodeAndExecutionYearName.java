@@ -30,12 +30,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 17/Nov/2003
  */
-public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName implements IService {
+public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName extends Service {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode,
             String stringExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {

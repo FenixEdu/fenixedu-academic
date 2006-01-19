@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
@@ -33,14 +34,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
-
 /**
  * @author João e Rita
  * 
  */
-public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod implements
-        IService {
+public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionPeriod extends
+        Service {
 
     /**
      * 

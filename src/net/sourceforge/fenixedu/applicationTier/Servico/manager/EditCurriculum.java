@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
 
-public class EditCurriculum implements IService {
+public class EditCurriculum extends Service {
 
     public void run(InfoCurriculum infoCurriculum, String language, String username)
             throws FenixServiceException, ExcepcaoPersistencia {

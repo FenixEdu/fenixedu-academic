@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DeleteSection implements IService {
+public class DeleteSection extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -23,13 +23,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
  *         (naat@mega.ist.utl.pt)
  */
-public class ChangeMasterDegreeProof implements IService {
+public class ChangeMasterDegreeProof extends Service {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate,
             Date thesisDeliveryDate, MasterDegreeClassification finalResult,

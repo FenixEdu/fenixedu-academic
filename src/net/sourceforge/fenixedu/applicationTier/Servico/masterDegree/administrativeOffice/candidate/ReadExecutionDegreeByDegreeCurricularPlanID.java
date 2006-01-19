@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * executionDegree specified in executionDegreeIndex
  */
 
-public class ReadExecutionDegreeByDegreeCurricularPlanID implements IService {
+public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
 
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex)
             throws ExcepcaoPersistencia {

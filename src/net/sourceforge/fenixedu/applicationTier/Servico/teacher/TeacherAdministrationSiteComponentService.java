@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  * 
  */
-public class TeacherAdministrationSiteComponentService implements IService {
+public class TeacherAdministrationSiteComponentService extends Service {
 
     public Object run(Integer infoExecutionCourseCode, ISiteComponent commonComponent,
             ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2)

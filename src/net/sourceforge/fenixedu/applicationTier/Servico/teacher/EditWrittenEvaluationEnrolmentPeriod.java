@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditWrittenEvaluationEnrolmentPeriod implements IService {
+public class EditWrittenEvaluationEnrolmentPeriod extends Service {
 
     public void run(Integer executionCourseID, Integer writtenEvaluationID, Date beginDate,
             Date endDate, Date beginTime, Date endTime) throws FenixServiceException,

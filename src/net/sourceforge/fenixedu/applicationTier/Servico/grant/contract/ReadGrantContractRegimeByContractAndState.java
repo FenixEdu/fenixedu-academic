@@ -19,14 +19,14 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRe
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadGrantContractRegimeByContractAndState implements IService {
+public class ReadGrantContractRegimeByContractAndState extends Service {
 
 	public List run(Integer grantContractId, Integer state) throws FenixServiceException, ExcepcaoPersistencia {
 		List contractRegimes = null;

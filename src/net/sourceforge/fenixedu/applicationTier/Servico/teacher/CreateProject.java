@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateProject implements IService {
+public class CreateProject extends Service {
 
     public void run(Integer executionCourseID, String name, Date begin, Date end, String description)
             throws ExcepcaoPersistencia, FenixServiceException {

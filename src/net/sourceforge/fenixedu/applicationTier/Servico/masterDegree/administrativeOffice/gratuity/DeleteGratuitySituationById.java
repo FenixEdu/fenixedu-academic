@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author Tânia Pousão
  * 
  */
-public class DeleteGratuitySituationById implements IService {
+public class DeleteGratuitySituationById extends Service {
 
 	public Boolean run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp = null;

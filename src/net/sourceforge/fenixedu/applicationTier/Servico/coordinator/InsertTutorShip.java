@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class InsertTutorShip implements IService {
+public class InsertTutorShip extends Service {
 
     public Boolean verifyStudentOfThisDegree(Student student, DegreeType degreeType, String degreeCode)
             throws FenixServiceException, ExcepcaoPersistencia {

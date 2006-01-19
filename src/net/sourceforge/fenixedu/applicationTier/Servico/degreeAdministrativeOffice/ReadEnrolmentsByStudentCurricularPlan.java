@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadEnrolmentsByStudentCurricularPlan implements IService {
+public class ReadEnrolmentsByStudentCurricularPlan extends Service {
 
     public List<InfoEnrolment> run(Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  *  
  */
-public class ReadTeacherExecutionCoursesSitesService implements IService {
+public class ReadTeacherExecutionCoursesSitesService extends Service {
 
     public List run(InfoTeacher infoTeacher) throws FenixServiceException, ExcepcaoPersistencia {
 

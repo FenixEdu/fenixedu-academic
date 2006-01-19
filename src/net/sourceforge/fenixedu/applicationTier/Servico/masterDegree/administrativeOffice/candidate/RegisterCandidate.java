@@ -42,13 +42,13 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentState;
 import net.sourceforge.fenixedu.util.StudentType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class RegisterCandidate implements IService {
+public class RegisterCandidate extends Service {
 
     public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {

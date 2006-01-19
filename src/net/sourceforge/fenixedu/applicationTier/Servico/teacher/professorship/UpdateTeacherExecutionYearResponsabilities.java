@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class UpdateTeacherExecutionYearResponsabilities implements IService {
+public class UpdateTeacherExecutionYearResponsabilities extends Service {
 
     public void run(Integer teacherId, Integer executionYearId,
             final List executionCourseResponsabilities) throws FenixServiceException,

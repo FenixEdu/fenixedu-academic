@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimburs
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadAllTransactionsByGratuitySituationID implements IService {
+public class ReadAllTransactionsByGratuitySituationID extends Service {
 
     public List run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
 

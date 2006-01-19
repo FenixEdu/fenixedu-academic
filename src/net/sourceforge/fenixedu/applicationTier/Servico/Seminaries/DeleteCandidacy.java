@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 25/Ago/2003, 15:09:58
  * 
  */
-public class DeleteCandidacy implements IService {
+public class DeleteCandidacy extends Service {
 
 	public void run(Integer id) throws BDException, ExcepcaoPersistencia {
 

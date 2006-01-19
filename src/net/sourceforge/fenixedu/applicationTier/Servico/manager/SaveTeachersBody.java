@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class SaveTeachersBody implements IService {
+public class SaveTeachersBody extends Service {
 
     public Boolean run(final List responsibleTeachersIds, final List<Integer> professorShipTeachersIds,
             final Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {

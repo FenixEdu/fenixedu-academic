@@ -26,12 +26,12 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
-public class InsertExecutionDegreeAtDegreeCurricularPlan implements IService {
+public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 
 	public void run(InfoExecutionDegree infoExecutionDegree) throws FenixServiceException,
 			ExcepcaoPersistencia {

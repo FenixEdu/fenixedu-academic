@@ -32,9 +32,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class PrepareInsertSummary implements IService {
+public class PrepareInsertSummary extends Service {
 
     public SiteView run(Integer executionCourseId, String userLogged) throws FenixServiceException,
             ExcepcaoPersistencia {

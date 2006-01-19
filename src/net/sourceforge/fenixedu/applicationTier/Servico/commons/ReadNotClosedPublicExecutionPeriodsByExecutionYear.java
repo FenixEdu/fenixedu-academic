@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class ReadNotClosedPublicExecutionPeriodsByExecutionYear implements IService {
+public class ReadNotClosedPublicExecutionPeriodsByExecutionYear extends Service {
 
     public List run(InfoExecutionYear infoExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {
 

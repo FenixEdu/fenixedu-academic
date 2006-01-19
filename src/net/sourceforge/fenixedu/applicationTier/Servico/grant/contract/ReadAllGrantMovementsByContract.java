@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMo
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadAllGrantMovementsByContract implements IService {
+public class ReadAllGrantMovementsByContract extends Service {
 
 	public List run(Integer grantContractId) throws FenixServiceException, ExcepcaoPersistencia {
 		List result = null;

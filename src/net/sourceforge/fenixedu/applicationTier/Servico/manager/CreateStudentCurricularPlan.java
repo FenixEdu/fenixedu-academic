@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateStudentCurricularPlan implements IService {
+public class CreateStudentCurricularPlan extends Service {
 
 public void run(final Integer studentNumber, final DegreeType degreeType,
             final StudentCurricularPlanState studentCurricularPlanState,

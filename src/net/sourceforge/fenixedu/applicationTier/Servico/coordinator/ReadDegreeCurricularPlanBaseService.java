@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 5/Dez/2003
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *           23/11/2004
  * 
  */
-abstract public class ReadDegreeCurricularPlanBaseService implements IService {
+abstract public class ReadDegreeCurricularPlanBaseService extends Service {
 
     protected List readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId)
             throws ExcepcaoPersistencia {

@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
 
-public class InsertBranch implements IService {
+public class InsertBranch extends Service {
 
     public void run(InfoBranch infoBranch) throws ExcepcaoPersistencia, NonExistingServiceException {
 

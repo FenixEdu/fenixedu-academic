@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport
 
 import org.apache.slide.common.SlideException;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class RetrieveItemFile implements IService {
+public class RetrieveItemFile extends Service {
 
     public static FileSuportObject run(final String slidename, final String fileName) throws SlideException {
         return JdbcMysqlFileSupport.retrieveFile(slidename, fileName);

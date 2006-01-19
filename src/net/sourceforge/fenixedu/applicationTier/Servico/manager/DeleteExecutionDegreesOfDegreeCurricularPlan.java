@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
 
-public class DeleteExecutionDegreesOfDegreeCurricularPlan implements IService {
+public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 	// delete a set of executionDegrees
 	public List run(List executionDegreesIds) throws FenixServiceException, ExcepcaoPersistencia {

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport
 
 import org.apache.slide.common.SlideException;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * fenix-head ServidorAplicacao.Servico.fileManager
@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author João Mota 17/Set/2003
  * 
  */
-public class StoreItemFile implements IService {
+public class StoreItemFile extends Service {
 
     public Boolean run(FileSuportObject file, Integer itemId) throws FenixServiceException,
             ExcepcaoPersistencia, NotSupportedException, SystemException, SlideException,

@@ -24,13 +24,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
-public class ReadStudentsAndGroupsWithoutShift implements IService {
+public class ReadStudentsAndGroupsWithoutShift extends Service {
 
     public InfoSiteStudentsAndGroups run(Integer groupPropertiesId) throws FenixServiceException,
             ExcepcaoPersistencia {

@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class EnrollStudentGroupShift implements IService {
+public class EnrollStudentGroupShift extends Service {
 
 	public Boolean run(Integer executionCourseCode, Integer studentGroupCode,
 			Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException,

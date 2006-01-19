@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  * 
  */
-public class ReadExecutionYearsByDegreeCurricularPlanID implements IService {
+public class ReadExecutionYearsByDegreeCurricularPlanID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 

@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author T�nia Pous�o
  * 
  */
-public class ReadExtraWorkRequests implements IService {
+public class ReadExtraWorkRequests extends Service {
 
 	public List run(String usernameWho, Date beginDate, Date endDate, String costCenterCode,
 			String costCenterCodeMoney) throws Exception {

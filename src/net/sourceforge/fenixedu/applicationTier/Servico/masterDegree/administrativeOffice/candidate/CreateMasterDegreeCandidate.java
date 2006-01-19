@@ -28,14 +28,14 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo </a>
  * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali </a>
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  */
-public class CreateMasterDegreeCandidate implements IService {
+public class CreateMasterDegreeCandidate extends Service {
 
     public InfoMasterDegreeCandidate run(Specialization degreeType, Integer executionDegreeID,
             String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType)

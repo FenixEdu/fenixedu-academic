@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
-public class ReadStudentsWithoutGroup implements IService {
+public class ReadStudentsWithoutGroup extends Service {
 
 	public class NewStudentGroupAlreadyExists extends FenixServiceException {
 	}

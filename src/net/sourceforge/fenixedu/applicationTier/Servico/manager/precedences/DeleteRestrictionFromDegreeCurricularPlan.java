@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DeleteRestrictionFromDegreeCurricularPlan implements IService {
+public class DeleteRestrictionFromDegreeCurricularPlan extends Service {
 
 	public void run(Integer restrictionID) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

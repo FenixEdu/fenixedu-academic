@@ -23,13 +23,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author ansr and scpo
  * 
  */
-public class PrepareCreateStudentGroup implements IService {
+public class PrepareCreateStudentGroup extends Service {
 
     public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
             throws ExcepcaoPersistencia, ExistingServiceException {

@@ -35,14 +35,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos in Jan 27, 2004
  */
 
-public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod implements
-		IService {
+public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
+		Service {
 	public ShowAvailableCurricularCoursesWithoutEnrollmentPeriod() {
 	}
 

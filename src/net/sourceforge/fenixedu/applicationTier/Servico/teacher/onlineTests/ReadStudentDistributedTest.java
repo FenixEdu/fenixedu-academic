@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentDistributedTest implements IService {
+public class ReadStudentDistributedTest extends Service {
     public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
         path = path.replace('\\', '/');

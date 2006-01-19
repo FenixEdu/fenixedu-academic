@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DefineInquiryResponsePeriod implements IService {
+public class DefineInquiryResponsePeriod extends Service {
 
     public void run(final Integer executionPeriodID, final Date inquiryResponseBegin, final Date inquiryResponseEnd)
             throws ExcepcaoPersistencia {

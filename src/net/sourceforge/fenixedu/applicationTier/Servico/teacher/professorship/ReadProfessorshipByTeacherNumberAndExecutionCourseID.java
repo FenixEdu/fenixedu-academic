@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author mrsp and jdnf
  *  
  */
-public class ReadProfessorshipByTeacherNumberAndExecutionCourseID implements IService {
+public class ReadProfessorshipByTeacherNumberAndExecutionCourseID extends Service {
 
     public InfoProfessorship run(String username, Integer executionCourseID)
             throws FenixServiceException, ExcepcaoPersistencia {

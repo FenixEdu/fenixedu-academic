@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateNewUnit implements IService {
+public class CreateNewUnit extends Service {
 
     public void run(Integer unitID, Integer parentUnitID, String unitName, String unitCostCenter,
             Date beginDate, Date endDate, UnitType type, Integer departmentID, Integer degreeID)

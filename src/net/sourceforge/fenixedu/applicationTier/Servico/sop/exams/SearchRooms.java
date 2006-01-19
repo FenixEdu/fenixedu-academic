@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class SearchRooms implements IService {
+public class SearchRooms extends Service {
 
     public List run(String name, String building, Integer floor, Integer type, Integer normal,
             Integer exam) throws FenixServiceException, ExcepcaoPersistencia {

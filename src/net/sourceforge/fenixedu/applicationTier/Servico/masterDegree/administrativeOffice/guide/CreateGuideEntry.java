@@ -8,14 +8,14 @@ import net.sourceforge.fenixedu.domain.GuideEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
-public class CreateGuideEntry implements IService {
+public class CreateGuideEntry extends Service {
 
     public void run(Integer guideID, GraduationType graduationType, DocumentType documentType,
             String description, Double price, Integer quantity) throws ExcepcaoPersistencia {

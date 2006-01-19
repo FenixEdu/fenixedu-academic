@@ -21,15 +21,15 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
  * 
  * Created at 11:23, February the 28th, 2005
  */
-public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername implements
-        IService {
+public class ReadStudentGroupsExternalInformationByExecutionCourseIDAndStudentUsername extends
+        Service {
     public Collection run(Integer executionCourseID, String username) throws ExcepcaoPersistencia {
         Collection result = new ArrayList();
         IPersistentExecutionCourse persistentExecutionCourse = PersistenceSupportFactory

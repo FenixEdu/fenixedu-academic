@@ -20,14 +20,14 @@ import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class InsertGroupingMembers implements IService {
+public class InsertGroupingMembers extends Service {
 
 	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, List studentCodes)
 			throws FenixServiceException, ExcepcaoPersistencia {

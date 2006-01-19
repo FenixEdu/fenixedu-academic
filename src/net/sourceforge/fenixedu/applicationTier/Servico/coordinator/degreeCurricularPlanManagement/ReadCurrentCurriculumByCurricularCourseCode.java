@@ -30,12 +30,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 13/Nov/2003
  */
-public class ReadCurrentCurriculumByCurricularCourseCode implements IService {
+public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {

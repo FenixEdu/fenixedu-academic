@@ -5,13 +5,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Crus & Sara Ribeiro
  */
 
-public class CreateExecutionPeriod implements IService {
+public class CreateExecutionPeriod extends Service {
 
     //SERVICO PARA SER REMOVIDO
     public Boolean run(InfoExecutionPeriod infoExecutionPeriodOfWorkingArea,

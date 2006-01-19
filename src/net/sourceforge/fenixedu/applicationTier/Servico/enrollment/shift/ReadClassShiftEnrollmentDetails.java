@@ -35,12 +35,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadClassShiftEnrollmentDetails implements IService {
+public class ReadClassShiftEnrollmentDetails extends Service {
 
 	public class StudentNotFoundServiceException extends FenixServiceException {
 	}

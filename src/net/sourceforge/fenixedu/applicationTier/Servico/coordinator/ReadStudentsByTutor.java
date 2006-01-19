@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class ReadStudentsByTutor implements IService {
+public class ReadStudentsByTutor extends Service {
 
     /*
      * This service returns a list with size two: first element is infoTeacher

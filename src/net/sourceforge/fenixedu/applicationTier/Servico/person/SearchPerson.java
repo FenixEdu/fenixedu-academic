@@ -25,9 +25,9 @@ import net.sourceforge.fenixedu.util.StringNormalizer;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class SearchPerson implements IService {
+public class SearchPerson extends Service {
 
     public static class SearchParameters {
 

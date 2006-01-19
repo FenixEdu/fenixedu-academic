@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 5/Ago/2003, 19:44:39
  * 
  */
-public class GetCandidaciesByStudentIDAndSeminaryID implements IService {
+public class GetCandidaciesByStudentIDAndSeminaryID extends Service {
 
 	public List run(Integer studentID, Integer seminaryID) throws BDException, ExcepcaoPersistencia {
 		List candidaciesInfo = new LinkedList();

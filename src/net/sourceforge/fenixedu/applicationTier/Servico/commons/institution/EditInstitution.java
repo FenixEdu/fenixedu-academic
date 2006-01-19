@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditInstitution implements IService {
+public class EditInstitution extends Service {
 
     public void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException,
             ExcepcaoPersistencia {

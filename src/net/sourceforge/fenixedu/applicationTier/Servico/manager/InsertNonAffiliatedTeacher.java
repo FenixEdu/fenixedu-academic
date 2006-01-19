@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class InsertNonAffiliatedTeacher implements IService {
+public class InsertNonAffiliatedTeacher extends Service {
 
     public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws ExcepcaoPersistencia,
             NotExistingServiceException {

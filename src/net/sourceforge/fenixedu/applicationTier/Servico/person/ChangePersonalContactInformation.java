@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangePersonalContactInformation implements IService {
+public class ChangePersonalContactInformation extends Service {
 
     public IUserView run(IUserView userView, InfoPerson newInfoPerson) throws ExcepcaoPersistencia {
 

@@ -48,12 +48,12 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ChangeStudentTestQuestion implements IService {
+public class ChangeStudentTestQuestion extends Service {
 
     public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Integer oldQuestionId,
             Integer newMetadataId, Integer studentId, TestQuestionChangesType changesType, Boolean delete,

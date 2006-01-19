@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.util.EMail;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 18/Set/2003, 19:16:29
  *  
  */
-public class SendMail implements IService {
+public class SendMail extends Service {
 
     private static String bundleFile = new String("SMTPConfiguration");
 

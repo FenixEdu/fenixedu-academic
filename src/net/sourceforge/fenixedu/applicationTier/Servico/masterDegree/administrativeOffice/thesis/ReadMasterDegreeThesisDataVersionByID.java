@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadMasterDegreeThesisDataVersionByID implements IService {
+public class ReadMasterDegreeThesisDataVersionByID extends Service {
 
 	public Object run(Integer masterDegreeThesisDataVersionID) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;

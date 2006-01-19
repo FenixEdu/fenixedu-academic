@@ -23,13 +23,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 03/10/2003
  * 
  */
-public class ReadWebSiteSectionByCode implements IService {
+public class ReadWebSiteSectionByCode extends Service {
 
 	public Object run(Integer sectionCode) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 

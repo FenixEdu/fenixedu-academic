@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
  *  
  */
-public class ReadCurricularYearByOID implements IService {
+public class ReadCurricularYearByOID extends Service {
 
     public InfoCurricularYear run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
 

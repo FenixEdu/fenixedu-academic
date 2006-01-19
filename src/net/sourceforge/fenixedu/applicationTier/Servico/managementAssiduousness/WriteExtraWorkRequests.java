@@ -19,9 +19,9 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class WriteExtraWorkRequests implements IService {
+public class WriteExtraWorkRequests extends Service {
 
     public List run(String usernameWho, List<InfoExtraWorkRequests> infoExtraWorkRequestsList,
             String costCenterCode, String costCenterMoneyCode) throws Exception {

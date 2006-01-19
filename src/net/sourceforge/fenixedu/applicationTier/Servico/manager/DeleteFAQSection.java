@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  */
-public class DeleteFAQSection implements IService {
+public class DeleteFAQSection extends Service {
 
     public void run(Integer sectionId) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

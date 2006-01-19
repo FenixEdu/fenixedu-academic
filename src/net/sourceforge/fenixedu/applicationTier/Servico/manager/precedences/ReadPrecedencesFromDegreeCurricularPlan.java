@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadPrecedencesFromDegreeCurricularPlan implements IService {
+public class ReadPrecedencesFromDegreeCurricularPlan extends Service {
 
 	public Map run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ivo Brandão
  */
-public class ReadLastAnnouncement implements IService {
+public class ReadLastAnnouncement extends Service {
 
     public InfoAnnouncement run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class DeleteEnrollment implements IService {
+public class DeleteEnrollment extends Service {
 
     public void run(final Integer enrollmentId) throws ExcepcaoPersistencia {
 

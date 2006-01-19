@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 4/Set/2003, 13:55:41
  * 
  */
-public class ReadDegreeCurricularPlans implements IService {
+public class ReadDegreeCurricularPlans extends Service {
 
 	/**
 	 * Executes the service. Returns the current InfoDegreeCurricularPlan.

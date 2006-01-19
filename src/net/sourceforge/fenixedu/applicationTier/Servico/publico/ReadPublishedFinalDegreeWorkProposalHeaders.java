@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class ReadPublishedFinalDegreeWorkProposalHeaders implements IService {
+public class ReadPublishedFinalDegreeWorkProposalHeaders extends Service {
 
     public List run(Integer executionDegreeOID) throws ExcepcaoPersistencia {
         List finalDegreeWorkProposalHeaders = new ArrayList();

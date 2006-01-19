@@ -36,13 +36,13 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quit�rio 10/07/2003
  * 
  */
-public class ReadStudentsFinalEvaluationForConfirmation implements IService {
+public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 
 	public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString)
 			throws FenixServiceException, ExcepcaoPersistencia {

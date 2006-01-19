@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author naat
  * 
  */
-public class ReadPersonFunctionsByPersonIDAndExecutionYearID implements IService {
+public class ReadPersonFunctionsByPersonIDAndExecutionYearID extends Service {
 
     public List<PersonFunction> run(Integer personID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {

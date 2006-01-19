@@ -15,14 +15,14 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  */
 
-public class ReadCurricularCourseScopesByExecutionCourseID implements IService {
+public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
 
     public List run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 

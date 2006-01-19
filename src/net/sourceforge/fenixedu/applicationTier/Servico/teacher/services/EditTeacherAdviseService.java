@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class EditTeacherAdviseService implements IService {
+public class EditTeacherAdviseService extends Service {
 
     public void run(Integer teacherID, Integer executionPeriodID, final Integer studentNumber,
             Double percentage, AdviseType adviseType) throws ExcepcaoPersistencia, FenixServiceException {

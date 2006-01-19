@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.struts.util.LabelValueBean;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentsByIdArray implements IService {
+public class ReadStudentsByIdArray extends Service {
 
     public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts) throws FenixServiceException,
             ExcepcaoPersistencia {

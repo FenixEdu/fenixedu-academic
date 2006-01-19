@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DeleteLessons implements IService {
+public class DeleteLessons extends Service {
 
     public Boolean run(final List lessonOIDs) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory

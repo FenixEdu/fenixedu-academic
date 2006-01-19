@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class EditSupportLesson implements IService {
+public class EditSupportLesson extends Service {
 
     public void run(SupportLessonDTO supportLessonDTO) throws ExcepcaoPersistencia {
 

@@ -27,14 +27,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * @author Ângela
  *  
  */
-public class ReadCurricularCourseListByExecutionCourseCode implements IService {
+public class ReadCurricularCourseListByExecutionCourseCode extends Service {
 
     public Object run(Integer executionCourseCode) throws ExcepcaoInexistente, FenixServiceException,
             ExcepcaoPersistencia {

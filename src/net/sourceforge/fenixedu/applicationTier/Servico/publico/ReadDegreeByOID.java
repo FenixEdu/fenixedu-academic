@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Luis Cruz
  */
-public class ReadDegreeByOID implements IService {
+public class ReadDegreeByOID extends Service {
 
     public InfoDegree run(Integer degreeId) throws ExcepcaoPersistencia {
         ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();

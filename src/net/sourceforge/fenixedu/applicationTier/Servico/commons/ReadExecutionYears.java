@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.struts.util.LabelValueBean;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadExecutionYears implements IService {
+public class ReadExecutionYears extends Service {
 
     public List run() throws FenixServiceException, ExcepcaoPersistencia {
 

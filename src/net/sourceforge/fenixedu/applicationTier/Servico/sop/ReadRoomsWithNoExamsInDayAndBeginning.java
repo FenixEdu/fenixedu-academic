@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadRoomsWithNoExamsInDayAndBeginning implements IService {
+public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
 
     public List run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

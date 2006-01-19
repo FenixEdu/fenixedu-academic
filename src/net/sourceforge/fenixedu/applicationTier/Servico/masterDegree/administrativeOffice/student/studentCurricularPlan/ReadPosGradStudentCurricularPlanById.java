@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão 6/Out/2003
  */
 
-public class ReadPosGradStudentCurricularPlanById implements IService {
+public class ReadPosGradStudentCurricularPlanById extends Service {
 
     public Object run(Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;

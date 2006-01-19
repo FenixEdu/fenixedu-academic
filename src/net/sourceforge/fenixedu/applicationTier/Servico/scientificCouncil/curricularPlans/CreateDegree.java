@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateDegree implements IService {
+public class CreateDegree extends Service {
 
     public void run(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
             Double ectsCredits, GradeScale gradeScale) throws ExcepcaoPersistencia, FenixServiceException {

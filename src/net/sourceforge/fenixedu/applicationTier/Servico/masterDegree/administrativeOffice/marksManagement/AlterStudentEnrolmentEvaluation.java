@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Angela 04/07/2003
  * 
  */
-public class AlterStudentEnrolmentEvaluation implements IService {
+public class AlterStudentEnrolmentEvaluation extends Service {
 
     public List run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
             InfoEnrolmentEvaluation infoEnrolmentEvaluation, Integer teacherNumber, IUserView userView)

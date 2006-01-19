@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class LerSala implements IService {
+public class LerSala extends Service {
 
 	public Object run(RoomKey keySala) throws ExcepcaoPersistencia {
 		InfoRoom infoSala = null;

@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  */
-public class CheckCandidacyConditionsForFinalDegreeWork implements IService {
+public class CheckCandidacyConditionsForFinalDegreeWork extends Service {
 
     public boolean run(IUserView userView, Integer executionDegreeOID) throws ExcepcaoPersistencia,
             FenixServiceException {

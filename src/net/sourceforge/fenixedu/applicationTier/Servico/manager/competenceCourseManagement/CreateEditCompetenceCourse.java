@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateEditCompetenceCourse implements IService {
+public class CreateEditCompetenceCourse extends Service {
 
 	public InfoCompetenceCourse run(Integer competenceCourseID, String code, String name, Integer[] departmentIDs) throws Exception{
 		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersisten
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadProfessorshipSupportLessons implements IService {
+public class ReadProfessorshipSupportLessons extends Service {
 
     public ProfessorshipSupportLessonsDTO run(Integer teacherId, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {

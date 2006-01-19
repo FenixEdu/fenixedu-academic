@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditarTurma implements IService {
+public class EditarTurma extends Service {
 
     public void run(final InfoClass oldClassView, final InfoClass newClassView)
             throws FenixServiceException, ExcepcaoPersistencia {

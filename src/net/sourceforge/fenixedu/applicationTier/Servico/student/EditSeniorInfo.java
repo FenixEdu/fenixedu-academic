@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Egidio, luis.egidio@ist.utl.pt
  *
  */
-public class EditSeniorInfo implements IService {
+public class EditSeniorInfo extends Service {
 
     public void run(InfoSenior changedInfoSenior) throws ExcepcaoPersistencia, FenixServiceException {
             ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

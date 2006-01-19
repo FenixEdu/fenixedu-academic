@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos Jan 26, 2004
  */
-public class WriteEnrollment implements IService {
+public class WriteEnrollment extends Service {
 
     // some of these arguments may be null. they are only needed for filter
     public Integer run(Integer executionDegreeId, Integer studentCurricularPlanID,

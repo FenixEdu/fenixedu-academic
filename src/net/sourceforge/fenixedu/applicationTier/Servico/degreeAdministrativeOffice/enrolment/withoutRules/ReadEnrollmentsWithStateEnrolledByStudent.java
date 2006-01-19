@@ -34,13 +34,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class ReadEnrollmentsWithStateEnrolledByStudent implements IService {
+public class ReadEnrollmentsWithStateEnrolledByStudent extends Service {
 
     public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionPeriodID)
             throws FenixServiceException, ExcepcaoPersistencia {

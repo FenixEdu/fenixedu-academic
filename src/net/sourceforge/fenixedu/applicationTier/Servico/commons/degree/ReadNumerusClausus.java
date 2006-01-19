@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author <a href="mailto:amam@mega.ist.utl.pt">Amin Amirali</a>
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  */
-public class ReadNumerusClausus implements IService {
+public class ReadNumerusClausus extends Service {
 
     public Integer run(Integer degreeCurricularPlanID) throws NonExistingServiceException, ExcepcaoPersistencia {
 

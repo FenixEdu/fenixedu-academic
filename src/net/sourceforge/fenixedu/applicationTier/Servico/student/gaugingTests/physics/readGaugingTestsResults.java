@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
  * 
  */
 
-public class readGaugingTestsResults implements IService {
+public class readGaugingTestsResults extends Service {
 
 	public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();

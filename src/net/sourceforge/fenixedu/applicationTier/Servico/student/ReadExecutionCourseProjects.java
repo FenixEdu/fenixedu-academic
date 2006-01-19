@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
-public class ReadExecutionCourseProjects implements IService {
+public class ReadExecutionCourseProjects extends Service {
 
     public ISiteComponent run(Integer executionCourseID, String userName) throws FenixServiceException,
             ExcepcaoPersistencia {

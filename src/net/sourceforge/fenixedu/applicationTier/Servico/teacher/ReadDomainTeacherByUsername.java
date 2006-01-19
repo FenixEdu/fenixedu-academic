@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  *
  */
 
-public class ReadDomainTeacherByUsername implements IService {
+public class ReadDomainTeacherByUsername extends Service {
 
     public Teacher run(final String username) throws ExcepcaoPersistencia{
         

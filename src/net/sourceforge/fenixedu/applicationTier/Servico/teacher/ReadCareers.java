@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadCareers implements IService {
+public class ReadCareers extends Service {
 
     public SiteView run(CareerType careerType, String user) throws ExcepcaoPersistencia {
         

@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class RemovePublicationFromTeacherInformationSheet implements IService {
+public class RemovePublicationFromTeacherInformationSheet extends Service {
     
     public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia, DomainException {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

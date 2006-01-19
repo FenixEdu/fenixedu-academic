@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * Created on Mar 8, 2004
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class ReadExecutionDegreesOfTypeDegree implements IService {
+public class ReadExecutionDegreesOfTypeDegree extends Service {
 
 	public List run() throws ExcepcaoPersistencia {
 		List executionDegrees = null;

@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author pica
  * @author barbosa
  */
-public class ReadPaymentEntityByNumberAndClass implements IService {
+public class ReadPaymentEntityByNumberAndClass extends Service {
 
 	public InfoGrantPaymentEntity run(String paymentEntityNumber, String className)
 			throws FenixServiceException, ExcepcaoPersistencia {

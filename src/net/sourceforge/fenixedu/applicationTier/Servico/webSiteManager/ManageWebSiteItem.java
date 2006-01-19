@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 import org.apache.commons.lang.StringUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 13/04/2004
  * 
  */
-abstract public class ManageWebSiteItem implements IService {
+abstract public class ManageWebSiteItem extends Service {
 
 	// infoItem with an infoSection
 

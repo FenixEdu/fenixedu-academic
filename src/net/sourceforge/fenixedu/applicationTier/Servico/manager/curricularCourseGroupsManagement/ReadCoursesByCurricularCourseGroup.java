@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  */
-public class ReadCoursesByCurricularCourseGroup implements IService {
+public class ReadCoursesByCurricularCourseGroup extends Service {
 
     public InfoCurricularCourseGroupWithCoursesToAdd run(Integer groupId) throws ExcepcaoPersistencia {
 

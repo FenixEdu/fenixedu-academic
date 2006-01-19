@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadMasterDegreeProofVersionByID implements IService {
+public class ReadMasterDegreeProofVersionByID extends Service {
 
     public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException,
             ExcepcaoPersistencia {

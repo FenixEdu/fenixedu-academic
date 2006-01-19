@@ -8,14 +8,14 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class StorePersonalPhoto implements IService {
+public class StorePersonalPhoto extends Service {
 
     public void run(byte[] contents, ContentType contentType, String personUsername)
             throws ExcepcaoPersistencia, ExcepcaoInexistente {

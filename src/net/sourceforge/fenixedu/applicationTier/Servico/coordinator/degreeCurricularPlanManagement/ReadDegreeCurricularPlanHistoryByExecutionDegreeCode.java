@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quit�rio 10/Nov/2003
  * 
  */
-public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode implements IService {
+public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends Service {
 
     public InfoDegreeCurricularPlan run(Integer executionDegreeCode) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadPersonByUsername implements IService {
+public class ReadPersonByUsername extends Service {
 
     public InfoPerson run(String username) throws ExcepcaoInexistente, ExcepcaoPersistencia {
 

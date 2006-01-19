@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
 
-public class CreateGrouping implements IService {
+public class CreateGrouping extends Service {
 
     public boolean run(Integer executionCourseID, InfoGrouping infoGrouping)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -33,7 +33,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
 // this service reads ALL the execution course's projects
 // to read the projects which has opened enrollments use the same service in
 // student package net.sourceforge.fenixedu.(ReadExecutionCourseProjects)
-public class ReadExecutionCourseProjects implements IService {
+public class ReadExecutionCourseProjects extends Service {
 
 	public ISiteComponent run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
 

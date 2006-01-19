@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class TransferEnrollments implements IService {
+public class TransferEnrollments extends Service {
 
     public void run(final Integer destinationStudentCurricularPlanId,
             final Integer[] enrollmentIDsToTransfer) throws ExcepcaoPersistencia {

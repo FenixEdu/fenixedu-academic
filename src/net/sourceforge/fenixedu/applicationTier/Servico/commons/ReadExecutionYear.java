@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  * 
  */
-public class ReadExecutionYear implements IService {
+public class ReadExecutionYear extends Service {
 
     public InfoExecutionYear run(String year) throws ExcepcaoPersistencia {
 

@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class GenerateNewPasswordService implements IService {
+public class GenerateNewPasswordService extends Service {
 
 	public String run(Integer personID) throws Exception {
 		ISuportePersistente sp;

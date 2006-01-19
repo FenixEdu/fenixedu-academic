@@ -22,13 +22,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 25/09/2003
  * 
  */
-public class ReadWebSiteBySectionCode implements IService {
+public class ReadWebSiteBySectionCode extends Service {
 
     public InfoWebSite run(Integer webSiteSectionCode) throws FenixServiceException,
             ExcepcaoPersistencia {

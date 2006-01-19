@@ -32,12 +32,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class WriteInquiry implements IService {
+public class WriteInquiry extends Service {
 
 	private IPersistentObject persistentObject;
 	

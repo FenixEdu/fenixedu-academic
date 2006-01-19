@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentExc
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
 
-public class InsertCurricularCourseAtDegreeCurricularPlan implements IService {
+public class InsertCurricularCourseAtDegreeCurricularPlan extends Service {
 
     public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
 

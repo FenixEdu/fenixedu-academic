@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author naat
  * 
  */
-public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID implements IService {
+public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID extends Service {
 
     public List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID,
             Integer teacherID) throws FenixServiceException, ExcepcaoPersistencia {

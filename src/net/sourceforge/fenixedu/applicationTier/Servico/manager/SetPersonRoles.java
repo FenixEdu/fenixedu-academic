@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class SetPersonRoles implements IService {
+public class SetPersonRoles extends Service {
 
     public Boolean run(final String username, final List<Integer> roleOIDs) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  */
-public class DeleteFinalDegreeWorkProposal implements IService {
+public class DeleteFinalDegreeWorkProposal extends Service {
 
 	public void run(Integer finalDegreeWorkProposalOID) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  */
-public class PublishMarks implements IService {
+public class PublishMarks extends Service {
 
     public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente,

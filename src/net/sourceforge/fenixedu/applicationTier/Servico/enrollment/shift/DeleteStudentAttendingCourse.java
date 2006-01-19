@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * 
  * @author Fernanda Quit�rio 11/Fev/2004
  *  
  */
-public class DeleteStudentAttendingCourse implements IService {
+public class DeleteStudentAttendingCourse extends Service {
 
     public class AlreadyEnrolledInGroupServiceException extends FenixServiceException {
     }

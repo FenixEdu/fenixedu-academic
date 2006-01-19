@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadExecutionCoursesByExecutionDegreeService implements IService {
+public class ReadExecutionCoursesByExecutionDegreeService extends Service {
 
     public class NonExistingExecutionDegree extends FenixServiceException {
         public NonExistingExecutionDegree() {

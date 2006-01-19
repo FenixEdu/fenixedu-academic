@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateBuilding implements IService {
+public class CreateBuilding extends Service {
 
     public void run(final String buildingName, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

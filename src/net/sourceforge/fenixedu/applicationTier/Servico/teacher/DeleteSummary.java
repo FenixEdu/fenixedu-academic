@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 21/Jul/2003 fenix-head ServidorAplicacao.Servico.teacher
  * 
  */
-public class DeleteSummary implements IService {
+public class DeleteSummary extends Service {
 
     public boolean run(Integer executionCourseId, Integer summaryID) throws FenixServiceException,
             ExcepcaoPersistencia {

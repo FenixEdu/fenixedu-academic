@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author naat
  */
-public class ReadDepartmentTeachersByDepartmentID implements IService {
+public class ReadDepartmentTeachersByDepartmentID extends Service {
 
     public List<InfoTeacher> run(Integer departmentID) throws ExcepcaoPersistencia,
             FenixServiceException {

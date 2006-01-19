@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadDepartmentByUser implements IService {
+public class ReadDepartmentByUser extends Service {
 
     public InfoDepartment run(String username) throws FenixServiceException, ExcepcaoPersistencia {
         InfoDepartment infoDepartment = null;

@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  */
-public class EditEvaluation implements IService {
+public class EditEvaluation extends Service {
 
     public boolean run(Integer infoExecutionCourseCode, Integer infoEvaluationMethodCode,
             InfoEvaluationMethod infoEvaluationMethod) throws FenixServiceException,

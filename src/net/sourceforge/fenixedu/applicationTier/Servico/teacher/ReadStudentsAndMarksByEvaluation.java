@@ -32,13 +32,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  *  
  */
-public class ReadStudentsAndMarksByEvaluation implements IService {
+public class ReadStudentsAndMarksByEvaluation extends Service {
 
     public Object run(Integer executionCourseCode, Integer evaluationCode) throws FenixServiceException,
             ExcepcaoPersistencia {

@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class DeleteBibliographicReference implements IService {
+public class DeleteBibliographicReference extends Service {
 
     public boolean run(Integer bibliographicReferenceOID) throws FenixServiceException,
             ExcepcaoPersistencia {

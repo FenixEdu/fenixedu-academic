@@ -31,13 +31,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota 15/Out/2003
  */
 
-public class EditPosGradStudentCurricularPlanStateAndCredits implements IService {
+public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 
 	public void run(IUserView userView, Integer studentCurricularPlanId, String currentState,
 			Double credits, String startDate, List extraCurricularCourses, String observations,

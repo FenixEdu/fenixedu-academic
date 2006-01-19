@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadExamsByDate implements IService {
+public class ReadExamsByDate extends Service {
 
     public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime)
             throws ExcepcaoPersistencia {

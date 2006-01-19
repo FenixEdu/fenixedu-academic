@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateNewFunction implements IService {
+public class CreateNewFunction extends Service {
 
     public void run(Integer functionID, Integer unitID, String functionName, Date beginDate,
             Date endDate, FunctionType type, Integer parentInherentFunctionID)

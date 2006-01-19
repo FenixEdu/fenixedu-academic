@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class ReadCandidateEnrolmentsByCandidateID implements IService {
+public class ReadCandidateEnrolmentsByCandidateID extends Service {
 
     public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
         List result = new ArrayList();

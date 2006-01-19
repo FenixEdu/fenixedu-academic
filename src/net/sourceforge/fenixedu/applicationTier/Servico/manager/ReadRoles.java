@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  */
 
-public class ReadRoles implements IService {
+public class ReadRoles extends Service {
 
 	/**
 	 * Executes the service. Returns the current infodegree.

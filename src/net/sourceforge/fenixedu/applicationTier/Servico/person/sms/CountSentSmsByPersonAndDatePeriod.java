@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * delimited by starDate(inclusive) and endDate(exclusive)
  * 
  */
-public class CountSentSmsByPersonAndDatePeriod implements IService {
+public class CountSentSmsByPersonAndDatePeriod extends Service {
 
 	public Integer run(IUserView userView, Date startDate, Date endDate) throws FenixServiceException,
 			ExcepcaoPersistencia {

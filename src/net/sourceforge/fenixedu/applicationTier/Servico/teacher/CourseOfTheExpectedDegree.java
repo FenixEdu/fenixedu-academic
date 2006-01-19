@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão Create on 3/Dez/2003
  */
-public class CourseOfTheExpectedDegree implements IService {
+public class CourseOfTheExpectedDegree extends Service {
 
 	public Boolean run(Integer curricularCourseCode, String degreeCode) throws FenixServiceException {
 		boolean result = false;

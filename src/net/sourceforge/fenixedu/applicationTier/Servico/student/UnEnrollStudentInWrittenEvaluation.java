@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class UnEnrollStudentInWrittenEvaluation implements IService {
+public class UnEnrollStudentInWrittenEvaluation extends Service {
 
 	public void run(String username, Integer writtenEvaluationOID) throws FenixServiceException,
 			ExcepcaoPersistencia {

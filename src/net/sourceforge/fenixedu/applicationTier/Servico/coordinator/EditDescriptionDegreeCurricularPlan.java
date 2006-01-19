@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão Created on 17/Nov/2003
  */
-public class EditDescriptionDegreeCurricularPlan implements IService {
+public class EditDescriptionDegreeCurricularPlan extends Service {
 
     public InfoDegreeCurricularPlan run(Integer infoExecutionDegreeId,
             InfoDegreeCurricularPlan infoDegreeCurricularPlan) throws FenixServiceException,

@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateCompetenceCourse implements IService {
+public class CreateCompetenceCourse extends Service {
 
     public CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic,
             RegimeType regimeType, Integer unitID) throws ExcepcaoPersistencia, FenixServiceException {

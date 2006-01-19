@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 10/07/2003
  * 
  */
-public class ConfirmStudentsFinalEvaluation implements IService {
+public class ConfirmStudentsFinalEvaluation extends Service {
 
 	public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView)
 			throws FenixServiceException, ExcepcaoPersistencia {

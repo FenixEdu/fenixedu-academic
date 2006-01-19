@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditarTurno implements IService {
+public class EditarTurno extends Service {
 
 	public Object run(InfoShift infoShiftOld, InfoShift infoShiftNew) throws FenixServiceException,
 			ExcepcaoPersistencia {

@@ -41,13 +41,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class ReadCurricularCoursesToEnroll implements IService {
+public class ReadCurricularCoursesToEnroll extends Service {
     private static final int MAX_CURRICULAR_YEARS = 5;
 
     private static final int MAX_CURRICULAR_SEMESTERS = 2;

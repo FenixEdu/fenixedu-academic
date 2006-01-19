@@ -8,13 +8,13 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  */
-public class SelectShifts implements IService {
+public class SelectShifts extends Service {
 
     public Object run(InfoShift infoShift) throws ExcepcaoPersistencia {
 

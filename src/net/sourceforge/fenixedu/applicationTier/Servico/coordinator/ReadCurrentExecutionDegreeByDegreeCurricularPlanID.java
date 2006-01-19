@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID implements IService {
+public class ReadCurrentExecutionDegreeByDegreeCurricularPlanID extends Service {
 
     public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory

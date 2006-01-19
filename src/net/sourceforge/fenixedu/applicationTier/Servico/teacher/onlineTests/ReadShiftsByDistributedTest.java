@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadShiftsByDistributedTest implements IService {
+public class ReadShiftsByDistributedTest extends Service {
 
 	public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId)
 			throws FenixServiceException, ExcepcaoPersistencia {

@@ -8,20 +8,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
 
 /**
  * @author João Fialho & Rita Ferreira
  *
  */
-public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod implements
-		IService {
+public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod extends
+		Service {
 
 	private static ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod service =
 		new ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod();

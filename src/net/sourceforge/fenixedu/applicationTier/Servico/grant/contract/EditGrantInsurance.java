@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditGrantInsurance implements IService {
+public class EditGrantInsurance extends Service {
 
     public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException,
             ExcepcaoPersistencia {

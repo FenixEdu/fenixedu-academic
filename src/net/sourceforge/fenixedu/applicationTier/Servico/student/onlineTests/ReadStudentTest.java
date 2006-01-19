@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTest implements IService {
+public class ReadStudentTest extends Service {
 
     public List<InfoStudentTestQuestion> run(String userName, Integer distributedTestId, Boolean log, String path) throws FenixServiceException,
             ExcepcaoPersistencia {

@@ -7,12 +7,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  */
-public class CreateBibliographicReference implements IService {
+public class CreateBibliographicReference extends Service {
 
     public boolean run(Integer infoExecutionCourseID, String newBibliographyTitle,
             String newBibliographyAuthors, String newBibliographyReference, String newBibliographyYear,

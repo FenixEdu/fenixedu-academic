@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class InsertExternalPersons implements IService {
+public class InsertExternalPersons extends Service {
 
     public List<ExternalPerson> run(List<InfoExternalPerson> infoExternalPersons)
             throws ExcepcaoPersistencia, ExistingServiceException {

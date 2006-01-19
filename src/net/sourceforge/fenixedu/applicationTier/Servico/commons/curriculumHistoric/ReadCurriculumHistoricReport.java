@@ -35,13 +35,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
  * @author lmre
  */
-public class ReadCurriculumHistoricReport implements IService {
+public class ReadCurriculumHistoricReport extends Service {
 
     public InfoCurriculumHistoricReport run(Integer curricularCourseID, Integer semester,
             Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {

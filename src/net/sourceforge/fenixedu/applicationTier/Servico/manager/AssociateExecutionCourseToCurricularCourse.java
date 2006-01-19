@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class AssociateExecutionCourseToCurricularCourse implements IService {
+public class AssociateExecutionCourseToCurricularCourse extends Service {
 
     public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
             throws FenixServiceException, ExcepcaoPersistencia {

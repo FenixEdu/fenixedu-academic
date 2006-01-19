@@ -24,9 +24,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadExecutionDegreesByExecutionYearId implements IService {
+public class ReadExecutionDegreesByExecutionYearId extends Service {
 
     public List run(Integer executionYearId) throws ExcepcaoPersistencia {
 

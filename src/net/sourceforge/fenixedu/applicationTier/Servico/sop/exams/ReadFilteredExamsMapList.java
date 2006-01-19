@@ -31,9 +31,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadFilteredExamsMapList implements IService {
+public class ReadFilteredExamsMapList extends Service {
 
     public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {

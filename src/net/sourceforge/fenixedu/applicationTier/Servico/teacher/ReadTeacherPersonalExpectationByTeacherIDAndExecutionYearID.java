@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author naat
  */
-public class ReadTeacherPersonalExpectationByTeacherIDAndExecutionYearID implements IService {
+public class ReadTeacherPersonalExpectationByTeacherIDAndExecutionYearID extends Service {
 
     public InfoTeacherPersonalExpectation run(Integer teacherID,
             Integer executionYearID) throws ExcepcaoPersistencia, FenixServiceException {

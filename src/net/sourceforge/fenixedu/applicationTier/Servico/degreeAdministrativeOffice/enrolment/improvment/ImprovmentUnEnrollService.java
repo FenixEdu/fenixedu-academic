@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
  */
-public class ImprovmentUnEnrollService implements IService {
+public class ImprovmentUnEnrollService extends Service {
 
     public Object run(Integer studentNumber, List<Integer> enrolmentsIds)
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {

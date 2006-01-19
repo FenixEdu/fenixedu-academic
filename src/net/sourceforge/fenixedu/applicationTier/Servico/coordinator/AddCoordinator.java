@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class AddCoordinator implements IService {
+public class AddCoordinator extends Service {
 
     public Boolean run(Integer executionDegreeId, Integer teacherNumber) throws FenixServiceException,
             ExcepcaoPersistencia {

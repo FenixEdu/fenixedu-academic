@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.util.PublicationArea;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class AddPublicationToTeacherInformationSheet implements IService {
+public class AddPublicationToTeacherInformationSheet extends Service {
 
     public void run(Integer teacherId, Integer publicationId, String publicationArea) throws Exception {
 

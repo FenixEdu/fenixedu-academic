@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
-public class EditTeacherInformation implements IService {
+public class EditTeacherInformation extends Service {
 	
 	private IPersistentObject persistentObject;
 

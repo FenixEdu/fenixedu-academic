@@ -25,9 +25,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class SeperateExecutionCourse implements IService {
+public class SeperateExecutionCourse extends Service {
 
     public void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
             final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer)

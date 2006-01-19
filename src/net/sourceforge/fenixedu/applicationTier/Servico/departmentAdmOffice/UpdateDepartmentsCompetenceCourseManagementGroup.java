@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class UpdateDepartmentsCompetenceCourseManagementGroup implements IService {
+public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
 
     public void run(Department department, Integer[] add, Integer[] remove) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

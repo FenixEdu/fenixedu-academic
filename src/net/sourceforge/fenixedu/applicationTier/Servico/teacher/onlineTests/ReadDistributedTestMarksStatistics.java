@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class ReadDistributedTestMarksStatistics implements IService {
+public class ReadDistributedTestMarksStatistics extends Service {
 
 	public SiteView run(Integer executionCourseId, Integer distributedTestId)
 			throws FenixServiceException, ExcepcaoPersistencia {

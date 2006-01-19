@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class CreateExercise implements IService {
+public class CreateExercise extends Service {
 
 	public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
 			QuestionDifficultyType questionDifficultyType, String mainSubject, String secondarySubject,

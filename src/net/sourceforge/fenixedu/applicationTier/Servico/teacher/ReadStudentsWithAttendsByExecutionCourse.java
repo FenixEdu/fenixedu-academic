@@ -51,12 +51,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author André Fernandes / João Brito
  */
-public class ReadStudentsWithAttendsByExecutionCourse implements IService {
+public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
     // doesnt allow an empty list
     private StudentCurricularPlan GetLastCurricularPlan(List cps) {

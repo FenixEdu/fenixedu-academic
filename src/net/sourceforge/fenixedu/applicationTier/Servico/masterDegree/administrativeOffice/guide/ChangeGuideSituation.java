@@ -40,9 +40,9 @@ import net.sourceforge.fenixedu.util.State;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangeGuideSituation implements IService {
+public class ChangeGuideSituation extends Service {
 
     public void run(Integer guideNumber, Integer guideYear, Integer guideVersion, Date paymentDate,
             String remarks, String situationOfGuideString, String paymentType, IUserView userView)

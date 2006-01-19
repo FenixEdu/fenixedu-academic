@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEnt
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadAllGrantPaymentEntitiesByClassName implements IService {
+public class ReadAllGrantPaymentEntitiesByClassName extends Service {
 
 	public List run(String className) throws FenixServiceException, ExcepcaoPersistencia {
 		List result = null;

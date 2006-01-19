@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class DeleteAllGroupingMembers implements IService {
+public class DeleteAllGroupingMembers extends Service {
 
     public boolean run(Integer objectCode, Integer groupingCode) throws FenixServiceException,
             ExcepcaoPersistencia {

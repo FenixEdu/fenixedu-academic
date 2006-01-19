@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
-public class VerifyIfCanEnrollStudentGroupsInShift implements IService {
+public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
             throws FenixServiceException, ExcepcaoPersistencia {

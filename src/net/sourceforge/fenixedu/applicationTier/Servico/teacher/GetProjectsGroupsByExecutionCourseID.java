@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -30,7 +30,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 10/Set/2003, 20:47:24
  * 
  */
-public class GetProjectsGroupsByExecutionCourseID implements IService {
+public class GetProjectsGroupsByExecutionCourseID extends Service {
 
     public List run(Integer executionCourseID) throws BDException, ExcepcaoPersistencia {
 

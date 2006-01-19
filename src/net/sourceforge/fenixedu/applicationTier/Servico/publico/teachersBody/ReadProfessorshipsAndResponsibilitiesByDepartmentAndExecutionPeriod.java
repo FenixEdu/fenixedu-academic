@@ -33,13 +33,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 19/Dez/2003
  *  
  */
-public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod implements IService {
+public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod extends Service {
 
     public List run(Integer departmentId, Integer executionYearId, Integer semester, Integer teacherType)
             throws FenixServiceException, ExcepcaoPersistencia {

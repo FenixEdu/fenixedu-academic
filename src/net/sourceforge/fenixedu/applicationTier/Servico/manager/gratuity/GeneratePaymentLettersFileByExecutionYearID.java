@@ -42,7 +42,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -184,7 +184,7 @@ class GratuityLetterFileEntry {
 	}
 }
 
-public class GeneratePaymentLettersFileByExecutionYearID implements IService {
+public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 
 	private static final String PHASE_SIBS_BASE_COLUMN = "REFERENCIA_SIBS_PRESTACAO_";
 

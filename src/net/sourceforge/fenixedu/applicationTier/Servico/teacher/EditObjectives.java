@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Modified by Tânia Pousão at 2/Dez/2003
  */
 
-public class EditObjectives implements IService {
+public class EditObjectives extends Service {
 
     public boolean run(Integer infoExecutionCourseCode, Integer infoCurricularCourseCode,
             InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException,

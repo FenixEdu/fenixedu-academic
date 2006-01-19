@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 19/Nov/2003
  */
-public class LoggedCoordinatorCanEdit implements IService {
+public class LoggedCoordinatorCanEdit extends Service {
 
     public Boolean run(Integer executionDegreeCode, Integer curricularCourseCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {

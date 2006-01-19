@@ -16,10 +16,10 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import sun.text.Normalizer;
 
-public class AutoCompleteSimpleSearchService implements IService {
+public class AutoCompleteSimpleSearchService extends Service {
 
     public List run(Map<String, String> arguments) throws ExcepcaoPersistencia, FenixServiceException {
 

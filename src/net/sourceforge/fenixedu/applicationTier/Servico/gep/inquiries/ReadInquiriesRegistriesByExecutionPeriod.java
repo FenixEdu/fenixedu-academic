@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
  *
  */
-public class ReadInquiriesRegistriesByExecutionPeriod implements IService {
+public class ReadInquiriesRegistriesByExecutionPeriod extends Service {
 
     public List<InfoInquiriesRegistry> run(Integer executionPeriodId) throws FenixServiceException,
     ExcepcaoPersistencia, NoSuchMethodException, InvocationTargetException,

@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author mrsp and jdnf
  */
 
-public class ReadLastSummary implements IService {
+public class ReadLastSummary extends Service {
 
     public InfoSummary run(Integer executionCourseId, Integer shiftId, Integer lessonID)
             throws FenixServiceException, ExcepcaoPersistencia {

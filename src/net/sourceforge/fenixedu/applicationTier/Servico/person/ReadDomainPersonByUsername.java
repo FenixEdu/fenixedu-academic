@@ -5,14 +5,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
-import java.io.Serializable;
-
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
 
 
 /**
@@ -20,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         <br/> Created on 17:51:06,21/Set/2005
  * @version $Id$
  */
-public class ReadDomainPersonByUsername implements IService, Serializable
+public class ReadDomainPersonByUsername extends Service
 {
 
 	public Person run(String username) throws ExcepcaoInexistente, ExcepcaoPersistencia

@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -40,7 +40,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 1/Set/2003, 14:47:35
  * 
  */
-public class ReadCandidacies implements IService {
+public class ReadCandidacies extends Service {
 
 	public List run(Integer modalityID, Integer seminaryID, Integer themeID, Integer case1Id,
 			Integer case2Id, Integer case3Id, Integer case4Id, Integer case5Id,

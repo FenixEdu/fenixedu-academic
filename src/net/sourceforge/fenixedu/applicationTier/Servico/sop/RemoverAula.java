@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class RemoverAula implements IService {
+public class RemoverAula extends Service {
 
     public Object run(final InfoLesson infoLesson, final InfoShift infoShift)
             throws ExcepcaoPersistencia {

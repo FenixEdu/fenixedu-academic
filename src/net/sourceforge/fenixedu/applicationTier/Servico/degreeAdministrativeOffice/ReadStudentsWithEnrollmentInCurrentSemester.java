@@ -19,14 +19,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  *  
  */
-public class ReadStudentsWithEnrollmentInCurrentSemester implements IService {
+public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
 
     public ReadStudentsWithEnrollmentInCurrentSemester() {
     }

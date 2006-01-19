@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ProposalState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
-public class ExecutionCourseWaitingAnswer implements IService {
+public class ExecutionCourseWaitingAnswer extends Service {
 
     public boolean run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  */
-public class ReadCurricularCourseGroupsByDegreeCurricularPlan implements IService {
+public class ReadCurricularCourseGroupsByDegreeCurricularPlan extends Service {
 
 	public List run(Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

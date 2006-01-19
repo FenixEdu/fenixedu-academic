@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa and rmalo
  *  
  */
-public class ViewStudentsByTutor implements IService {
+public class ViewStudentsByTutor extends Service {
 
     /*
      * This service returns a list of students that tutor tutorizes

@@ -30,14 +30,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  *
  */
 
-public class ReadClassTimeTableByStudent implements IService {
+public class ReadClassTimeTableByStudent extends Service {
     
     public List run(final String username, final Integer classID, final Integer executionCourseID) throws ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -4,13 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  *  
  */
-public class ConfirmManagerIdentity implements IService {
+public class ConfirmManagerIdentity extends Service {
 
     public ConfirmManagerIdentity() {
     }

@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
-public class ReadAvailableExecutionPeriods implements IService {
+public class ReadAvailableExecutionPeriods extends Service {
 
 	public List run(List unavailableExecutionPeriodsIds) throws FenixServiceException, ExcepcaoPersistencia {
 

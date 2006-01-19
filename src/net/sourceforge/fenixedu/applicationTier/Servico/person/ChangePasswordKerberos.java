@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangePasswordKerberos implements IService {
+public class ChangePasswordKerberos extends Service {
 
 	public void run(IUserView userView, String oldPassword, String newPassword)	
 		throws Exception {

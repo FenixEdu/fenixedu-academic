@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class StorePhoto implements IService {
+public class StorePhoto extends Service {
 
 	public Boolean run(FileSuportObject file, Integer personId) throws FenixServiceException,
 			ExcepcaoPersistencia {

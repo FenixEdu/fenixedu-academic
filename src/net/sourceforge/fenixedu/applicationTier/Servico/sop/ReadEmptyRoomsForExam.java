@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
-public class ReadEmptyRoomsForExam implements IService {
+public class ReadEmptyRoomsForExam extends Service {
 
     public List run(InfoExam infoExam) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class EditCurriculum implements IService {
+public class EditCurriculum extends Service {
 
 	public Boolean run(Integer curriculumId, String program, String programEn,
 			String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,

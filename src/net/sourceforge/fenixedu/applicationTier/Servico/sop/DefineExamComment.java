@@ -5,9 +5,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DefineExamComment implements IService {
+public class DefineExamComment extends Service {
 
     public void run(String executionCourseInitials, Integer executionPeriodId, String comment)
             throws FenixServiceException, ExcepcaoPersistencia {

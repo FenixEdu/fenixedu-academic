@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod implements IService {
+public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends Service {
 
     public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID)
             throws ExcepcaoPersistencia {

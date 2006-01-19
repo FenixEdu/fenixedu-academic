@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ana e Ricardo
  * 
  */
-public class ReadExecutionCourseWithAssociatedCurricularCourses implements IService {
+public class ReadExecutionCourseWithAssociatedCurricularCourses extends Service {
 
     public InfoExecutionCourse run(Integer executionCourseID) throws FenixServiceException,
             ExcepcaoPersistencia {

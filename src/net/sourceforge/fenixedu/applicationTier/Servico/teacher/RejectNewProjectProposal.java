@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
-public class RejectNewProjectProposal implements IService {
+public class RejectNewProjectProposal extends Service {
 
 	public Boolean run(Integer executionCourseId, Integer groupPropertiesId, String rejectorUserName)
 			throws FenixServiceException, ExcepcaoPersistencia {

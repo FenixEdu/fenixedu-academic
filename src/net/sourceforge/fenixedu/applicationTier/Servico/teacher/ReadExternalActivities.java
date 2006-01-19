@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActiv
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
-public class ReadExternalActivities implements IService {
+public class ReadExternalActivities extends Service {
 
     public SiteView run(String user) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

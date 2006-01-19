@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
 
-public class ReadExecutionCourseResponsiblesIds implements IService {
+public class ReadExecutionCourseResponsiblesIds extends Service {
 
     public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 

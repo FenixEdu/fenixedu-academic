@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditContextFromCurricularCourse implements IService {
+public class EditContextFromCurricularCourse extends Service {
 
     public void run(CurricularCourse curricularCourse, Context context, CourseGroup courseGroup,
             Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {

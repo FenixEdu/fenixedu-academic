@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.Profiler;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadDepartmentTeachersCreditsDetailsService implements IService {
+public class ReadDepartmentTeachersCreditsDetailsService extends Service {
 
     public List run(HashMap searchParameters) throws FenixServiceException, ExcepcaoPersistencia {
         Profiler.getInstance();

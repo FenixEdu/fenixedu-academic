@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear implements
-        IService {
+public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear extends
+        Service {
 
     public List<ExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID,
             Integer curricularYearID) throws ExcepcaoPersistencia, FenixServiceException {

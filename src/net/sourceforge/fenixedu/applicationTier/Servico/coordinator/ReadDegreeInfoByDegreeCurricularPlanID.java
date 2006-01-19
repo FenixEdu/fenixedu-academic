@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadDegreeInfoByDegreeCurricularPlanID implements IService {
+public class ReadDegreeInfoByDegreeCurricularPlanID extends Service {
 
     public InfoDegreeInfo run(Integer degreeCurricularPlanID) throws FenixServiceException,
             ExcepcaoPersistencia {

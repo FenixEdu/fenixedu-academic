@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
  * @author lmre
  */
-public class ReadOpenExecutionYears implements IService {
+public class ReadOpenExecutionYears extends Service {
 
     public List run() throws FenixServiceException, ExcepcaoPersistencia {
         

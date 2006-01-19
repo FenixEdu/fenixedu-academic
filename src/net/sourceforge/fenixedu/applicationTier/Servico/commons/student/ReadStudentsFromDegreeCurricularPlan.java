@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadStudentsFromDegreeCurricularPlan implements IService {
+public class ReadStudentsFromDegreeCurricularPlan extends Service {
 
     public List run(Integer degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException,
             ExcepcaoPersistencia {

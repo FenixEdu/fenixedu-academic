@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditDegree implements IService {
+public class EditDegree extends Service {
 
     public void run(InfoDegree infoDegree) throws FenixServiceException, ExcepcaoPersistencia {
         if (infoDegree.getIdInternal() == null || infoDegree.getNome() == null || infoDegree.getNameEn() == null

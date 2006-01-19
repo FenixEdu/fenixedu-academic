@@ -20,14 +20,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
  *
  */
 public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
-		implements IService {
+		extends Service {
 	
 	public List<InfoStudentWithAttendsAndInquiriesRegistries> run(final Integer degreeCurricularPlanId, final Integer executionPeriodId, final Boolean onlyAttendsWithTeachers)
 	throws ExcepcaoPersistencia, FenixServiceException {

@@ -20,12 +20,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadOverheadReport implements IService {
+public class ReadOverheadReport extends Service {
 
     public InfoOverheadReport run(String userView, String costCenter, ReportType reportType, Integer projectCode, String userNumber)
             throws ExcepcaoPersistencia {

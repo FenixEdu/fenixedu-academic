@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateCurricularCourseEquivalency implements IService {
+public class CreateCurricularCourseEquivalency extends Service {
 
     public void run(final Integer degreeCurricularPlanID, final Integer curricularCourseID, 
             final Integer oldCurricularCourseID) throws ExcepcaoPersistencia {

@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
  */
-public class EditGrouping implements IService {
+public class EditGrouping extends Service {
 
     public List run(Integer executionCourseID, InfoGrouping infoGroupProperties)
             throws FenixServiceException, ExcepcaoPersistencia {

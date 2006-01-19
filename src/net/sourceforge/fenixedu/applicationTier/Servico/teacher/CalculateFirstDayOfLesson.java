@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  *  
  */
-public class CalculateFirstDayOfLesson implements IService {
+public class CalculateFirstDayOfLesson extends Service {
 
 	public Calendar run(Integer lessonId) throws ExcepcaoPersistencia {
 	    ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

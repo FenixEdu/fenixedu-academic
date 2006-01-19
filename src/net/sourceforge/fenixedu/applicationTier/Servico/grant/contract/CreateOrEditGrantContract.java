@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateOrEditGrantContract implements IService {
+public class CreateOrEditGrantContract extends Service {
 
     public void run(InfoGrantContract infoGrantContract) throws FenixServiceException,
             ExcepcaoPersistencia {

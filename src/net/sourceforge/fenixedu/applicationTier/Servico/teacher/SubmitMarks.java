@@ -37,9 +37,9 @@ import net.sourceforge.fenixedu.util.Ftp;
 
 import org.apache.commons.lang.StringUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class SubmitMarks implements IService {
+public class SubmitMarks extends Service {
 	
 	private static final String NA = "NA";
 	

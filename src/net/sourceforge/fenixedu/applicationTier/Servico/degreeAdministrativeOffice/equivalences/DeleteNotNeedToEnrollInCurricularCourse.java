@@ -8,14 +8,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class DeleteNotNeedToEnrollInCurricularCourse implements IService {
+public class DeleteNotNeedToEnrollInCurricularCourse extends Service {
 
     public void run(Integer notNeedToEnrollInCurricularCourseID) throws ExcepcaoPersistencia {
 

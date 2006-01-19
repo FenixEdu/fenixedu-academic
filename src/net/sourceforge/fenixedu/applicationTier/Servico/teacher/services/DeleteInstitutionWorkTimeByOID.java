@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class DeleteInstitutionWorkTimeByOID implements IService {
+public class DeleteInstitutionWorkTimeByOID extends Service {
 
     public void run(Integer institutionWorkTimeID) throws ExcepcaoPersistencia {
 

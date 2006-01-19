@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
  */
-public class ImprovmentEnrollService implements IService {
+public class ImprovmentEnrollService extends Service {
 
     public Object run(Integer studentNumber, String employeeUserName, List enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {

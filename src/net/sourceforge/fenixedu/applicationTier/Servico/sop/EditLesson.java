@@ -21,9 +21,9 @@ import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditLesson implements IService {
+public class EditLesson extends Service {
 
     public Object run(InfoLesson aulaAntiga, InfoLesson aulaNova, InfoShift infoShift)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -15,14 +15,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadActiveDegreeCurricularPlansByDegreeType implements IService {
+public class ReadActiveDegreeCurricularPlansByDegreeType extends Service {
 
     public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType)
             throws ExcepcaoPersistencia {

@@ -41,7 +41,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br>
@@ -58,7 +58,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         current state is payed it cannot be changed d) if the current state
  *         is annuled it cannot be changed
  */
-public class EditReimbursementGuide implements IService {
+public class EditReimbursementGuide extends Service {
 
 	/**
 	 * @throws FenixServiceException,

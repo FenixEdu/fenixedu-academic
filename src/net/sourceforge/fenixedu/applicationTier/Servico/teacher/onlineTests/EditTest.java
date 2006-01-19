@@ -10,12 +10,12 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class EditTest implements IService {
+public class EditTest extends Service {
 
     public void run(Integer executionCourseId, Integer testId, String title, String information) throws ExcepcaoPersistencia {
         Test test = (Test) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTest().readByOID(Test.class, testId);

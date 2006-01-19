@@ -15,12 +15,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class UpdateProfessorshipsHours implements IService {
+public class UpdateProfessorshipsHours extends Service {
 
     public Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours)
             throws FenixServiceException, ExcepcaoPersistencia {

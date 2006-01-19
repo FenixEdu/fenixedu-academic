@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 28/10/2003
  * 
  */
-public class ReadActiveCurricularCourseScopes implements IService {
+public class ReadActiveCurricularCourseScopes extends Service {
 
 	/**
 	 * Executes the service. Returns the collection of active

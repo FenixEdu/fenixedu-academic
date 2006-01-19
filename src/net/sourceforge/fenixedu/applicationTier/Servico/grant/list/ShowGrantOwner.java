@@ -39,13 +39,13 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ShowGrantOwner implements IService {
+public class ShowGrantOwner extends Service {
 
 	public ShowGrantOwner() {
 	}

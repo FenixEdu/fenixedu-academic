@@ -49,12 +49,12 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.log4j.Logger;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class InsertStudentTestResponses implements IService {
+public class InsertStudentTestResponses extends Service {
 
     private static final Logger logger = Logger.getLogger(InsertStudentTestResponses.class);
 

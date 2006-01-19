@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class AddShiftsToSchoolClass implements IService {
+public class AddShiftsToSchoolClass extends Service {
 
 	public void run(InfoClass infoClass, List<String> shiftOIDs) throws FenixServiceException,
 			ExcepcaoPersistencia {

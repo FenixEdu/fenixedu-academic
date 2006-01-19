@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  *
  */
 
-public class WriteStudentPersonalDataAuthorizationAnswer implements IService {
+public class WriteStudentPersonalDataAuthorizationAnswer extends Service {
 
     public void run(Integer studentID, String answer) throws ExcepcaoPersistencia{
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

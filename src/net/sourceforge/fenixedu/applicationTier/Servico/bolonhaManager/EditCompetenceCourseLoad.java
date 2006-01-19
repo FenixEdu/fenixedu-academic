@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditCompetenceCourseLoad implements IService {
+public class EditCompetenceCourseLoad extends Service {
 
     public void run(Integer competenceCourseID, RegimeType regimeType, List<CourseLoad> courseLoads)
             throws ExcepcaoPersistencia, FenixServiceException {

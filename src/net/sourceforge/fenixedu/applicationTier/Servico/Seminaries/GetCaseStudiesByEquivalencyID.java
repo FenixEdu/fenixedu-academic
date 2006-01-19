@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 25/Ago/2003, 18:18:02
  * 
  */
-public class GetCaseStudiesByEquivalencyID implements IService {
+public class GetCaseStudiesByEquivalencyID extends Service {
 
 	public List run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
 		List infoCases = new LinkedList();

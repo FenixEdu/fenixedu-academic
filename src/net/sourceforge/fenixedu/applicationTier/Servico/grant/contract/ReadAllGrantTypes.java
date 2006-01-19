@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadAllGrantTypes implements IService {
+public class ReadAllGrantTypes extends Service {
 
     public List run() throws ExcepcaoPersistencia {
 

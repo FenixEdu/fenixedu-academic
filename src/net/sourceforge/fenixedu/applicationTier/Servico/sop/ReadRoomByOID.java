@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadRoomByOID implements IService {
+public class ReadRoomByOID extends Service {
 
 	public InfoRoom run(Integer oid) throws ExcepcaoPersistencia {
 		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

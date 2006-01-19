@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class UpdateAndReadGratuitySituationsByStudentNumber implements IService {
+public class UpdateAndReadGratuitySituationsByStudentNumber extends Service {
 
     public List<InfoGratuitySituation> run(Integer studentNumber) throws ExcepcaoPersistencia {
 

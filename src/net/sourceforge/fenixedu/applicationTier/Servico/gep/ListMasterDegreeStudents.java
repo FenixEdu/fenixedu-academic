@@ -24,14 +24,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ListMasterDegreeStudents implements IService {
+public class ListMasterDegreeStudents extends Service {
 
     private Map<DegreeCurricularPlan, ExecutionDegree> firstExecutionDegrees = new HashMap<DegreeCurricularPlan, ExecutionDegree>();
 

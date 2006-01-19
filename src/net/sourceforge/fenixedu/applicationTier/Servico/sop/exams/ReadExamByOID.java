@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadExamByOID implements IService {
+public class ReadExamByOID extends Service {
 
     public InfoExam run(Integer examID) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 
  */
 
-public class ReadActiveExecutionDegreebyDegreeCurricularPlanID implements IService {
+public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends Service {
 
     public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException,
             ExcepcaoPersistencia {

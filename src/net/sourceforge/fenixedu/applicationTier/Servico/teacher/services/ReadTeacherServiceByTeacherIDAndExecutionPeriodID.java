@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class ReadTeacherServiceByTeacherIDAndExecutionPeriodID implements IService {
+public class ReadTeacherServiceByTeacherIDAndExecutionPeriodID extends Service {
 
     public TeacherService run(Integer teacherID, Integer executionPeriodID) throws ExcepcaoPersistencia {
 

@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author jdnf and mrsp 21/Jul/2005
  * 
  */
-public class EditSummary implements IService {
+public class EditSummary extends Service {
 
     public void run(Integer executionCourseId, InfoSummary infoSummary) throws FenixServiceException,
             ExcepcaoPersistencia {

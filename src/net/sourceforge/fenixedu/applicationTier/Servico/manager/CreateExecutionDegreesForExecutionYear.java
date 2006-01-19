@@ -11,14 +11,14 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateExecutionDegreesForExecutionYear implements IService {
+public class CreateExecutionDegreesForExecutionYear extends Service {
 
     public void run(final Integer[] degreeCurricularPlansIDs, final Integer executionYearID,
             final String campusName, final Boolean temporaryExamMap,

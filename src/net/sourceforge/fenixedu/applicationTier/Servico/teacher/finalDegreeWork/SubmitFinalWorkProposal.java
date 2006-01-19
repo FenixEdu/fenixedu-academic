@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class SubmitFinalWorkProposal implements IService {
+public class SubmitFinalWorkProposal extends Service {
 
     public void run(InfoProposal infoProposal) throws FenixServiceException, ExcepcaoPersistencia {
 

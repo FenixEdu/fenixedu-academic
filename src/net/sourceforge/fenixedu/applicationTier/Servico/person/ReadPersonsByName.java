@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadPersonsByName implements IService {
+public class ReadPersonsByName extends Service {
 
     public List<InfoPerson> run(String stringtoSearch) throws ExcepcaoPersistencia {
 

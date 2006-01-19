@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ProposalState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  */
 
-public class PrepareEditGroupingMembers implements IService {
+public class PrepareEditGroupingMembers extends Service {
 
     public List run(Integer executionCourseCode, Integer groupingID)
             throws FenixServiceException, ExcepcaoPersistencia {

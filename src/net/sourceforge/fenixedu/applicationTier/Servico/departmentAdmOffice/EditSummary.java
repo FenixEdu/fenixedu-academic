@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Manuel Pinto e João Figueiredo
  */
-public class EditSummary implements IService {
+public class EditSummary extends Service {
 
     public void run(Integer executionCourseId, InfoSummary infoSummary) throws FenixServiceException,
             ExcepcaoPersistencia {

@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class ReadAllInstitutions implements IService {
+public class ReadAllInstitutions extends Service {
 
     public Object run() throws FenixServiceException, ExcepcaoPersistencia {
         List infoInstitutions = new ArrayList();

@@ -22,14 +22,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa and rmalo
  * 
  */
 
-public class EditStudentGroupsShift implements IService {
+public class EditStudentGroupsShift extends Service {
 
 	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode,
 			List studentGroupsCodes) throws FenixServiceException, ExcepcaoPersistencia {

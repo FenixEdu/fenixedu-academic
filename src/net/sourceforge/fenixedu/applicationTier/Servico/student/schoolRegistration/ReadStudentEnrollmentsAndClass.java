@@ -28,13 +28,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class ReadStudentEnrollmentsAndClass implements IService {
+public class ReadStudentEnrollmentsAndClass extends Service {
 
     public List run(IUserView userView) throws ExcepcaoPersistencia {
 

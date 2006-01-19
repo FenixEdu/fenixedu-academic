@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.dataTransferObject.department.CourseStatisticsDT
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.IGrade;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author pcma
  */
 
-public abstract class ComputeCourseStatistics implements IService {
+public abstract class ComputeCourseStatistics extends Service {
     public ComputeCourseStatistics() {
         super();
     }

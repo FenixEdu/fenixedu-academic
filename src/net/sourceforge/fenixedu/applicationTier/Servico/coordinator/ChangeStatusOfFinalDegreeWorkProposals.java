@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangeStatusOfFinalDegreeWorkProposals implements IService {
+public class ChangeStatusOfFinalDegreeWorkProposals extends Service {
 
     public void run(Integer executionDegreeOID, List<Integer> selectedProposalOIDs,
             FinalDegreeWorkProposalStatus status) throws FenixServiceException, ExcepcaoPersistencia {

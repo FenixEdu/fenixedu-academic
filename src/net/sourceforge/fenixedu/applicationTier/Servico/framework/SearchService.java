@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * Do a search on database.
  * 
  * @author jpvl
  */
-public abstract class SearchService implements IService {
+public abstract class SearchService extends Service {
 
     /**
      * @param searchParameters

@@ -28,9 +28,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadStudentMarksListByCurricularCourse implements IService {
+public class ReadStudentMarksListByCurricularCourse extends Service {
 
     public List run(IUserView userView, Integer curricularCourseID, String executionYear)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {

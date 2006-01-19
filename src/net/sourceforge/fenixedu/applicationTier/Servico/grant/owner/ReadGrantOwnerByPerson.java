@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadGrantOwnerByPerson implements IService {
+public class ReadGrantOwnerByPerson extends Service {
 
 	public InfoGrantOwner run(Integer personId) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoGrantOwner infoGrantOwner = null;

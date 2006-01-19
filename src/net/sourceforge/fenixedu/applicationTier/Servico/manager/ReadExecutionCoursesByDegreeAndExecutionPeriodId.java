@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a> 3/Dez/2003
  *  
  */
-public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IService {
+public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends Service {
 
     public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
             ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();

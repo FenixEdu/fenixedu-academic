@@ -27,14 +27,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  */
 
-public class ReadExamsByStudent implements IService {
+public class ReadExamsByStudent extends Service {
 
     public Object run(String username) throws ExcepcaoPersistencia {
 

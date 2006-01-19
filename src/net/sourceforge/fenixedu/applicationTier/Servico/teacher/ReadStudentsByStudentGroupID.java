@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 18/Set/2003, 18:17:51
  * 
  */
-public class ReadStudentsByStudentGroupID implements IService {
+public class ReadStudentsByStudentGroupID extends Service {
 
     public List run(Integer executionCourseId, Integer groupId) throws FenixServiceException,
             ExcepcaoPersistencia {

@@ -6,14 +6,14 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadMasterDegreeCandidateByID implements IService {
+public class ReadMasterDegreeCandidateByID extends Service {
 
     public InfoMasterDegreeCandidate run(Integer candidateID) throws ExcepcaoPersistencia {
 

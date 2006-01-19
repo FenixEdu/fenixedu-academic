@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
-public class GroupStudentEnrolment implements IService {
+public class GroupStudentEnrolment extends Service {
 
     public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException,
             ExcepcaoPersistencia {

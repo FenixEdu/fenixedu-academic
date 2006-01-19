@@ -31,13 +31,13 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class CreateClassificationsForStudents implements IService {
+public class CreateClassificationsForStudents extends Service {
 
     private static Transformer getEntryGradeTransformer = new Transformer() {
         public Object transform(Object input) {

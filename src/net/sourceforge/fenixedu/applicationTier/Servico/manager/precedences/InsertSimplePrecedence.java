@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  *  
  */
-public class InsertSimplePrecedence implements IService {
+public class InsertSimplePrecedence extends Service {
 
     public void run(String className, Integer curricularCourseToAddPrecedenceID,
             Integer precedentCurricularCourseID, Integer number) throws FenixServiceException, ExcepcaoPersistencia {

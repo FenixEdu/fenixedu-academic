@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadAllGrantPartsByGrantSubsidy implements IService {
+public class ReadAllGrantPartsByGrantSubsidy extends Service {
 
 	public List run(Integer grantSubsidyId) throws FenixServiceException, ExcepcaoPersistencia {
 		List result = null;

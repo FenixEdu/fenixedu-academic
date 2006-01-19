@@ -39,13 +39,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quit�rio 01/07/2003
  * 
  */
-public class ReadStudentsAndMarksByCurricularCourse implements IService {
+public class ReadStudentsAndMarksByCurricularCourse extends Service {
 
 	public InfoSiteEnrolmentEvaluation run(Integer curricularCourseCode, String yearString)
 			throws FenixServiceException, ExcepcaoPersistencia {

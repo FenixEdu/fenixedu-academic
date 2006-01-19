@@ -19,12 +19,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa and rmalo
  */
-public class ReadOpenExecutionPeriodsByTeacherExecutionCourses implements IService {
+public class ReadOpenExecutionPeriodsByTeacherExecutionCourses extends Service {
 
     public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
         

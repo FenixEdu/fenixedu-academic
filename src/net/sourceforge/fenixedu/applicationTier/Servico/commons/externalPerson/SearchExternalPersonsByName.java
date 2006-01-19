@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class SearchExternalPersonsByName implements IService {
+public class SearchExternalPersonsByName extends Service {
 
     public List run(String name) throws FenixServiceException, ExcepcaoPersistencia {
         List infoExternalPersons = new ArrayList();

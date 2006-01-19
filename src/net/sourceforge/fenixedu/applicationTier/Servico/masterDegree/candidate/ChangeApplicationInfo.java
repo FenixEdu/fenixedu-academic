@@ -32,9 +32,9 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangeApplicationInfo implements IService {
+public class ChangeApplicationInfo extends Service {
 
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
             InfoPerson infoPerson, IUserView userView, Boolean isNewPerson)
@@ -68,7 +68,7 @@ public class ChangeApplicationInfo implements IService {
             person.edit(infoPerson, country);
             
         } else {
-            IService service = new ChangePersonalContactInformation();
+            Service service = new ChangePersonalContactInformation();
             ((ChangePersonalContactInformation) service).run(userView, infoPerson);
         }
 

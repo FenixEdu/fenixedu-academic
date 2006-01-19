@@ -42,14 +42,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * @author Susana Fernandes 21/Jul/2003 fenix-head
  *         ServidorAplicacao.Servico.teacher
  */
-public class ReadSummaries implements IService {
+public class ReadSummaries extends Service {
 
     public SiteView run(Integer executionCourseId, String summaryType, Integer shiftId,
             Integer professorShiftId) throws FenixServiceException, ExcepcaoPersistencia {

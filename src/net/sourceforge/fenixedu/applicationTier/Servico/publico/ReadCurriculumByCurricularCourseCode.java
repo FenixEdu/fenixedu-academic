@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadCurriculumByCurricularCourseCode implements IService {
+public class ReadCurriculumByCurricularCourseCode extends Service {
 
     public InfoCurriculum run(final Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import java.io.Serializable;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
@@ -14,9 +12,8 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
-import net.sourceforge.fenixedu.applicationTier.IService;
 
-public class AuthenticateKerberos extends Authenticate implements IService, Serializable {
+public class AuthenticateKerberos extends Authenticate {
 
 	
 	public IUserView run(final String username, final String password, final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {

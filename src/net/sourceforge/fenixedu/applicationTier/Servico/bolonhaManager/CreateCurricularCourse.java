@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateCurricularCourse implements IService {
+public class CreateCurricularCourse extends Service {
 
     public void run(Double weight, String prerequisites, String prerequisitesEn,
             Integer competenceCourseID, Integer courseGroupID, Integer year, Integer semester,

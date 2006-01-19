@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author T�nia Pous�o Created on 10/Out/2003
  */
-public class ReadCurricularCourseScopeListByDegreeCurricularPlan implements IService {
+public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service {
 
     public List run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp;

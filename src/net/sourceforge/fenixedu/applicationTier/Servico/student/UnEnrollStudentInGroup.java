@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
 
-public class UnEnrollStudentInGroup implements IService {
+public class UnEnrollStudentInGroup extends Service {
 
     public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException,
             ExcepcaoPersistencia {

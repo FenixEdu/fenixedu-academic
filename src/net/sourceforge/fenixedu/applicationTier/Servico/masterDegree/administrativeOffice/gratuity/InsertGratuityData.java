@@ -29,13 +29,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.Sessi
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class InsertGratuityData implements IService {
+public class InsertGratuityData extends Service {
 
 	public Object run(InfoGratuityValues infoGratuityValues) throws FenixServiceException,
 			ExcepcaoPersistencia {

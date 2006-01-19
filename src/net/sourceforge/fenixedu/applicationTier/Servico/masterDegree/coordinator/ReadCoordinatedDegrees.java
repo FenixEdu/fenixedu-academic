@@ -25,9 +25,9 @@ import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricu
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadCoordinatedDegrees implements IService {
+public class ReadCoordinatedDegrees extends Service {
 
 	public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 

@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  *  
  */
-public class InsertCurricularCourseGroup implements IService {
+public class InsertCurricularCourseGroup extends Service {
 
     public void run(Integer groupId, String name, Integer branchId, Integer minimumValue,
             Integer maximumValue, AreaType areaType, String className) throws ExcepcaoPersistencia,

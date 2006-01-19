@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ChangeMasterDegreeThesisData implements IService {
+public class ChangeMasterDegreeThesisData extends Service {
 
     public void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
             List<Integer> guidersNumbers, List<Integer> assistentGuidersNumbers,

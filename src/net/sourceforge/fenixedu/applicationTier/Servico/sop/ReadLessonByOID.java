@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  * 
  * 
  */
-public class ReadLessonByOID implements IService {
+public class ReadLessonByOID extends Service {
 
 	public InfoLesson run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
 

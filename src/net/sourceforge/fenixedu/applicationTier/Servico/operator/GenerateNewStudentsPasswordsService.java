@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
-public class GenerateNewStudentsPasswordsService implements IService {
+public class GenerateNewStudentsPasswordsService extends Service {
     
     public List run(Integer fromNumber, Integer toNumber) throws ExistingPersistentException,
             ExcepcaoPersistencia {

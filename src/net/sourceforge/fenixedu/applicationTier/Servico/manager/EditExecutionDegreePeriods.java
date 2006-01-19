@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditExecutionDegreePeriods implements IService {
+public class EditExecutionDegreePeriods extends Service {
 
     public void run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
 

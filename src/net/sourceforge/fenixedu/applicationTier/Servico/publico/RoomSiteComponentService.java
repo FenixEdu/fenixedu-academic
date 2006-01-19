@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 
  * 
  */
-public class RoomSiteComponentService implements IService {
+public class RoomSiteComponentService extends Service {
 
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day) throws Exception {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

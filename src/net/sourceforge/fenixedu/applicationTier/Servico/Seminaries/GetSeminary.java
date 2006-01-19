@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 31/Jul/2003, 19:12:41
  * 
  */
-public class GetSeminary implements IService {
+public class GetSeminary extends Service {
 
 	public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException, ExcepcaoPersistencia {
 		InfoSeminaryWithEquivalencies infoSeminary = null;

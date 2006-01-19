@@ -20,14 +20,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class DeleteGroupingMembersByExecutionCourseID implements IService {
+public class DeleteGroupingMembersByExecutionCourseID extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupingCode)
             throws FenixServiceException, ExcepcaoPersistencia {

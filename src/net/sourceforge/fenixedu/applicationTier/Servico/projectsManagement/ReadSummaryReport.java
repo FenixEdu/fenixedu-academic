@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadSummaryReport implements IService {
+public class ReadSummaryReport extends Service {
 
     public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode, String userNumber) throws ExcepcaoPersistencia {
         InfoCoordinatorReport infoReport = new InfoCoordinatorReport();

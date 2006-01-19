@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1 modified by Fernanda Quitério
  */
-public class InsertExecutionCourseAtExecutionPeriod implements IService {
+public class InsertExecutionCourseAtExecutionPeriod extends Service {
 
     public void run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {
         ExecutionCourse executionCourse = DomainFactory.makeExecutionCourse();

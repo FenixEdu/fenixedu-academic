@@ -6,12 +6,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão Create on 04/Fev/2003
  */
-public class UserCoordinatorByExecutionDegree implements IService {
+public class UserCoordinatorByExecutionDegree extends Service {
 
     public Boolean run(Integer executionDegreeCode, String teacherUserName, String degree2Compare)
             throws FenixServiceException, ExcepcaoPersistencia {

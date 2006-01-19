@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class ReadSentSmsByPerson implements IService {
+public class ReadSentSmsByPerson extends Service {
 
 	public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();

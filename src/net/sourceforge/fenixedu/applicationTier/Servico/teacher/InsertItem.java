@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  */
-public class InsertItem implements IService {
+public class InsertItem extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem)
             throws FenixServiceException, ExcepcaoPersistencia, DomainException {

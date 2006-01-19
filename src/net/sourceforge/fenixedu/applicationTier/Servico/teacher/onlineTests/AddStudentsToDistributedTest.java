@@ -29,12 +29,12 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class AddStudentsToDistributedTest implements IService {
+public class AddStudentsToDistributedTest extends Service {
     private String contextPath = new String();
 
     public Integer run(Integer executionCourseId, Integer distributedTestId, List infoStudentList, String contextPath) throws ExcepcaoPersistencia,

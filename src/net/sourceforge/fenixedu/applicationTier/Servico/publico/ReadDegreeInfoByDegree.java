@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadDegreeInfoByDegree implements IService {
+public class ReadDegreeInfoByDegree extends Service {
 
     public InfoDegreeInfo run(final Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
         if (degreeId == null) {

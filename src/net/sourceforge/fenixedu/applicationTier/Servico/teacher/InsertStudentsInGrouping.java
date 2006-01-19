@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
 
-public class InsertStudentsInGrouping implements IService {
+public class InsertStudentsInGrouping extends Service {
 
 	public Boolean run(Integer executionCourseCode, Integer groupPropertiesCode, String[] selected)
 			throws FenixServiceException, ExcepcaoPersistencia {

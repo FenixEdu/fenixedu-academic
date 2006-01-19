@@ -15,14 +15,14 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadLastGrantContractCreatedByGrantOwner implements IService {
+public class ReadLastGrantContractCreatedByGrantOwner extends Service {
 
 	public InfoGrantContract run(Integer grantOwnerId) throws FenixServiceException,
 			ExcepcaoPersistencia {

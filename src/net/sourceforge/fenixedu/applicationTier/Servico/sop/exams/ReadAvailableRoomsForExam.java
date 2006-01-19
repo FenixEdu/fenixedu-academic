@@ -12,12 +12,12 @@ import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ana e Ricardo
  */
-public class ReadAvailableRoomsForExam implements IService {
+public class ReadAvailableRoomsForExam extends Service {
 
     public List run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,

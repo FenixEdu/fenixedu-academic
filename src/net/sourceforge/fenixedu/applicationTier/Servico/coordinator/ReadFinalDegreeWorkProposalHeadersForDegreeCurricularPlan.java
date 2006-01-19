@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan implements IService {
+public class ReadFinalDegreeWorkProposalHeadersForDegreeCurricularPlan extends Service {
 
     public List run(Integer executionDegreeOID) throws ExcepcaoPersistencia {
         List finalDegreeWorkProposalHeaders = new ArrayList();

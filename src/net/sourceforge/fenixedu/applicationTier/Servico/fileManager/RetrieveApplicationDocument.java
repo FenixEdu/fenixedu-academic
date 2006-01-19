@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class RetrieveApplicationDocument implements IService {
+public class RetrieveApplicationDocument extends Service {
 
     public FileSuportObject run(Integer personId, ApplicationDocumentType adt)
             throws FenixServiceException, ExcepcaoPersistencia {

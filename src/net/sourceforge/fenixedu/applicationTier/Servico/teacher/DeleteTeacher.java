@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersisten
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class DeleteTeacher implements IService {
+public class DeleteTeacher extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadStudentCurricularPlansByNumberAndDegreeType implements IService {
+public class ReadStudentCurricularPlansByNumberAndDegreeType extends Service {
 
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {

@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangeStudentsShift implements IService {
+public class ChangeStudentsShift extends Service {
 
     public void run(IUserView userView, Integer oldShiftId, Integer newShiftId)
             throws ExcepcaoPersistencia, FenixServiceException {

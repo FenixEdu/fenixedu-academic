@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditarSala implements IService {
+public class EditarSala extends Service {
 
 	public void run(RoomKey salaAntiga, InfoRoom salaNova) throws ExistingServiceException,
 			ExcepcaoPersistencia {

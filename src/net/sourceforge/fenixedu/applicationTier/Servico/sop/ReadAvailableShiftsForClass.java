@@ -35,9 +35,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadAvailableShiftsForClass implements IService {
+public class ReadAvailableShiftsForClass extends Service {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
 

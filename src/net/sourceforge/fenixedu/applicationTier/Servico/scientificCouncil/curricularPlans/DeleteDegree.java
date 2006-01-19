@@ -7,9 +7,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DeleteDegree implements IService {
+public class DeleteDegree extends Service {
 
     public void run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
         if (idInternal == null) {

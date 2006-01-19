@@ -44,7 +44,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -53,7 +53,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * case
  * 
  */
-public class PrepareInfoShiftEnrollmentByStudentNumber implements IService {
+public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
 
     public Object run(Integer studentNumber, Integer executionDegreeIdChosen)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -21,9 +21,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class WriteStudentAttendingCourse implements IService {
+public class WriteStudentAttendingCourse extends Service {
 
 	public class ReachedAttendsLimitServiceException extends
 			FenixServiceException {

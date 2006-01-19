@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota 17/Set/2003
  * 
  */
-public class ReadCoordinationResponsibility implements IService {
+public class ReadCoordinationResponsibility extends Service {
 
     public Boolean run(Integer executionDegreeId, IUserView userView) throws FenixServiceException,
             ExcepcaoPersistencia {

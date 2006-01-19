@@ -4,9 +4,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonalGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreatePersonalGroup implements IService {
+public class CreatePersonalGroup extends Service {
 
     public PersonalGroup run(Person person, String name, String description, Group group) throws FenixServiceException {
         PersonalGroup personalGroup = new PersonalGroup();

@@ -4,12 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  *  
  */
-public abstract class FenixService implements IService {
+public abstract class FenixService extends Service {
 
 }

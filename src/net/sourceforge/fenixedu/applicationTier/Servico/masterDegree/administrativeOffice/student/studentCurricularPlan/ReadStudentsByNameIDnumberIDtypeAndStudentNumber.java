@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos 2/Out/2003
  */
 
-public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber implements IService {
+public class ReadStudentsByNameIDnumberIDtypeAndStudentNumber extends Service {
 
     public List run(String studentName, String idNumber, IDDocumentType idType, Integer studentNumber)
             throws ExcepcaoPersistencia {

@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadPersonsByIDs implements IService {
+public class ReadPersonsByIDs extends Service {
 
     public List<InfoPerson> run(List<Integer> personsInternalIds) throws ExcepcaoPersistencia {
         List<InfoPerson> persons = new ArrayList<InfoPerson>();

@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * 
  * @author Fernanda Quitério 22/Dez/2003
  *  
  */
-public class ReadInfoExecutionCourseByOID implements IService {
+public class ReadInfoExecutionCourseByOID extends Service {
 
 	public InfoExecutionCourse run(Integer executionCourseOID) throws FenixServiceException, ExcepcaoPersistencia {
 

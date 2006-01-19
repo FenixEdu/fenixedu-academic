@@ -25,9 +25,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadExamsMap implements IService {
+public class ReadExamsMap extends Service {
 
 	public InfoExamsMap run(InfoExecutionDegree infoExecutionDegree, List curricularYears,
 			InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {

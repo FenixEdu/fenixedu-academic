@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
 
-public class DeleteBranches implements IService {
+public class DeleteBranches extends Service {
 
 	// delete a set of branches
 	public List run(List internalIds, Boolean forceDelete) throws FenixServiceException, ExcepcaoPersistencia {

@@ -18,13 +18,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.NameUtils;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Pica
  * @author Barbosa
  */
-public class ListGrantOwners implements IService {
+public class ListGrantOwners extends Service {
 
 	public ListGrantOwners() {
 	}

@@ -15,13 +15,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  *  
  */
-public class ReadActiveStudentCurricularPlanByDegreeType implements IService {
+public class ReadActiveStudentCurricularPlanByDegreeType extends Service {
 
     public ReadActiveStudentCurricularPlanByDegreeType() {
         super();

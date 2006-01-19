@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class ReadDislocatedStudentByStudentID implements IService {
+public class ReadDislocatedStudentByStudentID extends Service {
 
     public InfoDislocatedStudent run(Integer studentID) throws ExcepcaoPersistencia {
 

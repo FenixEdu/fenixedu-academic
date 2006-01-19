@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 4/Ago/2003, 18:58:03
  * 
  */
-public class GetCaseStudiesByThemeID implements IService {
+public class GetCaseStudiesByThemeID extends Service {
 
 	public List run(Integer themeID) throws BDException, ExcepcaoPersistencia {
 		List infoCases = new LinkedList();

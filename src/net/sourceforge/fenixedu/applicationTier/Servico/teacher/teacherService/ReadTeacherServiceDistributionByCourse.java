@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author jpmsit, amak
  */
-public class ReadTeacherServiceDistributionByCourse implements IService {
+public class ReadTeacherServiceDistributionByCourse extends Service {
 
 	public List run(String username, Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -14,14 +14,14 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa and rmalo
  * 
  */
 
-public class UnEnrollStudentGroupShift implements IService {
+public class UnEnrollStudentGroupShift extends Service {
 
 	public Boolean run(Integer executionCourseCode, Integer studentGroupCode, Integer groupPropertiesCode)
 			throws FenixServiceException, ExcepcaoPersistencia {

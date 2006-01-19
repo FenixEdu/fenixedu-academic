@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author David Santos in Mar 5, 2004
  */
 
-public class ReadStudentsByPerson implements IService {
+public class ReadStudentsByPerson extends Service {
 
     public List run(InfoPerson infoPerson) throws ExcepcaoPersistencia {
         final ISuportePersistente persistentSuport = PersistenceSupportFactory

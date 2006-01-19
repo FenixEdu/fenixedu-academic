@@ -19,14 +19,14 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class ReadAllTeacherCredits implements IService {
+public class ReadAllTeacherCredits extends Service {
 
     private static final Integer POINT_ZERO_EP_ID = 1;
 

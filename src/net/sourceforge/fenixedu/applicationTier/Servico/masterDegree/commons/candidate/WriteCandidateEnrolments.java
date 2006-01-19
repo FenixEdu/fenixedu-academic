@@ -20,14 +20,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
 
-public class WriteCandidateEnrolments implements IService {
+public class WriteCandidateEnrolments extends Service {
 
     public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits,
             String givenCreditsRemarks) throws FenixServiceException, ExcepcaoPersistencia {

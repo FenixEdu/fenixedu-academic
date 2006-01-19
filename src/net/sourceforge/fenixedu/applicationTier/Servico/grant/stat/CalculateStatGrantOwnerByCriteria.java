@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Pica
  * @author Barbosa
  */
-public class CalculateStatGrantOwnerByCriteria implements IService {
+public class CalculateStatGrantOwnerByCriteria extends Service {
 
 	public Object[] run(InfoStatGrantOwner infoStatGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente suportePersistente = PersistenceSupportFactory

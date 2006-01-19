@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadCompetenceCoursesByDepartment implements IService{
+public class ReadCompetenceCoursesByDepartment extends Service{
 	
 	public List<InfoCompetenceCourse> run(Integer departmentID) throws Exception {
 		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();

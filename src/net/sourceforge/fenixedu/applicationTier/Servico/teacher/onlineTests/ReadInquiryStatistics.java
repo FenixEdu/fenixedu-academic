@@ -33,12 +33,12 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.struts.util.LabelValueBean;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadInquiryStatistics implements IService {
+public class ReadInquiryStatistics extends Service {
 
 	private String path = new String();
 

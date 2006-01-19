@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan implements IService {
+public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends Service {
 
     public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
             throws FenixServiceException, ExcepcaoPersistencia {

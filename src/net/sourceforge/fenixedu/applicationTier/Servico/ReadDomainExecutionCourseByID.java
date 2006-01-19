@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @version $Id: ReadDomainExecutionCourseByID.java,v 1.2 2005/12/16 16:05:59
  *          lepc Exp $
  */
-public class ReadDomainExecutionCourseByID implements IService {
+public class ReadDomainExecutionCourseByID extends Service {
     public ExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
         ExecutionCourse executionCourse = null;

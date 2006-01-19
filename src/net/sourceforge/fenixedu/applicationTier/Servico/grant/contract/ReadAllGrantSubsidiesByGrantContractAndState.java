@@ -19,14 +19,14 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadAllGrantSubsidiesByGrantContractAndState implements IService {
+public class ReadAllGrantSubsidiesByGrantContractAndState extends Service {
 
 	public List run(Integer idContract, Integer state) throws FenixServiceException,
 			ExcepcaoPersistencia {

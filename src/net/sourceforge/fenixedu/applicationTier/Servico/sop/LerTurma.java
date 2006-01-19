@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class LerTurma implements IService {
+public class LerTurma extends Service {
 
     public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {

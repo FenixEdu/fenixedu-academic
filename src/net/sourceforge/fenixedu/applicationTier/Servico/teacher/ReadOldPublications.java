@@ -22,14 +22,14 @@ import net.sourceforge.fenixedu.util.OldPublicationType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
-public class ReadOldPublications implements IService {
+public class ReadOldPublications extends Service {
 
     public SiteView run(OldPublicationType oldPublicationType, String user) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -25,12 +25,12 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentT
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadTeacherInstitutionWorkingTime implements IService {
+public class ReadTeacherInstitutionWorkingTime extends Service {
 
     public TeacherInstitutionWorkingTimeDTO run(InfoTeacher infoTeacher, Integer executionPeriodId)
             throws FenixServiceException, ExcepcaoPersistencia {

@@ -16,14 +16,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  *  
  */
-public class ReadTeachersByExecutionCourseProfessorship implements IService {
+public class ReadTeachersByExecutionCourseProfessorship extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse) throws FenixServiceException,
             ExcepcaoPersistencia {

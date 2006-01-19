@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquirie
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiriesTeachersResByDegreeId implements IService {
+public class ReadOldInquiriesTeachersResByDegreeId extends Service {
 
 	public List run(Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
 		List oldInquiriesTeachersResList = null;

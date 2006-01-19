@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangeCandidacyApprovanceStatus implements IService {
+public class ChangeCandidacyApprovanceStatus extends Service {
 
     public void run(List<Integer> candidaciesIDs) throws ExcepcaoPersistencia {
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory

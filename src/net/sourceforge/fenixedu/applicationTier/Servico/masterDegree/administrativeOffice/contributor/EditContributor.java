@@ -10,12 +10,12 @@ import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class EditContributor implements IService {
+public class EditContributor extends Service {
 
     public InfoContributor run(InfoContributor infoContributor, Integer contributorNumber,
             String contributorName, String contributorAddress) throws ExcepcaoPersistencia,

@@ -11,14 +11,13 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.applicationTier.IService;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class ReadGrantOwner extends ReadDomainObjectService implements IService {
+public class ReadGrantOwner extends ReadDomainObjectService {
 
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
         return sp.getIPersistentGrantOwner();

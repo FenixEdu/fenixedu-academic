@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
-public class ReadOldInquiryTeachersResById implements IService {
+public class ReadOldInquiryTeachersResById extends Service {
 
 	public InfoOldInquiriesTeachersRes run(Integer internalId) throws FenixServiceException, ExcepcaoPersistencia, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		InfoOldInquiriesTeachersRes oldInquiriesTeachersRes = null;

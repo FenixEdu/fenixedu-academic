@@ -22,12 +22,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadExecutionDegreesByExecutionYearAndDegreeType implements IService {
+public class ReadExecutionDegreesByExecutionYearAndDegreeType extends Service {
 
     public List run(InfoExecutionYear infoExecutionYear, DegreeType degreeType)
             throws ExcepcaoPersistencia {

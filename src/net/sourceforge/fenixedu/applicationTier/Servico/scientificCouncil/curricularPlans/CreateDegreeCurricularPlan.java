@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CreateDegreeCurricularPlan implements IService {
+public class CreateDegreeCurricularPlan extends Service {
 
     public void run(Integer degreeId, String name, Double ectsCredits, CurricularStage curricularStage,
             GradeScale gradeScale) throws FenixServiceException, ExcepcaoPersistencia {

@@ -7,13 +7,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class EditBibliographicReference implements IService {
+public class EditBibliographicReference extends Service {
 
     public boolean run(Integer bibliographicReferenceID, String newTitle, String newAuthors,
             String newReference, String newYear, Boolean optional) throws FenixServiceException,

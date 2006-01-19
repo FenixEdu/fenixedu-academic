@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class DeleteTestQuestion implements IService {
+public class DeleteTestQuestion extends Service {
 
     public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {

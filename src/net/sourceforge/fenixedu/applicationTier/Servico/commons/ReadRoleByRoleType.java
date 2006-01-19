@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadRoleByRoleType implements IService {
+public class ReadRoleByRoleType extends Service {
 
     public Role run(RoleType roleType) throws ExcepcaoPersistencia{
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();        

@@ -32,9 +32,9 @@ import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadPavillionsRoomsLessons implements IService {
+public class ReadPavillionsRoomsLessons extends Service {
 
     public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod)
             throws ExcepcaoPersistencia {

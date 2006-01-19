@@ -28,12 +28,12 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class AcceptTeacherExecutionCourseShiftPercentage implements IService {
+public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
 
     public class InvalidProfessorshipPercentage extends FenixServiceException {
 

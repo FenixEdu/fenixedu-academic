@@ -34,12 +34,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
  */
-public class ReadImprovmentsToEnroll implements IService {
+public class ReadImprovmentsToEnroll extends Service {
 
     public Object run(Integer studentNumber, Integer executionPeriodID) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author jpvl
  * @author Barbosa
  */
-public abstract class EditDomainObjectService implements IService {
+public abstract class EditDomainObjectService extends Service {
 
 	/**
 	 * Checks if the objectToEdit can be created or update

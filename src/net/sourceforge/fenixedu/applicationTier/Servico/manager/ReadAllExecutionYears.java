@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
  */
 
-public class ReadAllExecutionYears implements IService {
+public class ReadAllExecutionYears extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente sp;

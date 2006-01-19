@@ -8,14 +8,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author jpvl
  */
 
-public class ReadCostCenterByNumber implements IService {
+public class ReadCostCenterByNumber extends Service {
 
 	public InfoGrantCostCenter run(String costContractNumber) throws FenixServiceException,
 			ExcepcaoPersistencia {

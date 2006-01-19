@@ -20,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 31/Jan/2004
  * 
  */
-public class ReadSpecializationAndSecundaryAreasByStudent implements IService {
+public class ReadSpecializationAndSecundaryAreasByStudent extends Service {
 
     // some of these arguments may be null. they are only needed for filter
     public InfoAreas2Choose run(Integer executionDegreeId, Integer studentCurricularPlanId,

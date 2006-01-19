@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class TransferCurricularCourse implements IService {
+public class TransferCurricularCourse extends Service {
 
     public void run(Integer sourceExecutionCourseId, final Integer curricularCourseId,
             Integer destinationExecutionCourseId) throws ExcepcaoPersistencia {

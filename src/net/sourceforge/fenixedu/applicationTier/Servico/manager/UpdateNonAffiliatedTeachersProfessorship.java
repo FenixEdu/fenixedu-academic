@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class UpdateNonAffiliatedTeachersProfessorship implements IService {
+public class UpdateNonAffiliatedTeachersProfessorship extends Service {
 
     public void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {

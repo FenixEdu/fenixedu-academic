@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,9 +14,9 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.Person;
@@ -31,13 +30,11 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
-
 /**
  * @author Luis Cruz
  * 
  */
-public class Authenticate implements IService, Serializable {
+public class Authenticate extends Service {
 
     protected static final Logger logger = Logger.getLogger(Authenticate.class);
 

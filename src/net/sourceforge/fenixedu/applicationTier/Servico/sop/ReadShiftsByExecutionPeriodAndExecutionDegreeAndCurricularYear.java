@@ -29,9 +29,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear implements IService {
+public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear extends Service {
 
     public Object run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear) throws ExcepcaoPersistencia {

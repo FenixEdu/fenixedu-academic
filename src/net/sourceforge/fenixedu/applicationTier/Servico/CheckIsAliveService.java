@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport
 import org.apache.log4j.Logger;
 import org.apache.slide.common.SlideException;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class CheckIsAliveService implements IService {
+public class CheckIsAliveService extends Service {
 
     private static final Logger logger = Logger.getLogger(CheckIsAliveService.class);
 

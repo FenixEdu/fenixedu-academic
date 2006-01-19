@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos Jan 26, 2004
  * @author João Mota Jul 23, 2004
  */
-public class DeleteEnrolment implements IService {
+public class DeleteEnrolment extends Service {
 
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)

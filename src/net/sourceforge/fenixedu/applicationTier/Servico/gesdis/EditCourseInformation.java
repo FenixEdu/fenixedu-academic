@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jdnf and mrsp
  */
-public class EditCourseInformation implements IService {
+public class EditCourseInformation extends Service {
 
     public void run(Integer courseReportID, InfoCourseReport infoCourseReport, String newReport) throws ExcepcaoPersistencia,
             FenixServiceException {

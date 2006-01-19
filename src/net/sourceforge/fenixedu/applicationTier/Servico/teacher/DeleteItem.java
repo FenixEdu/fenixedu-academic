@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class DeleteItem implements IService {
+public class DeleteItem extends Service {
 
     public Boolean run(final Integer infoExecutionCourseCode, final Integer itemCode)
             throws FenixServiceException, ExcepcaoPersistencia {

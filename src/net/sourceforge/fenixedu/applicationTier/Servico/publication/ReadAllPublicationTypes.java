@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadAllPublicationTypes implements IService {
+public class ReadAllPublicationTypes extends Service {
 
     public List<InfoPublicationType> run(String user) throws ExcepcaoPersistencia {
         ISuportePersistente persistentSuport = PersistenceSupportFactory

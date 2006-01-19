@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadTeachersByExecutionCourseResponsibility implements IService {
+public class ReadTeachersByExecutionCourseResponsibility extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
         return run(infoExecutionCourse.getIdInternal());

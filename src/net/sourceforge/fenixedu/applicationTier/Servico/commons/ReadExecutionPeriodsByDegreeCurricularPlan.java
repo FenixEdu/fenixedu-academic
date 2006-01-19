@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo</a>
  * 
  */
-public class ReadExecutionPeriodsByDegreeCurricularPlan implements IService {
+public class ReadExecutionPeriodsByDegreeCurricularPlan extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 

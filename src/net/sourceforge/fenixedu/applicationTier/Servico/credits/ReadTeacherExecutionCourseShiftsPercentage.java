@@ -32,12 +32,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia & Alexandra
  */
-public class ReadTeacherExecutionCourseShiftsPercentage implements IService {
+public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
 
     public TeacherExecutionCourseProfessorshipShiftsDTO run(InfoTeacher infoTeacher,
             InfoExecutionCourse infoExecutionCourse) throws FenixServiceException, ExcepcaoPersistencia {

@@ -30,12 +30,12 @@ import org.apache.struts.upload.FormFile;
 import org.apache.struts.util.LabelValueBean;
 import org.xml.sax.SAXParseException;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class InsertExerciseVariation implements IService {
+public class InsertExerciseVariation extends Service {
 
     private static final double FILE_SIZE_LIMIT = Math.pow(2, 20);
 

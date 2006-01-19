@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  *  
  */
-public class RemoveStudentFromFinalDegreeWorkStudentGroup implements IService {
+public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
 
     public RemoveStudentFromFinalDegreeWorkStudentGroup() {
         super();

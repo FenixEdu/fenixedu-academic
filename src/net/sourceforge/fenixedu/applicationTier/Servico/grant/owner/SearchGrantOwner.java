@@ -21,14 +21,14 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  * 
  */
-public class SearchGrantOwner implements IService {
+public class SearchGrantOwner extends Service {
 
 	public List run(String name, String IdNumber, IDDocumentType IdType, Integer grantOwnerNumber,
 			Boolean onlyGrantOwner, Integer startIndex) throws FenixServiceException,

@@ -39,14 +39,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
  * 
  * Created at 2:40:27 PM, Mar 11, 2005
  */
-public class ReadStudentExternalInformation implements IService {
+public class ReadStudentExternalInformation extends Service {
 
 	public Collection run(String username) throws ExcepcaoPersistencia,
 			FenixServiceException {

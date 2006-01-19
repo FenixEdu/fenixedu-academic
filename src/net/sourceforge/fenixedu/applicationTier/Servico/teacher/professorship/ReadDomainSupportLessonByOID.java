@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  *
  */
 
-public class ReadDomainSupportLessonByOID implements IService {
+public class ReadDomainSupportLessonByOID extends Service {
 
     public SupportLesson run(Integer supportLessonID) throws ExcepcaoPersistencia{
         

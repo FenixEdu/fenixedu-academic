@@ -9,13 +9,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 28/10/2003
  * 
  */
-public class EndCurricularCourseScope implements IService {
+public class EndCurricularCourseScope extends Service {
 
     public void run(InfoCurricularCourseScope newInfoCurricularCourseScope) throws ExcepcaoPersistencia,
             FenixServiceException {

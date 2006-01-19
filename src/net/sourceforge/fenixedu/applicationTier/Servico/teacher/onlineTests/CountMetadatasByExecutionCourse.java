@@ -7,13 +7,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
 
-public class CountMetadatasByExecutionCourse implements IService {
+public class CountMetadatasByExecutionCourse extends Service {
 
     public Integer run(Integer executionCourseId) throws ExcepcaoPersistencia {
         return new Integer(PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMetadata()

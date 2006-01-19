@@ -25,14 +25,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  * 
  */
-public class ClassSiteComponentService implements IService {
+public class ClassSiteComponentService extends Service {
 
     public Object run(ISiteComponent bodyComponent, String executionYearName,
             String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,

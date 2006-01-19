@@ -25,13 +25,13 @@ import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTe
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  * 
  */
-public class ReadDistributedTestMarks implements IService {
+public class ReadDistributedTestMarks extends Service {
 
 	public SiteView run(Integer executionCourseId, Integer distributedTestId)
 			throws FenixServiceException, ExcepcaoPersistencia {

@@ -36,12 +36,12 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class InsertDistributedTest implements IService {
+public class InsertDistributedTest extends Service {
 
     private String contextPath = new String();
 

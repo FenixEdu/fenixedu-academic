@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ChangeDegree implements IService {
+public class ChangeDegree extends Service {
 
     public void run(final String employeeUsername, final Integer studentNumber,
             final Integer executionDegreeToChangeTo, final Set<Integer> enrolementsToTransferIds,

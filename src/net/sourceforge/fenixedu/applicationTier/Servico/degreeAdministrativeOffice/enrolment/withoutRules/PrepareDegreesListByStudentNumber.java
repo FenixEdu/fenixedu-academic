@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -38,7 +38,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * case
  *  
  */
-public class PrepareDegreesListByStudentNumber implements IService {
+public class PrepareDegreesListByStudentNumber extends Service {
 
     public Object run(InfoStudent infoStudent, DegreeType degreeType, Integer executionDegreeId,
             Integer executionPeriodID)

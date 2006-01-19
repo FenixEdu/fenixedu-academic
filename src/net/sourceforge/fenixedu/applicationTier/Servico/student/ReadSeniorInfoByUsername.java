@@ -16,13 +16,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Egidio, luis.egidio@ist.utl.pt
  * 
  */
-public class ReadSeniorInfoByUsername implements IService {
+public class ReadSeniorInfoByUsername extends Service {
 
 	public InfoSenior run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

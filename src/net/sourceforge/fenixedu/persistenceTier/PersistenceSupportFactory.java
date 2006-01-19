@@ -20,12 +20,15 @@ public class PersistenceSupportFactory {
 
     private static final ISuportePersistente defaultPersistenceSupport;
 
+    private static final IPersistentObject persistentObject;
+
     static {
         final String defaultPersistenceSupportClassName = PropertiesManager.getProperty("default.persistenceSupport");
         try {
             final Class defaultPersistenceSupportClass = Class.forName(defaultPersistenceSupportClassName);
             final Method getInstanceMethod = defaultPersistenceSupportClass.getMethod("getInstance", (Class[])null);
             defaultPersistenceSupport = (ISuportePersistente) getInstanceMethod.invoke(null, (Object[])null);
+            persistentObject = defaultPersistenceSupport.getIPersistentObject();
         } catch (Exception e) {
             throw new RuntimeException("Unable to determine/obtain a default persistence support", e);
         }
@@ -33,8 +36,12 @@ public class PersistenceSupportFactory {
         logger.info("Default PersistenceSupport is set to: " + defaultPersistenceSupportClassName);
     }
 
-    public static ISuportePersistente getDefaultPersistenceSupport() throws ExcepcaoPersistencia {
+    public static ISuportePersistente getDefaultPersistenceSupport() {
         return defaultPersistenceSupport;
+    }
+
+    public static IPersistentObject getPersistentObject() {
+        return persistentObject;
     }
 
 }

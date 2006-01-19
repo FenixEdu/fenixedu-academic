@@ -11,12 +11,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
  */
-public class ReadDepartmentByOID implements IService {
+public class ReadDepartmentByOID extends Service {
 
     public InfoDepartment run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
         InfoDepartment infoDepartment = null;

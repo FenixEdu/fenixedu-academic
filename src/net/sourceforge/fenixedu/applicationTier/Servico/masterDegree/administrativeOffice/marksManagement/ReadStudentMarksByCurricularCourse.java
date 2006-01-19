@@ -31,13 +31,13 @@ import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 01/07/2003
  * 
  */
-public class ReadStudentMarksByCurricularCourse implements IService {
+public class ReadStudentMarksByCurricularCourse extends Service {
 
 	public List run(Integer curricularCourseID, Integer studentNumber, String executionYear)
 			throws FenixServiceException, ExcepcaoPersistencia {

@@ -9,14 +9,14 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSentServiceException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  *  
  */
-public class CreateSentSms implements IService {
+public class CreateSentSms extends Service {
 
     public void run(IUserView userView, Date startDate, Date endDate, Integer destinationNumber,
             String message) throws FenixServiceException {

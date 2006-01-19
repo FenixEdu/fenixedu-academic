@@ -37,9 +37,9 @@ import net.sourceforge.fenixedu.util.NumberUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class SearchExecutionCourses implements IService {
+public class SearchExecutionCourses extends Service {
 
     public List run(InfoExecutionPeriod infoExecutionPeriod, InfoExecutionDegree infoExecutionDegree,
             InfoCurricularYear infoCurricularYear, String executionCourseName)

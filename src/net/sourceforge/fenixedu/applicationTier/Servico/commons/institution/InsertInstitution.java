@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
  * @author - Nadir Tarmahomed (naat@mega.ist.utl.pt)
  */
-public class InsertInstitution implements IService {
+public class InsertInstitution extends Service {
 
     public Institution run(String institutionName) throws ExcepcaoPersistencia,
             ExistingServiceException {

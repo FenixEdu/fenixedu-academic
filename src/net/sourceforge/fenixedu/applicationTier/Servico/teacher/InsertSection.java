@@ -8,12 +8,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  */
-public class InsertSection implements IService {
+public class InsertSection extends Service {
 
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String sectionName,

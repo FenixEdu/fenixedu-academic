@@ -38,13 +38,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class ReadStudentCurricularInformation implements IService {
+public class ReadStudentCurricularInformation extends Service {
 
     public List run(final Integer studentNumber, final DegreeType degreeType) throws ExcepcaoPersistencia {
         final List infoStudentCurricularPlans = new ArrayList();

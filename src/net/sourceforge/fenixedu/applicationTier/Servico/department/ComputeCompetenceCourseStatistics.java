@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author pcma
  */
 
-public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics implements IService {
+public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
     public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {

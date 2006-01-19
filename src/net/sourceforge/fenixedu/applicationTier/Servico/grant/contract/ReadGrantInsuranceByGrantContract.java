@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
  * @author Pica
  */
-public class ReadGrantInsuranceByGrantContract implements IService {
+public class ReadGrantInsuranceByGrantContract extends Service {
 
 	public InfoGrantInsurance run(Integer idContract) throws FenixServiceException, ExcepcaoPersistencia {
 		GrantInsurance grantInsurance = null;

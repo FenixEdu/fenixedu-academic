@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PrintAllCandidatesFilter;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Clerigo & Telmo Nabais
  * 
  */
-public class ReadDegreeCandidatesWithFilter implements IService {
+public class ReadDegreeCandidatesWithFilter extends Service {
 
     private Specialization filterSpecialization = null;
 

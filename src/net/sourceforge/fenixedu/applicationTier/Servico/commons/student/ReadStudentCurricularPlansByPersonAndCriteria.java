@@ -31,7 +31,7 @@ import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Andr� Fernandes / Jo�o Brito
@@ -39,7 +39,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * TODO To change the template for this generated type comment go to Window -
  * Preferences - Java - Code Style - Code Templates
  */
-public class ReadStudentCurricularPlansByPersonAndCriteria implements IService {
+public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
 
     /*
      * devolve InfoXxxx com: - StudentCurricularPlan's do aluno - Enrolments do

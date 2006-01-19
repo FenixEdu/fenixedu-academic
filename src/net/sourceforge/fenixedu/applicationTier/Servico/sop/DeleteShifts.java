@@ -12,9 +12,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DeleteShifts implements IService {
+public class DeleteShifts extends Service {
 
     public Object run(final List<Integer> shiftOIDs) throws FenixServiceException, ExcepcaoPersistencia {
         for (final Integer shiftID : shiftOIDs) {

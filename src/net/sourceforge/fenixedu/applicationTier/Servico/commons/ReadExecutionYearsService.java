@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class ReadExecutionYearsService implements IService {
+public class ReadExecutionYearsService extends Service {
 
 	public List run() throws ExcepcaoPersistencia {
 

@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Luis Cruz
  */
-public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree implements IService
+public class ReadExecutionCoursesForCurrentAndPreviousPeriodByDegree extends Service
 {
 
     public Object run(Integer degreeOID) throws ExcepcaoPersistencia

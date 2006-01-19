@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author naat
  * 
  */
-public class ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID implements IService {
+public class ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYearID extends Service {
 
     public TeacherExpectationDefinitionPeriod run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {

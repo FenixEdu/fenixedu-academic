@@ -12,14 +12,14 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author naat
  * 
  */
-public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID implements IService {
+public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends Service {
 
     public List<Teacher> run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {

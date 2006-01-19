@@ -14,11 +14,7 @@ public class DaoTester extends ObjectFenixOJB {
     private static final DaoTester instance = new DaoTester();
 
     static {
-        try {
-            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        } catch (ExcepcaoPersistencia e) {
-            throw new RuntimeException(e);
-        }
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
     }
 
     public static void main(String[] args) {

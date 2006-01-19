@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 
  * 
  */
-public class ViewReimbursementGuide implements IService {
+public class ViewReimbursementGuide extends Service {
 
     public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException,
             ExcepcaoPersistencia {

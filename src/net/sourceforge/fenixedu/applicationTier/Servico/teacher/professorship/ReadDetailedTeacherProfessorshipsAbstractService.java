@@ -25,12 +25,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadDetailedTeacherProfessorshipsAbstractService implements IService {
+public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
     
     private final class Professorships2DetailProfessorship implements Transformer {
         private Professorships2DetailProfessorship() {

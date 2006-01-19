@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup implements IService {
+public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends Service {
 
     public List run(Integer groupOID) throws ExcepcaoPersistencia {
         List finalDegreeWorkProposalHeaders = new ArrayList();

@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
  * @author Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class ReadPublicExecutionDegreeByDCPID implements IService {
+public class ReadPublicExecutionDegreeByDCPID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
 

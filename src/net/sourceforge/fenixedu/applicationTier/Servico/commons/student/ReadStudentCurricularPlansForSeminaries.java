@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadStudentCurricularPlansForSeminaries implements IService {
+public class ReadStudentCurricularPlansForSeminaries extends Service {
 
     public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException,
             ExcepcaoPersistencia {

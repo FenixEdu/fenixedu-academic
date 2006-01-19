@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão Create on 13/Nov/2003
  */
-public class ReadExecutionDegreesByDegreeAndExecutionPeriod implements IService {
+public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 
 	public List run(Integer executionPeriodId, Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
 		List infoExecutionDegreeList = null;

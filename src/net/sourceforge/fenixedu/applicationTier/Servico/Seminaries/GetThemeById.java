@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 26/Ago/2003, 9:14:57
  * 
  */
-public class GetThemeById implements IService {
+public class GetThemeById extends Service {
 
 	public InfoTheme run(Integer themeID) throws BDException, ExcepcaoPersistencia {
 		InfoTheme infoTheme = null;

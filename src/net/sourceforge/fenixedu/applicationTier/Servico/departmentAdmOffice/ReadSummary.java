@@ -47,12 +47,12 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Manuel Pinto e João Figueiredo
  */
-public class ReadSummary implements IService {
+public class ReadSummary extends Service {
 
     public SiteView run(Integer teacherNumber, Integer executionCourseId, Integer summaryId)
             throws FenixServiceException, ExcepcaoPersistencia {

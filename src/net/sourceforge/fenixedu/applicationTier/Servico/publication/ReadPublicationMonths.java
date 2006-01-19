@@ -6,10 +6,10 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.util.Mes;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 
-public class ReadPublicationMonths implements IService {
+public class ReadPublicationMonths extends Service {
 
     public List<String> run(int publicationTypeId) {
         List<String> MonthList = new ArrayList<String>();

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class InsertCurriculum implements IService {
+public class InsertCurriculum extends Service {
 
     public Boolean run(Integer curricularCourseId, String program, String programEn,
             String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,

@@ -29,12 +29,12 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class CreateGuide implements IService {
+public class CreateGuide extends Service {
 
     public InfoGuide run(InfoGuide infoGuide, String othersRemarks, Double othersPrice, String remarks,
             GuideState situationOfGuide, String paymentType) throws FenixServiceException,

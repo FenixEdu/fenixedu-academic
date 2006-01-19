@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  */
-public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy implements IService {
+public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy extends Service {
 
     public ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy() {
         super();

@@ -39,7 +39,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -47,7 +47,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
-public class GenerateOutgoingSibsPaymentFileByExecutionYearID implements IService {
+public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
 	public GenerateOutgoingSibsPaymentFileByExecutionYearID() {
 

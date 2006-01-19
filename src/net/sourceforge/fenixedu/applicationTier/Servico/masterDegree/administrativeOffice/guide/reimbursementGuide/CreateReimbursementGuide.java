@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br>
@@ -46,7 +46,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         The service also generates the number of the new reimbursement guide
  *         using a sequential method.
  */
-public class CreateReimbursementGuide implements IService {
+public class CreateReimbursementGuide extends Service {
 
     /**
      * @throws FenixServiceException,

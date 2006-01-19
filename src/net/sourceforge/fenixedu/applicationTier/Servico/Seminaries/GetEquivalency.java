@@ -20,7 +20,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BD
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 4/Ago/2003, 13:05:42
  * 
  */
-public class GetEquivalency implements IService {
+public class GetEquivalency extends Service {
 
 	public InfoEquivalency run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
 		InfoEquivalency infoEquivalency = null;

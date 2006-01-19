@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditGrantOwner implements IService {
+public class EditGrantOwner extends Service {
 
 	private String generateGrantOwnerPersonUsername(Integer grantOwnerNumber) {
 		String result = null;

@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * @author jdnf and mrsp 21/Jul/2005
  * 
  */
-public class InsertSummary implements IService {
+public class InsertSummary extends Service {
 
     public Boolean run(Integer executionCourseID, InfoSummary infoSummary) throws FenixServiceException,
             ExcepcaoPersistencia {

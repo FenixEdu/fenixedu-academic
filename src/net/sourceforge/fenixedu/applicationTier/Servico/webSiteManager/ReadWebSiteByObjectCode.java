@@ -25,13 +25,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 24/09/2003
  * 
  */
-public class ReadWebSiteByObjectCode implements IService {
+public class ReadWebSiteByObjectCode extends Service {
 
     public InfoWebSite run(Integer webSiteCode) throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();

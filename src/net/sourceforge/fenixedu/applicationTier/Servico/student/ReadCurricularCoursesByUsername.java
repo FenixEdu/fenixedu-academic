@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -26,7 +26,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * case use ReadDisciplinesByStudent Created at 3/Ago/2003, 21:37:27
  * 
  */
-public class ReadCurricularCoursesByUsername implements IService {
+public class ReadCurricularCoursesByUsername extends Service {
 
 	public List run(String username) throws BDException, ExcepcaoPersistencia {
 		List curricularCourses = new LinkedList();

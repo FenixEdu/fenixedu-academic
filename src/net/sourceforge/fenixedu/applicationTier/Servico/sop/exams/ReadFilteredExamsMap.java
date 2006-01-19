@@ -34,9 +34,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadFilteredExamsMap implements IService {
+public class ReadFilteredExamsMap extends Service {
 
     public class ExamsPeriodUndefined extends FenixServiceException {
         private static final long serialVersionUID = 1L;

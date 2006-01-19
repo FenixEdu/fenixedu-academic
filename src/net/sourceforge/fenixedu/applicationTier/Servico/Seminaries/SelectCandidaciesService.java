@@ -32,13 +32,13 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
  * 
  */
-public class SelectCandidaciesService implements IService {
+public class SelectCandidaciesService extends Service {
 
 	public SelectCandidaciesDTO run(Boolean inEnrollmentPeriod, Integer seminaryID)
 			throws FenixServiceException, ExcepcaoPersistencia {

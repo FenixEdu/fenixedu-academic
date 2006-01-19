@@ -14,13 +14,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author tfs
  * 
  */
-public class CopySiteExecutionCourse implements IService {
+public class CopySiteExecutionCourse extends Service {
 
     public void run(Integer executionCourseFromID, Integer executionCourseToID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {

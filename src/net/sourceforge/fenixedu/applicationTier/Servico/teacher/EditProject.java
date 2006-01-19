@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.domain.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditProject implements IService {
+public class EditProject extends Service {
 
     public void run(Integer executionCourseID, Integer projectID, String name, Date begin, Date end,
             String description) throws ExcepcaoPersistencia, FenixServiceException {

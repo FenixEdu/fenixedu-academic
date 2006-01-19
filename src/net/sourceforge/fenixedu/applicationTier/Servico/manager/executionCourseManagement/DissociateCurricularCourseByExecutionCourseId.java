@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 
  */
 
-public class DissociateCurricularCourseByExecutionCourseId implements IService {
+public class DissociateCurricularCourseByExecutionCourseId extends Service {
 
     public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {

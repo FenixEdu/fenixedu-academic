@@ -13,13 +13,13 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  * 
  */
-public class VerifyGroupingAndStudentGroupWithoutShift implements IService {
+public class VerifyGroupingAndStudentGroupWithoutShift extends Service {
 
 	public Integer run(Integer studentGroupCode, Integer groupPropertiesCode, String shiftCodeString,
 			String username) throws FenixServiceException, ExcepcaoPersistencia {

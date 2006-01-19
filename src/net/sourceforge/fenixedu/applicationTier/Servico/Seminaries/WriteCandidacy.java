@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
  *         5/Ago/2003, 15:46:40
  */
-public class WriteCandidacy implements IService {
+public class WriteCandidacy extends Service {
 
     public void run(InfoCandidacy infoCandidacy) throws ExcepcaoPersistencia {
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();

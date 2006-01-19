@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadInfoEnrolmentEvaluationByEvaluationOID implements IService {
+public class ReadInfoEnrolmentEvaluationByEvaluationOID extends Service {
 
     public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {

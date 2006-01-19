@@ -30,13 +30,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ProposalState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
  *  
  */
-public class NewProjectProposal implements IService {
+public class NewProjectProposal extends Service {
 
     public Boolean run(Integer objectCode, Integer goalExecutionCourseId, Integer groupPropertiesId,
             String senderPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {

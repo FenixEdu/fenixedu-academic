@@ -21,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class ReadAndDeleteExtraWorkRequests implements IService {
+public class ReadAndDeleteExtraWorkRequests extends Service {
 
 	public List run(String usernameWho, List infoExtraWorkRequestsList) throws Exception {
 		List infoExtraWorkRequestsListAfter = null;

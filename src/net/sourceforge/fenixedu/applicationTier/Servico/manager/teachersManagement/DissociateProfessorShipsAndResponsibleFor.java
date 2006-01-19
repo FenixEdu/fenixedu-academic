@@ -18,9 +18,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DissociateProfessorShipsAndResponsibleFor implements IService {
+public class DissociateProfessorShipsAndResponsibleFor extends Service {
 
     public Map run(Integer teacherNumber, List<Integer> professorships, List<Integer> responsibleFors)
             throws FenixServiceException, ExcepcaoPersistencia {

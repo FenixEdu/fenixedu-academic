@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class AlterExecutionPeriodState implements IService {
+public class AlterExecutionPeriodState extends Service {
 
     public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
             throws FenixServiceException, ExcepcaoPersistencia {

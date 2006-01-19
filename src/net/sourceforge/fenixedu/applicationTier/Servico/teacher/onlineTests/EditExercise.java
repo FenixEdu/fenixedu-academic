@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author Susana Fernandes
  * 
  */
-public class EditExercise implements IService {
+public class EditExercise extends Service {
 
 	public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
 			String difficulty, Calendar learningTime, String level, String mainSubject,

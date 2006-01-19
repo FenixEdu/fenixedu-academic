@@ -8,9 +8,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadExecutionPeriod implements IService {
+public class ReadExecutionPeriod extends Service {
 
     public InfoExecutionPeriod run(final String name, final InfoExecutionYear infoExecutionYear)
             throws ExcepcaoPersistencia {

@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport
 
 import org.apache.slide.common.SlideException;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DeleteItemFile implements IService {
+public class DeleteItemFile extends Service {
 
 	public void run(Integer itemId, String fileName) throws FenixServiceException, ExcepcaoPersistencia,
 			SlideException {

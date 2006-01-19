@@ -16,12 +16,12 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPos
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadTeacherManagementPositionsService implements IService {
+public class ReadTeacherManagementPositionsService extends Service {
     public List run(Integer teacherId) throws FenixServiceException, ExcepcaoPersistencia {
         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 

@@ -19,13 +19,13 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jdnf, mrsp and Luis Cruz
  * 
  */
-public class DeleteExecutionCourses implements IService {
+public class DeleteExecutionCourses extends Service {
 
     public List run(final List executionCourseIDs) throws FenixServiceException, ExcepcaoPersistencia {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory

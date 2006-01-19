@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class InsertExternalPerson implements IService {
+public class InsertExternalPerson extends Service {
 
     public ExternalPerson run(String name, String sex, String address, Integer institutionID,
             String phone, String mobile, String homepage, String email) throws FenixServiceException,

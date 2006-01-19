@@ -13,12 +13,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos in Apr 14, 2004
  */
-public class WriteStudentAreasWithoutRestrictions implements IService {
+public class WriteStudentAreasWithoutRestrictions extends Service {
     public WriteStudentAreasWithoutRestrictions() {
     }
 

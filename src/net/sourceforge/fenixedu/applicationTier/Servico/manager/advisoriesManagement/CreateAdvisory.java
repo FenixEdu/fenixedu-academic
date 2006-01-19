@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AdvisoryRecipients;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  */
-public class CreateAdvisory implements IService {
+public class CreateAdvisory extends Service {
 
     private boolean hasRole(final Person person, final RoleType roleType) {
         final Collection roles = person.getPersonRoles();

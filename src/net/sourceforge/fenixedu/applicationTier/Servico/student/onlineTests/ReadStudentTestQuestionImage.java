@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.struts.util.LabelValueBean;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadStudentTestQuestionImage implements IService {
+public class ReadStudentTestQuestionImage extends Service {
 
     public String run(String userName, Integer distributedTestId, Integer questionId, Integer imageId, String feedbackId, String path)
             throws FenixServiceException, ExcepcaoPersistencia {

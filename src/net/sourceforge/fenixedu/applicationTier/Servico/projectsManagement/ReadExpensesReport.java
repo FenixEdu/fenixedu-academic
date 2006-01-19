@@ -23,12 +23,12 @@ import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
-public class ReadExpensesReport implements IService {
+public class ReadExpensesReport extends Service {
 
     public InfoExpensesReport run(String username, String costCenter, ReportType reportType, Integer projectCode, String rubric, String userNumber)
             throws ExcepcaoPersistencia {

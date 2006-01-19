@@ -25,13 +25,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 02/10/2003
  * 
  */
-public class ReadLimitedWebSiteSectionByName implements IService {
+public class ReadLimitedWebSiteSectionByName extends Service {
 
 	public Object run(String sectionName) throws ExcepcaoInexistente, FenixServiceException,
 			ExcepcaoPersistencia {

@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class WriteMarks implements IService {
+public class WriteMarks extends Service {
 
     public void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
             throws ExcepcaoPersistencia, FenixServiceException {

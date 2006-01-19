@@ -30,9 +30,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadDegreeCandidates implements IService {
+public class ReadDegreeCandidates extends Service {
 
     public List run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
 

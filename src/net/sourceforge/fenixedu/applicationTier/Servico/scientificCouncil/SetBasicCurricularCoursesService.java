@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Jo�o Mota
@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 23/Jul/2003 fenix-head ServidorAplicacao.Servico.scientificCouncil
  * 
  */
-public class SetBasicCurricularCoursesService implements IService {
+public class SetBasicCurricularCoursesService extends Service {
 
 	public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId)
 			throws FenixServiceException, ExcepcaoPersistencia {

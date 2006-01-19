@@ -20,14 +20,14 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
  * 
  */
 
-public class VerifyStudentGroupAtributes implements IService {
+public class VerifyStudentGroupAtributes extends Service {
 
 	private boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username)
 			throws FenixServiceException, ExcepcaoPersistencia {

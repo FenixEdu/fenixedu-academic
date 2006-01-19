@@ -14,12 +14,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author T�nia Pous�o Created on 4/Nov/2003
  */
-public class ReadDegreeInfoByExecutionDegree implements IService {
+public class ReadDegreeInfoByExecutionDegree extends Service {
 
     public InfoDegreeInfo run(Integer infoExecutionDegreeId) throws FenixServiceException {
         InfoDegreeInfo infoDegreeInfo = new InfoDegreeInfo();

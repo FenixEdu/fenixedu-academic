@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
-public class ReadCategories implements IService {
+public class ReadCategories extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();

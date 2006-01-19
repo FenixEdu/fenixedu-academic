@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadAllCampus implements IService {
+public class ReadAllCampus extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 		List infoCampusList;

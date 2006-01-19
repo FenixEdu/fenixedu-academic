@@ -17,13 +17,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class DeleteEnrollmentsList implements IService {
+public class DeleteEnrollmentsList extends Service {
 
     // some of these arguments may be null. they are only needed for filter
     public void run(InfoStudent infoStudent, DegreeType degreeType, List enrolmentIDList)

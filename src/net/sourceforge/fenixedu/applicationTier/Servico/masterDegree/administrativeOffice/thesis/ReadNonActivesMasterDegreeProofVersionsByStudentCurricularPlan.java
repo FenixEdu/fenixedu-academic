@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  *         (naat@mega.ist.utl.pt)
  * 
  */
-public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan implements IService {
+public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan extends Service {
 
     public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException,
             ExcepcaoPersistencia {

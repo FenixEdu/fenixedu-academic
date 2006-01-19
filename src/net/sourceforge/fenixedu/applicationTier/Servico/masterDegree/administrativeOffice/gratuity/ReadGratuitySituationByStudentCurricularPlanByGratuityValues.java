@@ -12,13 +12,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues implements IService {
+public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extends Service {
 
 	public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID)
 			throws FenixServiceException, ExcepcaoPersistencia {

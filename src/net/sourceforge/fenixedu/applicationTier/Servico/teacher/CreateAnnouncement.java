@@ -6,13 +6,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  * 
  */
-public class CreateAnnouncement implements IService {
+public class CreateAnnouncement extends Service {
 
     public boolean run(Integer infoExecutionCourseCode, String announcementTitle,
             String announcementInformation) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {

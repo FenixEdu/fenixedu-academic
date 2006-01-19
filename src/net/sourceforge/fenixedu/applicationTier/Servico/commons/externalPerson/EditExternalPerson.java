@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditExternalPerson implements IService {
+public class EditExternalPerson extends Service {
 
     public void run(Integer externalPersonID, String name, String address, Integer institutionID,
             String phone, String mobile, String homepage, String email) throws FenixServiceException,

@@ -24,9 +24,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadStudentsEnrolledInWrittenEvaluation implements IService {
+public class ReadStudentsEnrolledInWrittenEvaluation extends Service {
 
     public SiteView run(Integer executionCourseID, Integer writtenEvaluationID)
             throws FenixServiceException, ExcepcaoPersistencia {

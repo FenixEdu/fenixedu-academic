@@ -37,12 +37,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
  */
-public class PrepareCreateGuide implements IService {
+public class PrepareCreateGuide extends Service {
 
 	public InfoGuide run(String graduationType, InfoExecutionDegree infoExecutionDegree, Integer number,
 			String requesterType, Integer contributorNumber, String contributorName,

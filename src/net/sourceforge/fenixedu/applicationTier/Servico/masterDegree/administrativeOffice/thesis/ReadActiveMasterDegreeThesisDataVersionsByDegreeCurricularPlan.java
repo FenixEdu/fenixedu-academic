@@ -13,14 +13,14 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan implements IService {
+public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
 

@@ -11,13 +11,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
  * 
  */
-public class ChangeStudentCurricularPlanState implements IService {
+public class ChangeStudentCurricularPlanState extends Service {
 
     public void run(final Integer studentCurricularPlanId,
             final StudentCurricularPlanState studentCurricularPlanState) throws ExcepcaoPersistencia, DomainException {

@@ -5,10 +5,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAttribute;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoSiteAttributes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 
-public class ReadAllPublicationAttributes implements IService {
+public class ReadAllPublicationAttributes extends Service {
 
     public InfoSiteAttributes run(int publicationTypeId) throws ExcepcaoPersistencia {
 

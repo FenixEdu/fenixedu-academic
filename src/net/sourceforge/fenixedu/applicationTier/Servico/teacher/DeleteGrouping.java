@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
  * 
  */
-public class DeleteGrouping implements IService {
+public class DeleteGrouping extends Service {
 
     public Boolean run(Integer executionCourseId, Integer groupPropertiesId)
             throws FenixServiceException, ExcepcaoPersistencia {

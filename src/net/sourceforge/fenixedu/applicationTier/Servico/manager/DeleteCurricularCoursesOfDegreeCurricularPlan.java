@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1 modified by Fernanda Quiterio
  */
-public class DeleteCurricularCoursesOfDegreeCurricularPlan implements IService {
+public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
     // delete a set of curricularCourses
     public List run(List curricularCoursesIds) throws FenixServiceException, ExcepcaoPersistencia {

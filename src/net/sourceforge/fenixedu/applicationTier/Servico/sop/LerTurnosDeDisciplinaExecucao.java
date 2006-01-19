@@ -21,9 +21,9 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class LerTurnosDeDisciplinaExecucao implements IService {
+public class LerTurnosDeDisciplinaExecucao extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
 

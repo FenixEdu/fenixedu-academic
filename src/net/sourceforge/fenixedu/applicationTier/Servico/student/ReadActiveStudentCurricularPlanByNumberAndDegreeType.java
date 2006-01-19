@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * Created on 24/Set/2003, 11:26:29
@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * Created at 24/Set/2003, 11:26:29
  * 
  */
-public class ReadActiveStudentCurricularPlanByNumberAndDegreeType implements IService {
+public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Service {
 
     public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
             throws ExcepcaoPersistencia {

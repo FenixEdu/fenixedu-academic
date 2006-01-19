@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  */
-public class InsertStudentsFinalEvaluation implements IService {
+public class InsertStudentsFinalEvaluation extends Service {
 
 	public List run(List<InfoEnrolmentEvaluation> evaluations, Integer teacherNumber,
 			Date evaluationDate, IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {

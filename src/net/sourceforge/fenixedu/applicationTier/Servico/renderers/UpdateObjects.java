@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class UpdateObjects implements IService {
+public class UpdateObjects extends Service {
     
     public static class ObjectChange {
         public final ObjectKey key;

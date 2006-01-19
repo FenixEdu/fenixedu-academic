@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão Create on 18/Dez/2003
  */
-public class TeacherResponsibleByExecutionCourse implements IService {
+public class TeacherResponsibleByExecutionCourse extends Service {
 
     public Boolean run(String teacherUserName, Integer executionCourseCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {

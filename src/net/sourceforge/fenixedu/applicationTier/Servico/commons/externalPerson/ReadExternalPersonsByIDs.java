@@ -9,14 +9,14 @@ import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
-public class ReadExternalPersonsByIDs implements IService {
+public class ReadExternalPersonsByIDs extends Service {
 
     public Collection<InfoExternalPerson> run(Collection<Integer> externalPersonsIDs)
             throws ExcepcaoPersistencia {

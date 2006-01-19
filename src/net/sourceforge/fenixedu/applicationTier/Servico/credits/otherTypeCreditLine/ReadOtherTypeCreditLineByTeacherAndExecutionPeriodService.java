@@ -26,12 +26,12 @@ import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCred
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
-public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService implements IService {
+public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends Service {
 
     /**
      * @author jpvl

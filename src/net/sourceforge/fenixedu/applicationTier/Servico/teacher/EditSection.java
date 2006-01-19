@@ -9,12 +9,12 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
  */
-public class EditSection implements IService {
+public class EditSection extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String newSectionName,
             Integer newOrder) throws FenixServiceException, ExcepcaoPersistencia {

@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  *
  */
 
-public class ReadDomainProfessorshipByOID implements IService {
+public class ReadDomainProfessorshipByOID extends Service {
 
     public Professorship run(Integer professorshipID) throws ExcepcaoPersistencia {
 

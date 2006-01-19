@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class EditProjectAccess implements IService {
+public class EditProjectAccess extends Service {
 
     public void run(String username, String costCenter, Integer personId, Integer projectCode,
             Calendar beginDate, Calendar endDate, String userNumber) throws FenixServiceException,

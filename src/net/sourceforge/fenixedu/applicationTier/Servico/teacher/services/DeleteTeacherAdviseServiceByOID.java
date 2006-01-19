@@ -7,14 +7,14 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
-public class DeleteTeacherAdviseServiceByOID implements IService {
+public class DeleteTeacherAdviseServiceByOID extends Service {
 
     public void run(Integer teacherAdviseServiceID) throws ExcepcaoPersistencia {
 

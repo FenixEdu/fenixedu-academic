@@ -10,9 +10,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class ReadCurricularCourseEquivalenciesByDegreeCurricularPlan implements IService {
+public class ReadCurricularCourseEquivalenciesByDegreeCurricularPlan extends Service {
 
     public List<InfoCurricularCourseEquivalence> run(final Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {

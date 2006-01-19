@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.applicationTier.IService;
  * 30/Jun/2003 fenix-branch ServidorAplicacao.Servico.sop
  * 
  */
-public class ReadAllClasses implements IService {
+public class ReadAllClasses extends Service {
 
 	public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException, ExcepcaoPersistencia {
 		List infoClasses = null;

@@ -9,9 +9,9 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.IService;
+import net.sourceforge.fenixedu.applicationTier.Service;
 
-public class DissociateExecutionCourse implements IService {
+public class DissociateExecutionCourse extends Service {
 
     public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {
