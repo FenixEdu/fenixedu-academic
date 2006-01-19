@@ -55,10 +55,17 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         mailBody += "Exception: \n" + session.getAttribute(Globals.EXCEPTION_KEY) + "\n\n";
         mailBody += "RequestContext: \n" + requestContext + "\n\n\n";
         mailBody += "SessionContext: \n" + sessionContextGetter(request) + "\n\n\n";
+
+        final ActionForward actionForward; 
         if (originalMapping != null) {
             mailBody += "Path: " + originalMapping.getPath() + "\n";
             mailBody += "Name: " + originalMapping.getName() + "\n";
         }
+
+        actionForward = new ActionForward();
+        actionForward.setContextRelative(false);
+        actionForward.setRedirect(true);
+        actionForward.setPath("/showErrorPageRegistered.do");
 
         IUserView userView = (IUserView) session.getAttribute("UserView");
         if (userView != null) {
@@ -75,23 +82,12 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
         if (!request.getServerName().equals("localhost")) {
             email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
             email.send("suporte@dot.ist.utl.pt", "Fenix Error Report" + subject, mailBody);
-        }
-
-        else {
+        } else {
             email = new EMail("mail.rnl.ist.utl.pt", "erro@dot.ist.utl.pt");
             email.send("suporte@dot.ist.utl.pt", "Localhost Error Report", mailBody);
         }
 
-        //		email.send("j.mota@netcabo.pt", subject, mailBody);
-        //		email.send("lepc@mega.ist.utl.pt", subject, mailBody);
-        //		removes from session all the un-needed info
         sessionRemover(request);
-
-        ActionForward actionForward = originalMapping.getInputForward();
-        RequestUtils.selectModule(originalMapping.getModuleConfig().getPrefix(), request, this.servlet
-                .getServletContext());
-
-        actionForward.setPath(actionForward.getPath());
 
         return actionForward;
     }
