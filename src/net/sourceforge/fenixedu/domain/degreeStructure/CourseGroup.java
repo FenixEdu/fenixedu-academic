@@ -36,7 +36,7 @@ public class CourseGroup extends CourseGroup_Base {
             super.delete();            
             super.deleteDomainObject();
         } else {
-            throw new DomainException("error.notEmptyCourseGroupContexts");
+            throw new DomainException("courseGroup.notEmptyCourseGroupContexts");
         }
     }
 

@@ -14,10 +14,11 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class CourseGroupManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
-   
+    private final ResourceBundle bolonhaResources = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
+    private final ResourceBundle domainResources = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
+
     private String name = null;
-    
+
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
     }
@@ -25,7 +26,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     public Integer getParentCourseGroupID() {
         return getAndHoldIntegerParameter("parentCourseGroupID");
     }
-    
+
     public Integer getCourseGroupID() {
         return getAndHoldIntegerParameter("courseGroupID");
     }
@@ -37,53 +38,54 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException, FenixServiceException {
+
+    public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
+            FenixServiceException {
         return (DegreeCurricularPlan) readDomainObject(DegreeCurricularPlan.class, getDegreeCurricularPlanID());
     }
-    
+
     public CourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
         return (CourseGroup) readDomainObject(CourseGroup.class, getCourseGroupID());
     }
-    
-    public String createCourseGroup() throws FenixFilterException {        
+
+    public String createCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = {getParentCourseGroupID(), getName()};
+            final Object args[] = { getParentCourseGroupID(), getName() };
             ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
-            addInfoMessage(messages.getString("courseGroupCreated"));
+            addInfoMessage(bolonhaResources.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            setErrorMessage(e.getMessage());            
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (final DomainException e) {
-            setErrorMessage(e.getMessage());            
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }
-    
-    public String editCourseGroup() throws FenixFilterException {        
+
+    public String editCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = {getCourseGroupID(), getName()};
+            final Object args[] = { getCourseGroupID(), getName() };
             ServiceUtils.executeService(getUserView(), "EditCourseGroup", args);
-            addInfoMessage(messages.getString("courseGroupEdited"));
+            addInfoMessage(bolonhaResources.getString("courseGroupEdited"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            setErrorMessage(e.getMessage());            
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (final DomainException e) {
-            setErrorMessage(e.getMessage());            
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }
-    
-    public String deleteCourseGroup() throws FenixFilterException {        
+
+    public String deleteCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = {getCourseGroupID()};
+            final Object args[] = { getCourseGroupID() };
             ServiceUtils.executeService(getUserView(), "DeleteCourseGroup", args);
-            addInfoMessage(messages.getString("courseGroupDeleted"));
+            addInfoMessage(bolonhaResources.getString("courseGroupDeleted"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
-            setErrorMessage(e.getMessage());            
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (final DomainException e) {
-            setErrorMessage(e.getMessage());
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }

@@ -299,7 +299,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             checkCompetenceCourse();
             Object args[] = {getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourse()};
             ServiceUtils.executeService(getUserView(), "EditCurricularCourse", args);
-           
+            setContextID(0); // resetContextID
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (FenixActionException e) {

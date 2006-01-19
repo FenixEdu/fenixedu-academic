@@ -104,24 +104,22 @@
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p class='mbottom0'><em>#{bolonhaBundle['portuguese']}: </em></p>" escape="false"/>
-	<h:panelGrid styleClass="showinfo1 highlight2" columns="2">
-		<h:outputText value="<strong>#{bolonhaBundle['objectives']}: <strong>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.objectives}"/>
-		
-		<h:outputText value="<strong>#{bolonhaBundle['program']}: </strong>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.program}"/>
-	</h:panelGrid>
+	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
+	<h:outputText value="<tr><th>#{bolonhaBundle['objectives']}:</th>" escape="false"/>
+	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectives}</td></tr>" escape="false"/>
+	<h:outputText value="<tr><th>#{bolonhaBundle['program']}:</th>" escape="false"/>
+	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.program}</td></tr>" escape="false"/>
+	<h:outputText value="</table>" escape="false"/>
 	<h:outputText value="</div>" escape="false"/>
 	
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p class='mbottom0'><em>#{bolonhaBundle['english']}: </em></p>" escape="false"/>
-	<h:panelGrid styleClass="showinfo1 highlight2" columns="2">
-		<h:outputText value="<strong>#{bolonhaBundle['objectivesEn']}: <strong>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}"/>
-		
-		<h:outputText value="<strong>#{bolonhaBundle['programEn']}: </strong>" escape="false"/>
-		<h:outputText value="#{CompetenceCourseManagement.competenceCourse.programEn}"/>
-	</h:panelGrid>
+	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
+	<h:outputText value="<tr><th>#{bolonhaBundle['objectivesEn']}:</th>" escape="false"/>
+	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectivesEn}</td></tr>" escape="false"/>
+	<h:outputText value="<tr><th>#{bolonhaBundle['programEn']}:</th>" escape="false"/>
+	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.programEn}</td></tr>" escape="false"/>
+	<h:outputText value="</table>" escape="false"/>
 	<h:outputText value="</div>" escape="false"/>
 
 	<h:form>

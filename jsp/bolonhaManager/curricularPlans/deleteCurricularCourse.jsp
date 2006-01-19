@@ -2,47 +2,41 @@
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
-<style>
-<!--
-.alignRight {
-	text-align: right;
-}
--->
-</style>
+
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	
-	<h:outputText value="#{CurricularCourseManagement.degreeCurricularPlan.name}" style="font-style: italic"/>
+	<h:outputText value="<em>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
+	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['delete.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['curricularCourse']}"/>
 	</h:outputFormat>
-	<h:outputText styleClass="error" rendered="#{!empty CurricularCourseManagement.errorMessage}"
-			value="#{bolonhaBundle[CurricularCourseManagement.errorMessage]}<br/>" escape="false"/>			
-	<h:messages infoClass="infoMsg" errorClass="error" layout="table" globalOnly="true"/>
+	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
-		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'"/>
-				<h:outputText escape="false" value="<input id='contextIDToDelete' name='contextIDToDelete' type='hidden' value='#{CurricularCourseManagement.contextIDToDelete}'"/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>
+		<h:outputText escape="false" value="<input id='contextIDToDelete' name='contextIDToDelete' type='hidden' value='#{CurricularCourseManagement.contextIDToDelete}'/>"/>
 				
 		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['curricularCourseInformation']}: <br/>"  escape="false"/>		
-		<h:panelGrid columnClasses="infocell" columns="2" border="0">
-			<h:outputText value="#{bolonhaBundle['name']}: "/>
-			<h:outputText value="#{CurricularCourseManagement.curricularCourse.name}"/>
-		</h:panelGrid>
-		<br/>		
+		<h:outputText value="#{bolonhaBundle['name']}: "/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.name}"/>		
+		<br/><br/>
 		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['context']}: <br/>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
-			<h:panelGrid columnClasses="alignRight infocell, infocell," columns="2" border="0">				
-				<h:outputText value="#{bolonhaBundle['courseGroup']}: "/>
-				<h:outputText value="#{context.courseGroup.name}"/>
+			<h:panelGroup rendered="#{context.idInternal == CurricularCourseManagement.contextIDToDelete}">								
+				<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
+				<h:outputText value="#{context.courseGroup.name}</p>" escape="false"/>
 				
-				<h:outputText value="#{bolonhaBundle['curricularPeriod']}: " />
-				<h:outputText value="#{context.curricularPeriod.fullLabel}"/>
-			</h:panelGrid>
+				<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
+				<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
+			</h:panelGroup>
 		</fc:dataRepeater>
-		<br/>
+		<h:outputText value="</fieldset><br/>" escape="false"/>
+		
 		<h:outputText styleClass="infomsg" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/><br/>" escape="false"/>
-		<h:outputText styleClass="error" value="#{bolonhaBundle['confirmDeleteMessage']}<br/><hr>" escape="false"/>
+		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/><hr>" escape="false"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			 action="buildCurricularPlan" actionListener="#{CurricularCourseManagement.forceDeleteContext}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}"
