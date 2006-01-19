@@ -3,6 +3,22 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
+<script language="JavaScript">
+function check(e,v)
+{
+	if (e.style.display == "none")
+	  {
+	  e.style.display = "";
+	  v.src = "/ciapl/images/toggle_minus10.gif";
+	  }
+	else
+	  {
+	  e.style.display = "none";
+	  v.src = "/ciapl/images/toggle_plus10.gif";
+	  }
+}
+</script>
+
 <ft:tilesView definition="df.page.functionsManagement" attributeName="body-inline">
 
 	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>

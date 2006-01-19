@@ -198,17 +198,17 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String deletePersonFunction() throws FenixFilterException, FenixServiceException {
         activeFunctionsClear();
-        final Object[] argsToRead = { this.getPersonFunctionID() };        
-        ServiceUtils.executeService(getUserView(), "DeletePersonFunction", argsToRead);        
+        final Object[] argsToRead = { this.getPersonFunctionID() };
+        ServiceUtils.executeService(getUserView(), "DeletePersonFunction", argsToRead);
         setErrorMessage("message.success");
         return "";
     }
 
     private void activeFunctionsClear() throws FenixFilterException, FenixServiceException {
-        this.activeFunctions.remove(this.getPersonFunction());        
+        this.activeFunctions.remove(this.getPersonFunction());
         Iterator<Function> iter = this.inherentFunctions.iterator();
-        while(iter.hasNext()){                      
-            if(iter.next().getParentInherentFunction().equals(this.getPersonFunction().getFunction())){
+        while (iter.hasNext()) {
+            if (iter.next().getParentInherentFunction().equals(this.getPersonFunction().getFunction())) {
                 iter.remove();
             }
         }
@@ -526,10 +526,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
         StringBuilder buffer = new StringBuilder();
-        buffer.append("<ul>");
+        buffer.append("<ul class='padding nobullet'>");
         if (this.getEmployeeDepartmentUnit() != null
                 && this.getEmployeeDepartmentUnit().isActive(Calendar.getInstance().getTime())) {
-            getUnitsList(this.getEmployeeDepartmentUnit(), 0, buffer);
+            getUnitsList(this.getEmployeeDepartmentUnit(), buffer);
         } else {
             return "";
         }
@@ -537,20 +537,38 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    private void getUnitsList(Unit parentUnit, int index, StringBuilder buffer) {
+    private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
 
-        buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
+        buffer.append("<li>");
+
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<img ").append("src='").append(getContextPath()).append(
+                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
+                    .append("aa").append(parentUnit.getIdInternal()).append(
+                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+                            "'));return false;").append("\"> ");
+        }
+
+        buffer.append("<a href=\"").append(getContextPath()).append(
                 "/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(
                 personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
-                parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
+                parentUnit.getName()).append("</a>").append("</li>");
+
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
+                    .append("\" ").append("style='display:none'>\r\n");
+        }
 
         for (Unit subUnit : parentUnit.getSubUnits()) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
-                getUnitsList(subUnit, index + 1, buffer);
+                getUnitsList(subUnit, buffer);
             }
         }
 
-        buffer.append("</ul>");
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("</ul>");
+        }
     }
 
     public Unit getEmployeeDepartmentUnit() {
@@ -678,8 +696,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public Function getFunction() throws FenixFilterException, FenixServiceException {
         if (this.function == null && this.getFunctionID() != null) {
             final Object[] argsToRead = { Function.class, this.getFunctionID() };
-            this.function = (Function) ServiceUtils
-                    .executeService(null, "ReadDomainObject", argsToRead);
+            this.function = (Function) ServiceUtils.executeService(null, "ReadDomainObject", argsToRead);
 
         } else if (this.function == null && this.getPersonFunctionID() != null) {
             this.function = this.getPersonFunction().getFunction();
@@ -723,8 +740,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.beginDateHidden == null || this.beginDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(
-                    ExecutionPeriod.class, this.executionPeriod);
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(ExecutionPeriod.class,
+                    this.executionPeriod);
 
             this.beginDate = (executionPeriod != null) ? DateFormatUtil.format("dd/MM/yyyy",
                     executionPeriod.getBeginDate()) : null;
@@ -767,8 +784,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 && (this.endDateHidden == null || this.endDateHidden.getValue() == null)
                 && this.getExecutionPeriod() != null) {
 
-            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(
-                    ExecutionPeriod.class, this.executionPeriod);
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) readDomainObject(ExecutionPeriod.class,
+                    this.executionPeriod);
 
             ExecutionPeriod executionPeriodWithDuration = getDurationEndDate(executionPeriod);
             this.endDate = DateFormatUtil.format("dd/MM/yyyy", executionPeriodWithDuration.getEndDate());
@@ -905,8 +922,8 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     public PersonFunction getPersonFunction() throws FenixFilterException, FenixServiceException {
         if (this.personFunction == null) {
             final Object[] argsToRead = { PersonFunction.class, this.getPersonFunctionID() };
-            this.personFunction = (PersonFunction) ServiceUtils.executeService(null,
-                    "ReadDomainObject", argsToRead);
+            this.personFunction = (PersonFunction) ServiceUtils.executeService(null, "ReadDomainObject",
+                    argsToRead);
         }
         return personFunction;
     }

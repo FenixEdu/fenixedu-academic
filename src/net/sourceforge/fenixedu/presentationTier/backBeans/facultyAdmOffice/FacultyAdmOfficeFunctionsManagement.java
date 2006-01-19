@@ -29,24 +29,42 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
     }
 
     public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
-        buffer.append("<ul>");
-        getUnitsList(parentUnit, 0, buffer);
+        buffer.append("<ul class='padding nobullet'>");
+        getUnitsList(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
-    private void getUnitsList(Unit parentUnit, int index, StringBuilder buffer) {
+    private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
+        
+        buffer.append("<li>");
 
-        buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
-                "/facultyAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID)
-                .append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
-                        parentUnit.getName()).append("</a>").append("</li>").append("<ul>");
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<img ").append("src='").append(getContextPath()).append(
+                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
+                    .append("aa").append(parentUnit.getIdInternal()).append(
+                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+                            "'));return false;").append("\"> ");
+        }
+
+        buffer.append("<a href=\"").append(getContextPath()).append(
+                "/facultyAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(
+                personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
+                parentUnit.getName()).append("</a>").append("</li>");
+
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
+                    .append("\" ").append("style='display:none'>\r\n");
+        }
 
         for (Unit subUnit : parentUnit.getSubUnits()) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
-                getUnitsList(subUnit, index + 1, buffer);
+                getUnitsList(subUnit, buffer);
             }
         }
 
-        buffer.append("</ul>");
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("</ul>");
+        }              
     }
 }

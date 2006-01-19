@@ -147,7 +147,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void getUnitTreeToChooseParentUnit(StringBuilder buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
-        buffer.append("<ul>");
+        buffer.append("<ul class='padding nobullet'>");
         getUnitsListToChooseParentUnit(parentUnit, buffer);
         buffer.append("</ul>");
     }
@@ -155,12 +155,28 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer)
             throws FenixFilterException, FenixServiceException {
 
-        buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
+        buffer.append("<li>");
+
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<img ").append("src='").append(getContextPath()).append(
+                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
+                    .append("aa").append(parentUnit.getIdInternal()).append(
+                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+                            "'));return false;").append("\"> ");
+        }
+        
+        buffer.append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("chooseParentUnit.faces?").append(
                 "unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
                 parentUnit.getIdInternal()).append("\">").append(parentUnit.getName()).append("</a>")
-                .append("</li>").append("<ul>");
+                .append("</li>");
 
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("style='display:none'>\r\n");
+        }
+        
         for (Unit subUnit : parentUnit.getSubUnits()) {
             if (!subUnit.equals(this.getUnit())
                     && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getParentUnits()
@@ -169,7 +185,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             }
         }
 
-        buffer.append("</ul>");
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("</ul>");
+        }
     }
 
     public String getUnits() throws FenixFilterException, FenixServiceException {
@@ -192,9 +210,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return buffer.toString();
     }
 
-    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits, Date currentDate,
-            boolean active) {
-        buffer.append("<ul>");
+    public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits,
+            Date currentDate, boolean active) {
+        buffer.append("<ul class='padding nobullet'>");
         getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
     }
@@ -202,10 +220,26 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuilder buffer,
             Date currentDate, boolean active) {
 
-        buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
+        buffer.append("<li>");
+
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<img ").append("src='").append(getContextPath()).append(
+                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
+                    .append("aa").append(parentUnit.getIdInternal()).append(
+                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+                            "'));return false;").append("\"> ");
+        }
+
+        buffer.append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("unitDetails.faces?").append(
                 "unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getName())
-                .append("</a>").append("</li>").append("<ul>");
+                .append("</a>").append("</li>");
+
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("style='display:none'>\r\n");
+        }
 
         for (Unit subUnit : subUnits) {
             if (active) {
@@ -216,8 +250,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                         active);
             }
         }
-
-        buffer.append("</ul>");
+        
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("</ul>");
+        }
     }
 
     public String getUnitsToChoosePrincipalFunction() throws FenixFilterException, FenixServiceException {
@@ -236,7 +272,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void getUnitTreeToChoosePrincipalFunction(StringBuilder buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
-        buffer.append("<ul>");
+        buffer.append("<ul class='padding nobullet'>");
         getUnitsListToChoosePrincipalFunction(parentUnit, buffer);
         buffer.append("</ul>");
     }
@@ -244,18 +280,36 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getUnitsListToChoosePrincipalFunction(Unit parentUnit, StringBuilder buffer)
             throws FenixFilterException, FenixServiceException {
 
-        buffer.append("<li>").append("<a href=\"").append(getContextPath()).append(
+        buffer.append("<li>");
+
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<img ").append("src='").append(getContextPath()).append(
+                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
+                    .append("aa").append(parentUnit.getIdInternal()).append(
+                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+                            "'));return false;").append("\"> ");
+        }
+        
+        buffer.append("<a href=\"").append(getContextPath()).append(
                 "/manager/organizationalStructureManagament/").append("chooseFunction.faces?").append(
                 "unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=").append(
                 parentUnit.getIdInternal()).append("&functionID=").append(
                 this.getFunction().getIdInternal()).append("\">").append(parentUnit.getName()).append(
-                "</a>").append("</li>").append("<ul>");
+                "</a>").append("</li>");
 
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
+                    .append("style='display:none'>\r\n");
+        }
+        
         for (Unit subUnit : parentUnit.getSubUnits()) {
             getUnitsListToChoosePrincipalFunction(subUnit, buffer);
         }
 
-        buffer.append("</ul>");
+        if (parentUnit.hasAnySubUnits()) {
+            buffer.append("</ul>");
+        }
     }
 
     public List<SelectItem> getValidUnitType() {
@@ -991,8 +1045,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         private Integer degreeID, departmentID;
 
-        public CreateNewUnitParameters(OrganizationalStructureBackingBean bean, int mode) throws NumberFormatException,
-                FenixFilterException, FenixServiceException {
+        public CreateNewUnitParameters(OrganizationalStructureBackingBean bean, int mode)
+                throws NumberFormatException, FenixFilterException, FenixServiceException {
 
             if (mode == 1) {
                 this.departmentID = (bean.getDepartmentID() != null && !bean.getDepartmentID().equals(
