@@ -317,7 +317,15 @@
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<!-- END: Bolonha Management Beans -->
-
+	
+	<!-- BEGIN: OrganizationalStructure Managed Beans -->
+	<managed-bean>
+		<managed-bean-name>organizationalStructure</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.person.OrganizationalStructureBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<!-- END: OrganizationalStructure Managed Beans -->
+	
 	<!-- MANAGER ORGANIZATIONAL STRUCTURE MANAGEMENT -->
 	
 	<managed-bean>
@@ -325,6 +333,14 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.manager.organizationalStructureManagement.OrganizationalStructureBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>	
+	
+	<navigation-rule>
+		<from-view-id>/person/organizationalStructure/structurePage.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>choose</from-outcome>
+			<to-view-id>/person/organizationalStructure/structurePage.jsp</to-view-id>
+		</navigation-case>			
+	</navigation-rule>
 	
 	<navigation-rule>
 		<from-view-id>/manager/organizationalStructureManagament/listAllUnits.jsp</from-view-id>
@@ -1245,6 +1261,10 @@
 	</navigation-rule>
 	
 	<!-- END: ADVISORIES_MANAGEMENT Navigation Rules -->
+	
+	<!-- BEGIN: ORGANIZATION_ STRUCTURE Navigation Rules -->
+	
+	<!-- END: ORGANIZATION_ STRUCTURE Navigation Rules -->
 	
 	<!-- END: TEACHER Navigation Rules -->
 	
