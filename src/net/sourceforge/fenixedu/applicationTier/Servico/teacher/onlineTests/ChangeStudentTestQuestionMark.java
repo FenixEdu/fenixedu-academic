@@ -117,7 +117,9 @@ public class ChangeStudentTestQuestionMark implements IService {
                     } else {
                         mark.setMark(markValue);                        
                     }
-                    mark.setPublishedMark(markValue);
+                    if (mark.getPublishedMark() != null) {
+                        mark.setPublishedMark(markValue);
+                    }
                 }
             }
             StudentTestLog studentTestLog = DomainFactory.makeStudentTestLog();
