@@ -145,9 +145,6 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (getCanBeDeleted()) {
             ((CourseGroup)getDegreeModule()).delete();
             removeDegree();
-//            if (hasCurricularPlanMembersGroup()) {
-//                getCurricularPlanMembersGroup().delete();
-//            }
             getDegreeStructure().delete();
             deleteDomainObject();
         } else
