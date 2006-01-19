@@ -23,6 +23,7 @@
 	</h:outputFormat>	
 	<h:form>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['state']}: </label>" escape="false"/>

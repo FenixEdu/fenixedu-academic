@@ -64,6 +64,7 @@
 	<h:outputLink value="editCompetenceCourse.faces">
 		<h:outputText value="#{bolonhaBundle['edit']}"/>
 		<f:param name="competenceCourseID" value="#{CompetenceCourseManagement.competenceCourse.idInternal}"/>
+		<f:param name="action" value="viewccm"/>
 	</h:outputLink>
 	<h:outputText value="</p>" escape="false"/>
 	

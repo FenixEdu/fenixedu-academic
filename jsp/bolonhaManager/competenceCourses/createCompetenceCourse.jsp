@@ -54,13 +54,6 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['basic']}: </label>" escape="false"/>
 		<h:selectBooleanCheckbox value="#{CompetenceCourseManagement.basic}"></h:selectBooleanCheckbox>
 		<h:outputText value="</p>" escape="false"/>	
-		
-		<h:outputText value="<p><label>#{bolonhaBundle['regime']}: </label>" escape="false"/>
-		<fc:selectOneMenu value="#{CompetenceCourseManagement.regime}">
-			<f:selectItem itemValue="SEMESTRIAL" itemLabel="#{enumerationBundle['SEMESTRIAL']}"/>
-			<f:selectItem itemValue="ANUAL" itemLabel="#{enumerationBundle['ANUAL']}"/>
-		</fc:selectOneMenu>
-		<h:outputText value="</p>" escape="false"/>	
 
 		<h:outputText value="<label class='lempty'>.</label>#{bolonhaBundle['markedFields']} #{bolonhaBundle['with']} <span class='required'>*</span> #{bolonhaBundle['areRequiredFields']}</p>" escape="false"/>
 		<h:outputText value="<p><label class='lempty'>.</label>" escape="false"/>

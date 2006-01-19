@@ -340,7 +340,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String createCompetenceCourse() {
         try {
             final Object args[] = { getName(), getNameEn(), getAcronym(), getBasic(),
-                    RegimeType.valueOf(getRegime()), getCompetenceCourseGroupUnitID() };
+                    RegimeType.SEMESTRIAL, getCompetenceCourseGroupUnitID() };
             final CompetenceCourse competenceCourse = (CompetenceCourse) ServiceUtils.executeService(
                     getUserView(), "CreateCompetenceCourse", args);
             setCompetenceCourse(competenceCourse);
