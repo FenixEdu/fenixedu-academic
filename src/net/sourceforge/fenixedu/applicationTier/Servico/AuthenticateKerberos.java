@@ -3,44 +3,75 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
+import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
+import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
-import net.sourceforge.fenixedu.util.kerberos.UpdateKerberos;
+import net.sourceforge.fenixedu.util.kerberos.Script;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 public class AuthenticateKerberos extends Authenticate implements IService, Serializable {
 
-    public IUserView run(final String username, final String password, final String requestURL)
-            throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
-
-    	final Authenticate authenticate = new Authenticate();
-    	final IUserView userView = authenticate.run(username, password, requestURL);
-
-    	if (userView != null) {
-    		updateKerberos(userView);
-    	}
-
-    	return userView;
-    }
-
-	private void updateKerberos(final IUserView userView) throws ExcepcaoPersistencia, InvalidPasswordServiceException {
-    	final Person person = userView.getPerson();
-
-    	if (person == null) {
-    		throw new Error("No person found for provided UserView. This should not be possible!");
-    	}
-
-        if(person.getIstUsername() != null && !person.getIsPassInKerberos()) {
-        	try {
-        		 UpdateKerberos.createUser(person.getIstUsername(), person.getPassword());
-        		 person.setIsPassInKerberos(true);
-        	} catch(ExcepcaoPersistencia e) {
-        		return;
-        	} catch (KerberosException ke) {
-        		throw new InvalidPasswordServiceException(ke.getReturnCode(), userView);
-			}
+	
+	public IUserView run(final String username, final String password, final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
+		final ISuportePersistente persistenceSupport = PersistenceSupportFactory
+		.getDefaultPersistenceSupport();
+		final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
+		
+		final Person person = persistentPerson.lerPessoaPorUsername(username);
+        if (person == null) {
+            throw new ExcepcaoAutenticacao("bad.authentication");
+        }
+        if(person.getIstUsername() != null) {
+        	if(person.getIsPassInKerberos()) {
+        		try{
+        			
+            		if(!PasswordEncryptor.areEquals(person.getPassword(), password)) {
+            			person.setPassword(PasswordEncryptor.encryptPassword(password));
+            		}
+            		Script.verifyPass(person.getIstUsername(), password);
+                    return getUserView(person, requestURL);
+            	}catch (KerberosException ke) {
+            		if(ke.getReturnCode().equals(KerberosException.CHANGE_PASSWORD_EXPIRED)) {
+            			throw new PasswordExpiredServiceException(ke.getMessage());
+            		} if(ke.getReturnCode().equals(KerberosException.WRONG_PASSWORD)) {
+            			throw new ExcepcaoAutenticacao("bad.authentication");
+            		} else {
+            			return super.run(username, password, requestURL);
+            		}
+    			}catch (ExcepcaoPersistencia ep) {
+    				return super.run(username, password, requestURL);
+    			}
+        	}
+        	else {
+        		final IUserView userView = super.run(username, password, requestURL);
+        		if(userView != null) {
+		            try {
+		           		 Script.createUser(person.getIstUsername(), password);
+		           		 person.setIsPassInKerberos(true);
+		           	} catch(ExcepcaoPersistencia e) {
+		           		
+		           	} catch (KerberosException ke) {
+		           		String returnCode = ke.getReturnCode();
+						if (returnCode.equals(KerberosException.CHANGE_PASSWORD_TOO_SHORT)
+								|| returnCode
+										.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
+								|| returnCode
+										.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)) {
+							throw new InvalidPasswordServiceException(ke.getReturnCode(), userView);
+						}
+		   			}
+        		}
+        		return userView;
+        	}
+        } else {
+        	return super.run(username, password, requestURL);
         }
 	}
 }
