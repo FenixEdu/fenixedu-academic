@@ -121,20 +121,20 @@ public class Teacher extends Teacher_Base {
         return null;
     }
 
-    public Category getCategory(){
+    public Category getCategory() {
         TeacherLegalRegimen regimen = getLastLegalRegimen();
-        if(regimen != null){
+        if (regimen != null) {
             return regimen.getCategory();
         }
         return null;
     }
-       
-    public TeacherLegalRegimen getLastLegalRegimen(){
+
+    public TeacherLegalRegimen getLastLegalRegimen() {
         Date date = null;
         TeacherLegalRegimen regimenToReturn = null;
         for (TeacherLegalRegimen regimen : this.getLegalRegimens()) {
             if (regimen.isActive(Calendar.getInstance().getTime())) {
-                return regimen;               
+                return regimen;
             } else if (date == null || date.before(regimen.getEndDate())) {
                 date = regimen.getEndDate();
                 regimenToReturn = regimen;
@@ -142,11 +142,11 @@ public class Teacher extends Teacher_Base {
         }
         return regimenToReturn;
     }
-    
-    public List<TeacherLegalRegimen> getAllLegalRegimensBelongsToPeriod(Date beginDate, Date endDate){
+
+    public List<TeacherLegalRegimen> getAllLegalRegimensBelongsToPeriod(Date beginDate, Date endDate) {
         List<TeacherLegalRegimen> legalRegimens = new ArrayList<TeacherLegalRegimen>();
         for (TeacherLegalRegimen legalRegimen : this.getLegalRegimens()) {
-            if(legalRegimen.belongsToPeriod(beginDate, endDate)){
+            if (legalRegimen.belongsToPeriod(beginDate, endDate)) {
                 legalRegimens.add(legalRegimen);
             }
         }
@@ -256,7 +256,7 @@ public class Teacher extends Teacher_Base {
         return returnValue;
     }
 
-public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod executionPeriod) {
+    public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod executionPeriod) {
         return (TeacherService) CollectionUtils.find(getTeacherServices(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -402,15 +402,16 @@ public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod e
         return getPerson().getPersonFuntions(beginDate, endDate);
     }
 
-    public int getHoursByCategory(Date begin, Date end) {        
-        
-        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(begin, end);                 
+    public int getHoursByCategory(Date begin, Date end) {
+
+        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(begin, end);
 
         if (list.isEmpty()) {
             return 0;
         } else {
             Collections.sort(list, new BeanComparator("beginDate"));
-            return list.get(list.size() - 1).getLessonHours();
+            return (list.get(list.size() - 1).getLessonHours() == null) ? 0 : list.get(list.size() - 1)
+                    .getLessonHours();
         }
     }
 
@@ -443,8 +444,8 @@ public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod e
         double totalCredits = 0.0;
         if (list.size() > 1) {
             for (PersonFunction function : list) {
-                totalCredits = (function.getCredits() != null) ? totalCredits
-                        + function.getCredits() : totalCredits;
+                totalCredits = (function.getCredits() != null) ? totalCredits + function.getCredits()
+                        : totalCredits;
             }
             return totalCredits;
         } else if (list.size() == 1) {
@@ -457,13 +458,13 @@ public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod e
     }
 
     public Category getCategoryByPeriod(Date begin, Date end) {
-      
+
         List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(begin, end);
-        
+
         if (list.isEmpty()) {
             return null;
         } else {
-            Collections.sort(list,new BeanComparator("beginDate"));
+            Collections.sort(list, new BeanComparator("beginDate"));
             return list.get(list.size() - 1).getCategory();
         }
     }
@@ -544,35 +545,37 @@ public TeacherService getTeacherServiceByExecutionPeriod(final ExecutionPeriod e
 
         return result;
     }
-           
-    public double getCreditsBetweenExecutionPeriods(ExecutionPeriod startExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-    	
-     	ExecutionPeriod startPeriod = startExecutionPeriod;
-	          	   	    	 
-    	ExecutionPeriod executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
-    	   	
-    	boolean pastServiceAdded = false;
-    	double totalCredits = 0.0;
-    	
-    	while(startPeriod != executionPeriodAfterEnd) {
-    		TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
-    		    		    		
-    		if(teacherService != null){
-    			totalCredits += getManagementFunctionsCredits(startPeriod); 
-        		totalCredits += getServiceExemptionCredits(startPeriod);
-	    		totalCredits += teacherService.getTeachingDegreeCredits();
-	    		totalCredits += teacherService.getMasterDegreeServiceCredits();
-	    		totalCredits += teacherService.getTeacherAdviseServiceCredits();
-	    		totalCredits += teacherService.getOtherServiceCredits();
-	    		if(!pastServiceAdded){
-	    			totalCredits += teacherService.getPastServiceCredits();
-	    			pastServiceAdded = true;
-	    		} else {
-	    			totalCredits -= getHoursByCategory(startPeriod.getBeginDate(), startPeriod.getEndDate());
-	    		}	    	
-    		}    		    		    
-    		startPeriod = startPeriod.getNextExecutionPeriod();
-    	}    	
-    	return totalCredits;
+
+    public double getCreditsBetweenExecutionPeriods(ExecutionPeriod startExecutionPeriod,
+            ExecutionPeriod endExecutionPeriod) {
+
+        ExecutionPeriod startPeriod = startExecutionPeriod;
+
+        ExecutionPeriod executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
+
+        boolean pastServiceAdded = false;
+        double totalCredits = 0.0;
+
+        while (startPeriod != executionPeriodAfterEnd) {
+            TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
+
+            if (teacherService != null) {
+                totalCredits += getManagementFunctionsCredits(startPeriod);
+                totalCredits += getServiceExemptionCredits(startPeriod);
+                totalCredits += teacherService.getTeachingDegreeCredits();
+                totalCredits += teacherService.getMasterDegreeServiceCredits();
+                totalCredits += teacherService.getTeacherAdviseServiceCredits();
+                totalCredits += teacherService.getOtherServiceCredits();
+                if (!pastServiceAdded) {
+                    totalCredits += teacherService.getPastServiceCredits();
+                    pastServiceAdded = true;
+                } else {
+                    totalCredits -= getHoursByCategory(startPeriod.getBeginDate(), startPeriod
+                            .getEndDate());
+                }
+            }
+            startPeriod = startPeriod.getNextExecutionPeriod();
+        }
+        return totalCredits;
     }
 }
