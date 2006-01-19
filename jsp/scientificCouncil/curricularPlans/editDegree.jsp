@@ -13,58 +13,57 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'"/><br/>
 
-		<h:outputText value="<b>#{scouncilBundle['degree.data']}:</b><br/><br/>" escape="false"/>
-		
-		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}"
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<h4 class='first'>#{scouncilBundle['degree.data']}:</h4><br/>" escape="false"/>
+		<h:outputText styleClass="error0" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}"
 			value="#{ScientificCouncilDegreeManagement.errorMessage}<br/>" escape="false"/>
-		
-		<h:panelGrid columnClasses="infocell" columns="2" border="0">
-			<h:outputText value="#{scouncilBundle['name']} (pt): " />
-			<h:panelGroup>
-				<h:inputText id="name" value="#{ScientificCouncilDegreeManagement.name}" required="true" maxlength="100" size="60"/>
-				<h:message for="name" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-			</h:panelGroup>
-			
-			<h:outputText value="#{scouncilBundle['name']} (en): " />
-			<h:panelGroup>
-				<h:inputText id="nameEn" value="#{ScientificCouncilDegreeManagement.nameEn}" required="true" maxlength="100" size="60"/>			
-				<h:message for="nameEn" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-			</h:panelGroup>
-			
-			<h:outputText value="#{scouncilBundle['acronym']}: " />
-			<h:panelGroup>
-				<h:inputText id="acronym" value="#{ScientificCouncilDegreeManagement.acronym}" required="true" maxlength="100" size="10"/>
-				<h:message for="acronym" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-			</h:panelGroup>
-			
-			<h:outputText value="#{scouncilBundle['degreeType']}: " />
-			<h:panelGroup>
-				<h:selectOneMenu id="bolonhaDegreeType" value="#{ScientificCouncilDegreeManagement.bolonhaDegreeType}"
-						disabled="#{ScientificCouncilDegreeManagement.degree.degreeCurricularPlansCount > 0}">
-					<f:selectItems value="#{ScientificCouncilDegreeManagement.bolonhaDegreeTypes}" />
-				</h:selectOneMenu>
-				<h:message for="bolonhaDegreeType" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-			</h:panelGroup>
 
-			<h:outputText value="#{scouncilBundle['ectsCredits']}: " />
-			<h:panelGroup>
-				<h:inputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}" required="true" maxlength="100" size="10"/>
-				<h:message for="ectsCredits" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-			</h:panelGroup>
-<%-- 
- 			<h:outputText value="#{scouncilBundle['gradeTypes']}: " />
-			<h:panelGroup>
-				<h:selectOneMenu id="gradeType" value="#{ScientificCouncilDegreeManagement.gradeType}">
-					<f:selectItems value="#{ScientificCouncilDegreeManagement.gradeTypes}" />
-				</h:selectOneMenu>
-				<h:message for="gradeType" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>				
-			</h:panelGroup>
---%>
-		</h:panelGrid>
+		<h:outputText value="<br/><fieldset class='lfloat'>" escape="false"/>
+
+		<h:outputText value="<p><label>#{scouncilBundle['name']} (pt):</label>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText id="name" value="#{ScientificCouncilDegreeManagement.name}" required="true" maxlength="100" size="60"/>
+			<h:message for="name" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{scouncilBundle['name']} (en):</label>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText id="nameEn" value="#{ScientificCouncilDegreeManagement.nameEn}" required="true" maxlength="100" size="60"/>
+			<h:message for="nameEn" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{scouncilBundle['acronym']}:</label>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText id="acronym" value="#{ScientificCouncilDegreeManagement.acronym}" required="true" maxlength="6" size="6"/>
+			<h:message for="acronym" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{scouncilBundle['degreeType']}:</label>" escape="false"/>
+		<h:panelGroup>
+			<h:selectOneMenu id="bolonhaDegreeType" value="#{ScientificCouncilDegreeManagement.bolonhaDegreeType}">
+				<f:selectItems value="#{ScientificCouncilDegreeManagement.bolonhaDegreeTypes}" />
+			</h:selectOneMenu>
+			<h:message for="bolonhaDegreeType" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{scouncilBundle['ectsCredits']}:</label>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}" required="true" maxlength="3" size="2"/>
+			<h:message for="ectsCredits" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="</fieldset></div>" escape="false"/>
+
 		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['edit']}"
 			action="#{ScientificCouncilDegreeManagement.editDegree}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 	</h:form>
+
 </ft:tilesView>
