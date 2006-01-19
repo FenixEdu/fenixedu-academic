@@ -12,7 +12,7 @@
 	<logic:present name="elements">
 		
 		<bean:size name="elements" id="numberOfElements" />		
-		<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.elements.label" arg0="<%=numberOfElements.toString()%>"/>
+		<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.elements.label" arg0="<%=numberOfElements.toString()%>"/>
 		<table>
 			<tr>
 				<td class="listClasses-header">

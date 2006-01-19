@@ -8,8 +8,8 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
 
-<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>
-<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.saved.info"/>
+<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.title.label"/></h2>
+<bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.saved.info"/>
 
 <bean:define id="group" type="net.sourceforge.fenixedu.domain.PersonalGroup" name="group"/>
 <%
@@ -22,7 +22,7 @@
 <table>
 	<tr>
 		<td>
-			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.type.label"/></b>
 			:
 		</td>
 		<td>
@@ -31,7 +31,7 @@
 	</tr>
 	<tr>
 		<td>
-			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.name.label"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.name.label"/></b>
 			:
 		</td>
 		<td>
@@ -40,7 +40,7 @@
 	</tr>
 	<tr>
 		<td>
-			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.description.label"/></b>
+			<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.description.label"/></b>
 			:
 		</td>
 		<td>
@@ -54,5 +54,5 @@
 	params.put("groupId", group.getIdInternal());
 	request.setAttribute("params",params);
 	 %>
-<html:link  name="params" module="/cms" action="/userGroupsManagement" target="_blank" ><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewElements.link"/></html:link><br/>
-<html:link  module="/cms" page="/userGroupsManagement.do?method=prepare" ><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.label"/></html:link><br/>
+<html:link  name="params" module="/cms" action="/personalGroupsManagement" target="_blank" ><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.viewElements.link"/></html:link><br/>
+<html:link  module="/cms" page="/personalGroupsManagement.do?method=prepare" ><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.label"/></html:link><br/>

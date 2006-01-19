@@ -10,7 +10,9 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonalGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupTypes;
+import net.sourceforge.fenixedu.domain.accessControl.PublicRequestersGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -94,5 +96,27 @@ public class PersonalGroupsManagement extends FenixDispatchAction {
         ServiceUtils.executeService(userView, "DeletePersonalGroup", new Object[] { groupId });
         
         return prepare(mapping, form, request, response);
+    }
+    
+    public ActionForward createPublicGroup(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
+        DynaActionForm addGroupForm = (DynaActionForm) form;
+
+        String name = (String) addGroupForm.get("name");
+        String description = (String) addGroupForm.get("description");
+        String userGroupTypeString = (String) addGroupForm.get("userGroupType");
+        GroupTypes userGroupType = GroupTypes.valueOf(userGroupTypeString);
+        
+        Group group = new PublicRequestersGroup();
+        
+        IUserView userView = SessionUtils.getUserView(request);
+        Person person = getLoggedPerson(request);
+        
+        PersonalGroup personalGroup = (PersonalGroup) ServiceUtils.executeService(userView, "CreatePersonalGroup", new Object[] { person, name, description, group });
+        
+        request.setAttribute("userGroupType", userGroupType);
+        request.setAttribute("group", personalGroup);
+
+        return mapping.findForward("addGroup");
     }
 }

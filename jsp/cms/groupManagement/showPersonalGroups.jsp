@@ -14,8 +14,8 @@
     <bean:define id="groupsIterator" type="java.util.Iterator" scope="request" property="personalGroupsIterator" name="person"/>
     <bean:define id="numberOfGroups" type="java.lang.Integer" property="personalGroupsCount" name="person"/>    
     
-	<h2><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label" /></h2>
-	<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.foundGroups.label" arg0="<%= numberOfGroups.toString() %>"/>
+	<h2><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.title.label" /></h2>
+	<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.foundGroups.label" arg0="<%= numberOfGroups.toString() %>"/>
 
     <logic:greaterThan name="numberOfGroups" value="0">	
         	<table width="100%">
@@ -24,9 +24,9 @@
         			</td>
         			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>
         			</td>
-        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.type.label"/>
+        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.type.label"/>
         			</td>
-        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.groupCardinality.label"/>
+        			<td class="listClasses-header"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.groupCardinality.label"/>
         			</td>
         			<td class="listClasses-header">&nbsp;
         			</td>
@@ -42,7 +42,7 @@
         				<td class="listClasses"><bean:write name="personalGroup" property="description"/></td>
         				<td class="listClasses"><bean:message bundle="CMS_RESOURCES" name="readableGroupType" bundle="ENUMERATION_RESOURCES"/></td>
         				<td class="listClasses"><bean:write name="groupSize"/> 
-                        <bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.elements.label"/>
+                        <bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.elements.label"/>
                     </td>
                     <%
                         Map params = new HashMap();
@@ -55,28 +55,28 @@
                         request.setAttribute("groupSize", size);
                      %>
         				<td class="listClasses">
-                        <html:link  name="params" module="/cms" action="/userGroupsManagement" target="_blank" ><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewElements.link"/></html:link>
+                        <html:link  name="params" module="/cms" action="/personalGroupsManagement" target="_blank" ><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.viewElements.link"/></html:link>
                     </td>
                     <%
                         params.put("method", "deleteGroup");
                      %>
         				<td class="listClasses">
-                        <html:link name="params" module="/cms" action="/userGroupsManagement" ><bean:message  bundle="CMS_RESOURCES" key="cms.delete.label"/></html:link>
+                        <html:link name="params" module="/cms" action="/personalGroupsManagement" ><bean:message  bundle="CMS_RESOURCES" key="cms.delete.label"/></html:link>
                     </td>
         			</tr>
         		</logic:iterate>
         	</table>
     </logic:greaterThan>
     
-	<h3><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.createNewGroup.label" /></h3>
+	<h3><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.createNewGroup.label" /></h3>
     
-	<html:form action="/userGroupsManagement" method="get">
+	<html:form action="/personalGroupsManagement" method="get">
         <html:hidden property="method" value="selectUserGroupTypeToAdd"/>
         
 		<table>
 		  <tr>
 			<td width="10%"">
-				<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label" />
+				<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.type.label" />
 			</td>
             
 			<td width="90%"><e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.accessControl.GroupTypes" bundle="ENUMERATION_RESOURCES"/>
@@ -85,7 +85,7 @@
 				</html:select>
                 
 				<html:submit styleClass="inputbutton">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.create.label"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.create.label"/>
 				</html:submit>        		
 			</td>	
 		  </tr>

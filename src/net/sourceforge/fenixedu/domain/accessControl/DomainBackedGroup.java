@@ -6,7 +6,9 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 
 public abstract class DomainBackedGroup<T extends DomainObject> extends LeafGroup {
-
+    
+    private static final long serialVersionUID = 1L;
+    
     private DomainReference<T> reference;
     
     public DomainBackedGroup(T object) {

@@ -11,13 +11,14 @@
 		<bean:define id="group" name="group" type="net.sourceforge.fenixedu.domain.PersonalGroup"/>
 		<bean:define id="readableGroupType" value="<%= GroupTypes.userGroupTypeByClass(group.getGroup().getClass()).toString() %>"/>
         
-		<h2><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>	
-		<b><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label"/></b> <bean:message  bundle="CMS_RESOURCES" name="readableGroupType" bundle="ENUMERATION_RESOURCES"/><br/>
+		<h2><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.title.label"/></h2>	
+		<b><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.type.label"/></b> <bean:message  bundle="CMS_RESOURCES" name="readableGroupType" bundle="ENUMERATION_RESOURCES"/><br/>
 		<b><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>:</b> <bean:write name="group" property="name"/><br/>
 		<b><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>:</b> <bean:write name="group" property="description"/><br/>
 
+        <br/>
 		<bean:define id="numberOfElements" type="java.lang.Integer" name="group" property="group.elementsCount"/>	
-		<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.elementsNumber.label" arg0="<%=numberOfElements.toString()%>"/>
+		<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.elementsNumber.label" arg0="<%=numberOfElements.toString()%>"/>
 		<table>
 			<tr>
 				<td class="listClasses-header">

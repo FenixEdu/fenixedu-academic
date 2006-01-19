@@ -20,7 +20,9 @@
 	    	<form-property name="executionDegreeID" type="java.lang.Integer"/>
 	    	<form-property name="curricularYear" type="java.lang.Integer"/>
 	    	<form-property name="executionCourseID" type="java.lang.Integer"/>
-	    	<form-property name="selectedGroups" type="java.lang.Integer[]"/>    	
+	    	<form-property name="selectedGroups" type="java.lang.Integer[]"/>
+        <form-property name="excludeGroups" type="java.lang.Integer[]"/>
+        <form-property name="selectedRole" type="java.lang.Integer"/>
 	    </form-bean> 
     <!--  ================================================ -->    
 
@@ -88,7 +90,7 @@
             <forward name="Success" path="index"/>
         </action>       
         <!--  ============= by gedl 24-9-2005  ================-->
-		<action path="/userGroupsManagement"
+		<action path="/personalGroupsManagement"
 			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.PersonalGroupsManagement"
 			parameter="method"
 			scope="request"
@@ -100,7 +102,11 @@
 			<forward name="selectOptionsFor_EXECUTION_COURSE_TEACHERS_GROUP" path="/executionCourseTeachersGroupManagement.do?method=prepareChooseExecutionPeriod"/>							
 			<forward name="selectOptionsFor_UNION_GROUP" path="/unsortedGroupOperationsManagement.do?method=prepare"/>
 			<forward name="selectOptionsFor_INTERSECTION_GROUP" path="/unsortedGroupOperationsManagement.do?method=prepare"/>
+            <forward name="selectOptionsFor_DIFFERENCE_GROUP" path="/differenceGroupOperationsManagement.do?method=prepare"/>
+            <forward name="selectOptionsFor_ROLE_GROUP" path="/roleGroupOperationsManagement.do?method=prepare"/>
+            <forward name="selectOptionsFor_PUBLIC_REQUESTER_GROUP" path="/personalGroupsManagement.do?method=createPublicGroup"/>
 			<forward name="showElements" path="showPersonsInGroup"/>										
+            <forward name="addGroup" path="addGroup"/>  
 		</action>        
 		<!--  =================================================-->		
 		<!--  ============= by gedl 26-9-2005  ================-->
@@ -129,7 +135,6 @@
 		</action>						
 		<!--  =================================================-->	
 
-		<!--  ============= by gedl 3-10-2005  ================-->		
 		<action path="/unsortedGroupOperationsManagement"
 			type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.UnsortedGroupOperationsManagement"
 			parameter="method"
@@ -139,7 +144,24 @@
 			<forward name="showCurrentGroups" path="showCurrentGroupsToOperate"/>
 			<forward name="addGroup" path="addGroup"/>	
 		</action>						
-		<!--  =================================================-->	
+        <action path="/differenceGroupOperationsManagement"
+            type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.DifferenceGroupOperationsManagement"
+            parameter="method"
+            scope="request"
+            name="userGroupForm"
+            >
+            <forward name="showCurrentGroups" path="showGroupsToIncludeOrExclude"/>
+            <forward name="addGroup" path="addGroup"/>  
+        </action>                       
+        <action path="/roleGroupOperationsManagement"
+            type="net.sourceforge.fenixedu.presentationTier.Action.cms.groupManagement.RoleGroupOperationsManagement"
+            parameter="method"
+            scope="request"
+            name="userGroupForm"
+            >
+            <forward name="showRoles" path="showRoles"/>
+            <forward name="addGroup" path="addGroup"/>  
+        </action>
 		
 		<!--  ============= by gedl 17-10-2005  ================-->		
 		<action path="/recieveEmail"
@@ -239,4 +261,3 @@
         <set-property property="definitions-parser-validate" value="true" />
     </plug-in>
 </struts-config>
-

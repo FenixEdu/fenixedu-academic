@@ -9,8 +9,8 @@
 <bean:define id="targetAction" name="targetAction" type="java.lang.String"/>
 <bean:define id="userGroupTypeToAdd" type="net.sourceforge.fenixedu.domain.accessControl.GroupTypes" name="userGroupTypeToAdd"/>
 <e:define id="userGroupTypeToAddString" enumeration="userGroupTypeToAdd" bundle="ENUMERATION_RESOURCES"/>
-<h2><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>
-<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.label"/> <b><bean:write name="userGroupTypeToAddString"/></b><br/>
+<h2><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.title.label"/></h2>
+<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.label"/> <b><bean:write name="userGroupTypeToAddString"/></b><br/>
 <b><bean:message  bundle="CMS_RESOURCES" key="cms.name.label"/>:</b> <bean:write property="name" name="userGroupForm"/><br/>
 <b><bean:message  bundle="CMS_RESOURCES" key="cms.description.label"/>:</b> <bean:write name="userGroupForm" property="description"/><br/>
 
@@ -23,7 +23,7 @@
 		<table width="100%">
 			<tr>
 				<td width="10%">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.executionCourseStudentsOptions.executionPeriodSelection.label" />
+					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.executionCourseStudentsOptions.executionPeriodSelection.label" />
 					:
 				</td>
 				<td width="90%">
@@ -34,7 +34,7 @@
 			</tr>
 		</table>
 		<br />
-		<html:submit styleClass="inputbutton"><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.choose.button"/></html:submit>
+		<html:submit styleClass="inputbutton"><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.choose.button"/></html:submit>
 	</html:form>
 </logic:present>
 
@@ -49,7 +49,7 @@
 		<table width="100%">		
 			<tr>
 				<td witdh="10%">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.executionCourseStudentsOptions.degreeSelection.label"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.executionCourseStudentsOptions.degreeSelection.label"/>
 					:
 				</td>
 				<td witdh="90%">
@@ -60,7 +60,7 @@
 			</tr>
 			<tr>
 				<td witdh="10%">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.executionCourseStudentsOptions.curricularYearSelection.label"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.executionCourseStudentsOptions.curricularYearSelection.label"/>
 					:
 				</td>
 				<td witdh="90%">
@@ -76,7 +76,7 @@
 		</table>
 		<br />
 		<html:submit styleClass="inputbutton">
-			<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.choose.button"/>
+			<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.choose.button"/>
 		</html:submit>
 	</html:form>
 </logic:present>
@@ -91,7 +91,7 @@
 			<table width="100%">
 				<tr>
 					<td valign="top" width="10%">
-					<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.executionCourseStudentsOptions.courseSelection.label"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.executionCourseStudentsOptions.courseSelection.label"/>
 					:
 					</td>
 					<td width="100%">
@@ -125,7 +125,7 @@
 														request.setAttribute("params",params);
 														 %>
 														 
-														<html:link  name="params" action="<%=viewAction%>" target="_blank" ><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.viewElements.link"/></html:link>
+														<html:link  name="params" action="<%=viewAction%>" target="_blank" ><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.viewElements.link"/></html:link>
 													</td>
 								 				</tr>
 								 			</logic:iterate>						
@@ -138,7 +138,7 @@
 				</tr>
 			</table>
 	<html:submit styleClass="inputbutton">
-			<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.save.button"/>
+			<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.save.button"/>
 		</html:submit>
 	</html:form>
 </logic:present>

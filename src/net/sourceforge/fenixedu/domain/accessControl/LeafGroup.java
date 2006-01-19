@@ -5,6 +5,8 @@ package net.sourceforge.fenixedu.domain.accessControl;
  */
 public abstract class LeafGroup extends Group {
 
+    private static final long serialVersionUID = 1L;
+    
     public LeafGroup() {
         super();
     }

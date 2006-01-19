@@ -43,6 +43,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
  * format or that the persisted groups are migrated correctly.
  */
 public abstract class Group implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     /**
      * A <code>DomainReference</code> allows groups to refer to domain objects and still being

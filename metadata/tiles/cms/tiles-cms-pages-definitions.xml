@@ -35,12 +35,17 @@
 	</definition>	
 	<!-- =============================================== -->	
 
-	<!-- ================= by gedl 3-10-2005 =========== -->
 	<definition name="showCurrentGroupsToOperate" extends="cms.masterPage" >
 		<put name="body" value="/cms/groupManagement/showCurrentGroupsToOperate.jsp" />
 	</definition>
-	<!-- =============================================== -->		
-		<!-- ================= by gedl 11-10-2005 =========== -->
+    <definition name="showGroupsToIncludeOrExclude" extends="cms.masterPage" >
+        <put name="body" value="/cms/groupManagement/showGroupsToIncludeOrExclude.jsp" />
+    </definition>
+    <definition name="showRoles" extends="cms.masterPage" >
+        <put name="body" value="/cms/groupManagement/showRoles.jsp" />
+    </definition>
+    
+    <!-- ================= by gedl 11-10-2005 =========== -->
 	<definition name="showPersonsInGroup" extends="cms.masterPage" >
 		<put name="body" value="/cms/groupManagement/showPersonsInGroup.jsp" />
 	</definition>

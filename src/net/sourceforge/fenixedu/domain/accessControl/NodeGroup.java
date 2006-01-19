@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.Person;
 
 public abstract class NodeGroup extends Group {
     
+    private static final long serialVersionUID = 1L;
+    
     private List<Group> children;
     
     protected NodeGroup() {
@@ -30,12 +32,10 @@ public abstract class NodeGroup extends Group {
     public NodeGroup(Collection<Group> groups) {
         this();
         
-        for (Group group : groups) {
-            this.children.add(group);
-        }
+        this.children.addAll(groups);
     }
     
-    public List<Group> getChildren() {
+    protected List<Group> getChildren() {
         return this.children;
     }
 

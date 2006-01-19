@@ -8,17 +8,17 @@
 	<bean:define id="userGroupTypeToAdd" type="net.sourceforge.fenixedu.domain.accessControl.GroupTypes" name="userGroupTypeToAdd"/>
 	<e:define id="userGroupTypeToAddString" enumeration="userGroupTypeToAdd" bundle="ENUMERATION_RESOURCES"/>
     
-	<h2><bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.title.label"/></h2>
-	<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.label"/> <b><bean:write name="userGroupTypeToAddString"/></b>
+	<h2><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.title.label"/></h2>
+	<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.label"/> <b><bean:write name="userGroupTypeToAddString"/></b>
 	
-	<html:form action="/userGroupsManagement" method="get">
+	<html:form action="/personalGroupsManagement" method="get">
 		<html:hidden property="userGroupType"/>
 		<html:hidden property="method" value="parameterizeGroup"/>
         
 		<table>
 			<tr>				
 				<td>
-					<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.name.label"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.name.label"/>
 				</td>
 				<td>
 					<html:text property="name"/>
@@ -26,7 +26,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message  bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.description.label"/>
+					<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.creating.description.label"/>
 				</td>
 				<td>
 					<html:text property="description"/>

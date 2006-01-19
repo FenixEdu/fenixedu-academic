@@ -6,6 +6,7 @@ import java.util.Iterator;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.collections.iterators.IteratorChain;
+import org.apache.commons.collections.iterators.UniqueFilterIterator;
 
 public final class GroupUnion extends NodeGroup {
 
@@ -27,11 +28,6 @@ public final class GroupUnion extends NodeGroup {
             iteratorChain.addIterator(part.getElementsIterator());
         }
 
-        return iteratorChain;
-    }
-
-    @Override
-    public boolean isMember(Person person) {
-        return super.isMember(person);
+        return new UniqueFilterIterator(iteratorChain);
     }
 }

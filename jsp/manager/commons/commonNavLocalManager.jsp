@@ -114,7 +114,7 @@
 <br/>
 <strong>Gestão de CMS</strong>
 <p><strong>&raquo; 
-	<html:link module="/cms" action="/userGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
+	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
 		<bean:message bundle="MANAGER_RESOURCES" key="link.userGroupsManagement" />
 	</html:link>
 	</strong></p>
