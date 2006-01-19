@@ -30,6 +30,10 @@
 	<definition name="displayPerson" extends="definition.person.masterPage" >
 		<put name="body" value="/person/findPerson/displayPerson.jsp" />
 	</definition>
+	<!-- ========== Organizational Structure ========== -->	
+	<definition name="df.page.structure" extends="definition.person.masterPage" >
+	<put name="body"  value="/common/blank.jsp"/>
+	</definition>
 
 	<!-- ========== RENDERERS ========== -->
   
