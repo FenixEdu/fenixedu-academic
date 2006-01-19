@@ -11,7 +11,6 @@
 	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
 	<h:outputText value="<h2>#{scouncilBundle['curricularPlansManagement']}</h2>" escape="false"/>
 
-	<h:outputText value="</br>* " escape="false"/>
 	<h:outputLink value="createDegree.faces">
 		<h:outputFormat value="#{scouncilBundle['create.param']}">
 			<f:param value="#{scouncilBundle['degree']}"/>
@@ -21,11 +20,12 @@
 
 	<h:messages errorClass="error" infoClass="infoMsg"/>
 	
-	<h:outputText value="<table border='0' width='70%'>" escape="false"/>
-		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree">
-		<h:outputText value="<tr><td colspan='2'><b>#{scouncilBundle['degree']}:</b></td></tr>" escape="false"/>
+	<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree">
+		<h:outputText value="<table width='80%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
+		<h:outputText value="<tr><th width='120px'>#{scouncilBundle['degree']}:</th>" escape="false"/>
 
-		<h:outputText value="<tr><td colspan='2'>#{degree.nome} > " escape="false"/>
+		<h:outputText value="<td>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
+		<h:outputText value="<td width='200px'>" escape="false"/>
 		<h:outputLink value="editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>
 			<f:param name="degreeId" value="#{degree.idInternal}"/>
@@ -37,16 +37,19 @@
 		</h:outputLink>
 		<h:outputText value="</td></tr>" escape="false"/>
 		
-		<h:outputText value="<tr><td colspan='2'><b>#{scouncilBundle['curricularPlans']}:</b></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>
-		<h:outputText value="<tr><td colspan='2' align='center'><i>#{scouncilBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
+		<h:panelGroup rendered="#{!empty degree.degreeCurricularPlans}">
+			<h:outputText value="<tr><th>#{scouncilBundle['curricularPlans']}:</th><td colspan='2'></td>" escape="false"/>
+			<h:outputText value="</tr>" escape="false"/>
+		</h:panelGroup>
+		<h:outputText value="<tr><td colspan='3' align='center'><i>#{scouncilBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
 
 		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}">
 			<h:outputText value="<tr>" escape="false"/>
 
-			<h:outputText value="<td><i>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}:</i> " escape="false" />
+			<h:outputText value="<th></th><td><em class='attention2'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> " escape="false" />
 			<h:outputText value="#{degreeCurricularPlan.name}</td>" escape="false" />
 
-			<h:outputText value="<td align='right'>" escape="false"/>
+			<h:outputText value="<td>" escape="false"/>
 			<h:outputLink value="viewCurricularPlan.faces">
 				<h:outputText value="#{scouncilBundle['view']}" />
 				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
@@ -66,12 +69,11 @@
 				<h:outputText value="#{scouncilBundle['group']}" />
 				<f:param name="dcpId" value="#{degreeCurricularPlan.idInternal}"/>
 			</h:outputLink>
-			<h:outputText value="</td>" escape="false"/>
-			
-			<h:outputText value="</tr>" escape="false"/>
+			<h:outputText value="</td></tr>" escape="false"/>
 		</fc:dataRepeater>
 
-		<h:outputText value="<tr><td colspan='2' align='right'>" escape="false"/>
+		<h:outputText value="<tr><th></th><td></td>" escape="false"/>
+		<h:outputText value="<td>" escape="false"/>
 		<h:outputLink value="createCurricularPlan.faces">
 			<h:outputFormat value="#{scouncilBundle['create.param']}">
 				<f:param value="#{scouncilBundle['curricularPlan']}"/>
@@ -79,9 +81,8 @@
 			<f:param name="degreeId" value="#{degree.idInternal}"/>
 		</h:outputLink>
 		<h:outputText value="</td></tr>" escape="false"/>
-		<h:outputText value="<tr><td colspan='2'>&nbsp;</td></tr>" escape="false"/>
-		
+
+		<h:outputText value="</table><br/>" escape="false"/>
 	</fc:dataRepeater>
-	<h:outputText value="</table>" escape="false"/>	
 
 </ft:tilesView>
