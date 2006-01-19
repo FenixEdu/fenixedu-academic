@@ -1,54 +1,35 @@
-/*
- * Created on 3/Fev/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.List;
-import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Tânia Pousão
- * 
- */
 public class DeleteTutorShip implements IService {
 
-    public DeleteTutorShip() {
-    }
-
-    public Object run(Integer executionDegreeId, Integer tutorNumber, List tutorIds2Delete)
+    public void run(Integer executionDegreeId, Integer tutorNumber, List<Integer> tutorIds2Delete)
             throws FenixServiceException, ExcepcaoPersistencia {
 
         if (tutorNumber == null) {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
 
-        Boolean result = Boolean.FALSE;
         if (tutorIds2Delete != null && tutorIds2Delete.size() > 0) {
-            ISuportePersistente sp;
+            final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-
-            ListIterator iterator = tutorIds2Delete.listIterator();
-            while (iterator.hasNext()) {
-                Integer tutorId = (Integer) iterator.next();
-                Tutor tutor = (Tutor) persistentTutor.readByOID(Tutor.class, tutorId);
+            for (Integer tutorId : tutorIds2Delete) {
+                Tutor tutor = (Tutor) persistentObject.readByOID(Tutor.class, tutorId);
                 if (tutor != null) {
-                    persistentTutor.deleteByOID(Tutor.class, tutorId);
+                    tutor.delete();
                 }
             }
-
-            result = Boolean.TRUE;
         }
-        return result;
     }
+
 }
