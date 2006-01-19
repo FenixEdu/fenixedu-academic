@@ -52,6 +52,26 @@ public class SummariesControlAction extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         readAndSaveAllExecutionPeriods(request);
+
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        String departmentID = (String) dynaActionForm.get("department");
+        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
+
+        if (departmentID != null && !departmentID.equals("") && executionPeriodID != null
+                && !executionPeriodID.equals("")) {
+            getListing(request, departmentID, executionPeriodID);
+        }
+        else if (departmentID == null || departmentID.equals("")) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error", new ActionError("error.no.deparment"));
+            saveErrors(request, actionErrors);                       
+        }
+        else if (executionPeriodID == null || executionPeriodID.equals("")) {
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error", new ActionError("error.no.execution.period"));
+            saveErrors(request, actionErrors);            
+        }
+
         return prepareSummariesControl(mapping, actionForm, request, response);
     }
 
@@ -77,17 +97,18 @@ public class SummariesControlAction extends DispatchAction {
             runProcess = false;
         }
 
-        if (runProcess) {            
+        if (runProcess) {
             getListing(request, departmentID, executionPeriodID);
         }
-        
+
         readAndSaveAllDepartments(request);
         readAndSaveAllExecutionPeriods(request);
 
         return mapping.findForward("success");
     }
 
-    private void getListing(HttpServletRequest request, String departmentID, String executionPeriodID) throws FenixFilterException, FenixServiceException {
+    private void getListing(HttpServletRequest request, String departmentID, String executionPeriodID)
+            throws FenixFilterException, FenixServiceException {
         final Department department;
         final ExecutionPeriod executionPeriod;
         Object[] args = { Department.class, Integer.valueOf(departmentID) }, args1 = {
@@ -109,8 +130,7 @@ public class SummariesControlAction extends DispatchAction {
         List<ListElementDTO> allListElements = new ArrayList<ListElementDTO>();
 
         for (Teacher teacher : allDepartmentTeachers) {
-            TeacherService teacherService = teacher
-                    .getTeacherServiceByExecutionPeriod(executionPeriod);
+            TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             for (Professorship professorship : teacher.getProfessorships()) {
 
                 Double lessonHours = 0.0, summaryHours = 0.0, percentage = 0.0, difference = 0.0, totalSummaryHours = 0.0;
@@ -160,8 +180,7 @@ public class SummariesControlAction extends DispatchAction {
                                     totalSummaryHours += lesson.hours();
                                 } else {
                                     if (!shift.getAssociatedLessons().isEmpty()) {
-                                        totalSummaryHours += shift.getAssociatedLessons().get(0)
-                                                .hours();
+                                        totalSummaryHours += shift.getAssociatedLessons().get(0).hours();
                                     }
                                 }
                             }
@@ -175,10 +194,9 @@ public class SummariesControlAction extends DispatchAction {
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
 
-                    ListElementDTO listElementDTO = new ListElementDTO(
-                            teacher.getPerson().getNome(), professorship.getExecutionCourse()
-                                    .getNome(), teacher.getTeacherNumber(), categoryName,
-                            lessonHours, summaryHours, totalSummaryHours, difference);
+                    ListElementDTO listElementDTO = new ListElementDTO(teacher.getPerson().getNome(),
+                            professorship.getExecutionCourse().getNome(), teacher.getTeacherNumber(),
+                            categoryName, lessonHours, summaryHours, totalSummaryHours, difference);
 
                     allListElements.add(listElementDTO);
                 }

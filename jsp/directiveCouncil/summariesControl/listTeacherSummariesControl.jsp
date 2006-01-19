@@ -24,6 +24,8 @@
 		</html:select></p>		
 	</logic:notEmpty>
 	
+	<br/>
+	
 	<logic:present name="listElements">		
 		<p><fr:view name="listElements" schema="summaries.control.list">
 				<fr:layout name="tabular">
