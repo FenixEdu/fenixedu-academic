@@ -1,6 +1,7 @@
 /* dotist CSS - 27.08.2003 
-   by Bruno Monteiro @ GAEL */ 
-
+   by Bruno Monteiro @ GAEL
+*/
+	
 /**************************************** 
 	Global Text Proprieties 
 *****************************************/
@@ -11,62 +12,35 @@ body {
 	background: #369;
 	margin: 0;
 	padding: 0;
+	font-size: 71%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 	}
 
 .center { text-align: center; }
 .left { text-align: left; }
 
 table {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #333;
 	}
 
+h1, h2, h3 { font-family: Trebuchet MS, Arial, Helvetica, sans-serif; }
+
 h1	{
-	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 1.7em;
 	color: #fff;
 	}
 
 h2	{
-	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 1.7em;
 	color: #223d4a;
-	/*color: #036;*/
 	}
 
 h3 {
-	font: bold 14px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #666;
+	font-size: 1.25em;
+	color: #223d4a;
 	}
 
-h2.diploma_posGrad	{
-	font: bold 28px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
-	/*color: #036;*/
-	}	
-	
-h3.diploma_posGrad {
-	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
-	}	
-	
-h4.diploma_posGrad {
-	font: 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color: #223d4a;
-	}	
-	
-h2.registration	{
-	font: 20px Courier;
-	color: #000;
-	}
 
-h3.registration	{
-	font: 16px Courier;
-	color: #000;
-	}
-	
-h4.registration {
-	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;		
-	color: #000;
-	}
 
 /******************************************
 	Global Links Proprieties
@@ -102,7 +76,9 @@ a:hover {
 	position: absolute;
 	top: 30px;
 	right: 20px;
-	font: bold 13px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.15em;
+	font-weight: bold;
 	color: #fff;
 	margin: 0;
 	padding: 0;
@@ -150,7 +126,9 @@ a:hover {
 
 #navgeral a:link, #navgeral a:visited {
 	float: left;
-	font: 11px/14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	#: 1.25em;
 	color: #223D4A;
 	text-decoration: none;
 	margin: 0px 10px 0px 10px;
@@ -172,7 +150,7 @@ a:hover {
 */
 
 #logged {
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	font-size: 0.9em;
 	color: #666;
 	background: #cc9;
 	border-bottom: 1px solid #C0A488;
@@ -196,19 +174,12 @@ a:hover {
 	padding: 0;
 	}
 
-#navlateral, #navlateral_photos {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	color: #333;
-	background: #fff;
-	padding: 20px;
-	}
-
-#navlateral {
-	border-right: 1px solid #ccc;
-	}
-	
 #bodycontent {
-	font: 11px/16px Verdana, Arial, Helvetica, sans-serif;
+}
+
+#bodycontent {
+	/*font-size: 11px; line-height: 16px; */
+	line-height: 1.45em;
 	color: #333;
 	background: #fff;
 	padding: 20px;
@@ -221,7 +192,9 @@ a:hover {
 	}
 
 #footer p {
-	font: 11px/14px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.0em;
+	line-height: 1.25em;
 	text-align: center;
 	color: #333;
 	margin: 0;
@@ -241,6 +214,18 @@ a:hover {
 	 navlateral list & links
 ***********************************************/	
 
+#navlateral, #navlateral_photos {
+	font-size: 71%;
+
+	color: #333;
+	background: #fff;
+	padding: 20px;
+	}
+
+#navlateral {
+	border-right: 1px solid #ccc;
+	}
+	
 #navlateral ul {
 	list-style: none;
 	margin: 0;
@@ -249,7 +234,9 @@ a:hover {
 #navlateral li {
 	list-style: none;
 	background: url("../images/red-list-bullet.gif") no-repeat 0 2px;
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	/*font: 10px Verdana, Arial, Helvetica, sans-serif;*/
+	
+	font-size: 10px;
 	padding: 0 0 0 10px;
 	margin: 5px 0 5px 0;
 	}
@@ -270,28 +257,11 @@ a:hover {
 ***********************************************/
 
 .error {
-	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	color: #c00;
 	background: #ffc;
 	}
 
-.infoMsg {
-	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
-	color: darkblue;
-	background: #ffc;
-	}
-
-.sucessfulOperarion {
-	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
-	color: darkblue;
-	}
-	
-.inputlist {
-	font: 11px Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	color: #333;
-	}
-	
 .inputbutton {
 	font: 11px Verdana, Arial, Helvetica, sans-serif;
 	color: #333;
@@ -305,51 +275,12 @@ a:hover {
 	background-color: #b5bdd6;
 	}
 
-select.courseEnroll {
-	font: 9px Verdana, Arial, Helvetica, sans-serif;
-	width: 100%;
-	}
-select.degrees {
-	font: 10px Verdana, Arial, Helvetica, sans-serif;
-	width: 100%;
-	}	
 /*****************************************************************
 	TABLE Classes: Info TD + Info TD with Icons + ListClasses
 ******************************************************************/
 
-.infoIcons {
-	background-color: #EBECED;
-	vertical-align: middle;
-	padding-left: 10px;
-	border-bottom: 1px solid #ccc;
-	width: 15px;
-	}
-	
 .infoop {
 	background-color: #EBECED;
-	vertical-align: middle;
-	padding: 10px 10px;
-	border-bottom: 1px solid #ccc;
-	}
-	
-.infoop2 {
-	background-color: #fafade;
-	vertical-align: middle;
-	padding: 10px 10px;
-	border-bottom: 1px solid #f2f2a6;
-	}
-.infoop3 {
-	background-color: #fafade;
-	padding: 2px 4px;
-	border-bottom: 1px solid #f2f2a6;
-	}
-.infoop4 {
-	background-color: #ffc;
-	padding: 2px 4px;
-	}
-	
-.infoop-blue {
-	background-color: #9CF;
 	vertical-align: middle;
 	padding: 10px 10px;
 	border-bottom: 1px solid #ccc;
@@ -368,17 +299,6 @@ select.degrees {
 	border: 1px solid #ccc;
 	}
 
-.infocell {
-	background: #EBECED;
-	padding: 6px;
-	border: 1px solid #ccc;
-}
-
-
-.bottomborder {
-	border-bottom: 1px solid #ccc;
-	}  
-	
 .formTD	{
 	text-align: left;
 	height: 30px;
@@ -392,62 +312,11 @@ select.degrees {
 	height: 30px;
 	}
 
-.listClassesWhite	{
-	border: 1px solid #ccc;
-	text-align: center;
-	height: 30px;
-	}
-			
 .listClasses-header	{
 	background: #ccc;
 	font-weight: bold;
 	text-align: center;
 	padding: 5px;
-	}
-
-.listClasses-subheader{
-	color:#FFF;
-	background:#999; 
-	padding:5px;
-	font-weight:bold;
-}
-
-.listClasses-supheader{
-	color:#FFF;
-	background:#4F82B5; 
-	padding:5px;
-	font-weight:bold;
-	text-align: center;
-}
-
-.listClasses-subheader a:link, .listClasses-subheader a:visited{
-	color:#FFF;
-	text-decoration:underline;
-	font-weight:normal;	
-}
-
-.listClasses-subheader a:hover{
-	color:#FFF;
-	text-decoration:none;
-	font-weight:normal;
-}
-
-.tall-td {
-	height: 50px;
-	}
-
-.ects_headertable {
-	border: 1px solid #000;
-	}
-
-.ects_headertable td {
-	color: #333;
-	padding: 5px;
-	background:#EBECED;
-	}
-	
-table#ects {
-	page-break-after: always;
 	}
 
 table.style1 {
@@ -478,71 +347,6 @@ table.style1 td.courses {
 table tr.highlight td.listClasses {
 background-color: #e9fee9;
 }
-
-
-table tr td.leftColumn {
-text-align: right;
-width: 14em;
-vertical-align: top;
-}
-
-table tr td.rightColumn {
-text-align: left;
-/*width: 40%;*/
-}
-
-table tr td.errorColumn {
-/*width: 40%;*/
-}
-
-/*****************************************************************
-	Assiduidade - layout verbete
-******************************************************************/
-
-.verb-table {
-	border: 1px solid #333;
-	}
-
-.verb-hdr {
-	padding: 5px;
-	font-weight: bold;
-	text-align: center;
-	background: #ccc;
-	border-right: 1px solid #333;
-	border-bottom: 1px solid #333;
-	}
-
-.verb-hrd-last {
-	padding: 5px;
-	font-weight: bold;
-	text-align: center;
-	background: #ccc;
-	border-bottom: 1px solid #333;
-	}
-	
-.verb-td {
-	padding: 5px;
-	background: #ebeced;
-	border-right: 1px solid #333;   
-	border-bottom: 1px solid #ccc;                               
-	}
-	
-.verb-td-last {
-	padding: 5px;
-	background: #ebeced;  
-	border-bottom: 1px solid #ccc;                               
-	}
-
-.verb-finalrow {
-	padding: 5px;
-	background: #ebeced;
-	border-right: 1px solid #333;
-	}
-
-.verb-finalrow-last {
-	padding: 5px;
-	background: #ebeced;
-	}                   
 
 /*****************************************************************
 	Misc text styles
@@ -688,7 +492,7 @@ table.registration {
 	}
 	
 .registration_cell  {
-	font: 12px Verdana, Arial, Helvetica, sans-serif;		
+	/*font-size: 12px;*/
 	color: #000;
 	}	
 	
@@ -696,29 +500,219 @@ table.registration {
 	page-break-before:always;
 	}	
 		
-#pagewrapper_registration
-{
-width: 800px;
-margin-right:auto;
-margin-left:auto;
-margin-top:30px;
-padding:0px;
-text-align: left;
+#pagewrapper_registration {
+	width: 800px;
+	margin-right:auto;
+	margin-left:auto;
+	margin-top:30px;
+	padding:0px;
+	text-align: left;
+	}
+	
+
+
+	
+/* Less used classes: */	
+	
+/**************************************** 
+	Global Text Proprieties 
+*****************************************/
+
+h2.diploma_posGrad	{
+	font: bold 28px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	/*color: #036;*/
+	}	
+	
+h3.diploma_posGrad {
+	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	}	
+	
+h4.diploma_posGrad {
+	font: 18px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color: #223d4a;
+	}	
+	
+h2.registration	{
+	font: 20px Courier;
+	color: #000;
+	}
+
+h3.registration	{
+	font: 16px Courier;
+	color: #000;
+	}
+	
+h4.registration {
+	font: bold 18px "Trebuchet MS", Arial, Helvetica, sans-serif;		
+	color: #000;
+	}
+	
+/**********************************************
+	 FORMS Classes: inputs
+***********************************************/
+
+/*not used*/
+.sucessfulOperarion {
+	font: bold 11px Verdana, Arial, Helvetica, sans-serif;
+	color: darkblue;
+	}
+
+/*not used*/
+.inputlist {
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333;
+	}
+	
+select.courseEnroll {
+	font: 9px Verdana, Arial, Helvetica, sans-serif;
+	width: 100%;
+	}
+select.degrees {
+	font: 10px Verdana, Arial, Helvetica, sans-serif;
+	width: 100%;
+	}
+	
+/*****************************************************************
+	TABLE Classes: Info TD + Info TD with Icons + ListClasses
+******************************************************************/
+
+
+.infoIcons {
+	background-color: #EBECED;
+	vertical-align: middle;
+	padding-left: 10px;
+	border-bottom: 1px solid #ccc;
+	width: 15px;
+	}
+
+.infoop2 {
+	background-color: #fafade;
+	vertical-align: middle;
+	padding: 10px 10px;
+	border-bottom: 1px solid #f2f2a6;
+	}
+.infoop3 {
+	background-color: #fafade;
+	padding: 2px 4px;
+	border-bottom: 1px solid #f2f2a6;
+	}
+.infoop4 {
+	background-color: #ffc;
+	padding: 2px 4px;
+	}
+	
+.infoop-blue {
+	background-color: #9CF;
+	vertical-align: middle;
+	padding: 10px 10px;
+	border-bottom: 1px solid #ccc;
+	}
+	
+.bottomborder {
+	border-bottom: 1px solid #ccc;
+	}
+	
+.listClassesWhite	{
+	border: 1px solid #ccc;
+	text-align: center;
+	height: 30px;
+	}
+
+.listClasses-subheader{
+	color:#FFF;
+	background:#999; 
+	padding:5px;
+	font-weight:bold;
 }
 
-div.autoComplete {
-      position:absolute;
-      width:250px;
-      background-color:white;
-      border:1px solid #888;
-      margin:0px;
-      padding:0px;
-     
-    }
-ul.autoCompleteItems  {
-      list-style-type: none;
-      margin:0px;
-      padding:0px;
-   }
+.listClasses-supheader{
+	color:#FFF;
+	background:#4F82B5; 
+	padding:5px;
+	font-weight:bold;
+	text-align: center;
+}
 
-ul.autoCompleteItems li.selected { background-color:  #cef; }
+.listClasses-subheader a:link, .listClasses-subheader a:visited{
+	color:#FFF;
+	text-decoration:underline;
+	font-weight:normal;	
+}
+
+.listClasses-subheader a:hover{
+	color:#FFF;
+	text-decoration:none;
+	font-weight:normal;
+}
+
+.tall-td {
+	height: 50px;
+	}
+
+.ects_headertable {
+	border: 1px solid #000;
+	}
+
+.ects_headertable td {
+	color: #333;
+	padding: 5px;
+	background:#EBECED;
+	}
+	
+table#ects {
+	page-break-after: always;
+	}
+
+	
+/*****************************************************************
+	Assiduidade - layout verbete
+******************************************************************/
+
+.verb-table {
+	border: 1px solid #333;
+	}
+
+.verb-hdr {
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+	background: #ccc;
+	border-right: 1px solid #333;
+	border-bottom: 1px solid #333;
+	}
+
+.verb-hrd-last {
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+	background: #ccc;
+	border-bottom: 1px solid #333;
+	}
+	
+.verb-td {
+	padding: 5px;
+	background: #ebeced;
+	border-right: 1px solid #333;   
+	border-bottom: 1px solid #ccc;                               
+	}
+	
+.verb-td-last {
+	padding: 5px;
+	background: #ebeced;  
+	border-bottom: 1px solid #ccc;                               
+	}
+
+.verb-finalrow {
+	padding: 5px;
+	background: #ebeced;
+	border-right: 1px solid #333;
+	}
+
+.verb-finalrow-last {
+	padding: 5px;
+	background: #ebeced;
+	}
+ 
