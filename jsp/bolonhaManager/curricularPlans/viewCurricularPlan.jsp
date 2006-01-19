@@ -11,7 +11,7 @@
 	
 	<h:outputText value="<i>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</i>" escape="false"/>
-	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2><br/>" escape="false">
+	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 
