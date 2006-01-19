@@ -27,6 +27,10 @@ public class UpdateDegreeCurricularPlanMembersGroup implements IService {
         Role bolonhaRole = persistentSupport.getIPersistentRole().readByRoleType(RoleType.BOLONHA_MANAGER); 
         
         Group group = degreeCurricularPlan.getCurricularPlanMembersGroup();
+        if (group == null) {
+            group = new FixedSetGroup();
+        }
+        
         Iterator<Person> iterator = group.getElementsIterator();
         while (iterator.hasNext()) {
             Person person = iterator.next();

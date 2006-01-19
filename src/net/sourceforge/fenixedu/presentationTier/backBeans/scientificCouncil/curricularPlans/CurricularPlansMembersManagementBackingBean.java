@@ -154,7 +154,7 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
             Group curricularPlanMembersGroup = this.getDegreeCurricularPlan().getCurricularPlanMembersGroup();
             for (Employee departmentEmployee : employees) {
                 Person person = departmentEmployee.getPerson();
-                if (!curricularPlanMembersGroup.isMember(person)) {
+                if (curricularPlanMembersGroup == null || !curricularPlanMembersGroup.isMember(person)) {
                     result.add(new SelectItem(person.getIdInternal(), person.getNome() + " ("
                             + person.getUsername() + ")"));
                 }

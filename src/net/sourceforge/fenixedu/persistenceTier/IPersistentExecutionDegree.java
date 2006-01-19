@@ -38,7 +38,7 @@ public interface IPersistentExecutionDegree extends IPersistentObject {
 
     public List readByDegreeCurricularPlan(Integer degreeCurricularPlanOID) throws ExcepcaoPersistencia;
 
-    public List readExecutionsDegreesByDegree(Integer degreeOID, CurricularStage curricularStage) throws ExcepcaoPersistencia;
+    public List<ExecutionDegree> readExecutionsDegreesByDegree(Integer degreeOID, CurricularStage curricularStage) throws ExcepcaoPersistencia;
 
     public List readByExecutionCourseAndByTeacher(Integer executionCourseOID, Integer teacherOID)
             throws ExcepcaoPersistencia;
