@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -148,8 +147,7 @@ public class ProcessSibsPaymentFile implements IService {
                     } else {
                         // create the insurance transaction payment for the
                         // execution year
-                        InsuranceTransaction insuranceTransaction = DomainFactory
-                                .makeInsuranceTransaction(sibsPaymentFileEntry.getPayedValue(),
+                        DomainFactory.makeInsuranceTransaction(sibsPaymentFileEntry.getPayedValue(),
                                         new Timestamp(new Date().getTime()), null, PaymentType.SIBS,
                                         TransactionType.INSURANCE_PAYMENT, new Boolean(false),
                                         responsiblePerson, personAccount, null, executionYear, student);
