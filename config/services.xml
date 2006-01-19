@@ -9107,6 +9107,15 @@
 		</filterChains>				
 	</service>
 	<!--######################################-->
+    <service>
+		<name>AuthenticationExpired</name>
+		<implementationClass>
+			net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateExpiredKerberos
+		</implementationClass>
+		<description/>
+		<isTransactional>true</isTransactional>
+		<filterChains/>
+	</service>	
 	<service>
 		<name>CreateClassificationsForStudents</name>
 		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries.CreateClassificationsForStudents</implementationClass>
