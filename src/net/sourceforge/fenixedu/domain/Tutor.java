@@ -1,13 +1,19 @@
-/*
- * Created on 2/Fev/2004
- *
- */
 package net.sourceforge.fenixedu.domain;
 
-/**
- * @author Tânia Pousão
- * 
- */
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 public class Tutor extends Tutor_Base {
+
+    private Boolean getCanBeDeleted() {
+        return Boolean.TRUE;
+    }
+    
+    public void delete() {
+        if (getCanBeDeleted()) {
+            deleteDomainObject();
+        } else {
+            throw new DomainException("tutor.cant.delete");
+        }
+    }
 
 }
