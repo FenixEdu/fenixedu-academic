@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
@@ -123,7 +124,7 @@ public class Authenticate implements IService, Serializable {
     }
 
     public IUserView run(final String username, final String password, final String requestURL)
-            throws ExcepcaoPersistencia, ExcepcaoAutenticacao, InvalidPasswordServiceException {
+            throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
 
         final ISuportePersistente persistenceSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
@@ -134,10 +135,14 @@ public class Authenticate implements IService, Serializable {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
         
-        final Set allowedRoles = getAllowedRolesByHostname(requestURL);
-        return new UserView(person, allowedRoles);
+        return getUserView(person, requestURL);
     }
    
+    
+    protected IUserView getUserView(final Person person, final String requestURL) {
+    	final Set allowedRoles = getAllowedRolesByHostname(requestURL);
+        return new UserView(person, allowedRoles);
+    }
 
     protected Collection<InfoRole> getInfoRoles(final String username, final Collection personRoles,
             final Set allowedRoles) {
