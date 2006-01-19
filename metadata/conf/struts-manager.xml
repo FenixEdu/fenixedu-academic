@@ -1390,9 +1390,13 @@
 		<action	name="mergeExecutionCoursesForm"
 				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
 				path="/mergeExecutionCoursesForm"
+				input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"
 				parameter="method"
 				scope="request"
 				validate="false">
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
+         	       key="error.cannot.merge.execution.course.with.itself"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
 	</action>	
 	

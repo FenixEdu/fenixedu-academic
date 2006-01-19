@@ -12,12 +12,9 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Announcement;
 import net.sourceforge.fenixedu.domain.Attends;
-import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.EvaluationMethod;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.FinalEvaluation;
@@ -28,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
-import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
@@ -77,25 +73,25 @@ public class MergeExecutionCourses implements IService {
         if (!isMergeAllowed(persistentSupport, executionCourseFrom, executionCourseTo)) {
             throw new InvalidArgumentsServiceException();
         }
+
         copyProfessorships(persistentSupport, executionCourseFrom, executionCourseTo);
         copyAttends(executionCourseFrom, executionCourseTo);
         copyBibliographicReference(persistentSupport, executionCourseFrom, executionCourseTo);
-        removeEvaluationMethod(persistentSupport, executionCourseFrom);
-        removeCourseReport(persistentSupport, executionCourseFrom);
+        if (executionCourseFrom.getEvaluationMethod() != null) {
+            executionCourseFrom.getEvaluationMethod().delete();
+        }
+        if (executionCourseFrom.getCourseReport() != null) {
+            executionCourseFrom.getCourseReport().delete();
+        }
         copySummaries(persistentSupport, executionCourseFrom, executionCourseTo);
         copyGroupPropertiesExecutionCourse(executionCourseFrom, executionCourseTo);
         copySite(persistentSupport, executionCourseFrom, executionCourseTo);
         copyShifts(executionCourseFrom, executionCourseTo);
-        removeEvaluations(persistentSupport, executionCourseFrom);
+        removeEvaluations(persistentSupport, executionCourseFrom, executionCourseTo);
 
-        executionCourseTo.getAssociatedCurricularCourses().addAll(
-                executionCourseFrom.getAssociatedCurricularCourses());
+        executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
-        List executionCourseID = new ArrayList();
-        executionCourseID.add(executionCourseFrom.getIdInternal());
-
-        DeleteExecutionCourses deleteExecutionCourses = new DeleteExecutionCourses();
-        deleteExecutionCourses.run(executionCourseID);
+        executionCourseFrom.delete();
     }
 
     private boolean isMergeAllowed(final ISuportePersistente persistentSupport,
@@ -120,15 +116,6 @@ public class MergeExecutionCourses implements IService {
                 && executionCourseFrom != executionCourseTo && distributedTestAuthorization;
     }
 
-    private void removeEvaluationMethod(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
-       
-        final EvaluationMethod evaluationMethod = executionCourseFrom.getEvaluationMethod();
-        if (evaluationMethod != null) {
-            evaluationMethod.delete();
-        }
-    }
-
     private void copySummaries(final ISuportePersistente persistentSupport,
             final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
@@ -136,15 +123,6 @@ public class MergeExecutionCourses implements IService {
         associatedSummaries.addAll(executionCourseFrom.getAssociatedSummaries());
         for (final Summary summary : associatedSummaries) {
             summary.setExecutionCourse(executionCourseTo);
-        }
-    }
-
-    private void removeCourseReport(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia {
-        
-        final CourseReport courseReport = executionCourseFrom.getCourseReport();
-        if (courseReport != null) {
-            courseReport.delete();
         }
     }
 
@@ -160,39 +138,29 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void removeEvaluations(final ISuportePersistente persistentSupport,
-            final ExecutionCourse executionCourseFrom) throws ExcepcaoPersistencia,
-            InvalidArgumentsServiceException {
-        final List<Evaluation> associatedEvaluations = new ArrayList();
-        associatedEvaluations.addAll(executionCourseFrom.getAssociatedEvaluations());
-
-        for (final Evaluation evaluation : associatedEvaluations) {
+            final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
+            throws ExcepcaoPersistencia, FenixServiceException {
+        while (!executionCourseFrom.getAssociatedEvaluations().isEmpty()) {
+            final Evaluation evaluation = executionCourseFrom.getAssociatedEvaluations().get(0);
             if (evaluation instanceof FinalEvaluation) {
-                if (((FinalEvaluation) evaluation).deleteFrom(executionCourseFrom)) {
-                    persistentSupport.getIPersistentObject().deleteByOID(Evaluation.class, evaluation.getIdInternal());
+                final FinalEvaluation finalEvaluationFrom = (FinalEvaluation) evaluation;
+                if (finalEvaluationFrom.hasAnyMarks()) {
+                    throw new FenixServiceException("Cannot merge execution courses: marks exist for final evaluation.");
+                } else {
+                    finalEvaluationFrom.delete();
                 }
             } else {
-                throw new InvalidArgumentsServiceException();
+                executionCourseTo.getAssociatedEvaluations().add(evaluation);
+                executionCourseFrom.getAssociatedEvaluations().remove(evaluation);
             }
-
         }
     }
 
     private void copyBibliographicReference(final ISuportePersistente persistentSupport,
             final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
-
-        final List<BibliographicReference> notCopiedBibliographicReferences = ExecutionCourseUtils
-                .copyBibliographicReference(executionCourseFrom, executionCourseTo);
-        removeBibliographicReferences(persistentSupport, notCopiedBibliographicReferences);
-    }
-
-    private void removeBibliographicReferences(final ISuportePersistente persistentSupport,
-            final List<BibliographicReference> notCopiedBibliographicReferences)
-            throws ExcepcaoPersistencia {
-        
-        for (final BibliographicReference bibliographicReference : notCopiedBibliographicReferences) {
-            bibliographicReference.delete();
-        }
+        for (; !executionCourseFrom.getAssociatedBibliographicReferences().isEmpty();
+            executionCourseTo.getAssociatedBibliographicReferences().add(executionCourseFrom.getAssociatedBibliographicReferences().get(0)));
     }
 
     private void copyShifts(final ExecutionCourse executionCourseFrom,
@@ -207,7 +175,23 @@ public class MergeExecutionCourses implements IService {
     }
 
     private void copyAttends(final ExecutionCourse executionCourseFrom,
-            final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia {
+            final ExecutionCourse executionCourseTo) throws ExcepcaoPersistencia, FenixServiceException {
+        while (!executionCourseFrom.getAttends().isEmpty()) {
+            final Attends attends = executionCourseFrom.getAttends().get(0);
+            final Attends otherAttends = executionCourseTo.getAttendsByStudent(attends.getAluno());
+            if (otherAttends == null) {
+                attends.setDisciplinaExecucao(executionCourseTo);
+            } else {
+                if (attends.hasEnrolment() && !otherAttends.hasAluno()) {
+                    otherAttends.setEnrolment(attends.getEnrolment());
+                } else if (otherAttends.hasEnrolment() && attends.hasAluno()) {
+                    throw new FenixServiceException("Unable to merge execution courses. Student " + attends.getAluno().getNumber() + " has an enrolment in both.");
+                //} else {
+                    // all is ok
+                }
+                attends.delete();
+            }
+        }
 
         final Iterator associatedAttendsFromDestination = executionCourseTo.getAttendsIterator();
         final Map alreadyAttendingDestination = new HashMap();
@@ -266,14 +250,12 @@ public class MergeExecutionCourses implements IService {
     private void copyProfessorships(final ISuportePersistente persistentSupport,
             final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo)
             throws ExcepcaoPersistencia {
-
-        final List<Professorship> sourceExecutionCourseProfessorships = new ArrayList();
-        sourceExecutionCourseProfessorships.addAll(executionCourseFrom.getProfessorships());
-        for (final Professorship professorship : sourceExecutionCourseProfessorships) {
+        for (;!executionCourseFrom.getProfessorships().isEmpty();) {
+            final Professorship professorship = executionCourseFrom.getProfessorships().get(0);
             if (canAddProfessorshipTo(executionCourseTo, professorship)) {
                 professorship.setExecutionCourse(executionCourseTo);
             } else {
-                removeProfessorship(persistentSupport, professorship);
+                professorship.delete();
             }
         }
     }

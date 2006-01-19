@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -23,11 +22,6 @@ import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.Transformer;
-
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
 /**
@@ -41,42 +35,38 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriodId implements IServic
             IPersistentExecutionPeriod persistentExecutionPeriod = ps.getIPersistentExecutionPeriod();
             ICursoPersistente persistentDegree = ps.getICursoPersistente();
 
-            final ExecutionPeriod executionPeriod2Compare = (ExecutionPeriod) persistentExecutionPeriod
+            final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod
                     .readByOID(ExecutionPeriod.class, executionPeriodId);
-            if (executionPeriod2Compare == null) {
+            if (executionPeriod == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
+            final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
             if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            List<DegreeCurricularPlan> curricularPlans = degree.getDegreeCurricularPlans();
-            List curricularCourses = new ArrayList();
-            for (DegreeCurricularPlan degreeCurricularPlan : curricularPlans) {
-                if (degreeCurricularPlan.getState().equals(DegreeCurricularPlanState.ACTIVE) && degreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
-                    curricularCourses.addAll(degreeCurricularPlan.getCurricularCourses());
+
+            final List infoExecutionCourses = new ArrayList();
+            for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+                if (satisfiesCriteria(executionCourse, degree)) {
+                    infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
                 }
             }
-            List executionCourses = new ArrayList();
-            Iterator iter = curricularCourses.iterator();
-            while (iter.hasNext()) {
-                CurricularCourse curricularCourse = (CurricularCourse) iter.next();
-                executionCourses.addAll(CollectionUtils.select(curricularCourse
-                        .getAssociatedExecutionCourses(), new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
-                        return executionCourse.getExecutionPeriod().equals(executionPeriod2Compare);
-                    }
-                }));
-            }
-            List infoExecutionCourses = (List) CollectionUtils.collect(executionCourses,
-                    new Transformer() {
-                        public Object transform(Object arg0) {
-                            return InfoExecutionCourse.newInfoFromDomain((ExecutionCourse) arg0);
-                        }
-                    });
             return infoExecutionCourses;
-
     }
+
+    private boolean satisfiesCriteria(final ExecutionCourse executionCourse, final Degree degree) {
+        for (final CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            final DegreeCurricularPlan degreeCurricularPlan = curricularCourse.getDegreeCurricularPlan();
+            if (degreeCurricularPlan.getState() == DegreeCurricularPlanState.ACTIVE
+                    && degreeCurricularPlan.getCurricularStage() == CurricularStage.OLD) {
+                final Degree degreeOfCurricularCourse = degreeCurricularPlan.getDegree();
+                if (degree == degreeOfCurricularCourse) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

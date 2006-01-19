@@ -309,51 +309,52 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 			getNonAffiliatedTeachers().clear();
 
 			super.deleteDomainObject();
-		} else
+		} else {
 			throw new DomainException("error.execution.course.cant.delete");
+        }
 	}
 
 	private boolean canBeDeleted() {
 		if (hasAnyAssociatedSummaries()) {
-			return false;
+			throw new DomainException("error.execution.course.cant.delete");
 		}
 		if (!getGroupings().isEmpty()) {
-			return false;
+			throw new DomainException("error.execution.course.cant.delete");
 		}
 		if (hasAnyAssociatedBibliographicReferences()) {
-			return false;
+			throw new DomainException("error.execution.course.cant.delete");
 		}
 		if (hasAnyAssociatedEvaluations()) {
-			return false;
+			throw new DomainException("error.execution.course.cant.delete");
 		}
 		if (hasEvaluationMethod()) {
-			return false;
+			throw new DomainException("error.execution.course.cant.delete");
 		}
 		if (hasAnyAssociatedShifts()) {
-			return false;
+			throw new DomainException("error.execution.course.cant.delete");
 		}
 		if (hasCourseReport()) {
-			return false;
+			throw new DomainException("error.execution.course.cant.delete");
 		}
 		final Site site = getSite();
 		if (site != null) {
 			if (site.hasAnyAssociatedAnnouncements()) {
-				return false;
+				throw new DomainException("error.execution.course.cant.delete");
 			}
 			if (site.hasAnyAssociatedSections()) {
-				return false;
+				throw new DomainException("error.execution.course.cant.delete");
 			}
 		}
 
 		for (final Professorship professorship : getProfessorships()) {
 			if (professorship.hasAnyAssociatedShiftProfessorship()) {
-				return false;
+				throw new DomainException("error.execution.course.cant.delete");
 			}
 			if (professorship.hasAnyAssociatedSummaries()) {
-				return false;
+				throw new DomainException("error.execution.course.cant.delete");
 			}
 			if (professorship.hasAnySupportLessons()) {
-				return false;
+				throw new DomainException("error.execution.course.cant.delete");
 			}
 		}
 
