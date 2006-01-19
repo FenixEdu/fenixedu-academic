@@ -23,7 +23,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterRetrieveException
 import pt.utl.ist.berserk.logic.filterManager.exceptions.IncompatibleFilterException;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.InvalidFilterException;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.InvalidFilterExpressionException;
-import pt.utl.ist.berserk.logic.serviceManager.IServiceManager;
+import net.sourceforge.fenixedu.applicationTier.IServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.ServiceManager;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.FilterChainFailedException;
 import pt.utl.ist.berserk.logic.serviceManager.exceptions.InvalidServiceException;

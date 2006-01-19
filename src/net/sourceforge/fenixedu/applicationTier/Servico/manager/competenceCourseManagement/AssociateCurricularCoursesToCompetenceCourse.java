@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 
 public class AssociateCurricularCoursesToCompetenceCourse implements IService {
 	public void run(Integer competenceCourseID, Integer[] curricularCoursesIDs) throws Exception {

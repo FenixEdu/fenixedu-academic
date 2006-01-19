@@ -16,7 +16,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.Predicate;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 import sun.text.Normalizer;
 
 public class AutoCompleteSimpleSearchService implements IService {

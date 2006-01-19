@@ -49,7 +49,7 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.log4j.Logger;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 
 /**
  * @author Susana Fernandes

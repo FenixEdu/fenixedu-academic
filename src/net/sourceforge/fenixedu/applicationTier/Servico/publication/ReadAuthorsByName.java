@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonsByName
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 
 public class ReadAuthorsByName implements IService {
 

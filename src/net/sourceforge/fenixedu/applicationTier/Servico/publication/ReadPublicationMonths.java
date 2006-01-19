@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.constants.publication.PublicationConstants;
 import net.sourceforge.fenixedu.util.Mes;
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 
 
 public class ReadPublicationMonths implements IService {

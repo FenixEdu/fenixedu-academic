@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersist
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 
 public class WriteExtraWorkRequests implements IService {
 

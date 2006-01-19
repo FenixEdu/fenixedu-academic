@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 
 /**
  * @author Fernanda Quitério 13/04/2004

@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.util.StringNormalizer;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 
-import pt.utl.ist.berserk.logic.serviceManager.IService;
+import net.sourceforge.fenixedu.applicationTier.IService;
 
 public class SearchPerson implements IService {
 
