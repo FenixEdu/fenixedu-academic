@@ -10,41 +10,34 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'"/><br/>	
+		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'"/>
 
-		<h:outputText value="<b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
-		
-		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilCurricularPlanManagement.errorMessage}"
-			value="#{ScientificCouncilCurricularPlanManagement.errorMessage}<br/>" escape="false"/>
-		
-		<h:panelGrid columnClasses="infocell" columns="2" border="0">
-			<h:outputText value="#{scouncilBundle['name']}: " />
-			<h:panelGroup>
-				<h:inputText id="name" value="#{ScientificCouncilCurricularPlanManagement.name}" required="true" maxlength="100" size="60"/>
-				<h:message for="name" errorClass="error" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
-			</h:panelGroup>
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<h4 class='first'>#{scouncilBundle['curricularPlan.data']}:</h4>" escape="false"/>
 
-			<h:outputText value="#{scouncilBundle['ectsCredits']}: " />
-			<h:panelGroup>
-				<h:inputText id="ectsCredits" value="#{ScientificCouncilCurricularPlanManagement.ectsCredits}" required="true" maxlength="100" size="10"/>
-				<h:message for="ectsCredits" errorClass="error" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-			</h:panelGroup>
-			
-<%--
- 			<h:outputText value="#{scouncilBundle['gradeTypes']}: " />
-			<h:panelGroup>
-				<h:selectOneMenu id="gradeType" value="#{ScientificCouncilCurricularPlanManagement.gradeType}">
-					<f:selectItems value="#{ScientificCouncilCurricularPlanManagement.gradeScales}" />
-				</h:selectOneMenu>
-				<h:message for="gradeType" errorClass="error" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>				
-			</h:panelGroup>
---%>
+		<h:outputText value="<br/><fieldset class='lfloat'>" escape="false"/>
 
-		</h:panelGrid>
-		<br/><br/><hr/>
+		<h:outputText value="<p><label>#{scouncilBundle['name']}:</label>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText id="name" value="#{ScientificCouncilCurricularPlanManagement.name}" required="true" maxlength="100" size="20"/>
+			<h:message for="name" errorClass="error0" rendered="#{empty ScientificCouncilCurricularPlanManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="<p><label>#{scouncilBundle['ectsCredits']}:</label>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText id="ectsCredits" value="#{ScientificCouncilCurricularPlanManagement.ectsCredits}" required="true" maxlength="3" size="2"/>
+			<h:message for="ectsCredits" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
+		<h:outputText value="</fieldset></div>" escape="false"/>
+
+		<br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['create']}"
 			action="#{ScientificCouncilCurricularPlanManagement.createCurricularPlan}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
 	</h:form>
+
 </ft:tilesView>
