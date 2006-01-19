@@ -35,3 +35,9 @@
 		<bean:message bundle="MANAGER_RESOURCES" key="link.newPasswordForStudentRegistration" />
 	</html:link>
 </strong></p>
+
+<p><strong>&raquo;
+	<html:link page="/functionsManagement/personSearchForFunctionsManagement.faces">
+		<bean:message bundle="MANAGER_RESOURCES" key="link.functions.management"/>
+	</html:link>		
+</strong></p>
