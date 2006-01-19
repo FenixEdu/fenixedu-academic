@@ -1,7 +1,3 @@
-/*
- * Created on 4/Fev/2004
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -12,51 +8,38 @@ import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author Tânia Pousão
- * 
- */
 public class InsertTutorShip implements IService {
+
     public Boolean verifyStudentOfThisDegree(Student student, DegreeType degreeType, String degreeCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        boolean result = false;
 
-        ISuportePersistente sp;
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+        final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
-
         StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);
 
-        result = studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(
-                degreeCode);
-
-        return Boolean.valueOf(result);
+        return studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla().equals(degreeCode);
     }
 
     public Boolean verifyStudentAlreadyTutor(Student student, Teacher teacher)
             throws FenixServiceException, ExcepcaoPersistencia {
+
         boolean result = false;
-        Tutor tutor = null;
 
-        ISuportePersistente sp;
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Tutor tutor = persistentSupport.getIPersistentTutor().readTeachersByStudent(student);
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-
-        tutor = persistentTutor.readTeachersByStudent(student);
-
-        if (tutor != null && !tutor.getTeacher().equals(teacher)) {
+        if (tutor != null && !(tutor.getTeacher() == teacher)) {
             result = true;
         }
 
         return new Boolean(result);
     }
+
 }
