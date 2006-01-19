@@ -88,6 +88,8 @@ public class CheckUserViewFilter implements Filter {
                 && (uri.indexOf("login.do") == -1)
                 && (uri.indexOf("privado") == -1)
                 && (uri.indexOf("loginPage.jsp") == -1)
+                && (uri.indexOf("loginExpired.jsp") == -1)
+                && (uri.indexOf("loginExpired.do") == -1)                
                 && (uri.indexOf("logoff.do") == -1)
                 && (uri.indexOf("publico/") == -1)
                 && (uri.indexOf("showErrorPage.do") == -1)
