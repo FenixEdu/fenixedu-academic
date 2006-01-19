@@ -90,7 +90,7 @@ public class AuthenticationAction extends FenixAction {
         }
     }
 
-    private HttpSession createNewSession(final HttpServletRequest request, final HttpSession session,
+    protected HttpSession createNewSession(final HttpServletRequest request, final HttpSession session,
             final IUserView userView) {
         if (session != null) {
             session.invalidate();
@@ -132,7 +132,7 @@ public class AuthenticationAction extends FenixAction {
      * @param userRoles
      * @return
      */
-    private int getNumberOfSubApplications(Collection userRoles) {
+    protected int getNumberOfSubApplications(Collection userRoles) {
         List subApplications = new ArrayList();
         Iterator iterator = userRoles.iterator();
         while (iterator.hasNext()) {
@@ -149,7 +149,7 @@ public class AuthenticationAction extends FenixAction {
      * @param infoRole
      * @return
      */
-    private ActionForward buildRoleForward(InfoRole infoRole) {
+    protected ActionForward buildRoleForward(InfoRole infoRole) {
         ActionForward actionForward = new ActionForward();
         actionForward.setContextRelative(false);
         actionForward.setRedirect(false);
@@ -158,7 +158,7 @@ public class AuthenticationAction extends FenixAction {
         return actionForward;
     }
 
-    private InfoRole getRole(RoleType roleType, Collection rolesList) {
+    protected InfoRole getRole(RoleType roleType, Collection rolesList) {
 
         InfoRole infoRole = new InfoRole();
         infoRole.setRoleType(roleType);
