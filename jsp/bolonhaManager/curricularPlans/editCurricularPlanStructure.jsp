@@ -15,9 +15,9 @@
 
 	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="true" toEdit="true" />
 
-	<h:outputText value="</br></br>" escape="false"/>
+	<h:outputText value="<br/><br/><hr/>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/><br/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}"
 			action="buildCurricularPlan"/>
 	</h:form>
