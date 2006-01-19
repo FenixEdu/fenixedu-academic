@@ -46,14 +46,6 @@ public abstract class FenixDispatchAction extends DispatchAction {
 		return person;
     }
 
-    /**
-     * Tests if the session is valid.
-     * 
-     * @see SessionUtils#validSessionVerification(HttpServletRequest,
-     *      ActionMapping)
-     * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm,
-     *      HttpServletRequest, HttpServletResponse)
-     */
     protected HttpSession getSession(HttpServletRequest request) throws InvalidSessionActionException {
         HttpSession result = request.getSession(false);
         if (result == null)
