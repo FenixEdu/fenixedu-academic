@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 public class EnrolmentTest extends DomainTestBase {
@@ -313,7 +315,7 @@ public class EnrolmentTest extends DomainTestBase {
 		improvementEnrolment.setExecutionPeriod(otherExecutionPeriod);
 	}
 
-	private void setUpForSubmitEnrolmentEvaluationCase() {
+	private void setUpForSubmitEnrolmentEvaluationCase() throws ParseException {
 
 		enrolmentToSubmitWithoutTemporaryEvaluation = new Enrolment();
 		enrolmentToSubmitWithTemporaryEvaluation = new Enrolment();
@@ -332,7 +334,7 @@ public class EnrolmentTest extends DomainTestBase {
 		emptyMark = new Mark();
 		emptyMark.setMark("");
 		
-		examDate = new Date(2001,4,15);
+        examDate = DateFormatUtil.parse("yyyy/mm/dd","2001/04/15");
 		employeeSubmittingGrade = new Employee();
 		personResponsibleForGrade = new Person();
 		observation = "submission";
@@ -574,7 +576,7 @@ public class EnrolmentTest extends DomainTestBase {
 		
 	}
 
-	public void testSubmitEnrolmentEvaluation() {
+	public void testSubmitEnrolmentEvaluation() throws ParseException {
 		
 		setUpForSubmitEnrolmentEvaluationCase();
 		
