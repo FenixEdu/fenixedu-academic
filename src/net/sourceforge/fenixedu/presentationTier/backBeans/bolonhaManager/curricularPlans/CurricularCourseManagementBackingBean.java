@@ -242,6 +242,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public Integer getCurricularYearID() throws FenixFilterException, FenixServiceException {
         if (curricularYearID == null && getContext(getContextID()) != null) {            
             curricularYearID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.YEAR);
+        } else if (curricularYearID == null && getAndHoldIntegerParameter("curricularYearID") != null) {
+            curricularYearID = getAndHoldIntegerParameter("curricularYearID");
         }
         return curricularYearID;
     }
@@ -253,6 +255,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     public Integer getCurricularSemesterID() throws FenixFilterException, FenixServiceException {
         if (curricularSemesterID == null && getContext(getContextID()) != null) {
             curricularSemesterID = getContext(getContextID()).getCurricularPeriod().getOrderByType(CurricularPeriodType.SEMESTER);
+        } else if (curricularSemesterID == null && getAndHoldIntegerParameter("curricularSemesterID") != null) {
+            curricularSemesterID = getAndHoldIntegerParameter("curricularSemesterID");
         }
         return curricularSemesterID;
     }

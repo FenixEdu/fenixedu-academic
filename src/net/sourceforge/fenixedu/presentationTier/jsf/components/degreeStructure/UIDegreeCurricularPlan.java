@@ -166,19 +166,21 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.endElement("th");
 
         if (this.toEdit) {
-            encodeCourseGroupOptions();
+            encodeCourseGroupOptions(year, semester);
         }
 
         writer.endElement("tr");
     }
 
-    private void encodeCourseGroupOptions() throws IOException {
+    private void encodeCourseGroupOptions(int year, int semester) throws IOException {
         writer.startElement("th", this);
         writer.writeAttribute("class", "aleft", null);
         writer.writeAttribute("width", "73px", null);
-        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID="
-                + this.facesContext.getExternalContext().getRequestParameterMap().get(
-                        "degreeCurricularPlanID"), "create.curricular.course");
+        encodeLink(
+                "createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID")
+                + "&curricularYearID=" + year
+                + "&curricularSemesterID=" + semester,
+                "create.curricular.course");
         writer.endElement("th");
     }
 

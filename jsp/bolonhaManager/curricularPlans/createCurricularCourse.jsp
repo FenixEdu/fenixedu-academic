@@ -12,6 +12,8 @@
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}" />
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
+		<h:outputText escape="false" value="<input id='curricularYearID' name='curricularYearID' type='hidden' value='#{CurricularCourseManagement.curricularYearID}'"/>
+		<h:outputText escape="false" value="<input id='curricularSemesterID' name='curricularSemesterID' type='hidden' value='#{CurricularCourseManagement.curricularSemesterID}'"/>
 		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['competenceCourse']}: "/>
 		<h:panelGrid columnClasses="infocell" columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['department']}: " />
