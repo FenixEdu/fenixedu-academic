@@ -40,6 +40,10 @@ public class PropertiesManager {
     public static String getProperty(final String key) {
         return properties.getProperty(key);
     }
+    
+    public static boolean getBooleanProperty(final String key) {
+    	return Boolean.parseBoolean(properties.getProperty(key));
+    }
 
     public static void setProperty(final String key, final String value) {
         properties.setProperty(key, value);
