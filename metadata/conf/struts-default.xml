@@ -15,6 +15,15 @@
             <form-property name="username" type="java.lang.String" />
             <form-property name="password" type="java.lang.String" />
         </form-bean>
+      <form-bean name="authenticationExpiredForm" 
+                 type="org.apache.struts.validator.DynaValidatorForm"
+                 dynamic="true">
+        <form-property name="username" type="java.lang.String" />                 
+        <form-property name="password" type="java.lang.String" />
+        <form-property name="newPassword" type="java.lang.String" />
+        <form-property name="reTypeNewPassword" type="java.lang.String" />
+        <form-property name="page" type="java.lang.Integer" />        
+      </form-bean>        
         <form-bean name="errorMailForm"
 				type="org.apache.struts.validator.DynaValidatorForm" 
             	dynamic="true">
@@ -87,6 +96,9 @@
             <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException" 
                 key="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException" 
                 handler="net.sourceforge.fenixedu.presentationTier.config.LoginInvalidPasswordExceptionHandler" />
+			 <exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException" 
+                key="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException" 
+                path="/loginExpired.do?method=start" />                
             <forward name="sucess" path="/home.do"/>
             <forward name="changePass" path="/person/changePasswordForward.do"/>
         </action>
@@ -94,6 +106,15 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction">
             <forward name="show-redirect-page" path="/redirect.jsp"/>
         </action>
+       <action path="/loginExpired"
+				type="net.sourceforge.fenixedu.presentationTier.Action.AuthenticationExpiredAction" 
+            	name="authenticationExpiredForm"
+            	parameter="method"
+				input="/loginExpired.jsp"
+				scope="request" >
+            <forward name="sucess" path="/home.do"/>
+            <forward name="changePass" path="/loginExpired.jsp"/>            
+        </action>        
         <action path="/logoff"
 				type="net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction">
 			<forward name="Success" path="/loginPage.jsp"/>
@@ -133,7 +154,7 @@
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-default.xml"/>
+        <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-default.xml"/>
     </plug-in>
     <plug-in className="org.apache.struts.tiles.TilesPlugin" >
         <set-property property="definitions-config" value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml" />
