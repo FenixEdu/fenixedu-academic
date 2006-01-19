@@ -40,8 +40,4 @@ public class PersistenceSupportFactory {
         return defaultPersistenceSupport;
     }
 
-    public static IPersistentObject getPersistentObject() {
-        return persistentObject;
-    }
-
 }
