@@ -23,49 +23,6 @@ background: url(../pics/bullet07.gif) left no-repeat;
 
 
 /* ----------------------
- ---- Classes ----------
------------------------ */
-
-.aleft { text-align: left; }
-.aright { text-align: right; }
-.acenter { text-align: center; }
-.asterisk1 { color: #d42; }
-.hidden { display: none; }
-.bold { font-weight: bold; }
-.nobullet { list-style: none; }
-.noindent { margin-left: 0; padding-left: 0; }
-.attention { background-color: #ffa; }
-.attention2 { background-color: #ffa; color: #d60}
-
-.mtop0 { margin-top: 0;}
-.mtop05 { margin-top: 0.5em; }
-.mtop1 { margin-top: 1em; }
-.mtop2 { margin-top: 2em; }
-.mtop3 { margin-top: 3em; }
-.mbottom0 { margin-bottom: 0;}
-.mbottom1 { margin-bottom: 1em;}
-.mbottom2 { margin-bottom: 2em;}
-.mbottom3 { margin-bottom: 3em;}
-.mleft0 { margin-left: 0; }
-.mleft1 { margin-left: 1em; }
-.mvert0 { margin-top: 0; margin-bottom: 0; }
-.mvert1 { margin-top: 1em; margin-bottom: 1em; }
-.mvert2 { margin-top: 2em; margin-bottom: 2em;  }
-.mvert3 { margin-top: 3em; margin-bottom: 3em;  }
-.indent0 { margin-left: 0; }
-.indent1 { margin-left: 1em; }
-.indent2 { margin-left: 2em; }
-.indent3 { margin-left: 3em; }
-.indent4 { margin-left: 4em; }
-.indent5 { margin-left: 5em; }
-.indent6 { margin-left: 6em; }
-.valigntop { vertical-align: top; }
-
-ul.indent0 { margin-left: 0; padding-left: 0; }
-table.mtop05 { margin-top: 0.5em; }
-table.smallmargin td { padding: 0.25em; }
-
-/* ----------------------
  ---- Info Blocks ------
 ----------------------- */
 
@@ -308,11 +265,9 @@ margin-left: 10em;
 color: #d55;
 }
 
-.lfloat label {
-float: left;
-text-align: right;
-width: 10em;
-}
+.lfloat label { float: left; text-align: right; width: 10em; }
+.lfloat2 label { float: left; text-align: right; width: 12em; }
+
 
 .lempty {
 color: #fff;
@@ -321,3 +276,52 @@ color: #fff;
 .lfloat .indent105 {
 margin-left: 10.5em;
 }
+
+/* ----------------------
+ ---- Classes ----------
+----------------------- */
+
+.aleft { text-align: left; }
+.aright { text-align: right; }
+.acenter { text-align: center; }
+.asterisk1 { color: #d42; }
+.hidden { display: none; }
+.bold { font-weight: bold; }
+.nobullet { list-style: none; }
+.noindent { margin-left: 0; padding-left: 0; }
+.attention { background-color: #ffa; }
+.attention2 { background-color: #ffa; color: #d60}
+
+.mtop0 { margin-top: 0;}
+.mtop05 { margin-top: 0.5em; }
+.mtop1 { margin-top: 1em; }
+.mtop2 { margin-top: 2em; }
+.mtop3 { margin-top: 3em; }
+.mbottom0 { margin-bottom: 0;}
+.mbottom1 { margin-bottom: 1em;}
+.mbottom2 { margin-bottom: 2em;}
+.mbottom3 { margin-bottom: 3em;}
+.mleft0 { margin-left: 0; }
+.mleft1 { margin-left: 1em; }
+.mvert0 { margin-top: 0; margin-bottom: 0; }
+.mvert1 { margin-top: 1em; margin-bottom: 1em; }
+.mvert2 { margin-top: 2em; margin-bottom: 2em;  }
+.mvert3 { margin-top: 3em; margin-bottom: 3em;  }
+.indent0 { margin-left: 0; }
+.indent1 { margin-left: 1em; }
+.indent2 { margin-left: 2em; }
+.indent3 { margin-left: 3em; }
+.indent4 { margin-left: 4em; }
+.indent5 { margin-left: 5em; }
+.indent6 { margin-left: 6em; }
+.valigntop { vertical-align: top; }
+
+ul.indent0 { margin-left: 0; padding-left: 0; }
+table.mtop05 { margin-top: 0.5em; }
+table.smallmargin td { padding: 0.25em; }
+td.pleft1 { padding-left: 1em; }
+td.pleft2 { padding-left: 2em; }
+td.pleft3 { padding-left: 3em; }
+td.pleft4 { padding-left: 4em; }
+td.pleft5 { padding-left: 5em; }
+td.pleft6 { padding-left: 6em; }
