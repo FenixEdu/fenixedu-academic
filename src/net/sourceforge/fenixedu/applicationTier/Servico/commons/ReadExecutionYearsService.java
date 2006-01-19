@@ -43,5 +43,17 @@ public class ReadExecutionYearsService implements IService {
 				});
 
 	}
+	
+	public ExecutionYear run(Integer executionYearID) throws ExcepcaoPersistencia {
+		
+		final ISuportePersistente sp = PersistenceSupportFactory
+				.getDefaultPersistenceSupport();
+		final IPersistentExecutionYear executionYearDAO = sp
+				.getIPersistentExecutionYear();
+
+		ExecutionYear executionYear = (ExecutionYear)executionYearDAO.readByOID(ExecutionYear.class,executionYearID);
+		return executionYear;
+
+	}
 
 }

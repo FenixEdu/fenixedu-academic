@@ -21,8 +21,10 @@ public class UnitType2SqlUnitTypeConversion implements FieldConversion {
     }
 
     public Object sqlToJava(Object source) throws ConversionException {
-        
-        if (source instanceof String) {            
+    	  if(source == null || source.equals("")){
+              return null;
+          }            
+          else if (source instanceof String) {            
             String src = (String) source;            
             return UnitType.valueOf(src);
         }

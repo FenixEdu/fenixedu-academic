@@ -6,21 +6,28 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 public enum FunctionType {
     
-    PRESIDENT,
-    ASSISTANCE_PRESIDENT,
+	PRESIDENT,
     VICE_PRESIDENT,
-    SECRETARY,
-    CHIEF,       
+    ASSISTANCE_PRESIDENT,
     DIRECTOR,
+    ASSOCIATE_DIRECTOR,
     COORDINATOR,
+    VICE_COORDINATOR,
+    ASSOCIATE_COORDINATOR,
+    CHIEF,
+    RESPONSIBLE,
+    TEACHER,
     EMPLOYEE,    
     NON_TEACHING_EMPLOYEE,
     TEACHER_MEMBER,
-    STUDENT_MEMBER,
     EMPLOYEE_MEMBER,
-    REPRESENTATIVE,
+    STUDENT_MEMBER,
+    TEACER_VOWEL,
     VOWEL,
-    TEACER_VOWEL;
+    SECRETARY,
+    REPRESENTATIVE,
+    MEMBER;
+    
          
     public String getName() {
         return name();
