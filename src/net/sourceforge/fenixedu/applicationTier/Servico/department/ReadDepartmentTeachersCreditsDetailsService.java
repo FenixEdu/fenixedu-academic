@@ -1,7 +1,3 @@
-/*
- * Created on Dec 1, 2003 by jpvl
- *  
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.department;
 
 import java.util.ArrayList;
@@ -17,39 +13,31 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.Profiler;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
 
-/**
- * @author jpvl
- */
 public class ReadDepartmentTeachersCreditsDetailsService implements IService {
 
     public List run(HashMap searchParameters) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp;
-        List teachers;
-
         Profiler.getInstance();
         Profiler.resetInstance();
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        teachers = doSearch(searchParameters, sp);
+        final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
+                .getIPersistentExecutionPeriod();
+        final ExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters, executionPeriodDAO);
 
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-        final ExecutionPeriod executionPeriod = readExecutionPeriod(searchParameters,
-                executionPeriodDAO);
-
-        InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
+        final InfoExecutionPeriodWithInfoExecutionYear infoExecutionPeriod = (InfoExecutionPeriodWithInfoExecutionYear) InfoExecutionPeriodWithInfoExecutionYear
                 .newInfoFromDomain(executionPeriod);
 
-        List list = new ArrayList();
-        for (int i = 0; i < teachers.size(); i++) {
-            Teacher teacher = (Teacher) teachers.get(i);
+        List<Teacher> teachers = doSearch(searchParameters);
+        List<TeacherCreditsDetailsDTO> list = new ArrayList<TeacherCreditsDetailsDTO>(teachers.size());
+        for (Teacher teacher : teachers) {
             TeacherCreditsDetailsDTO details = new TeacherCreditsDetailsDTO();
             InfoCredits infoCredits = teacher.getExecutionPeriodCredits(executionPeriod);
             if (teacher.getCategory() != null) {
@@ -83,13 +71,17 @@ public class ReadDepartmentTeachersCreditsDetailsService implements IService {
         return executionPeriod;
     }
 
-    protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    protected List<Teacher> doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
         Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
-        IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
-        Department department = (Department) departmentDAO.readByOID(Department.class, departmentId);
-        
-        List teachers = department.getCurrentTeachers();
+
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
+
+        final Department department = (Department) persistentObject.readByOID(Department.class,
+                departmentId);
+
+        List<Teacher> teachers = department.getCurrentTeachers();
         return teachers;
     }
+
 }
