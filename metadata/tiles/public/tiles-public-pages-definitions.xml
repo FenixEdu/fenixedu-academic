@@ -146,5 +146,8 @@
 	<definition name="viewAllExamsByDegreeAndCurricularYear" extends="definition.public.mainPageIST">
 		<put name="main_navigation" value="/publico/degreeSite/degreeSiteMainNavigation.jsp" />	
 		<put name="body" value="/publico/viewAllExamsByDegreeAndCurricularYear_bd.jsp"/>
+		
 	</definition>	
+	
+	
 </tiles-definitions>
