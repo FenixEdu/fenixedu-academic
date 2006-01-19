@@ -17,9 +17,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-/**
- * @author jorge
- */
 public abstract class FenixAction extends Action {
 
     protected HttpSession getSession(HttpServletRequest request) throws ExcepcaoSessaoInexistente {
@@ -30,20 +27,14 @@ public abstract class FenixAction extends Action {
         return result;
     }
 
-    
-    protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException
-    {
-    	IUserView userView = SessionUtils.getUserView(request);
-		Person person  = (Person) ServiceManagerServiceFactory.executeService(userView,"ReadDomainPersonByUsername",new Object[] {userView.getUtilizador()});
-		return person;
+    protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException,
+            FenixServiceException {
+        IUserView userView = SessionUtils.getUserView(request);
+        Person person = (Person) ServiceManagerServiceFactory.executeService(userView,
+                "ReadDomainPersonByUsername", new Object[] { userView.getUtilizador() });
+        return person;
     }
-    /**
-     * 
-     * @see SessionUtils#validSessionVerification(HttpServletRequest,
-     *      ActionMapping)
-     * @see org.apache.struts.action.Action#execute(ActionMapping, ActionForm,
-     *      HttpServletRequest, HttpServletResponse)
-     */
+
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
 
