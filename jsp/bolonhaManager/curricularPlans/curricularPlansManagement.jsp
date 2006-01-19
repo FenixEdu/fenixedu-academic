@@ -17,28 +17,28 @@
 		<h:outputText value="<br/>" escape="false" />
 		<h:messages errorClass="error" infoClass="infoMsg"/>
 	
-		<h:outputText value="<table border='0' width='70%'>" escape="false"/>
+		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty ScientificCouncilDegreeManagement.bolonhaDegrees}">
+			<h:outputText value="<table width='80%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
+			<h:outputText value="<tr><th width='120px'>#{bolonhaBundle['degree']}:</th>" escape="false"/>
 	
-			<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty ScientificCouncilDegreeManagement.bolonhaDegrees}">
-			<h:outputText value="<tr><td colspan='2'><b>#{bolonhaBundle['degree']}:</b></td></tr>" escape="false"/>
-	
-			<h:outputText value="<tr><td colspan='2'>#{degree.nome} > " escape="false"/>
+			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
+			<h:outputText value="<td width='200px'>" escape="false"/>
 			<h:outputLink value="viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
 				<f:param name="degreeId" value="#{degree.idInternal}"/>
 			</h:outputLink>
 			<h:outputText value="</td></tr>" escape="false"/>
-			
-			<h:outputText value="<tr><td colspan='2'><b>#{bolonhaBundle['curricularPlan']}:</b></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>
-			<h:outputText value="<tr><td colspan='2' align='center'><i>#{bolonhaBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
+
+			<h:outputText value="<tr><th>#{bolonhaBundle['curricularPlans']}:</th><td colspan='2'></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>			
+			<h:outputText value="<tr><td colspan='3' align='center'><i>#{bolonhaBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
 	
 			<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}">
 				<h:outputText value="<tr>" escape="false"/>
 	
-				<h:outputText value="<td><i>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}:</i> " escape="false" />
+				<h:outputText value="<th></th><td><em class='attention2'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> " escape="false" />
 				<h:outputText value="#{degreeCurricularPlan.name}</td>" escape="false" />
 	
-				<h:outputText value="<td align='right'>" escape="false"/>
+				<h:outputText value="<td>" escape="false"/>
 				<h:outputLink value="viewCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['view']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
@@ -48,15 +48,12 @@
 					<h:outputText value="#{bolonhaBundle['buildCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 				</h:outputLink>
-				<h:outputText value="</td>" escape="false"/>
-				
-				<h:outputText value="</tr>" escape="false"/>
+				<h:outputText value="</td></tr>" escape="false"/>
 			</fc:dataRepeater>
 	
-			<h:outputText value="<tr><td colspan='2'>&nbsp;</td></tr>" escape="false"/>
-			
+			<h:outputText value="</table><br/>" escape="false"/>
 		</fc:dataRepeater>
-		<h:outputText value="</table>" escape="false"/>	
+
 	</h:panelGroup>
 
 </ft:tilesView>
