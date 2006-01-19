@@ -144,7 +144,7 @@ public class SummariesControlAction extends DispatchAction {
                         // GET LESSON HOURS
                         if (teacherService != null) {
                             degreeTeachingService = teacherService
-                                    .getDegreeTeachingServiceByShiftAndExecutionCourse(shift,
+                                    .getDegreeTeachingServiceByShiftAndProfessorship(shift,
                                             professorship);
                             if (degreeTeachingService != null) {
                                 percentage = degreeTeachingService.getPercentage();

@@ -149,7 +149,7 @@ public class TeacherService extends TeacherService_Base {
         }
     }
 
-    public DegreeTeachingService getDegreeTeachingServiceByShiftAndExecutionCourse(final Shift shift,
+    public DegreeTeachingService getDegreeTeachingServiceByShiftAndProfessorship(final Shift shift,
             final Professorship professorship) {
         return (DegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
                 new Predicate() {

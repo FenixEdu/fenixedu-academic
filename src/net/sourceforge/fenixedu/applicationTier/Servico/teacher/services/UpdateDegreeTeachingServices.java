@@ -42,7 +42,7 @@ public class UpdateDegreeTeachingServices implements IService {
             Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
                     shiftIDTeachingPercentage.getShiftID());
             DegreeTeachingService degreeTeachingService = teacherService
-                    .getDegreeTeachingServiceByShiftAndExecutionCourse(shift, professorship);
+                    .getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);
             if (degreeTeachingService != null) {
                 degreeTeachingService.updatePercentage(shiftIDTeachingPercentage.getPercentage());
             } else {
