@@ -1,43 +1,28 @@
-/*
- * Created on 14/Ago/2003
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
-
-/**
- * @author lmac1
- */
 
 public class ReadAllExecutionYears extends Service {
 
-	public List run() throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp;
-		List allExecutionYears = null;
+    public List<InfoExecutionYear> run() throws FenixServiceException, ExcepcaoPersistencia {
+        List<ExecutionYear> executionYears = (List<ExecutionYear>) persistentObject.readAll(ExecutionYear.class);
+        if (executionYears == null || executionYears.isEmpty()) {
+            return new ArrayList<InfoExecutionYear>();
+        }
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		allExecutionYears = (List) sp.getIPersistentExecutionYear().readAll(ExecutionYear.class);
+        List<InfoExecutionYear> result = new ArrayList<InfoExecutionYear>(executionYears.size());
+        for (ExecutionYear executionYear : executionYears) {
+            result.add(InfoExecutionYear.newInfoFromDomain(executionYear));
+        }
 
-		if (allExecutionYears == null || allExecutionYears.isEmpty())
-			return allExecutionYears;
+        return result;
+    }
 
-		// build the result of this service
-		Iterator iterator = allExecutionYears.iterator();
-		List result = new ArrayList(allExecutionYears.size());
-
-		while (iterator.hasNext())
-			result.add(InfoExecutionYear.newInfoFromDomain((ExecutionYear) iterator.next()));
-
-		return result;
-	}
 }
