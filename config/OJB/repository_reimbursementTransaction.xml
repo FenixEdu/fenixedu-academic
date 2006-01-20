@@ -14,6 +14,12 @@
         primarykey="true"
         autoincrement="true"
     />
+    
+    <field-descriptor
+		name="ojbConcreteClass"
+		column="CLASS_NAME"
+		jdbc-type="VARCHAR"
+	/>
 	
 	<field-descriptor
 	   	name="ackOptLock"

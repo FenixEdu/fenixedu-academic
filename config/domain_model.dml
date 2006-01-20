@@ -2477,10 +2477,10 @@ class net.sourceforge.fenixedu.domain.transactions.Transaction extends net.sourc
     PaymentType paymentType;
     TransactionType transactionType;
     Date transactionDate;
+    String ojbConcreteClass;
 }
 
-    class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {
-    	String ojbConcreteClass;
+    class net.sourceforge.fenixedu.domain.transactions.PaymentTransaction extends net.sourceforge.fenixedu.domain.transactions.Transaction {    	
     	Integer keyGuideEntry;
     }
 
