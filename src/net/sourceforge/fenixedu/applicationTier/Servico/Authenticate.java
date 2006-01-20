@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,7 +33,7 @@ import org.apache.log4j.Logger;
  * @author Luis Cruz
  * 
  */
-public class Authenticate extends Service {
+public class Authenticate extends Service implements Serializable {
 
     protected static final Logger logger = Logger.getLogger(Authenticate.class);
 
