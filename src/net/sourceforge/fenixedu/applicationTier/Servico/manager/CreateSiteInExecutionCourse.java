@@ -3,14 +3,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -18,13 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class CreateSiteInExecutionCourse extends Service {
 
     public void run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.non.existing.execution.course", null);

@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -21,8 +19,7 @@ public class DeleteDegrees extends Service {
 
     // delete a set of degrees
     public List run(List degreesInternalIds) throws FenixServiceException, ExcepcaoPersistencia {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            ICursoPersistente persistentDegree = sp.getICursoPersistente();
+            ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
 
             Iterator iter = degreesInternalIds.iterator();
 

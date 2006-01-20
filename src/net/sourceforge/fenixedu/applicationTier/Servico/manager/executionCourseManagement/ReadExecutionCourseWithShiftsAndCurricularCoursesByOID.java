@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
@@ -23,10 +24,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -36,10 +34,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Service {
 
     public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentObject persistentObject = sp.getIPersistentObject();
-        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
         InfoExecutionCourse infoExecutionCourse = null;
 

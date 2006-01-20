@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.FileNotCreatedServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.InsufficientSibsPaymentPhaseCodesServiceException;
@@ -33,8 +34,6 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 
@@ -42,7 +41,6 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -235,17 +233,15 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 	 * @throws ExcepcaoPersistencia 
 	 */
 	public void run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear().readByOID(
 				ExecutionYear.class, executionYearID);
 
-		IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
+		IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
 
-		IPersistentInsuranceTransaction insuranceTransactionDAO = sp
+		IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
 				.getIPersistentInsuranceTransaction();
 
-		InsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
+		InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue().readByExecutionYear(
 				executionYear.getIdInternal());
 
 		if (insuranceValue == null) {
@@ -255,7 +251,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 		String shortYear = executionYear.getYear().split("/")[0].trim().substring(2);
 
 		// read master degree and specialization execution degrees
-		List executionDegreeList = sp.getIPersistentExecutionDegree().readByExecutionYearAndDegreeType(
+		List executionDegreeList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYearAndDegreeType(
 				executionYear.getYear(), DegreeType.MASTER_DEGREE);
 
 		List gratuityLetterFileEntries = new ArrayList();

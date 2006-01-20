@@ -4,14 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.precedences;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -22,8 +20,7 @@ public class InsertSimplePrecedence extends Service {
     public void run(String className, Integer curricularCourseToAddPrecedenceID,
             Integer precedentCurricularCourseID, Integer number) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
                 .getIPersistentCurricularCourse();
 
         CurricularCourse curricularCourseToAddPrecedence = (CurricularCourse) persistentCurricularCourse

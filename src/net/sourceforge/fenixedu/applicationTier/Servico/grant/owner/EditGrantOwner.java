@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
 import net.sourceforge.fenixedu.domain.Country;
@@ -12,10 +13,7 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditGrantOwner extends Service {
 
@@ -58,25 +56,23 @@ public class EditGrantOwner extends Service {
 	}
 
 	public Integer run(InfoGrantOwner infoGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = null;
 		IPersistentGrantOwner pGrantOwner = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		pGrantOwner = sp.getIPersistentGrantOwner();
+		pGrantOwner = persistentSupport.getIPersistentGrantOwner();
 
 		Person person = null;
 		GrantOwner grantOwner = null;
 		Country country = null;
 
 		if (infoGrantOwner.getPersonInfo().getInfoPais() != null) {
-			country = (Country) sp.getIPersistentCountry().readByOID(Country.class,
+			country = (Country) persistentSupport.getIPersistentCountry().readByOID(Country.class,
 					infoGrantOwner.getPersonInfo().getInfoPais().getIdInternal());
 		} else {
 			// If the person country is undefined it is set to default
 			// "PORTUGUESA NATURAL DO CONTINENTE"
 			// In a not distance future this will not be needed since the coutry
 			// can never be null
-			country = (Country) sp.getIPersistentCountry().readCountryByNationality(
+			country = (Country) persistentSupport.getIPersistentCountry().readCountryByNationality(
 					"PORTUGUESA NATURAL DO CONTINENTE");
 		}
 
@@ -84,7 +80,7 @@ public class EditGrantOwner extends Service {
 		if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
 			person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);
 		} else {
-			person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
+			person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
 					infoGrantOwner.getPersonInfo().getIdInternal());
 			person.edit(infoGrantOwner.getPersonInfo(), country);
 		}
@@ -98,7 +94,7 @@ public class EditGrantOwner extends Service {
 
 			grantOwner = DomainFactory.makeGrantOwner();
 
-			IPersistentRole persistentRole = sp.getIPersistentRole();
+			IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
 			if (!person.hasRole(RoleType.PERSON)) {
 				person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.PERSON));
 			}
@@ -109,7 +105,7 @@ public class EditGrantOwner extends Service {
 		// Generate the GrantOwner's Person Username
 		if (person.getUsername() == null || person.getUsername().length() == 0)
 			person.changeUsername(generateGrantOwnerPersonUsername(grantOwner.getNumber()),
-					(List<Person>) sp.getIPessoaPersistente().readAll(Person.class));
+					(List<Person>) persistentSupport.getIPessoaPersistente().readAll(Person.class));
 		return grantOwner.getIdInternal();
 	}
 }

@@ -3,15 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -19,8 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteCurricularCourseScope extends Service {
 
 	public void run(Integer scopeId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+		IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
 				.getIPersistentCurricularCourseScope();
 
 		CurricularCourseScope scope = (CurricularCourseScope) persistentCurricularCourseScope

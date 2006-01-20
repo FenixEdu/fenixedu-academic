@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -24,8 +22,7 @@ public class ReadCostCenterByNumber extends Service {
 		// chosen for orientator really exists
 		InfoGrantCostCenter infoGrantCostCenter = new InfoGrantCostCenter();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrantCostCenter pCostContract = sp.getIPersistentGrantCostCenter();
+		IPersistentGrantCostCenter pCostContract = persistentSupport.getIPersistentGrantCostCenter();
 		GrantCostCenter costCenter = pCostContract.readGrantCostCenterByNumber(costContractNumber);
 		if (costCenter == null)
 			throw new GrantOrientationTeacherNotFoundException();

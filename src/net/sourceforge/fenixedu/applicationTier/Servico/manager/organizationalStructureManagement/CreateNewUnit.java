@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateNewUnit extends Service {
 
@@ -25,20 +23,17 @@ public class CreateNewUnit extends Service {
             Date beginDate, Date endDate, UnitType type, Integer departmentID, Integer degreeID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
         Unit unit = null;
         if (unitID == null) {
             unit = DomainFactory.makeUnit();
         } else {
-            unit = (Unit) suportePersistente.getIPersistentObject().readByOID(Unit.class, unitID);
+            unit = (Unit) persistentObject.readByOID(Unit.class, unitID);
             if (unit == null) {
                 throw new FenixServiceException("error.noUnit");
             }
         }
 
-        Unit parentUnit = setParentUnits(parentUnitID, suportePersistente, unit);
+        Unit parentUnit = setParentUnits(parentUnitID, unit);
         Integer costCenterCode = null;
         if (unitCostCenter != null && !unitCostCenter.equals("")) {
             costCenterCode = (Integer.valueOf(unitCostCenter));
@@ -46,12 +41,12 @@ public class CreateNewUnit extends Service {
         
         unit.edit(unitName, costCenterCode, beginDate, endDate, type, parentUnit);
 
-        setDepartment(departmentID, suportePersistente, unit);
+        setDepartment(departmentID, unit);
 
-        setDegree(degreeID, suportePersistente, unit);
+        setDegree(degreeID, unit);
     }
 
-    private void setDegree(Integer degreeID, ISuportePersistente suportePersistente, Unit unit)
+    private void setDegree(Integer degreeID, Unit unit)
             throws ExcepcaoPersistencia {
 
         Degree degree = null;
@@ -60,7 +55,7 @@ public class CreateNewUnit extends Service {
                 && (unit.getType().equals(UnitType.DEGREE) || unit.getType().equals(
                         UnitType.MASTER_DEGREE))) {
 
-            degree = (Degree) suportePersistente.getIPersistentObject().readByOID(Degree.class,
+            degree = (Degree) persistentObject.readByOID(Degree.class,
                     degreeID);
 
             if ((degree.getTipoCurso().equals(DegreeType.DEGREE) && unit.getType().equals(
@@ -79,12 +74,12 @@ public class CreateNewUnit extends Service {
         }
     }
 
-    private void setDepartment(Integer departmentID, ISuportePersistente suportePersistente, Unit unit)
+    private void setDepartment(Integer departmentID, Unit unit)
             throws ExcepcaoPersistencia {
 
         Department department = null;
         if (departmentID != null && unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)) {
-            department = (Department) suportePersistente.getIPersistentObject().readByOID(
+            department = (Department) persistentObject.readByOID(
                     Department.class, departmentID);
             unit.setDepartment(department);
 
@@ -93,11 +88,11 @@ public class CreateNewUnit extends Service {
         }
     }
 
-    private Unit setParentUnits(Integer parentUnitID, ISuportePersistente suportePersistente, Unit unit)
+    private Unit setParentUnits(Integer parentUnitID, Unit unit)
             throws ExcepcaoPersistencia {
         Unit parentUnit = null;
         if (parentUnitID != null) {
-            parentUnit = (Unit) suportePersistente.getIPersistentObject().readByOID(Unit.class,
+            parentUnit = (Unit) persistentObject.readByOID(Unit.class,
                     parentUnitID);
             if (unit.getParentUnits().contains(parentUnit)) {
                 unit.removeParentUnits(parentUnit);

@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegreeCurricularPlan;
@@ -23,9 +24,6 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -35,13 +33,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCourseHistoric extends Service {
 
 	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
 				ExecutionCourse.class, executionCourseId);
 		Integer semester = executionCourse.getExecutionPeriod().getSemester();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-		return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester, sp);
+		return getInfoSiteCoursesHistoric(executionCourse, curricularCourses, semester);
 	}
 
 	/**
@@ -49,14 +46,14 @@ public class ReadCourseHistoric extends Service {
 	 * @param sp
 	 * @return
 	 */
-	private List getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List curricularCourses,
-			Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
+	private List getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List curricularCourses, Integer semester)
+            throws ExcepcaoPersistencia {
 		List infoSiteCoursesHistoric = new ArrayList();
 		Iterator iter = curricularCourses.iterator();
 		while (iter.hasNext()) {
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 			infoSiteCoursesHistoric.add(getInfoSiteCourseHistoric(executionCourse.getExecutionPeriod()
-					.getExecutionYear(), curricularCourse, semester, sp));
+					.getExecutionYear(), curricularCourse, semester));
 		}
 		return infoSiteCoursesHistoric;
 	}
@@ -67,7 +64,7 @@ public class ReadCourseHistoric extends Service {
 	 * @return
 	 */
 	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear,
-			CurricularCourse curricularCourse, Integer semester, ISuportePersistente sp)
+			CurricularCourse curricularCourse, Integer semester)
 			throws ExcepcaoPersistencia {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 
@@ -80,7 +77,7 @@ public class ReadCourseHistoric extends Service {
 		// the historic must only show info regarding the years previous to the
 		// year chosen by the user
 		List<InfoCourseHistoric> infoCourseHistorics = new ArrayList<InfoCourseHistoric>();
-		final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+		final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 		for (CourseHistoric courseHistoric : courseHistorics) {
 			ExecutionYear courseHistoricExecutionYear = persistentExecutionYear
 					.readExecutionYearByName(courseHistoric.getCurricularYear());

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.gratuity.masterDegree.DuplicateSibsPaymentFileProcessingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -29,12 +30,9 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsPaymentFileUtils;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ProcessSibsPaymentFile extends Service {
 
@@ -55,8 +53,7 @@ public class ProcessSibsPaymentFile extends Service {
 
         }
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final SibsPaymentFile storedPaymentFile = sp.getIPersistentSibsPaymentFile().readByFilename(
+        final SibsPaymentFile storedPaymentFile = persistentSupport.getIPersistentSibsPaymentFile().readByFilename(
                 filename);
         if (storedPaymentFile != null) {
             throw new DuplicateSibsPaymentFileProcessingServiceException(
@@ -65,23 +62,23 @@ public class ProcessSibsPaymentFile extends Service {
 
         SibsPaymentFile sibsPaymentFile = SibsPaymentFileUtils.buildPaymentFile(filename, fileEntries);
 
-        buildTransactionsAndStoreFile(sp, sibsPaymentFile, userView);
+        buildTransactionsAndStoreFile(sibsPaymentFile, userView);
     }
 
-    private void buildTransactionsAndStoreFile(ISuportePersistente sp, SibsPaymentFile sibsPaymentFile,
+    private void buildTransactionsAndStoreFile(SibsPaymentFile sibsPaymentFile,
             IUserView userView) throws ExcepcaoPersistencia {
 
         List<SibsPaymentFileEntry> sibsPaymentFileEntries = sibsPaymentFile.getSibsPaymentFileEntries();
 
         int totalPaymentEntries = sibsPaymentFileEntries.size();
 
-        findDuplicatesAndMarkThem(sp, sibsPaymentFileEntries, totalPaymentEntries);
+        findDuplicatesAndMarkThem(sibsPaymentFileEntries, totalPaymentEntries);
 
         // lets build transactions for the entries in file
-        final IPersistentInsuranceTransaction insuranceTransactionDAO = sp
+        final IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
                 .getIPersistentInsuranceTransaction();
-        final IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
-        final IPersistentInsuranceValue insuranceValueDAO = sp.getIPersistentInsuranceValue();
+        final IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
+        final IPersistentInsuranceValue insuranceValueDAO = persistentSupport.getIPersistentInsuranceValue();
         for (int i = 0; i < totalPaymentEntries; i++) {
 
             SibsPaymentFileEntry sibsPaymentFileEntry = sibsPaymentFileEntries.get(i);
@@ -101,12 +98,12 @@ public class ProcessSibsPaymentFile extends Service {
 
             // DegreeType should be changed in future to support Degree Student
             // gratuity
-            Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(
+            Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(
                     sibsPaymentFileEntry.getStudentNumber(), DegreeType.MASTER_DEGREE);
 
             int year = sibsPaymentFileEntry.getYear().intValue();
             String executionYearName = year + "/" + (year + 1);
-            ExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+            ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
                     executionYearName);
 
             if (executionYear == null) {
@@ -117,10 +114,10 @@ public class ProcessSibsPaymentFile extends Service {
                 continue;
             }
 
-            Person responsiblePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
+            Person responsiblePerson = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
                     userView.getUtilizador());
 
-            PersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
+            PersonAccount personAccount = persistentSupport.getIPersistentPersonAccount().readByPerson(
                     student.getPerson().getIdInternal());
             if (personAccount == null) {
                 personAccount = DomainFactory.makePersonAccount(student.getPerson());
@@ -170,7 +167,7 @@ public class ProcessSibsPaymentFile extends Service {
                     continue;
                 }
 
-                ExecutionDegree candidateExecutionDegree = sp.getIPersistentExecutionDegree()
+                ExecutionDegree candidateExecutionDegree = persistentSupport.getIPersistentExecutionDegree()
                         .readByDegreeCurricularPlanAndExecutionYear(
                                 studentCurricularPlan.getDegreeCurricularPlan().getName(),
                                 studentCurricularPlan.getDegreeCurricularPlan().getDegree().getSigla(),
@@ -233,8 +230,7 @@ public class ProcessSibsPaymentFile extends Service {
 
     }
 
-    private void findDuplicatesAndMarkThem(ISuportePersistente sp,
-            List<SibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries)
+    private void findDuplicatesAndMarkThem(List<SibsPaymentFileEntry> sibsPaymentFileEntries, int totalPaymentEntries)
             throws ExcepcaoPersistencia {
         for (int i = 0; i < totalPaymentEntries; i++) {
 
@@ -253,7 +249,7 @@ public class ProcessSibsPaymentFile extends Service {
                 // }
                 // else { do specific code to insurance and gratuities }
 
-                markDuplicateGratuityAndInsurancePayments(sp, sibsPaymentFileEntry,
+                markDuplicateGratuityAndInsurancePayments(sibsPaymentFileEntry,
                         sibsPaymentFileEntries, totalPaymentEntries, i);
             }
         }
@@ -287,7 +283,7 @@ public class ProcessSibsPaymentFile extends Service {
         return transactionType;
     }
 
-    private void markDuplicateGratuityAndInsurancePayments(ISuportePersistente sp,
+    private void markDuplicateGratuityAndInsurancePayments(
             SibsPaymentFileEntry sibsPaymentFileEntry, List sibsPaymentFileEntries,
             int totalPaymentEntries, int currentIndex) throws ExcepcaoPersistencia {
 
@@ -323,7 +319,7 @@ public class ProcessSibsPaymentFile extends Service {
 
         // next check if the gratuity or insurance payment is repeated in
         // database
-        final IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = sp
+        final IPersistentSibsPaymentFileEntry sibsPaymentFileEntryDAO = persistentSupport
                 .getIPersistentSibsPaymentFileEntry();
         List sibsPaymentFileEntryList = sibsPaymentFileEntryDAO
                 .readByYearAndStudentNumberAndPaymentType(sibsPaymentFileEntry.getYear(),

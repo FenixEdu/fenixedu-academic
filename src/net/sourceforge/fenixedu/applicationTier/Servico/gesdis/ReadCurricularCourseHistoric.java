@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.gesdis.InfoCourseHistoric;
@@ -20,9 +21,6 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -39,9 +37,8 @@ public class ReadCurricularCourseHistoric extends Service {
 
 	public InfoSiteCourseHistoric run(Integer curricularCourseId) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, curricularCourseId);
@@ -50,7 +47,7 @@ public class ReadCurricularCourseHistoric extends Service {
 		Integer semester = executionPeriod.getSemester();
 		// TODO: corrigir o calculo do semestre
 		semester = new Integer(semester.intValue() == 2 ? 1 : 2);
-		return getInfoSiteCourseHistoric(curricularCourse, semester, sp);
+		return getInfoSiteCourseHistoric(curricularCourse, semester);
 	}
 
 	/**
@@ -58,8 +55,8 @@ public class ReadCurricularCourseHistoric extends Service {
 	 * @param sp
 	 * @return
 	 */
-	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(CurricularCourse curricularCourse,
-			Integer semester, ISuportePersistente sp) throws ExcepcaoPersistencia {
+	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(CurricularCourse curricularCourse, Integer semester)
+            throws ExcepcaoPersistencia {
 		InfoSiteCourseHistoric infoSiteCourseHistoric = new InfoSiteCourseHistoric();
 		InfoCurricularCourse infoCurricularCourse = InfoCurricularCourse
 				.newInfoFromDomain(curricularCourse);

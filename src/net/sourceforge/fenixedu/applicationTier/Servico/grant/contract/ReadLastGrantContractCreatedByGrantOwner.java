@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
@@ -11,11 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantOrien
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
@@ -32,9 +30,8 @@ public class ReadLastGrantContractCreatedByGrantOwner extends Service {
 		IPersistentGrantContract persistentGrantContract = null;
 		IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		persistentGrantContract = sp.getIPersistentGrantContract();
-		persistentGrantOrientationTeacher = sp.getIPersistentGrantOrientationTeacher();
+		persistentGrantContract = persistentSupport.getIPersistentGrantContract();
+		persistentGrantOrientationTeacher = persistentSupport.getIPersistentGrantOrientationTeacher();
 
 		// set the contract number!
 		grantContractNumber = persistentGrantContract

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -9,26 +10,18 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class AssociateExecutionCourseToCurricularCourse extends Service {
 
     public void run(Integer executionCourseId, Integer curricularCourseId, Integer executionPeriodId)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
-        final CurricularCourse curricularCourse = (CurricularCourse) persistentSuport
-                .getIPersistentObject().readByOID(CurricularCourse.class, curricularCourseId);
+        final CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSuport
-                .getIPersistentObject().readByOID(ExecutionPeriod.class, executionPeriodId);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
         if (executionPeriod == null) {
             throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
         }
@@ -40,8 +33,7 @@ public class AssociateExecutionCourseToCurricularCourse extends Service {
             }
         }
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport
-                .getIPersistentObject().readByOID(ExecutionCourse.class, executionCourseId);
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }

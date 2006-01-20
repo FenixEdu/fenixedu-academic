@@ -3,20 +3,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.competenceCours
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadAllCurricularCoursesByCompetenceCourse extends Service {
 
 	public List<CurricularCourse> run(Integer competenceID) throws Exception {
-		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCompetenceCourse persistentCompetenceCourse = suportePersistente.getIPersistentCompetenceCourse();
+		IPersistentCompetenceCourse persistentCompetenceCourse = persistentSupport.getIPersistentCompetenceCourse();
 		CompetenceCourse competenceCourse = (CompetenceCourse) persistentCompetenceCourse.readByOID(CompetenceCourse.class, competenceID);
 		if(competenceCourse == null) {
 			throw new NonExistingServiceException("error.manager.noCompetenceCourse");

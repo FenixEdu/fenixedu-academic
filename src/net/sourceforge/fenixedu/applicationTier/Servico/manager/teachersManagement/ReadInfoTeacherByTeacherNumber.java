@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.teachersManagem
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -14,13 +15,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 5/Dez/2003
@@ -31,9 +28,8 @@ public class ReadInfoTeacherByTeacherNumber extends Service {
     public InfoTeacher run(Integer teacherNumber) throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoTeacher infoTeacher = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
        
         if (teacherNumber == null) {
             throw new FenixServiceException("nullTeacherNumber");

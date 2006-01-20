@@ -81,8 +81,7 @@ public class ReadCourseInformation extends Service {
             ExcepcaoPersistencia {
         TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView();
 
-        ISuportePersistente sp = persistentSupport;
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
@@ -95,7 +94,7 @@ public class ReadCourseInformation extends Service {
 
         infoSiteCourseInformation.setInfoExecutionCourse(infoExecutionCourse);
 
-        IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
+        IPersistentEvaluationMethod persistentEvaluationMethod = persistentSupport.getIPersistentEvaluationMethod();
         EvaluationMethod evaluationMethod = persistentEvaluationMethod
                 .readByIdExecutionCourse(executionCourse.getIdInternal());
         if (evaluationMethod == null) {
@@ -109,38 +108,38 @@ public class ReadCourseInformation extends Service {
                     .newInfoFromDomain(evaluationMethod));
         }
 
-        List responsiblesFor = executionCourse.responsibleFors();
+        List repersistentSupportonsiblesFor = executionCourse.responsibleFors();
 
-        List infoResponsibleTeachers = getInfoResponsibleTeachers(responsiblesFor, sp);
-        infoSiteCourseInformation.setInfoResponsibleTeachers(infoResponsibleTeachers);
+        List infoRepersistentSupportonsibleTeachers = getInfoRepersistentSupportonsibleTeachers(repersistentSupportonsiblesFor);
+        infoSiteCourseInformation.setInfoResponsibleTeachers(infoRepersistentSupportonsibleTeachers);
 
         List curricularCourses = executionCourse.getAssociatedCurricularCourses();
-        List infoCurricularCourses = getInfoCurricularCourses(curricularCourses, sp);
+        List infoCurricularCourses = getInfoCurricularCourses(curricularCourses);
         infoSiteCourseInformation.setInfoCurricularCourses(infoCurricularCourses);
 
-        List infoCurriculums = getInfoCurriculums(curricularCourses, sp);
+        List infoCurriculums = getInfoCurriculums(curricularCourses);
         infoSiteCourseInformation.setInfoCurriculums(infoCurriculums);
 
-        List infoLecturingTeachers = getInfoLecturingTeachers(executionCourse, sp);
+        List infoLecturingTeachers = getInfoLecturingTeachers(executionCourse);
         infoSiteCourseInformation.setInfoLecturingTeachers(infoLecturingTeachers);
 
-        List infoBibliographicReferences = getInfoBibliographicReferences(executionCourse, sp);
+        List infoBibliographicReferences = getInfoBibliographicReferences(executionCourse);
         infoSiteCourseInformation.setInfoBibliographicReferences(infoBibliographicReferences);
 
-        List infoDepartments = getInfoDepartments(responsiblesFor, sp);
+        List infoDepartments = getInfoDepartments(repersistentSupportonsiblesFor);
         infoSiteCourseInformation.setInfoDepartments(infoDepartments);
 
-        List infoLessons = getInfoLessons(executionCourse, sp);
+        List infoLessons = getInfoLessons(executionCourse);
         infoSiteCourseInformation.setInfoLessons(getFilteredInfoLessons(infoLessons));
         infoSiteCourseInformation.setNumberOfTheoLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.TEORICA.name(), sp));
+                ShiftType.TEORICA.name(), persistentSupport));
         infoSiteCourseInformation.setNumberOfPratLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.PRATICA.name(), sp));
+                ShiftType.PRATICA.name(), persistentSupport));
         infoSiteCourseInformation.setNumberOfTheoPratLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.TEORICO_PRATICA.name(), sp));
+                ShiftType.TEORICO_PRATICA.name(), persistentSupport));
         infoSiteCourseInformation.setNumberOfLabLessons(ReadCoursesInformation.getNumberOfLessons(infoLessons,
-                ShiftType.LABORATORIAL.name(), sp));
-        IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
+                ShiftType.LABORATORIAL.name(), persistentSupport));
+        IPersistentCourseReport persistentCourseReport = persistentSupport.getIPersistentCourseReport();
         CourseReport courseReport = persistentCourseReport
                 .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
 
@@ -154,10 +153,10 @@ public class ReadCourseInformation extends Service {
         }
 
         List infoSiteEvaluationInformations = getInfoSiteEvaluationInformation(executionCourse
-                .getExecutionPeriod(), curricularCourses, sp);
+                .getExecutionPeriod(), curricularCourses);
         infoSiteCourseInformation.setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
 
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
 
         siteView.setComponent(infoSiteCourseInformation);
@@ -170,13 +169,13 @@ public class ReadCourseInformation extends Service {
         return siteView;
     }
 
-    private List removeDuplicates(List responsiblesFor) {
+    private List removeDuplicates(List repersistentSupportonsiblesFor) {
         List<Professorship> result = new ArrayList<Professorship>();
-        Iterator iter = responsiblesFor.iterator();
+        Iterator iter = repersistentSupportonsiblesFor.iterator();
         while (iter.hasNext()) {
-            Professorship responsibleFor = (Professorship) iter.next();
-            if (!result.contains(responsibleFor))
-                result.add(responsibleFor);
+            Professorship repersistentSupportonsibleFor = (Professorship) iter.next();
+            if (!result.contains(repersistentSupportonsibleFor))
+                result.add(repersistentSupportonsibleFor);
         }
         return result;
     }
@@ -184,18 +183,18 @@ public class ReadCourseInformation extends Service {
     /**
      * @param period
      * @param curricularCourses
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private List getInfoSiteEvaluationInformation(ExecutionPeriod executionPeriod,
-            List curricularCourses, ISuportePersistente sp) throws ExcepcaoPersistencia {
+            List curricularCourses) throws ExcepcaoPersistencia {
         List infoSiteEvalutationInformations = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
             CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
             InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+            List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
             infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -211,7 +210,7 @@ public class ReadCourseInformation extends Service {
                     .newInfoFromDomain(curricularCourse);
             infoSiteEvaluationInformation.setInfoCurricularCourse(infoCurricularCourse);
             infoSiteEvaluationInformation.setInfoSiteEvaluationHistory(getInfoSiteEvaluationsHistory(
-                    executionPeriod, curricularCourse, sp));
+                    executionPeriod, curricularCourse));
             infoSiteEvalutationInformations.add(infoSiteEvaluationInformation);
         }
         return infoSiteEvalutationInformations;
@@ -220,11 +219,11 @@ public class ReadCourseInformation extends Service {
     /**
      * @param executionPeriod
      * @param curricularCourse
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private List getInfoSiteEvaluationsHistory(final ExecutionPeriod executionPeriodToTest,
-            CurricularCourse curricularCourse, ISuportePersistente sp) throws ExcepcaoPersistencia {
+            CurricularCourse curricularCourse) throws ExcepcaoPersistencia {
 
         List infoSiteEvaluationsHistory = new ArrayList();
 
@@ -252,7 +251,7 @@ public class ReadCourseInformation extends Service {
 
             infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriodWithInfoExecutionYear
                     .newInfoFromDomain(executionPeriod));
-            List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+            List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
             infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
             infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
             infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -266,7 +265,7 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param curricularCourses
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private Integer getApproved(List enrolments) {
@@ -284,7 +283,7 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param curricularCourses
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private Integer getEvaluated(List enrolments) {
@@ -303,12 +302,12 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param curricularCourses
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private List getEnrolled(ExecutionPeriod executionPeriod, CurricularCourse curricularCourse,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
         List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse
                 .getIdInternal(), executionPeriod.getIdInternal());
         return enrolments;
@@ -316,18 +315,18 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param executionCourse
-     * @param sp
+     * @param persistentSupport
      * @return
      */
-    private List getInfoDepartments(List responsiblesFor, ISuportePersistente sp)
+    private List getInfoDepartments(List repersistentSupportonsiblesFor)
             throws ExcepcaoPersistencia {
         
         List infoDepartments = new ArrayList();
-        responsiblesFor = removeDuplicates(responsiblesFor);
-        Iterator iter = responsiblesFor.iterator();
+        repersistentSupportonsiblesFor = removeDuplicates(repersistentSupportonsiblesFor);
+        Iterator iter = repersistentSupportonsiblesFor.iterator();
         while (iter.hasNext()) {
-            Professorship responsibleFor = (Professorship) iter.next();
-            Teacher teacher = responsibleFor.getTeacher();
+            Professorship repersistentSupportonsibleFor = (Professorship) iter.next();
+            Teacher teacher = repersistentSupportonsibleFor.getTeacher();
             Department department = teacher.getCurrentWorkingDepartment();
 
             infoDepartments.add(InfoDepartment.newInfoFromDomain(department));
@@ -381,12 +380,12 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param executionCourse
-     * @param sp
+     * @param persistentSupport
      * @return
      */
-    private List getInfoBibliographicReferences(ExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoBibliographicReferences(ExecutionCourse executionCourse)
             throws ExcepcaoPersistencia {
-        IPersistentBibliographicReference persistentBibliographicReference = sp
+        IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
                 .getIPersistentBibliographicReference();
         List bibliographicReferences = persistentBibliographicReference
                 .readBibliographicReference(executionCourse.getIdInternal());
@@ -402,9 +401,9 @@ public class ReadCourseInformation extends Service {
         return infoBibliographicReferences;
     }
 
-    private List getInfoLecturingTeachers(ExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoLecturingTeachers(ExecutionCourse executionCourse)
             throws ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse
                 .getIdInternal());
 
@@ -419,9 +418,9 @@ public class ReadCourseInformation extends Service {
         return infoLecturingTeachers;
     }
 
-    private List getInfoCurriculums(List curricularCourses, ISuportePersistente sp)
+    private List getInfoCurriculums(List curricularCourses)
             throws ExcepcaoPersistencia {
-        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
         List infoCurriculums = new ArrayList();
         Iterator iter = curricularCourses.iterator();
@@ -430,7 +429,7 @@ public class ReadCourseInformation extends Service {
 
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
-            List infoScopes = getInfoScopes(curricularCourse.getScopes(), sp);
+            List infoScopes = getInfoScopes(curricularCourse.getScopes());
             infoCurricularCourse.setInfoScopes(infoScopes);
             Curriculum curriculum = persistentCurriculum
                     .readCurriculumByCurricularCourse(curricularCourse.getIdInternal());
@@ -449,35 +448,35 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param executionCourse
-     * @param sp
+     * @param persistentSupport
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private List getInfoResponsibleTeachers(List responsiblesFor, ISuportePersistente sp) {
-        List infoResponsibleTeachers = new ArrayList();
-        Iterator iter = responsiblesFor.iterator();
+    private List getInfoRepersistentSupportonsibleTeachers(List repersistentSupportonsiblesFor) {
+        List infoRepersistentSupportonsibleTeachers = new ArrayList();
+        Iterator iter = repersistentSupportonsiblesFor.iterator();
         while (iter.hasNext()) {
-            Professorship responsibleFor = (Professorship) iter.next();
-            Teacher teacher = responsibleFor.getTeacher();
+            Professorship repersistentSupportonsibleFor = (Professorship) iter.next();
+            Teacher teacher = repersistentSupportonsibleFor.getTeacher();
 
-            infoResponsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
+            infoRepersistentSupportonsibleTeachers.add(InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher));
         }
-        return infoResponsibleTeachers;
+        return infoRepersistentSupportonsibleTeachers;
     }
 
     /**
      * @param curricularCourses
-     * @param sp
+     * @param persistentSupport
      * @return
      */
-    private List getInfoCurricularCourses(List curricularCourses, ISuportePersistente sp) {
+    private List getInfoCurricularCourses(List curricularCourses) {
         List infoCurricularCourses = new ArrayList();
         Iterator iter = curricularCourses.iterator();
         while (iter.hasNext()) {
             CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
             List curricularCourseScopes = curricularCourse.getScopes();
-            List infoScopes = getInfoScopes(curricularCourseScopes, sp);
+            List infoScopes = getInfoScopes(curricularCourseScopes);
             InfoCurricularCourse infoCurricularCourse = InfoCurricularCourseWithInfoDegree
                     .newInfoFromDomain(curricularCourse);
             infoCurricularCourse.setInfoScopes(infoScopes);
@@ -488,10 +487,10 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param scopes
-     * @param sp
+     * @param persistentSupport
      * @return
      */
-    private List getInfoScopes(List scopes, ISuportePersistente sp) {
+    private List getInfoScopes(List scopes) {
         List infoScopes = new ArrayList();
         Iterator iter = scopes.iterator();
         while (iter.hasNext()) {
@@ -506,15 +505,15 @@ public class ReadCourseInformation extends Service {
 
     /**
      * @param executionCourse
-     * @param sp
+     * @param persistentSupport
      * @return
      * @throws ExcepcaoPersistencia
      */
-    private List getInfoLessons(ExecutionCourse executionCourse, ISuportePersistente sp)
+    private List getInfoLessons(ExecutionCourse executionCourse)
             throws ExcepcaoPersistencia {
         List lessons = new ArrayList();
 
-        List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
         for (int i = 0; i < shifts.size(); i++) {
             Shift shift = (Shift) shifts.get(i);
             List aulasTemp = shift.getAssociatedLessons();

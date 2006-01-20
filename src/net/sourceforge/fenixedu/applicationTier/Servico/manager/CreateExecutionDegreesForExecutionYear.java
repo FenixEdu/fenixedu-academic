@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -9,9 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -28,12 +26,10 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
             final Calendar examsSeason2BeginDate, final Calendar examsSeason2EndDate)
             throws ExcepcaoPersistencia {
 
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final ExecutionYear executionYear = (ExecutionYear) ps.getIPersistentExecutionYear()
+        final ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear()
                 .readByOID(ExecutionYear.class, executionYearID);
 
-        final Campus campus = ps.getIPersistentCampus().readByName(campusName);
+        final Campus campus = persistentSupport.getIPersistentCampus().readByName(campusName);
 
         final OccupationPeriod lessonSeason1 = createPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
         final OccupationPeriod lessonSeason2 = createPeriod(lessonSeason2BeginDate, lessonSeason2EndDate);
@@ -42,11 +38,11 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
 
         for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
 
-            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ps
+            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                     .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                             degreeCurricularPlanID);
 
-            ExecutionDegree storedExecutionDegree = ps.getIPersistentExecutionDegree()
+            ExecutionDegree storedExecutionDegree = persistentSupport.getIPersistentExecutionDegree()
                     .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID,
                             executionYear.getYear());
 

@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -12,14 +13,10 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -38,9 +35,7 @@ public class EditCurricularCourse extends Service {
         String newCode = null;
       
         try {
-
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            persistentCurricularCourse = persistentSuport.getIPersistentCurricularCourse();
+            persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
             oldCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                     CurricularCourse.class, newInfoCurricularCourse.getIdInternal());
 

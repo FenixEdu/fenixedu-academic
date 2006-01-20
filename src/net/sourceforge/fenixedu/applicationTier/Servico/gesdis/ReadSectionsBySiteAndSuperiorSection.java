@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSectionWithAll;
@@ -17,9 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadSectionsBySiteAndSuperiorSection extends Service {
 
@@ -31,26 +29,24 @@ public class ReadSectionsBySiteAndSuperiorSection extends Service {
 	 */
 	public List run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException,
 			ExcepcaoPersistencia {
-
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Site site = (Site) sp.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
+		Site site = (Site) persistentSupport.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
 		List allSections = null;
 
 		Section superiorSection = null;
 		if (infoSuperiorSection != null) {
-			superiorSection = (Section) sp.getIPersistentSection().readByOID(Section.class,
+			superiorSection = (Section) persistentSupport.getIPersistentSection().readByOID(Section.class,
 					infoSuperiorSection.getIdInternal());
 			superiorSection.setSite(site);
 		}
 
 		if (superiorSection != null) {
-			allSections = sp.getIPersistentSection().readBySiteAndSection(
+			allSections = persistentSupport.getIPersistentSection().readBySiteAndSection(
 					site.getExecutionCourse().getSigla(),
 					site.getExecutionCourse().getExecutionPeriod().getName(),
 					site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(),
 					superiorSection.getIdInternal());
 		} else {
-			allSections = sp.getIPersistentSection().readBySiteAndSection(
+			allSections = persistentSupport.getIPersistentSection().readBySiteAndSection(
 					site.getExecutionCourse().getSigla(),
 					site.getExecutionCourse().getExecutionPeriod().getName(),
 					site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear(), null);

@@ -7,19 +7,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidy;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantSubsidyWithContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
@@ -33,8 +30,7 @@ public class ReadAllGrantSubsidiesByGrantContractAndState extends Service {
 		List subsidies = null;
 		IPersistentGrantSubsidy persistentGrantSubsidy = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
+		persistentGrantSubsidy = persistentSupport.getIPersistentGrantSubsidy();
 		subsidies = persistentGrantSubsidy.readAllSubsidiesByGrantContractAndState(idContract, state);
 
 		if (subsidies == null)

@@ -4,10 +4,8 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -16,9 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ClearCache extends Service {
 
 	public Boolean run() throws ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		sp.clearCache();
-		return new Boolean(true);
+        persistentSupport.clearCache();
+		return Boolean.TRUE;
 	}
 
 }

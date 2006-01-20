@@ -4,14 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -19,13 +16,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class CreateFAQSection extends Service {
 
     public void run(InfoFAQSection infoFAQSection) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject dao = sp.getIPersistentObject();
-
         FAQSection parentFAQSection = null;
         if (infoFAQSection.getParentSection() != null
                 && infoFAQSection.getParentSection().getIdInternal() != null) {
-            parentFAQSection = (FAQSection) dao.readByOID(FAQSection.class, infoFAQSection
+            parentFAQSection = (FAQSection) persistentObject.readByOID(FAQSection.class, infoFAQSection
                     .getParentSection().getIdInternal());
         }
 

@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegimeWithTeacherAndContract;
@@ -31,15 +32,12 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Pica
@@ -51,25 +49,25 @@ public class ShowGrantOwner extends Service {
 	}
 
 	private void buildInfoListGrantOwnerComplete(InfoListGrantOwnerComplete infoListGrantOwnerComplete,
-			GrantOwner grantOwner, ISuportePersistente sp) throws FenixServiceException {
+			GrantOwner grantOwner) throws FenixServiceException {
 		List listInfoListGrantContracts = new ArrayList();
 		try {
 			// set grantOwner info
-			IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
+			IPersistentGrantContract persistentGrantContract = persistentSupport.getIPersistentGrantContract();
 			infoListGrantOwnerComplete.setInfoGrantOwner(InfoGrantOwnerWithPerson
 					.newInfoFromDomain(grantOwner));
 			List grantContractsList = persistentGrantContract.readAllContractsByGrantOwner(grantOwner
 					.getIdInternal());
 			Iterator contractsIter = grantContractsList.iterator();
 			// set list of qualifications
-			IPersistentQualification persistentQualification = sp.getIPersistentQualification();
+			IPersistentQualification persistentQualification = persistentSupport.getIPersistentQualification();
 			List infoQualificationsList = persistentQualification
 					.readQualificationsByPersonId(grantOwner.getPerson().getIdInternal());
 			if (infoQualificationsList != null)
 				infoListGrantOwnerComplete.setInfoQualifications(infoQualificationsList);
 			while (contractsIter.hasNext()) {
 				InfoListGrantContract infoListGrantContract = buildInfoListGrantContract(
-						(GrantContract) contractsIter.next(), sp);
+						(GrantContract) contractsIter.next());
 				listInfoListGrantContracts.add(infoListGrantContract);
 			}
 			Collections.reverse(listInfoListGrantContracts);
@@ -79,8 +77,7 @@ public class ShowGrantOwner extends Service {
 		}
 	}
 
-	private InfoListGrantContract buildInfoListGrantContract(GrantContract grantContract,
-			ISuportePersistente sp) throws FenixServiceException, ExcepcaoPersistencia {
+	private InfoListGrantContract buildInfoListGrantContract(GrantContract grantContract) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoListGrantContract newInfoListGrantContract = new InfoListGrantContract();
 		List listInfoListGrantSubsidies = new ArrayList();
 		List infoContractRegimes = new ArrayList();
@@ -90,7 +87,7 @@ public class ShowGrantOwner extends Service {
 		newInfoListGrantContract.setInfoGrantContract(InfoGrantContractWithGrantOwnerAndGrantType
 				.newInfoFromDomain(grantContract));
 		// Set the grant orientation teacher for the contract
-		IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = sp
+		IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = persistentSupport
 				.getIPersistentGrantOrientationTeacher();
 		GrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
 				.readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(
@@ -99,7 +96,7 @@ public class ShowGrantOwner extends Service {
 				InfoGrantOrientationTeacherWithTeacherAndGrantContract
 						.newInfoFromDomain(grantOrientationTeacher));
 		// Read the contract regimes
-		IPersistentGrantContractRegime persistentGrantContractRegime = sp
+		IPersistentGrantContractRegime persistentGrantContractRegime = persistentSupport
 				.getIPersistentGrantContractRegime();
 		List contractRegimes = persistentGrantContractRegime
 				.readGrantContractRegimeByGrantContract(grantContract.getIdInternal());
@@ -111,7 +108,7 @@ public class ShowGrantOwner extends Service {
 		}
 		newInfoListGrantContract.setInfoGrantContractRegimes(infoContractRegimes);
 		// read the contract subsidies
-		IPersistentGrantSubsidy persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
+		IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport.getIPersistentGrantSubsidy();
 		List contractSubsidies = persistentGrantSubsidy.readAllSubsidiesByGrantContract(grantContract
 				.getIdInternal());
 		Iterator subsidiesIter = contractSubsidies.iterator();
@@ -121,7 +118,7 @@ public class ShowGrantOwner extends Service {
 					.newInfoFromDomain((GrantSubsidy) subsidiesIter.next());
 			newInfoListGrantSubsidy.setInfoGrantSubsidy(newInfoGrantSubsidy);
 			// read the subsidy grant parts
-			IPersistentGrantPart persistentGrantPart = sp.getIPersistentGrantPart();
+			IPersistentGrantPart persistentGrantPart = persistentSupport.getIPersistentGrantPart();
 			List subsidyParts = persistentGrantPart.readAllGrantPartsByGrantSubsidy(newInfoGrantSubsidy
 					.getIdInternal());
 			Iterator partsIter = subsidyParts.iterator();
@@ -139,16 +136,14 @@ public class ShowGrantOwner extends Service {
 	}
 
 	public InfoListGrantOwnerComplete run(Integer grantOwnerId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = null;
 		InfoListGrantOwnerComplete infoListGrantOwnerComplete = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrantOwner persistentGrantOwner = sp.getIPersistentGrantOwner();
+		IPersistentGrantOwner persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 		GrantOwner grantOwner = (GrantOwner) persistentGrantOwner.readByOID(GrantOwner.class,
 				grantOwnerId);
 		if (grantOwner != null) {
 			infoListGrantOwnerComplete = new InfoListGrantOwnerComplete();
-			buildInfoListGrantOwnerComplete(infoListGrantOwnerComplete, grantOwner, sp);
+			buildInfoListGrantOwnerComplete(infoListGrantOwnerComplete, grantOwner);
 		}
 
 		return infoListGrantOwnerComplete;

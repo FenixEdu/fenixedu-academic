@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.owner;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.dataTransferObject.grant.owner.InfoGrantOwner;
@@ -17,11 +18,8 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
@@ -33,7 +31,6 @@ public class SearchGrantOwner extends Service {
 	public List run(String name, String IdNumber, IDDocumentType IdType, Integer grantOwnerNumber,
 			Boolean onlyGrantOwner, Integer startIndex) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = null;
 		IPessoaPersistente persistentPerson = null;
 		IPersistentGrantOwner persistentGrantOwner = null;
 		List grantOwnerList = new ArrayList();
@@ -42,7 +39,6 @@ public class SearchGrantOwner extends Service {
 		GrantOwner grantOwner = null;
 		Person person = null;
 
-		persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		persistentPerson = persistentSupport.getIPessoaPersistente();
 		persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 

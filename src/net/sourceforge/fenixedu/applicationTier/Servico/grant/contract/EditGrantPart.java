@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidGrantPaymentEntityException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.InvalidPartResponsibleTeacherException;
@@ -11,17 +12,12 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditGrantPart extends Service {
 
     public void run(InfoGrantPart infoGrantPart) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final IPersistentGrantPaymentEntity persistentGrantPaymentEntity = persistentSupport
                 .getIPersistentGrantPaymentEntity();
         final IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport

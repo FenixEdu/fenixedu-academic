@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -10,13 +11,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * 
@@ -29,8 +26,7 @@ public class ReadInfoExecutionCourseByOID extends Service {
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionDegree persistentExecutionCourse = sp.getIPersistentExecutionDegree();
+		IPersistentExecutionDegree persistentExecutionCourse = persistentSupport.getIPersistentExecutionDegree();
 		if (executionCourseOID == null) {
 			throw new FenixServiceException("nullId");
 		}

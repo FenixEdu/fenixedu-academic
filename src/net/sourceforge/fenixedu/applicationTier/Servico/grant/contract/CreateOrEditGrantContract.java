@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantTypeNotFoundException;
@@ -15,28 +16,23 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateOrEditGrantContract extends Service {
 
     public void run(InfoGrantContract infoGrantContract) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
-        IPersistentGrantType pGrantType = sp.getIPersistentGrantType();
-        IPersistentGrantContract pGrantContract = sp.getIPersistentGrantContract();
-        IPersistentGrantOwner pGrantOwner = sp.getIPersistentGrantOwner();
-        IPersistentGrantOrientationTeacher pGrantOrientationTeacher = sp
+        IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
+        IPersistentGrantType pGrantType = persistentSupport.getIPersistentGrantType();
+        IPersistentGrantContract pGrantContract = persistentSupport.getIPersistentGrantContract();
+        IPersistentGrantOwner pGrantOwner = persistentSupport.getIPersistentGrantOwner();
+        IPersistentGrantOrientationTeacher pGrantOrientationTeacher = persistentSupport
                 .getIPersistentGrantOrientationTeacher();
-        IPersistentGrantCostCenter pGrantCostCenter = sp.getIPersistentGrantCostCenter();
+        IPersistentGrantCostCenter pGrantCostCenter = persistentSupport.getIPersistentGrantCostCenter();
 
         final GrantContract grantContract;
         if (infoGrantContract.getContractNumber() == null) {
@@ -76,7 +72,7 @@ public class CreateOrEditGrantContract extends Service {
                                 new Integer(0));
 
             if (grantOrientationTeacher == null) {
-                grantOrientationTeacher = createNewGrantOrientationTeacher(sp, infoGrantContract
+                grantOrientationTeacher = createNewGrantOrientationTeacher(infoGrantContract
                         .getGrantOrientationTeacherInfo(), grantContract);
             } else {
 
@@ -109,11 +105,10 @@ public class CreateOrEditGrantContract extends Service {
         grantContract.setEndContractMotive(infoGrantContract.getEndContractMotive());
     }
 
-    private GrantOrientationTeacher createNewGrantOrientationTeacher(ISuportePersistente sp,
-            InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract)
+    private GrantOrientationTeacher createNewGrantOrientationTeacher(InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
 
         final Teacher teacher = pTeacher.readByNumber(grantOrientationTeacherInfo
                 .getOrientationTeacherInfo().getTeacherNumber());

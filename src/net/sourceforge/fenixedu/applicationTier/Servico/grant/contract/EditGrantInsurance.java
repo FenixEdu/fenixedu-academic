@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractRegime;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
@@ -11,19 +12,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditGrantInsurance extends Service {
 
     public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final IPersistentGrantContract persistentGrantContract = persistentSupport
                 .getIPersistentGrantContract();
         final IPersistentGrantContractRegime persistentGrantContractRegime = persistentSupport

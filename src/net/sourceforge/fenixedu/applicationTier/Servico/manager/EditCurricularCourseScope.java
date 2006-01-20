@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -11,10 +12,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularSemester;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 
 public class EditCurricularCourseScope extends Service {
@@ -26,10 +24,9 @@ public class EditCurricularCourseScope extends Service {
         Branch newBranch = null;
 
         try {
-            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentBranch persistentBranch = ps.getIPersistentBranch();
-            IPersistentCurricularSemester persistentCurricularSemester = ps.getIPersistentCurricularSemester();
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = ps.getIPersistentCurricularCourseScope();
+            IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
+            IPersistentCurricularSemester persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();
+            IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
 
             Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
             newBranch = (Branch) persistentBranch.readByOID(Branch.class, branchId);

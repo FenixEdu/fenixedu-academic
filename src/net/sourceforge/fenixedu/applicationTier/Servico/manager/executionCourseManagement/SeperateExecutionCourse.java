@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.utils.ExecutionCourseUtils;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -19,13 +20,9 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class SeperateExecutionCourse extends Service {
 
@@ -33,8 +30,7 @@ public class SeperateExecutionCourse extends Service {
             final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer)
             throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentObject persistentObject = sp.getIPersistentObject();
+        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
         final ExecutionCourse originExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, originExecutionCourseOid);
         ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, destinationExecutionCourseId);

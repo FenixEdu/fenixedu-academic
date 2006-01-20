@@ -4,12 +4,9 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.support.GlossaryEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -17,10 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteGlossaryEntry extends Service {
 
     public void run(Integer entryId) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject dao = sp.getIPersistentObject();
-
-        dao.deleteByOID(GlossaryEntry.class, entryId);
+        persistentObject.deleteByOID(GlossaryEntry.class, entryId);
     }
 
 }

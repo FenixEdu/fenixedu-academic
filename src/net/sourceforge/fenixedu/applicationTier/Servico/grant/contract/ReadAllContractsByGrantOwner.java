@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContract;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantContractWithGrantOwnerAndGrantType;
@@ -19,12 +20,9 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
@@ -38,10 +36,9 @@ public class ReadAllContractsByGrantOwner extends Service {
 		IPersistentGrantOrientationTeacher pgot = null;
 		IPersistentGrantContractRegime persistentGrantContractRegime = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrantContract pgc = sp.getIPersistentGrantContract();
-		pgot = sp.getIPersistentGrantOrientationTeacher();
-		persistentGrantContractRegime = sp.getIPersistentGrantContractRegime();
+		IPersistentGrantContract pgc = persistentSupport.getIPersistentGrantContract();
+		pgot = persistentSupport.getIPersistentGrantOrientationTeacher();
+		persistentGrantContractRegime = persistentSupport.getIPersistentGrantContractRegime();
 		contracts = pgc.readAllContractsByGrantOwner(grantOwnerId);
 
 		if (contracts == null) {

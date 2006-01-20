@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -23,8 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteDegreeCurricularPlans extends Service {
 
 	public List run(List degreeCurricularPlansIds) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
 				.getIPersistentDegreeCurricularPlan();
 
 		Iterator<Integer> iter = degreeCurricularPlansIds.iterator();

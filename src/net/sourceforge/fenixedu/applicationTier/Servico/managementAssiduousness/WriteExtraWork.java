@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWork;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkWithAll;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -11,27 +12,21 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWork;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class WriteExtraWork extends Service {
 
     public List run(String usernameWho, List<InfoExtraWork> infoExtraWorkList, Integer employeeNumber,
             String compensation) throws Exception {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+        final IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
         Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
 
         // Read employee logged
-        final IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
+        final IPersistentEmployee employeeDAO = persistentSupport.getIPersistentEmployee();
         Employee employeeWho = null;
         if (personWho != null) {
             employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
@@ -41,7 +36,7 @@ public class WriteExtraWork extends Service {
             // TODO
         }
 
-        final IPersistentExtraWork extraWorkDAO = sp.getIPersistentExtraWork();
+        final IPersistentExtraWork extraWorkDAO = persistentSupport.getIPersistentExtraWork();
         List<ExtraWork> extraWorkList = new ArrayList<ExtraWork>();
         for (InfoExtraWork infoExtraWork : infoExtraWorkList) {
             ExtraWork extraWork = null;

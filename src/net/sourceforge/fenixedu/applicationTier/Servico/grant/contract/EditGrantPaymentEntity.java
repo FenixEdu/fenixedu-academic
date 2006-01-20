@@ -5,6 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.grant.GrantOrientationTeacherNotFoundException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantCostCenter;
@@ -16,11 +17,8 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
@@ -32,9 +30,7 @@ public class EditGrantPaymentEntity extends Service {
 
     public void run(InfoGrantCostCenter infoObject) throws FenixServiceException,
     				ExcepcaoPersistencia{
-       // super.run(new Integer(0), infoObject);
-    	ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= sp.getIPersistentGrantPaymentEntity();
+        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= persistentSupport.getIPersistentGrantPaymentEntity();
         GrantCostCenter grantCostCenter = (GrantCostCenter)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
         if(grantCostCenter == null){
         	grantCostCenter = DomainFactory.makeGrantCostCenter();
@@ -43,7 +39,7 @@ public class EditGrantPaymentEntity extends Service {
         grantCostCenter.setNumber(infoObject.getNumber());
 //      ResponsibleTeacher
     	if (infoObject.getInfoResponsibleTeacher() != null) {
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readByNumber(infoObject
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null)
@@ -54,9 +50,8 @@ public class EditGrantPaymentEntity extends Service {
 
     public void run(InfoGrantProject infoObject) throws FenixServiceException,
     				ExcepcaoPersistencia {
-    	ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= sp.getIPersistentGrantPaymentEntity();
-        IPersistentGrantCostCenter persistentGrantCostCenter= sp.getIPersistentGrantCostCenter();
+        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= persistentSupport.getIPersistentGrantPaymentEntity();
+        IPersistentGrantCostCenter persistentGrantCostCenter= persistentSupport.getIPersistentGrantCostCenter();
         GrantProject grantProject = (GrantProject)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
         if(grantProject == null){
         	grantProject = DomainFactory.makeGrantProject();
@@ -74,7 +69,7 @@ public class EditGrantPaymentEntity extends Service {
     	
     	//ResponsibleTeacher
     	if (infoObject.getInfoResponsibleTeacher() != null) {
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readByNumber(infoObject
                     .getInfoResponsibleTeacher().getTeacherNumber());
             if (teacher == null)

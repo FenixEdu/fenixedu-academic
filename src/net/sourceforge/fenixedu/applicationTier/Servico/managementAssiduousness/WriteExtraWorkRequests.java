@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequests;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
 import net.sourceforge.fenixedu.domain.CostCenter;
@@ -12,33 +13,27 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class WriteExtraWorkRequests extends Service {
 
     public List run(String usernameWho, List<InfoExtraWorkRequests> infoExtraWorkRequestsList,
             String costCenterCode, String costCenterMoneyCode) throws Exception {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+        final IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
         final Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
 
         // Read employee logged
         Employee employeeWho = null;
-        IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
+        IPersistentEmployee employeeDAO = persistentSupport.getIPersistentEmployee();
         if (personWho != null) {
             employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
         }
 
-        IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
+        IPersistentCostCenter costCenterDAO = persistentSupport.getIPersistentCostCenter();
         CostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
         if (costCenter == null) {
             // TODO
@@ -54,7 +49,7 @@ public class WriteExtraWorkRequests extends Service {
             ExtraWorkRequests extraWorkRequests = null;
             if (infoExtraWorkRequests.getIdInternal() != null
                     && infoExtraWorkRequests.getIdInternal().intValue() > 0) {
-                extraWorkRequests = (ExtraWorkRequests) sp.getIPersistentObject().readByOID(
+                extraWorkRequests = (ExtraWorkRequests) persistentSupport.getIPersistentObject().readByOID(
                         ExtraWorkRequests.class, infoExtraWorkRequests.getIdInternal());
             }
             if (extraWorkRequests == null) {

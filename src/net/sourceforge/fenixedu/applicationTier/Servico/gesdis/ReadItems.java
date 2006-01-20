@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSection;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac2 & lmac1
@@ -26,8 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadItems extends Service {
 
     public List run(InfoSection infoSection) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentItem persistentItem = sp.getIPersistentItem();
+        final IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
 
         List<Item> itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(),
                 infoSection.getInfoSite().getInfoExecutionCourse().getSigla(), infoSection.getInfoSite()

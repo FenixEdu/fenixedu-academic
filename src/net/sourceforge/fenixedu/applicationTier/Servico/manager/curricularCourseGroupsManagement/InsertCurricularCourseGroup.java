@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.curricularCourseGroupsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.AreaCurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -12,10 +13,7 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -27,9 +25,8 @@ public class InsertCurricularCourseGroup extends Service {
             Integer maximumValue, AreaType areaType, String className) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentBranch persistentBranch = persistentSuport.getIPersistentBranch();
-        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
+        IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
+        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
                 .getIPersistentCurricularCourseGroup();
 
         Branch branch = (Branch) persistentBranch.readByOID(Branch.class, branchId);

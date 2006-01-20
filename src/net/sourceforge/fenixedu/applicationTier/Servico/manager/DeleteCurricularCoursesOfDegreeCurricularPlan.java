@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -16,12 +17,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1 modified by Fernanda Quiterio
@@ -30,9 +27,8 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
     // delete a set of curricularCourses
     public List run(List curricularCoursesIds) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
         Iterator iter = curricularCoursesIds.iterator();
         List undeletedCurricularCourses = new ArrayList();

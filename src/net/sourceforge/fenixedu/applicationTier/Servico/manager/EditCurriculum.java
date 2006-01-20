@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -30,13 +28,11 @@ public class EditCurriculum extends Service {
 
     public void run(InfoCurriculum infoCurriculum, String language, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
                 .getIPersistentCurricularCourse();
-        IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
-        IPersistentCurriculum persistentCurriculum = persistentSuport.getIPersistentCurriculum();
-        IPersistentExecutionYear persistentExecutionYear = persistentSuport
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport
                 .getIPersistentExecutionYear();
 
         CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(

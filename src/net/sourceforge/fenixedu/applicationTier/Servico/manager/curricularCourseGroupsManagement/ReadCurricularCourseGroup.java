@@ -4,15 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.curricularCourseGroupsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroupWithInfoBranch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -21,8 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCurricularCourseGroup extends Service {
 
 	public InfoCurricularCourseGroup run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
+		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
 				.getIPersistentCurricularCourseGroup();
 		CurricularCourseGroup group = (CurricularCourseGroup) persistentCurricularCourseGroup
 				.readByOID(CurricularCourseGroup.class, groupId);

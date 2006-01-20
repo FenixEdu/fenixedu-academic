@@ -6,18 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
@@ -30,8 +27,7 @@ public class ReadAllGrantPaymentEntitiesByClassName extends Service {
 		List result = null;
 		IPersistentGrantPaymentEntity pgpe = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		pgpe = sp.getIPersistentGrantPaymentEntity();
+		pgpe = persistentSupport.getIPersistentGrantPaymentEntity();
 		List grantPaymentEntities = pgpe.readAllPaymentEntitiesByClassName(className);
 
 		result = (List) CollectionUtils.collect(grantPaymentEntities, new Transformer() {

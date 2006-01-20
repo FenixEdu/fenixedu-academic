@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
@@ -16,9 +17,6 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class DissociateProfessorShipsAndResponsibleFor extends Service {
 
@@ -29,9 +27,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
             throw new FenixServiceException("nullTeacherNumber");
         }
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final Teacher teacher = sp.getIPersistentTeacher().readByNumber(teacherNumber);
+        final Teacher teacher = persistentSupport.getIPersistentTeacher().readByNumber(teacherNumber);
         if (teacher == null) {
             throw new NonExistingServiceException("noTeacher");
         }
@@ -41,7 +37,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
         if (professorships != null && responsibleFors != null) {
             List<Professorship> newProfessorships = new ArrayList<Professorship>();
             for (Integer professorshipId : professorships) {
-                Professorship professorship = (Professorship) sp.getIPersistentObject().readByOID(
+                Professorship professorship = (Professorship) persistentSupport.getIPersistentObject().readByOID(
                         Professorship.class, professorshipId);
                 if (professorship == null) {
                     throw new FenixServiceException("nullPSNorRF");
@@ -55,7 +51,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
 
             List<Professorship> newResponsibleFor = new ArrayList<Professorship>();
             for (Integer responsibleForId : responsibleFors) {
-                Professorship responsibleFor = (Professorship) sp.getIPersistentObject().readByOID(
+                Professorship responsibleFor = (Professorship) persistentSupport.getIPersistentObject().readByOID(
                         Professorship.class, responsibleForId);
                 if (responsibleFor == null) {
                     throw new FenixServiceException("nullPSNorRF");
@@ -77,7 +73,7 @@ public class DissociateProfessorShipsAndResponsibleFor extends Service {
                 if ((shiftProfessorships == null || shiftProfessorships.isEmpty())
                         && (supportLessons == null || supportLessons.isEmpty())) {
 
-                    final IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+                    final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
                     List<Summary> summaryList = persistentSummary.readByTeacher(professorship
                             .getExecutionCourse().getIdInternal(), professorship.getTeacher()
                             .getTeacherNumber());

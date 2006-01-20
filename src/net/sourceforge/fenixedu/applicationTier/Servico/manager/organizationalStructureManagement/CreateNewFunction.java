@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.organizationalS
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,9 +14,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateNewFunction extends Service {
 
@@ -23,14 +21,11 @@ public class CreateNewFunction extends Service {
             Date endDate, FunctionType type, Integer parentInherentFunctionID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
         Function function = null;
         if (functionID == null) {
             function = DomainFactory.makeFunction();
         } else {
-            function = (Function) suportePersistente.getIPersistentObject().readByOID(Function.class,
+            function = (Function) persistentSupport.getIPersistentObject().readByOID(Function.class,
                     functionID);
             if (function == null) {
                 throw new FenixServiceException("error.noFunction");
@@ -39,12 +34,12 @@ public class CreateNewFunction extends Service {
 
         Unit unit = null;
         if (unitID != null) {
-            unit = (Unit) suportePersistente.getIPersistentObject().readByOID(Unit.class, unitID);            
+            unit = (Unit) persistentObject.readByOID(Unit.class, unitID);            
         }
 
         Function parentInherentFunction = null;
         if (parentInherentFunctionID != null) {
-            parentInherentFunction = (Function) suportePersistente.getIPersistentObject()
+            parentInherentFunction = (Function) persistentObject
                     .readByOID(Function.class, parentInherentFunctionID);            
         }
         

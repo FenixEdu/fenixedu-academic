@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.executionCourse
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -10,9 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * 
@@ -21,10 +19,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class AssociateCurricularCoursesToExecutionCourse extends Service {
 
 	public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
 				.getIPersistentExecutionCourse();
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSuport
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
 				.getIPersistentCurricularCourse();
 
 		if (executionCourseId == null) {

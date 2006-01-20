@@ -7,21 +7,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager.advisoriesManag
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Advisory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 
 public class EditAdvisory extends Service {
 
     public void run(Integer advisoryID, String newSender, String newSubject, String message, Date expires) throws ExcepcaoPersistencia, FenixServiceException{
-     
-        ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                
-        Advisory advisory = (Advisory) suportePersistente.getIPersistentObject().readByOID(Advisory.class, advisoryID);
+        Advisory advisory = (Advisory) persistentObject.readByOID(Advisory.class, advisoryID);
         
         if(advisory == null){                  
             throw new FenixServiceException("error.no.advisory");            

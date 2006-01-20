@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author pica
@@ -40,8 +39,6 @@ public class DeleteGrantContractMovement extends DeleteDomainObjectService {
 	 */
 	protected void deleteDomainObject(DomainObject domainObject) {
 		try{
-	      ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-	      IPersistentObject persistentObject = getIPersistentObject(sp);
 	      persistentObject.deleteByOID(getDomainObjectClass(), domainObject.getIdInternal());
 			
 		} catch (Exception e) {

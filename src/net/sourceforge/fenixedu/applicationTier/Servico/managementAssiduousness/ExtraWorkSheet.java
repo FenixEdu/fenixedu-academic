@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.ServicoAutorizacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoAutorizacaoLer;
 import net.sourceforge.fenixedu.applicationTier.Servico.assiduousness.ServicoSeguroBuscarParamJustificacoes;
@@ -41,8 +42,6 @@ import net.sourceforge.fenixedu.domain.SuporteStrategyHorarios;
 import net.sourceforge.fenixedu.domain.SuporteStrategyJustificacoes;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWork;
 import net.sourceforge.fenixedu.persistenceTierJDBC.IFeriadoPersistente;
 import net.sourceforge.fenixedu.persistenceTierJDBC.SuportePersistente;
@@ -50,8 +49,6 @@ import net.sourceforge.fenixedu.util.Comparador;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -146,10 +143,8 @@ public class ExtraWorkSheet extends Service {
 		List infoExtraWorkList = null;
 		List extraWorkList = null;
 		Employee employee = null;
-		ISuportePersistente sp;
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
+		IPersistentEmployee employeeDAO = persistentSupport.getIPersistentEmployee();
 		// »»»»»»»»»read employee
 		employee = employeeDAO.readByNumber(employeeNumber);
 		if (employee == null) {
@@ -193,8 +188,7 @@ public class ExtraWorkSheet extends Service {
 
 		_dataConsulta = new Timestamp(_dataInicioEscolha.getTime());
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExtraWork persistentExtraWork = sp.getIPersistentExtraWork();
+		IPersistentExtraWork persistentExtraWork = persistentSupport.getIPersistentExtraWork();
 
 		// invoca a função execute do ServicoSeguroConsultarVerbete
 		execute(extraWorkListPerDay, persistentExtraWork);

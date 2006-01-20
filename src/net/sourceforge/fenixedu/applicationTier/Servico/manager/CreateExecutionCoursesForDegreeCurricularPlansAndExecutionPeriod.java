@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -14,9 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -27,16 +25,14 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
     public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID)
             throws ExcepcaoPersistencia {
 
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) ps.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, executionPeriodID);
 
         Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionPeriod);
 
         for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
 
-            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ps
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                     .getIPersistentObject()
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 

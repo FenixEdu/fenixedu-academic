@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroup;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseGroupWithCoursesToAdd;
@@ -20,13 +21,9 @@ import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -35,9 +32,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCoursesByCurricularCourseGroup extends Service {
 
     public InfoCurricularCourseGroupWithCoursesToAdd run(Integer groupId) throws ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSuport
+        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
                 .getIPersistentCurricularCourseGroup();
         CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup
                 .readByOID(CurricularCourseGroup.class, groupId);

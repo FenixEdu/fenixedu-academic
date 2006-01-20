@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantOrientationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
 
 /**
@@ -28,7 +27,7 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 public class ReadGrantContract extends ReadDomainObjectService {
 
 	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-		return sp.getIPersistentGrantContract();
+		return persistentSupport.getIPersistentGrantContract();
 	}
 
 	protected InfoObject newInfoFromDomain(DomainObject domainObject) {
@@ -41,8 +40,7 @@ public class ReadGrantContract extends ReadDomainObjectService {
 	}
 
 	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
+		IPersistentGrantOrientationTeacher pgot = persistentSupport.getIPersistentGrantOrientationTeacher();
 
 		InfoGrantContract infoGrantContract = (InfoGrantContract) super.run(objectId);
 

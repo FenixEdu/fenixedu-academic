@@ -6,18 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.contract;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantPartWithSubsidyAndTeacherAndPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Barbosa
@@ -29,8 +26,7 @@ public class ReadAllGrantPartsByGrantSubsidy extends Service {
 	public List run(Integer grantSubsidyId) throws FenixServiceException, ExcepcaoPersistencia {
 		List result = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGrantPart pgp = sp.getIPersistentGrantPart();
+		IPersistentGrantPart pgp = persistentSupport.getIPersistentGrantPart();
 		List grantParts = pgp.readAllGrantPartsByGrantSubsidy(grantSubsidyId);
 
 		if (grantParts != null) {

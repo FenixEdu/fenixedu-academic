@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCostCenter;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoMoneyCostCenter;
@@ -14,33 +15,29 @@ import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadAllMoneyCostCenterByYear extends Service {
 
     public List run(Integer year, String usernameWho) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List<InfoMoneyCostCenter> infoMoneyCostCenterList = new ArrayList<InfoMoneyCostCenter>();
 
         // Read employee logged
         Employee employeeWho = null;
 
-        IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+        IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
         Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
         if (personWho != null) {
-            IPersistentEmployee employeeDAO = sp.getIPersistentEmployee();
+            IPersistentEmployee employeeDAO = persistentSupport.getIPersistentEmployee();
             employeeWho = employeeDAO.readByPerson(personWho.getIdInternal().intValue());
         }
 
         // Read all cost center and for each verify money at this year
-        IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
+        IPersistentCostCenter costCenterDAO = persistentSupport.getIPersistentCostCenter();
         List<CostCenter> costCenterList = (List<CostCenter>) costCenterDAO.readAll(CostCenter.class);
         if (costCenterList != null && costCenterList.size() > 0) {
-            IPersistentMoneyCostCenter moneyCostCenterDAO = sp.getIPersistentMoneyCostCenter();
+            IPersistentMoneyCostCenter moneyCostCenterDAO = persistentSupport.getIPersistentMoneyCostCenter();
 
             for (CostCenter costCenter : costCenterList) {
                 MoneyCostCenter moneyCostCenter = moneyCostCenterDAO.readByCostCenterAndYear(

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -15,10 +16,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -28,9 +26,8 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 	// delete a set of executionDegrees
 	public List run(List executionDegreesIds) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-		ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+		IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
+		ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
 
 		Iterator iter = executionDegreesIds.iterator();
 
@@ -81,7 +78,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 
 					// GratuityValues
 					if (executionDegree.getGratuityValues() != null) {
-						sp.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
+						persistentSupport.getIPersistentGratuityValues().deleteByOID(GratuityValues.class,
 								executionDegree.getGratuityValues().getIdInternal());
 					}
 
@@ -92,7 +89,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodLessonsFirstSemester() != null)
 							&& (executionDegree.getPeriodLessonsFirstSemester()
 									.getExecutionDegreesForLessonsFirstSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodLessonsFirstSemester().getIdInternal());
 					}
 
@@ -102,7 +99,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodLessonsSecondSemester() != null)
 							&& (executionDegree.getPeriodLessonsSecondSemester()
 									.getExecutionDegreesForLessonsSecondSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodLessonsSecondSemester().getIdInternal());
 					}
 
@@ -112,7 +109,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodExamsFirstSemester() != null)
 							&& (executionDegree.getPeriodExamsFirstSemester()
 									.getExecutionDegreesForExamsFirstSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodExamsFirstSemester().getIdInternal());
 					}
 
@@ -122,7 +119,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					if ((executionDegree.getPeriodExamsSecondSemester() != null)
 							&& (executionDegree.getPeriodExamsSecondSemester()
 									.getExecutionDegreesForExamsSecondSemester().size() == 1)) {
-						sp.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
+						persistentSupport.getIPersistentPeriod().deleteByOID(OccupationPeriod.class,
 								executionDegree.getPeriodExamsSecondSemester().getIdInternal());
 					}
 
@@ -134,7 +131,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					List<Coordinator> coordinators = executionDegree.getCoordinatorsList();
 					for (Coordinator coordinator : coordinators) {
 						coordinator.setExecutionDegree(null);
-						sp.getIPersistentCoordinator().deleteByOID(Coordinator.class,
+						persistentSupport.getIPersistentCoordinator().deleteByOID(Coordinator.class,
 								coordinator.getIdInternal());
 					}
 					executionDegree.getCoordinatorsList().clear();
@@ -142,7 +139,7 @@ public class DeleteExecutionDegreesOfDegreeCurricularPlan extends Service {
 					executionDegree.getCampus().getExecutionDegrees().remove(executionDegree);
 					executionDegree.setCampus(null);
 
-					sp.getIPersistentExecutionDegree().deleteByOID(ExecutionDegree.class,
+					persistentSupport.getIPersistentExecutionDegree().deleteByOID(ExecutionDegree.class,
 							executionDegree.getIdInternal());
 				} else
 					undeletedExecutionDegreesYears.add(executionDegree.getExecutionYear().getYear());

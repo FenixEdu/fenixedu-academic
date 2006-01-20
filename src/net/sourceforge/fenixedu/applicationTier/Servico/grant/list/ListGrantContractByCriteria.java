@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.grant.list;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoListGrantOwnerByOrder;
 import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanByCriteriaListGrantContract;
@@ -14,14 +15,11 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.NameUtils;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Pica
@@ -46,8 +44,7 @@ public class ListGrantContractByCriteria extends Service {
 		List grantContractBySpanAndCriteria = null;
 		IPersistentGrantContract persistentGrantContract = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		persistentGrantContract = sp.getIPersistentGrantContract();
+		persistentGrantContract = persistentSupport.getIPersistentGrantContract();
 		grantContractBySpanAndCriteria = persistentGrantContract.readAllContractsByCriteria(
 				propertyOrderBy(infoSpanByCriteriaListGrantOwner.getOrderBy()),
 				infoSpanByCriteriaListGrantOwner.getJustActiveContract(),
@@ -67,8 +64,7 @@ public class ListGrantContractByCriteria extends Service {
 			for (int i = 0; i < grantContractBySpanAndCriteria.size(); i++) {
 				GrantContract grantContract = (GrantContract) grantContractBySpanAndCriteria.get(i);
 
-				convertToInfoListGrantOwnerByOrder(grantContract, infoSpanByCriteriaListGrantOwner, sp,
-						listGrantContract);
+				convertToInfoListGrantOwnerByOrder(grantContract, infoSpanByCriteriaListGrantOwner, listGrantContract);
 			}
 		}
 
@@ -93,11 +89,11 @@ public class ListGrantContractByCriteria extends Service {
 	 */
 	private void convertToInfoListGrantOwnerByOrder(GrantContract grantContract,
 			InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner,
-			ISuportePersistente sp, List result) throws ExcepcaoPersistencia {
+			List result) throws ExcepcaoPersistencia {
 
-		IPersistentGrantContractRegime persistentGrantContractRegime = sp
+		IPersistentGrantContractRegime persistentGrantContractRegime = persistentSupport
 				.getIPersistentGrantContractRegime();
-		IPersistentGrantInsurance persistentGrantInsurance = sp.getIPersistentGrantInsurance();
+		IPersistentGrantInsurance persistentGrantInsurance = persistentSupport.getIPersistentGrantInsurance();
 
 		// Read the actual regime and insurance
 		List grantContractRegimeList = persistentGrantContractRegime

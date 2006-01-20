@@ -6,16 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.support.FAQEntry;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQEntries;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -23,15 +20,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteFAQSection extends Service {
 
     public void run(Integer sectionId) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject dao = sp.getIPersistentObject();
-        IPersistentFAQEntries persistentFAQEntries = sp.getIPersistentFAQEntries();
-        IPersistentFAQSection persistentFAQSection = sp.getIPersistentFAQSection();
+        IPersistentFAQEntries persistentFAQEntries = persistentSupport.getIPersistentFAQEntries();
+        IPersistentFAQSection persistentFAQSection = persistentSupport.getIPersistentFAQSection();
 
         List entriesToDelete = persistentFAQEntries.readEntriesInSection(sectionId);
         for (int i = 0; i < entriesToDelete.size(); i++) {
             FAQEntry faqEntry = (FAQEntry) entriesToDelete.get(i);
-            dao.deleteByOID(FAQEntry.class, faqEntry.getIdInternal());
+            persistentObject.deleteByOID(FAQEntry.class, faqEntry.getIdInternal());
         }
 
         List subSectionsToDelete = persistentFAQSection.readSubSectionsInSection(sectionId);
@@ -40,7 +35,7 @@ public class DeleteFAQSection extends Service {
             run(subSction.getIdInternal());
         }
 
-        dao.deleteByOID(FAQSection.class, sectionId);
+        persistentObject.deleteByOID(FAQSection.class, sectionId);
     }
 
 }

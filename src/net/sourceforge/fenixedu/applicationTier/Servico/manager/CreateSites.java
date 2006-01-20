@@ -2,21 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateSites extends Service {
 
     public Integer run(final Integer executionPeriodID) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
-                .getIPersistentObject().readByOID(ExecutionPeriod.class, executionPeriodID);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
 
         final List<ExecutionCourse> executionCourses = executionPeriod.getAssociatedExecutionCourses();
         int numberCreatedSites = 0;
