@@ -280,10 +280,6 @@ public class EditGuideInformation extends Service {
         Guide newGuide = null;
         InfoGuide result = null;
 
-        // Make sure that everything is written before reading ...
-        sp.confirmarTransaccao();
-        sp.iniciarTransaccao();
-
         newGuide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
                 infoGuide.getYear(), infoGuide.getVersion());
         // Update the Guide Total
