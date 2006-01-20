@@ -192,9 +192,9 @@
 <br />
 <strong>Renderers</strong>
 <p>
-    <strong>&raquo;<html:link page="/renderers/reload.do">Reler configuração</html:link></strong>
+    <strong>&raquo;<html:link module="/manager" page="/renderers/reload.do">Reler configuração</html:link></strong>
 </p>
 <!-- FIXME: This is only temporary to show some examples of how renderers can be used -->
 <p>
-    <strong>&raquo;<html:link page="/renderers/index.do">Exemplos</html:link></strong>
+    <strong>&raquo;<html:link module="/manager" page="/renderers/index.do">Exemplos</html:link></strong>
 </p>
