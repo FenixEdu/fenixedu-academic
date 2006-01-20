@@ -304,6 +304,14 @@
 		<put name="body" value="/manager/personManagement/displayEmployee.jsp" />
 		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
 	</definition>
+	<definition name="choosePersons" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/choosePersonsToMerge.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+	</definition>
+	<definition name="displayPersons" extends="definition.manager.masterPage" >
+		<put name="body" value="/manager/personManagement/mergePersons.jsp" />
+		<put name="navLocal" value="/manager/personManagement/mainMenu.jsp" />
+	</definition>
 		
 	<!-- ========== FIND PERSON MANAGEMENT ========== -->
 	<definition name="firstPageGenerateFiles" extends="definition.manager.masterPage" >
