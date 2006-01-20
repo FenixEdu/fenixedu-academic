@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -40,9 +39,8 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 	}
 
 	@Override
-	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject,
-			ISuportePersistente sp) throws Exception {
-		super.doBeforeLock(domainObjectToLock, infoObject, sp);
+	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject) throws Exception {
+		super.doBeforeLock(domainObjectToLock, infoObject);
 
 		InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
 
@@ -61,7 +59,7 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 		CreditsValidator.validatePeriod(infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal(),
 				infoTeacherInstitutionWorkTime.getInfoExecutionPeriod().getIdInternal(), weekDay,
 				startTime, endTime, PeriodType.INSTITUTION_WORKING_TIME_PERIOD);
-		IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
+		IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = persistentSupport
 				.getIPersistentTeacherInstitutionWorkingTime();
 
 		List teacherInstitutionWorkingTime = teacherInstitutionWorkingTimeDAO.readOverlappingPeriod(
@@ -88,13 +86,13 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 	}
 
 	@Override
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-		return sp.getIPersistentTeacherInstitutionWorkingTime();
+	protected IPersistentObject getIPersistentObject() {
+		return persistentSupport.getIPersistentTeacherInstitutionWorkingTime();
 	}
 
-	protected DomainObject readObjectByUnique(DomainObject domainObject, ISuportePersistente sp)
+	protected DomainObject readObjectByUnique(DomainObject domainObject)
 			throws ExcepcaoPersistencia {
-		IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
+		IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = persistentSupport
 				.getIPersistentTeacherInstitutionWorkingTime();
 		TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) domainObject;
 		teacherInstitutionWorkTime = teacherInstitutionWorkingTimeDAO
@@ -103,19 +101,19 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 	}
 
 	@Override
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
+	protected void copyInformationFromInfoToDomain(InfoObject infoObject,
 			DomainObject domainObject) throws ExcepcaoPersistencia {
 		InfoTeacherInstitutionWorkTime infoTeacherInstitutionWorkTime = (InfoTeacherInstitutionWorkTime) infoObject;
 		TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) domainObject;
 		teacherInstitutionWorkTime.setEndTime(infoTeacherInstitutionWorkTime.getEndTime());
 
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
 				ExecutionPeriod.class, infoTeacherInstitutionWorkTime.getInfoExecutionPeriod()
 						.getIdInternal());
 		teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
 
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
 				infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
 		teacherInstitutionWorkTime.setKeyTeacher(teacher.getIdInternal());

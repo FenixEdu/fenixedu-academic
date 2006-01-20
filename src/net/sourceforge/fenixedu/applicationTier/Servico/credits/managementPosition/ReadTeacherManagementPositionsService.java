@@ -5,27 +5,22 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.managementPosit
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoManagementPositionCreditLine;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
  */
 public class ReadTeacherManagementPositionsService extends Service {
     public List run(Integer teacherId) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentManagementPositionCreditLine managementPositionCreditLineDAO = sp
+        IPersistentManagementPositionCreditLine managementPositionCreditLineDAO = persistentSupport
                 .getIPersistentManagementPositionCreditLine();
 
         List managementPositions = managementPositionCreditLineDAO.readByTeacher(teacherId);

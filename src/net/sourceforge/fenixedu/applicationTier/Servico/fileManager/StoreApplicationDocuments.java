@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
@@ -8,9 +9,6 @@ import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class StoreApplicationDocuments extends Service {
 
@@ -25,8 +23,7 @@ public class StoreApplicationDocuments extends Service {
         result[0] = result[1] = result[2] = result[3] = false;
         
         try {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
         Person person = (Person) persistentPerson.readByOID(Person.class, personId);
         IFileSuport fileSuport = FileSuport.getInstance();
         String uri = person.getSlideNameForCandidateDocuments();

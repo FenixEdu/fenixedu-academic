@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -18,11 +16,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCurricularCourseByID extends Service {
 
     public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException, ExcepcaoPersistencia {
-
-        CurricularCourse curricularCourse = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject persistentObject = sp.getIPersistentObject();
-        curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
+        IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
                 curricularCourseID);
 
         if (curricularCourse == null) {

@@ -4,14 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
@@ -20,8 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
  */
 public abstract class ReadDomainObjectService extends Service {
 	public InfoObject run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = getIPersistentObject(sp);
 		DomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 		InfoObject infoObject = null;
 

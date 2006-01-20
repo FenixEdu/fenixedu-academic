@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.execution;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -11,13 +12,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadExecutionCoursesByExecutionDegreeService extends Service {
 
@@ -28,9 +25,8 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
     }
 
     public List run(Integer executionDegreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = null;
 
         if (executionPeriodId == null) {
@@ -40,7 +36,7 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
                     executionPeriodId);
         }
 
-        IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
         ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO.readByOID(
                 ExecutionDegree.class, executionDegreeId);

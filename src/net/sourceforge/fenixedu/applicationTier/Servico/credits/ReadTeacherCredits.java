@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
@@ -13,9 +14,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
@@ -24,10 +22,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadTeacherCredits extends Service {
 
     public List run(Integer teacherOID) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
         Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherOID);
         ExecutionPeriod startExecutionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(

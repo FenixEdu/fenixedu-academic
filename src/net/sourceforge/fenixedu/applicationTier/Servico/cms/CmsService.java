@@ -20,6 +20,6 @@ public abstract class CmsService extends Service
 {
 	protected Cms readFenixCMS() throws ExcepcaoPersistencia
 	{
-		return PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readFenixCMS();
+		return persistentSupport.getIPersistentCms().readFenixCMS();
 	}	
 }

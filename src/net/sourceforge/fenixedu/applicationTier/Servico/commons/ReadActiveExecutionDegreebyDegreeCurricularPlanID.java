@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCoordinator;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -20,9 +21,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -35,11 +33,9 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends Service {
 
     public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = suportePersistente
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
                 .getIPersistentDegreeCurricularPlan();
-        final IPersistentExecutionDegree persistentExecutionDegree = suportePersistente
+        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
                 .getIPersistentExecutionDegree();
 
         // degree curricular plan
@@ -49,7 +45,7 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends Service {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        // and correspondent execution degrees
+        // and correpersistentSupportondent execution degrees
         final List executionDegrees = persistentExecutionDegree
                 .readByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
         if (executionDegrees == null) {

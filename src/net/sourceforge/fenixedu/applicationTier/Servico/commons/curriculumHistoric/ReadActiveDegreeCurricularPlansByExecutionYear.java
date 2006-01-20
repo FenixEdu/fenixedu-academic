@@ -5,19 +5,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.curriculumHisto
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
@@ -26,8 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadActiveDegreeCurricularPlansByExecutionYear extends Service {
 
     public List run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         List executionDegrees = persistentExecutionDegree.readByExecutionYearOID(executionYearID);
 
         if (executionDegrees == null) {

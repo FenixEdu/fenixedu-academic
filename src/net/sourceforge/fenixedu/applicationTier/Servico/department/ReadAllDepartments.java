@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDepartment;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a>
@@ -23,8 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadAllDepartments extends Service {
 
     public List run() throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentDepartment departmentDAO = sp.getIDepartamentoPersistente();
+        IPersistentDepartment departmentDAO = persistentSupport.getIDepartamentoPersistente();
         List departments = departmentDAO.readAll();
         Iterator iter = departments.iterator();
         List infoDepartments = new ArrayList();

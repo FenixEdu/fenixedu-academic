@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutor;
@@ -17,9 +18,6 @@ import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -41,8 +39,7 @@ public class ReadStudentsByTutor extends Service {
             throw new FenixServiceException("error.tutor.impossibleOperation");
         }
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacherDB = persistentTeacher.readByNumber(tutorNumber);
         if (teacherDB == null) {
             throw new FenixServiceException("error.noTutor");
@@ -58,7 +55,7 @@ public class ReadStudentsByTutor extends Service {
         List teacherAndStudentsList = new ArrayList();
         teacherAndStudentsList.add(InfoTeacherWithPerson.newInfoFromDomain(teacherDB));
 
-        IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
         List<Tutor> tutorStudents = persistentTutor.readStudentsByTeacher(null, tutorNumber);
         if (tutorStudents == null || tutorStudents.size() <= 0) {
             return teacherAndStudentsList;

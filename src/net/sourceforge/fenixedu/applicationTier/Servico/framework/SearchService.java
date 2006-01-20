@@ -3,17 +3,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 import java.util.HashMap;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * Do a search on database.
@@ -32,8 +29,7 @@ public abstract class SearchService extends Service {
      *             if it can't get persistent support
      */
     public List run(HashMap searchParameters) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final List domainList = doSearch(searchParameters, sp);
+        final List domainList = doSearch(searchParameters);
 
         final List infoList = (List) CollectionUtils.collect(domainList, new Transformer() {
             public Object transform(Object input) {
@@ -59,7 +55,7 @@ public abstract class SearchService extends Service {
      * @param searchParameters
      * @return A list of DomainObject.
      */
-    abstract protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
+    abstract protected List doSearch(HashMap searchParameters)
             throws ExcepcaoPersistencia;
 
 }

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -10,15 +11,11 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadExecutionPeriodsByExecutionYear extends Service {
 
     public List run(InfoExecutionYear infoExecutionYear) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+        final IPersistentExecutionYear executionYearDAO = persistentSupport.getIPersistentExecutionYear();
 
         final ExecutionYear executionYear = (infoExecutionYear != null) ?
                 (ExecutionYear) executionYearDAO.readByOID(ExecutionYear.class, infoExecutionYear.getIdInternal())

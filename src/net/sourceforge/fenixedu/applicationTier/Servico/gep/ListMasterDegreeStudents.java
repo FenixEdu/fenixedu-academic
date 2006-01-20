@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithFirstTimeEnrolment;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -18,13 +19,9 @@ import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricu
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -36,14 +33,12 @@ public class ListMasterDegreeStudents extends Service {
     private Map<DegreeCurricularPlan, ExecutionDegree> firstExecutionDegrees = new HashMap<DegreeCurricularPlan, ExecutionDegree>();
 
     public Collection run(String executionYearName) throws ExcepcaoPersistencia {
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
                 executionYearName);
 
         final Collection<InfoStudentCurricularPlanWithFirstTimeEnrolment> infoStudentCurricularPlans = new ArrayList();
         final Collection<StudentCurricularPlan> studentCurricularPlans = new ArrayList();
-        final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = sp
+        final Collection<DegreeCurricularPlan> masterDegreeCurricularPlans = persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByDegreeTypeAndState(DegreeType.MASTER_DEGREE,
                         DegreeCurricularPlanState.ACTIVE);
 
@@ -76,7 +71,7 @@ public class ListMasterDegreeStudents extends Service {
             boolean firstTimeEnrolment = true;
             if (studentCurricularPlan.getSpecialization().equals(Specialization.MASTER_DEGREE)) {
 
-                Collection<StudentCurricularPlan> previousStudentCurricularPlans = sp
+                Collection<StudentCurricularPlan> previousStudentCurricularPlans = persistentSupport
                         .getIStudentCurricularPlanPersistente().readAllByStudentNumberAndSpecialization(
                                 studentCurricularPlan.getStudent().getNumber(),
                                 DegreeType.MASTER_DEGREE, Specialization.MASTER_DEGREE);

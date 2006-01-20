@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -20,9 +21,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
@@ -31,8 +29,7 @@ public class ImprovmentEnrollService extends Service {
 
     public Object run(Integer studentNumber, String employeeUserName, List enrolmentsIds)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                 DegreeType.DEGREE);
@@ -40,10 +37,10 @@ public class ImprovmentEnrollService extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente();
+        IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
         Person pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod
                 .readActualExecutionPeriod();
 
@@ -51,7 +48,7 @@ public class ImprovmentEnrollService extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+        IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
         Employee employee = persistentEmployee.readByPerson(pessoa);
         ;
 
@@ -59,7 +56,7 @@ public class ImprovmentEnrollService extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
+        IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
 
         Iterator iterator = enrolmentsIds.iterator();
         while (iterator.hasNext()) {

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDegreeAndExecutionPeriodAndYear;
@@ -26,15 +27,11 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
@@ -42,13 +39,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadImprovmentsToEnroll extends Service {
 
     public Object run(Integer studentNumber, Integer executionPeriodID) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List previousExecPeriodAprovedEnrol = new ArrayList();
         List beforePreviousExecPeriodAprovedEnrol = new ArrayList();
         List beforeBeforePreviousExecPeriodAprovedEnrol = new ArrayList();
 
         // Read Execution Periods
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod actualExecPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
         if (actualExecPeriod == null) {
@@ -61,7 +57,7 @@ public class ReadImprovmentsToEnroll extends Service {
                 .getPreviousExecutionPeriod();
 
         // Read Student
-        Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
+        Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(studentNumber,
                 DegreeType.DEGREE);
 
         if (student == null) {
@@ -111,7 +107,7 @@ public class ReadImprovmentsToEnroll extends Service {
 
         // From Before Before Previous OccupationPeriod remove the ones with scope in
         // Previous OccupationPeriod
-        removeFromBeforeBeforePreviousPeriod(beforeBeforePreviousExecPeriodAprovedEnrol,
+        removeFromBeforeBeforePrevioupersistentSupporteriod(beforeBeforePreviousExecPeriodAprovedEnrol,
                 previousExecPeriod);
 
         // From previous OccupationPeriod remove the ones that not take place in the
@@ -128,7 +124,7 @@ public class ReadImprovmentsToEnroll extends Service {
                 alreadyImprovedEnrolmentsInCurrentExecutionPeriod);
     }
 
-    private void removeFromBeforeBeforePreviousPeriod(List beforeBeforePreviousExecPeriodAprovedEnrol,
+    private void removeFromBeforeBeforePrevioupersistentSupporteriod(List beforeBeforePreviousExecPeriodAprovedEnrol,
             final ExecutionPeriod previousExecPeriod) {
         CollectionUtils.filter(beforeBeforePreviousExecPeriodAprovedEnrol, new Predicate() {
 
@@ -255,8 +251,7 @@ public class ReadImprovmentsToEnroll extends Service {
 
     private List removeNotInCurrentExecutionPeriod(List enrolments,
             final ExecutionPeriod currentExecutionPeriod) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
         List res = new ArrayList();
         Iterator iterator = enrolments.iterator();

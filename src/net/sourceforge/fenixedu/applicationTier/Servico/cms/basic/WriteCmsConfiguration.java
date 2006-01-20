@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.cms.basic;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.domain.cms.Cms;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -36,7 +35,7 @@ public class WriteCmsConfiguration extends CmsService
 
 	public Cms run(String name,CmsConfiguration changes) throws ExcepcaoPersistencia
 	{
-		Cms editedCms = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCms().readCmsByName(name);
+		Cms editedCms = persistentSupport.getIPersistentCms().readCmsByName(name);
 		editedCms.getConfiguration().setSmtpServerAddress(changes.smtpServerAddress);
 		editedCms.getConfiguration().setFilterNonTextualAttachments(changes.filterNonTextualAttachments);
 		editedCms.getConfiguration().setMailingListsHost(changes.mailingListsHost);

@@ -6,14 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.course.inquiries;
 
 import java.lang.reflect.InvocationTargetException;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesCoursesRes;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -34,9 +32,8 @@ public class ReadOldInquiryCoursesResByExecutionPeriodAndDegreeIdAndCourseCode e
         if (courseCode == null) {
             throw new FenixServiceException("nullCourseCode");
         }
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentOldInquiriesCoursesRes poics = sp.getIPersistentOldInquiriesCoursesRes();
+        IPersistentOldInquiriesCoursesRes poics = persistentSupport.getIPersistentOldInquiriesCoursesRes();
 
         OldInquiriesCoursesRes oics = poics.readByExecutionPeriodAndDegreeIdAndCourseCode(
                 executionPeriodId, degreeId, courseCode);

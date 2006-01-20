@@ -12,25 +12,18 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ChangePersonalStudentInfo extends Service {
 
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoPersistencia, ExcepcaoInexistente  {
-
-        ISuportePersistente sp = null;
-        Person person = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
                 newInfoPerson.getIdInternal());
 
         if (person == null) {
@@ -44,7 +37,7 @@ public class ChangePersonalStudentInfo extends Service {
             if ((person.getPais() == null)
                     || (!newInfoPerson.getInfoPais().getNationality().equals(
                             person.getPais().getNationality()))) {
-                country = sp.getIPersistentCountry().readCountryByNationality(
+                country = persistentSupport.getIPersistentCountry().readCountryByNationality(
                         newInfoPerson.getInfoPais().getNationality());
             }else{
                 country = person.getPais();
@@ -53,7 +46,7 @@ public class ChangePersonalStudentInfo extends Service {
         else {
             //If the person country is undefined it is set to default "PORTUGUESA NATURAL DO CONTINENTE" 
             //In a not distance future this will not be needed since the coutry can never be null
-            country = (Country) sp.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
+            country = (Country) persistentSupport.getIPersistentCountry().readCountryByNationality("PORTUGUESA NATURAL DO CONTINENTE");
         }
 
         // Change personal Information

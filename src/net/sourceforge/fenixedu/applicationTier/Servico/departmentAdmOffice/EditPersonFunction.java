@@ -6,31 +6,25 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditPersonFunction extends Service {
 
     public void run(Integer personFunctionID, Integer functionID, Date beginDate, Date endDate,
             Double credits) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
-
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
-        PersonFunction person_Function = (PersonFunction) suportePersistente.getIPersistentObject()
+        PersonFunction person_Function = (PersonFunction) persistentSupport.getIPersistentObject()
                 .readByOID(PersonFunction.class, personFunctionID);
 
         if (person_Function == null) {
             throw new FenixServiceException("error.no.personFunction");
         }
 
-        Function function = (Function) suportePersistente.getIPersistentObject().readByOID(
+        Function function = (Function) persistentSupport.getIPersistentObject().readByOID(
                 Function.class, functionID);
 
         if (function == null) {

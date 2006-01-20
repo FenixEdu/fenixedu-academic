@@ -17,25 +17,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.general;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCountry;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
-
 public class ReadAllCountries extends Service {
 
     public Object run() throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List countries = sp.getIPersistentCountry().readAllCountrys();
+        List countries = persistentSupport.getIPersistentCountry().readAllCountrys();
 
         if (countries.size() == 0) {
             throw new ExcepcaoInexistente("Non existing Countries !!");

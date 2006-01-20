@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Manuel Pinto e João Figueiredo
@@ -32,9 +30,6 @@ public class EditSummary extends Service {
                 || infoSummary.getIsExtraLesson() == null || infoSummary.getSummaryDate() == null) {
             throw new FenixServiceException("error.summary.impossible.edit");
         }
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
 
         final Summary summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary

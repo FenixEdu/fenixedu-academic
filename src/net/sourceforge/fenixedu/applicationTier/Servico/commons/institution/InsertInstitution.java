@@ -1,12 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -16,8 +14,7 @@ public class InsertInstitution extends Service {
 
     public Institution run(String institutionName) throws ExcepcaoPersistencia,
             ExistingServiceException {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final Institution storedInstitution = sp.getIPersistentInstitution().readByName(
+        final Institution storedInstitution = persistentSupport.getIPersistentInstitution().readByName(
                 institutionName);
 
         if (storedInstitution != null) {

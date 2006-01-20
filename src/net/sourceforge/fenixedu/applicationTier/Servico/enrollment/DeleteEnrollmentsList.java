@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.CantDeleteServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -28,8 +26,7 @@ public class DeleteEnrollmentsList extends Service {
     // some of these arguments may be null. they are only needed for filter
     public void run(InfoStudent infoStudent, DegreeType degreeType, List enrolmentIDList)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
+        IPersistentEnrollment enrolmentDAO = persistentSupport.getIPersistentEnrolment();
 
         if (enrolmentIDList != null && enrolmentIDList.size() > 0) {
             ListIterator iterator = enrolmentIDList.listIterator();

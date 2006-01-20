@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -11,8 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * 
@@ -36,9 +35,6 @@ public class DeleteStudentAttendingCourse extends Service {
         if (infoStudent == null) {
             return Boolean.FALSE;
         }
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final Student student = readStudent(persistentSupport, infoStudent);
         final ExecutionCourse executionCourse = readExecutionCourse(persistentSupport,
                 executionCourseID);

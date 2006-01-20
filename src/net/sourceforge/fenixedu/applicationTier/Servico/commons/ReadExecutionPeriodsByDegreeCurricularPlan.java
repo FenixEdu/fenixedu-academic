@@ -10,14 +10,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -28,17 +26,15 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionPeriodsByDegreeCurricularPlan extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
         // End date of the current year
-        Date end = sp.getIPersistentExecutionYear().readCurrentExecutionYear().getEndDate();
+        Date end = persistentSupport.getIPersistentExecutionYear().readCurrentExecutionYear().getEndDate();
 
         // Start date of the degree curricular plan
-        Date start = ((DegreeCurricularPlan) (sp.getIPersistentDegreeCurricularPlan().readByOID(
+        Date start = ((DegreeCurricularPlan) (persistentSupport.getIPersistentDegreeCurricularPlan().readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID))).getInitialDate();
 
-        List<ExecutionPeriod> executionPeriods = sp.getIPersistentExecutionPeriod()
+        List<ExecutionPeriod> executionPeriods = persistentSupport.getIPersistentExecutionPeriod()
                 .readExecutionPeriodsInTimePeriod(start, end);
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>(

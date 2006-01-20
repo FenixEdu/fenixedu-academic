@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateCurricularCourse extends Service {
 
@@ -25,7 +23,6 @@ public class CreateCurricularCourse extends Service {
             Integer competenceCourseID, Integer courseGroupID, Integer year, Integer semester,
             Integer degreeCurricularPlanID) throws ExcepcaoPersistencia, FenixServiceException {
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
                 .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
@@ -40,7 +37,8 @@ public class CreateCurricularCourse extends Service {
         DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentObject().readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-        CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan.getDegreeStructure();
+        CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan
+                .getDegreeStructure();
         CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
                 new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR),
                 new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER));
@@ -55,11 +53,10 @@ public class CreateCurricularCourse extends Service {
         // we just read the '2006/2007'
         ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
                 .readExecutionYearByName("2006/2007");
-        ExecutionPeriod executionPeriod = executionYear.getExecutionPeriodForSemester(Integer
-                .valueOf(1));
+        ExecutionPeriod executionPeriod = executionYear
+                .getExecutionPeriodForSemester(Integer.valueOf(1));
 
         DomainFactory.makeCurricularCourse(weight, prerequisites, prerequisitesEn,
-                CurricularStage.DRAFT, competenceCourse, courseGroup, curricularPeriod,
-                executionPeriod);
+                CurricularStage.DRAFT, competenceCourse, courseGroup, curricularPeriod, executionPeriod);
     }
 }

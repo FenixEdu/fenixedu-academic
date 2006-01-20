@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gep.inquiries;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoInquiriesCourse;
@@ -29,10 +30,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
-import net.sourceforge.fenixedu.applicationTier.Service;
 /**
  * @author João Fialho & Rita Ferreira
  * 
@@ -51,9 +49,6 @@ public class WriteInquiry extends Service {
         if (infoStudent == null) {
             throw new FenixServiceException("nullInfoStudent");
         }
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		persistentObject = sp.getIPersistentObject();
 
         // Writing the inquiries course
         final InfoInquiriesCourse iic = inquiry.getInquiriesCourse();
@@ -81,7 +76,7 @@ public class WriteInquiry extends Service {
         }
 
         // updating the registry
-        IPersistentInquiriesRegistry inquiriesRegistryDAO = sp.getIPersistentInquiriesRegistry();
+        IPersistentInquiriesRegistry inquiriesRegistryDAO = persistentSupport.getIPersistentInquiriesRegistry();
         writeInquiriesRegistry(inquiriesRegistryDAO, inquiriesCourse, infoStudent);
     }
 

@@ -17,6 +17,7 @@ import java.util.ListIterator;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -24,14 +25,10 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -90,15 +87,13 @@ public class CreateClassificationsForStudents extends Service {
     public ByteArrayOutputStream run(Integer[] entryGradeLimits, Integer[] approvationRatioLimits,
             Integer[] arithmeticMeanLimits, Integer degreeCurricularPlanID) throws ExcepcaoPersistencia,
             FileNotFoundException {
-
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ExecutionYear currentExecutionYear = ps.getIPersistentExecutionYear()
+        ExecutionYear currentExecutionYear = persistentSupport.getIPersistentExecutionYear()
                 .readCurrentExecutionYear();
 
         List<Student> otherYearsStudents = new ArrayList<Student>();
         List<Student> firstYearStudents = new ArrayList<Student>();
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) ps
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
         List<StudentCurricularPlan> studentCurricularPlans = degreeCurricularPlan

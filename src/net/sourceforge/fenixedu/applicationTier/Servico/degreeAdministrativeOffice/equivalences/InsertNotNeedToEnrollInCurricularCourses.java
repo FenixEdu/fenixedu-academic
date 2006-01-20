@@ -3,6 +3,7 @@
 */
 package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOffice.equivalences;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
@@ -10,9 +11,6 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurric
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -22,10 +20,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class InsertNotNeedToEnrollInCurricularCourses extends Service {
 
     public void run(Integer studentCurricularPlanID, Integer[] curricularCoursesID) throws ExcepcaoPersistencia{
-        
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan scpDAO = sp.getIStudentCurricularPlanPersistente();
-        IPersistentCurricularCourse ccDAO = sp.getIPersistentCurricularCourse();
+        IPersistentStudentCurricularPlan scpDAO = persistentSupport.getIStudentCurricularPlanPersistente();
+        IPersistentCurricularCourse ccDAO = persistentSupport.getIPersistentCurricularCourse();
         
         StudentCurricularPlan scp = (StudentCurricularPlan) scpDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
         

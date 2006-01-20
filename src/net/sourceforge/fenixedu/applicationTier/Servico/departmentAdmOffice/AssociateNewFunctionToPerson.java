@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.departmentAdmOffice;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Person;
@@ -14,9 +15,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.RulesRepository;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 
 public class AssociateNewFunctionToPerson extends Service {
@@ -24,15 +22,13 @@ public class AssociateNewFunctionToPerson extends Service {
     public void run(Integer functionID, Integer personID, Double credits,
             Date beginDate, Date endDate) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        
-        Person person = (Person) suportePersistente.getIPessoaPersistente().readByOID(Person.class, personID);
+        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class, personID);
         
         if(person == null){
             throw new FenixServiceException("error.noPerson");
         }
                        
-        Function function = (Function) suportePersistente.getIPersistentObject().readByOID(Function.class, functionID);
+        Function function = (Function) persistentSupport.getIPersistentObject().readByOID(Function.class, functionID);
         
         if(function == null){
             throw new FenixServiceException("error.noFunction");

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
@@ -32,14 +33,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * Manuel Pinto e João Figueiredo
@@ -48,12 +45,11 @@ public class ReadSummaries extends Service {
     
     public SiteView run(Integer teacherNumber, Integer executionCourseId, String summaryType,
             Integer shiftId) throws FenixServiceException, ExcepcaoPersistencia {
-        
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
-        final IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
-        final ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
+
+        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+        final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         
         final Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
         if (teacher == null) {
@@ -85,7 +81,7 @@ public class ReadSummaries extends Service {
         // execution courses's lesson types for display to filter summary
         List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
         
-        IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
         
         if (site == null) {

@@ -4,17 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadRoleByRoleType extends Service {
 
     public Role run(RoleType roleType) throws ExcepcaoPersistencia{
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();        
-        return sp.getIPersistentRole().readByRoleType(roleType);              
+        return persistentSupport.getIPersistentRole().readByRoleType(roleType);              
     }
 }

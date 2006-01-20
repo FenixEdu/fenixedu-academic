@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.EnrolmentRuleServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -29,13 +30,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos in Jan 27, 2004
@@ -187,9 +184,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
 	public static EnrolmentPeriodInCurricularCourses getEnrolmentPeriod(
 			StudentCurricularPlan studentActiveCurricularPlan)
 			throws ExcepcaoPersistencia, OutOfCurricularCourseEnrolmentPeriod {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSuport
+		IPersistentEnrolmentPeriod enrolmentPeriodDAO = persistentSupport
 				.getIPersistentEnrolmentPeriod();
 		EnrolmentPeriodInCurricularCourses enrolmentPeriod = enrolmentPeriodDAO
 				.readActualEnrolmentPeriodForDegreeCurricularPlan(studentActiveCurricularPlan
@@ -216,9 +211,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
 	 */
 	protected Student getStudent(Integer studentNumber)
 			throws ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentStudent studentDAO = persistentSuport
+		IPersistentStudent studentDAO = persistentSupport
 				.getIPersistentStudent();
 
 		return studentDAO.readStudentByNumberAndDegreeType(studentNumber,
@@ -232,9 +225,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
 	 */
 	protected StudentCurricularPlan getStudentCurricularPlan(Student student)
 			throws ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
+		IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
 				.getIStudentCurricularPlanPersistente();
 
 		return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student
@@ -247,9 +238,7 @@ public class ShowAvailableCurricularCoursesWithoutEnrollmentPeriod extends
 		ExecutionPeriod executionPeriod2Return = executionPeriod;
 
 		if (executionPeriod == null) {
-			ISuportePersistente daoFactory = PersistenceSupportFactory
-					.getDefaultPersistenceSupport();
-			IPersistentExecutionPeriod executionPeriodDAO = daoFactory
+			IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
 					.getIPersistentExecutionPeriod();
 			executionPeriod2Return = executionPeriodDAO
 					.readActualExecutionPeriod();

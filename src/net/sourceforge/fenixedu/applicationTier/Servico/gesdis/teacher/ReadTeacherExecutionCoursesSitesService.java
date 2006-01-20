@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteWithInfoExecutionCourse;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -30,11 +28,9 @@ public class ReadTeacherExecutionCoursesSitesService extends Service {
 
         final List<InfoSite> infoSites = new ArrayList<InfoSite>();
 
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         //final IPersistentSite persistentSite =
         // persistentSuport.getIPersistentSite();
-        final IPersistentProfessorship persistentProfessorship = persistentSuport
+        final IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
 
         final List<Professorship> professorships = persistentProfessorship

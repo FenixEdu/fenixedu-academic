@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
@@ -23,14 +24,10 @@ import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -40,9 +37,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadClassTimeTableByStudent extends Service {
     
     public List run(final String username, final Integer classID, final Integer executionCourseID) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();        
-        ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();        
+        ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
         
         Student student = persistentStudent.readByUsername(username);
         SchoolClass schoolClass = (SchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classID);

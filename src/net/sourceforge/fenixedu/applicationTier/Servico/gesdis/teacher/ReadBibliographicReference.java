@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBibliographicReference;
@@ -22,10 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReferenc
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author PTRLV
@@ -39,12 +37,11 @@ public class ReadBibliographicReference extends Service {
 		List references = null;
 		List infoBibRefs = null;
 		try {
-			ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-			IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-			IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-			IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = sp
+			IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+			IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+			IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = persistentSupport
 					.getIPersistentBibliographicReference();
-			IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
 			ExecutionYear executionYear = persistentExecutionYear
 					.readExecutionYearByName(infoExecutionCourse.getInfoExecutionPeriod()

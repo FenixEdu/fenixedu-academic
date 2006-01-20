@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -17,9 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
@@ -32,22 +30,18 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
     }
 
     public List run(Integer fromNumber, Integer toNumber) throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = null;
-
         List infoStudentList = new ArrayList();
         List degreeNames = new ArrayList();
         List allStudentsData = new ArrayList();
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent pStudent = sp.getIPersistentStudent();
+        IPersistentStudent pStudent = persistentSupport.getIPersistentStudent();
         List studentsList = pStudent.readAllBetweenNumbers(fromNumber, toNumber);
 
         for (int iter = 0; iter < studentsList.size(); iter++) {
             Student student = (Student) studentsList.get(iter);
             //TODO se ele está inscrito no semestre actual é porque já pagou as
             // propinas...
-            if (student.getPayedTuition().booleanValue() && studentHasEnrollments(student, sp)) {
+            if (student.getPayedTuition().booleanValue() && studentHasEnrollments(student)) {
                 InfoStudent infoStudentWithInfoPerson = InfoStudentWithInfoPerson
                         .newInfoFromDomain(student);
                 infoStudentList.add(infoStudentWithInfoPerson);
@@ -67,11 +61,11 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private boolean studentHasEnrollments(Student student, ISuportePersistente sp)
+    private boolean studentHasEnrollments(Student student)
             throws ExcepcaoPersistencia {
 
-        IPersistentEnrollment pEnrollment = sp.getIPersistentEnrolment();
-        IPersistentExecutionPeriod pExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentEnrollment pEnrollment = persistentSupport.getIPersistentEnrolment();
+        IPersistentExecutionPeriod pExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = pExecutionPeriod.readActualExecutionPeriod();
 
         List enrollments = pEnrollment.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(

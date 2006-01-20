@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.institution.InsertInstitution;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
@@ -11,9 +12,6 @@ import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class InsertExternalPersons extends Service {
 
@@ -22,11 +20,10 @@ public class InsertExternalPersons extends Service {
 
         List<ExternalPerson> externalPersons = new ArrayList<ExternalPerson>();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<Institution> institutions = (List<Institution>)sp.getIPersistentInstitution().readAll();
+        List<Institution> institutions = (List<Institution>)persistentSupport.getIPersistentInstitution().readAll();
 
         // generate new identification number
-        String lastDocumentIdNumber = sp.getIPersistentExternalPerson().readLastDocumentIdNumber();
+        String lastDocumentIdNumber = persistentSupport.getIPersistentExternalPerson().readLastDocumentIdNumber();
         int nextID = Integer.parseInt(lastDocumentIdNumber);
 
         for (InfoExternalPerson infoExternalPerson : infoExternalPersons) {

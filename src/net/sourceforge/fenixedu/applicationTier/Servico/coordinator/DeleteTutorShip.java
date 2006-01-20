@@ -2,13 +2,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class DeleteTutorShip extends Service {
 
@@ -20,9 +17,6 @@ public class DeleteTutorShip extends Service {
         }
 
         if (tutorIds2Delete != null && tutorIds2Delete.size() > 0) {
-            final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-
             for (Integer tutorId : tutorIds2Delete) {
                 Tutor tutor = (Tutor) persistentObject.readByOID(Tutor.class, tutorId);
                 if (tutor != null) {

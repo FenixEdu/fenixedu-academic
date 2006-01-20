@@ -17,19 +17,17 @@ public class EditExternalPerson extends Service {
             String phone, String mobile, String homepage, String email) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ExternalPerson storedExternalPerson = (ExternalPerson) sp.getIPersistentExternalPerson()
+        ExternalPerson storedExternalPerson = (ExternalPerson) persistentSupport.getIPersistentExternalPerson()
                 .readByOID(ExternalPerson.class, externalPersonID);
 
         if (storedExternalPerson == null)
             throw new NonExistingServiceException(
                     "error.exception.externalPerson.nonExistingExternalPsrson");
 
-        List<ExternalPerson> allExternalPersons = (List<ExternalPerson>) sp
+        List<ExternalPerson> allExternalPersons = (List<ExternalPerson>) persistentSupport
                 .getIPersistentExternalPerson().readAll(ExternalPerson.class);
 
-        Institution storedInstitution = (Institution) sp.getIPersistentInstitution().readByOID(
+        Institution storedInstitution = (Institution) persistentSupport.getIPersistentInstitution().readByOID(
                 Institution.class, institutionID);
 
         storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution,

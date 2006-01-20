@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSummary;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -19,14 +20,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author mrsp and jdnf
@@ -38,13 +35,11 @@ public class ReadLastSummary extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoSummary summary = null;
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        IPersistentSummary persistentSummary = suportePersistente.getIPersistentSummary();
-        IPersistentExecutionCourse persistentExecutionCourse = suportePersistente
+        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
-        ITurnoPersistente persistentShift = suportePersistente.getITurnoPersistente();
-        IAulaPersistente aulaPersistente = suportePersistente.getIAulaPersistente();
+        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
+        IAulaPersistente aulaPersistente = persistentSupport.getIAulaPersistente();
 
         Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftId);
         if (shift == null)

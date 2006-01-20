@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
@@ -39,15 +40,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentManagementPositionCreditLine;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.comparators.ComparatorChain;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadTeacherCreditsSheet extends Service {
 
@@ -202,10 +200,8 @@ public class ReadTeacherCreditsSheet extends Service {
 
         TeacherCreditsSheetDTO teacherCreditsSheetDTO = new TeacherCreditsSheetDTO();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = readExecutionPeriod(executionPeriodId, executionPeriodDAO);
         Teacher teacher = readTeacher(infoTeacherParam.getTeacherNumber(), teacherDAO);
 
@@ -222,11 +218,11 @@ public class ReadTeacherCreditsSheet extends Service {
         List infoTeacherDegreeFinalProjectStudentList = readTeacherDegreeFinalProjectStudentList(
                 teacher, executionPeriod);
 
-        List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod, sp);
+        List detailedProfessorshipList = readDetailedProfessorships(teacher, executionPeriod);
 
         List otherTypeCreditLineList = readOtherTypeCreditLine(teacher, executionPeriod);
 
-        List infoManagementPositions = readManagementPositions(teacher, executionPeriod, sp);
+        List infoManagementPositions = readManagementPositions(teacher, executionPeriod);
 
         List infoServiceExemptions = teacher.getServiceExemptionSituations(executionPeriod
                 .getBeginDate(), executionPeriod.getEndDate());
@@ -264,9 +260,8 @@ public class ReadTeacherCreditsSheet extends Service {
         return teacherCreditsSheetDTO;
     }
 
-    private List readManagementPositions(Teacher teacher, ExecutionPeriod executionPeriod,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentManagementPositionCreditLine managementPosistionCreditLineDAO = sp
+    private List readManagementPositions(Teacher teacher, ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+        IPersistentManagementPositionCreditLine managementPosistionCreditLineDAO = persistentSupport
                 .getIPersistentManagementPositionCreditLine();
 
         List managementPositions = managementPosistionCreditLineDAO.readByTeacherAndExecutionPeriod(
@@ -304,9 +299,8 @@ public class ReadTeacherCreditsSheet extends Service {
         return infoOtherCreditLines;
     }
 
-    private List readDetailedProfessorships(Teacher teacher, ExecutionPeriod executionPeriod,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+    private List readDetailedProfessorships(Teacher teacher, ExecutionPeriod executionPeriod) throws ExcepcaoPersistencia {
+        IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
 
         List professorshipList = professorshipDAO.readByTeacherAndExecutionPeriod(teacher
                 .getIdInternal(), executionPeriod.getIdInternal());

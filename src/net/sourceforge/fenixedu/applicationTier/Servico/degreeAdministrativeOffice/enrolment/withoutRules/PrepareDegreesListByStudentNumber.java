@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.degree.execution.ReadExecutionDegreesByExecutionYearAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -24,12 +25,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -45,10 +43,8 @@ public class PrepareDegreesListByStudentNumber extends Service {
     //Integer studentNumber, Integer executionDegreeIdChosen)
             throws FenixServiceException, ExcepcaoPersistencia {
         List result = null;
-        ISuportePersistente sp = null;
 
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
             ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
             InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
             
@@ -65,7 +61,7 @@ public class PrepareDegreesListByStudentNumber extends Service {
             }
 
             
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+            IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
             Student student = persistentStudent.readStudentByNumberAndDegreeType(infoStudent
                     .getNumber(), degreeType);
             if (student == null) {
@@ -74,7 +70,7 @@ public class PrepareDegreesListByStudentNumber extends Service {
 
             //select the first execution degree or the execution degree of the
             // student logged
-            InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(sp,
+            InfoExecutionDegree infoExecutionDegree = selectExecutionDegree(persistentSupport,
                     infoExecutionsDegreesList, executionDegreeId, student, degreeType);
 
             //it is return a list where the first element is the degree
@@ -86,14 +82,14 @@ public class PrepareDegreesListByStudentNumber extends Service {
         return result;
     }
 
-    private InfoExecutionDegree selectExecutionDegree(ISuportePersistente sp,
+    private InfoExecutionDegree selectExecutionDegree(ISuportePersistente persistentSupport,
             List infoExecutionDegreeList, Integer executionDegreeIdChosen, Student student,
             DegreeType degreeType) throws ExcepcaoPersistencia {
         InfoExecutionDegree infoExecutionDegree = null;
 
         //read the execution degree chosen
         if (executionDegreeIdChosen != null) {
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
             ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                     ExecutionDegree.class, executionDegreeIdChosen);
@@ -103,7 +99,7 @@ public class PrepareDegreesListByStudentNumber extends Service {
         }
 
         //read the execution degree belongs to student
-        IPersistentStudentCurricularPlan persistentCurricularPlan = sp
+        IPersistentStudentCurricularPlan persistentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
         StudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), degreeType);

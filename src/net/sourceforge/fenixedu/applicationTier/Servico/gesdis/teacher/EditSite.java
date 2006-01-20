@@ -3,14 +3,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author PTRLV
@@ -19,9 +17,7 @@ public class EditSite extends Service {
 
     public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site siteOld = persistentSite.readByExecutionCourse(infoSiteOld.getInfoExecutionCourse()
                 .getIdInternal());
 

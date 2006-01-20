@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
@@ -34,15 +35,11 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Manuel Pinto e João Figueiredo
@@ -53,9 +50,7 @@ public class PrepareInsertSummary extends Service {
             ExcepcaoPersistencia {
         SiteView siteView;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
@@ -63,13 +58,13 @@ public class PrepareInsertSummary extends Service {
             throw new FenixServiceException("no.executionCourse");
         }
 
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
         if (site == null) {
             throw new FenixServiceException("no.site");
         }
 
-        ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
@@ -92,10 +87,10 @@ public class PrepareInsertSummary extends Service {
             });
         }
 
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         List infoProfessorships = new ArrayList();
 
-        ISalaPersistente persistentRoom = sp.getISalaPersistente();
+        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         List rooms = persistentRoom.readAll();
         List infoRooms = new ArrayList();
         if (rooms != null && rooms.size() > 0) {
@@ -110,7 +105,7 @@ public class PrepareInsertSummary extends Service {
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
         //teacher logged
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readByNumber(teacherNumber);
         Integer professorshipSelect = null;
         if (teacher != null) {

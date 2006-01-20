@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -50,16 +49,15 @@ public class ReadDelegateCurricularCourses extends SearchService {
     }
 
     @Override
-    protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    protected List doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
 
         final String user = (String) searchParameters.get("user");
-        final Student student = sp.getIPersistentStudent().readByUsername(user);
-        final Delegate delegate = sp.getIPersistentDelegate().readByStudent(student);
+        final Student student = persistentSupport.getIPersistentStudent().readByUsername(user);
+        final Delegate delegate = persistentSupport.getIPersistentDelegate().readByStudent(student);
 
         // if he's a degree delegate then he can read all curricular courses
         // report
-        final IPersistentCurricularCourse persistentCurricularCourse = sp
+        final IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
                 .getIPersistentCurricularCourse();
         List curricularCourses = null;
         if (delegate.getType().booleanValue()) {

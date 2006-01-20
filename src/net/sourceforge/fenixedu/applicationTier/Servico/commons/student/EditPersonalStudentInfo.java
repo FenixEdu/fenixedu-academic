@@ -1,24 +1,18 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonWithInfoCountry;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditPersonalStudentInfo extends Service {
 
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoPersistencia, ExcepcaoInexistente {
 
-        ISuportePersistente sp = null;
-        Person person = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
                 newInfoPerson.getIdInternal());
 
         if (person == null) {
@@ -26,7 +20,7 @@ public class EditPersonalStudentInfo extends Service {
         }
 
         // Get new Country
-        Country country = sp.getIPersistentCountry().readCountryByNationality(
+        Country country = persistentSupport.getIPersistentCountry().readCountryByNationality(
                 newInfoPerson.getInfoPais().getNationality());
         
         // Change personal Information

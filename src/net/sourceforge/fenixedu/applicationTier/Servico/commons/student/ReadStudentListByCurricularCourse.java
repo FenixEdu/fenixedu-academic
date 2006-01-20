@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -22,12 +23,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanA
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadStudentListByCurricularCourse extends Service {
 
@@ -35,16 +32,15 @@ public class ReadStudentListByCurricularCourse extends Service {
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
         CurricularCourse curricularCourse = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         // Read the Students
 
-        curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse().readByOID(
+        curricularCourse = (CurricularCourse) persistentSupport.getIPersistentCurricularCourse().readByOID(
                 CurricularCourse.class, curricularCourseID);
 
         List enrolmentList = null;
         if (executionYear != null) {
-            enrolmentList = sp.getIPersistentEnrolment().readByCurricularCourseAndYear(
+            enrolmentList = persistentSupport.getIPersistentEnrolment().readByCurricularCourseAndYear(
                     curricularCourseID, executionYear);
         } else {
             enrolmentList = curricularCourse.getEnrolments();

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -29,13 +30,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
@@ -46,27 +43,25 @@ public class ReadCurriculumHistoricReport extends Service {
     public InfoCurriculumHistoricReport run(Integer curricularCourseID, Integer semester,
             Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         // read ExecutionYear
-        IPersistentExecutionYear persistentExecutionYear = suportePersistente
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport
                 .getIPersistentExecutionYear();
         ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
                 ExecutionYear.class, executionYearID);
 
         // read ExecutionPeriod
-        IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
                 .getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                 semester, executionYear.getYear());
 
         // read CurricularCourse
-        IPersistentCurricularCourse persistentCurricularCourse = suportePersistente
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
                 .getIPersistentCurricularCourse();
         CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseID);
         // read all enrollments
-        IPersistentEnrollment persistentEnrollment = suportePersistente.getIPersistentEnrolment();
+        IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
         List enrollments = persistentEnrollment.readByCurricularCourseAndExecutionPeriod(
                 curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
 

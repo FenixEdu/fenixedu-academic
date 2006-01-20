@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.student.GetEnrolmentGrade;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -32,14 +33,10 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
@@ -51,9 +48,7 @@ public class ReadStudentExternalInformation extends Service {
 	public Collection run(String username) throws ExcepcaoPersistencia,
 			FenixServiceException {
 		Collection result = new ArrayList();
-		IPessoaPersistente persistentPerson = PersistenceSupportFactory
-				.getDefaultPersistenceSupport().getIPessoaPersistente();
-		Person person = persistentPerson.lerPessoaPorUsername(username);
+		Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
 		Collection students = person.getStudents();
 		for (Iterator iter = students.iterator(); iter.hasNext();) {
 			InfoStudentExternalInformation info = new InfoStudentExternalInformation();

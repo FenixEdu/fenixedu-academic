@@ -12,21 +12,20 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
 public class EditGrantSubsidy extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject,
             DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
         GrantSubsidy grantSubsidy = (GrantSubsidy) domainObject;
         grantSubsidy.setDateBeginSubsidy(infoGrantSubsidy.getDateBeginSubsidy());
         grantSubsidy.setDateEndSubsidy(infoGrantSubsidy.getDateEndSubsidy());
 
-        IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
+        IPersistentGrantContract persistentGrantContract = persistentSupport.getIPersistentGrantContract();
         GrantContract grantContract = (GrantContract) persistentGrantContract.readByOID(
                 GrantContract.class, infoGrantSubsidy.getInfoGrantContract().getIdInternal());
         grantSubsidy.setGrantContract(grantContract);
@@ -47,19 +46,19 @@ public class EditGrantSubsidy extends EditDomainObjectService {
     }
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantSubsidy();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentGrantSubsidy();
     }
 
     @Override
-    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException, ExcepcaoPersistencia {
+    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject)
+            throws FenixServiceException, ExcepcaoPersistencia {
         /*
          * In case of a new Subsidy, the Contract associated needs to be set.
          */
         GrantSubsidy grantSubsidy = (GrantSubsidy) domainObjectLocked;
         InfoGrantSubsidy infoGrantSubsidy = (InfoGrantSubsidy) infoObject;
-        IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
+        IPersistentGrantContract persistentGrantContract = persistentSupport.getIPersistentGrantContract();
         GrantContract grantContract = (GrantContract) persistentGrantContract.readByOID(
                 GrantContract.class, infoGrantSubsidy.getInfoGrantContract().getIdInternal());
         grantSubsidy.setGrantContract(grantContract);
@@ -69,7 +68,7 @@ public class EditGrantSubsidy extends EditDomainObjectService {
          * If this is a active subsidy, set all others to state 0 (Desactive)
          */
         if (grantSubsidy.getState().equals(InfoGrantSubsidy.getActiveStateValue())) {
-            IPersistentGrantSubsidy persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
+            IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport.getIPersistentGrantSubsidy();
             List<GrantSubsidy> activeSubsidy = persistentGrantSubsidy
                     .readAllSubsidiesByGrantContractAndState(grantSubsidy.getGrantContract()
                             .getIdInternal(), InfoGrantSubsidy.getActiveStateValue());

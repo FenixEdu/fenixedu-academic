@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -50,7 +51,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentOldPublication;
@@ -66,8 +66,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
-
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
@@ -78,10 +76,9 @@ public class ReadTeachersInformation extends Service {
     public List run(Integer executionDegreeId, Boolean basic, String executionYearString)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 
         List professorships = null;
         ExecutionYear executionYear = null;
@@ -164,22 +161,20 @@ public class ReadTeachersInformation extends Service {
 
         InfoSiteTeacherInformation infoSiteTeacherInformation = new InfoSiteTeacherInformation();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();        
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();        
         Teacher teacher = persistentTeacher.readTeacherByUsername(user);
 
         InfoTeacher infoTeacher = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
         infoSiteTeacherInformation.setInfoTeacher(infoTeacher);
 
-        infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(sp, teacher));
+        infoSiteTeacherInformation.setInfoQualifications(getInfoQualifications(persistentSupport, teacher));
 
-        infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(sp, teacher,
+        infoSiteTeacherInformation.setInfoProfessionalCareers(getInfoCareers(persistentSupport, teacher,
                 CareerType.PROFESSIONAL));
-        infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(sp, teacher,
+        infoSiteTeacherInformation.setInfoTeachingCareers(getInfoCareers(persistentSupport, teacher,
                 CareerType.TEACHING));
 
-        IPersistentServiceProviderRegime persistentServiceProviderRegime = sp
+        IPersistentServiceProviderRegime persistentServiceProviderRegime = persistentSupport
                 .getIPersistentServiceProviderRegime();
         ServiceProviderRegime serviceProviderRegime = persistentServiceProviderRegime
                 .readByTeacherId(teacher.getIdInternal());
@@ -193,15 +188,15 @@ public class ReadTeachersInformation extends Service {
             infoSiteTeacherInformation.setInfoServiceProviderRegime(infoServiceProviderRegime);
         }
 
-        infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(sp, teacher));
+        infoSiteTeacherInformation.setInfoExternalActivities(getInfoExternalActivities(persistentSupport, teacher));
 
         infoSiteTeacherInformation.setInfoLecturingExecutionCourses(getInfoLecturingExecutionCourses(
-                teacher, sp, executionYear));
+                teacher, persistentSupport, executionYear));
         infoSiteTeacherInformation
-                .setInfoResponsibleExecutionCourses(getInfoResponsibleExecutionCourses(teacher, sp,
+                .setInfoResponsibleExecutionCourses(getInfoRepersistentSupportonsibleExecutionCourses(teacher, persistentSupport,
                         executionYear));
 
-        IPersistentWeeklyOcupation persistentWeeklyOcupation = sp.getIPersistentWeeklyOcupation();
+        IPersistentWeeklyOcupation persistentWeeklyOcupation = persistentSupport.getIPersistentWeeklyOcupation();
         WeeklyOcupation weeklyOcupation = persistentWeeklyOcupation.readByTeacherId(teacher.getIdInternal());
         if (weeklyOcupation == null) {
             InfoWeeklyOcupation infoWeeklyOcupation = new InfoWeeklyOcupation();
@@ -218,30 +213,30 @@ public class ReadTeachersInformation extends Service {
             infoSiteTeacherInformation.setInfoWeeklyOcupation(infoWeeklyOcupation);
         }
 
-        infoSiteTeacherInformation.setInfoDegreeOrientation(getInfoOrientation(sp, teacher,
+        infoSiteTeacherInformation.setInfoDegreeOrientation(getInfoOrientation(persistentSupport, teacher,
                 OrientationType.DEGREE));
-        infoSiteTeacherInformation.setInfoMasterOrientation(getInfoOrientation(sp, teacher,
+        infoSiteTeacherInformation.setInfoMasterOrientation(getInfoOrientation(persistentSupport, teacher,
                 OrientationType.MASTER));
-        infoSiteTeacherInformation.setInfoPhdOrientation(getInfoOrientation(sp, teacher,
+        infoSiteTeacherInformation.setInfoPhdOrientation(getInfoOrientation(persistentSupport, teacher,
                 OrientationType.PHD));
 
-        infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(sp,
+        infoSiteTeacherInformation.setInfoArticleChapterPublicationsNumber(getInfoPublicationsNumber(persistentSupport,
                 teacher, PublicationType.ARTICLES_CHAPTERS));
-        infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(sp,
+        infoSiteTeacherInformation.setInfoEditBookPublicationsNumber(getInfoPublicationsNumber(persistentSupport,
                 teacher, PublicationType.EDITOR_BOOK));
-        infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(sp,
+        infoSiteTeacherInformation.setInfoAuthorBookPublicationsNumber(getInfoPublicationsNumber(persistentSupport,
                 teacher, PublicationType.AUTHOR_BOOK));
-        infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(sp,
+        infoSiteTeacherInformation.setInfoMagArticlePublicationsNumber(getInfoPublicationsNumber(persistentSupport,
                 teacher, PublicationType.MAG_ARTICLE));
-        infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(sp,
+        infoSiteTeacherInformation.setInfoComunicationPublicationsNumber(getInfoPublicationsNumber(persistentSupport,
                 teacher, PublicationType.COMUNICATION));
 
-        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(sp, teacher.getIdInternal(),
+        infoSiteTeacherInformation.setInfoOldCientificPublications(getInfoOldPublications(persistentSupport, teacher.getIdInternal(),
                 OldPublicationType.CIENTIFIC));
-        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(sp, teacher.getIdInternal(),
+        infoSiteTeacherInformation.setInfoOldDidacticPublications(getInfoOldPublications(persistentSupport, teacher.getIdInternal(),
                 OldPublicationType.DIDACTIC));
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
         infoSiteTeacherInformation.setInfoExecutionPeriod(InfoExecutionPeriod
@@ -249,27 +244,27 @@ public class ReadTeachersInformation extends Service {
         return infoSiteTeacherInformation;
     }
 
-    private List getInfoResponsibleExecutionCourses(Teacher teacher, ISuportePersistente sp,
+    private List getInfoRepersistentSupportonsibleExecutionCourses(Teacher teacher, ISuportePersistente persistentSupport,
             final ExecutionYear executionYear) throws ExcepcaoPersistencia {
         
-        List responsiblesFor = teacher.responsibleFors();
+        List repersistentSupportonsiblesFor = teacher.responsibleFors();
 
         // filter only the execution courses of the chosen execution year or the
         // current in case none was chosen
-        responsiblesFor = (List) CollectionUtils.select(responsiblesFor, new Predicate() {
+        repersistentSupportonsiblesFor = (List) CollectionUtils.select(repersistentSupportonsiblesFor, new Predicate() {
 
             public boolean evaluate(Object o) {
-                Professorship responsibleFor = (Professorship) o;
-                ExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
+                Professorship repersistentSupportonsibleFor = (Professorship) o;
+                ExecutionCourse executionCourse = repersistentSupportonsibleFor.getExecutionCourse();
                 ExecutionYear executionYearElem = executionCourse.getExecutionPeriod()
                         .getExecutionYear();
                 return executionYear.equals(executionYearElem);
             }
         });
-        List infoExecutionCourses = (List) CollectionUtils.collect(responsiblesFor, new Transformer() {
+        List infoExecutionCourses = (List) CollectionUtils.collect(repersistentSupportonsiblesFor, new Transformer() {
             public Object transform(Object o) {
-                Professorship responsibleFor = (Professorship) o;
-                ExecutionCourse executionCourse = responsibleFor.getExecutionCourse();
+                Professorship repersistentSupportonsibleFor = (Professorship) o;
+                ExecutionCourse executionCourse = repersistentSupportonsibleFor.getExecutionCourse();
                 List curricularCourses = executionCourse.getAssociatedCurricularCourses();
                 List infoCurricularCourses = (List) CollectionUtils.collect(curricularCourses,
                         new Transformer() {
@@ -290,9 +285,9 @@ public class ReadTeachersInformation extends Service {
         return infoExecutionCourses;
     }
 
-    private List getInfoExternalActivities(ISuportePersistente sp, Teacher teacher)
+    private List getInfoExternalActivities(ISuportePersistente persistentSupport, Teacher teacher)
             throws ExcepcaoPersistencia {
-        IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
+        IPersistentExternalActivity persistentExternalActivity = persistentSupport.getIPersistentExternalActivity();
         List externalActivities = persistentExternalActivity.readByTeacherId(teacher.getIdInternal());
 
         List infoExternalActivities = (List) CollectionUtils.collect(externalActivities,
@@ -306,9 +301,9 @@ public class ReadTeachersInformation extends Service {
         return infoExternalActivities;
     }
 
-    private List getInfoLecturingExecutionCourses(Teacher teacher, ISuportePersistente sp,
+    private List getInfoLecturingExecutionCourses(Teacher teacher, ISuportePersistente persistentSupport,
             final ExecutionYear executionYear) throws ExcepcaoPersistencia {
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         List professorships = persistentProfessorship.readByTeacher(teacher.getIdInternal());
 
         // filter only the execution courses of the chosen execution year or the
@@ -347,9 +342,9 @@ public class ReadTeachersInformation extends Service {
         return infoExecutionCourses;
     }
 
-    private List getInfoQualifications(ISuportePersistente sp, Teacher teacher)
+    private List getInfoQualifications(ISuportePersistente persistentSupport, Teacher teacher)
             throws ExcepcaoPersistencia {
-        IPersistentQualification persistentQualification = sp.getIPersistentQualification();
+        IPersistentQualification persistentQualification = persistentSupport.getIPersistentQualification();
         List qualifications = persistentQualification.readQualificationsByPersonId(teacher.getPerson().getIdInternal());
         List infoQualifications = (List) CollectionUtils.collect(qualifications, new Transformer() {
             public Object transform(Object o) {
@@ -361,9 +356,9 @@ public class ReadTeachersInformation extends Service {
         return infoQualifications;
     }
 
-    private List getInfoCareers(ISuportePersistente sp, Teacher teacher, CareerType careerType)
+    private List getInfoCareers(ISuportePersistente persistentSupport, Teacher teacher, CareerType careerType)
             throws ExcepcaoPersistencia {
-        IPersistentCareer persistentCareer = sp.getIPersistentCareer();
+        IPersistentCareer persistentCareer = persistentSupport.getIPersistentCareer();
         List careers = persistentCareer.readAllByTeacherIdAndCareerType(teacher.getIdInternal(), careerType);
         List infoCareers = (List) CollectionUtils.collect(careers, new Transformer() {
             public Object transform(Object o) {
@@ -374,9 +369,9 @@ public class ReadTeachersInformation extends Service {
         return infoCareers;
     }
 
-    private List getInfoOldPublications(ISuportePersistente sp, Integer teacherId,
+    private List getInfoOldPublications(ISuportePersistente persistentSupport, Integer teacherId,
             OldPublicationType oldPublicationType) throws ExcepcaoPersistencia {
-        IPersistentOldPublication persistentOldPublication = sp.getIPersistentOldPublication();
+        IPersistentOldPublication persistentOldPublication = persistentSupport.getIPersistentOldPublication();
         List oldCientificPublications = persistentOldPublication.readAllByTeacherIdAndOldPublicationType(
                 teacherId, oldPublicationType);
 
@@ -390,9 +385,9 @@ public class ReadTeachersInformation extends Service {
         return infoOldPublications;
     }
 
-    private InfoOrientation getInfoOrientation(ISuportePersistente sp, Teacher teacher,
+    private InfoOrientation getInfoOrientation(ISuportePersistente persistentSupport, Teacher teacher,
             OrientationType orientationType) throws ExcepcaoPersistencia {
-        IPersistentOrientation persistentOrientation = sp.getIPersistentOrientation();
+        IPersistentOrientation persistentOrientation = persistentSupport.getIPersistentOrientation();
         Orientation orientation = persistentOrientation.readByTeacherIdAndOrientationType(teacher.getIdInternal(),
                 orientationType);
         InfoOrientation infoOrientation = null;
@@ -407,9 +402,9 @@ public class ReadTeachersInformation extends Service {
         return infoOrientation;
     }
 
-    private InfoPublicationsNumber getInfoPublicationsNumber(ISuportePersistente sp, Teacher teacher,
+    private InfoPublicationsNumber getInfoPublicationsNumber(ISuportePersistente persistentSupport, Teacher teacher,
             PublicationType publicationType) throws ExcepcaoPersistencia {
-        IPersistentPublicationsNumber persistentPublicationsNumber = sp
+        IPersistentPublicationsNumber persistentPublicationsNumber = persistentSupport
                 .getIPersistentPublicationsNumber();
         PublicationsNumber publicationsNumber = persistentPublicationsNumber
                 .readByTeacherIdAndPublicationType(teacher.getIdInternal(), publicationType);

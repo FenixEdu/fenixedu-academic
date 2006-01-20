@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class FindTeachersService extends SearchService {
 
@@ -20,10 +19,9 @@ public class FindTeachersService extends SearchService {
     }
 
     @Override
-    protected List doSearch(HashMap searchParameters, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
+    protected List doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
 
-        Teacher teacher = sp.getIPersistentTeacher().readByNumber(
+        Teacher teacher = persistentSupport.getIPersistentTeacher().readByNumber(
                 Integer.valueOf((String) searchParameters.get("teacherNumber")));
 
         List<Teacher> returnList = new ArrayList<Teacher>();

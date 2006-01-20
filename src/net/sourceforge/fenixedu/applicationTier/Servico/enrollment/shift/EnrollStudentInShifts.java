@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.ShiftEnrollmentErrorReport;
@@ -10,10 +11,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EnrollStudentInShifts extends Service {
 
@@ -22,10 +20,8 @@ public class EnrollStudentInShifts extends Service {
 
     public ShiftEnrollmentErrorReport run(final Integer studentId, final Integer shiftId)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 

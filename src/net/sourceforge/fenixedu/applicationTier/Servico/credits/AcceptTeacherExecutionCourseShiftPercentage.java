@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.CreditsValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingLessonPeriod;
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.validator.OverlappingPeriodException;
@@ -24,11 +25,8 @@ import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
@@ -51,11 +49,9 @@ public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
             List infoShiftProfessorshipList) throws FenixServiceException, ExcepcaoPersistencia {
         List shiftWithErrors = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
-        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentTeacherShiftPercentage();
-        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
+        IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport.getIPersistentTeacherShiftPercentage();
+        IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
 
         // read professorship
         Professorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(infoTeacher

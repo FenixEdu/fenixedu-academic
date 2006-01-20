@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ChosenAreasAreIncompatibleServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -9,9 +10,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos Jan 26, 2004
@@ -25,11 +23,9 @@ public class WriteStudentAreas extends Service {
 			Integer specializationAreaID, Integer secundaryAreaID)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSuport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentBranch persistentBranch = persistentSuport
+		IPersistentBranch persistentBranch = persistentSupport
 				.getIPersistentBranch();
-		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSuport
+		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
 				.getIStudentCurricularPlanPersistente();
 
 		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan

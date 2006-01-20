@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
@@ -14,18 +15,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
 
     public void run(Integer objectID,
             InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent)
             throws ExcepcaoPersistencia, FenixServiceException {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
 
         final Student student = (Student) persistentSupport.getIPersistentStudent()
                 .readStudentByNumberAndDegreeType(

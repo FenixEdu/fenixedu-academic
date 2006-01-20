@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoom;
@@ -25,14 +26,10 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia & Alexandra
@@ -46,15 +43,13 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
 
         List infoShiftPercentageList = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse, sp);
-        Teacher teacher = readTeacher(infoTeacher, sp);
+        ExecutionCourse executionCourse = readExecutionCourse(infoExecutionCourse);
+        Teacher teacher = readTeacher(infoTeacher);
 
         result.setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(executionCourse));
         result.setInfoTeacher(InfoTeacher.newInfoFromDomain(teacher));
 
-        ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
 
         List executionCourseShiftsList = null;
 
@@ -104,15 +99,13 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
         return result;
     }
 
-    private Teacher readTeacher(InfoTeacher infoTeacher, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+    private Teacher readTeacher(InfoTeacher infoTeacher) throws ExcepcaoPersistencia {
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
         return (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
     }
 
-    private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+    private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
+        IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
         return (ExecutionCourse) executionCourseDAO.readByOID(
                 ExecutionCourse.class, infoExecutionCourse.getIdInternal());

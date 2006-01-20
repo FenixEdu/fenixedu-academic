@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import relations.CmsContents;
 import relations.CmsUsers;
 import relations.ContentCreation;
@@ -62,7 +61,7 @@ public class ProcessReceivedMail extends CmsService
 			{
 				addressesList.add(addresses[i]);
 			}
-			Collection<MailingList> mailingLists = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailingList().readReceptorMailingListsForAddress(addressesList, this.readFenixCMS().getConfiguration().getMailingListsHostToUse());
+			Collection<MailingList> mailingLists = persistentSupport.getIPersistentMailingList().readReceptorMailingListsForAddress(addressesList, this.readFenixCMS().getConfiguration().getMailingListsHostToUse());
 			boolean messageCreated = false;
 			boolean firstMailingList = true;
 			if (mailingLists.size() > 0)

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 
@@ -25,14 +24,14 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMo
 public class EditGrantContractMovement extends EditDomainObjectService {
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantContractMovement();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentGrantContractMovement();
     }
 
     @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
+    protected DomainObject readObjectByUnique(InfoObject infoObject)
             throws ExcepcaoPersistencia {
-        IPersistentGrantContractMovement persistentGrantContractMovement = sp
+        IPersistentGrantContractMovement persistentGrantContractMovement = persistentSupport
                 .getIPersistentGrantContractMovement();
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
@@ -41,8 +40,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
     @Override
-    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException {
+    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject) throws FenixServiceException {
 
         try {
             /*
@@ -52,7 +50,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
             GrantContractMovement grantContractMovement = (GrantContractMovement) domainObjectLocked;
             InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
-            GrantContract grantContract = (GrantContract) sp.getIPersistentGrantContract().readByOID(
+            GrantContract grantContract = (GrantContract) persistentSupport.getIPersistentGrantContract().readByOID(
                     GrantContract.class,
                     infoGrantContractMovement.getInfoGrantContract().getIdInternal());
             grantContractMovement.setGrantContract(grantContract);
@@ -67,7 +65,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     }
 
     @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject,
             DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
         GrantContractMovement grantContractMovement = (GrantContractMovement) domainObject;
@@ -75,7 +73,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
         grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
         grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
 
-        IPersistentGrantContract persistentGrantContract = sp.getIPersistentGrantContract();
+        IPersistentGrantContract persistentGrantContract = persistentSupport.getIPersistentGrantContract();
         GrantContract grantContract = (GrantContract) persistentGrantContract.readByOID(GrantContract.class,
                 infoGrantContractMovement.getInfoGrantContract().getIdInternal());
         grantContractMovement.setGrantContract(grantContract);

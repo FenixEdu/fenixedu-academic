@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,13 +14,9 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCur
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos Jan 26, 2004
@@ -30,9 +27,9 @@ public class DeleteEnrolment extends Service {
     // some of these arguments may be null. they are only needed for filter
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
             throws FenixServiceException, DomainException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentEnrollment enrolmentDAO = persistentSuport.getIPersistentEnrolment();
-        IPersistentRestriction persistentRestriction = persistentSuport.getIPersistentRestriction();
+
+        IPersistentEnrollment enrolmentDAO = persistentSupport.getIPersistentEnrolment();
+        IPersistentRestriction persistentRestriction = persistentSupport.getIPersistentRestriction();
         final Enrolment enrollment1 = (Enrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
 
         List<Enrolment> enrollments2Delete = new ArrayList<Enrolment>();

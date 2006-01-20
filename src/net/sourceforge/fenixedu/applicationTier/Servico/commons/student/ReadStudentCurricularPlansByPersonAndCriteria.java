@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.EnrollmentPredicates;
@@ -23,15 +24,11 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrollmentStateSelectionType;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Andr� Fernandes / Jo�o Brito
@@ -52,7 +49,6 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
         // criterio define que IEnrolments vamos ver: pode ser 'aprovado ou null
         // (selecciona todos)
 
-        ISuportePersistente sp = null;
         List studentCurricularPlans = new ArrayList();
 
         Predicate predicado = null;
@@ -65,10 +61,8 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
             predicado = EnrollmentPredicates.getAllPredicate(); // todos
         }
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         if (curricularPlanID.isAll() || curricularPlanID.isNewest()) {
-            Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+            Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
             List students = person.getStudents();
             List studentCPsTemp = null;
 
@@ -106,9 +100,9 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
             }
         } else // um SCP em particular
         {
-            // obter o CP especificado como curricularPlanID
+            // obter o CP epersistentSupportecificado como curricularPlanID
 
-            studentCurricularPlans.add(sp.getIStudentCurricularPlanPersistente().readByOID(
+            studentCurricularPlans.add(persistentSupport.getIStudentCurricularPlanPersistente().readByOID(
                     StudentCurricularPlan.class, curricularPlanID.getId()));
         }
 

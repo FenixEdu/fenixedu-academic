@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriodWithInfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
@@ -15,18 +16,13 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.Profiler;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadDepartmentTeachersCreditsDetailsService extends Service {
 
     public List run(HashMap searchParameters) throws FenixServiceException, ExcepcaoPersistencia {
         Profiler.getInstance();
         Profiler.resetInstance();
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
                 .getIPersistentExecutionPeriod();
@@ -74,7 +70,6 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
     protected List<Teacher> doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
         Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
         final Department department = (Department) persistentObject.readByOID(Department.class,

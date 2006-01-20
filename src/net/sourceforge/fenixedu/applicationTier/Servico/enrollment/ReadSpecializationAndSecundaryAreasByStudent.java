@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
@@ -14,13 +15,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 31/Jan/2004
@@ -36,9 +33,8 @@ public class ReadSpecializationAndSecundaryAreasByStudent extends Service {
         List finalSpecializationAreas = new ArrayList();
         List finalSecundaryAreas = new ArrayList();
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
+        IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
                 .getIStudentCurricularPlanPersistente();
 
         Student student = studentDAO.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);

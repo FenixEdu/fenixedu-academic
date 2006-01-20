@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -11,13 +12,9 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 5/Dez/2003
@@ -32,9 +29,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
     protected List readActiveCurricularCourseScopes(final Integer degreeCurricularPlanId)
             throws ExcepcaoPersistencia {
         List infoActiveScopes = null;
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
 
         if (degreeCurricularPlanId != null) {
@@ -65,9 +60,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
             ExecutionYear executionYear) throws FenixServiceException, ExcepcaoPersistencia {
         List infoActiveScopes = null;
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
 
         if (degreeCurricularPlanId != null) {
@@ -99,9 +92,7 @@ abstract public class ReadDegreeCurricularPlanBaseService extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         List infoActiveScopes = null;
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
         if (executionPeriod != null) {
 

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -40,15 +39,15 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 	}
 
 	@Override
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-		return sp.getIPersistentSupportLesson();
+	protected IPersistentObject getIPersistentObject() {
+		return persistentSupport.getIPersistentSupportLesson();
 	}
 
-	protected DomainObject readObjectByUnique(DomainObject domainObject, ISuportePersistente sp)
+	protected DomainObject readObjectByUnique(DomainObject domainObject)
 			throws ExcepcaoPersistencia {
 
 		SupportLesson supportLessonDomainObject = (SupportLesson) domainObject;
-		IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
+		IPersistentSupportLesson supportLessonDAO = persistentSupport.getIPersistentSupportLesson();
 		SupportLesson supportLesson = supportLessonDAO.readByUnique(supportLessonDomainObject
 				.getProfessorship().getIdInternal(), supportLessonDomainObject.getWeekDay(),
 				supportLessonDomainObject.getStartTime(), supportLessonDomainObject.getEndTime());
@@ -56,8 +55,8 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 	}
 
 	@Override
-	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject,
-			ISuportePersistente sp) throws Exception {
+	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject)
+            throws Exception {
 		InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
 
 		Calendar begin = Calendar.getInstance();
@@ -68,10 +67,9 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 		if (end.before(begin)) {
 			throw new InvalidPeriodException();
 		}
-		IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+		IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
 
-		Professorship professorship;
-		professorship = (Professorship) professorshipDAO.readByOID(Professorship.class,
+		Professorship professorship = (Professorship) professorshipDAO.readByOID(Professorship.class,
 				infoSupportLesson.getInfoProfessorship().getIdInternal());
 		Teacher teacher = professorship.getTeacher();
 		ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
@@ -82,7 +80,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 		CreditsValidator.validatePeriod(teacher.getIdInternal(), executionPeriod.getIdInternal(),
 				weekDay, startTime, endTime, PeriodType.SUPPORT_LESSON_PERIOD);
 
-		IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
+		IPersistentSupportLesson supportLessonDAO = persistentSupport.getIPersistentSupportLesson();
 
 		List supportLessonList = supportLessonDAO.readOverlappingPeriod(teacher.getIdInternal(),
 				executionPeriod.getIdInternal(), weekDay, startTime, endTime);
@@ -102,17 +100,17 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 			throw new OverlappingSupportLessonPeriod();
 		}
 
-		super.doBeforeLock(domainObjectToLock, infoObject, sp);
+		super.doBeforeLock(domainObjectToLock, infoObject);
 	}
 
 	@Override
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-			DomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
+            throws ExcepcaoPersistencia {
 		InfoSupportLesson infoSupportLesson = (InfoSupportLesson) infoObject;
 		SupportLesson supportLesson = (SupportLesson) domainObject;
 		supportLesson.setEndTime(infoSupportLesson.getEndTime());
 
-		IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+		IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
 		Professorship professorship = (Professorship) persistentProfessorship.readByOID(
 				Professorship.class, infoSupportLesson.getInfoProfessorship().getIdInternal());
 		supportLesson.setProfessorship(professorship);

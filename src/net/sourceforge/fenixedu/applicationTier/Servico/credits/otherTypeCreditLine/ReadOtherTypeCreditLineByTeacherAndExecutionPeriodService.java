@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.credits.otherTypeCredit
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
@@ -20,13 +21,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
@@ -50,10 +48,9 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends S
     public TeacherOtherTypeCreditLineDTO run(Integer teacherId, Integer executionPeriodId)
             throws FenixServiceException, ExcepcaoPersistencia {
         TeacherOtherTypeCreditLineDTO teacherOtherTypeCreditLineDTO = new TeacherOtherTypeCreditLineDTO();
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = persistentSupport.getIPersistentOtherTypeCreditLine();
 
         Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherId);
 
@@ -110,7 +107,7 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends S
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
     protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentOtherTypeCreditLine();
+        return persistentSupport.getIPersistentOtherTypeCreditLine();
     }
 
     /*

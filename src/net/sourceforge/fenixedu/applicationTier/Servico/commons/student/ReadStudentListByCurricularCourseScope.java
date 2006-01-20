@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -21,35 +22,15 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanA
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadStudentListByCurricularCourseScope extends Service {
 
-    /**
-     * The actor of this class.
-     */
-    public ReadStudentListByCurricularCourseScope() {
-    }
-
     public List run(IUserView userView, Integer curricularCourseScopeID) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente sp = null;
-
-        List enrolmentList = null;
-
-        CurricularCourseScope curricularCourseScope = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        // Read the Students
-
-        curricularCourseScope = (CurricularCourseScope) sp.getIPersistentCurricularCourseScope()
+        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentSupport.getIPersistentCurricularCourseScope()
                 .readByOID(CurricularCourseScope.class, curricularCourseScopeID);
 
-        enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
+        List enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();
 
         if ((enrolmentList == null) || (enrolmentList.size() == 0)) {
             throw new NonExistingServiceException();

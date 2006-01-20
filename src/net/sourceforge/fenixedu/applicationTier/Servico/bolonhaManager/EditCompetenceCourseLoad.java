@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -12,17 +13,11 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditCompetenceCourseLoad extends Service {
 
     public void run(Integer competenceCourseID, RegimeType regimeType, List<CourseLoad> courseLoads)
             throws ExcepcaoPersistencia, FenixServiceException {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
                 .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {

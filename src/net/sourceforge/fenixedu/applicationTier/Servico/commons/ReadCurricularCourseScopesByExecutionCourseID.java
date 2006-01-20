@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithBranchAndSemesterAndYear;
@@ -13,9 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -28,11 +26,9 @@ public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
 
         List infoCurricularCourses = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         // Read The ExecutionCourse
 
-        ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, executionCourseID);
 
         // For all associated Curricular Courses read the Scopes
@@ -43,7 +39,7 @@ public class ReadCurricularCourseScopesByExecutionCourseID extends Service {
             CurricularCourse curricularCourse = (CurricularCourse) iterator.next();
 
             ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-            List curricularCourseScopes = sp.getIPersistentCurricularCourseScope()
+            List curricularCourseScopes = persistentSupport.getIPersistentCurricularCourseScope()
                     .readCurricularCourseScopesByCurricularCourseInExecutionPeriod(
                             curricularCourse.getIdInternal(), executionPeriod.getBeginDate(),
                             executionPeriod.getEndDate());

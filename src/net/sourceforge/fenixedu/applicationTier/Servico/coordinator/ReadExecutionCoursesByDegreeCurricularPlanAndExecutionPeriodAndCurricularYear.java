@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -15,18 +16,12 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurricularYear extends
         Service {
 
     public List<ExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID,
             Integer curricularYearID) throws ExcepcaoPersistencia, FenixServiceException {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
 
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
                 .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, executionPeriodID);

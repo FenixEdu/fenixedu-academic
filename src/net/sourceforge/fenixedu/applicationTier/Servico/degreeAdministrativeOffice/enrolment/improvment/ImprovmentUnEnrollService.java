@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -12,9 +13,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author nmgo
@@ -23,10 +21,8 @@ public class ImprovmentUnEnrollService extends Service {
 
     public Object run(Integer studentNumber, List<Integer> enrolmentsIds)
 			throws FenixServiceException, ExcepcaoPersistencia, DomainException {
-        
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentEnrollment persistentEnrollment = sp.getIPersistentEnrolment();
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 		
 		for (Integer enrolmentId : enrolmentsIds) {
             

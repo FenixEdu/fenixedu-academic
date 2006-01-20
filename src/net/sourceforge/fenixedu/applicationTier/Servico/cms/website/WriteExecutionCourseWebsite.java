@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import relations.CmsContents;
 import relations.CmsUsers;
 import relations.ContentCreation;
@@ -81,7 +80,7 @@ public class WriteExecutionCourseWebsite extends CmsService
 		website.setName(parameters.getName());
 		website.setDescription(parameters.getDescription());
 		
-		ExecutionCourse executionCourse = (ExecutionCourse) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentObject().readByOID(ExecutionCourse.class,parameters.getExecutionCourseID());
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentObject().readByOID(ExecutionCourse.class,parameters.getExecutionCourseID());
 		if (executionCourse.getExecutionCourseWebsite()!=null)
 		{
 			throw new ExecutionCourseAlreadyHasWebsiteException("The selected execution course already have a website");

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 
 /**
@@ -21,14 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 public class EditGrantType extends EditDomainObjectService {
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantType();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentGrantType();
     }
 
     @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
-            throws ExcepcaoPersistencia {
-        IPersistentGrantType pgs = sp.getIPersistentGrantType();
+    protected DomainObject readObjectByUnique(InfoObject infoObject) throws ExcepcaoPersistencia {
+        IPersistentGrantType pgs = persistentSupport.getIPersistentGrantType();
         InfoGrantType infoGrantType = (InfoGrantType) infoObject;
         return pgs.readGrantTypeBySigla(infoGrantType.getSigla());
     }
@@ -48,7 +46,7 @@ public class EditGrantType extends EditDomainObjectService {
 	}
 
 	@Override
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, DomainObject domainObject) {
+	protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) {
 		InfoGrantType infoGrantType = (InfoGrantType) infoObject;
 		GrantType grantType = (GrantType) domainObject;
 

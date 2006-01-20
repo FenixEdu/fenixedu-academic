@@ -3,13 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -19,11 +17,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadNotClosedExecutionYears extends Service {
 
     public List run() throws ExcepcaoPersistencia {
-
         List<InfoExecutionYear> result = new ArrayList();
-        
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         List<ExecutionYear> executionYears = persistentExecutionYear.readNotClosedExecutionYears();
 
         if (executionYears != null) {

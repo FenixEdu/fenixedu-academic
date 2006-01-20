@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author jpvl
@@ -21,13 +20,13 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditManagementPositionCreditLineService extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            DomainObject domainObject) throws ExcepcaoPersistencia {
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
+            throws ExcepcaoPersistencia {
         InfoManagementPositionCreditLine infoManagementPositionCreditLine = (InfoManagementPositionCreditLine) infoObject;
         ManagementPositionCreditLine managementPositionCreditLine = (ManagementPositionCreditLine) domainObject;
         managementPositionCreditLine.setCredits(infoManagementPositionCreditLine.getCredits());
         managementPositionCreditLine.setEnd(infoManagementPositionCreditLine.getEnd());
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
                 infoManagementPositionCreditLine.getInfoTeacher().getIdInternal());
 
@@ -47,8 +46,8 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
     }
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentManagementPositionCreditLine();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentManagementPositionCreditLine();
     }
 
 }

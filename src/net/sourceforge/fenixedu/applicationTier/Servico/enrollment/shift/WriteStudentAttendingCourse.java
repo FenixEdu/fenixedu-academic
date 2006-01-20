@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.enrollment.shift;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -19,9 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class WriteStudentAttendingCourse extends Service {
 
@@ -32,17 +30,15 @@ public class WriteStudentAttendingCourse extends Service {
 
 	public Boolean run(InfoStudent infoStudent, Integer executionCourseId)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-		IPersistentExecutionCourse persistentExecutionCourse = sp
+		IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
 				.getIPersistentExecutionCourse();
-		IPersistentEnrollment persistentEnrolment = sp
+		IPersistentEnrollment persistentEnrolment = persistentSupport
 				.getIPersistentEnrolment();
-		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
 				.getIStudentCurricularPlanPersistente();
 
-		IPersistentStudent studentDAO = sp.getIPersistentStudent();
+		IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
 		Student student = (Student) studentDAO.readByOID(Student.class,
 				infoStudent.getIdInternal());
 		infoStudent.setNumber(student.getNumber());

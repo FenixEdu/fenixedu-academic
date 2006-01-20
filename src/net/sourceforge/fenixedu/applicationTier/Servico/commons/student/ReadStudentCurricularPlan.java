@@ -7,6 +7,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.student;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -14,9 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadStudentCurricularPlan extends Service {
 
@@ -28,13 +26,10 @@ public class ReadStudentCurricularPlan extends Service {
             throw newEx;
         }
 
-        ISuportePersistente sp = null;
         StudentCurricularPlan studentCurricularPlan = null;
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         // The student Curricular plan
-        studentCurricularPlan = (StudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+        studentCurricularPlan = (StudentCurricularPlan) persistentSupport.getIStudentCurricularPlanPersistente()
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {

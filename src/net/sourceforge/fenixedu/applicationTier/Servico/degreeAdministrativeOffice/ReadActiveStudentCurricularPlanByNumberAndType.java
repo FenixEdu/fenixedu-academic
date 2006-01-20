@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -12,13 +13,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -29,10 +26,7 @@ public class ReadActiveStudentCurricularPlanByNumberAndType extends Service {
 
     public InfoStudentCurricularPlanWithEquivalencesAndInfoDegreeCurricularPlan run(
             Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
-
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = suportePersistente
+        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
 
         StudentCurricularPlan scp = persistentStudentCurricularPlan

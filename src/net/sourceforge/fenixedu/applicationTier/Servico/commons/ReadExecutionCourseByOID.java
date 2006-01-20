@@ -5,13 +5,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -21,16 +18,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionCourseByOID extends Service {
 
     public InfoExecutionCourse run(Integer oid) throws ExcepcaoPersistencia {
-
-        InfoExecutionCourse result = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject persistentObject = sp.getIPersistentObject();
         ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, oid);
         if (executionCourse != null) {
-            result = InfoExecutionCourse.newInfoFromDomain(executionCourse);
+            return InfoExecutionCourse.newInfoFromDomain(executionCourse);
         }
-
-        return result;
+        return null;
     }
 }

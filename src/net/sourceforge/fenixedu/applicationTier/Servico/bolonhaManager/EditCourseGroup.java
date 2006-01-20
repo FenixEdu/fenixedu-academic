@@ -3,20 +3,15 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditCourseGroup extends Service {
 
     public void run(final Integer courseGroupID, final String name) throws ExcepcaoPersistencia,
             FenixServiceException {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final CourseGroup courseGroup = (CourseGroup) persistentSupport.getIPersistentObject()
                 .readByOID(CourseGroup.class, courseGroupID);
         if (courseGroup == null) {

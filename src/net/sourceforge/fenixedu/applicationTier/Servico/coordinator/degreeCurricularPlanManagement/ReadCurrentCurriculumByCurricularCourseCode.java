@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -23,14 +24,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 13/Nov/2003
@@ -39,14 +36,12 @@ public class ReadCurrentCurriculumByCurricularCourseCode extends Service {
 
     public InfoCurriculum run(Integer executionDegreeCode, Integer curricularCourseCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-        IPersistentCurricularCourseScope persistentCurricularCourseScope = sp
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
+        IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
         if (curricularCourseCode == null) {
             throw new FenixServiceException("nullCurricularCourse");

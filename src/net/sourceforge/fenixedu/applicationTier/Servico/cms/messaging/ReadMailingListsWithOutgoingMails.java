@@ -22,9 +22,6 @@ public class ReadMailingListsWithOutgoingMails extends CmsService
 {
 	public Collection<MailingList> run() throws ExcepcaoPersistencia
 	{
-		Collection<MailingList> mailingLists =
-		PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailingList().readAllMailingListsWithOutgoingMails();
-		
-		return mailingLists;
+		return persistentSupport.getIPersistentMailingList().readAllMailingListsWithOutgoingMails();
 	}
 }

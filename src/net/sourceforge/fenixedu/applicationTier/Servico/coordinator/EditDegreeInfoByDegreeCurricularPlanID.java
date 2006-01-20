@@ -2,15 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -20,15 +18,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditDegreeInfoByDegreeCurricularPlanID extends Service {
     public void run(Integer degreeCurricularPlanID, InfoDegreeInfo infoDegreeInfo)
             throws FenixServiceException, ExcepcaoPersistencia {
-        
-        ISuportePersistente suportePersistente = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
         if (degreeCurricularPlanID == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) suportePersistente
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 

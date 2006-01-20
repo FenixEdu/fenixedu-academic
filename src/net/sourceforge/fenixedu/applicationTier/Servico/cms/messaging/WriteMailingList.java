@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import relations.CmsContents;
 import relations.CmsUsers;
 import relations.ContentCreation;
@@ -47,7 +46,7 @@ public class WriteMailingList extends CmsService
 		Collection<MailAddressAlias> aliases = new ArrayList<MailAddressAlias>();
 		for (String aliasAddress : aliasAdresses)
 		{
-			MailAddressAlias existingAlias = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMailAdressAlias().readByAddress(aliasAddress);
+			MailAddressAlias existingAlias = persistentSupport.getIPersistentMailAdressAlias().readByAddress(aliasAddress);
 			if (existingAlias == null)
 			{
 				existingAlias = new MailAddressAlias();

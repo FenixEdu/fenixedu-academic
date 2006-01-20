@@ -4,13 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
@@ -19,30 +18,27 @@ import net.sourceforge.fenixedu.applicationTier.Service;
  */
 public abstract class DeleteDomainObjectService extends Service {
 	public void run(Integer objectId) throws Exception {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = getIPersistentObject(sp);
-
 		DomainObject domainObject = persistentObject.readByOID(getDomainObjectClass(), objectId);
 
-		if ((domainObject == null) || !canDelete(domainObject, sp)) {
+		if ((domainObject == null) || !canDelete(domainObject)) {
 			throw new NonExistingServiceException("The object does not exist");
 		}
-		doBeforeDelete(domainObject, sp);
+		doBeforeDelete(domainObject);
 		deleteDomainObject(domainObject);
-		doAfterDelete(domainObject, sp);
+		doAfterDelete(domainObject);
 	}
 
 	/**
 	 * @param domainObject
 	 * @param sp
 	 */
-	protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente sp) throws Exception {
+	protected void doBeforeDelete(DomainObject domainObject) throws Exception {
 	}
 
 	/**
 	 * @param domainObject
 	 */
-	protected void doAfterDelete(DomainObject domainObject, ISuportePersistente sp) {
+	protected void doAfterDelete(DomainObject domainObject) {
 
 	}
 
@@ -52,7 +48,7 @@ public abstract class DeleteDomainObjectService extends Service {
 	 * @param newDomainObject
 	 * @return
 	 */
-	protected boolean canDelete(DomainObject newDomainObject, ISuportePersistente sp) {
+	protected boolean canDelete(DomainObject newDomainObject) {
 		return true;
 	}
 

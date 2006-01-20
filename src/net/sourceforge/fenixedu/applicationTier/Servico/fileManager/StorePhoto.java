@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileAlreadyExistsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FileNameTooLongServiceException;
@@ -12,10 +13,6 @@ import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
@@ -25,9 +22,7 @@ public class StorePhoto extends Service {
 
 	public Boolean run(FileSuportObject file, Integer personId) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-		Person person = (Person) persistentPerson.readByOID(Person.class, personId);
+		Person person = (Person) persistentObject.readByOID(Person.class, personId);
 
 		file.setUri(person.getSlideName());
 		IFileSuport fileSuport = FileSuport.getInstance();

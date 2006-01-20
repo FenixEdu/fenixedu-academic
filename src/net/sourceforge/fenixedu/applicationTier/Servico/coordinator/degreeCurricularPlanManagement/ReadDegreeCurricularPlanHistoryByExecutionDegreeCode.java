@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -14,13 +15,9 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quit�rio 10/Nov/2003
@@ -32,8 +29,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends Servic
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
         if (executionDegreeCode == null) {
             throw new FenixServiceException("nullDegree");
@@ -52,7 +48,7 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends Servic
             String degreeName = degreeCurricularPlan.getDegree().getNome();
             String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
 
-            List allCurricularCourses = sp.getIPersistentCurricularCourse()
+            List allCurricularCourses = persistentSupport.getIPersistentCurricularCourse()
                     .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
 
             if (allCurricularCourses != null && !allCurricularCourses.isEmpty()) {

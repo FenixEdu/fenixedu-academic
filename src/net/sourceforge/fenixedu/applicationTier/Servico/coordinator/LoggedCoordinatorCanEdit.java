@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.Coordinator;
@@ -12,10 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 19/Nov/2003
@@ -26,11 +24,10 @@ public class LoggedCoordinatorCanEdit extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         Boolean result = new Boolean(false);
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
         if (executionDegreeCode == null) {
             throw new FenixServiceException("nullExecutionDegreeCode");

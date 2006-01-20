@@ -3,19 +3,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -26,10 +23,7 @@ public class ReadActiveDegreeCurricularPlansByDegreeType extends Service {
 
     public Collection<InfoDegreeCurricularPlan> run(final DegreeType degreeType)
             throws ExcepcaoPersistencia {
-
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        List<DegreeCurricularPlan> degreeCurricularPlans = ps.getIPersistentDegreeCurricularPlan()
+        List<DegreeCurricularPlan> degreeCurricularPlans = persistentSupport.getIPersistentDegreeCurricularPlan()
                 .readByDegreeTypeAndState(degreeType, DegreeCurricularPlanState.ACTIVE);
 
         return CollectionUtils.collect(degreeCurricularPlans, new Transformer() {

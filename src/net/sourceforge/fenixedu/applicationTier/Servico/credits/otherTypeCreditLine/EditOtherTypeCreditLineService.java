@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author jpvl
@@ -23,19 +22,18 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditOtherTypeCreditLineService extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            DomainObject domainObject) throws ExcepcaoPersistencia {
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoOtherTypeCreditLine infoOtherTypeCreditLine = (InfoOtherTypeCreditLine) infoObject;
         OtherTypeCreditLine otherTypeCreditLine = (OtherTypeCreditLine) domainObject;
 
         otherTypeCreditLine.setCredits(infoOtherTypeCreditLine.getCredits());
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoOtherTypeCreditLine.getInfoExecutionPeriod().getIdInternal());
         otherTypeCreditLine.setExecutionPeriod(executionPeriod);
 
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, infoOtherTypeCreditLine
                 .getInfoTeacher().getIdInternal());
         otherTypeCreditLine.setTeacher(teacher);
@@ -55,8 +53,8 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
     }
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentOtherTypeCreditLine();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentOtherTypeCreditLine();
     }
 
 }

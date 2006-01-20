@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.fileManager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -19,9 +17,7 @@ public class StorePersonalPhoto extends Service {
 
     public void run(byte[] contents, ContentType contentType, String personUsername)
             throws ExcepcaoPersistencia, ExcepcaoInexistente {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
 
         if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");
@@ -32,9 +28,7 @@ public class StorePersonalPhoto extends Service {
 
     public void run(byte[] contents, ContentType contentType, Integer personID)
             throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class, personID);
+        Person person = (Person) persistentObject.readByOID(Person.class, personID);
 
         storePersonalPhoto(contents, contentType, person);
     }

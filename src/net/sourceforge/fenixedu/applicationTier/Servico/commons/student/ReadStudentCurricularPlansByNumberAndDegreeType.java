@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -18,21 +19,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWith
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadStudentCurricularPlansByNumberAndDegreeType extends Service {
 
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = null;
-
-        List studentCurricularPlans = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
+        List studentCurricularPlans = persistentSupport.getIStudentCurricularPlanPersistente()
                 .readByStudentNumberAndDegreeType(studentNumber, degreeType);
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {

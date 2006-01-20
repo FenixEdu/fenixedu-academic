@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author jpvl
@@ -38,10 +37,7 @@ public class DeleteManagementPositionCreditLineService extends DeleteDomainObjec
 	 */
 	protected void deleteDomainObject(DomainObject domainObject) {
 		try{
-	      ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-	      IPersistentObject persistentObject = getIPersistentObject(sp);
-	      persistentObject.deleteByOID(getDomainObjectClass(), domainObject.getIdInternal());
-			
+	      persistentObject.deleteByOID(getDomainObjectClass(), domainObject.getIdInternal());			
 		} catch (Exception e) {
 			
 		}

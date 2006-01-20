@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.framework;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -11,9 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
@@ -49,8 +47,7 @@ public abstract class EditDomainObjectService extends Service {
 	 * @param infoObject
 	 * @param sp
 	 */
-	protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject,
-			ISuportePersistente sp) throws Exception {
+	protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject) throws Exception {
 	}
 
 	/**
@@ -60,16 +57,14 @@ public abstract class EditDomainObjectService extends Service {
 	 * @param infoObject
 	 * @param sp
 	 */
-	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject,
-			ISuportePersistente sp) throws Exception {
+	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject) throws Exception {
 	}
 
 	/**
 	 * @param sp
 	 * @return
 	 */
-	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
-			throws ExcepcaoPersistencia;
+	protected abstract IPersistentObject getIPersistentObject() throws ExcepcaoPersistencia;
 
 	/**
 	 * Checks if the internalId of the object is null or 0
@@ -92,8 +87,7 @@ public abstract class EditDomainObjectService extends Service {
 	 * @return By default returns null. When there is no unique in domainObject
 	 *         the object that we want to create never exists.
 	 */
-	protected DomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
-			throws Exception {
+	protected DomainObject readObjectByUnique(InfoObject infoObject) throws Exception {
 		return null;
 	}
 
@@ -106,19 +100,17 @@ public abstract class EditDomainObjectService extends Service {
 	 * @throws Exception
 	 */
 	public void run(Integer objectId, InfoObject infoObject) throws Exception {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		DomainObject objectFromDatabase = getObjectFromDatabase(infoObject, sp);
+		DomainObject objectFromDatabase = getObjectFromDatabase(infoObject);
 		if (!canCreate(infoObject, objectFromDatabase)) {
 			throw new ExistingServiceException("The object already exists");
 		}
 		DomainObject domainObject = getObjectToLock(infoObject, objectFromDatabase);
 
-		doBeforeLock(domainObject, infoObject, sp);
+		doBeforeLock(domainObject, infoObject);
 
-		copyInformationFromInfoToDomain(sp, infoObject, domainObject);
+		copyInformationFromInfoToDomain(infoObject, domainObject);
 
-		doAfterLock(domainObject, infoObject, sp);
+		doAfterLock(domainObject, infoObject);
 	}
 
 	private DomainObject getObjectToLock(InfoObject infoObject, DomainObject objectFromDatabase)
@@ -137,18 +129,18 @@ public abstract class EditDomainObjectService extends Service {
 
 	protected abstract Class getDomainObjectClass();
 
-	protected abstract void copyInformationFromInfoToDomain(ISuportePersistente sp,
-			InfoObject infoObject, DomainObject domainObject) throws ExcepcaoPersistencia,
+	protected abstract void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
+            throws ExcepcaoPersistencia,
 			FenixServiceException;
 
-	private DomainObject getObjectFromDatabase(InfoObject infoObject, ISuportePersistente sp)
+	private DomainObject getObjectFromDatabase(InfoObject infoObject)
 			throws Exception {
-		DomainObject objectFromDatabase = readObjectByUnique(infoObject, sp);
+		DomainObject objectFromDatabase = readObjectByUnique(infoObject);
 
 		// if the editing means alter unique keys or the there is no unique
 		// then read by oid to get the object from database.
 		if (objectFromDatabase == null && !isNew(infoObject)) {
-			objectFromDatabase = getIPersistentObject(sp).readByOID(getDomainObjectClass(),
+			objectFromDatabase = getIPersistentObject().readByOID(getDomainObjectClass(),
 					infoObject.getIdInternal());
 			// if the object still null then the object doesn't exist.
 			if (objectFromDatabase == null) {

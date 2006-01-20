@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -29,10 +27,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionDegreesByExecutionYearAndType extends Service {
 
     public List run(Integer executionYearOID, DegreeType typeOfCourse) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
-        final ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear()
+        final ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear()
                 .readByOID(ExecutionYear.class, executionYearOID);
 
         final List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear
@@ -41,7 +38,6 @@ public class ReadExecutionDegreesByExecutionYearAndType extends Service {
     }
 
     public List run(final DegreeType typeOfCourse) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 
         final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
@@ -58,8 +54,7 @@ public class ReadExecutionDegreesByExecutionYearAndType extends Service {
 
     public List run(Degree degree, ExecutionYear executionYear, String tmp)
             throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
         final List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(degree
                 .getIdInternal(), executionYear.getYear(), CurricularStage.OLD);

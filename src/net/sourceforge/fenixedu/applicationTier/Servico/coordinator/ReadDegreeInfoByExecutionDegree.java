@@ -3,18 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author T�nia Pous�o Created on 4/Nov/2003
@@ -30,10 +27,8 @@ public class ReadDegreeInfoByExecutionDegree extends Service {
                 throw new FenixServiceException("error.invalidExecutionDegree");
             }
 
-            ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             //Execution degree
-            IPersistentExecutionDegree cursoExecucaoPersistente = suportePersistente
+            IPersistentExecutionDegree cursoExecucaoPersistente = persistentSupport
                     .getIPersistentExecutionDegree();
             ExecutionDegree executionDegree = (ExecutionDegree) cursoExecucaoPersistente.readByOID(
                     ExecutionDegree.class, infoExecutionDegreeId);

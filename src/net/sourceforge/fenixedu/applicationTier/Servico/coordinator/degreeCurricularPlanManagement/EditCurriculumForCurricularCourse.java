@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.coordinator.degreeCurri
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurriculum;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 21/Nov/2003
@@ -30,11 +28,10 @@ public class EditCurriculumForCurricularCourse extends Service {
             String language) throws FenixServiceException, ExcepcaoPersistencia {
         Boolean result = new Boolean(false);
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
         if (oldCurriculumId == null) {
             throw new FenixServiceException("nullCurriculumCode");

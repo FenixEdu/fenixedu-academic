@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.enrollment;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -13,9 +14,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author David Santos Jan 26, 2004
@@ -27,11 +25,9 @@ public class WriteEnrollment extends Service {
             Integer curricularCourseID, Integer executionPeriodID,
             CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView)
             throws ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport.getIStudentCurricularPlanPersistente();
-        IPersistentExecutionPeriod executionPeriodDAO = persistentSuport.getIPersistentExecutionPeriod();
-        IPersistentCurricularCourse curricularCourseDAO = persistentSuport.getIPersistentCurricularCourse();
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport.getIStudentCurricularPlanPersistente();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
+        IPersistentCurricularCourse curricularCourseDAO = persistentSupport.getIPersistentCurricularCourse();
 
         StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) studentCurricularPlanDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
         CurricularCourse curricularCourse = (CurricularCourse) curricularCourseDAO.readByOID(CurricularCourse.class, curricularCourseID);

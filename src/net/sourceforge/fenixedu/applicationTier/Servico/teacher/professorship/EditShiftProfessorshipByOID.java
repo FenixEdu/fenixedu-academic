@@ -24,14 +24,14 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditShiftProfessorshipByOID extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
-            DomainObject domainObject) throws ExcepcaoPersistencia {
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject)
+            throws ExcepcaoPersistencia {
         InfoShiftProfessorship infoShiftProfessorship = (InfoShiftProfessorship) infoObject;
         ShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;
 
         shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        IPersistentShiftProfessorship persistentShift = sp.getIPersistentShiftProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
+        IPersistentShiftProfessorship persistentShift = persistentSupport.getIPersistentShiftProfessorship();
 
         Professorship professorship = (Professorship) persistentProfessorship.readByOID(Professorship.class,
                 infoShiftProfessorship.getInfoProfessorship().getIdInternal());
@@ -53,14 +53,14 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
     }
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentShiftProfessorship();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentShiftProfessorship();
     }
 
-    protected DomainObject readObjectByUnique(DomainObject domainObject, ISuportePersistente sp)
+    protected DomainObject readObjectByUnique(DomainObject domainObject, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         Professorship professorship = (Professorship) domainObject;
-        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
         professorship = professorshipDAO.readByTeacherAndExecutionCourse(professorship.getTeacher()
                 .getIdInternal(), professorship.getExecutionCourse().getIdInternal());
         return professorship;

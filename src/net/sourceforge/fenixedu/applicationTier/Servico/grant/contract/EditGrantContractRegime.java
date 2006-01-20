@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
@@ -29,7 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientatio
 public class EditGrantContractRegime extends EditDomainObjectService {
 
     @Override
-    protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject,
+    protected void copyInformationFromInfoToDomain(InfoObject infoObject,
             DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
         GrantContractRegime grantContractRegime = (GrantContractRegime) domainObject;
@@ -42,13 +41,13 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         grantContractRegime.setCostCenterKey(infoGrantContractRegime.getCostCenterKey());
         grantContractRegime.setState(infoGrantContractRegime.getState());
 
-        GrantContract grantContract = (GrantContract) sp.getIPersistentObject().readByOID(
+        GrantContract grantContract = (GrantContract) persistentSupport.getIPersistentObject().readByOID(
                 GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
         grantContractRegime.setGrantContract(grantContract);
 
         if (grantContract.getCostCenterKey() != null
                 && grantContract.getCostCenterKey() != new Integer(0)) {
-            GrantCostCenter grantCostCenter = (GrantCostCenter) sp.getIPersistentObject().readByOID(
+            GrantCostCenter grantCostCenter = (GrantCostCenter) persistentSupport.getIPersistentObject().readByOID(
                     GrantCostCenter.class, infoGrantContractRegime.getIdInternal());
             grantContractRegime.setGrantCostCenter(grantCostCenter);
         } else {
@@ -68,15 +67,15 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantContractRegime();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentGrantContractRegime();
     }
 
     @Override
-    protected DomainObject readObjectByUnique(InfoObject infoObject, ISuportePersistente sp)
+    protected DomainObject readObjectByUnique(InfoObject infoObject)
             throws ExcepcaoPersistencia {
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
-        return sp.getIPersistentObject().readByOID(GrantContractRegime.class,
+        return persistentSupport.getIPersistentObject().readByOID(GrantContractRegime.class,
                 infoGrantContractRegime.getIdInternal());
     }
 
@@ -85,8 +84,8 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     }
 
     @Override
-    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject,
-            ISuportePersistente sp) throws FenixServiceException, ExcepcaoPersistencia {
+    protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject)
+            throws FenixServiceException, ExcepcaoPersistencia {
 
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
         if (infoGrantContractRegime.getState().equals(InfoGrantContractRegime.getActiveState())) {
@@ -95,10 +94,10 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             GrantContractRegime grantContractRegime = (GrantContractRegime) domainObjectLocked;
             // Set the correct grant orientation teacher
 
-            IPersistentGrantCostCenter pGrantCostCenter = sp.getIPersistentGrantCostCenter();
-            IPersistentTeacher pTeacher = sp.getIPersistentTeacher();
+            IPersistentGrantCostCenter pGrantCostCenter = persistentSupport.getIPersistentGrantCostCenter();
+            IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
 
-            GrantContract grantContract = (GrantContract) sp.getIPersistentObject().readByOID(
+            GrantContract grantContract = (GrantContract) persistentSupport.getIPersistentObject().readByOID(
                     GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
 
             if (infoGrantContractRegime.getGrantCostCenterInfo() != null
@@ -116,7 +115,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 
             grantContractRegime.setGrantCostCenter(grantContract.getGrantCostCenter());
 
-            IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = sp
+            IPersistentGrantOrientationTeacher persistentGrantOrientationTeacher = persistentSupport
                     .getIPersistentGrantOrientationTeacher();
             GrantOrientationTeacher grantOrientationTeacher = persistentGrantOrientationTeacher
                     .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(),
@@ -139,7 +138,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
                     } else {
                         teacher = pTeacher.readByNumber(infoGrantContractRegime.getInfoTeacher()
                                 .getTeacherNumber());
-                        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+                        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
                         Person person = (Person) persistentPerson.readByOID(Person.class, teacher
                                 .getPerson().getIdInternal());
                         infoTeacher.setTeacherNumber(teacher.getTeacherNumber());
@@ -160,7 +159,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             // Set all the others GrantContractRegime that are active to state
             // inactive
 
-            IPersistentGrantContractRegime persistentGrantContractRegime = sp
+            IPersistentGrantContractRegime persistentGrantContractRegime = persistentSupport
                     .getIPersistentGrantContractRegime();
             List<GrantContractRegime> activeContractRegime = persistentGrantContractRegime
                     .readGrantContractRegimeByGrantContractAndState(grantContractRegime

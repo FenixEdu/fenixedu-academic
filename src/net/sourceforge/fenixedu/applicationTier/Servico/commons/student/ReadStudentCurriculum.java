@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -18,17 +19,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithCourseAndDeg
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadStudentCurriculum extends Service {
 
     public List run(Integer executionDegreeCode, Integer studentCurricularPlanID)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-         ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp.getIStudentCurricularPlanPersistente()
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport.getIStudentCurricularPlanPersistente()
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {

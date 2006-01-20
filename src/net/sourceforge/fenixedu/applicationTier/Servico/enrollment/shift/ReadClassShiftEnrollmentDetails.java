@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -27,15 +28,11 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
@@ -50,14 +47,11 @@ public class ReadClassShiftEnrollmentDetails extends Service {
 
 		InfoClassEnrollmentDetails enrollmentDetails = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-
-		IPersistentStudent studentDAO = sp.getIPersistentStudent();
-		ITurmaPersistente classDAO = sp.getITurmaPersistente();
-		IPersistentExecutionPeriod executionPeriodDAO = sp
+		IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
+		ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
+		IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
 				.getIPersistentExecutionPeriod();
-		ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+		ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
 
 		// Current Execution OccupationPeriod
 		ExecutionPeriod executionPeriod = executionPeriodDAO

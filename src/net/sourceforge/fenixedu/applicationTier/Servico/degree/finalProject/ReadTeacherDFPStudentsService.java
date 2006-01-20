@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degree.finalProject;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.degree.finalProject.InfoTeacherDegreeFinalProjectStudent;
@@ -17,14 +18,10 @@ import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalPro
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
@@ -35,9 +32,8 @@ public class ReadTeacherDFPStudentsService extends Service {
             throws ExcepcaoPersistencia {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
         ExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
 
@@ -46,7 +42,7 @@ public class ReadTeacherDFPStudentsService extends Service {
         Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
-        IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = sp
+        IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = persistentSupport
                 .getIPersistentTeacherDegreeFinalProjectStudent();
 
         List teacherDFPStudentList = teacherDfpStudentDAO.readByTeacherAndExecutionPeriod(teacher

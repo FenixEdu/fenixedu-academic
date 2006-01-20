@@ -8,19 +8,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.commons;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -32,9 +29,7 @@ public class ReadExecutionYearsByDegreeCurricularPlanID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = sp
+        IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSupport
                 .getIPersistentDegreeCurricularPlan();
         DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) degreeCurricularPlanDAO
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);

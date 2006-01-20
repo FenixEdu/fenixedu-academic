@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -24,11 +23,11 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 public class EditStudentCourseReport extends EditDomainObjectService {
 
     @Override
-	protected void copyInformationFromInfoToDomain(ISuportePersistente sp, InfoObject infoObject, DomainObject domainObject) throws ExcepcaoPersistencia {
+	protected void copyInformationFromInfoToDomain(InfoObject infoObject, DomainObject domainObject) throws ExcepcaoPersistencia {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
         StudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
 
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
         CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, infoStudentCourseReport.getInfoCurricularCourse()
                         .getIdInternal());
@@ -52,8 +51,8 @@ public class EditStudentCourseReport extends EditDomainObjectService {
     }
 
     @Override
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentStudentCourseReport();
+    protected IPersistentObject getIPersistentObject() {
+        return persistentSupport.getIPersistentStudentCourseReport();
     }
 
 }

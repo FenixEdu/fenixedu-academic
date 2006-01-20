@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -10,9 +11,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -24,9 +22,7 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends Serv
     public List<Teacher> run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        IPersistentDepartment persistentDepartment = persistenceSupport.getIDepartamentoPersistente();
+        IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();
 
         Department department = (Department) persistentDepartment.readByOID(Department.class,
                 departmentID);
@@ -35,7 +31,7 @@ public class ReadDepartmentTeachersByDepartmentIDAndExecutionYearID extends Serv
 
         if (executionYearID != null) {
 
-            IPersistentExecutionYear persistentExecutionYear = persistenceSupport
+            IPersistentExecutionYear persistentExecutionYear = persistentSupport
                     .getIPersistentExecutionYear();
 
             ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(

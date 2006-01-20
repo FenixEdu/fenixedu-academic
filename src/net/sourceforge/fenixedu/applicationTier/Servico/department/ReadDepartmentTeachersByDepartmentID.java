@@ -3,14 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.department;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author naat
@@ -21,8 +19,7 @@ public class ReadDepartmentTeachersByDepartmentID extends Service {
             FenixServiceException {
 
         List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Department department = (Department) sp.getIDepartamentoPersistente().readByOID(
+        Department department = (Department) persistentSupport.getIDepartamentoPersistente().readByOID(
                 Department.class, departmentID);
 
         List teachers = department.getCurrentTeachers();
