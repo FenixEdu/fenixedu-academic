@@ -53,6 +53,11 @@ public class PersonRole extends PersonRole_Base {
         person.updateUsername();
         person.updateIstUsername();
     }
+    
+    public static void forceRemove(Person person, Role removedRole) {   
+            PersonRole_Base.remove(person, removedRole);
+    }
+    
 
     private static Boolean verifiesDependencies(Person person, Role role) {
         switch (role.getRoleType()) {
