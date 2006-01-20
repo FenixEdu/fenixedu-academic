@@ -46,4 +46,7 @@ public class LessonSlot {
         return startIndex;
     }
 
+    public boolean isSinleSlot() {
+        return getStartIndex() == getEndIndex();
+    }
 }
