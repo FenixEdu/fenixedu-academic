@@ -26,10 +26,10 @@ public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ITurnoPersistente persistentShift = ps.getITurnoPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-        final Grouping grouping = (Grouping) ps.getIPersistentObject().readByOID(Grouping.class, groupPropertiesCode);
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();

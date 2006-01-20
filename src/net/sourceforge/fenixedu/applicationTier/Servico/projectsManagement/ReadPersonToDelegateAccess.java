@@ -4,15 +4,13 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -20,19 +18,18 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadPersonToDelegateAccess extends Service {
 
     public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null) {
             throw new ExcepcaoInexistente();
-        } else if (!isTeacherOrEmployee(sp, person)) {
+        } else if (!isTeacherOrEmployee(person)) {
             throw new InvalidArgumentsServiceException();
         }
         return InfoPerson.newInfoFromDomain(person);
     }
 
-    private boolean isTeacherOrEmployee(ISuportePersistente sp, Person person) throws ExcepcaoPersistencia {
-        if (sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername()) == null) {
-            if (sp.getIPersistentEmployee().readByPerson(person.getIdInternal()) == null) {
+    private boolean isTeacherOrEmployee(Person person) throws ExcepcaoPersistencia {
+        if (persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername()) == null) {
+            if (persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal()) == null) {
                 return false;
             }
         }

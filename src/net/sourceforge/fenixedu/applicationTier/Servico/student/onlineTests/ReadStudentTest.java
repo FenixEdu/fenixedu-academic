@@ -31,17 +31,17 @@ public class ReadStudentTest extends Service {
             ExcepcaoPersistencia {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
-        DistributedTest distributedTest = (DistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 student.getIdInternal(), distributedTest.getIdInternal());
         if (studentTestQuestionList.size() == 0)
             throw new InvalidArgumentsServiceException();

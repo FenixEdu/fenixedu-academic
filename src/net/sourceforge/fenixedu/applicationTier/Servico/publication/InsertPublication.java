@@ -17,8 +17,8 @@ public class InsertPublication extends Service {
 
     public void run(InfoPublication infoPublication) throws ExcepcaoPersistencia, ExistingServiceException {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentPublicationType persistentPublicationType = persistentSupport.getIPersistentPublicationType();
 
         final List infoAuthorsList = infoPublication.getInfoPublicationAuthors();
 

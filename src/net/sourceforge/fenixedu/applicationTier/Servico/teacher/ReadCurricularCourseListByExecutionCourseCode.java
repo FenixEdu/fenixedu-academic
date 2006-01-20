@@ -41,8 +41,8 @@ public class ReadCurricularCourseListByExecutionCourseCode extends Service {
 
         List infoCurricularCourseList = new ArrayList();
         Site site = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
         ExecutionCourse executionCourse = (ExecutionCourse) executionCourseDAO.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
@@ -76,7 +76,7 @@ public class ReadCurricularCourseListByExecutionCourseCode extends Service {
             }
         }
 
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
 
         InfoSiteAssociatedCurricularCourses infoSiteAssociatedCurricularCourses = new InfoSiteAssociatedCurricularCourses();

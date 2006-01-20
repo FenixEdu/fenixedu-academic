@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class WriteStudentPersonalDataAuthorizationAnswer extends Service {
 
     public void run(Integer studentID, String answer) throws ExcepcaoPersistencia{
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         
         Student student = (Student) persistentStudent.readByOID(Student.class,studentID);
         ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();

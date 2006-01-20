@@ -43,14 +43,14 @@ public class InsertExerciseVariation extends Service {
             NotExecuteException, ExcepcaoPersistencia {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Metadata metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
+        Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -65,7 +65,7 @@ public class InsertExerciseVariation extends Service {
 
             try {
                 ParseQuestion parseQuestion = new ParseQuestion();
-                IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
+                IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
 
                 parseQuestion.parseQuestion(xmlFile, new InfoQuestion(), replacedPath);
                 Question question = DomainFactory.makeQuestion();

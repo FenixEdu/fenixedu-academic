@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWithInfoStudentWithPersonAndDegree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -21,19 +19,15 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateDeclaration extends Service {
 
-    public List run(InfoStudent infoStudent, Specialization specialization) throws Exception {
+    public List run(InfoStudent infoStudent, Specialization persistentSupportecialization) throws Exception {
 
         List studentCurricularPlanList = null;
         List infoStudentCurricularPlanList = new ArrayList();
 
-        ISuportePersistente sp = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         try {
-            studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
+            studentCurricularPlanList = persistentSupport.getIStudentCurricularPlanPersistente()
                     .readAllByStudentNumberAndSpecialization(infoStudent.getNumber(),
-                            infoStudent.getDegreeType(), specialization);
+                            infoStudent.getDegreeType(), persistentSupportecialization);
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
@@ -58,20 +52,16 @@ public class CreateDeclaration extends Service {
 
     }
 
-    public List run(InfoStudent infoStudent, Specialization specialization,
+    public List run(InfoStudent infoStudent, Specialization persistentSupportecialization,
             StudentCurricularPlanState state) throws Exception {
 
         List studentCurricularPlanList = null;
         List infoStudentCurricularPlanList = new ArrayList();
 
-        ISuportePersistente sp = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         try {
-            studentCurricularPlanList = sp.getIStudentCurricularPlanPersistente()
+            studentCurricularPlanList = persistentSupport.getIStudentCurricularPlanPersistente()
                     .readAllByStudentNumberAndSpecializationAndState(infoStudent.getNumber(),
-                            infoStudent.getDegreeType(), specialization, state);
+                            infoStudent.getDegreeType(), persistentSupportecialization, state);
 
         } catch (ExistingPersistentException ex) {
             throw new ExistingServiceException(ex);
@@ -98,24 +88,20 @@ public class CreateDeclaration extends Service {
 
     // FIXME change paraemter states to List type, when berserk's reflection bug
     // is fixed
-    public List run(InfoStudent infoStudent, Specialization specialization, ArrayList states)
+    public List run(InfoStudent infoStudent, Specialization persistentSupportecialization, ArrayList states)
             throws Exception {
 
         List studentCurricularPlanList = new ArrayList();
         List studentCurricularPlanListTmp = null;
         List infoStudentCurricularPlanList = new ArrayList();
 
-        ISuportePersistente sp = null;
-
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         for (Iterator iter = states.iterator(); iter.hasNext();) {
             StudentCurricularPlanState state = (StudentCurricularPlanState) iter.next();
 
             try {
-                studentCurricularPlanListTmp = sp.getIStudentCurricularPlanPersistente()
+                studentCurricularPlanListTmp = persistentSupport.getIStudentCurricularPlanPersistente()
                         .readAllByStudentNumberAndSpecializationAndState(infoStudent.getNumber(),
-                                infoStudent.getDegreeType(), specialization, state);
+                                infoStudent.getDegreeType(), persistentSupportecialization, state);
 
             } catch (ExistingPersistentException ex) {
                 throw new ExistingServiceException(ex);

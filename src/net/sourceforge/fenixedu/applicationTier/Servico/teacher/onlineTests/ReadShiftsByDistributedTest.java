@@ -25,21 +25,21 @@ public class ReadShiftsByDistributedTest extends Service {
 
 	public List<InfoShift> run(Integer executionCourseId, Integer distributedTestId)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		List<Student> studentsList = new ArrayList<Student>();
 
 		if (distributedTestId != null) // lista de alunos que tem teste
-			studentsList = persistentSuport.getIPersistentStudentTestQuestion()
+			studentsList = persistentSupport.getIPersistentStudentTestQuestion()
 					.readStudentsByDistributedTest(distributedTestId);
 
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
 				.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
 		if (executionCourse == null) {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		List<Shift> shiftList = persistentSuport.getITurnoPersistente().readByExecutionCourse(
+		List<Shift> shiftList = persistentSupport.getITurnoPersistente().readByExecutionCourse(
 				executionCourse.getIdInternal());
 
 		List<InfoShift> result = new ArrayList<InfoShift>();

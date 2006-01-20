@@ -23,8 +23,8 @@ public class DeleteTestQuestion extends Service {
 
     public void run(Integer executionCourseId, Integer testId, final Integer questionId) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
         TestQuestion testQuestion = (TestQuestion) CollectionUtils.find(test.getTestQuestions(), new Predicate() {

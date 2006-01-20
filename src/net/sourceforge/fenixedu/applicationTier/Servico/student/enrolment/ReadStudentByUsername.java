@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadStudentByUsername extends Service {
     
     public Student run(String studentUsername) throws ExcepcaoPersistencia, FenixServiceException {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final Student student = sp.getIPersistentStudent().readByUsername(studentUsername);
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Student student = persistentSupport.getIPersistentStudent().readByUsername(studentUsername);
         if (student == null) {
             throw new FenixServiceException("error.noStudent");
         }

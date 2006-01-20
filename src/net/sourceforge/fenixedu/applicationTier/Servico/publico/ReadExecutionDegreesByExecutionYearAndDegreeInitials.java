@@ -24,8 +24,8 @@ public class ReadExecutionDegreesByExecutionYearAndDegreeInitials extends Servic
             final String degreeInitials, final String nameDegreeCurricularPlan)
             throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
         final ExecutionDegree executionDegree = executionDegreeDAO
                 .readByDegreeCurricularPlanAndExecutionYear(nameDegreeCurricularPlan, degreeInitials,

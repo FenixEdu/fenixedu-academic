@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.SendMail;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -16,19 +17,14 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditMasterDegreeCandidate extends Service {
 
     public InfoMasterDegreeCandidate run(Integer oldCandidateID, InfoMasterDegreeCandidate newCandidate)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
                 .getIPersistentObject().readByOID(MasterDegreeCandidate.class, oldCandidateID);
         if (masterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Candidate !!");
@@ -38,7 +34,7 @@ public class EditMasterDegreeCandidate extends Service {
         Person person = masterDegreeCandidate.getPerson();
         Country country = null;
         if ((newCandidate.getInfoPerson().getInfoPais() != null)) {
-            country = sp.getIPersistentCountry().readCountryByNationality(
+            country = persistentSupport.getIPersistentCountry().readCountryByNationality(
                     newCandidate.getInfoPerson().getInfoPais().getNationality());
         }
         person.edit(newCandidate.getInfoPerson(), country);

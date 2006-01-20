@@ -1,11 +1,9 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -15,10 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteGuideVersionInManager extends Service {
 
     public void run(Integer guideID) throws ExcepcaoPersistencia, InvalidChangeServiceException {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
+        Guide guide = (Guide) persistentSupport.getIPersistentGuide().readByOID(Guide.class, guideID);
 
         if (!guide.getGuideEntries().isEmpty()) {
             throw new InvalidChangeServiceException();
@@ -32,7 +27,7 @@ public class DeleteGuideVersionInManager extends Service {
             throw new InvalidChangeServiceException();
         }
 
-        sp.getIPersistentGuide().deleteByOID(Guide.class, guide.getIdInternal());
+        persistentSupport.getIPersistentGuide().deleteByOID(Guide.class, guide.getIdInternal());
 
     }
 

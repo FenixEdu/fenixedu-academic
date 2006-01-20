@@ -39,15 +39,15 @@ public class CreateLesson extends Service {
 
     public InfoLessonServiceResult run(InfoLesson infoLesson, InfoShift infoShift)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) sp.getIPersistentExecutionPeriod()
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
                 .readByOID(
                         ExecutionPeriod.class,
                         infoLesson.getInfoShift().getInfoDisciplinaExecucao().getInfoExecutionPeriod()
                                 .getIdInternal());
 
-        final Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class,
+        final Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
                 infoShift.getIdInternal());
 
         InfoLessonServiceResult result = validTimeInterval(infoLesson);
@@ -67,10 +67,10 @@ public class CreateLesson extends Service {
                     roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation()
                             .getWeekOfQuinzenalStart());
 
-                    final Room sala = sp.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+                    final Room sala = persistentSupport.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
                     roomOccupation.setRoom(sala);
 
-                    final OccupationPeriod period = (OccupationPeriod) sp.getIPersistentPeriod().readByOID(OccupationPeriod.class,
+                    final OccupationPeriod period = (OccupationPeriod) persistentSupport.getIPersistentPeriod().readByOID(OccupationPeriod.class,
                             infoLesson.getInfoRoomOccupation().getInfoPeriod().getIdInternal());
                     roomOccupation.setPeriod(period);
 
@@ -98,8 +98,8 @@ public class CreateLesson extends Service {
 
     private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final Room room = (Room) sp.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Room room = (Room) persistentSupport.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 
         for (final RoomOccupation roomOccupation : roomOccupations) {

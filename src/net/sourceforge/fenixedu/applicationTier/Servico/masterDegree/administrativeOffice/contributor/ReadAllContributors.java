@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -22,15 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadAllContributors extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente sp = null;
-		List result = new ArrayList();
-
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		// Read the contributors
-
-		result = sp.getIPersistentContributor().readAll();
+		List result = persistentSupport.getIPersistentContributor().readAll();
 
 		List contributors = new ArrayList();
 		Iterator iterator = result.iterator();

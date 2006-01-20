@@ -22,9 +22,9 @@ public class DeleteItem extends Service {
     public Boolean run(final Integer infoExecutionCourseCode, final Integer itemCode)
             throws FenixServiceException, ExcepcaoPersistencia {
         
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();    
-        final IPersistentItem persistentItem = persistentSuport.getIPersistentItem();
+        final IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
         final Item deletedItem = (Item) persistentItem.readByOID(Item.class, itemCode);
         
         if (deletedItem == null) {

@@ -38,9 +38,9 @@ public class ReadPavillionsRoomsLessons extends Service {
 
     public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod)
             throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ISalaPersistente roomDAO = sp.getISalaPersistente();
-        final IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
+        final IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
 
         final List infoViewRoomScheduleList = new ArrayList();
 

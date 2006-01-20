@@ -22,15 +22,15 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadMetadatas extends Service {
 
     public List<InfoMetadata> run(Integer executionCourseId, Integer testId, Boolean distributedTest) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
         List<Metadata> metadatas = null;
         if (testId == null) {
             metadatas = persistentMetadata.readByExecutionCourseAndVisibility(executionCourseId);
         } else if (distributedTest == false) {
-            metadatas = persistentSuport.getIPersistentMetadata().readByExecutionCourseAndNotTest(executionCourseId, testId);
+            metadatas = persistentSupport.getIPersistentMetadata().readByExecutionCourseAndNotTest(executionCourseId, testId);
         } else if (distributedTest == true) {
-            metadatas = persistentSuport.getIPersistentMetadata().readByExecutionCourseAndNotDistributedTest(executionCourseId, testId);
+            metadatas = persistentSupport.getIPersistentMetadata().readByExecutionCourseAndNotDistributedTest(executionCourseId, testId);
         }
         List<InfoMetadata> infoMetadataList = new ArrayList<InfoMetadata>();
         for (Metadata metadata : metadatas) {

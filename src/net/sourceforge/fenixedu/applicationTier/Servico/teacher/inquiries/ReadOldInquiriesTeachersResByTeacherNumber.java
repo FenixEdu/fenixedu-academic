@@ -31,8 +31,8 @@ public class ReadOldInquiriesTeachersResByTeacherNumber extends Service {
 		if (teacherNumber == null) {
 			throw new FenixServiceException("nullTeacherNumber");
 		}
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentOldInquiriesTeachersRes poits = sp.getIPersistentOldInquiriesTeachersRes();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentOldInquiriesTeachersRes poits = persistentSupport.getIPersistentOldInquiriesTeachersRes();
 
 		oldInquiriesTeachersResList = poits.readByTeacherNumber(teacherNumber);
 

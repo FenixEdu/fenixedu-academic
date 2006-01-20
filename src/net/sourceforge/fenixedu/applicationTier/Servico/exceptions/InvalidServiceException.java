@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.exceptions;
 
 /**
  * This class represents an exception thrown when an invalid service is
- * specified.
+ * persistentSupportecified.
  * 
  * @author Joao Pereira
  * @version

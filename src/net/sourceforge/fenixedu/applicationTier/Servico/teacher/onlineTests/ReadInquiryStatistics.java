@@ -47,14 +47,14 @@ public class ReadInquiryStatistics extends Service {
 		this.path = path.replace('\\', '/');
 		InfoSiteInquiryStatistics infoSiteInquiryStatistics = new InfoSiteInquiryStatistics();
 		List infoInquiryStatisticsList = new ArrayList();
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		DistributedTest distributedTest = (DistributedTest) persistentSuport
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		DistributedTest distributedTest = (DistributedTest) persistentSupport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)
 			throw new InvalidArgumentsServiceException();
 		infoSiteInquiryStatistics.setExecutionCourse(InfoExecutionCourse
 				.newInfoFromDomain((ExecutionCourse) distributedTest.getTestScope().getDomainObject()));
-		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
 				.getIPersistentStudentTestQuestion();
 
 		List<StudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion

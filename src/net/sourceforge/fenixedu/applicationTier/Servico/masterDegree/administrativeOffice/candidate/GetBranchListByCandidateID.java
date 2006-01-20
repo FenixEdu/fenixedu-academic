@@ -8,14 +8,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -24,16 +22,13 @@ public class GetBranchListByCandidateID extends Service {
 
 	public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = null;
 		List result = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
+		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
 				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
 						candidateID);
 		// result =
-		// sp.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
+		// persistentSupport.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());
 		result = masterDegreeCandidate.getExecutionDegree().getDegreeCurricularPlan().getAreas();
 
 		List branchList = new ArrayList();

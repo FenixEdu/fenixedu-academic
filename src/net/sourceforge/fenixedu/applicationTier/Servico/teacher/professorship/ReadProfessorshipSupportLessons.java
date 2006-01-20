@@ -34,14 +34,14 @@ public class ReadProfessorshipSupportLessons extends Service {
         
         ProfessorshipSupportLessonsDTO professorshipSupportLessonsDTO = new ProfessorshipSupportLessonsDTO();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
         Professorship professorship = professorshipDAO.readByTeacherAndExecutionCourse(teacherId,
                 executionCourseId);
 
         InfoProfessorship infoProfessorship = InfoProfessorshipWithAll.newInfoFromDomain(professorship);
         professorshipSupportLessonsDTO.setInfoProfessorship(infoProfessorship);
-        IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
+        IPersistentSupportLesson supportLessonDAO = persistentSupport.getIPersistentSupportLesson();
 
         List supportLessons = supportLessonDAO.readByProfessorship(professorship.getIdInternal());
         List infoSupportLessons = (List) CollectionUtils.collect(supportLessons, new Transformer() {

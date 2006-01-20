@@ -2,22 +2,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditInsuranceValueByExecutionYearID extends Service {
 
     public void run(Integer executionYearID, Double annualValue, Date endDate)
             throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentObject().readByOID(
+        final ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentObject().readByOID(
                 ExecutionYear.class, executionYearID);
 
         InsuranceValue insuranceValue = executionYear.getInsuranceValue();

@@ -16,8 +16,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadAllExecutionPeriods extends Service {
 
 	public List run() throws ExcepcaoPersistencia {
-		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		final Collection<ExecutionPeriod> executionPeriods = persistentExecutionPeriod.readAll(ExecutionPeriod.class);
 		final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>(executionPeriods.size());

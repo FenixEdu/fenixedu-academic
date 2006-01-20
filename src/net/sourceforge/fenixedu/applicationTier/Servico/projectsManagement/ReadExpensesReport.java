@@ -33,14 +33,14 @@ public class ReadExpensesReport extends Service {
     public InfoExpensesReport run(String username, String costCenter, ReportType reportType, Integer projectCode, String rubric, String userNumber)
             throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         IPersistentSuportOracle p = PersistentSuportOracle.getInstance();
         Integer coordID = new Integer(userNumber);
         InfoExpensesReport infoReport = new InfoExpensesReport();
         if (coordID != null
                 && projectCode != null
-                && (p.getIPersistentProject().isUserProject(coordID, projectCode) || persistentSuport.getIPersistentProjectAccess()
+                && (p.getIPersistentProject().isUserProject(coordID, projectCode) || persistentSupport.getIPersistentProjectAccess()
                         .hasPersonProjectAccess(username, projectCode))) {
             List infoLines = new ArrayList();
             infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));

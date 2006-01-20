@@ -2,15 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -22,9 +20,7 @@ public class CreateGuideSituation extends Service {
     public void run(Integer guideID, String remarks, GuideState situation, Date date)
             throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        Guide guide = (Guide) sp.getIPersistentGuide().readByOID(Guide.class, guideID);
+        Guide guide = (Guide) persistentSupport.getIPersistentGuide().readByOID(Guide.class, guideID);
 
         for (GuideSituation guideSituation : guide.getGuideSituations()) {
             guideSituation.setState(new State(State.INACTIVE));

@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.strategy.enrolment.context.InfoStudentEnrollmentContext;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -34,14 +35,10 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -72,10 +69,9 @@ public class ReadCurricularCoursesToEnroll extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoStudentEnrollmentContext infoStudentEnrolmentContext = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
 
@@ -90,7 +86,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
         }
 
         // Execution Degree
-        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeID);
         if (executionDegree == null) {
@@ -253,8 +249,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
      * @throws ExcepcaoPersistencia
      */
     protected Student getStudent(Integer studentNumber) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent studentDAO = persistentSuport.getIPersistentStudent();
+        IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
 
         return studentDAO.readStudentByNumberAndDegreeType(studentNumber, DegreeType.DEGREE);
     }
@@ -266,8 +261,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
      */
     protected StudentCurricularPlan getStudentCurricularPlan(Student student)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSuport
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
                 .getIStudentCurricularPlanPersistente();
 
         return studentCurricularPlanDAO.readActiveStudentCurricularPlan(student.getNumber(), student

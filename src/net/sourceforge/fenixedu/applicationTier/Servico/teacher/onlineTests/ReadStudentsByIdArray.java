@@ -30,26 +30,26 @@ public class ReadStudentsByIdArray extends Service {
     public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         if (selected != null && selected.length != 0) {
             if (insertByShifts.booleanValue())
-                studentList = returnStudentsFromShiftsArray(persistentSuport, selected);
+                studentList = returnStudentsFromShiftsArray(persistentSupport, selected);
             else
-                studentList = returnStudentsFromStudentsArray(persistentSuport, selected, executionCourseId);
+                studentList = returnStudentsFromStudentsArray(persistentSupport, selected, executionCourseId);
         }
         return studentList;
     }
 
     public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {
                 Integer number = new Integer(lvb.getValue());
-                studentList.add(InfoStudent.newInfoFromDomain((Student) persistentSuport.getIPersistentStudent().readAllBetweenNumbers(number,
+                studentList.add(InfoStudent.newInfoFromDomain((Student) persistentSupport.getIPersistentStudent().readAllBetweenNumbers(number,
                         number).get(0)));
             }
         }
@@ -57,11 +57,11 @@ public class ReadStudentsByIdArray extends Service {
         return studentList;
     }
 
-    private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSuport, String[] shifts) throws FenixServiceException,
+    private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSupport, String[] shifts) throws FenixServiceException,
             ExcepcaoPersistencia {
         final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
+        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         for (int i = 0; i < shifts.length; i++) {
             if (shifts[i].equals(bundle.getString("label.allShifts"))) {
                 continue;
@@ -78,20 +78,20 @@ public class ReadStudentsByIdArray extends Service {
         return infoStudentList;
     }
 
-    private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSuport, String[] students, Integer executionCourseId)
+    private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSupport, String[] students, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {
         final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
 
         for (int i = 0; i < students.length; i++) {
             if (students[i].equals(bundle.getString("label.allStudents"))) {
-                List<Attends> attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
+                List<Attends> attendList = persistentSupport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
                 for (Attends attend : attendList) {
                     studentsList.add(InfoStudent.newInfoFromDomain(attend.getAluno()));
                 }
                 break;
             }
-            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) persistentSuport.getIPersistentStudent().readByOID(Student.class,
+            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
                     new Integer(students[i])));
             if (!studentsList.contains(infoStudent))
                 studentsList.add(infoStudent);

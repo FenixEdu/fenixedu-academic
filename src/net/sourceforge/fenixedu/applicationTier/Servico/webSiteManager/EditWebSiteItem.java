@@ -29,11 +29,11 @@ public class EditWebSiteItem extends ManageWebSiteItem {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         Boolean result = Boolean.FALSE;
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                 .getIPersistentWebSiteSection();
-        IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
-        IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
+        IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         WebSiteSection webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(
                 WebSiteSection.class, sectionCode);

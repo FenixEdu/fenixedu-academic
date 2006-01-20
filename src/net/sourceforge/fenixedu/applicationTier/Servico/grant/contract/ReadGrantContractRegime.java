@@ -21,8 +21,8 @@ public class ReadGrantContractRegime extends ReadDomainObjectService {
         return GrantContractRegime.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantContractRegime();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentGrantContractRegime();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

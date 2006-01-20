@@ -39,8 +39,8 @@ public class ReadExecutionCourseProjects extends Service {
 
 		InfoSiteProjects infoSiteProjects = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
 				.readByOID(ExecutionCourse.class, executionCourseCode);
 
 		List executionCourseProjects = new ArrayList();

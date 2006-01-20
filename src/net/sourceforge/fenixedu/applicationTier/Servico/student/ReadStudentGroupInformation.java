@@ -40,8 +40,8 @@ public class ReadStudentGroupInformation extends Service {
         Grouping grouping = null;
         List groupAttendsList = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(StudentGroup.class,
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(StudentGroup.class,
                 studentGroupCode);
 
         if (studentGroup == null) {

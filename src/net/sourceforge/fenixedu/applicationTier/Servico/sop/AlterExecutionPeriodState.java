@@ -17,9 +17,9 @@ public class AlterExecutionPeriodState extends Service {
 	public void run(InfoExecutionPeriod infoExecutionPeriod, PeriodState periodState)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-		final IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
+		final IPersistentExecutionYear executionYearDAO = persistentSupport.getIPersistentExecutionYear();
 
 		final ExecutionPeriod executionPeriod = executionPeriodDAO.readBySemesterAndExecutionYear(
 				infoExecutionPeriod.getSemester(), executionYearDAO.readExecutionYearByName(

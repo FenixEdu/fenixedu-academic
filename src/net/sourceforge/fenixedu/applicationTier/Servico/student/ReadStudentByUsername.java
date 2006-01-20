@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadStudentByUsername extends Service {
 
     public Object run(String username) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final Student student = sp.getIPersistentStudent().readByUsername(username);
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
         if (student != null) {
             return InfoStudent.newInfoFromDomain(student);

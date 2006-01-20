@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
@@ -24,14 +25,10 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -45,19 +42,18 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		InfoTeacher infoTeacher = null;
 		List infoSiteEnrolmentEvaluations = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
 				.getIPersistentEnrolmentEvaluation();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
 		// read curricularCourse by ID
-		CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
+		CurricularCourse curricularCourse = (CurricularCourse) persistentSupport.getIPersistentCurricularCourse()
 				.readByOID(CurricularCourse.class, curricularCourseID);
 
 		final CurricularCourse curricularCourseTemp = curricularCourse;
 
 		// StudentCurricularPlan studentCurricularPlan =
-		// sp.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
+		// persistentSupport.getIStudentCurricularPlanPersistente().readActiveStudentCurricularPlan(
 		// studentNumber,
 		// DegreeType.MESTRADO_OBJ);
 		//
@@ -71,7 +67,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		// in case student has school part concluded his curricular plan is
 		// not in active state
 
-		List studentCurricularPlans = sp.getIStudentCurricularPlanPersistente()
+		List studentCurricularPlans = persistentSupport.getIStudentCurricularPlanPersistente()
 				.readByStudentNumberAndDegreeType(studentNumber, DegreeType.MASTER_DEGREE);
 
 		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) CollectionUtils.find(
@@ -107,12 +103,12 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		// }
 		Enrolment enrolment = null;
 		if (executionYear != null) {
-			enrolment = sp.getIPersistentEnrolment().readEnrolmentByStudentNumberAndCurricularCourse(
+			enrolment = persistentSupport.getIPersistentEnrolment().readEnrolmentByStudentNumberAndCurricularCourse(
 					studentCurricularPlan.getStudent().getNumber(), curricularCourse.getIdInternal(),
 					executionYear);
 		} else {
 			// TODO: Não se sabe se este comportamento está correcto!
-			List enrollments = sp.getIPersistentEnrolment()
+			List enrollments = persistentSupport.getIPersistentEnrolment()
 					.readByStudentCurricularPlanAndCurricularCourse(
 							studentCurricularPlan.getIdInternal(), curricularCourse.getIdInternal());
 
@@ -156,7 +152,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 
 					if (enrolmentEvaluation != null) {
 						if (enrolmentEvaluation.getEmployee() != null) {
-							Person person2 = (Person) sp.getIPessoaPersistente()
+							Person person2 = (Person) persistentSupport.getIPessoaPersistente()
 									.readByOID(
 											Person.class,
 											enrolmentEvaluation.getEmployee().getPerson()

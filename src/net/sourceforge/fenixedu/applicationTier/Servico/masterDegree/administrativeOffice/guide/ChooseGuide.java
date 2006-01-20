@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
@@ -21,12 +22,9 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -35,11 +33,9 @@ public class ChooseGuide extends Service {
 
 	public List run(Integer guideNumber, Integer guideYear) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		ISuportePersistente sp = null;
 		List guides = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		guides = sp.getIPersistentGuide().readByNumberAndYear(guideNumber, guideYear);
+        guides = persistentSupport.getIPersistentGuide().readByNumberAndYear(guideNumber, guideYear);
 
 		if (guides == null || guides.isEmpty()) {
 			throw new NonExistingServiceException();
@@ -72,12 +68,9 @@ public class ChooseGuide extends Service {
 
 	public InfoGuide run(Integer guideNumber, Integer guideYear, Integer guideVersion) throws Exception {
 
-		ISuportePersistente sp = null;
 		Guide guide = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
+		guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
 				guideVersion);
 
 		if (guide == null) {
@@ -104,12 +97,9 @@ public class ChooseGuide extends Service {
 
 	public List run(Integer guideYear) throws Exception {
 
-		ISuportePersistente sp = null;
 		List guides = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		guides = sp.getIPersistentGuide().readByYear(guideYear);
+		guides = persistentSupport.getIPersistentGuide().readByYear(guideYear);
 
 		if (guides == null) {
 			throw new NonExistingServiceException();
@@ -174,22 +164,20 @@ public class ChooseGuide extends Service {
 	public List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType)
 			throws Exception {
 
-		ISuportePersistente sp = null;
+		ISuportePersistente persistentSupport = null;
 		List guides = null;
 		Person person = null;
 
 		// Check if person exists
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(identificationDocumentNumber,
+		person = persistentSupport.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(identificationDocumentNumber,
 				identificationDocumentType);
 
 		if (person == null) {
 			throw new NonExistingServiceException();
 		}
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		guides = sp.getIPersistentGuide().readByPerson(identificationDocumentNumber,
+		guides = persistentSupport.getIPersistentGuide().readByPerson(identificationDocumentNumber,
 				identificationDocumentType);
 
 		if ((guides == null) || (guides.size() == 0)) {

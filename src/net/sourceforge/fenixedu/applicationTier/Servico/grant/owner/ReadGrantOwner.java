@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
  */
 public class ReadGrantOwner extends ReadDomainObjectService {
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantOwner();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentGrantOwner();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

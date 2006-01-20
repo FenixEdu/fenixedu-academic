@@ -36,9 +36,9 @@ public class ReadStudentsAndGroupsWithoutShift extends Service {
             ExcepcaoPersistencia {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
                 groupPropertiesId);
 
         if (groupProperties == null) {

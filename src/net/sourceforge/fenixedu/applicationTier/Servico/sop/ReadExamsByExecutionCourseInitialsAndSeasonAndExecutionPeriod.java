@@ -35,9 +35,9 @@ public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod exten
 			InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 		InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		ExecutionCourse executionCourse = sp.getIPersistentExecutionCourse()
+		ExecutionCourse executionCourse = persistentSupport.getIPersistentExecutionCourse()
 				.readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,
 						infoExecutionPeriod.getIdInternal());
 

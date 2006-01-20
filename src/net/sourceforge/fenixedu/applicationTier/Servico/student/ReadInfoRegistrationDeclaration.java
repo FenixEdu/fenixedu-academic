@@ -32,8 +32,8 @@ public class ReadInfoRegistrationDeclaration extends Service {
 
     public InfoRegistrationDeclaration run(Integer studentNumber, DegreeType degreeType)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber, degreeType);
         if (student == null) {

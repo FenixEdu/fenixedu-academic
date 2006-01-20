@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
@@ -7,9 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfo
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -20,11 +18,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadGratuitySituationById extends Service {
 
 	public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = null;
 		InfoGratuitySituation infoGratuitySituation = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
+		IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
 
 		GratuitySituation gratuitySituation = (GratuitySituation) persistentGratuitySituation
 				.readByOID(GratuitySituation.class, gratuitySituationID);

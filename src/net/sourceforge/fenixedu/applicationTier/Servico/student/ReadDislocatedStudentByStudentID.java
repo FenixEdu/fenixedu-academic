@@ -20,8 +20,8 @@ public class ReadDislocatedStudentByStudentID extends Service {
 
     public InfoDislocatedStudent run(Integer studentID) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
         return InfoDislocatedStudent.newInfoFromDomain(student.getDislocatedStudent());

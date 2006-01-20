@@ -56,10 +56,10 @@ public class ReadFilteredExamsMap extends Service {
         infoExamsMap.setCurricularYears(curricularYears);
 
         // Translate to execute following queries
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         OccupationPeriod period = null;
@@ -92,10 +92,10 @@ public class ReadFilteredExamsMap extends Service {
         List infoExecutionCourses = new ArrayList();
 
         // Obtain execution courses and associated information
-        // of the given execution degree for each curricular year specified
+        // of the given execution degree for each curricular year persistentSupportecified
         for (int i = 0; i < curricularYears.size(); i++) {
             // Obtain list os execution courses
-            List executionCourses = sp.getIPersistentExecutionCourse()
+            List executionCourses = persistentSupport.getIPersistentExecutionCourse()
                     .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
                             (Integer) curricularYears.get(i), infoExecutionPeriod.getSemester(),
                             executionDegree.getDegreeCurricularPlan().getName(),

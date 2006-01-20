@@ -27,9 +27,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCategories extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentCategory persistentCategory = persistentSuport.getIPersistentCategory();
+		IPersistentCategory persistentCategory = persistentSupport.getIPersistentCategory();
 		List categories = persistentCategory.readAll();
 
 		List result = (List) CollectionUtils.collect(categories, new Transformer() {

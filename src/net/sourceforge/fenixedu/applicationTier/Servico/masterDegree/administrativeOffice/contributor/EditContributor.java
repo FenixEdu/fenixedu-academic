@@ -3,14 +3,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.contributor;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoContributor;
 import net.sourceforge.fenixedu.domain.Contributor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -21,9 +19,7 @@ public class EditContributor extends Service {
             String contributorName, String contributorAddress) throws ExcepcaoPersistencia,
             NonExistingContributorServiceException, ExistingServiceException {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final Contributor storedContributor = (Contributor) sp.getIPersistentContributor().readByOID(
+        final Contributor storedContributor = (Contributor) persistentSupport.getIPersistentContributor().readByOID(
                 Contributor.class, infoContributor.getIdInternal());
 
         if (storedContributor == null) {
@@ -31,7 +27,7 @@ public class EditContributor extends Service {
         }
 
         // Read if exists any contributor with the new number
-        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+        Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(
                 contributorNumber);
         if (contributor != null && !contributor.equals(storedContributor)) {
             throw new ExistingServiceException();

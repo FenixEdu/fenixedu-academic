@@ -35,8 +35,8 @@ public class ReadOldIquiriesSummaryByDegreeIDAndExecutionPeriodID extends Servic
 		if (executionPeriodID == null) {
 			throw new FenixServiceException("nullExecutionPeriodId");
 		}
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentOldInquiriesSummary pois = sp.getIPersistentOldInquiriesSummary();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentOldInquiriesSummary pois = persistentSupport.getIPersistentOldInquiriesSummary();
 
 		oldInquiriesSummaryList = pois.readByDegreeIdAndExecutionPeriod(degreeID, executionPeriodID);
 

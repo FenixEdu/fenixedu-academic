@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeletePublication extends Service {
 
 	public void run(final Integer publicationId) throws ExcepcaoPersistencia {
-		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
+		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
 
         final Publication publication = (Publication) persistentPublication.readByOID(Publication.class, publicationId);
         publication.delete();

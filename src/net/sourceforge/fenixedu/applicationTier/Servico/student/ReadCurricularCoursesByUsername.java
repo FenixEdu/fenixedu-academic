@@ -31,8 +31,8 @@ public class ReadCurricularCoursesByUsername extends Service {
 	public List run(String username) throws BDException, ExcepcaoPersistencia {
 		List curricularCourses = new LinkedList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		List curricularPlans = sp.getIStudentCurricularPlanPersistente().readByUsername(username);
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		List curricularPlans = persistentSupport.getIStudentCurricularPlanPersistente().readByUsername(username);
 		for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
 			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 			for (Iterator curricularCoursesIterator = studentCurricularPlan.getDegreeCurricularPlan()

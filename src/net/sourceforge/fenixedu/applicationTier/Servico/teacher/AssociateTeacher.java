@@ -32,9 +32,9 @@ public class AssociateTeacher extends Service {
     public boolean run(Integer infoExecutionCourseCode, Integer teacherNumber)
             throws FenixServiceException, ExcepcaoPersistencia {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
             Teacher iTeacher = persistentTeacher.readByNumber(teacherNumber);
             if (iTeacher == null) {

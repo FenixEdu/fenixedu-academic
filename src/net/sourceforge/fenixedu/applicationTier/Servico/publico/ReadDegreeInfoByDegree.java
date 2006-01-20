@@ -22,8 +22,8 @@ public class ReadDegreeInfoByDegree extends Service {
             throw new FenixServiceException("error.impossibleDegreeSite");
         }
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ICursoPersistente persistentDegree = sp.getICursoPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
 
         final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
         if (degree == null || degree.getDegreeInfos().isEmpty()) {

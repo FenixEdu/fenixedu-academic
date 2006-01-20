@@ -20,8 +20,8 @@ public class LerSala extends Service {
 	public Object run(RoomKey keySala) throws ExcepcaoPersistencia {
 		InfoRoom infoSala = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Room sala = sp.getISalaPersistente().readByName(keySala.getNomeSala());
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		Room sala = persistentSupport.getISalaPersistente().readByName(keySala.getNomeSala());
 		if (sala != null)
 			infoSala = new InfoRoom(sala.getNome(), sala.getBuilding().getName(), sala.getPiso(), sala
 					.getTipo(), sala.getCapacidadeNormal(), sala.getCapacidadeExame());

@@ -7,17 +7,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -25,8 +22,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadFAQSections extends Service {
 
     public Collection run() throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentFAQSection dao = sp.getIPersistentFAQSection();
+        IPersistentFAQSection dao = persistentSupport.getIPersistentFAQSection();
 
         List faqSections = dao.readAll();
         return CollectionUtils.collect(faqSections, new Transformer() {

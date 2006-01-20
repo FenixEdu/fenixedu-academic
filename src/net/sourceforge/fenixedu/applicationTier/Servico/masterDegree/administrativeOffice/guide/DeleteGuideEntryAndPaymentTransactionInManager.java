@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.Guide;
@@ -8,9 +9,6 @@ import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntr
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -21,9 +19,7 @@ public class DeleteGuideEntryAndPaymentTransactionInManager extends Service {
 
     public void run(Integer guideEntryID) throws ExcepcaoPersistencia, InvalidChangeServiceException {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        GuideEntry guideEntry = (GuideEntry) sp.getIPersistentGuideEntry().readByOID(GuideEntry.class,
+        GuideEntry guideEntry = (GuideEntry) persistentSupport.getIPersistentGuideEntry().readByOID(GuideEntry.class,
                 guideEntryID);
 
         if (!guideEntry.getReimbursementGuideEntries().isEmpty()) {
@@ -52,7 +48,7 @@ public class DeleteGuideEntryAndPaymentTransactionInManager extends Service {
             paymentTransaction.removePersonAccount();
             paymentTransaction.removeGuideEntry();
             paymentTransaction.removeResponsiblePerson();
-            sp.getIPersistentPaymentTransaction().deleteByOID(PaymentTransaction.class,
+            persistentSupport.getIPersistentPaymentTransaction().deleteByOID(PaymentTransaction.class,
                     paymentTransaction.getIdInternal());
 
         }
@@ -64,13 +60,13 @@ public class DeleteGuideEntryAndPaymentTransactionInManager extends Service {
                 reimbursementGuideEntry.removeGuideEntry();
                 reimbursementGuideEntry.removeReimbursementGuide();
                 reimbursementGuideEntry.removeReimbursementTransaction();
-                sp.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,
+                persistentSupport.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,
                         reimbursementGuideEntry.getIdInternal());
             }
         }
 
         guideEntry.removeGuide();
-        sp.getIPersistentGuideEntry().deleteByOID(GuideEntry.class, guideEntry.getIdInternal());
+        persistentSupport.getIPersistentGuideEntry().deleteByOID(GuideEntry.class, guideEntry.getIdInternal());
 
         // update guide's total value
         guide.updateTotalValue();

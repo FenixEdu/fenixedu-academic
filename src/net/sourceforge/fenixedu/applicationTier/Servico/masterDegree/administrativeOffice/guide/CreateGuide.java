@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuide;
@@ -25,11 +26,8 @@ import net.sourceforge.fenixedu.domain.GuideState;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -40,7 +38,6 @@ public class CreateGuide extends Service {
             GuideState situationOfGuide, String paymentType) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         GuideSituation guideSituation = null;
 
         // Check the Guide Situation
@@ -64,7 +61,7 @@ public class CreateGuide extends Service {
         infoGuide.setTotal(CalculateGuideTotal.calculate(infoGuide));
 
         // Get the Guide Number
-        Integer guideNumber = sp.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
+        Integer guideNumber = persistentSupport.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
         infoGuide.setNumber(guideNumber);
 
         // Create the new Guide Situation
@@ -77,11 +74,11 @@ public class CreateGuide extends Service {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
                 infoGuide.getInfoPerson().getIdInternal());
-        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class, infoGuide.getInfoExecutionDegree().getIdInternal());
-        Contributor contributor = (Contributor) sp.getIPersistentContributor().readByOID(
+        Contributor contributor = (Contributor) persistentSupport.getIPersistentContributor().readByOID(
                 Contributor.class, infoGuide.getInfoContributor().getIdInternal());
 
         Guide guide = DomainFactory.makeGuide();

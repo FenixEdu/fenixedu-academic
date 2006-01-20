@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -14,14 +15,10 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -32,12 +29,9 @@ public class InsertCurricularCourseAtDegreeCurricularPlan extends Service {
     public void run(InfoCurricularCourse infoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
 
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-
             Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan()
                     .getIdInternal();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSuport
+            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
                     .getIPersistentDegreeCurricularPlan();
 
             DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan

@@ -37,8 +37,8 @@ public class CreateExercise extends Service {
 			Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
 				.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
 		if (executionCourse == null) {
 			throw new InvalidArgumentsServiceException();
@@ -56,13 +56,13 @@ public class CreateExercise extends Service {
 			metadata.setLevel(level);
 			metadata.setVisibility(new Boolean(true));
 		} else {
-			metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class,
+			metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(Metadata.class,
 					metadataId);
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();
 			}
 		}
-		IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
+		IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
 		Question question = DomainFactory.makeQuestion();
 		question.setMetadata(metadata);
 		question.setVisibility(new Boolean(true));

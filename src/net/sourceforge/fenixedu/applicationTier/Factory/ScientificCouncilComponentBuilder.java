@@ -81,15 +81,15 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteBasicCurricularCourses(InfoSiteBasicCurricularCourses component,
 			Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = sp.getIPersistentObject();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
 				DegreeCurricularPlan.class, degreeCurricularPlanId);
 
 		if (degreeCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
 		List nonBasicCurricularCourses = persistentCurricularCourse
 				.readCurricularCoursesByDegreeCurricularPlanAndBasicAttribute(degreeCurricularPlan
@@ -132,15 +132,15 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteCurricularCourses(InfoSiteCurricularCourses component,
 			Integer degreeCurricularPlanId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = sp.getIPersistentObject();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
 				DegreeCurricularPlan.class, degreeCurricularPlanId);
 
 		if (degreeCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
 		String name = degreeCurricularPlan.getName();
 		String degreeName = degreeCurricularPlan.getDegree().getNome();
@@ -171,13 +171,13 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteDegreeCurricularPlans(InfoSiteDegreeCurricularPlans component,
 			Integer degreeId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = sp.getIPersistentObject();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 		Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
 		if (degree == null) {
 			throw new InvalidArgumentsServiceException();
 		}
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
 				.getIPersistentDegreeCurricularPlan();
 		List degreeCurricularPlans = persistentDegreeCurricularPlan.readByDegreeAndState(degree
 				.getIdInternal(), DegreeCurricularPlanState.ACTIVE, CurricularStage.OLD);
@@ -202,8 +202,8 @@ public class ScientificCouncilComponentBuilder {
 	private ISiteComponent getInfoSiteSCDegrees(InfoSiteSCDegrees component)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ICursoPersistente persistentDegree = sp.getICursoPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
 		List degrees = persistentDegree.readAllFromOldDegreeStructure();
 		Iterator degreeIterator = degrees.iterator();
 		List infoDegrees = new ArrayList();

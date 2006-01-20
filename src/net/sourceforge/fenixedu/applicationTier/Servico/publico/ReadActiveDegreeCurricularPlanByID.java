@@ -45,8 +45,8 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
                     .readActiveCurricularCourseScopes(degreeCurricularPlanId), language);
         }
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, executionPeriodId);
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
@@ -62,8 +62,8 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     public List run(InfoExecutionDegree infoExecutionDegree, InfoExecutionPeriod infoExecutionPeriod,
             Integer curricularYear, String language) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         final ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, infoExecutionDegree.getIdInternal());
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
@@ -75,7 +75,7 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
             return groupScopesByCurricularYearAndCurricularCourseAndBranch(super
                     .readActiveCurricularCourseScopes(degreeCurricularPlan.getIdInternal()), language);
         }
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                 ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
         if (executionPeriod == null || executionPeriod.getExecutionYear() == null) {
@@ -146,8 +146,8 @@ public class ReadActiveDegreeCurricularPlanByID extends ReadDegreeCurricularPlan
     public InfoDegreeCurricularPlan run(Integer degreeCurricularPlanId, Integer executionYear, String arg)
             throws FenixServiceException, ExcepcaoPersistencia {
         
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
                 .getIPersistentDegreeCurricularPlan();
         final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);

@@ -28,8 +28,8 @@ public class DeleteManagementPositionCreditLineService extends DeleteDomainObjec
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentManagementPositionCreditLine();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentManagementPositionCreditLine();
     }
 
     /* (non-Javadoc)

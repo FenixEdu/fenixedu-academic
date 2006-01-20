@@ -50,10 +50,10 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
     public List run(Integer executionDegreeId, Integer semester, Integer teacherType)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
 
         ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
@@ -73,7 +73,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
 
         List responsibleFors = getResponsibleForsByDegree(executionDegree);
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, sp,
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, persistentSupport,
                 teacherType);
 
         // Cleaning out possible null elements inside the list
@@ -150,7 +150,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegreeAndExecutionP
     }
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente sp, final Integer teacherType) {
+            ISuportePersistente persistentSupport, final Integer teacherType) {
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Transformer() {
 

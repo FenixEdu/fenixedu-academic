@@ -43,12 +43,12 @@ public class ReadAvailableShiftsForClass extends Service {
 
         List infoShifts = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
+        SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
-        List shifts = sp.getITurnoPersistente().readAvailableShiftsForClass(schoolClass.getIdInternal());
+        List shifts = persistentSupport.getITurnoPersistente().readAvailableShiftsForClass(schoolClass.getIdInternal());
 
         infoShifts = (List) CollectionUtils.collect(shifts, new Transformer() {
             public Object transform(Object arg0) {

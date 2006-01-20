@@ -43,8 +43,8 @@ public class ReadEnrolledCurricularCoursesByStudentAndExecutionPeriod extends
 	public List<InfoCurricularCourse> run(Integer studentCurricularPlanId, Integer executionPeriodId)
 	throws ExcepcaoPersistencia {
 		
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentEnrollment pe = sp.getIPersistentEnrolment();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentEnrollment pe = persistentSupport.getIPersistentEnrolment();
 		
 		List<Enrolment> enrollments =
 			pe.readAllEnrolmentsByStudentCurricularPlanAndExecutionPeriod(studentCurricularPlanId, executionPeriodId);

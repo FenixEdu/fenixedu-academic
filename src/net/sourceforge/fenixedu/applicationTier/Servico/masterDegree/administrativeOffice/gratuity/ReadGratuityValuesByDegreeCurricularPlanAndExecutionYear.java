@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValuesWithInfoExecutionDegree;
@@ -20,13 +21,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author T�nia Pous�o
@@ -40,18 +37,15 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Se
 			throw new FenixServiceException("error.impossible.noGratuityValues");
 		}
 
-		ISuportePersistente sp = null;
 		GratuityValues gratuityValues = null;
 		List infoPaymentPhases = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
 				.getIPersistentDegreeCurricularPlan();
 		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
 				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-		IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+		IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 		ExecutionYear executionYear = persistentExecutionYear
 				.readExecutionYearByName(executionYearName);
 
@@ -60,7 +54,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Se
 		}
 
 		// read execution degree
-		IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+		IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 		ExecutionDegree executionDegree = persistentExecutionDegree
 				.readByDegreeCurricularPlanAndExecutionYear(degreeCurricularPlan.getName(),
 						degreeCurricularPlan.getDegree().getSigla(), executionYear.getYear());

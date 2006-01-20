@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.guide.InvalidGuideSituationServiceException;
@@ -37,11 +38,9 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> <br>
@@ -69,9 +68,7 @@ public class EditReimbursementGuide extends Service {
 	public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks,
 			IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentReimbursementGuide persistentReimbursementGuide = ps
+		IPersistentReimbursementGuide persistentReimbursementGuide = persistentSupport
 				.getIPersistentReimbursementGuide();
 
 		ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentReimbursementGuide
@@ -90,8 +87,8 @@ public class EditReimbursementGuide extends Service {
 		ReimbursementGuideSituation newActiveSituation = DomainFactory
 				.makeReimbursementGuideSituation();
 
-		IPersistentEmployee persistentEmployee = ps.getIPersistentEmployee();
-		IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
+		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
+		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 		Employee employee = persistentEmployee.readByPerson(person);
 
@@ -118,7 +115,7 @@ public class EditReimbursementGuide extends Service {
 			ReimbursementGuideEntry reimbursementGuideEntry = null;
 			ReimbursementTransaction reimbursementTransaction = null;
 
-			IPersistentPersonAccount persistentPersonAccount = ps.getIPersistentPersonAccount();
+			IPersistentPersonAccount persistentPersonAccount = persistentSupport.getIPersistentPersonAccount();
 			PersonAccount personAccount = persistentPersonAccount.readByPerson(reimbursementGuide
 					.getGuide().getPerson().getIdInternal());
 
@@ -127,13 +124,13 @@ public class EditReimbursementGuide extends Service {
 						.getPerson());
 			}
 
-			IPersistentGratuitySituation persistentGratuitySituation = ps
+			IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
 					.getIPersistentGratuitySituation();
 
 			while (iterator.hasNext()) {
 				reimbursementGuideEntry = (ReimbursementGuideEntry) iterator.next();
 
-				if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry, ps) == false) {
+				if (checkReimbursementGuideEntriesSum(reimbursementGuideEntry, persistentSupport) == false) {
 					throw new InvalidReimbursementValueServiceException(
 							"error.exception.masterDegree.invalidReimbursementValue");
 
@@ -156,7 +153,7 @@ public class EditReimbursementGuide extends Service {
 							personAccount, reimbursementGuideEntry);
 
 					Person studentPerson = reimbursementGuide.getGuide().getPerson();
-					Student student = ps.getIPersistentStudent().readByPersonAndDegreeType(
+					Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(
 							studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
 					ExecutionDegree executionDegree = reimbursementGuide.getGuide()
 							.getExecutionDegree();

@@ -33,12 +33,12 @@ public class ViewStudentsByTutor extends Service {
         }
 
         List infoTutorStudents = new ArrayList();
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readTeacherByUsername(userName);
 
-        IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
         List<Tutor> tutorStudents = persistentTutor.readStudentsByTeacher(teacher.getIdInternal(),
                 teacher.getTeacherNumber());
 

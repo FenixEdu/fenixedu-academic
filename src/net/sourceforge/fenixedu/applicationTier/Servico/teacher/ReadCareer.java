@@ -24,8 +24,8 @@ public class ReadCareer extends ReadDomainObjectService {
         return Career.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentCareer();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentCareer();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

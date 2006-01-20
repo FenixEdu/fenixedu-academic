@@ -48,11 +48,11 @@ public class ReadPublishedMarksByExam extends Service {
         Evaluation evaluation = null;
         InfoEvaluation infoEvaluation = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         //Site
 
-        IPersistentSite siteDAO = sp.getIPersistentSite();
+        IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
         site = (Site) siteDAO.readByOID(Site.class, siteCode);
 
         //Execution Course
@@ -60,16 +60,16 @@ public class ReadPublishedMarksByExam extends Service {
 
         // Evaluation
 
-        evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
         //Attends
-        IFrequentaPersistente attendDAO = sp.getIFrequentaPersistente();
+        IFrequentaPersistente attendDAO = persistentSupport.getIFrequentaPersistente();
         List attendList = attendDAO.readByExecutionCourse(executionCourse.getIdInternal());
 
         //Marks
-        IPersistentMark markDAO = sp.getIPersistentMark();
+        IPersistentMark markDAO = persistentSupport.getIPersistentMark();
         marksList = markDAO.readBy(evaluation);
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {

@@ -20,8 +20,8 @@ public class ReadSchoolClass extends Service {
 
 		InfoClass result = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
 		SchoolClass schoolClass = (SchoolClass) persistentSchoolClass.readByOID(SchoolClass.class,
 				infoSchoolClass.getIdInternal());
 		if (schoolClass != null) {

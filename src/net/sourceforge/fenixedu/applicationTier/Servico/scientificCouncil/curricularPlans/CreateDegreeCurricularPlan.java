@@ -72,9 +72,9 @@ public class CreateDegreeCurricularPlan extends Service {
 
     private void addBolonhaRoleToCreator(Person creator) throws ExcepcaoPersistencia {
         if (!creator.hasRole(RoleType.BOLONHA_MANAGER)) {
-            final ISuportePersistente persistentSuport = PersistenceSupportFactory
+            final ISuportePersistente persistentSupport = PersistenceSupportFactory
                     .getDefaultPersistenceSupport();
-            final Role bolonhaRole = persistentSuport.getIPersistentRole().readByRoleType(
+            final Role bolonhaRole = persistentSupport.getIPersistentRole().readByRoleType(
                     RoleType.BOLONHA_MANAGER);
             creator.addPersonRoles(bolonhaRole);
         }

@@ -7,12 +7,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -22,9 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadInstitutions extends Service {
 
     public List run() throws ExcepcaoPersistencia {
-
-        IPersistentInstitution persistentInstitution = PersistenceSupportFactory
-                .getDefaultPersistenceSupport().getIPersistentInstitution();
+        IPersistentInstitution persistentInstitution = persistentSupport.getIPersistentInstitution();
         List<Institution> institutions = persistentInstitution.readAll();
         List<InfoInstitution> infoInstitutions = new ArrayList();
 

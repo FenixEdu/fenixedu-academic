@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,12 +23,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
@@ -39,8 +37,7 @@ public class ReadStudentsByCurricularCourse extends Service {
 
     public Object run(Integer executionCourseCode, Integer courseCode) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentSite persistentSite = sp.getIPersistentSite();
+        final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
         List infoStudentList = null;
         CurricularCourse curricularCourse = null;
@@ -48,13 +45,13 @@ public class ReadStudentsByCurricularCourse extends Service {
         final Site site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         if (courseCode == null) {
-            infoStudentList = getAllAttendingStudents(sp, site);
+            infoStudentList = getAllAttendingStudents(site);
         } else {
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
             curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                     CurricularCourse.class, courseCode);
 
-            infoStudentList = getCurricularCourseStudents(curricularCourse, sp);
+            infoStudentList = getCurricularCourseStudents(curricularCourse, persistentSupport);
 
         }
 
@@ -62,7 +59,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         return siteView;
     }
 
-    private List getCurricularCourseStudents(CurricularCourse curricularCourse, ISuportePersistente sp)
+    private List getCurricularCourseStudents(CurricularCourse curricularCourse, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         List infoStudentList;
 
@@ -80,7 +77,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         return infoStudentList;
     }
 
-    private List getAllAttendingStudents(final ISuportePersistente sp, final Site site) throws ExcepcaoPersistencia {
+    private List getAllAttendingStudents(final Site site) throws ExcepcaoPersistencia {
         final List<Attends> attendList = site.getExecutionCourse().getAttends();
         final List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (final Attends attends : attendList) {

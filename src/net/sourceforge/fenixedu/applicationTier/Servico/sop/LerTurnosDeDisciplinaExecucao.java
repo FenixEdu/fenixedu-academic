@@ -30,8 +30,8 @@ public class LerTurnosDeDisciplinaExecucao extends Service {
         List infoShiftList = new ArrayList();
         List infoShiftAndLessons = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        infoShiftList = sp.getITurnoPersistente().readByExecutionCourse(infoExecutionCourse.getIdInternal());
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        infoShiftList = persistentSupport.getITurnoPersistente().readByExecutionCourse(infoExecutionCourse.getIdInternal());
         Iterator itShiftList = infoShiftList.iterator();
 
         while (itShiftList.hasNext()) {

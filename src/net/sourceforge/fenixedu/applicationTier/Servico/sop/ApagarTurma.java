@@ -26,9 +26,9 @@ public class ApagarTurma extends Service {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(
+        final SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(
                 SchoolClass.class, infoClass.getIdInternal());
 
         // Shift
@@ -48,7 +48,7 @@ public class ApagarTurma extends Service {
         schoolClass.getExecutionPeriod().getSchoolClasses().remove(schoolClass);
         schoolClass.setExecutionPeriod(null);
 
-        sp.getITurmaPersistente().deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
+        persistentSupport.getITurmaPersistente().deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
 
         return new Boolean(true);
     }

@@ -29,8 +29,8 @@ public class ExecutionCourseSiteComponentService extends Service {
             Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
         final Site site;
         if (infoSiteCode != null)

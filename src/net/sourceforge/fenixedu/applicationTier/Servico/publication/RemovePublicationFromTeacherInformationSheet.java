@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class RemovePublicationFromTeacherInformationSheet extends Service {
     
     public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia, DomainException {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        IPersistentPublication persistentPublication = sp.getIPersistentPublication();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
 
         Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherId);
         Publication publication = (Publication) persistentPublication.readByOID(Publication.class, publicationId);

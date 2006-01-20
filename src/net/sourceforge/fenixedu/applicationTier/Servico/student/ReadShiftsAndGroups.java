@@ -34,9 +34,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadShiftsAndGroups extends Service {
 
     public static ISiteComponent run(Integer groupingCode, String username) throws ExcepcaoPersistencia, FenixServiceException {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class, groupingCode);
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();
         }

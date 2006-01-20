@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditSeniorInfo extends Service {
 
     public void run(InfoSenior changedInfoSenior) throws ExcepcaoPersistencia, FenixServiceException {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentSenior persistentSenior = sp.getIPersistentSenior();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentSenior persistentSenior = persistentSupport.getIPersistentSenior();
             
             Senior seniorToEdit = (Senior) persistentSenior.readByOID(Senior.class, changedInfoSenior.getIdInternal());
             if (seniorToEdit == null) {

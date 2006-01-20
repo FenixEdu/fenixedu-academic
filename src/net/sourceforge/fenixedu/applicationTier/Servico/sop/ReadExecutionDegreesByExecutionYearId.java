@@ -32,9 +32,9 @@ public class ReadExecutionDegreesByExecutionYearId extends Service {
 
         List infoExecutionDegreeList = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
         ExecutionYear executionYear = null;
         if (executionYearId == null) {

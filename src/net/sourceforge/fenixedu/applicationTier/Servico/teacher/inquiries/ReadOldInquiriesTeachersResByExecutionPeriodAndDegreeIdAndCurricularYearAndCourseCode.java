@@ -42,8 +42,8 @@ public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricula
 		if (courseCode == null) {
 			throw new FenixServiceException("nullCourseCode");
 		}
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentOldInquiriesTeachersRes poits = sp.getIPersistentOldInquiriesTeachersRes();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentOldInquiriesTeachersRes poits = persistentSupport.getIPersistentOldInquiriesTeachersRes();
 
 		oldInquiriesTeachersResList = poits
 				.readByExecutionPeriodAndDegreeIdAndCurricularYearAndCourseCode(executionPeriodId,

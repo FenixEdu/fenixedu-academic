@@ -36,16 +36,16 @@ public class GenetareStudentTestForSimulation extends Service {
             Boolean imsfeedback, String testInformation) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        final Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
-        TestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(
                     ExecutionCourse.class, executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
@@ -62,7 +62,7 @@ public class GenetareStudentTestForSimulation extends Service {
         infoDistributedTest.setTestInformation(testInformation);
         infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        List<TestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByTest(testId);
+        List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByTest(testId);
         for (TestQuestion testQuestionExample : testQuestionList) {
 
             List<Question> questionList = new ArrayList<Question>();

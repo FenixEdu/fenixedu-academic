@@ -77,8 +77,8 @@ public class RoomSiteComponentBuilder {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
 
             Calendar startDay = Calendar.getInstance();
             startDay.setTimeInMillis(day.getTimeInMillis());
@@ -184,11 +184,11 @@ public class RoomSiteComponentBuilder {
 
     private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws Exception {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             int semester = executionPeriod.getSemester().intValue();
 
-            List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
+            List executionDegreesList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
             ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesList.get(0);
 

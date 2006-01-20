@@ -31,8 +31,8 @@ public class LerAulasDeSalaEmSemestre extends Service {
             executionPeriodId = infoExecutionPeriod.getIdInternal();
         }
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final List<Lesson> lessonList = sp.getIAulaPersistente().readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriodId);
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final List<Lesson> lessonList = persistentSupport.getIAulaPersistente().readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriodId);
 
         List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
         for (Lesson elem : lessonList) {

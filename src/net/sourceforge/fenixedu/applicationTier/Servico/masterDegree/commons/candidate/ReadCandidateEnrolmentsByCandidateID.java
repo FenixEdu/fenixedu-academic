@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolment;
@@ -11,9 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateEnrolmentWithCur
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -25,9 +23,7 @@ public class ReadCandidateEnrolmentsByCandidateID extends Service {
     public List run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
         List result = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
@@ -35,7 +31,7 @@ public class ReadCandidateEnrolmentsByCandidateID extends Service {
             throw new NonExistingServiceException();
         }
 
-        List candidateEnrolments = sp.getIPersistentCandidateEnrolment().readByMDCandidate(
+        List candidateEnrolments = persistentSupport.getIPersistentCandidateEnrolment().readByMDCandidate(
                 masterDegreeCandidate.getIdInternal());
 
         if (candidateEnrolments == null) {

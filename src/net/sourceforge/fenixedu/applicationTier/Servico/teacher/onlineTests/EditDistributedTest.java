@@ -46,13 +46,13 @@ public class EditDistributedTest extends Service {
             Calendar endDate, Calendar endHour, TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback,
             String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
                 executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
+        IPersistentDistributedTest persistentDistributedTest = persistentSupport.getIPersistentDistributedTest();
         DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
@@ -82,32 +82,32 @@ public class EditDistributedTest extends Service {
             distributedTest.setEndDate(endDate);
             distributedTest.setEndHour(endHour);
             advisory = createTestAdvisory(distributedTest);
-            persistentSuport.getIPersistentDistributedTestAdvisory().updateDistributedTestAdvisoryDates(distributedTest, endDate.getTime());
+            persistentSupport.getIPersistentDistributedTestAdvisory().updateDistributedTestAdvisoryDates(distributedTest, endDate.getTime());
             createDistributedTestAdvisory(distributedTest, advisory);
         }
 
         if (change2OtherType) {
             // Change evaluation test to study/inquiry test
             // delete evaluation and marks
-            OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
-            persistentSuport.getIPersistentMark().deleteByEvaluation(onlineTest);
-            persistentSuport.getIPersistentOnlineTest().deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
+            OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+            persistentSupport.getIPersistentMark().deleteByEvaluation(onlineTest);
+            persistentSupport.getIPersistentOnlineTest().deleteByOID(OnlineTest.class, onlineTest.getIdInternal());
         } else if (change2EvaluationType) {
             // Change to evaluation test
             // Create evaluation (onlineTest) and marks
             OnlineTest onlineTest = DomainFactory.makeOnlineTest();
             onlineTest.setDistributedTest(distributedTest);
             onlineTest.addAssociatedExecutionCourses(executionCourse);
-            List<Student> studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
+            List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(
                     distributedTest.getIdInternal());
             for (Student student : studentList) {
-                List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+                List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion()
                         .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
                 double studentMark = 0;
                 for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
                     studentMark += studentTestQuestion.getTestQuestionMark().doubleValue();
                 }
-                Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+                Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
                         executionCourse.getIdInternal());
                 if (attend != null) {
                     Mark mark = DomainFactory.makeMark();

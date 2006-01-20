@@ -20,8 +20,8 @@ public class ReadRequiredAttributes extends Service {
 
     public List<InfoAttribute> run(int publicationTypeId) throws ExcepcaoPersistencia {
            
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentPublicationType persistentPublicationType = persistentSuport.getIPersistentPublicationType();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentPublicationType persistentPublicationType = persistentSupport.getIPersistentPublicationType();
        
         
         PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(

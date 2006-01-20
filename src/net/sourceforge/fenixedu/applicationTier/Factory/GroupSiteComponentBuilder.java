@@ -93,8 +93,8 @@ public class GroupSiteComponentBuilder {
 		List projects = null;
 		Grouping groupProperties;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
 				.readByOID(ExecutionCourse.class, executionCourseCode);
 
 		List executionCourseProjects = executionCourse.getGroupings();
@@ -158,10 +158,10 @@ public class GroupSiteComponentBuilder {
 
 		List infoSiteStudentsAndGroupsList = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 		Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
 
@@ -216,8 +216,8 @@ public class GroupSiteComponentBuilder {
 
 		List infoSiteStudentsAndGroupsList = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -270,9 +270,9 @@ public class GroupSiteComponentBuilder {
 
 		List infoSiteStudentsAndGroupsList = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -351,8 +351,8 @@ public class GroupSiteComponentBuilder {
 			ExcepcaoPersistencia {
 		Shift shift = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
 		shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
 
@@ -370,8 +370,8 @@ public class GroupSiteComponentBuilder {
 	private ISiteComponent getInfoSiteShiftsAndGroups(InfoSiteShiftsAndGroups component,
 			Integer groupPropertiesCode) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		List infoSiteShiftsAndGroups = ReadShiftsAndGroups.run(grouping).getInfoSiteGroupsByShiftList();
@@ -388,9 +388,9 @@ public class GroupSiteComponentBuilder {
 
 		InfoGrouping infoGroupProperties = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		infoGroupProperties = InfoGroupingWithExportGrouping.newInfoFromDomain(grouping);
@@ -423,9 +423,9 @@ public class GroupSiteComponentBuilder {
 
 		List studentGroupAttendInformationList = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		List studentGroupAttendList = studentGroup.getAttends();

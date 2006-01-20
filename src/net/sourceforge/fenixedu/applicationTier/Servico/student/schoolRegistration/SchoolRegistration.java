@@ -64,11 +64,11 @@ public class SchoolRegistration extends Service {
         return !pessoa.hasRole(RoleType.FIRST_TIME_STUDENT);
     }
 
-    private void updatePersonalInfo(final ISuportePersistente sp, final InfoPerson infoPerson, final Person person)
+    private void updatePersonalInfo(final ISuportePersistente persistentSupport, final InfoPerson infoPerson, final Person person)
             throws ExcepcaoPersistencia {
 
-        final IPersistentCountry persistentCountry = sp.getIPersistentCountry();
-        final IPersistentRole pRole = sp.getIPersistentRole();
+        final IPersistentCountry persistentCountry = persistentSupport.getIPersistentCountry();
+        final IPersistentRole pRole = persistentSupport.getIPersistentRole();
 
         Country country = null;
 
@@ -112,10 +112,10 @@ public class SchoolRegistration extends Service {
         }
     }
 
-    private void updateStudentInfo(final ISuportePersistente sp, final Student student)
+    private void updateStudentInfo(final ISuportePersistente persistentSupport, final Student student)
             throws ExcepcaoPersistencia {
 
-        final IPersistentExecutionYear pExecutionYear = sp.getIPersistentExecutionYear();
+        final IPersistentExecutionYear pExecutionYear = persistentSupport.getIPersistentExecutionYear();
  
         final ExecutionYear executionYear = pExecutionYear.readCurrentExecutionYear();
         student.setRegistrationYear(executionYear);

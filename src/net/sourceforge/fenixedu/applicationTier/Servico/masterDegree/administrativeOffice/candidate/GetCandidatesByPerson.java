@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -18,10 +19,7 @@ import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -29,13 +27,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class GetCandidatesByPerson extends Service {
 
 	public List run(Integer personID) throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente sp = null;
-		List result = null;
-
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		result = sp.getIPersistentMasterDegreeCandidate().readByPersonID(personID);
+		List result = persistentSupport.getIPersistentMasterDegreeCandidate().readByPersonID(personID);
 
 		List candidateList = new ArrayList();
 		Iterator iterator = result.iterator();

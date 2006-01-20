@@ -42,8 +42,8 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
             throw new FenixServiceException("nullOnlyAttendsWithTeachers");
 		}
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
 		
 		List<Attends> attendsList =
 			persistentAttend.readByDegreeCurricularPlanAndExecutionPeriodOrderedByStudentId(degreeCurricularPlanId, executionPeriodId);

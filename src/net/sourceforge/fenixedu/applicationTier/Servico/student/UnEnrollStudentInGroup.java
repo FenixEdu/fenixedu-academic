@@ -26,11 +26,11 @@ public class UnEnrollStudentInGroup extends Service {
     public Boolean run(String userName, Integer studentGroupCode) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentStudent persistentStudent = persistentSuport.getIPersistentStudent();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        StudentGroup studentGroup = (StudentGroup) persistentSuport.getIPersistentObject().readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
                 StudentGroup.class, studentGroupCode);
 
         if (studentGroup == null) {
@@ -61,7 +61,7 @@ public class UnEnrollStudentInGroup extends Service {
         if (resultEmpty) {
             groupProperties.removeStudentGroups(studentGroup);
             studentGroup.setShift(null);
-            persistentSuport.getIPersistentObject().deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
+            persistentSupport.getIPersistentObject().deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
             return Boolean.FALSE;
         }
 

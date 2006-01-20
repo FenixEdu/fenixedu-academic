@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -17,15 +18,11 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.StringNormalizer;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class SearchPerson extends Service {
 
@@ -47,8 +44,6 @@ public class SearchPerson extends Service {
                 String roleType, String degreeTypeString, Integer degreeId, Integer departmentId)
                 throws ExcepcaoPersistencia {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             this.nameWords = (name != null && !name.equals("")) ? getNameWords(name) : null;
             this.email = (email != null && !email.equals("")) ? normalize(email.trim()) : null;
             this.username = (username != null && !username.equals("")) ? normalize(username.trim())
@@ -58,11 +53,11 @@ public class SearchPerson extends Service {
                     : null;
 
             if (roleType != null && roleType.length() > 0) {
-                role = (Role) sp.getIPersistentRole().readByRoleType(RoleType.valueOf(roleType));
+                role = (Role) persistentSupport.getIPersistentRole().readByRoleType(RoleType.valueOf(roleType));
             }
 
             if (degreeId != null) {
-                degree = (Degree) sp.getICursoPersistente().readByOID(Degree.class, degreeId);
+                degree = (Degree) persistentSupport.getICursoPersistente().readByOID(Degree.class, degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
@@ -70,7 +65,7 @@ public class SearchPerson extends Service {
             }
 
             if (departmentId != null) {
-                department = (Department) sp.getIDepartamentoPersistente().readByOID(Department.class,
+                department = (Department) persistentSupport.getIDepartamentoPersistente().readByOID(Department.class,
                         departmentId);
             }
         }
@@ -127,7 +122,6 @@ public class SearchPerson extends Service {
     public SearchPersonResults run(SearchParameters searchParameters, Predicate predicate)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final List<Person> persons;
         List<Person> allValidPersons = new ArrayList<Person>();
         List<Teacher> teachers = new ArrayList<Teacher>();
@@ -135,7 +129,7 @@ public class SearchPerson extends Service {
 
         Role roleBd = searchParameters.getRole();
         if (roleBd == null) {
-            roleBd = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
+            roleBd = persistentSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
         }
 
         if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {

@@ -29,10 +29,10 @@ public class SetBasicCurricularCoursesService extends Service {
 	public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = sp
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
 				.getIPersistentDegreeCurricularPlan();
 
 		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
@@ -12,25 +13,18 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class TransferCurricularCourse extends Service {
 
     public void run(Integer sourceExecutionCourseId, final Integer curricularCourseId,
             Integer destinationExecutionCourseId) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
-        final ExecutionCourse sourceExecutionCourse = (ExecutionCourse) persistentSuport
+        final ExecutionCourse sourceExecutionCourse = (ExecutionCourse) persistentSupport
                 .getIPersistentObject().readByOID(ExecutionCourse.class, sourceExecutionCourseId);
-        final ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentSuport
+        final ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentSupport
                 .getIPersistentObject().readByOID(ExecutionCourse.class, destinationExecutionCourseId);
 
         final CurricularCourse curricularCourse = (CurricularCourse) CollectionUtils.find(

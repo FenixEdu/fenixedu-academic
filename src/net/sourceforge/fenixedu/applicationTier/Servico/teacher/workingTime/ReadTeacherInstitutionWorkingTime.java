@@ -36,11 +36,11 @@ public class ReadTeacherInstitutionWorkingTime extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = new TeacherInstitutionWorkingTimeDTO();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = persistentSupport
                 .getIPersistentTeacherInstitutionWorkingTime();
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
-        IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
 
         Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);

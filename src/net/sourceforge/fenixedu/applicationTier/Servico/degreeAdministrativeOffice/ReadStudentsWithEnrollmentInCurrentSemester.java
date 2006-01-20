@@ -57,7 +57,7 @@ public class ReadStudentsWithEnrollmentInCurrentSemester extends Service {
 
     /**
      * @param student
-     * @param sp
+     * @param persistentSupport
      * @return @throws
      *         ExcepcaoPersistencia
      */

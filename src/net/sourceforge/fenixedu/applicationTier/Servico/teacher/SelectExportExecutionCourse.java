@@ -24,9 +24,9 @@ public class SelectExportExecutionCourse extends Service {
 		List infoExecutionCourseList = new ArrayList();
 
 		List executionCourseList = null;
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+		IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
 		executionCourseList = executionCourseDAO
 				.readByCurricularYearAndExecutionPeriodAndExecutionDegree(curricularYear,

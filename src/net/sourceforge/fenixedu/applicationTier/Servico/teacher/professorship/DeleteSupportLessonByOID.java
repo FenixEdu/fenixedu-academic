@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author jpvl
@@ -32,8 +31,8 @@ public class DeleteSupportLessonByOID extends DeleteDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentSupportLesson();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentSupportLesson();
     }
 	
     /* (non-Javadoc)
@@ -41,8 +40,6 @@ public class DeleteSupportLessonByOID extends DeleteDomainObjectService {
 	 */
 	protected void deleteDomainObject(DomainObject domainObject) {
 		try{
-	      ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-	      IPersistentObject persistentObject = getIPersistentObject(sp);
 	      persistentObject.deleteByOID(getDomainObjectClass(), domainObject.getIdInternal());
 			
 		} catch (Exception e) {

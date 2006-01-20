@@ -28,39 +28,39 @@ public class ReviewProjectAccess extends Service {
     }
 
     public void run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentProjectAccess persistentProjectAccess = sp.getIPersistentProjectAccess();
-        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
-        Role role = sp.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentProjectAccess persistentProjectAccess = persistentSupport.getIPersistentProjectAccess();
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Role role = persistentSupport.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, false) == 0) {
-            Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+            Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
             if (teacher == null) {
-                Employee employee = sp.getIPersistentEmployee().readByPerson(person);
+                Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person);
                 if (employee != null) {
-                    IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
-                    if ((persistentSuportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
+                    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
+                    if ((persistentSupportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
                         persistentProjectAccess.deleteByPersonAndCC(person, false);
-                        PersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
+                        PersonRole personRole = persistentSupport.getIPersistentPersonRole().readByPersonAndRole(person, role);
                         if (personRole != null)
-                            sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+                            persistentSupport.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
                     }
                 } else
                     throw new FenixServiceException();
             }
         }
 
-        role = sp.getIPersistentRole().readByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+        role = persistentSupport.getIPersistentRole().readByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, true) == 0) {
-            Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
+            Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername());
             if (teacher == null) {
-                Employee employee = sp.getIPersistentEmployee().readByPerson(person);
+                Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person);
                 if (employee != null) {
-                    IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
-                    if ((persistentSuportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
+                    IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
+                    if ((persistentSupportOracle.getIPersistentProject().countUserProject(employee.getEmployeeNumber()) == 0)) {
                         persistentProjectAccess.deleteByPersonAndCC(person, true);
-                        PersonRole personRole = sp.getIPersistentPersonRole().readByPersonAndRole(person, role);
+                        PersonRole personRole = persistentSupport.getIPersistentPersonRole().readByPersonAndRole(person, role);
                         if (personRole != null)
-                            sp.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
+                            persistentSupport.getIPersistentPersonRole().deleteByOID(PersonRole.class, personRole.getIdInternal());
                     }
                 } else
                     throw new FenixServiceException();

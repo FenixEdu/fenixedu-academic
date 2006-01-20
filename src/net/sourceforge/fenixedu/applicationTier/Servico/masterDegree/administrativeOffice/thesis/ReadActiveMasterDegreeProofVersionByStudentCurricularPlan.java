@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ScholarshipNotFinishedServiceException;
@@ -10,9 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -25,8 +23,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends S
     public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
@@ -39,7 +36,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends S
             throw new ScholarshipNotFinishedServiceException(
                     "error.exception.masterDegree.scholarshipNotFinished");
 
-        MasterDegreeProofVersion masterDegreeProofVersion = sp.getIPersistentMasterDegreeProofVersion()
+        MasterDegreeProofVersion masterDegreeProofVersion = persistentSupport.getIPersistentMasterDegreeProofVersion()
                 .readActiveByStudentCurricularPlan(studentCurricularPlan);
 
         if (masterDegreeProofVersion == null)

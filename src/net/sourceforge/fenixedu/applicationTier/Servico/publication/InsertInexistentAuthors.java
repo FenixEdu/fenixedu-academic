@@ -27,8 +27,8 @@ public class InsertInexistentAuthors extends Service {
         
         List<Integer> externalPersonsIndexes = new ArrayList<Integer>();
         
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
         
         List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>();
         int index = 0;

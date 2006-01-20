@@ -92,9 +92,9 @@ public class ProcessSibsPaymentFile extends Service {
             // checking is not required)
             // assuming the form:
             // if (isSmsPayment())) {
-            // do specific code if any
+            // do persistentSupportecific code if any
             // }
-            // else { do specific code to insurance and gratuities }
+            // else { do persistentSupportecific code to insurance and gratuities }
 
             // DegreeType should be changed in future to support Degree Student
             // gratuity
@@ -245,9 +245,9 @@ public class ProcessSibsPaymentFile extends Service {
                 // checking is not required)
                 // assuming the form:
                 // if (isSmsPayment())) {
-                // do specific code if any
+                // do persistentSupportecific code if any
                 // }
-                // else { do specific code to insurance and gratuities }
+                // else { do persistentSupportecific code to insurance and gratuities }
 
                 markDuplicateGratuityAndInsurancePayments(sibsPaymentFileEntry,
                         sibsPaymentFileEntries, totalPaymentEntries, i);

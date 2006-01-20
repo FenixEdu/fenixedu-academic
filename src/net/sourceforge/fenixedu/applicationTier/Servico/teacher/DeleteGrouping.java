@@ -25,9 +25,9 @@ public class DeleteGrouping extends Service {
             return Boolean.FALSE;
         }
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
      
-        Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
                 groupPropertiesId);
 
         if (groupProperties == null) {

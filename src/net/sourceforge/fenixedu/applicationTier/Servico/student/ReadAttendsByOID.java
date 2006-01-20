@@ -21,8 +21,8 @@ public class ReadAttendsByOID extends Service {
 
 	
 	public InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers run(Integer idInternal) throws ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
 		
 		Attends attends = (Attends)persistentAttend.readByOID(Attends.class, idInternal);
 				

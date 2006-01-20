@@ -71,20 +71,20 @@ public class ReadFilteredExamsMapList extends Service {
         infoExamsMap.setStartSeason2(null);
         infoExamsMap.setEndSeason2(endSeason2);
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         // List of execution courses
         List infoExecutionCourses = new ArrayList();
 
         // Obtain execution courses and associated information
-        // of the given execution degree for each curricular year specified
+        // of the given execution degree for each curricular year persistentSupportecified
         for (int i = 0; i < curricularYears.size(); i++) {
             // Obtain list os execution courses
             for (int n = 0; n < infoExecutionDegreeList.size(); n++) {
                 InfoExecutionDegree infoExecucaoDegree = (InfoExecutionDegree) infoExecutionDegreeList
                         .get(n);
-                List executionCourses = sp.getIPersistentExecutionCourse()
+                List executionCourses = persistentSupport.getIPersistentExecutionCourse()
                         .readByCurricularYearAndExecutionPeriodAndExecutionDegree(
                                 (Integer) curricularYears.get(i),
                                 infoExecutionPeriod.getSemester(),

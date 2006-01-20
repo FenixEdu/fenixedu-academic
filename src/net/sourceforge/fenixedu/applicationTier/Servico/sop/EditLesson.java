@@ -29,10 +29,10 @@ public class EditLesson extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoLessonServiceResult result = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IAulaPersistente aulaPersistente = sp.getIAulaPersistente();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IAulaPersistente aulaPersistente = persistentSupport.getIAulaPersistente();
 
-        Room salaNova = sp.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
+        Room salaNova = persistentSupport.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
         Lesson aula = (Lesson) aulaPersistente.readByOID(Lesson.class, aulaAntiga.getIdInternal());
         Shift shift = aula.getShift();
 

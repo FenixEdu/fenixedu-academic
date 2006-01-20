@@ -23,8 +23,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditExternalActivity extends Service {
 
     public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject po = sp.getIPersistentObject();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject po = persistentSupport.getIPersistentObject();
 		
 		ExternalActivity externalActivity = (ExternalActivity) po.readByOID(ExternalActivity.class, externalActivityId);
 		//If it doesn't exist in the database, a new one has to be created

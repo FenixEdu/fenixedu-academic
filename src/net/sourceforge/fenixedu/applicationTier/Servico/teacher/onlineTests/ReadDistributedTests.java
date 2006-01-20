@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadDistributedTests extends Service {
 
     public List<InfoDistributedTest> run(Integer executionCourseId) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<DistributedTest> distributedTests = persistentSuport.getIPersistentDistributedTest().readByTestScope(ExecutionCourse.class.getName(),
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List<DistributedTest> distributedTests = persistentSupport.getIPersistentDistributedTest().readByTestScope(ExecutionCourse.class.getName(),
                 executionCourseId);
         List<InfoDistributedTest> infoDistributedTestList = new ArrayList<InfoDistributedTest>();
         for (DistributedTest distributedTest : distributedTests) {

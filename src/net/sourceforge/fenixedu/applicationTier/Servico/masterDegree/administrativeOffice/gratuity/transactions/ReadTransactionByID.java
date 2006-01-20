@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity.transactions;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -19,9 +17,7 @@ public class ReadTransactionByID extends Service {
 	public InfoTransaction run(Integer transactionId) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoTransaction infoTransaction = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		Transaction transaction = (Transaction) sp.getIPersistentTransaction().readByOID(
+		Transaction transaction = (Transaction) persistentSupport.getIPersistentTransaction().readByOID(
 				Transaction.class, transactionId);
 
 		if (transaction == null) {

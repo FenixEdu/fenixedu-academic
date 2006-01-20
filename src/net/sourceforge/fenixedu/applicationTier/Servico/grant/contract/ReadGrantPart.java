@@ -21,8 +21,8 @@ public class ReadGrantPart extends ReadDomainObjectService {
         return GrantPart.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantPart();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentGrantPart();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

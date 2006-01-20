@@ -42,8 +42,8 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
     public List run(Integer departmentId, Integer executionYearId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject persistentObject = ps.getIPersistentObject();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
         //Execution Year
         ExecutionYear executionYear = null;
@@ -58,7 +58,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
         List teachers = department.getCurrentTeachers();
 
         Iterator iter = teachers.iterator();
-        IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         
         List professorships = new ArrayList();
         List responsibleFors = new ArrayList();
@@ -91,7 +91,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
             }
         }
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, ps);
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, persistentSupport);
 
         Collections.sort(detailedProfessorships, new Comparator() {
 
@@ -143,7 +143,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartment extends Service {
     }
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente sp) {
+            ISuportePersistente persistentSupport) {
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Transformer() {

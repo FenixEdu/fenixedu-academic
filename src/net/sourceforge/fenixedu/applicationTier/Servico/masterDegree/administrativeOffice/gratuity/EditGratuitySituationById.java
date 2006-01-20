@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
@@ -13,9 +14,6 @@ import net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuideEntry;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditGratuitySituationById extends Service {
 
@@ -25,9 +23,7 @@ public class EditGratuitySituationById extends Service {
             throw new FenixServiceException();
         }
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final GratuitySituation gratuitySituation = sp.getIPersistentGratuitySituation()
+        final GratuitySituation gratuitySituation = persistentSupport.getIPersistentGratuitySituation()
                 .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
                         infoGratuitySituation.getInfoStudentCurricularPlan().getIdInternal(),
                         infoGratuitySituation.getInfoGratuityValues().getIdInternal());
@@ -36,7 +32,7 @@ public class EditGratuitySituationById extends Service {
         }
 
         // set employee who made register
-        final Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(
+        final Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
                 infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
         if (person != null) {
             gratuitySituation.setEmployee(person.getEmployee());

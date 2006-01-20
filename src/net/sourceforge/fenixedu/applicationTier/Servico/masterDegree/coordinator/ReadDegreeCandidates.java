@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -27,19 +28,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadDegreeCandidates extends Service {
 
     public List run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         // Read the Candidates
-        List candidates = sp.getIPersistentMasterDegreeCandidate().readByExecutionDegree(
+        List candidates = persistentSupport.getIPersistentMasterDegreeCandidate().readByExecutionDegree(
                 infoExecutionDegree.getIdInternal());
 
         if (candidates == null)
@@ -73,10 +68,8 @@ public class ReadDegreeCandidates extends Service {
     }
 
     public List run(Integer degreeCurricularPlanId) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         // Read the Candidates
-        List candidates = sp.getIPersistentMasterDegreeCandidate().readByDegreeCurricularPlanId(
+        List candidates = persistentSupport.getIPersistentMasterDegreeCandidate().readByDegreeCurricularPlanId(
                 degreeCurricularPlanId);
 
         if (candidates == null)

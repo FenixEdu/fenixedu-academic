@@ -54,8 +54,8 @@ public class ReadSummaries extends Service {
     public SiteView run(Integer executionCourseId, String summaryType, Integer shiftId,
             Integer professorShiftId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
@@ -63,7 +63,7 @@ public class ReadSummaries extends Service {
             throw new FenixServiceException("no.executionCourse");
         }
 
-        IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site site = persistentSite.readByExecutionCourse(executionCourseId);
         if (site == null) {
             throw new FenixServiceException("no.site");
@@ -73,7 +73,7 @@ public class ReadSummaries extends Service {
         List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
         // execution courses's shifts for display to filter summary
-        ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
+        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
@@ -97,7 +97,7 @@ public class ReadSummaries extends Service {
         }
 
         // execution courses's professorships for display to filter summary
-        IPersistentProfessorship persistentProfessorship = persistentSuport
+        IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
         List<Professorship> professorships = persistentProfessorship
                 .readByExecutionCourse(executionCourseId);
@@ -112,7 +112,7 @@ public class ReadSummaries extends Service {
             });
         }
 
-        IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
+        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
 
         List summaries = readSummariesByType(executionCourseId, summaryType, persistentSummary);
 
@@ -126,7 +126,7 @@ public class ReadSummaries extends Service {
                 summaries);
 
         summaries = readSummariesOfOtherTeachersIfResponsible(executionCourseId, professorShiftId,
-                persistentSuport, persistentSummary, summaries, professorships, summaryType);
+                persistentSupport, persistentSummary, summaries, professorships, summaryType);
 
         summaries = readAllSummaries(executionCourseId, summaryType, shiftId, professorShiftId, persistentSummary, summaries);
 
@@ -236,7 +236,7 @@ public class ReadSummaries extends Service {
     }
 
     protected List readSummariesOfOtherTeachersIfResponsible(Integer executionCourseId,
-            Integer professorShiftId, ISuportePersistente persistentSuport,
+            Integer professorShiftId, ISuportePersistente persistentSupport,
             IPersistentSummary persistentSummary, List summaries, List<Professorship> professorships, String summaryType)
             throws ExcepcaoPersistencia {
 

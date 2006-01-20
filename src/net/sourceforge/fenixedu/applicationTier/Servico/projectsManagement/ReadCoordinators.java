@@ -26,12 +26,12 @@ public class ReadCoordinators extends Service {
     public List run(String username, String costCenter, String userNumber) throws ExcepcaoPersistencia {
         List<InfoRubric> coordinatorsList = new ArrayList<InfoRubric>();
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         Integer thisCoordinator = new Integer(userNumber);
 
-        List<Integer> coordinatorsCodes = persistentSuport.getIPersistentProjectAccess().readCoordinatorsCodesByPersonUsernameAndDatesAndCC(username,
+        List<Integer> coordinatorsCodes = persistentSupport.getIPersistentProjectAccess().readCoordinatorsCodesByPersonUsernameAndDatesAndCC(username,
                 costCenter);
         if (thisCoordinator != null && !coordinatorsCodes.contains(thisCoordinator))
             coordinatorsCodes.add(thisCoordinator);

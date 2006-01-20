@@ -3,14 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.commons.ca
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -27,10 +25,7 @@ public class ReadAdmitedCandidates extends Service {
      */
     public List run(String[] candidateList, String[] ids) throws FenixServiceException,
 			ExcepcaoPersistencia {
-
-        ISuportePersistente sp = null;
         List result = new ArrayList();
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             // Read the admited candidates
             int size = candidateList.length;
@@ -42,7 +37,7 @@ public class ReadAdmitedCandidates extends Service {
                         || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)
                         || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
 
-                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
+                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
                             .getIPersistentMasterDegreeCandidate().readByOID(
                                     MasterDegreeCandidate.class, new Integer(ids[i]));
                     if (!masterDegreeCandidate.getSpecialization().equals(

@@ -46,8 +46,8 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantContract();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentGrantContract();
     }
 
     /*
@@ -56,41 +56,41 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#doBeforeDelete(Dominio.DomainObject,
      *      ServidorPersistente.ISuportePersistente)
      */
-    protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente sp)
+    protected void doBeforeDelete(DomainObject domainObject, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         GrantContract grantContract = (GrantContract) domainObject;
 
         /*
          * Delete respective GrantOrientationTeacher entry
          */
-        deleteAssociatedOrientationTeacher(sp, grantContract);
+        deleteAssociatedOrientationTeacher(grantContract);
         /*
          * Delete GrantContract Regimes associated with contract
          */
-        deleteAssociatedRegimes(sp, grantContract);
+        deleteAssociatedRegimes(grantContract);
         /*
          * Delete GrantContract Movements associated with contract
          */
-        deleteAssociatedMovements(sp, grantContract);
+        deleteAssociatedMovements(grantContract);
         /*
          * Delete GrantContract Subsidies and associated Grant Parts with
          * contract
          */
-        deleteAssociatedSubsidiesAndParts(sp, grantContract);
+        deleteAssociatedSubsidiesAndParts(grantContract);
         /*
          * Delete GrantContract Insurance associated with contract
          */
-        deleteAssociatedInsurance(sp, grantContract);
+        deleteAssociatedInsurance(grantContract);
     }
 
     /**
-     * @param sp
+     * @param persistentSupport
      * @param grantContract
      * @throws ExcepcaoPersistencia
      */
-    private void deleteAssociatedOrientationTeacher(ISuportePersistente sp, GrantContract grantContract)
+    private void deleteAssociatedOrientationTeacher(GrantContract grantContract)
             throws ExcepcaoPersistencia {
-        IPersistentGrantOrientationTeacher pgot = sp.getIPersistentGrantOrientationTeacher();
+        IPersistentGrantOrientationTeacher pgot = persistentSupport.getIPersistentGrantOrientationTeacher();
         GrantOrientationTeacher grantOrientationTeacher = pgot
                 .readActualGrantOrientationTeacherByContract(grantContract.getIdInternal(), new Integer(0));
         if (grantOrientationTeacher != null)
@@ -98,13 +98,13 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
     }
 
     /**
-     * @param sp
+     * @param persistentSupport
      * @param grantContract
      * @throws ExcepcaoPersistencia
      */
-    private void deleteAssociatedInsurance(ISuportePersistente sp, GrantContract grantContract)
+    private void deleteAssociatedInsurance(GrantContract grantContract)
             throws ExcepcaoPersistencia {
-        IPersistentGrantInsurance persistentGrantInsurance = sp.getIPersistentGrantInsurance();
+        IPersistentGrantInsurance persistentGrantInsurance = persistentSupport.getIPersistentGrantInsurance();
         GrantInsurance grantInsurance = persistentGrantInsurance
                 .readGrantInsuranceByGrantContract(grantContract.getIdInternal());
         if (grantInsurance != null)
@@ -112,13 +112,13 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
     }
 
     /**
-     * @param sp
+     * @param persistentSupport
      * @param grantContract
      * @throws ExcepcaoPersistencia
      */
-    private void deleteAssociatedSubsidiesAndParts(ISuportePersistente sp, GrantContract grantContract)
+    private void deleteAssociatedSubsidiesAndParts(GrantContract grantContract)
             throws ExcepcaoPersistencia {
-        IPersistentGrantSubsidy persistentGrantSubsidy = sp.getIPersistentGrantSubsidy();
+        IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport.getIPersistentGrantSubsidy();
         List subsidiesList = persistentGrantSubsidy.readAllSubsidiesByGrantContract(grantContract
                 .getIdInternal());
         if (subsidiesList != null) {
@@ -127,7 +127,7 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
                 GrantSubsidy grantSubsidy = (GrantSubsidy) subsidiesIter.next();
                 persistentGrantSubsidy.deleteByOID(GrantSubsidy.class, grantSubsidy.getIdInternal());
                 //Delete GrantParts associated with each subsidy
-                IPersistentGrantPart persistentGrantPart = sp.getIPersistentGrantPart();
+                IPersistentGrantPart persistentGrantPart = persistentSupport.getIPersistentGrantPart();
                 List partsList = persistentGrantPart.readAllGrantPartsByGrantSubsidy(grantSubsidy
                         .getIdInternal());
                 if (partsList != null) {
@@ -142,13 +142,13 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
     }
 
     /**
-     * @param sp
+     * @param persistentSupport
      * @param grantContract
      * @throws ExcepcaoPersistencia
      */
-    private void deleteAssociatedMovements(ISuportePersistente sp, GrantContract grantContract)
+    private void deleteAssociatedMovements(GrantContract grantContract)
             throws ExcepcaoPersistencia {
-        IPersistentGrantContractMovement persistentGrantContractMovement = sp
+        IPersistentGrantContractMovement persistentGrantContractMovement = persistentSupport
                 .getIPersistentGrantContractMovement();
         List movementsList = persistentGrantContractMovement.readAllMovementsByContract(grantContract
                 .getIdInternal());
@@ -164,13 +164,13 @@ public class DeleteGrantContract extends DeleteDomainObjectService {
     }
 
     /**
-     * @param sp
+     * @param persistentSupport
      * @param grantContract
      * @throws ExcepcaoPersistencia
      */
-    private void deleteAssociatedRegimes(ISuportePersistente sp, GrantContract grantContract)
+    private void deleteAssociatedRegimes(GrantContract grantContract)
             throws ExcepcaoPersistencia {
-        IPersistentGrantContractRegime pgcr = sp.getIPersistentGrantContractRegime();
+        IPersistentGrantContractRegime pgcr = persistentSupport.getIPersistentGrantContractRegime();
         List regimesList = pgcr.readGrantContractRegimeByGrantContract(grantContract.getIdInternal());
         if (regimesList != null) {
             Iterator regIter = regimesList.iterator();

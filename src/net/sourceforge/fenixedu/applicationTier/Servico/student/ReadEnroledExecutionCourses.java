@@ -56,9 +56,9 @@ public class ReadEnroledExecutionCourses extends Service {
     public List run(String username) throws ExcepcaoPersistencia {
         List allInfoExecutionCourses = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Student student = persistentStudent.readByUsername(username);
         List allAttend = persistentAttend.readByStudentNumber(student.getNumber(), student

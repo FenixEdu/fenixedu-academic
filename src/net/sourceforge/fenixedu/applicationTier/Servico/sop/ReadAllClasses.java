@@ -34,13 +34,13 @@ public class ReadAllClasses extends Service {
 	public SiteView run(Integer keyExecutionPeriod) throws FenixServiceException, ExcepcaoPersistencia {
 		List infoClasses = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
 				ExecutionPeriod.class, keyExecutionPeriod);
 
-		ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+		ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
 		List classes = persistentClass.readByExecutionPeriod(executionPeriod.getIdInternal());
 
 		infoClasses = new ArrayList();

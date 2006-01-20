@@ -28,8 +28,8 @@ public class ReadTestQuestion extends Service {
 	public InfoTestQuestion run(Integer executionCourseId, Integer testId, Integer questionId,
 			String path) throws FenixServiceException, ExcepcaoPersistencia {
 		this.path = path.replace('\\', '/');
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		TestQuestion testQuestion = persistentSuport.getIPersistentTestQuestion()
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		TestQuestion testQuestion = persistentSupport.getIPersistentTestQuestion()
 				.readByTestAndQuestion(testId, questionId);
 		InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion
 				.newInfoFromDomain(testQuestion);

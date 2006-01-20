@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoTransaction;
@@ -19,14 +20,10 @@ import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.ReimbursementTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentReimbursementTransaction;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -44,12 +41,10 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
 
         List reimbursementTransactionList = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        GratuitySituation gratuitySituation = (GratuitySituation) sp.getIPersistentGratuitySituation()
+        GratuitySituation gratuitySituation = (GratuitySituation) persistentSupport.getIPersistentGratuitySituation()
                 .readByOID(GratuitySituation.class, gratuitySituationID);
 
-        List insuranceTransactionList = sp.getIPersistentInsuranceTransaction()
+        List insuranceTransactionList = persistentSupport.getIPersistentInsuranceTransaction()
                 .readAllByExecutionYearAndStudent(
                         gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear().getIdInternal(),
                         gratuitySituation.getStudentCurricularPlan().getStudent().getIdInternal());
@@ -61,7 +56,7 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
 
         }
 
-        List gratuityTransactionList = sp.getIPersistentGratuityTransaction()
+        List gratuityTransactionList = persistentSupport.getIPersistentGratuityTransaction()
                 .readAllByGratuitySituation(gratuitySituation.getIdInternal());
 
         // read gratuity transactions
@@ -71,7 +66,7 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
             paymentTransactionList.add(gratuityTransaction);
         }
 
-        IPersistentReimbursementTransaction reimbursementTransactionDAO = sp
+        IPersistentReimbursementTransaction reimbursementTransactionDAO = persistentSupport
                 .getIPersistentReimbursementTransaction();
 
         // read reimbursement transactions
@@ -96,12 +91,12 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
                             .next();
 
                     // we have to read again because of OJB bug
-                    ReimbursementGuideEntry newReimbursementGuideEntry = (ReimbursementGuideEntry) sp
+                    ReimbursementGuideEntry newReimbursementGuideEntry = (ReimbursementGuideEntry) persistentSupport
                             .getIPersistentReimbursementGuideEntry().readByOID(
                                     ReimbursementGuideEntry.class,
                                     reimbursementGuideEntry.getIdInternal());
 
-                    ReimbursementGuide reimbursementGuide = (ReimbursementGuide) sp
+                    ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentSupport
                             .getIPersistentReimbursementGuide().readByOID(
                                     ReimbursementGuide.class,
                                     reimbursementGuideEntry.getKeyReimbursementGuide());

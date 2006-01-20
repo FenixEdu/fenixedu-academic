@@ -46,17 +46,17 @@ public class NewProjectProposal extends Service {
         if (groupPropertiesId == null) {
             return result;
         }
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
       
-        Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(
+        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(
                 Grouping.class, groupPropertiesId);
         ExecutionCourse goalExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, goalExecutionCourseId);
         ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, objectCode);
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Person senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername).getPerson();
 
         if (groupProperties == null) {

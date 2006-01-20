@@ -39,9 +39,9 @@ public class ReadLimitedWebSiteSectionByName extends Service {
 		WebSiteSection webSiteSection = null;
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
-		IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
+		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
 		webSiteSection = persistentWebSiteSection.readByName(sectionName);
 

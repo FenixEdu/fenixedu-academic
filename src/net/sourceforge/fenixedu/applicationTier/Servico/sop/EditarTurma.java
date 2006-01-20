@@ -16,14 +16,14 @@ public class EditarTurma extends Service {
     public void run(final InfoClass oldClassView, final InfoClass newClassView)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final SchoolClass classToEdit = (SchoolClass) sp.getIPersistentObject().readByOID(
+        final SchoolClass classToEdit = (SchoolClass) persistentSupport.getIPersistentObject().readByOID(
                 SchoolClass.class, oldClassView.getIdInternal());
         final ExecutionDegree executionDegree = classToEdit.getExecutionDegree();
         final ExecutionPeriod executionPeriod = classToEdit.getExecutionPeriod();
 
-        final SchoolClass otherClassWithSameNewName = sp.getITurmaPersistente()
+        final SchoolClass otherClassWithSameNewName = persistentSupport.getITurmaPersistente()
                 .readByNameAndExecutionDegreeAndExecutionPeriod(newClassView.getNome(),
                         executionDegree.getIdInternal(), executionPeriod.getIdInternal());
 

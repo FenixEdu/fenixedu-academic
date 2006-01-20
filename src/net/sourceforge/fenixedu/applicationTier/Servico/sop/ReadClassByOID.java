@@ -25,8 +25,8 @@ public class ReadClassByOID extends Service {
 
 		InfoClass result = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ITurmaPersistente classDAO = sp.getITurmaPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
 		SchoolClass turma = (SchoolClass) classDAO.readByOID(SchoolClass.class, oid);
 		if (turma != null) {
 			result = InfoClass.newInfoFromDomain(turma);

@@ -3,14 +3,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -21,10 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class UpdateAndReadGratuitySituationsByStudentNumber extends Service {
 
     public List<InfoGratuitySituation> run(Integer studentNumber) throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        List<StudentCurricularPlan> studentCurricularPlansList = sp
+        List<StudentCurricularPlan> studentCurricularPlansList = persistentSupport
                 .getIStudentCurricularPlanPersistente().readAllFromStudent(studentNumber.intValue());
 
         List<InfoGratuitySituation> infoGratuitySituationsList = new ArrayList<InfoGratuitySituation>();

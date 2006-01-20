@@ -21,8 +21,8 @@ public class ReadProfessorshipByOID extends ReadDomainObjectService {
         return Professorship.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentProfessorship();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentProfessorship();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

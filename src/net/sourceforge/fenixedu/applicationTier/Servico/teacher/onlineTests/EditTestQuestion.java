@@ -19,8 +19,8 @@ public class EditTestQuestion extends Service {
 
     public void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue, CorrectionFormula formula)
             throws ExcepcaoPersistencia, FenixServiceException {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        TestQuestion testQuestion = (TestQuestion) persistentSuport.getIPersistentTestQuestion().readByOID(TestQuestion.class, testQuestionId);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        TestQuestion testQuestion = (TestQuestion) persistentSupport.getIPersistentTestQuestion().readByOID(TestQuestion.class, testQuestionId);
         if (testQuestion == null) {
             throw new InvalidArgumentsServiceException();
         }

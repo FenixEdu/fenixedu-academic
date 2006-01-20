@@ -15,10 +15,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadAllPublicationTypes extends Service {
 
     public List<InfoPublicationType> run(String user) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory
+        ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
 
-        IPersistentPublicationType persistentPublicationType = persistentSuport
+        IPersistentPublicationType persistentPublicationType = persistentSupport
                 .getIPersistentPublicationType();
         List<PublicationType> publicationTypeList = (List<PublicationType>) persistentPublicationType.readAll(PublicationType.class);
 

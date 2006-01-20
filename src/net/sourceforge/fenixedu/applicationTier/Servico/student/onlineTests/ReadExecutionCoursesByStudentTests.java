@@ -23,11 +23,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionCoursesByStudentTests extends Service {
 
     public Object run(String userName) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
 
-        final Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
-        final List<Attends> attends = persistentSuport.getIFrequentaPersistente().readByStudentNumber(student.getNumber(), student.getDegreeType());
+        final Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
+        final List<Attends> attends = persistentSupport.getIFrequentaPersistente().readByStudentNumber(student.getNumber(), student.getDegreeType());
 
         final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>();
         for (Attends attend : attends) {

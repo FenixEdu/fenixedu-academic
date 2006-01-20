@@ -27,18 +27,18 @@ public class ReadQuestion extends Service {
     public InfoQuestion run(Integer executionCourseId, Integer metadataId, Integer questionId, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Question question = null;
         if (questionId == null || questionId.equals(new Integer(-1))) {
             if (metadataId == null)
                 throw new InvalidArgumentsServiceException();
-            Metadata metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
+            Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
             if (metadata == null || metadata.getVisibleQuestions() == null && metadata.getVisibleQuestions().size() == 0) {
                 throw new InvalidArgumentsServiceException();
             }
             question = metadata.getVisibleQuestions().get(0);
         } else {
-            question = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionId);
+            question = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, questionId);
         }
         if (question == null) {
             throw new InvalidArgumentsServiceException();

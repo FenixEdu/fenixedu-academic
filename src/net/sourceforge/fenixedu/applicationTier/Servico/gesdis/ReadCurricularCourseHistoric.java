@@ -52,7 +52,7 @@ public class ReadCurricularCourseHistoric extends Service {
 
 	/**
 	 * @param curricularCourse
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(CurricularCourse curricularCourse, Integer semester)

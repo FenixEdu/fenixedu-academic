@@ -3,15 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -33,8 +31,7 @@ public class ReadDegreeCurricularPlan extends Service {
     public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp.getIPersistentDegreeCurricularPlan()
+		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport.getIPersistentDegreeCurricularPlan()
                 .readByOID(DegreeCurricularPlan.class, idInternal);
 
         if (degreeCurricularPlan == null) {

@@ -39,9 +39,9 @@ public class ReadAvailableClassesForShift extends Service {
     public List run(Integer shiftOID) throws ExcepcaoPersistencia {
 
         List infoClasses = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
 
         Shift shift = (Shift) shiftDAO.readByOID(Shift.class, shiftOID);
 
@@ -54,7 +54,7 @@ public class ReadAvailableClassesForShift extends Service {
 
         ExecutionCourse executionCourse = shift.getDisciplinaExecucao();
 
-        ITurmaPersistente classDAO = sp.getITurmaPersistente();
+        ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
         List classes = classDAO.readByExecutionPeriod(executionCourse.getExecutionPeriod()
                 .getIdInternal());
 

@@ -2,18 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeProofVersion;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeProofVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -25,10 +22,7 @@ public class ReadNonActivesMasterDegreeProofVersionsByStudentCurricularPlan exte
 
     public List run(InfoStudentCurricularPlan infoStudentCurricularPlan) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        List masterDegreeProofVersions = sp.getIPersistentMasterDegreeProofVersion()
+        List masterDegreeProofVersions = persistentSupport.getIPersistentMasterDegreeProofVersion()
                 .readNotActiveByStudentCurricularPlan(infoStudentCurricularPlan.getIdInternal());
 
         CollectionUtils.transform(masterDegreeProofVersions, new Transformer() {

@@ -21,9 +21,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadAuthorshipsByUsername extends Service {
 
 	public SiteView run(String user) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
 		Person person = persistentPerson.lerPessoaPorUsername(user);
 		Teacher teacher = persistentTeacher.readTeacherByUsername(user);

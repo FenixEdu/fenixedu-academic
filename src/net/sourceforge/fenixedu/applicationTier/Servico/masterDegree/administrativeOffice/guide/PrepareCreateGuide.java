@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingContributorServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -31,13 +32,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.masterDegree.GuideRequester;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -48,15 +45,13 @@ public class PrepareCreateGuide extends Service {
 			String requesterType, Integer contributorNumber, String contributorName,
 			String contributorAddress) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = null;
 		Contributor contributor = null;
 		MasterDegreeCandidate masterDegreeCandidate = null;
 		InfoGuide infoGuide = new InfoGuideWithPersonAndExecutionDegreeAndContributor();
 
 		// Read the Contributor
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
+		contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(contributorNumber);
 
 		if ((contributor == null)
 				&& ((contributorAddress == null) || (contributorAddress.length() == 0)
@@ -80,13 +75,13 @@ public class PrepareCreateGuide extends Service {
 
 		ExecutionDegree executionDegree = null;
 
-		executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+		executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree().readByOID(
 				ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
 		// Check if the Requester is a Candidate
 		if (requesterType.equals(GuideRequester.CANDIDATE.name())) {
 
-			masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+			masterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
 					.readByNumberAndExecutionDegreeAndSpecialization(number,
 							executionDegree.getIdInternal(), Specialization.valueOf(graduationType));
 
@@ -100,7 +95,7 @@ public class PrepareCreateGuide extends Service {
 			// changed to keys to resource bundles
 			String description = getDescription(graduationType);
 
-			price = sp.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
+			price = persistentSupport.getIPersistentPrice().readByGraduationTypeAndDocumentTypeAndDescription(
 					GraduationType.MASTER_DEGREE, DocumentType.APPLICATION_EMOLUMENT, description);
 
 			if (price == null) {
@@ -136,7 +131,7 @@ public class PrepareCreateGuide extends Service {
 		if (requesterType.equals(GuideRequester.STUDENT.name())) {
 			Student student = null;
 
-			student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+			student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
 					DegreeType.MASTER_DEGREE);
 			if (student == null)
 				throw new NonExistingServiceException("O Aluno", null);

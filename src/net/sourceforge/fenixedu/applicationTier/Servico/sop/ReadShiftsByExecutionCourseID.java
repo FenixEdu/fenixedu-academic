@@ -18,12 +18,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadShiftsByExecutionCourseID extends Service {
 
     public InfoExecutionCourseOccupancy run(Integer executionCourseID) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, executionCourseID);
         final List<Shift> shifts = executionCourse.getAssociatedShifts();
 

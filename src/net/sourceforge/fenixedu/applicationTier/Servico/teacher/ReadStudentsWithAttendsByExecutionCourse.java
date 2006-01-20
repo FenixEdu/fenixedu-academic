@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
@@ -51,8 +52,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
-
 /**
  * @author André Fernandes / João Brito
  */
@@ -86,24 +85,24 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
             List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
         Site site = null;
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, executionCourseCode);
         InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                 .newInfoFromDomain(executionCourse);
 
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         List attends = executionCourse.getAttends();
 
         List allDegreeCurricularPlans = getDegreeCurricularPlansFromAttends(attends);
-        List allShifts = sp.getITurnoPersistente()
+        List allShifts = persistentSupport.getITurnoPersistente()
                 .readByExecutionCourse(executionCourse.getIdInternal());
         List groupProperties = executionCourse.getGroupings();
 
-        Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties, sp);
+        Map studentGroupsMap = getStudentGroupsMapFromGroupPropertiesList(groupProperties, persistentSupport);
 
         InfoAttendsSummary infoAttendsSummary = new InfoAttendsSummary();
         int[] enrollmentDistribution = new int[10];
@@ -166,7 +165,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
                     // not enrolled student
                 } else if (notEnrolledFilter && attendacy.getEnrolment() == null) {
                     newAttends.add(attendacy);
-                    // special season student
+                    // persistentSupportecial season student
                 } else if (specialSeasonFilter && attendacy.getEnrolment() != null && (attendacy.getEnrolment().getExecutionPeriod().equals(executionCourse
                         .getExecutionPeriod())) && hasSpecialSeasonEnrolmentEvaluation(attendacy.getEnrolment().getEvaluations())) {
                 		newAttends.add(attendacy);
@@ -183,7 +182,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
             while (shiftIterator.hasNext()) {
 
                 Integer shiftId = (Integer) shiftIterator.next();
-                final Shift turno = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, shiftId);
+                final Shift turno = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftId);
 
                 Iterator attendsIterator = attends.iterator();
 
@@ -203,7 +202,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
         // building the info
         InfoForReadStudentsWithAttendsByExecutionCourse infoDTO = new InfoForReadStudentsWithAttendsByExecutionCourse();
-        List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+        List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
 
         List infoCompositions = new ArrayList();
         Iterator it = attends.iterator();
@@ -244,7 +243,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
             infoComposition.setAttendingStudentInfoDCP(infoDCP);
 
-            Map infoShifts = getShiftsByAttends(shifts, iFrequenta, sp, clonedShifts);
+            Map infoShifts = getShiftsByAttends(shifts, iFrequenta, persistentSupport, clonedShifts);
             infoComposition.setInfoShifts(infoShifts);
 
             Map infoStudentGroups = getInfoStudentGroupsByAttends(studentGroupsMap, iFrequenta);
@@ -362,7 +361,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private Map getShiftsByAttends(final List shifts, final Attends attend,
-            final ISuportePersistente sp, final Map<Integer, InfoShift> clonedShifts)
+            final ISuportePersistente persistentSupport, final Map<Integer, InfoShift> clonedShifts)
             throws ExcepcaoPersistencia {
         final Map result = new HashMap();
 
@@ -444,7 +443,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
     }
 
     private Map getStudentGroupsMapFromGroupPropertiesList(List groupPropertiesList,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+            ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
 
         Map result = new HashMap();
         List allStudentsGroups = new ArrayList();

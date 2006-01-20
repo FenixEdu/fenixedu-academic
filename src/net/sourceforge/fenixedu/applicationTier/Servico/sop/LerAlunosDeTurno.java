@@ -29,9 +29,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class LerAlunosDeTurno extends Service {
 
     public Object run(ShiftKey keyTurno) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         Shift shift = persistentShift.readByNameAndExecutionCourse(keyTurno.getShiftName(), keyTurno
                 .getInfoExecutionCourse().getIdInternal());
 

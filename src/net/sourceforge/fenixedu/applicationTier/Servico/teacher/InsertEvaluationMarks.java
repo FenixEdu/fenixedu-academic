@@ -51,16 +51,16 @@ public class InsertEvaluationMarks extends Service {
         List attendList = null;
         HashMap newHashMarks = new HashMap();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSite persistentSite = sp.getIPersistentSite();
-        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-        IPersistentMark persistentMark = sp.getIPersistentMark();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
+        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
+        IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
 
         //Site
         site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         //Evaluation
-        evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
 
         //Attend List
         attendList = persistentAttend.readByExecutionCourse(executionCourseCode);
@@ -142,8 +142,8 @@ public class InsertEvaluationMarks extends Service {
         StudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentCurricularPlan curricularPlanPersistente = sp
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentStudentCurricularPlan curricularPlanPersistente = persistentSupport
                     .getIStudentCurricularPlanPersistente();
 
             studentCurricularPlan = curricularPlanPersistente.readActiveStudentCurricularPlan(student

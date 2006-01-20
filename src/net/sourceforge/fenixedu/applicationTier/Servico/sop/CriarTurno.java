@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class CriarTurno extends Service {
 
     public InfoShift run(InfoShift infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
 
         final Shift existingShift = shiftDAO.readByNameAndExecutionCourse(infoTurno.getNome(),
                 infoTurno.getInfoDisciplinaExecucao().getIdInternal());
@@ -40,7 +40,7 @@ public class CriarTurno extends Service {
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
                 .doubleValue())).intValue());
         newShift.setAvailabilityFinal(availabilityFinal);
-        ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, infoTurno.getInfoDisciplinaExecucao().getIdInternal());
         newShift.setDisciplinaExecucao(executionCourse);
         newShift.setNome(infoTurno.getNome());

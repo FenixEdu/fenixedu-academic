@@ -69,14 +69,14 @@ public class InsertStudentTestResponses extends Service {
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
         if (student == null)
             throw new FenixServiceException();
         if (student.getNumber().compareTo(studentNumber) != 0)
             throw new NotAuthorizedStudentToDoTestException();
 
-        DistributedTest distributedTest = (DistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
@@ -88,7 +88,7 @@ public class InsertStudentTestResponses extends Service {
         List<String> errors = new ArrayList<String>();
 
         if (compareDates(distributedTest.getEndDate(), distributedTest.getEndHour())) {
-            List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+            List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion()
                     .readByStudentAndDistributedTest(student.getIdInternal(), distributedTest.getIdInternal());
             if (studentTestQuestionList.size() == 0)
                 throw new FenixServiceException();
@@ -167,10 +167,10 @@ public class InsertStudentTestResponses extends Service {
                 }
             }
             if (distributedTest.getTestType().equals(new TestType(TestType.EVALUATION))) {
-                OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
-                Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
+                OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(distributedTestId);
+                Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(student.getIdInternal(),
                         ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
-                Mark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
+                Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
 
                 if (mark == null) {
                     mark = DomainFactory.makeMark();

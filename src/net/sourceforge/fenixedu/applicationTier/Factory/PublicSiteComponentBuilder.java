@@ -76,9 +76,9 @@ public class PublicSiteComponentBuilder {
         List classes = new ArrayList();
         List infoClasses = new ArrayList();
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-            ITurmaPersistente classDAO = sp.getITurmaPersistente();
+            ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
 
             ExecutionPeriod executionPeriod = domainClass.getExecutionPeriod();
             ExecutionDegree executionDegree = domainClass.getExecutionDegree();

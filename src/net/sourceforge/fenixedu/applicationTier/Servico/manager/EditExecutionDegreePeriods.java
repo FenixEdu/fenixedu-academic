@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPeriod;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -11,18 +12,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditExecutionDegreePeriods extends Service {
 
     public void run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-
-        final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentSuport
+        final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentSupport
                 .getIPersistentObject().readByOID(ExecutionDegree.class,
                         infoExecutionDegree.getIdInternal());
 
@@ -56,9 +51,7 @@ public class EditExecutionDegreePeriods extends Service {
         int infoPeriodListSize = infoPeriodList.size();
         InfoPeriod infoPeriodNew = infoPeriodList.get(infoPeriodListSize - 1);
 
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPersistentPeriod periodDAO = persistentSuport.getIPersistentPeriod();
+        final IPersistentPeriod periodDAO = persistentSupport.getIPersistentPeriod();
         OccupationPeriod period = (OccupationPeriod) periodDAO.readByCalendarAndNextPeriod(
                 infoPeriodNew.getStartDate().getTime(), infoPeriodNew.getEndDate().getTime(), null);
 

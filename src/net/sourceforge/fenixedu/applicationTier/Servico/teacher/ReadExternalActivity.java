@@ -24,8 +24,8 @@ public class ReadExternalActivity extends ReadDomainObjectService {
         return ExternalActivity.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        IPersistentExternalActivity persistentExternalActivity = persistentSupport.getIPersistentExternalActivity();
         return persistentExternalActivity;
     }
 

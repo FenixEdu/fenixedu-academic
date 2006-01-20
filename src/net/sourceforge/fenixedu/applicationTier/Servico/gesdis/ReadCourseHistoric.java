@@ -43,7 +43,7 @@ public class ReadCourseHistoric extends Service {
 
 	/**
 	 * @param curricularCourses
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private List getInfoSiteCoursesHistoric(ExecutionCourse executionCourse, List curricularCourses, Integer semester)
@@ -60,7 +60,7 @@ public class ReadCourseHistoric extends Service {
 
 	/**
 	 * @param curricularCourse
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private InfoSiteCourseHistoric getInfoSiteCourseHistoric(final ExecutionYear executionYear,

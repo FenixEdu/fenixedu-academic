@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithStudentPlanAndCourseAndEvaluationsAndExecutionPeriod;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentInExtraCurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -30,14 +28,11 @@ public class GetEnrolmentList extends Service {
 	public List run(Integer studentCurricularPlanID, EnrollmentState enrollmentState)
 			throws FenixServiceException, Exception {
 
-		ISuportePersistente sp = null;
 		List enrolmentList = null;
-
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		// Read the list
 
-		enrolmentList = sp.getIPersistentEnrolment()
+		enrolmentList = persistentSupport.getIPersistentEnrolment()
 				.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
 						enrollmentState);
 
@@ -62,14 +57,11 @@ public class GetEnrolmentList extends Service {
 
 	public List run(Integer studentCurricularPlanID) throws FenixServiceException, Exception {
 
-		ISuportePersistente sp = null;
 		List enrolmentList = null;
-
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		// Read the list
 
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
 				.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
 						studentCurricularPlanID);
 		enrolmentList = studentCurricularPlan.getEnrolments();
@@ -100,10 +92,8 @@ public class GetEnrolmentList extends Service {
 			return this.run(studentCurricularPlanID, enrollmentState);
 		}
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		// Read the list
-		List enrolmentList = sp.getIPersistentEnrolment()
+		List enrolmentList = persistentSupport.getIPersistentEnrolment()
 				.readEnrolmentsByStudentCurricularPlanAndEnrolmentState(studentCurricularPlanID,
 						enrollmentState);
 

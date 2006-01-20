@@ -53,9 +53,9 @@ public class ReadDegreesClassesLessons extends Service {
 
 		List infoViewClassScheduleList = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		ITurmaPersistente classDAO = sp.getITurmaPersistente();
+		ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
 		List classes = new ArrayList();
 		for (int i = 0; i < infoExecutionDegrees.size(); i++) {
 			InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) infoExecutionDegrees.get(i);

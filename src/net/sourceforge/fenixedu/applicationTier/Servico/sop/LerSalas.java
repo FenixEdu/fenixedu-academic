@@ -24,8 +24,8 @@ public class LerSalas extends Service {
 		List salas = null;
 		List infoSalas = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		salas = sp.getISalaPersistente().readAll();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		salas = persistentSupport.getISalaPersistente().readAll();
 
 		Iterator iterator = salas.iterator();
 		infoSalas = new ArrayList();

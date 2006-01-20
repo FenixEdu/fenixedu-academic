@@ -24,8 +24,8 @@ public class ReadAttendsByStudentIdAndExecutionPeriodId extends Service {
 
     public List<InfoAttendsWithProfessorshipTeachersAndNonAffiliatedTeachers> run(Integer studentId, Integer executionPeriodId,
             Boolean onlyEnrolledCourses, Boolean onlyAttendsWithTeachers) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
 
         final List<Attends> attendsList = persistentAttend.readByStudentIdAndExecutionPeriodId(
                 studentId, executionPeriodId);

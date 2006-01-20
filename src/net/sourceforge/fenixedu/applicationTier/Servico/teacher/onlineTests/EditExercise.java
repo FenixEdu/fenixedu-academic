@@ -26,9 +26,9 @@ public class EditExercise extends Service {
 			String difficulty, Calendar learningTime, String level, String mainSubject,
 			String secondarySubject) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+		IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
 
 		Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId);
 		if (metadata == null)

@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -26,11 +27,8 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentTransaction;
 import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.Transaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -53,8 +51,7 @@ public class CreateGuideFromTransactions extends Service {
         // Get the Guide Number
         Integer guideNumber = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        guideNumber = sp.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
+        guideNumber = persistentSupport.getIPersistentGuide().generateGuideNumber(infoGuide.getYear());
 
         infoGuide.setNumber(guideNumber);
 
@@ -83,16 +80,16 @@ public class CreateGuideFromTransactions extends Service {
         }
 
         // Get the Execution Degree
-        ExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanAndExecutionYear(
                         infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
                         infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
                                 .getSigla(),
                         infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+        Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(
                 infoGuide.getInfoContributor().getContributorNumber());
-        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
                 infoGuide.getInfoPerson().getUsername());
 
         guide.setExecutionDegree(executionDegree);
@@ -110,7 +107,7 @@ public class CreateGuideFromTransactions extends Service {
 
         while (iterator.hasNext()) {
             transactionId = (Integer) iterator.next();
-            transaction = (PaymentTransaction) sp.getIPersistentTransaction().readByOID(
+            transaction = (PaymentTransaction) persistentSupport.getIPersistentTransaction().readByOID(
                     Transaction.class, transactionId);
 
             if (transaction == null) {

@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.candidate;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
@@ -11,9 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -26,12 +24,9 @@ public class ChangePersonPassword extends Service {
 
 		// Check if the old password is equal
 
-		ISuportePersistente sp = null;
-
 		Person person = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+        IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
 
 		person = (Person) personDAO.readByOID(Person.class, personID);
 

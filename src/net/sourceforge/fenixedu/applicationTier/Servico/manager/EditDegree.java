@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class EditDegree extends Service {
 
@@ -20,8 +18,6 @@ public class EditDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final Degree degreeToEdit = (Degree) persistentSupport.getIPersistentObject().readByOID(Degree.class,
                 infoDegree.getIdInternal());
 

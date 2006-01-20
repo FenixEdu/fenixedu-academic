@@ -12,14 +12,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
  * @author tfc130
  */
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadStudentByNumberAndType extends Service {
 
@@ -29,13 +27,12 @@ public class ReadStudentByNumberAndType extends Service {
 
         InfoStudent infoStudent = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Isto não é para ficar assim. Está assim temporariamente até se
         // saber como é feita de facto a distinção
         // dos aluno, referente ao tipo, a partir da página de login.
         // ////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+        Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
                 degreeType);
 
         if (student != null) {

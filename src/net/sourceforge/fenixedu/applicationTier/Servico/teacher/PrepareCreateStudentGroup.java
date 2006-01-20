@@ -34,9 +34,9 @@ public class PrepareCreateStudentGroup extends Service {
     public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
             throws ExcepcaoPersistencia, ExistingServiceException {
 
-        final ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final Grouping grouping = (Grouping) ps.getIPersistentObject().readByOID(Grouping.class,
+        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
                 groupPropertiesCode);
 
         if (grouping == null) {

@@ -43,9 +43,9 @@ public class ReadExamsByStudent extends Service {
         List infoExamsToEnroll = new ArrayList();
         List infoWrittenEvaluationEnrolmentList = new ArrayList();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentWrittenEvaluationEnrolment writtenEvaluationEnrolmentDAO = sp.getIPersistentWrittenEvaluationEnrolment();
-        Student student = sp.getIPersistentStudent().readByUsername(username);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentWrittenEvaluationEnrolment writtenEvaluationEnrolmentDAO = persistentSupport.getIPersistentWrittenEvaluationEnrolment();
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
         if (student != null) {
             List examsStudentRooms = writtenEvaluationEnrolmentDAO.readByStudentOID(student.getIdInternal());
@@ -77,7 +77,7 @@ public class ReadExamsByStudent extends Service {
                 examsEnrolled.add((Exam) writtenEvaluationEnrolment.getWrittenEvaluation());
             }
 
-            List attends = sp.getIFrequentaPersistente().readByStudentNumber(student.getNumber(),
+            List attends = persistentSupport.getIFrequentaPersistente().readByStudentNumber(student.getNumber(),
                     student.getDegreeType());
 
             Iterator examsToEnrollIterator = attends.iterator();

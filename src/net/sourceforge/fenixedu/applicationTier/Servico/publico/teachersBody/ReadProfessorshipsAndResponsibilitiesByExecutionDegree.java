@@ -40,9 +40,9 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Serv
 
     public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionDegree persistentExecutionDegree = ps.getIPersistentExecutionDegree();
-        IPersistentProfessorship persistentProfessorship = ps.getIPersistentProfessorship();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
 
         ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                 ExecutionDegree.class, executionDegreeId);
@@ -53,7 +53,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Serv
 
         List responsibleFors = getResponsibleForsByDegree(executionDegree);
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, ps);
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, persistentSupport);
 
         Collections.sort(detailedProfessorships, new Comparator() {
 
@@ -120,7 +120,7 @@ public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Serv
     }
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente sp) {
+            ISuportePersistente persistentSupport) {
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Transformer() {
 

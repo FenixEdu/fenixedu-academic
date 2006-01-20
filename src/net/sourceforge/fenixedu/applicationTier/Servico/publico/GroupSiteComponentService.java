@@ -19,8 +19,8 @@ public class GroupSiteComponentService extends Service {
             Integer infoSiteCode, Integer groupPropertiesCode, Integer code, Integer shiftCode,
             Integer value) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site site = null;
         if (infoSiteCode != null) {
             site = (Site) persistentSite.readByOID(Site.class, infoSiteCode);

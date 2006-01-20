@@ -2,26 +2,22 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateCandidateSituation extends Service {
 
     public void run(Integer executionDegreeID, Integer personID, SituationName newSituation)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final MasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        final MasterDegreeCandidate masterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
                 .readByExecutionDegreeAndPerson(executionDegreeID, personID);
         if (masterDegreeCandidate == null) {
             throw new ExcepcaoInexistente("Unknown Master Degree Candidate");

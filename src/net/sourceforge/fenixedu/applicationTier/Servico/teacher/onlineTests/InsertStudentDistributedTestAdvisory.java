@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class InsertStudentDistributedTestAdvisory extends Service {
 
     public void run(final Integer executionCourseId, final Integer advisoryId, final Integer studentId) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Advisory advisory = (Advisory) persistentSuport.getIPersistentObject().readByOID(Advisory.class, advisoryId);
-        Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Advisory advisory = (Advisory) persistentSupport.getIPersistentObject().readByOID(Advisory.class, advisoryId);
+        Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
         advisory.addPeople(student.getPerson());
     }
 

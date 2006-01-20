@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeServiceException;
@@ -36,11 +37,8 @@ import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalculateGuideTotal;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -62,8 +60,7 @@ public class EditGuideInformation extends Service {
 
         // Read The Guide
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Guide guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
+        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
                 infoGuide.getYear(), infoGuide.getVersion());
 
         // check if it's needed to change the Contributor
@@ -76,7 +73,7 @@ public class EditGuideInformation extends Service {
 
         // Read the Contributor
 
-        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(contributorNumber);
+        Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(contributorNumber);
 
         infoGuide.setInfoContributor(InfoContributor.newInfoFromDomain(contributor));
 
@@ -135,16 +132,16 @@ public class EditGuideInformation extends Service {
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
 
-                    GuideEntry guideEntry = (GuideEntry) sp.getIPersistentGuideEntry().readByOID(
+                    GuideEntry guideEntry = (GuideEntry) persistentSupport.getIPersistentGuideEntry().readByOID(
                             GuideEntry.class, infoGuideEntry.getIdInternal());
 
-                    PaymentTransaction paymentTransaction = sp.getIPersistentPaymentTransaction()
+                    PaymentTransaction paymentTransaction = persistentSupport.getIPersistentPaymentTransaction()
                             .readByGuideEntryID(guideEntry.getIdInternal());
 
                     if (paymentTransaction != null) {
                         paymentTransaction.getPersonAccount().getPaymentTransactions().remove(
                                 paymentTransaction);
-                        sp.getIPersistentPaymentTransaction().deleteByOID(PaymentTransaction.class,
+                        persistentSupport.getIPersistentPaymentTransaction().deleteByOID(PaymentTransaction.class,
                                 paymentTransaction.getIdInternal());
                     }
 
@@ -153,13 +150,13 @@ public class EditGuideInformation extends Service {
                                 .getReimbursementGuideEntries()) {
                             reimbursementGuideEntry.getReimbursementGuide()
                                     .getReimbursementGuideEntries().remove(reimbursementGuideEntry);
-                            sp.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,
+                            persistentSupport.getIPersistentGuideEntry().deleteByOID(ReimbursementGuideEntry.class,
                                     reimbursementGuideEntry.getIdInternal());
                         }
                     }
                     guideEntry.getGuide().getGuideEntries().remove(guideEntry);
 
-                    sp.getIPersistentGuideEntry().deleteByOID(GuideEntry.class,
+                    persistentSupport.getIPersistentGuideEntry().deleteByOID(GuideEntry.class,
                             infoGuideEntry.getIdInternal());
                 }
 
@@ -168,7 +165,7 @@ public class EditGuideInformation extends Service {
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
 
-                    GuideEntry guideEntry = sp.getIPersistentGuideEntry()
+                    GuideEntry guideEntry = persistentSupport.getIPersistentGuideEntry()
                             .readByGuideAndGraduationTypeAndDocumentTypeAndDescription(guide,
                                     infoGuideEntry.getGraduationType(),
                                     infoGuideEntry.getDocumentType(), infoGuideEntry.getDescription());
@@ -202,7 +199,7 @@ public class EditGuideInformation extends Service {
 
                 PaymentTransaction paymentTransaction = null;
                 GratuitySituation gratuitySituation = null;
-                IPersistentPersonAccount persistentPersonAccount = sp.getIPersistentPersonAccount();
+                IPersistentPersonAccount persistentPersonAccount = persistentSupport.getIPersistentPersonAccount();
                 PersonAccount personAccount = persistentPersonAccount.readByPerson(guide.getPerson()
                         .getIdInternal());
 
@@ -210,7 +207,7 @@ public class EditGuideInformation extends Service {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
 
-                IPersistentGratuitySituation persistentGratuitySituation = sp
+                IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
                         .getIPersistentGratuitySituation();
 
                 // Write the Guide Entries
@@ -223,7 +220,7 @@ public class EditGuideInformation extends Service {
                     guideEntry.setGuide(newGuideVersion);
 
                     Person studentPerson = guide.getPerson();
-                    Student student = sp.getIPersistentStudent().readByUsername(
+                    Student student = persistentSupport.getIPersistentStudent().readByUsername(
                             studentPerson.getUsername());
                     ExecutionDegree executionDegree = guide.getExecutionDegree();
 
@@ -280,7 +277,7 @@ public class EditGuideInformation extends Service {
         Guide newGuide = null;
         InfoGuide result = null;
 
-        newGuide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
+        newGuide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(infoGuide.getNumber(),
                 infoGuide.getYear(), infoGuide.getVersion());
         // Update the Guide Total
         InfoGuide infoGuideTemp = new InfoGuide();
@@ -302,9 +299,8 @@ public class EditGuideInformation extends Service {
         // Annuled Guides cannot be changed
         if (infoGuide.getInfoGuideSituation().getSituation().equals(GuideState.ANNULLED))
             throw new InvalidChangeServiceException("Situation of Guide Is Annulled");
-        
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();        
-        List<Guide> guides = sp.getIPersistentGuide()
+
+        List<Guide> guides = persistentSupport.getIPersistentGuide()
                 .readByNumberAndYear(infoGuide.getNumber(), infoGuide.getYear());
 
         // If it's not the latest version ...
@@ -314,17 +310,15 @@ public class EditGuideInformation extends Service {
 
     private Guide createNewGuideVersion(InfoGuide infoGuide) throws 
             ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();  
-
         // Read the needed information from the DataBase
-        Person person = sp.getIPessoaPersistente()
+        Person person = persistentSupport.getIPessoaPersistente()
                 .lerPessoaPorUsername(infoGuide.getInfoPerson().getUsername());
-        Contributor contributor = sp.getIPersistentContributor().readByContributorNumber(
+        Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(
                 infoGuide.getInfoContributor().getContributorNumber());
-        ExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+        ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
                 infoGuide.getInfoExecutionDegree().getInfoExecutionYear().getYear());
 
-        ExecutionDegree executionDegree = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
+        ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree().readByDegreeCurricularPlanAndExecutionYear(
                 infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(),
                 infoGuide.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree()
                         .getSigla(), executionYear.getYear());

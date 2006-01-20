@@ -21,8 +21,8 @@ public class ReadGrantPaymentEntity extends ReadDomainObjectService {
         return GrantPaymentEntity.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentGrantPaymentEntity();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentGrantPaymentEntity();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

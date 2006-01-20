@@ -23,8 +23,8 @@ public class ReadOldPublication extends ReadDomainObjectService {
         return OldPublication.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentOldPublication();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentOldPublication();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

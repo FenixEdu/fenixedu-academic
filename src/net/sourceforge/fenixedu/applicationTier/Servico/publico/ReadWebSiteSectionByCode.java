@@ -36,9 +36,9 @@ public class ReadWebSiteSectionByCode extends Service {
 		WebSiteSection webSiteSection;
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
-		IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
+		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
 		webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
 				sectionCode);

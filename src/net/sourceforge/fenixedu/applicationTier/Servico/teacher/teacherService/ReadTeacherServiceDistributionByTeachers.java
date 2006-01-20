@@ -36,14 +36,14 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 	
 
 	public List run(String username, Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		
 
-		final ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentObject().readByOID(ExecutionYear.class, executionYearID);
+		final ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentObject().readByOID(ExecutionYear.class, executionYearID);
 		final List<ExecutionPeriod> executionPeriodList = executionYear.getExecutionPeriods();
 		
-		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) sp.getIPersistentObject().readAll(ExecutionPeriod.class);
+		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentSupport.getIPersistentObject().readAll(ExecutionPeriod.class);
 		
 		final ExecutionPeriod startPeriod = findStartPeriod(allExecutionPeriods);
 

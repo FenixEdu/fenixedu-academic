@@ -26,8 +26,8 @@ public class ReadCareers extends Service {
 
     public SiteView run(CareerType careerType, String user) throws ExcepcaoPersistencia {
         
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final Teacher teacher = persistentSuport.getIPersistentTeacher().readTeacherByUsername(user);
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(user);
         
         final InfoSiteCareers bodyComponent = new InfoSiteCareers();
         bodyComponent.setInfoCareers(getInfoCareers(teacher, careerType));

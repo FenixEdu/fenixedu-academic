@@ -18,11 +18,11 @@ public class SelectShifts extends Service {
 
     public Object run(InfoShift infoShift) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class,
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
                 infoShift.getIdInternal());
 
-        final List<Shift> shifts = sp.getITurnoPersistente().readByExecutionCourse(
+        final List<Shift> shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(
                 shift.getDisciplinaExecucao().getIdInternal());
 
         List<InfoShift> infoShifts = new ArrayList<InfoShift>();

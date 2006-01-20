@@ -23,16 +23,16 @@ public class VerifyGroupingAndStudentGroupWithoutShift extends Service {
 
 	public Integer run(Integer studentGroupCode, Integer groupPropertiesCode, String shiftCodeString,
 			String username) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) ps.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) ps.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {

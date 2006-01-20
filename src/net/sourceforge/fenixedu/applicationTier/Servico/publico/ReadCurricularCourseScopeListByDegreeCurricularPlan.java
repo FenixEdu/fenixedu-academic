@@ -21,12 +21,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service {
 
     public List run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp;
+        ISuportePersistente persistentSupport;
         List allCurricularCourses = null;
         List allCurricularCourseScope = new ArrayList();
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         idDegreeCurricularPlan);
 
@@ -34,7 +34,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service
         String degreeName = degreeCurricularPlan.getDegree().getNome();
         String degreeSigla = degreeCurricularPlan.getDegree().getSigla();
 
-        allCurricularCourses = sp.getIPersistentCurricularCourse()
+        allCurricularCourses = persistentSupport.getIPersistentCurricularCourse()
                 .readCurricularCoursesByDegreeCurricularPlan(name, degreeName, degreeSigla);
 
         if (allCurricularCourses == null || allCurricularCourses.isEmpty())
@@ -50,7 +50,7 @@ public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service
         while (iterator.hasNext()) {
             curricularCourse = (CurricularCourse) iterator.next();
 
-            List curricularCourseScopes = sp
+            List curricularCourseScopes = persistentSupport
                     .getIPersistentCurricularCourseScope()
                     .readActiveCurricularCourseScopesByCurricularCourse(curricularCourse.getIdInternal());
 

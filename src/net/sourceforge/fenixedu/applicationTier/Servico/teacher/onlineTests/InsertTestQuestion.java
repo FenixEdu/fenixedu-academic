@@ -36,9 +36,9 @@ public class InsertTestQuestion extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		this.path = path.replace('\\', '/');
 
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		for (int i = 0; i < metadataId.length; i++) {
-			Metadata metadata = (Metadata) persistentSuport.getIPersistentMetadata().readByOID(
+			Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(
 					Metadata.class, new Integer(metadataId[i]));
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();
@@ -52,12 +52,12 @@ public class InsertTestQuestion extends Service {
 			if (question == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
+			IPersistentTest persistentTest = persistentSupport.getIPersistentTest();
 			Test test = (Test) persistentTest.readByOID(Test.class, testId);
 			if (test == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentTestQuestion persistentTestQuestion = persistentSuport
+			IPersistentTestQuestion persistentTestQuestion = persistentSupport
 					.getIPersistentTestQuestion();
 			List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
 			if (testQuestionList != null) {

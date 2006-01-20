@@ -2,18 +2,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersionWithGuidersAndRespAndThesis;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -23,10 +20,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadActiveMasterDegreeThesisDataVersionsByDegreeCurricularPlan extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        List masterDegreeThesisDataVersions = sp.getIPersistentMasterDegreeThesisDataVersion()
+        List masterDegreeThesisDataVersions = persistentSupport.getIPersistentMasterDegreeThesisDataVersion()
                 .readActiveByDegreeCurricularPlan(degreeCurricularPlanID);
 
         if (masterDegreeThesisDataVersions == null || masterDegreeThesisDataVersions.isEmpty()) {

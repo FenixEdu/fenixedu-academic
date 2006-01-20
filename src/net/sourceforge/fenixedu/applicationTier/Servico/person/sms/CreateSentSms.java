@@ -23,11 +23,11 @@ public class CreateSentSms extends Service {
 
         throw new SmsNotSentServiceException("error.person.sendSms");
         //    	
-        //            ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        //            IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
+        //            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        //            IPersistentSentSms persistentSentSms = persistentSupport.getIPersistentSentSms();
         //
         //            Person person =
-        // ps.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        // persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
         //
         //            //count number of sent SMS's by this person
         //            Integer numberOfSms =

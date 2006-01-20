@@ -18,8 +18,8 @@ public class ReadDegreeIdInternalByDegreeCode extends Service {
 	
 	public Integer run(String degreeCode) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ICursoPersistente degreeDAO = sp.getICursoPersistente();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ICursoPersistente degreeDAO = persistentSupport.getICursoPersistente();
 
         Degree degree = degreeDAO.readBySigla(degreeCode);
 

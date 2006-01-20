@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class RoomSiteComponentService extends Service {
 
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day) throws Exception {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         final ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
         return RoomSiteComponentServiceByExecutionPeriodID.runService(bodyComponent, roomKey, day, executionPeriod);
     }

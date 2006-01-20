@@ -31,8 +31,8 @@ public class ReadOldIquiriesSummaryByDegreeID extends Service {
 		if (degreeID == null) {
 			throw new FenixServiceException("nullDegreeId");
 		}
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentOldInquiriesSummary pois = sp.getIPersistentOldInquiriesSummary();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentOldInquiriesSummary pois = persistentSupport.getIPersistentOldInquiriesSummary();
 
 		oldInquiriesSummaryList = pois.readByDegreeId(degreeID);
 

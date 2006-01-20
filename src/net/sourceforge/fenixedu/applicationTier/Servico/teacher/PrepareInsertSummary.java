@@ -39,9 +39,9 @@ public class PrepareInsertSummary extends Service {
     public SiteView run(Integer executionCourseId, String userLogged) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-        final ISalaPersistente persistentRoom = sp.getISalaPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+        final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
 
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);

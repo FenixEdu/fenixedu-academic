@@ -20,8 +20,8 @@ public class ReadOtherTypeCreditLineByOidService extends ReadDomainObjectService
         return OtherTypeCreditLine.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentOtherTypeCreditLine();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentOtherTypeCreditLine();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

@@ -13,9 +13,9 @@ public class EditCustomizationOptions extends Service {
     public boolean run(Integer infoExecutionCourseCode, InfoSite infoSiteNew)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        Site siteOld = sp.getIPersistentSite().readByExecutionCourse(infoExecutionCourseCode);
+        Site siteOld = persistentSupport.getIPersistentSite().readByExecutionCourse(infoExecutionCourseCode);
 
         siteOld.setAlternativeSite(infoSiteNew.getAlternativeSite());
         siteOld.setMail(infoSiteNew.getMail());

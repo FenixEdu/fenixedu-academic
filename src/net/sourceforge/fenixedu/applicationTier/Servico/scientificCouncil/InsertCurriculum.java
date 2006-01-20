@@ -29,9 +29,9 @@ public class InsertCurriculum extends Service {
             String generalObjectivesEn, Boolean basic) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
         CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
                 CurricularCourse.class, curricularCourseId);
 

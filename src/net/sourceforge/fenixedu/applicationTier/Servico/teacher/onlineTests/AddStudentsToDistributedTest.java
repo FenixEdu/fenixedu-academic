@@ -42,13 +42,13 @@ public class AddStudentsToDistributedTest extends Service {
         if (infoStudentList == null || infoStudentList.size() == 0)
             return null;
         this.contextPath = contextPath.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentDistributedTest persistentDistributedTest = persistentSuport.getIPersistentDistributedTest();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentDistributedTest persistentDistributedTest = persistentSupport.getIPersistentDistributedTest();
         DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
-        List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion()
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion()
                 .readStudentTestQuestionsByDistributedTest(distributedTest);
         for (StudentTestQuestion studentTestQuestionExample : studentTestQuestionList) {
 
@@ -56,9 +56,9 @@ public class AddStudentsToDistributedTest extends Service {
             questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             for (int j = 0; j < infoStudentList.size(); j++) {
-                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class,
+                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
-                if (persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student.getIdInternal(), distributedTestId)
+                if (persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student.getIdInternal(), distributedTestId)
                         .isEmpty()) {
                     StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                     studentTestQuestion.setStudent(student);

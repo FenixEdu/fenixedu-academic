@@ -32,9 +32,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class CriarTurma extends Service {
 
     public Object run(final InfoClass infoTurma) throws ExcepcaoPersistencia, ExistingServiceException {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ITurmaPersistente schoolClassDAO = sp.getITurmaPersistente();
+        final ITurmaPersistente schoolClassDAO = persistentSupport.getITurmaPersistente();
         final List<SchoolClass> listSchoolClasses = schoolClassDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
                 infoTurma.getInfoExecutionPeriod().getIdInternal(), 
                 infoTurma.getAnoCurricular(), 
@@ -58,14 +58,14 @@ public class CriarTurma extends Service {
         schoolClass.setNome(infoTurma.getNome());
         schoolClass.setAnoCurricular(infoTurma.getAnoCurricular());
         
-        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();        
+        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();        
         schoolClass.setExecutionDegree(
                 executionDegreeDAO.readByDegreeCurricularPlanAndExecutionYear(
                         infoTurma.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getName(), 
                         infoTurma.getInfoExecutionDegree().getInfoDegreeCurricularPlan().getInfoDegree().getSigla(), 
                         infoTurma.getInfoExecutionDegree().getInfoExecutionYear().getYear()));
 
-        final IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        final IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
         schoolClass.setExecutionPeriod(
                 executionPeriodDAO.readByNameAndExecutionYear(
                         infoTurma.getInfoExecutionPeriod().getName(), 

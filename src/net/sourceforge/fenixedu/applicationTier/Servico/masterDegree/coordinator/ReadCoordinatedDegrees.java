@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
@@ -23,27 +24,19 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadCoordinatedDegrees extends Service {
 
 	public List run(IUserView userView) throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente sp = null;
-
 		List plans = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        // Read the Teacher
 
-		// Read the Teacher
-
-		Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
+		Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(userView.getUtilizador());
 		if (teacher == null) {
 			throw new ExcepcaoInexistente("No Teachers Found !!");
 		}
-		plans = sp.getIPersistentCoordinator().readCurricularPlansByTeacher(teacher.getIdInternal());
+		plans = persistentSupport.getIPersistentCoordinator().readCurricularPlansByTeacher(teacher.getIdInternal());
 
 		if (plans == null) {
 			throw new ExcepcaoInexistente("No Degrees Found !!");

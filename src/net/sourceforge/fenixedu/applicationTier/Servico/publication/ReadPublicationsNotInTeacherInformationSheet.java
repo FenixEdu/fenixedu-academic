@@ -22,8 +22,8 @@ public class ReadPublicationsNotInTeacherInformationSheet extends Service {
 
     public SiteView run(String user) throws ExcepcaoPersistencia {
         InfoSitePublications infoSitePublications = new InfoSitePublications();
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         
         Teacher teacher = persistentTeacher.readTeacherByUsername(user);
 

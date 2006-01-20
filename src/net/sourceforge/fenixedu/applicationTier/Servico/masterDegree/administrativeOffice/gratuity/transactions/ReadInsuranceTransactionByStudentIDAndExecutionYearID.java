@@ -2,16 +2,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.transactions.InfoInsuranceTransaction;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.transactions.InsuranceTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -32,15 +30,13 @@ public class ReadInsuranceTransactionByStudentIDAndExecutionYearID extends Servi
 
 		InfoInsuranceTransaction infoInsuranceTransaction = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentInsuranceTransaction insuranceTransactionDAO = sp
+		IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
 				.getIPersistentInsuranceTransaction();
 
-		ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear().readByOID(
 				ExecutionYear.class, executionYearId);
 
-		Student student = (Student) sp.getIPersistentStudent().readByOID(Student.class, studentId);
+		Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
 
 		if ((executionYear == null) || (student == null)) {
 			return null;

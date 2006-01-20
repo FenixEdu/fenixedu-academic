@@ -20,7 +20,7 @@ public class WriteStudentAreas extends Service {
 
 	// some of these arguments may be null. they are only needed for filter
 	public void run(Integer executionDegreeId, Integer studentCurricularPlanID,
-			Integer specializationAreaID, Integer secundaryAreaID)
+			Integer persistentSupportecializationAreaID, Integer secundaryAreaID)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		IPersistentBranch persistentBranch = persistentSupport
@@ -36,7 +36,7 @@ public class WriteStudentAreas extends Service {
 		}
 
 		Branch specializationArea = (Branch) persistentBranch.readByOID(
-				Branch.class, specializationAreaID);
+				Branch.class, persistentSupportecializationAreaID);
 
 		Branch secundaryArea = null;
 		if (secundaryAreaID != null) {

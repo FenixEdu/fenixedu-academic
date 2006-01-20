@@ -25,11 +25,11 @@ public class ReadProjectWithoutPersonAccess extends Service {
     }
 
     public List run(String userName, String costCenter, String newUserName, String userNumber) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Integer coordinatorId = new Integer(userNumber);
-        List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(newUserName, coordinatorId, true);
-        IPersistentSuportOracle persistentSuportOracle = PersistentSuportOracle.getInstance();
-        List<Project> projectList = persistentSuportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
+        List projectCodes = persistentSupport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(newUserName, coordinatorId, true);
+        IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
+        List<Project> projectList = persistentSupportOracle.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorId, projectCodes);
         List<InfoProject> infoProjects = new ArrayList<InfoProject>();
         for (Project project : projectList) {
             infoProjects.add(InfoProject.newInfoFromDomain(project));

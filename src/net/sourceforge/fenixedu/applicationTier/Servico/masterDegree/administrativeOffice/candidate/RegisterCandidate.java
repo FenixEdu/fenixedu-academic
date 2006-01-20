@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidChangeServiceException;
@@ -36,13 +37,11 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EntryPhase;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 import net.sourceforge.fenixedu.util.StudentState;
 import net.sourceforge.fenixedu.util.StudentType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -52,10 +51,7 @@ public class RegisterCandidate extends Service {
 
     public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         candidateID);
         Person person = masterDegreeCandidate.getPerson();
@@ -67,19 +63,19 @@ public class RegisterCandidate extends Service {
         person.getPersonRoles().remove(person.getPersonRole(RoleType.MASTER_DEGREE_CANDIDATE));
 
         // check if old student number is free
-        checkOldStudentNumber(studentNumber, person, sp);
+        checkOldStudentNumber(studentNumber, person, persistentSupport);
 
         // create new student
         if (student == null) {
-            student = createNewStudent(studentNumber, person, sp);
+            student = createNewStudent(studentNumber, person, persistentSupport);
         }
 
         checkDuplicateStudentCurricularPlan(masterDegreeCandidate, student);
 
         StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(student, branchID,
-                masterDegreeCandidate, sp);
+                masterDegreeCandidate, persistentSupport);
 
-        createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan, sp);
+        createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan, persistentSupport);
 
         updateCandidateSituation(masterDegreeCandidate);
 
@@ -159,10 +155,10 @@ public class RegisterCandidate extends Service {
     }
 
     private void createEnrolments(IUserView userView, MasterDegreeCandidate masterDegreeCandidate,
-            StudentCurricularPlan studentCurricularPlan, ISuportePersistente sp)
+            StudentCurricularPlan studentCurricularPlan, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         List<CandidateEnrolment> candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
-        ExecutionPeriod executionPeriod = sp.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = persistentSupport.getIPersistentExecutionPeriod()
                 .readActualExecutionPeriod();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
             Enrolment enrolment = DomainFactory.makeEnrolment();
@@ -172,9 +168,9 @@ public class RegisterCandidate extends Service {
     }
 
     private StudentCurricularPlan createNewStudentCurricularPlan(Student student, Integer branchID,
-            MasterDegreeCandidate masterDegreeCandidate, ISuportePersistente sp)
+            MasterDegreeCandidate masterDegreeCandidate, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
-        Branch branch = (Branch) sp.getIPersistentBranch().readByOID(Branch.class, branchID);
+        Branch branch = (Branch) persistentSupport.getIPersistentBranch().readByOID(Branch.class, branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan();
         Date startDate = Calendar.getInstance().getTime();
@@ -185,21 +181,21 @@ public class RegisterCandidate extends Service {
         return studentCurricularPlan;
     }
 
-    private Student createNewStudent(Integer studentNumber, Person person, ISuportePersistente sp)
+    private Student createNewStudent(Integer studentNumber, Person person, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         Student student;
         if (studentNumber == null) {
-            studentNumber = sp.getIPersistentStudent().generateStudentNumber(DegreeType.MASTER_DEGREE);
+            studentNumber = persistentSupport.getIPersistentStudent().generateStudentNumber(DegreeType.MASTER_DEGREE);
         }
 
-        StudentKind studentKind = sp.getIPersistentStudentKind().readByStudentType(
+        StudentKind studentKind = persistentSupport.getIPersistentStudentKind().readByStudentType(
                 new StudentType(StudentType.NORMAL));
         StudentState state = new StudentState(StudentState.INSCRITO);
         student = DomainFactory.makeStudent(person, studentNumber, studentKind, state, false, false,
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
         student.setInterruptedStudies(false);
 
-        person.addPersonRoles(sp.getIPersistentRole().readByRoleType(RoleType.STUDENT));
+        person.addPersonRoles(persistentSupport.getIPersistentRole().readByRoleType(RoleType.STUDENT));
         return student;
     }
 
@@ -215,10 +211,10 @@ public class RegisterCandidate extends Service {
         }
     }
 
-    private void checkOldStudentNumber(Integer studentNumber, Person person, ISuportePersistente sp)
+    private void checkOldStudentNumber(Integer studentNumber, Person person, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia, ExistingServiceException {
         if (studentNumber != null) {
-            Student existingStudent = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(
+            Student existingStudent = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(
                     studentNumber, DegreeType.MASTER_DEGREE);
             if (!existingStudent.getPerson().equals(person)) {
                 throw new ExistingServiceException();

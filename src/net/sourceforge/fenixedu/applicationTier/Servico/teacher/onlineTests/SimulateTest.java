@@ -50,8 +50,8 @@ public class SimulateTest extends Service {
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new FenixServiceException();
 
@@ -60,10 +60,10 @@ public class SimulateTest extends Service {
         int notResponseNumber = 0;
         List<String> errors = new ArrayList<String>();
 
-        TestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
                     executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
@@ -80,7 +80,7 @@ public class SimulateTest extends Service {
         infoDistributedTest.setTitle(test.getTitle());
         infoDistributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        List<InfoStudentTestQuestion> infoStudentTestQuestionList = getInfoStudentTestQuestionList(persistentSuport, questionCodes, optionShuffle,
+        List<InfoStudentTestQuestion> infoStudentTestQuestionList = getInfoStudentTestQuestionList(persistentSupport, questionCodes, optionShuffle,
                 responses, infoDistributedTest, testId);
         if (infoStudentTestQuestionList.size() == 0)
             return null;
@@ -149,12 +149,12 @@ public class SimulateTest extends Service {
         return infoQuestion;
     }
 
-    private List<InfoStudentTestQuestion> getInfoStudentTestQuestionList(ISuportePersistente sp, String[] questionCodes, String[] optionShuffle,
+    private List<InfoStudentTestQuestion> getInfoStudentTestQuestionList(ISuportePersistente persistentSupport, String[] questionCodes, String[] optionShuffle,
             Response[] responses, InfoDistributedTest infoDistributedTest, Integer testId) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException, FenixServiceException {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
 
-        List<TestQuestion> testQuestionList = sp.getIPersistentTestQuestion().readByTest(testId);
+        List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByTest(testId);
         for (int i = 0; i < testQuestionList.size(); i++) {
             TestQuestion testQuestionExample = testQuestionList.get(i);
             InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
@@ -165,7 +165,7 @@ public class SimulateTest extends Service {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(new Double(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = (Question) sp.getIPersistentQuestion().readByOID(Question.class, new Integer(questionCodes[i]));
+            Question question = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, new Integer(questionCodes[i]));
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }

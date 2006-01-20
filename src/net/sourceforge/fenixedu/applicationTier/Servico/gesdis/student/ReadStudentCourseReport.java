@@ -23,8 +23,8 @@ public class ReadStudentCourseReport extends ReadDomainObjectService {
         return StudentCourseReport.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentStudentCourseReport();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentStudentCourseReport();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

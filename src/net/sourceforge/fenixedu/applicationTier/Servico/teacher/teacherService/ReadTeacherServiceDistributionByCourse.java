@@ -46,11 +46,11 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 
 		Department department;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentTeacher persistenceTeacher = sp.getIPersistentTeacher();
+		IPersistentTeacher persistenceTeacher = persistentSupport.getIPersistentTeacher();
 
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		executionPeriodList = persistentExecutionPeriod.readByExecutionYear(executionYearID);
 

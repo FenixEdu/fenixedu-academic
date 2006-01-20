@@ -27,12 +27,12 @@ public class PublishMarks extends Service {
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         // Site
-        IPersistentSite siteDAO = sp.getIPersistentSite();
+        IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
         Site site = siteDAO.readByExecutionCourse(executionCourseCode);
         // find what type of evaluation we are dealing with
-        Evaluation evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class,
                 evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {
@@ -43,7 +43,7 @@ public class PublishMarks extends Service {
         }
 
         // publish marks
-        IPersistentMark persistentMark = sp.getIPersistentMark();
+        IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
         List marksList = persistentMark.readBy(evaluation);
         ListIterator iterMarks = marksList.listIterator();
         while (iterMarks.hasNext()) {

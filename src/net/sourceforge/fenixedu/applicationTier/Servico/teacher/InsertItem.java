@@ -18,9 +18,9 @@ public class InsertItem extends Service {
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem)
             throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory
                 .getDefaultPersistenceSupport();
-        final IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+        final IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
                        
         final Section section = (Section) persistentSection.readByOID(Section.class, sectionCode);
               

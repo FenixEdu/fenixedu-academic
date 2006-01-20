@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionDegreeRecentByDegreeId extends Service {
 
     public InfoExecutionDegree run(final Integer degreeId) throws ExcepcaoPersistencia{
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         List listExecutionDegrees = persistentExecutionDegree.readAll();
         CollectionUtils.filter(listExecutionDegrees, new Predicate(){
 

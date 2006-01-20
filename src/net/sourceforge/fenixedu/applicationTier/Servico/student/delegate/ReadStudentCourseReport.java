@@ -46,11 +46,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadStudentCourseReport extends Service {
 
 	public InfoSiteStudentCourseReport run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		IPersistentStudentCourseReport persistentStudentCourseReport = sp
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		IPersistentStudentCourseReport persistentStudentCourseReport = persistentSupport
 				.getIPersistentStudentCourseReport();
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
 				CurricularCourse.class, objectId);
@@ -87,10 +87,10 @@ public class ReadStudentCourseReport extends Service {
 		ExecutionPeriod executionPeriod = actualPeriod.getPreviousExecutionPeriod();
 
 		List infoSiteEvaluationHistory = getInfoSiteEvaluationsHistory(executionPeriod,
-				curricularCourse, sp);
+				curricularCourse, persistentSupport);
 
 		InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = getInfoSiteEvaluationStatistics(
-				executionPeriod, curricularCourse, sp);
+				executionPeriod, curricularCourse, persistentSupport);
 
 		infoSiteStudentCourseReport.setInfoStudentCourseReport(infoStudentCourseReport);
 		infoSiteStudentCourseReport.setInfoSiteEvaluationHistory(infoSiteEvaluationHistory);
@@ -102,15 +102,15 @@ public class ReadStudentCourseReport extends Service {
 	/**
 	 * @param period
 	 * @param curricularCourses
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private InfoSiteEvaluationStatistics getInfoSiteEvaluationStatistics(
-			ExecutionPeriod executionPeriod, CurricularCourse curricularCourse, ISuportePersistente sp)
+			ExecutionPeriod executionPeriod, CurricularCourse curricularCourse, ISuportePersistente persistentSupport)
 			throws ExcepcaoPersistencia {
 
 		InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
-		List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+		List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
 		infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
 		infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
 		infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -123,11 +123,11 @@ public class ReadStudentCourseReport extends Service {
 	/**
 	 * @param executionPeriod
 	 * @param curricularCourse
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private List getInfoSiteEvaluationsHistory(ExecutionPeriod executionPeriodToTest,
-			CurricularCourse curricularCourse, ISuportePersistente sp) throws ExcepcaoPersistencia {
+			CurricularCourse curricularCourse, ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
 		List infoSiteEvaluationsHistory = new ArrayList();
 		List executionPeriods = (List) CollectionUtils.collect(curricularCourse
 				.getAssociatedExecutionCourses(), new Transformer() {
@@ -164,7 +164,7 @@ public class ReadStudentCourseReport extends Service {
 			InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
 			infoSiteEvaluationStatistics.setInfoExecutionPeriod(InfoExecutionPeriod
 					.newInfoFromDomain(executionPeriod));
-			List enrolled = getEnrolled(executionPeriod, curricularCourse, sp);
+			List enrolled = getEnrolled(executionPeriod, curricularCourse, persistentSupport);
 			infoSiteEvaluationStatistics.setEnrolled(new Integer(enrolled.size()));
 			infoSiteEvaluationStatistics.setEvaluated(getEvaluated(enrolled));
 			infoSiteEvaluationStatistics.setApproved(getApproved(enrolled));
@@ -176,7 +176,7 @@ public class ReadStudentCourseReport extends Service {
 
 	/**
 	 * @param curricularCourses
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private Integer getApproved(List enrolments) {
@@ -194,7 +194,7 @@ public class ReadStudentCourseReport extends Service {
 
 	/**
 	 * @param curricularCourses
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private Integer getEvaluated(List enrolments) {
@@ -213,12 +213,12 @@ public class ReadStudentCourseReport extends Service {
 
 	/**
 	 * @param curricularCourses
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	private List getEnrolled(ExecutionPeriod executionPeriod, CurricularCourse curricularCourse,
-			ISuportePersistente sp) throws ExcepcaoPersistencia {
-		IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+			ISuportePersistente persistentSupport) throws ExcepcaoPersistencia {
+		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 		List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(curricularCourse
 				.getIdInternal(), executionPeriod.getIdInternal());
 		return enrolments;

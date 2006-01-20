@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuityValues;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPaymentPhase;
@@ -23,13 +24,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -55,19 +52,16 @@ public class InsertGratuityData extends Service {
 			throw new FenixServiceException("impossible.insertGratuityValues");
 		}
 
-		ISuportePersistente sp = null;
+		validateGratuity(infoGratuityValues);
 
-		validateGratuity(sp, infoGratuityValues);
-
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGratuityValues persistentGratuityValues = sp.getIPersistentGratuityValues();
+		IPersistentGratuityValues persistentGratuityValues = persistentSupport.getIPersistentGratuityValues();
 
 		GratuityValues gratuityValues = persistentGratuityValues
 				.readGratuityValuesByExecutionDegree(infoGratuityValues.getInfoExecutionDegree()
 						.getIdInternal());
 
 		// execution Degree
-		ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
+		ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
 				.readByOID(ExecutionDegree.class,
 						infoGratuityValues.getInfoExecutionDegree().getIdInternal());
 
@@ -81,10 +75,10 @@ public class InsertGratuityData extends Service {
 
 		executionDegree.setGratuityValues(gratuityValues);
 
-		validatePaymentPhasesWithTransaction(sp, gratuityValues);
+		validatePaymentPhasesWithTransaction(gratuityValues);
 		// validateGratuitySituationWithTransaction(sp, gratuityValues);
 
-		registerWhoAndWhen(sp, infoGratuityValues, gratuityValues);
+		registerWhoAndWhen(infoGratuityValues, gratuityValues);
 
 		gratuityValues.setAnualValue(infoGratuityValues.getAnualValue());
 		gratuityValues.setScholarShipValue(infoGratuityValues.getScholarShipValue());
@@ -96,7 +90,7 @@ public class InsertGratuityData extends Service {
 		gratuityValues.setEndPayment(infoGratuityValues.getEndPayment());
 
 		// write all payment phases
-		writePaymentPhases(sp, infoGratuityValues, gratuityValues);
+		writePaymentPhases(infoGratuityValues, gratuityValues);
 
 		// update gratuity values in all student curricular plan that belong
 		// to this execution
@@ -107,7 +101,7 @@ public class InsertGratuityData extends Service {
 		return Boolean.TRUE;
 	}
 
-	private Double validateGratuity(ISuportePersistente sp, InfoGratuityValues infoGratuityValues)
+	private Double validateGratuity(InfoGratuityValues infoGratuityValues)
 			throws FenixServiceException {
 		// find the gratuity's value
 		Double gratuityValue = null;
@@ -172,18 +166,17 @@ public class InsertGratuityData extends Service {
 		}
 	}
 
-	private void validatePaymentPhasesWithTransaction(ISuportePersistente sp,
-			GratuityValues gratuityValues) throws FenixServiceException {
+	private void validatePaymentPhasesWithTransaction(GratuityValues gratuityValues) throws FenixServiceException {
 	}
 
-	private void registerWhoAndWhen(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
+	private void registerWhoAndWhen(InfoGratuityValues infoGratuityValues,
 			GratuityValues gratuityValues) throws ExcepcaoPersistencia {
 		// employee who made register
-		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
 				.getPerson().getUsername());
 		if (person != null) {
-			IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+			IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 			Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 			gratuityValues.setEmployee(employee);
 		}
@@ -192,12 +185,12 @@ public class InsertGratuityData extends Service {
 		gratuityValues.setWhen(now.getTime());
 	}
 
-	private void writePaymentPhases(ISuportePersistente sp, InfoGratuityValues infoGratuityValues,
+	private void writePaymentPhases(InfoGratuityValues infoGratuityValues,
 			GratuityValues gratuityValues) throws FenixServiceException, ExcepcaoPersistencia {
 		if (gratuityValues.getPaymentPhaseList() != null
 				&& gratuityValues.getPaymentPhaseList().size() > 0) {
 			for (PaymentPhase paymentPhase : gratuityValues.getPaymentPhaseList()) {
-				sp.getIPersistentObject().deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
+				persistentObject.deleteByOID(PaymentPhase.class, paymentPhase.getIdInternal());
 			}
 			gratuityValues.getPaymentPhaseList().clear();
 		}

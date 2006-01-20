@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.sibs.InfoSibsPaymentFileEntry;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -23,8 +21,7 @@ public class ReadNonProcessedSibsEntries extends Service {
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 		List infoSibsFileEntries = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentSibsPaymentFileEntry persistentSibsPaymentFileEntry = sp
+		IPersistentSibsPaymentFileEntry persistentSibsPaymentFileEntry = persistentSupport
 				.getIPersistentSibsPaymentFileEntry();
 
 		List sibsFileEntries = persistentSibsPaymentFileEntry.readNonProcessed();

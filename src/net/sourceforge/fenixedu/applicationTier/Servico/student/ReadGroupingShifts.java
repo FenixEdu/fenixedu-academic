@@ -40,15 +40,15 @@ public class ReadGroupingShifts extends Service {
 		Grouping grouping = null;
 		boolean result = false;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		StudentGroup studentGroup = null;
-		grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class, groupingCode);
+		grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingCode);
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}
 		if (studentGroupCode != null) {
 
-			studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(StudentGroup.class,
+			studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(StudentGroup.class,
 					studentGroupCode);
 
 			if (studentGroup == null) {
@@ -64,7 +64,7 @@ public class ReadGroupingShifts extends Service {
 				.getGroupEnrolmentStrategyInstance(grouping);
 
 		if (strategy.checkHasShift(grouping)) {
-			ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+			ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
 			List executionCourses = new ArrayList();
 			executionCourses = grouping.getExecutionCourses();

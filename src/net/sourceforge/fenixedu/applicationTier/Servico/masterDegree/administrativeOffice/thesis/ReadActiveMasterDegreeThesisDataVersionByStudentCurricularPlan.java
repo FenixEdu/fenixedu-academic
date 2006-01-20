@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.thesis;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVersion;
@@ -7,9 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeThesisDataVer
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.MasterDegreeThesisDataVersion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -23,9 +21,7 @@ public class ReadActiveMasterDegreeThesisDataVersionByStudentCurricularPlan exte
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = sp
+        MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = persistentSupport
                 .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
                         infoStudentCurricularPlan.getIdInternal());
 

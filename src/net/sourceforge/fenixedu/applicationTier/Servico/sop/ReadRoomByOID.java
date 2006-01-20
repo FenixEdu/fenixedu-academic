@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadRoomByOID extends Service {
 
 	public InfoRoom run(Integer oid) throws ExcepcaoPersistencia {
-		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final ISalaPersistente roomDAO = sp.getISalaPersistente();
+		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
 
 		final Room room = (Room) roomDAO.readByOID(Room.class, oid);
 

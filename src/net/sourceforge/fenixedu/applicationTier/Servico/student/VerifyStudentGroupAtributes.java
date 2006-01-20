@@ -34,9 +34,9 @@ public class VerifyStudentGroupAtributes extends Service {
 
 		boolean result = false;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
@@ -70,9 +70,9 @@ public class VerifyStudentGroupAtributes extends Service {
 
 		boolean result = false;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(
 				Grouping.class, groupPropertiesCode);
 
 		if (groupProperties == null) {
@@ -88,7 +88,7 @@ public class VerifyStudentGroupAtributes extends Service {
 			throw new NotAuthorizedException();
 		}
 
-		Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, shiftCode);
+		Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftCode);
 		result = strategy.checkNumberOfGroups(groupProperties, shift);
 
 		if (!result)
@@ -107,9 +107,9 @@ public class VerifyStudentGroupAtributes extends Service {
 
 		boolean result = false;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {
@@ -142,16 +142,16 @@ public class VerifyStudentGroupAtributes extends Service {
 
 		boolean result = false;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();
@@ -182,16 +182,16 @@ public class VerifyStudentGroupAtributes extends Service {
 
 		boolean result = false;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {
 			throw new ExistingServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 		if (studentGroup == null) {
 			throw new FenixServiceException();

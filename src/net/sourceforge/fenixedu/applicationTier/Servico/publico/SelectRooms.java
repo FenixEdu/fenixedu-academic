@@ -27,10 +27,10 @@ public class SelectRooms extends Service {
 	public Object run(InfoRoom infoRoom) throws ExcepcaoPersistencia {
 		List salas = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		Integer tipo = infoRoom.getTipo() != null ? infoRoom.getTipo().getTipo() : null;
 
-		salas = sp.getISalaPersistente().readSalas(infoRoom.getNome(), infoRoom.getEdificio(),
+		salas = persistentSupport.getISalaPersistente().readSalas(infoRoom.getNome(), infoRoom.getEdificio(),
 				infoRoom.getPiso(), tipo, infoRoom.getCapacidadeNormal(), infoRoom.getCapacidadeExame());
 
 		if (salas == null)

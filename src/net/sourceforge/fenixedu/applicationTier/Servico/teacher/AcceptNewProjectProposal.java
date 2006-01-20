@@ -47,12 +47,12 @@ public class AcceptNewProjectProposal extends Service {
 			return result;
 		}
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
-		IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
+		IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-		Grouping grouping = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesId);
 
 		if (grouping == null) {

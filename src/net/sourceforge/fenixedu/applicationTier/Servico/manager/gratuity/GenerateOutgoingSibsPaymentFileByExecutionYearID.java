@@ -78,7 +78,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
 		String shortYear = executionYear.getYear().split("/")[0].trim().substring(2);
 
-		// read master degree and specialization execution degrees
+		// read master degree and persistentSupportecialization execution degrees
 		List executionDegreeList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYearAndDegreeType(
 				executionYear.getYear(), DegreeType.MASTER_DEGREE);
 

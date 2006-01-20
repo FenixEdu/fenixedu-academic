@@ -60,13 +60,13 @@ public class ChangeStudentTestQuestion extends Service {
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        Question oldQuestion = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, oldQuestionId);
+        Question oldQuestion = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, oldQuestionId);
         if (oldQuestion == null)
             throw new InvalidArgumentsServiceException();
 
-        IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+        IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
         Metadata metadata = null;
 
         List<Question> availableQuestions = new ArrayList<Question>();
@@ -80,13 +80,13 @@ public class ChangeStudentTestQuestion extends Service {
             availableQuestions.remove(oldQuestion);
         }
 
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
+        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
 
         List<DistributedTest> distributedTestList = new ArrayList<DistributedTest>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS)
             distributedTestList = persistentStudentTestQuestion.readDistributedTestsByTestQuestion(oldQuestion.getIdInternal());
         else {
-            DistributedTest distributedTest = (DistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+            DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
                     distributedTestId);
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
@@ -101,13 +101,13 @@ public class ChangeStudentTestQuestion extends Service {
             infoSiteDistributedTestAdvisory.setInfoAdvisory(InfoAdvisory.newInfoFromDomain(getAdvisory(distributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
+                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 studentsTestQuestionList.add(persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
                         student.getIdInternal(), distributedTest.getIdInternal()));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
+                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 Integer order = persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
@@ -141,14 +141,14 @@ public class ChangeStudentTestQuestion extends Service {
                     if (!group.contains(studentTestQuestion.getStudent().getPerson()))
                         group.add(InfoStudent.newInfoFromDomain(studentTestQuestion.getStudent()));
                     if (studentTestQuestion.getDistributedTest().getTestType().equals(new TestType(TestType.EVALUATION))) {
-                        OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
+                        OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(
                                 studentTestQuestion.getDistributedTest().getIdInternal());
-                        Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
+                        Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                                 studentTestQuestion.getStudent().getIdInternal(),
                                 ((ExecutionCourse) distributedTest.getTestScope().getDomainObject()).getIdInternal());
-                        Mark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
+                        Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
                         if (mark != null) {
-                            mark.setMark(getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion
+                            mark.setMark(getNewStudentMark(persistentSupport, studentTestQuestion.getDistributedTest(), studentTestQuestion
                                     .getStudent(), oldMark));
                         }
                     }
@@ -170,7 +170,7 @@ public class ChangeStudentTestQuestion extends Service {
             metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, oldQuestion.getKeyMetadata());
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
-            removeOldTestQuestion(persistentSuport, oldQuestion);
+            removeOldTestQuestion(persistentSupport, oldQuestion);
             List metadataQuestions = metadata.getVisibleQuestions();
 
             if (metadataQuestions != null && metadataQuestions.size() <= 1)
@@ -230,9 +230,9 @@ public class ChangeStudentTestQuestion extends Service {
         return false;
     }
 
-    private void removeOldTestQuestion(ISuportePersistente persistentSuport, Question oldQuestion) throws ExcepcaoPersistencia {
+    private void removeOldTestQuestion(ISuportePersistente persistentSupport, Question oldQuestion) throws ExcepcaoPersistencia {
 
-        IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
+        IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
         List<TestQuestion> testQuestionOldList = (List<TestQuestion>) persistentTestQuestion.readByQuestion(oldQuestion.getIdInternal());
         List<Question> availableQuestions = new ArrayList<Question>();
         availableQuestions.addAll(oldQuestion.getMetadata().getVisibleQuestions());
@@ -252,9 +252,9 @@ public class ChangeStudentTestQuestion extends Service {
         }
     }
 
-    private String getNewStudentMark(ISuportePersistente sp, DistributedTest dt, Student s, double mark2Remove) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(ISuportePersistente persistentSupport, DistributedTest dt, Student s, double mark2Remove) throws ExcepcaoPersistencia {
         double totalMark = 0;
-        List<StudentTestQuestion> studentTestQuestionList = sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 s.getIdInternal(), dt.getIdInternal());
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();

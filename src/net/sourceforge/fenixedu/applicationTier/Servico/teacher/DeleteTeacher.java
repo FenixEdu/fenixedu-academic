@@ -29,11 +29,11 @@ public class DeleteTeacher extends Service {
     public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
-        IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
-        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
+        IPersistentSupportLesson supportLessonDAO = persistentSupport.getIPersistentSupportLesson();
+        IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport.getIPersistentShiftProfessorship();
 
         // note: removed the possibility for a responsible teacher to remove
         // from himself the professorship
@@ -62,7 +62,7 @@ public class DeleteTeacher extends Service {
         }
 
         if (!hasCredits && !hasSupportLessons) {
-            IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+            IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
             List summaryList = persistentSummary.readByTeacher(professorshipToDelete
                     .getExecutionCourse().getIdInternal(), professorshipToDelete.getTeacher()
                     .getTeacherNumber());

@@ -38,11 +38,11 @@ public class ClassSiteComponentService extends Service {
             String executionPeriodName, String degreeInitials, String nameDegreeCurricularPlan,
             String className, Integer curricularYear, Integer classId) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-        final ITurmaPersistente persistentSchoolClass = sp.getITurmaPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+        final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+        final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
+        final ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
 
         ExecutionYear executionYear = persistentExecutionYear
                 .readExecutionYearByName(executionYearName);
@@ -56,7 +56,7 @@ public class ClassSiteComponentService extends Service {
         PublicSiteComponentBuilder componentBuilder = PublicSiteComponentBuilder.getInstance();
         SchoolClass domainClass;
         if (classId == null) {
-            domainClass = getDomainClass(className, curricularYear, executionPeriod, executionDegree, sp);
+            domainClass = getDomainClass(className, curricularYear, executionPeriod, executionDegree, persistentSupport);
             if (domainClass == null) {
                 throw new NonExistingServiceException();
             }
@@ -71,10 +71,10 @@ public class ClassSiteComponentService extends Service {
     }
 
     private SchoolClass getDomainClass(String className, Integer curricularYear,
-            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, ISuportePersistente sp)
+            ExecutionPeriod executionPeriod, ExecutionDegree executionDegree, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
 
-        ITurmaPersistente persistentClass = sp.getITurmaPersistente();
+        ITurmaPersistente persistentClass = persistentSupport.getITurmaPersistente();
         SchoolClass domainClass = null;
         List domainList = new ArrayList();
         if (curricularYear == null) {

@@ -44,30 +44,30 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
             ExcepcaoPersistencia {
 
         InfoEvaluation infoEvaluation = new InfoEvaluation();
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         //Execution Course
 
-        IPersistentExecutionCourse disciplinaExecucaoDAO = sp.getIPersistentExecutionCourse();
+        IPersistentExecutionCourse disciplinaExecucaoDAO = persistentSupport.getIPersistentExecutionCourse();
         final ExecutionCourse executionCourse = (ExecutionCourse) disciplinaExecucaoDAO.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         //Site
-        IPersistentSite siteDAO = sp.getIPersistentSite();
+        IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
         final Site site = siteDAO.readByExecutionCourse(executionCourseCode);
 
         //Evaluation
 
-        Evaluation evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
+        Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
         //Attends
-        IFrequentaPersistente frequentaPersistente = sp.getIFrequentaPersistente();
+        IFrequentaPersistente frequentaPersistente = persistentSupport.getIFrequentaPersistente();
         List attendList = frequentaPersistente.readByExecutionCourse(executionCourseCode);
 
         //Marks
-        IPersistentMark persistentMark = sp.getIPersistentMark();
+        IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
         List marksList = persistentMark.readBy(evaluation);
 
         List infoAttendList = (List) CollectionUtils.collect(attendList, new Transformer() {

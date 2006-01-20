@@ -28,9 +28,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
 
     public List run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List exams = sp.getIPersistentExam().readBy(day, beginning);
-        List allRooms = sp.getISalaPersistente().readAll();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List exams = persistentSupport.getIPersistentExam().readBy(day, beginning);
+        List allRooms = persistentSupport.getISalaPersistente().readAll();
 
         List occupiedRooms = new ArrayList();
         for (int i = 0; i < exams.size(); i++) {

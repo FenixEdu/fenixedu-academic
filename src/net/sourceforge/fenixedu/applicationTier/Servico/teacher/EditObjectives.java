@@ -28,10 +28,10 @@ public class EditObjectives extends Service {
             InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
         
         // Person who change all information        
         Person person = persistentPerson.lerPessoaPorUsername(username);
@@ -63,7 +63,7 @@ public class EditObjectives extends Service {
             curriculum = curricularCourse.insertCurriculum("", "", "", "", "", "");
         }
 
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         ExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
 
         if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())

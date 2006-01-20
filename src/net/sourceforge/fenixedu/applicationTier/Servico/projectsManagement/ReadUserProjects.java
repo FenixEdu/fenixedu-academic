@@ -23,13 +23,13 @@ public class ReadUserProjects extends Service {
     public List<InfoProject> run(String username, String costCenter, Boolean all, String userNumber) throws ExcepcaoPersistencia {
         List<InfoProject> infoProjectList = new ArrayList<InfoProject>();
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         List<Project> projectList = p.getIPersistentProject().readByUserLogin(userNumber);
         if (all)
             projectList.addAll(p.getIPersistentProject().readByProjectsCodes(
-                    persistentSuport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndDateAndCC(username, costCenter)));
+                    persistentSupport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndDateAndCC(username, costCenter)));
         for (int i = 0; i < projectList.size(); i++)
             infoProjectList.add(InfoProject.newInfoFromDomain(projectList.get(i)));
 

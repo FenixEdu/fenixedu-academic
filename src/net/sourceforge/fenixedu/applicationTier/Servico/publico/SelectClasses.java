@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class SelectClasses extends Service {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ITurmaPersistente classDAO = sp.getITurmaPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
 
         List<SchoolClass> classes = classDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
                 infoClass.getInfoExecutionPeriod().getIdInternal(), infoClass.getAnoCurricular(),

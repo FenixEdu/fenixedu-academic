@@ -24,8 +24,8 @@ public class ReadPublicExecutionPeriods extends Service {
 
 		List result = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
 		List executionPeriods = executionPeriodDAO.readPublic();
 

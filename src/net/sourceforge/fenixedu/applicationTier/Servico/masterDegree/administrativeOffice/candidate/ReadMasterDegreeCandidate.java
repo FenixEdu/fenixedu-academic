@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateSituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
@@ -18,10 +19,7 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -31,10 +29,8 @@ public class ReadMasterDegreeCandidate extends Service {
     public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree,
             Integer candidateNumber, Specialization degreeType) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         // Read the candidates
-        MasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        MasterDegreeCandidate masterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
                 .readByNumberAndExecutionDegreeAndSpecialization(candidateNumber,
                         infoExecutionDegree.getIdInternal(), degreeType);
 
@@ -59,15 +55,12 @@ public class ReadMasterDegreeCandidate extends Service {
 
     public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson)
             throws ExcepcaoPersistencia {
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        Person person = (Person) sp.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
                 infoPerson.getIdInternal());
 
         // Read the candidates
 
-        MasterDegreeCandidate masterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        MasterDegreeCandidate masterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
                 .readByExecutionDegreeAndPerson(infoExecutionDegree.getIdInternal(),
                         person.getIdInternal());
 

@@ -38,10 +38,10 @@ public abstract class ReadDomainObjectService extends Service {
 	protected abstract Class getDomainObjectClass();
 
 	/**
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
-	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
+	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport)
 			throws ExcepcaoPersistencia;
 
 	/**

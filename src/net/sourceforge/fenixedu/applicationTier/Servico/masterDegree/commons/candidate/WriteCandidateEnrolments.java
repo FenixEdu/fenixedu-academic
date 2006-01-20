@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
@@ -13,14 +14,10 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateEnrolment;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -32,11 +29,10 @@ public class WriteCandidateEnrolments extends Service {
     public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits,
             String givenCreditsRemarks) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCandidateEnrolment persistentCandidateEnrolment = sp
+        IPersistentCandidateEnrolment persistentCandidateEnrolment = persistentSupport
                 .getIPersistentCandidateEnrolment();
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
                 .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
@@ -74,7 +70,7 @@ public class WriteCandidateEnrolments extends Service {
                     }
                 });
 
-        writeFilteredEnrollments(sp, masterDegreeCandidate, curricularCoursesToEnroll);
+        writeFilteredEnrollments(masterDegreeCandidate, curricularCoursesToEnroll);
 
         deleteRemainingEnrollments(persistentCandidateEnrolment, candidateEnrollmentsToDelete);
 
@@ -103,19 +99,18 @@ public class WriteCandidateEnrolments extends Service {
     }
 
     /**
-     * @param sp
+     * @param persistentSupport
      * @param masterDegreeCandidate
      * @param curricularCoursesToEnroll
      * @throws NonExistingServiceException
      * @throws ExcepcaoPersistencia
      */
-    private void writeFilteredEnrollments(ISuportePersistente sp,
-            MasterDegreeCandidate masterDegreeCandidate, Collection<Integer> curricularCoursesToEnroll)
+    private void writeFilteredEnrollments(MasterDegreeCandidate masterDegreeCandidate, Collection<Integer> curricularCoursesToEnroll)
             throws NonExistingServiceException, ExcepcaoPersistencia {
         Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 
-            CurricularCourse curricularCourse = (CurricularCourse) sp.getIPersistentCurricularCourse()
+            CurricularCourse curricularCourse = (CurricularCourse) persistentSupport.getIPersistentCurricularCourse()
                     .readByOID(CurricularCourse.class, (Integer) iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {

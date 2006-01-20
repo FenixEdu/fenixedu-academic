@@ -26,8 +26,8 @@ public class ReadExecutionCourseByCodeAndExecutionPeriodId extends Service {
 		ExecutionCourse iExecCourse = null;
 		InfoExecutionCourse infoExecCourse = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 		iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriodId(code,
 				executionPeriodId);
 		if (iExecCourse != null)

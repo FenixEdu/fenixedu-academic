@@ -33,16 +33,16 @@ public class ReadDistributedTestMarksStatistics extends Service {
 	public SiteView run(Integer executionCourseId, Integer distributedTestId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSuport;
+		ISuportePersistente persistentSupport;
 		InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
-		persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		DistributedTest distributedTest = (DistributedTest) persistentSuport
+		persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		DistributedTest distributedTest = (DistributedTest) persistentSupport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)
 			throw new InvalidArgumentsServiceException();
 
-		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+		IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
 				.getIPersistentStudentTestQuestion();
 		List<StudentTestQuestion> studentTestQuestionList = persistentStudentTestQuestion
 				.readStudentTestQuestionsByDistributedTest(distributedTest);

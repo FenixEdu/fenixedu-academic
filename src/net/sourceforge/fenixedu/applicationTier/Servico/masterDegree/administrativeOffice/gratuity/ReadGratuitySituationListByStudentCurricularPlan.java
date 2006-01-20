@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -23,14 +21,11 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadGratuitySituationListByStudentCurricularPlan extends Service {
 
 	public List run(Integer studentCurricularPlanID) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = null;
 		List infoGratuitySituations = new ArrayList();
 		List gratuitySituations = null;
 		GratuitySituation gratuitySituation = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
+		IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
 
 		gratuitySituations = persistentGratuitySituation
 				.readGratuitySituatuionListByStudentCurricularPlan(studentCurricularPlanID);

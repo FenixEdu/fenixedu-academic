@@ -26,8 +26,8 @@ public class ReadCurricularCourseByOIdService extends Service {
 
 	public SiteView run(Integer curricularCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject persistentObject = sp.getIPersistentObject();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseId);
 

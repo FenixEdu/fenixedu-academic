@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCandidateRegistration;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -25,21 +23,16 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class GetCandidateRegistrationInformation extends Service {
 
 	public InfoCandidateRegistration run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente sp = null;
-
 		InfoCandidateRegistration infoCandidateRegistration = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
+		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
 				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
 						candidateID);
 
-		Student student = sp.getIPersistentStudent().readByPersonAndDegreeType(
+		Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(
 				masterDegreeCandidate.getPerson().getIdInternal(), DegreeType.MASTER_DEGREE);
 
-		StudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+		StudentCurricularPlan studentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente()
 				.readActiveStudentCurricularPlan(student.getNumber(), DegreeType.MASTER_DEGREE);
 
 		infoCandidateRegistration = new InfoCandidateRegistration();

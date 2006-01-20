@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -16,8 +17,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.transactions.GratuityTransaction;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -35,11 +34,9 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
 
         gratuitySituationsToDelete = new HashSet<GratuitySituation>();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ExecutionYear executionYear = readExecutionYear(year, persistentSupport);
 
-        ExecutionYear executionYear = readExecutionYear(year, sp);
-
-        // read master degree and specialization execution degrees
+        // read master degree and persistentSupportecialization execution degrees
         Collection<ExecutionDegree> executionDegrees = executionYear
                 .getExecutionDegreesByType(DegreeType.MASTER_DEGREE);
 
@@ -77,18 +74,18 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
         }
 
         for (GratuitySituation gratuitySituationToDelete : this.gratuitySituationsToDelete) {
-            sp.getIPersistentObject().deleteByOID(GratuitySituation.class,
+            persistentSupport.getIPersistentObject().deleteByOID(GratuitySituation.class,
                     gratuitySituationToDelete.getIdInternal());
         }
     }
 
-    private ExecutionYear readExecutionYear(String year, ISuportePersistente sp)
+    private ExecutionYear readExecutionYear(String year, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
         ExecutionYear executionYear;
         if (year == null || year.equals("")) {
-            executionYear = sp.getIPersistentExecutionYear().readCurrentExecutionYear();
+            executionYear = persistentSupport.getIPersistentExecutionYear().readCurrentExecutionYear();
         } else {
-            executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(year);
+            executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(year);
         }
         return executionYear;
     }
@@ -98,7 +95,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
      */
     private void updateGratuitySituation(GratuitySituation gratuitySituation) {
 
-        // check if there isnt any specialization for a 2nd year
+        // check if there isnt any persistentSupportecialization for a 2nd year
         if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
                 Specialization.SPECIALIZATION)) {
 
@@ -120,7 +117,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
 
     private void removeWrongGratuitySituation(GratuitySituation gratuitySituation) {
 
-        // find gratuity situation of first specialization year
+        // find gratuity situation of first persistentSupportecialization year
         for (GratuitySituation correctSituation : gratuitySituation.getStudentCurricularPlan()
                 .getGratuitySituations()) {
             if (correctSituation.getGratuityValues().getExecutionDegree().isFirstYear()) {

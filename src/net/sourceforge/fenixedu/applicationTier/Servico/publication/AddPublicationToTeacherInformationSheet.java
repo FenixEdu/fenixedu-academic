@@ -13,11 +13,11 @@ public class AddPublicationToTeacherInformationSheet extends Service {
 
     public void run(Integer teacherId, Integer publicationId, String publicationArea) throws Exception {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherId);
 
-        IPersistentPublication persistentPublication = sp.getIPersistentPublication();
+        IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
         Publication publication = (Publication) persistentPublication.readByOID(Publication.class,
                 publicationId);
         

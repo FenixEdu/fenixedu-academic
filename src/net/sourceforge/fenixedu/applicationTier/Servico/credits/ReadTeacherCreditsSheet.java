@@ -81,7 +81,7 @@ public class ReadTeacherCreditsSheet extends Service {
     }
 
     /**
-     * @param sp
+     * @param persistentSupport
      * @param infoCredits
      * @param infoTeacher
      * @param infoExecutionPeriod
@@ -112,7 +112,7 @@ public class ReadTeacherCreditsSheet extends Service {
      * @param teacher
      * @param executionPeriod
      * @param infoCredits
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private List readInfoSupportLessonList(Teacher teacher, ExecutionPeriod executionPeriod) {
@@ -146,7 +146,7 @@ public class ReadTeacherCreditsSheet extends Service {
      * @param teacher
      * @param executionPeriod
      * @param infoCredits
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private List readInfoTeacherInstitutionWorkingTime(Teacher teacher, ExecutionPeriod executionPeriod) {
@@ -177,7 +177,7 @@ public class ReadTeacherCreditsSheet extends Service {
      * @param teacher
      * @param executionPeriod
      * @param infoCredits
-     * @param sp
+     * @param persistentSupport
      * @return
      */
     private List readTeacherDegreeFinalProjectStudentList(Teacher teacher,

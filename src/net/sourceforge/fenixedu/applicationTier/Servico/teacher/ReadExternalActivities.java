@@ -31,13 +31,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExternalActivities extends Service {
 
     public SiteView run(String user) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
-        IPersistentExternalActivity persistentExternalActivity = persistentSuport
+        IPersistentExternalActivity persistentExternalActivity = persistentSupport
                 .getIPersistentExternalActivity();
         List externalActivities = persistentExternalActivity.readByTeacherId(teacher.getIdInternal());
 

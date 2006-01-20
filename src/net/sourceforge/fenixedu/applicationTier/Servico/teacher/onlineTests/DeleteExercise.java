@@ -27,19 +27,19 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteExercise extends Service {
 
     public void run(Integer executionCourseId, Integer metadataId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentMetadata persistentMetadata = persistentSuport.getIPersistentMetadata();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
         Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId);
         if (metadata == null)
             throw new InvalidArgumentsServiceException();
-        List<Question> questionList = persistentSuport.getIPersistentQuestion().readByMetadata(metadata);
+        List<Question> questionList = persistentSupport.getIPersistentQuestion().readByMetadata(metadata);
         boolean delete = true;
-        IPersistentQuestion persistentQuestion = persistentSuport.getIPersistentQuestion();
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
+        IPersistentQuestion persistentQuestion = persistentSupport.getIPersistentQuestion();
+        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
         for (Question question : questionList) {
-            List<TestQuestion> testQuestionList = persistentSuport.getIPersistentTestQuestion().readByQuestion(question.getIdInternal());
+            List<TestQuestion> testQuestionList = persistentSupport.getIPersistentTestQuestion().readByQuestion(question.getIdInternal());
             for (TestQuestion testQuestion : testQuestionList) {
-                removeTestQuestionFromTest(persistentSuport, testQuestion);
+                removeTestQuestionFromTest(persistentSupport, testQuestion);
             }
             if (persistentStudentTestQuestion.countByQuestion(question.getIdInternal()) == 0) {
                 persistentQuestion.deleteByOID(Question.class, question.getIdInternal());
@@ -56,10 +56,10 @@ public class DeleteExercise extends Service {
         }
     }
 
-    private void removeTestQuestionFromTest(ISuportePersistente persistentSuport, TestQuestion testQuestion) throws ExcepcaoPersistencia {
-        IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
+    private void removeTestQuestionFromTest(ISuportePersistente persistentSupport, TestQuestion testQuestion) throws ExcepcaoPersistencia {
+        IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
 
-        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testQuestion.getKeyTest());
+        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testQuestion.getKeyTest());
         if (test == null)
             throw new ExcepcaoPersistencia();
         List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(test.getIdInternal());

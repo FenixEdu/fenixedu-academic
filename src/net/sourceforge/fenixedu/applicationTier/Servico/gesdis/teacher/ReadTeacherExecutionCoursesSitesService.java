@@ -29,7 +29,7 @@ public class ReadTeacherExecutionCoursesSitesService extends Service {
         final List<InfoSite> infoSites = new ArrayList<InfoSite>();
 
         //final IPersistentSite persistentSite =
-        // persistentSuport.getIPersistentSite();
+        // persistentSupport.getIPersistentSite();
         final IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
 

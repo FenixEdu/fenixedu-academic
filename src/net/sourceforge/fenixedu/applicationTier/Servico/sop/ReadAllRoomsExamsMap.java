@@ -57,8 +57,8 @@ public class ReadAllRoomsExamsMap extends Service {
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List rooms = sp.getISalaPersistente().readForRoomReservation();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List rooms = persistentSupport.getISalaPersistente().readForRoomReservation();
 
         for (int i = 0; i < rooms.size(); i++) {
 
@@ -73,7 +73,7 @@ public class ReadAllRoomsExamsMap extends Service {
             infoExamsMap.setStartSeason2(null);
             infoExamsMap.setEndSeason2(endSeason2);
 
-            List exams = sp.getIPersistentExam().readByRoomAndExecutionPeriod(room.getNome(),
+            List exams = persistentSupport.getIPersistentExam().readByRoomAndExecutionPeriod(room.getNome(),
                     infoExecutionPeriod.getName(), infoExecutionPeriod.getInfoExecutionYear().getYear());
             infoExamsMap.setExams((List) CollectionUtils.collect(exams, TRANSFORM_EXAM_TO_INFOEXAM));
 

@@ -19,8 +19,8 @@ public class ReadTeacherPublicationsByArea extends Service {
     
     public SiteView run(String user, String publicationAreaString) throws ExcepcaoPersistencia {
         
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         final Teacher teacher = persistentTeacher.readTeacherByUsername(user);
         
         List<InfoPublication> infoPublications = new ArrayList<InfoPublication>(); 

@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteExternalActivity extends Service {
 
 	public void run(Integer externalActivityId) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExternalActivity pea = sp.getIPersistentExternalActivity();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExternalActivity pea = persistentSupport.getIPersistentExternalActivity();
 		
 		ExternalActivity externalActivity = (ExternalActivity) pea.readByOID(ExternalActivity.class, externalActivityId);
 		externalActivity.delete();

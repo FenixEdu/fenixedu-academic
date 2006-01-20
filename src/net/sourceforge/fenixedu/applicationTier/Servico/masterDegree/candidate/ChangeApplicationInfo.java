@@ -15,6 +15,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 import java.util.Calendar;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePersonalContactInformation;
@@ -28,25 +29,19 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ChangeApplicationInfo extends Service {
 
     public InfoMasterDegreeCandidate run(InfoMasterDegreeCandidate newMasterDegreeCandidate,
             InfoPerson infoPerson, IUserView userView, Boolean isNewPerson)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ExecutionDegree executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
                 .readByOID(ExecutionDegree.class,
                         newMasterDegreeCandidate.getInfoExecutionDegree().getIdInternal());
 
-        MasterDegreeCandidate existingMasterDegreeCandidate = sp.getIPersistentMasterDegreeCandidate()
+        MasterDegreeCandidate existingMasterDegreeCandidate = persistentSupport.getIPersistentMasterDegreeCandidate()
                 .readByIdentificationDocNumberAndTypeAndExecutionDegreeAndSpecialization(
                         newMasterDegreeCandidate.getInfoPerson().getNumeroDocumentoIdentificacao(),
                         newMasterDegreeCandidate.getInfoPerson().getTipoDocumentoIdentificacao(),
@@ -60,7 +55,7 @@ public class ChangeApplicationInfo extends Service {
         if (isNewPerson) {
             Country country = null;
             if ((infoPerson.getInfoPais() != null)) {
-                country = sp.getIPersistentCountry().readCountryByNationality(
+                country = persistentSupport.getIPersistentCountry().readCountryByNationality(
                         infoPerson.getInfoPais().getNationality());
             }
             

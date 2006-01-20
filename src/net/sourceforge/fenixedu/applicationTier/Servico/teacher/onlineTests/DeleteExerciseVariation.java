@@ -29,10 +29,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteExerciseVariation extends Service {
 
     public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
-        Question question = (Question) persistentSuport.getIPersistentQuestion().readByOID(Question.class, questionCode);
+        Question question = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, questionCode);
         if (question == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -56,8 +56,8 @@ public class DeleteExerciseVariation extends Service {
             Metadata metadata = question.getMetadata();
             if (question.getStudentTestsQuestions() == null || question.getStudentTestsQuestions().size() == 0) {
                 question.delete();
-                if (persistentSuport.getIPersistentMetadata().getNumberOfQuestions(metadata) <= 1) {
-                    persistentSuport.getIPersistentMetadata().deleteByOID(Metadata.class, metadata.getIdInternal());
+                if (persistentSupport.getIPersistentMetadata().getNumberOfQuestions(metadata) <= 1) {
+                    persistentSupport.getIPersistentMetadata().deleteByOID(Metadata.class, metadata.getIdInternal());
                 } else if (metadata.getVisibleQuestions().size() == 0) {
                     metadata.setVisibility(new Boolean(false));
                 }

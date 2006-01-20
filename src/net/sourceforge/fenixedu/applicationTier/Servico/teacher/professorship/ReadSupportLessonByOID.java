@@ -21,8 +21,8 @@ public class ReadSupportLessonByOID extends ReadDomainObjectService {
         return SupportLesson.class;
     }
 
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
-        return sp.getIPersistentSupportLesson();
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
+        return persistentSupport.getIPersistentSupportLesson();
     }
 
     protected InfoObject newInfoFromDomain(DomainObject domainObject) {

@@ -40,7 +40,7 @@ public class ListGrantContractByCriteria extends Service {
 	public Object[] run(InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		// Read the grant contracts ordered by span
+		// Read the grant contracts ordered by persistentSupportan
 		List grantContractBySpanAndCriteria = null;
 		IPersistentGrantContract persistentGrantContract = null;
 

@@ -38,8 +38,8 @@ public class EditCareer extends Service {
 
 	private void editCareer(Integer careerId, InfoTeachingCareer infoTeachingCareer) throws ExcepcaoPersistencia {
 		
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject po = sp.getIPersistentObject();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject po = persistentSupport.getIPersistentObject();
 		
 		TeachingCareer teachingCareer = (TeachingCareer) po.readByOID(TeachingCareer.class, careerId);
 		
@@ -58,8 +58,8 @@ public class EditCareer extends Service {
 	}
 
 	private void editCareer(Integer careerId, InfoProfessionalCareer infoProfessionalCareer) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentObject po = sp.getIPersistentObject();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentObject po = persistentSupport.getIPersistentObject();
 		
 		ProfessionalCareer professionalCareer = (ProfessionalCareer) po.readByOID(ProfessionalCareer.class, careerId);
 		

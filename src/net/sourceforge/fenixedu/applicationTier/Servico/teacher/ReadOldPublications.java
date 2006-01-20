@@ -32,13 +32,13 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadOldPublications extends Service {
 
     public SiteView run(OldPublicationType oldPublicationType, String user) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);
 
-        IPersistentOldPublication persistentOldPublication = persistentSuport
+        IPersistentOldPublication persistentOldPublication = persistentSupport
                 .getIPersistentOldPublication();
         List publications = persistentOldPublication.readAllByTeacherIdAndOldPublicationType(teacher.getIdInternal(),
                 oldPublicationType);

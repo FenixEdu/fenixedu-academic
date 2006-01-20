@@ -36,7 +36,7 @@ public class ListGrantOwners extends Service {
 	 */
 
 	public Object[] run(InfoSpanListGrantOwner infoSpanListGrantOwner) throws FenixServiceException, ExcepcaoPersistencia {
-		// Read the grant owners ordered by span
+		// Read the grant owners ordered by persistentSupportan
 		List grantOwnerBySpan = null;
 		IPersistentGrantOwner persistentGrantOwner = null;
 

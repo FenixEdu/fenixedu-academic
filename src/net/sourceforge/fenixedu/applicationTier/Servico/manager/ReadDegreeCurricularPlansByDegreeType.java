@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -26,9 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadDegreeCurricularPlansByDegreeType extends Service {
 
     public List run(final DegreeType tipoCurso) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        final List degreeCurricularPlans = sp.getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
+        final List degreeCurricularPlans = persistentSupport.getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
 
         return constructInfoDegreeCurricularPlans(tipoCurso, degreeCurricularPlans);
     }

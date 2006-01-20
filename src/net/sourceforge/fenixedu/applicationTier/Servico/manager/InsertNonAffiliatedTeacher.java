@@ -4,16 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -25,10 +23,9 @@ public class InsertNonAffiliatedTeacher extends Service {
     public NonAffiliatedTeacher run(String nonAffiliatedTeacherName, Integer institutionID) throws ExcepcaoPersistencia,
             NotExistingServiceException {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentNonAffiliatedTeacher persistentNonAffiliatedTeacher = sp
+        IPersistentNonAffiliatedTeacher persistentNonAffiliatedTeacher = persistentSupport
                 .getIPersistentNonAffiliatedTeacher();
-        IPersistentInstitution persistentInstitution = sp.getIPersistentInstitution();
+        IPersistentInstitution persistentInstitution = persistentSupport.getIPersistentInstitution();
 
         Institution institution = (Institution) persistentInstitution.readByOID(Institution.class,
                 institutionID);

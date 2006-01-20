@@ -30,10 +30,10 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends 
         List listDCDE = null;
         List listInfoDE = null;
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
-            CurricularYear curricularYearFromDB = (CurricularYear) sp.getIPersistentCurricularYear()
+            CurricularYear curricularYearFromDB = (CurricularYear) persistentSupport.getIPersistentCurricularYear()
                     .readByOID(CurricularYear.class, curricularYear);
 
             listDCDE = executionCourseDAO

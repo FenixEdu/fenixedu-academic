@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
@@ -19,14 +20,11 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -50,7 +48,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
      * payed values 3. in third, a double with the total of list's remaning
      * values
      */
-    public Object run(Integer executionDegreeId, String executionYearName, String specializationName,
+    public Object run(Integer executionDegreeId, String executionYearName, String persistentSupportecializationName,
             String gratuitySituationTypeName) throws FenixServiceException {
 
         // at least one of the arguments it's obligator
@@ -60,14 +58,13 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
         }
 
         HashMap result = null;
-        ISuportePersistente sp = null;
+        ISuportePersistente persistentSupport = null;
 
         try {
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-            IPersistentGratuitySituation gratuitySituationDAO = sp.getIPersistentGratuitySituation();
+            IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
+            IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
 
-            IPersistentInsuranceTransaction insuranceTransactionDAO = sp
+            IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
                     .getIPersistentInsuranceTransaction();
 
             List executionDegreeList = new ArrayList();
@@ -82,7 +79,7 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
                 // the execution degree wasn't supplied so
                 // we have to show all execution degrees from the choosen year
                 if (executionYearName != null) {
-                    IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+                    IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
                     ExecutionYear executionYear = persistentExecutionYear.readExecutionYearByName(executionYearName);
                     if (executionYear != null) {
                         executionDegreeList = executionDegreeDAO.readByExecutionYearAndDegreeType(

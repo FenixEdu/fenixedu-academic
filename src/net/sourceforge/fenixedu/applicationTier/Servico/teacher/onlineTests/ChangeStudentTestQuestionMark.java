@@ -50,9 +50,9 @@ public class ChangeStudentTestQuestionMark extends Service {
     public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
             Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         path = path.replace('\\', '/');
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport.getIPersistentStudentTestQuestion();
+        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
             studentsTestQuestionList.add(persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(questionId, studentId,
@@ -104,14 +104,14 @@ public class ChangeStudentTestQuestionMark extends Service {
                     final String outString = out.toString();
                     studentTestQuestion.setResponse(outString);
                 } else {
-                    OnlineTest onlineTest = (OnlineTest) persistentSuport.getIPersistentOnlineTest().readByDistributedTest(
+                    OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(
                             studentTestQuestion.getDistributedTest().getIdInternal());
-                    ExecutionCourse executionCourse = (ExecutionCourse) persistentSuport.getIPersistentExecutionCourse().readByOID(
+                    ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(
                             ExecutionCourse.class, executionCourseId);
-                    Attends attend = persistentSuport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
+                    Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                             studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());
-                    Mark mark = persistentSuport.getIPersistentMark().readBy(onlineTest, attend);
-                    final String markValue = getNewStudentMark(persistentSuport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent());
+                    Mark mark = persistentSupport.getIPersistentMark().readBy(onlineTest, attend);
+                    final String markValue = getNewStudentMark(persistentSupport, studentTestQuestion.getDistributedTest(), studentTestQuestion.getStudent());
                     if (mark == null) {
                         mark = DomainFactory.makeMark(attend, onlineTest, markValue);
                     } else {
@@ -135,9 +135,9 @@ public class ChangeStudentTestQuestionMark extends Service {
         return infoSiteDistributedTestAdvisoryList;
     }
 
-    private String getNewStudentMark(ISuportePersistente sp, DistributedTest dt, Student s) throws ExcepcaoPersistencia {
+    private String getNewStudentMark(ISuportePersistente persistentSupport, DistributedTest dt, Student s) throws ExcepcaoPersistencia {
         double totalMark = 0;
-        List<StudentTestQuestion> studentTestQuestionList = sp.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 s.getIdInternal(), dt.getIdInternal());
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             totalMark += studentTestQuestion.getTestQuestionMark().doubleValue();

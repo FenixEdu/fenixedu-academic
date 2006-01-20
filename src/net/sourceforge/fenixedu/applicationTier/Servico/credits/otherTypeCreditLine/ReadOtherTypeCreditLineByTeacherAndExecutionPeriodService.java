@@ -106,7 +106,7 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends S
      * 
      * @see ServidorAplicacao.Servico.framework.ReadDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
         return persistentSupport.getIPersistentOtherTypeCreditLine();
     }
 

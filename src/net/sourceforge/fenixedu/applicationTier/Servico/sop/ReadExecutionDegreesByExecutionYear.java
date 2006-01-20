@@ -31,10 +31,10 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
 
 		final List infoExecutionDegreeList = new ArrayList();
 
-		final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		final IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
-		final List executionDegrees = readExecutionDegrees(infoExecutionYear, sp, executionDegreeDAO);
+		final List executionDegrees = readExecutionDegrees(infoExecutionYear, persistentSupport, executionDegreeDAO);
 
 		for (final Iterator iterator = executionDegrees.iterator(); iterator.hasNext();) {
 			final ExecutionDegree executionDegree = (ExecutionDegree) iterator.next();
@@ -57,11 +57,11 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
 
 	private List readExecutionDegrees(
 			final InfoExecutionYear infoExecutionYear,
-			final ISuportePersistente sp,
+			final ISuportePersistente persistentSupport,
 			final IPersistentExecutionDegree executionDegreeDAO)
 			throws ExcepcaoPersistencia {
 		if (infoExecutionYear == null) {
-			final IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+			final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 			final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
 			return executionDegreeDAO.readByExecutionYear(executionYear.getYear());
 		}

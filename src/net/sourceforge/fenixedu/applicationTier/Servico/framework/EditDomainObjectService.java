@@ -45,7 +45,7 @@ public abstract class EditDomainObjectService extends Service {
 	 * 
 	 * @param newDomainObject
 	 * @param infoObject
-	 * @param sp
+	 * @param persistentSupport
 	 */
 	protected void doAfterLock(DomainObject domainObjectLocked, InfoObject infoObject) throws Exception {
 	}
@@ -55,13 +55,13 @@ public abstract class EditDomainObjectService extends Service {
 	 * 
 	 * @param objectLocked
 	 * @param infoObject
-	 * @param sp
+	 * @param persistentSupport
 	 */
 	protected void doBeforeLock(DomainObject domainObjectToLock, InfoObject infoObject) throws Exception {
 	}
 
 	/**
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
 	protected abstract IPersistentObject getIPersistentObject() throws ExcepcaoPersistencia;

@@ -29,9 +29,9 @@ public class DeleteGrantPart extends DeleteDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
 
-        return sp.getIPersistentGrantPart();
+        return persistentSupport.getIPersistentGrantPart();
     }
 
     /* (non-Javadoc)

@@ -143,13 +143,13 @@ public class ExecutionCourseSiteComponentBuilder {
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		// execution courses's lesson types for display to filter summary
 		List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
 
 		// execution courses's shifts for display to filter summary
-		ITurnoPersistente persistentShift = persistentSuport.getITurnoPersistente();
+		ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 		List shifts = executionCourse.getAssociatedShifts();
 		List infoShifts = new ArrayList();
 		if (shifts != null && shifts.size() > 0) {
@@ -163,7 +163,7 @@ public class ExecutionCourseSiteComponentBuilder {
 		}
 
 		// execution courses's professorships for display to filter summary
-		IPersistentProfessorship persistentProfessorship = persistentSuport
+		IPersistentProfessorship persistentProfessorship = persistentSupport
 				.getIPersistentProfessorship();
 		List professorships = executionCourse.getProfessorships();
 		List infoProfessorships = new ArrayList();
@@ -178,7 +178,7 @@ public class ExecutionCourseSiteComponentBuilder {
 			});
 		}
 
-		IPersistentSummary persistentSummary = persistentSuport.getIPersistentSummary();
+		IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
 		List summaries = null;
 		if (component.getShiftType() != null) {
 			List summariesBySummaryType = persistentSummary.readByExecutionCourseShiftsAndTypeLesson(
@@ -338,7 +338,6 @@ public class ExecutionCourseSiteComponentBuilder {
 	private ISiteComponent getInfoSiteCommon(InfoSiteCommon component, Site site)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp;
 		List allSections = null;
 		List infoSectionsList = null;
 
@@ -346,8 +345,8 @@ public class ExecutionCourseSiteComponentBuilder {
 		List infoCurricularCourseListByDegree = null;
 		// read sections
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		allSections = sp.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		allSections = persistentSupport.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),
 				site.getExecutionCourse().getExecutionPeriod().getName(),
 				site.getExecutionCourse().getExecutionPeriod().getExecutionYear().getYear());
 
@@ -387,8 +386,8 @@ public class ExecutionCourseSiteComponentBuilder {
 		component.setSection(infoSection);
 		List itemsList = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentItem persistentItem = sp.getIPersistentItem();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
 		itemsList = persistentItem.readAllItemsBySection(infoSection.getIdInternal(), infoSection
 				.getInfoSite().getInfoExecutionCourse().getSigla(), infoSection.getInfoSite()
 				.getInfoExecutionCourse().getInfoExecutionPeriod().getInfoExecutionYear().getYear(),
@@ -450,13 +449,13 @@ public class ExecutionCourseSiteComponentBuilder {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		List infoLessonList = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 
 		List aulas = new ArrayList();
 
-		List shifts = sp.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
+		List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(executionCourse.getIdInternal());
 		for (int i = 0; i < shifts.size(); i++) {
 			Shift shift = (Shift) shifts.get(i);
 			List aulasTemp = shift.getAssociatedLessons();
@@ -531,9 +530,9 @@ public class ExecutionCourseSiteComponentBuilder {
 		List references = null;
 		List infoBibRefs = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = sp
+		IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = persistentSupport
 				.getIPersistentBibliographicReference();
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
@@ -561,9 +560,9 @@ public class ExecutionCourseSiteComponentBuilder {
 
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentEvaluationMethod persistentEvaluationMethod = sp.getIPersistentEvaluationMethod();
+		IPersistentEvaluationMethod persistentEvaluationMethod = persistentSupport.getIPersistentEvaluationMethod();
 		EvaluationMethod evaluationMethod = persistentEvaluationMethod
 				.readByIdExecutionCourse(executionCourse.getIdInternal());
 		if (evaluationMethod != null) {

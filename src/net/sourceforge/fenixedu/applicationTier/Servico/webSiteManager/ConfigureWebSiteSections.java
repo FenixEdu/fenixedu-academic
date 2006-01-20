@@ -23,10 +23,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ConfigureWebSiteSections extends Service {
 
 	public boolean run(InfoWebSite infoWebSite) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
 				.getIPersistentWebSiteSection();
-		IPersistentWebSite persistentWebSite = persistentSuport.getIPersistentWebSite();
+		IPersistentWebSite persistentWebSite = persistentSupport.getIPersistentWebSite();
 
 		WebSiteSection webSiteSection = null;
 		Iterator iterSections = infoWebSite.getSections().iterator();

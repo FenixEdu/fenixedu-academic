@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteCareer extends Service {
 
 	public void run(Integer careerId) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCareer pc = sp.getIPersistentCareer();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCareer pc = persistentSupport.getIPersistentCareer();
 		
 		Career career = (Career) pc.readByOID(Career.class, careerId);
 		

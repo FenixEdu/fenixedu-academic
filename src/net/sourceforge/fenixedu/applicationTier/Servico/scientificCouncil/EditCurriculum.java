@@ -25,8 +25,8 @@ public class EditCurriculum extends Service {
 			String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,
 			String generalObjectivesEn, Boolean basic) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 		Curriculum curriculum = (Curriculum) persistentCurriculum.readByOID(Curriculum.class,
 				curriculumId);
 		if (curriculum.getCurricularCourse().getBasic().equals(basic)) {

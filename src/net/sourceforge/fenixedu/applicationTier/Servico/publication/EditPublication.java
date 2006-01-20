@@ -20,9 +20,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditPublication extends Service {
 
     public void run(InfoPublication infoPublication) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentPublication persistentPublication = sp.getIPersistentPublication();
-        final IPersistentPublicationType persistentPublicationType = sp.getIPersistentPublicationType();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
+        final IPersistentPublicationType persistentPublicationType = persistentSupport.getIPersistentPublicationType();
 
         final Publication publication = (Publication) persistentPublication.readByOID(
                 Publication.class, infoPublication.getIdInternal());

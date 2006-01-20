@@ -35,8 +35,8 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
 		// Execution OccupationPeriod
 		ExecutionPeriod executionPeriod;
@@ -58,14 +58,14 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 		}
 
 		// Degree
-		ICursoPersistente persistentDegree = sp.getICursoPersistente();
+		ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
 		Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
 		if (degree == null) {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}
 
 		// Execution degrees
-		IPersistentExecutionDegree persistentExecutionDegre = sp.getIPersistentExecutionDegree();
+		IPersistentExecutionDegree persistentExecutionDegre = persistentSupport.getIPersistentExecutionDegree();
 		List executionDegreeList = persistentExecutionDegre.readByDegreeAndExecutionYear(degree
 				.getIdInternal(), executionYear.getYear(), CurricularStage.OLD);
 		if (executionDegreeList == null || executionDegreeList.size() <= 0) {

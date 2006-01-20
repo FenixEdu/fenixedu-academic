@@ -16,9 +16,9 @@ public class ReadNonRequiredAttributes extends Service {
 
     public List<InfoAttribute> run(int publicationTypeId) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentPublicationType persistentPublicationType = persistentSuport
+        IPersistentPublicationType persistentPublicationType = persistentSupport
                 .getIPersistentPublicationType();
         PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeId));

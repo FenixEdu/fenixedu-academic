@@ -34,10 +34,10 @@ public class ReadStudentsByStudentGroupID extends Service {
 
         List infoStudents = new LinkedList();
         
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        StudentGroup studentGroup = (StudentGroup) sp.getIPersistentObject().readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
                 StudentGroup.class, groupId);
        
         Iterator iter = studentGroup.getAttends().iterator();

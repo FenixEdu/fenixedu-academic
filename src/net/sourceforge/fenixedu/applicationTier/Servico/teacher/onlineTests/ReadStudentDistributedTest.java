@@ -26,15 +26,15 @@ public class ReadStudentDistributedTest extends Service {
             ExcepcaoPersistencia {
         path = path.replace('\\', '/');
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, studentId);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
         if (student == null)
             throw new FenixServiceException();
-        DistributedTest distributedTest = (DistributedTest) persistentSuport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();
-        List<StudentTestQuestion> studentTestQuestionList = persistentSuport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(
                 student.getIdInternal(), distributedTest.getIdInternal());
         for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
             InfoStudentTestQuestion infoStudentTestQuestion;

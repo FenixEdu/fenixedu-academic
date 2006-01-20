@@ -4,14 +4,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide.reimbursementGuide;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.guide.reimbursementGuide.InfoReimbursementGuide;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
@@ -27,9 +25,7 @@ public class ViewReimbursementGuide extends Service {
     public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ReimbursementGuide reimbursementGuide = (ReimbursementGuide) ps
+        ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentSupport
                 .getIPersistentReimbursementGuide().readByOID(ReimbursementGuide.class,
                         reimbursementGuideId);
 

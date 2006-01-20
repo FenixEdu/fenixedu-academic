@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.GuiderAlreadyChosenServiceException;
@@ -17,13 +18,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -50,13 +47,11 @@ public class ChangeMasterDegreeThesisData extends Service {
                     "error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) sp
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
                 .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
-        MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = sp
+        MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = persistentSupport
                 .getIPersistentMasterDegreeThesisDataVersion().readActiveByStudentCurricularPlan(
                         studentCurricularPlanID);
         if (storedMasterDegreeThesisDataVersion == null) {
@@ -66,7 +61,7 @@ public class ChangeMasterDegreeThesisData extends Service {
 
         storedMasterDegreeThesisDataVersion.setCurrentState(new State(State.INACTIVE));
 
-        MasterDegreeThesisDataVersion masterDegreeThesisDataVersionWithChosenDissertationTitle = sp
+        MasterDegreeThesisDataVersion masterDegreeThesisDataVersionWithChosenDissertationTitle = persistentSupport
                 .getIPersistentMasterDegreeThesisDataVersion().readActiveByDissertationTitle(
                         dissertationTitle);
 
@@ -78,20 +73,20 @@ public class ChangeMasterDegreeThesisData extends Service {
             }
         }
 
-        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
-        Employee employee = sp.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
 
         MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = DomainFactory
                 .makeMasterDegreeThesisDataVersion(storedMasterDegreeThesisDataVersion
                         .getMasterDegreeThesis(), employee, dissertationTitle, new Date(), new State(
                         State.ACTIVE));
 
-        Collection<Teacher> guiders = sp.getIPersistentTeacher().readByNumbers(guidersNumbers);
-        Collection<Teacher> assistentGuiders = sp.getIPersistentTeacher().readByNumbers(
+        Collection<Teacher> guiders = persistentSupport.getIPersistentTeacher().readByNumbers(guidersNumbers);
+        Collection<Teacher> assistentGuiders = persistentSupport.getIPersistentTeacher().readByNumbers(
                 assistentGuidersNumbers);
-        Collection<ExternalPerson> externalGuiders = sp.getIPersistentExternalPerson().readByIDs(
+        Collection<ExternalPerson> externalGuiders = persistentSupport.getIPersistentExternalPerson().readByIDs(
                 externalGuidersIDs);
-        Collection<ExternalPerson> externalAssistentGuiders = sp.getIPersistentExternalPerson()
+        Collection<ExternalPerson> externalAssistentGuiders = persistentSupport.getIPersistentExternalPerson()
                 .readByIDs(externalAssistentGuidersIDs);
 
         masterDegreeThesisDataVersion.getGuiders().addAll(guiders);

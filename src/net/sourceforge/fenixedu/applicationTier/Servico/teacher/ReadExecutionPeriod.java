@@ -26,8 +26,8 @@ public class ReadExecutionPeriod extends Service {
 		IPersistentExecutionCourse persistentExecutionCourse = null;
 		ExecutionPeriod executionPeriod = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
 				ExecutionCourse.class, executionCourseCode);
 

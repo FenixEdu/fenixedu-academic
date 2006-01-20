@@ -24,9 +24,9 @@ public class ReadExecutionCoursesByDegreeAndExecutionPeriod extends Service {
 
 		List infoExecutionCourseList = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+		IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
 		List executionCourseList = new ArrayList();
 		List temp = null;

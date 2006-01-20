@@ -28,10 +28,10 @@ public class AddItem extends ManageWebSiteItem {
 
         List infoWebSiteSections = new ArrayList();
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentWebSiteSection persistentWebSiteSection = persistentSuport
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                 .getIPersistentWebSiteSection();
-        IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         WebSiteSection webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
                 sectionCode);

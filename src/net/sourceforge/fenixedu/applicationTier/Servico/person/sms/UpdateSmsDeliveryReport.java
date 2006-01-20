@@ -6,14 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.person.sms;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -23,8 +21,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class UpdateSmsDeliveryReport extends Service {
 
 	public void run(Integer smsId, SmsDeliveryType smsDeliveryType) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentSentSms persistentSentSms = ps.getIPersistentSentSms();
+		IPersistentSentSms persistentSentSms = persistentSupport.getIPersistentSentSms();
 
 		// read sentSms Object
 		SentSms sentSms = (SentSms) persistentSentSms.readByOID(SentSms.class, smsId);

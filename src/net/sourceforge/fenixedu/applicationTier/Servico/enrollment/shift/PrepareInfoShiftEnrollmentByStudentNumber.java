@@ -129,7 +129,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
         return infoShiftEnrollment;
     }
 
-    private List readAttendingCourses(ISuportePersistente sp, Integer studentNumber,
+    private List readAttendingCourses(ISuportePersistente persistentSupport, Integer studentNumber,
             DegreeType tipoCurso, List attendingExecutionCourses) throws ExcepcaoPersistencia {
         List infoAttendingCourses = null;
 
@@ -157,7 +157,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
         return infoAttendingCourses;
     }
 
-    private List readShiftEnrollment(ISuportePersistente sp, Student student, List infoAttendingCourses)
+    private List readShiftEnrollment(ISuportePersistente persistentSupport, Student student, List infoAttendingCourses)
             throws ExcepcaoPersistencia {
         List infoShiftEnrollment = null;
 
@@ -214,7 +214,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
         return result;
     }
 
-    private List readInfoExecutionDegrees(ISuportePersistente sp, ExecutionYear executionYear)
+    private List readInfoExecutionDegrees(ISuportePersistente persistentSupport, ExecutionYear executionYear)
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionDegree presistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         List executionDegrees = presistentExecutionDegree.readByExecutionYearAndDegreeType(executionYear
@@ -234,7 +234,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
         return infoExecutionDegreeList;
     }
 
-    private List readInfoExecutionCoursesOfdegree(ISuportePersistente sp,
+    private List readInfoExecutionCoursesOfdegree(ISuportePersistente persistentSupport,
             ExecutionPeriod executionPeriod, InfoExecutionDegree infoExecutionDegree)
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
@@ -265,7 +265,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
      * @param infoExecutionDegreeList
      * @return
      */
-    private InfoExecutionDegree selectExecutionDegree(ISuportePersistente sp,
+    private InfoExecutionDegree selectExecutionDegree(ISuportePersistente persistentSupport,
             List infoExecutionDegreeList, Integer executionDegreeIdChosen, Student student)
             throws ExcepcaoPersistencia {
         ExecutionDegree executionDegree = null;
@@ -281,7 +281,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
             }
         }
 
-        IPersistentStudentCurricularPlan persistentCurricularPlan = sp
+        IPersistentStudentCurricularPlan persistentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
         StudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
                 .readActiveByStudentNumberAndDegreeType(student.getNumber(), DegreeType.DEGREE);

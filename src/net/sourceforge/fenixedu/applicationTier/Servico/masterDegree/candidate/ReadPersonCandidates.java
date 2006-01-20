@@ -19,18 +19,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.candidate;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadPersonCandidates extends Service {
 
@@ -39,8 +36,7 @@ public class ReadPersonCandidates extends Service {
 
         String username = new String(userView.getUtilizador());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List candidates = sp.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(
+        List candidates = persistentSupport.getIPersistentMasterDegreeCandidate().readMasterDegreeCandidatesByUsername(
                 username);
 
         if (candidates == null) {

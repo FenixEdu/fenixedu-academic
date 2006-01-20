@@ -11,8 +11,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadStudentByNumberAndDegreeType extends Service {
 
     public Object run(Integer number, DegreeType degreeType) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
                 degreeType);
 
         if (student != null) {

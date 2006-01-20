@@ -6,18 +6,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -28,7 +25,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * Given the id of a degreeCurricularPlan, this service returns its
- * executionDegree specified in executionDegreeIndex
+ * executionDegree persistentSupportecified in executionDegreeIndex
  */
 
 public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
@@ -36,15 +33,13 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, Integer executionDegreeIndex)
             throws ExcepcaoPersistencia {
         List infoExecutionDegreeList = null;
-        ISuportePersistente sp;
         List executionDegrees = null;
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
-        executionDegrees = sp.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
+        executionDegrees = persistentSupport.getIPersistentExecutionDegree().readByDegreeCurricularPlan(
                 degreeCurricularPlan.getIdInternal());
 
         infoExecutionDegreeList = new ArrayList();
@@ -77,10 +72,7 @@ public class ReadExecutionDegreeByDegreeCurricularPlanID extends Service {
      */
     public InfoExecutionDegree run(Integer degreeCurricularPlanID, final String executionYear)
             throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 

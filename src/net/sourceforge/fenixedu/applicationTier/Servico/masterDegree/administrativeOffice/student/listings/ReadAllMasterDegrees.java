@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeWithInfoDegreeCurricularPlansAndInfoDegreeInfos;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -20,14 +18,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadAllMasterDegrees extends Service {
 
 	public List run(DegreeType degreeType) throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente sp = null;
 		List result = new ArrayList();
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		// Read the master degrees
-		result = sp.getICursoPersistente().readAllByDegreeType(degreeType);
+		result = persistentSupport.getICursoPersistente().readAllByDegreeType(degreeType);
 
 		if (result == null || result.size() == 0) {
 			throw new NonExistingServiceException();

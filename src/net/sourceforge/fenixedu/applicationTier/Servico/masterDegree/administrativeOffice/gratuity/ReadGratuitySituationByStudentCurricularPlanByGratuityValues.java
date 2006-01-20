@@ -4,15 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -22,12 +20,9 @@ public class ReadGratuitySituationByStudentCurricularPlanByGratuityValues extend
 
 	public Object run(Integer studentCurricularPlanID, Integer gratuityValuesID)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente sp = null;
 		GratuitySituation gratuitySituation = null;
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentGratuitySituation persistentGratuitySituation = sp.getIPersistentGratuitySituation();
+		IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
 
 		gratuitySituation = persistentGratuitySituation
 				.readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(studentCurricularPlanID,

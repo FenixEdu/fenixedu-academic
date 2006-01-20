@@ -22,9 +22,9 @@ public class EditExamRooms extends Service {
 
     public InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws ExcepcaoPersistencia,
             FenixServiceException {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ISalaPersistente persistentRoom = sp.getISalaPersistente();
-        final IPersistentExam persistentExam = sp.getIPersistentExam();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
+        final IPersistentExam persistentExam = persistentSupport.getIPersistentExam();
 
         final List<Room> finalRoomList = new ArrayList<Room>();
         for (final Integer id : roomsForExam) {

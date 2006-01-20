@@ -26,8 +26,8 @@ public class ReadLessonByOID extends Service {
 
 		InfoLesson result = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IAulaPersistente lessonDAO = sp.getIAulaPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
 		Lesson lesson = (Lesson) lessonDAO.readByOID(Lesson.class, oid);
 		if (lesson != null) {
 			InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod

@@ -43,11 +43,11 @@ public class RejectNewProjectProposal extends Service {
 			return result;
 		}
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-		Grouping groupProperties = (Grouping) sp.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesId);
 
 		if (groupProperties == null) {

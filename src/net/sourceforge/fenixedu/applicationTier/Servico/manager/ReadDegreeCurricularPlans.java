@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithDegree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -32,10 +30,7 @@ public class ReadDegreeCurricularPlans extends Service {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List run() throws ExcepcaoPersistencia {
-		final ISuportePersistente sp = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-
-		final List curricularPlans = sp.getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
+		final List curricularPlans = persistentSupport.getIPersistentDegreeCurricularPlan().readByCurricularStage(CurricularStage.OLD);
 		final List infoCurricularPlans = new ArrayList(curricularPlans.size());
 
 		for (final Iterator iter = curricularPlans.iterator(); iter.hasNext();) {

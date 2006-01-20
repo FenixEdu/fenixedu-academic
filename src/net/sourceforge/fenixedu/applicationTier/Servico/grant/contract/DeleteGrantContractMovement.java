@@ -29,9 +29,9 @@ public class DeleteGrantContractMovement extends DeleteDomainObjectService {
      * 
      * @see ServidorAplicacao.Servico.framework.DeleteDomainObjectService#getIPersistentObject(ServidorPersistente.ISuportePersistente)
      */
-    protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+    protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
 
-        return sp.getIPersistentGrantContractMovement();
+        return persistentSupport.getIPersistentGrantContractMovement();
     }
 
     /* (non-Javadoc)

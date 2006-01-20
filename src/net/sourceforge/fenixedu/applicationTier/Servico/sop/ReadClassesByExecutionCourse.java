@@ -27,12 +27,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadClassesByExecutionCourse extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
                 .readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
-        final List classes = sp.getITurmaPersistente().readByExecutionCourse(
+        final List classes = persistentSupport.getITurmaPersistente().readByExecutionCourse(
                 executionCourse.getIdInternal());
         final List infoClasses = new ArrayList(classes.size());
 

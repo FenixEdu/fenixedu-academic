@@ -52,10 +52,10 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
-        IAulaPersistente lessonDAO = sp.getIAulaPersistente();
-        ISalaPersistente persistentRoom = sp.getISalaPersistente();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
+        IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
+        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
 
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
@@ -161,11 +161,11 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
     private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws FenixServiceException {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             int semester = executionPeriod.getSemester().intValue();
 
-            List executionDegreesList = sp.getIPersistentExecutionDegree().readByExecutionYear(
+            List executionDegreesList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYear(
                     executionPeriod.getExecutionYear().getYear());
             ExecutionDegree executionDegree = (ExecutionDegree) executionDegreesList.get(0);
 

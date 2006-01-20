@@ -27,12 +27,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class readGaugingTestsResults extends Service {
 
 	public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentGaugingTestResult persistentGaugingTestResult = ps.getIPersistentGaugingTestResult();
-		IPessoaPersistente persistentPerson = ps.getIPessoaPersistente();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentGaugingTestResult persistentGaugingTestResult = persistentSupport.getIPersistentGaugingTestResult();
+		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 
-		IPersistentStudent persistentStudent = ps.getIPersistentStudent();
+		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
 		Student student = persistentStudent.readByPersonAndDegreeType(person.getIdInternal(),
 				DegreeType.DEGREE);

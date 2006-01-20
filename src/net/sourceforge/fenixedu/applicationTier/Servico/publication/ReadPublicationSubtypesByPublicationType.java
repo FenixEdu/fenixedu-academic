@@ -17,9 +17,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadPublicationSubtypesByPublicationType extends Service {
 
     public List<InfoPublicationSubtype> run(int publicationTypeId) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentPublicationType persistentPublicationType = persistentSuport
+        IPersistentPublicationType persistentPublicationType = persistentSupport
                 .getIPersistentPublicationType();
         PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
                 PublicationType.class, new Integer(publicationTypeId));

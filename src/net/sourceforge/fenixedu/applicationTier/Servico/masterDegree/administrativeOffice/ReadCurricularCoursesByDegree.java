@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
@@ -12,9 +13,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 01/07/2003
@@ -24,14 +22,11 @@ public class ReadCurricularCoursesByDegree extends Service {
 
     public List run(String executionYearString, String degreeName) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        ExecutionYear executionYear = sp.getIPersistentExecutionYear().readExecutionYearByName(
+        ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(
                 executionYearString);
 
         // Read degree
-        ExecutionDegree executionDegree = sp.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = persistentSupport.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanNameAndExecutionYear(degreeName,
                         executionYear.getIdInternal());
 
@@ -53,9 +48,7 @@ public class ReadCurricularCoursesByDegree extends Service {
     }
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) sp
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 

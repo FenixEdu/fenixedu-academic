@@ -25,8 +25,8 @@ public class EditItem extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		Item item = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentItem persistentItem = sp.getIPersistentItem();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
 
 		item = (Item) persistentItem.readByOID(Item.class, itemCode);
 

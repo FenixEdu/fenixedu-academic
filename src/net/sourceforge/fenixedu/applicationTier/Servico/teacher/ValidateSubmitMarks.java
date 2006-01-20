@@ -34,21 +34,21 @@ public class ValidateSubmitMarks extends Service {
     public InfoSiteSubmitMarks run(Integer executionCourseCode, Integer evaluationCode,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         //execution course and execution course's site
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-        IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = sp.getIPersistentEnrolmentEvaluation();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
+        IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSupport.getIPersistentEnrolmentEvaluation();
 
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         //evaluation
-        Evaluation evaluation = (Evaluation) sp.getIPersistentObject().readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class,
                 evaluationCode);
 
         //attend list
-        IFrequentaPersistente persistentAttend = sp.getIFrequentaPersistente();
+        IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
         List attendList = persistentAttend.readByExecutionCourse(executionCourse.getIdInternal());
 
         //verifySubmitMarks(attendList);
@@ -82,7 +82,7 @@ public class ValidateSubmitMarks extends Service {
         }
 
         //marks list
-        IPersistentMark persistentMark = sp.getIPersistentMark();
+        IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
         List markList = persistentMark.readBy(evaluation);
 
         //Check if there is any mark. If not, we can not submit

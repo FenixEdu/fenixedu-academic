@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -17,9 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Angela 04/07/2003
@@ -33,13 +31,11 @@ public class AlterStudentEnrolmentEvaluation extends Service {
 
         List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+        IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
                 .getIPersistentEnrolmentEvaluation();
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-        IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 
         Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
         if (person == null)

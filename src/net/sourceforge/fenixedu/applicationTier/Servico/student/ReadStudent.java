@@ -29,13 +29,13 @@ public class ReadStudent extends Service {
 
 		InfoStudent infoStudent = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		// ////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// Isto não é para ficar assim. Está assim temporariamente até se
 		// saber como é feita de facto a distinção
 		// dos aluno, referente ao tipo, a partir da página de login.
 		// ////////////////////////////////////////////////////////////////////////////////////////////////////////
-		Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+		Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
 				DegreeType.DEGREE);
 
 		if (student != null) {

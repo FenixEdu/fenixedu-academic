@@ -7,15 +7,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1
@@ -30,8 +28,7 @@ public class ReadExecutionCourseTeachers extends Service {
 	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
 
 		List professorShips = null;
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
 				.readByOID(ExecutionCourse.class, executionCourseId);
 		professorShips = executionCourse.getProfessorships();
 

@@ -27,23 +27,23 @@ public abstract class CreditsValidator {
     public static void validatePeriod(Integer teacherId, Integer executionPeriodId, DiaSemana weekDay,
             Date startTime, Date endTime, PeriodType periodType) throws OverlappingPeriodException,
             FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = null;
+        ISuportePersistente persistentSupport = null;
 
-        sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         switch (periodType.getValue()) {
         case PeriodType.INSTITUTION_WORKING_TIME_PERIOD_TYPE:
-            verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
-            verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
+            verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, persistentSupport);
+            verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, persistentSupport);
             break;
         case PeriodType.LESSON_PERIOD_TYPE:
-            verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
+            verifyOverlappingSupportLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, persistentSupport);
             verifyOverlappingInstitutionWorkingTime(teacherId, executionPeriodId, weekDay, startTime,
-                    endTime, sp);
+                    endTime, persistentSupport);
             break;
         case PeriodType.SUPPORT_LESSON_PERIOD_TYPE:
             verifyOverlappingInstitutionWorkingTime(teacherId, executionPeriodId, weekDay, startTime,
-                    endTime, sp);
-            verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, sp);
+                    endTime, persistentSupport);
+            verifyOverlappingLesson(teacherId, executionPeriodId, weekDay, startTime, endTime, persistentSupport);
             break;
         }
     }
@@ -56,8 +56,8 @@ public abstract class CreditsValidator {
      */
     private static void verifyOverlappingInstitutionWorkingTime(Integer teacherId,
             Integer executionPeriodId, DiaSemana weekDay, Date startTime, Date endTime,
-            ISuportePersistente sp) throws OverlappingInstitutionWorkingPeriod, ExcepcaoPersistencia {
-        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = sp
+            ISuportePersistente persistentSupport) throws OverlappingInstitutionWorkingPeriod, ExcepcaoPersistencia {
+        IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = persistentSupport
                 .getIPersistentTeacherInstitutionWorkingTime();
 
         List list = teacherInstitutionWorkingTimeDAO.readOverlappingPeriod(teacherId, executionPeriodId,
@@ -68,9 +68,9 @@ public abstract class CreditsValidator {
     }
 
     private static void verifyOverlappingSupportLesson(Integer teacherId, Integer executionPeriodId,
-            DiaSemana weekDay, Date startTime, Date endTime, ISuportePersistente sp)
+            DiaSemana weekDay, Date startTime, Date endTime, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia, OverlappingSupportLessonPeriod {
-        IPersistentSupportLesson supportLessonDAO = sp.getIPersistentSupportLesson();
+        IPersistentSupportLesson supportLessonDAO = persistentSupport.getIPersistentSupportLesson();
 
         List list = supportLessonDAO.readOverlappingPeriod(teacherId, executionPeriodId, weekDay,
                 startTime, endTime);
@@ -86,9 +86,9 @@ public abstract class CreditsValidator {
      * @param endTime
      */
     private static void verifyOverlappingLesson(Integer teacherId, Integer executionPeriodId,
-            DiaSemana weekDay, Date startTime, Date endTime, ISuportePersistente sp)
+            DiaSemana weekDay, Date startTime, Date endTime, ISuportePersistente persistentSupport)
             throws OverlappingLessonPeriod, ExcepcaoPersistencia {
-        IPersistentShiftProfessorship shiftProfessorshipDAO = sp.getIPersistentShiftProfessorship();
+        IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport.getIPersistentShiftProfessorship();
 
         List list = shiftProfessorshipDAO.readOverlappingPeriod(teacherId, executionPeriodId, weekDay,
                 startTime, endTime);

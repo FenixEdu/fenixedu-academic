@@ -27,9 +27,9 @@ public class ReadStudentTests extends Service {
 
     public Object run(String userName, Integer executionCourseId) throws ExcepcaoPersistencia {
         InfoSiteStudentDistributedTests infoSite = new InfoSiteStudentDistributedTests();
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Student student = persistentSuport.getIPersistentStudent().readByUsername(userName);
-        List<DistributedTest> distributedTestList = persistentSuport.getIPersistentDistributedTest().readByStudentAndExecutionCourse(
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
+        List<DistributedTest> distributedTestList = persistentSupport.getIPersistentDistributedTest().readByStudentAndExecutionCourse(
                 student.getIdInternal(), executionCourseId);
         List<InfoDistributedTest> testToDoList = new ArrayList<InfoDistributedTest>();
         List<InfoDistributedTest> doneTestsList = new ArrayList<InfoDistributedTest>();

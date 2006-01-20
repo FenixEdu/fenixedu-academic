@@ -18,8 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteItems extends Service {
 
 	public boolean run(Integer sectionCode, List itemsToDelete) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentWebSiteItem persistentWebSiteItem = persistentSuport.getIPersistentWebSiteItem();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
 		Iterator iterItemsCode = itemsToDelete.iterator();
 		while (iterItemsCode.hasNext()) {

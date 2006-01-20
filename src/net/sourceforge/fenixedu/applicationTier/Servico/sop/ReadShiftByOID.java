@@ -40,8 +40,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadShiftByOID extends Service {
 
     public InfoShift run(final Integer oid) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ITurnoPersistente shiftDAO = sp.getITurnoPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
         final Shift shift = (Shift) shiftDAO.readByOID(Shift.class, oid);
 
         if (shift != null) {

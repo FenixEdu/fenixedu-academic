@@ -28,8 +28,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
 
     public static Object run(ISiteComponent bodyComponent, RoomKey roomKey, Calendar day, Integer executionPeriodID) throws Exception {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
         return (executionPeriod != null) ? runService(bodyComponent, roomKey, day, executionPeriod) : RoomSiteComponentService.run(bodyComponent, roomKey, day);
     }
@@ -38,10 +38,10 @@ public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
             ExecutionPeriod executionPeriod) throws Exception {
         SiteView siteView = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ISalaPersistente persistentRoom = sp.getISalaPersistente();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         // IPersistentExecutionPeriod persistentExecutionPeriod =
-        // sp.getIPersistentExecutionPeriod();
+        // persistentSupport.getIPersistentExecutionPeriod();
 
         Room room = persistentRoom.readByName(roomKey.getNomeSala());
         // ExecutionPeriod executionPeriod = (ExecutionPeriod)

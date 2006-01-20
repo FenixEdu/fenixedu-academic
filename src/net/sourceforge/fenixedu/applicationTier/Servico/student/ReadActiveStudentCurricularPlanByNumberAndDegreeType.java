@@ -25,8 +25,8 @@ public class ReadActiveStudentCurricularPlanByNumberAndDegreeType extends Servic
 
     public InfoStudentCurricularPlan run(Integer studentNumber, DegreeType degreeType)
             throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final StudentCurricularPlan studentCurricularPlan = sp.getIStudentCurricularPlanPersistente()
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final StudentCurricularPlan studentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente()
                 .readActiveByStudentNumberAndDegreeType(studentNumber, degreeType);
 
         if (studentCurricularPlan != null) {

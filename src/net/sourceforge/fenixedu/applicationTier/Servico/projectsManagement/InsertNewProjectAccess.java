@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -28,11 +28,10 @@ public class InsertNewProjectAccess extends Service {
 
     public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate, String userNumber)
             throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
-        sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
+        persistentSupport.getIPersistentProjectAccess().deleteByPersonAndDate(person);
         IPersistentSuportOracle po = PersistentSuportOracle.getInstance();
         Integer coordinatorCode = new Integer(userNumber);
         Boolean isCostCenter = Boolean.FALSE;
@@ -42,14 +41,14 @@ public class InsertNewProjectAccess extends Service {
             isCostCenter = Boolean.TRUE;
         }
         if (!hasProjectsManagerRole(person, roleType)) {
-            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(roleType));
+            person.getPersonRoles().add(persistentSupport.getIPersistentRole().readByRoleType(roleType));
         }
-        List projectCodes = sp.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorCode, true);
+        List projectCodes = persistentSupport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorCode, true);
         List projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes);
 
         for (int i = 0; i < projectList.size(); i++) {
             Project project = (Project) projectList.get(i);
-            if (sp.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(project.getProjectCode())) != 0)
+            if (persistentSupport.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(project.getProjectCode())) != 0)
                 throw new IllegalArgumentException();
             ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
             projectAccess.setPerson(person);
@@ -63,11 +62,11 @@ public class InsertNewProjectAccess extends Service {
 
     public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
             GregorianCalendar endDate, String userNumber) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Person person = sp.getIPessoaPersistente().lerPessoaPorUsername(username);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
-        sp.getIPersistentProjectAccess().deleteByPersonAndDate(person);
+        persistentSupport.getIPersistentProjectAccess().deleteByPersonAndDate(person);
 
         Boolean isCostCenter = Boolean.FALSE;
         RoleType roleType = RoleType.PROJECTS_MANAGER;
@@ -77,11 +76,11 @@ public class InsertNewProjectAccess extends Service {
         }
 
         if (!hasProjectsManagerRole(person, roleType)) {
-            person.getPersonRoles().add(sp.getIPersistentRole().readByRoleType(roleType));
+            person.getPersonRoles().add(persistentSupport.getIPersistentRole().readByRoleType(roleType));
         }
 
         for (int i = 0; i < projectCodes.length; i++) {
-            if (sp.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(projectCodes[i])) != 0)
+            if (persistentSupport.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(projectCodes[i])) != 0)
                 throw new IllegalArgumentException();
 
             ProjectAccess projectAccess = DomainFactory.makeProjectAccess();

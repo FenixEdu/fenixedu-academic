@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.DeleteEnrollment;
@@ -29,9 +30,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota 15/Out/2003
@@ -43,9 +41,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 			Double credits, String startDate, List extraCurricularCourses, String observations,
 			Integer branchId, String specialization) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
 				.getIStudentCurricularPlanPersistente();
 
 		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
@@ -57,10 +53,10 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 		StudentCurricularPlanState newState = StudentCurricularPlanState.valueOf(currentState);
 
 		Employee employee = null;
-		IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
-		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-		IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-		IPersistentBranch persistentBranch = sp.getIPersistentBranch();
+		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
+		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
+		IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
 
 		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 		if (person == null) {

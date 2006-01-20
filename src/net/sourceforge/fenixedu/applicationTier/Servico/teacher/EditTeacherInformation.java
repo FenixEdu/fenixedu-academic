@@ -41,10 +41,10 @@ public class EditTeacherInformation extends Service {
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
             List<InfoPublicationsNumber> infoPublicationsNumbers) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		persistentObject = sp.getIPersistentObject();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		persistentObject = persistentSupport.getIPersistentObject();
 
-        final IPersistentTeacher pteacher = sp.getIPersistentTeacher();
+        final IPersistentTeacher pteacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = (Teacher) pteacher.readByOID(Teacher.class, infoServiceProviderRegime
                 .getInfoTeacher().getIdInternal());
 

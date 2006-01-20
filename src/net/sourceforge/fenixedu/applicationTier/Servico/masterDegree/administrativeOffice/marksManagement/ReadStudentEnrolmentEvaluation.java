@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Angela 04/07/2003
@@ -36,10 +34,9 @@ public class ReadStudentEnrolmentEvaluation extends Service {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		List infoEnrolmentEvaluations = new ArrayList();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
 				.getIPersistentEnrolmentEvaluation();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		enrolmentEvaluation = (EnrolmentEvaluation) persistentEnrolmentEvaluation.readByOID(
 				EnrolmentEvaluation.class, studentEvaluationCode);
 

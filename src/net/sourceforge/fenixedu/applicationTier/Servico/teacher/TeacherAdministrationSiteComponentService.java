@@ -22,8 +22,8 @@ public class TeacherAdministrationSiteComponentService extends Service {
             ISiteComponent bodyComponent, Integer infoSiteCode, Object obj1, Object obj2)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentSite persistentSite = sp.getIPersistentSite();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
         final Site site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
         final TeacherAdministrationSiteComponentBuilder componentBuilder = TeacherAdministrationSiteComponentBuilder

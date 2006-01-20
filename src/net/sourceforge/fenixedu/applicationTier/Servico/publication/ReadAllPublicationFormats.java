@@ -14,9 +14,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadAllPublicationFormats extends Service {
 
     public List<InfoPublicationFormat> run(int publicationTypeId) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentPublicationFormat persistentPublicationFormat = persistentSuport
+        IPersistentPublicationFormat persistentPublicationFormat = persistentSupport
                 .getIPersistentPublicationFormat();
 
         List<PublicationFormat> publicationFormatList = (List<PublicationFormat>)persistentPublicationFormat.readAll(PublicationFormat.class);

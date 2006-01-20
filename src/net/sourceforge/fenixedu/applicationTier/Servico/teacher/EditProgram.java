@@ -27,10 +27,10 @@ public class EditProgram extends Service {
             InfoCurriculum infoCurriculumNew, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-        IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-        IPersistentCurriculum persistentCurriculum = sp.getIPersistentCurriculum();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+        IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         
         // Person who change all information
         Person person = persistentPerson.lerPessoaPorUsername(username);
@@ -64,7 +64,7 @@ public class EditProgram extends Service {
             curriculum = curricularCourse.insertCurriculum("", "", "", "", "", "");
         }
 
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         ExecutionYear currentExecutionYear = persistentExecutionYear.readCurrentExecutionYear();
 
         if (!curriculum.getLastModificationDate().before(currentExecutionYear.getBeginDate())

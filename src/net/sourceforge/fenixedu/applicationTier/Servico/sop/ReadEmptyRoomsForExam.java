@@ -31,8 +31,8 @@ public class ReadEmptyRoomsForExam extends Service {
             }
         };
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        ISalaPersistente persistentRoom = sp.getISalaPersistente();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         List availableRooms = persistentRoom.readAvailableRooms(infoExam.getIdInternal());
         availableInfoRooms = (List) CollectionUtils.collect(availableRooms, TRANSFORM_TO_INFOROOM);
         return availableInfoRooms;

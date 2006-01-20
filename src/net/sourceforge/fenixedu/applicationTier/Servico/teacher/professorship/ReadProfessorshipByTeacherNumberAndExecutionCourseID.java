@@ -20,10 +20,10 @@ public class ReadProfessorshipByTeacherNumberAndExecutionCourseID extends Servic
     public InfoProfessorship run(String username, Integer executionCourseID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentProfessorship persistentProfessorship = persistentSuport
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readTeacherByUsername(username);
         if (teacher == null) {
             throw new FenixServiceException();

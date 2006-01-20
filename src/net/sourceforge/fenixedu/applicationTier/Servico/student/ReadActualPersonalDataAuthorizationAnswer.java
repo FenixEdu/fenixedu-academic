@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
@@ -16,7 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -27,10 +27,10 @@ public class ReadActualPersonalDataAuthorizationAnswer extends Service {
 
     public StudentPersonalDataAuthorizationChoice run(Integer studentID) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-        IPersistentExecutionYear persistentExecutionYear = sp.getIPersistentExecutionYear();
-        IPersistentStudentPersonalDataAuthorization persistentStudentPersonalDataAuthorization = sp
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
+        IPersistentStudentPersonalDataAuthorization persistentStudentPersonalDataAuthorization = persistentSupport
                 .getIPersistentStudentPersonalDataAuthorization();
 
         Student student = (Student) persistentStudent.readByOID(Student.class, studentID);

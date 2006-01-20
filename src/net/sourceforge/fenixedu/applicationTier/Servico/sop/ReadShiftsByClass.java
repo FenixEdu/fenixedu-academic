@@ -33,9 +33,9 @@ public class ReadShiftsByClass extends Service {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
+        SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
         List<Shift> shifts = schoolClass.getAssociatedShifts();

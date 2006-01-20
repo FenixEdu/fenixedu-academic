@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -13,10 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author lmac1 modified by Fernanda Quitério
@@ -28,9 +26,7 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
         ExecutionPeriod executionPeriod = null;
         ExecutionCourse existentExecutionCourse = null;
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
+            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
                     .getIPersistentExecutionPeriod();
             executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
                     ExecutionPeriod.class, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
@@ -39,7 +35,7 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
                 throw new NonExistingServiceException("message.nonExistingExecutionPeriod", null);
             }
 
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSuport
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                     .getIPersistentExecutionCourse();
 
             existentExecutionCourse = persistentExecutionCourse

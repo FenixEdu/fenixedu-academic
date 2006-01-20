@@ -44,8 +44,8 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
     public List run(Integer departmentId, Integer executionYearId, Integer semester, Integer teacherType)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentObject persistentObject = sp.getIPersistentObject();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
         //Execution Year
         ExecutionYear executionYear = null;
@@ -56,7 +56,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         }
 
         //Execution period
-        IPersistentExecutionPeriod persistentExecutionPeriod = sp.getIPersistentExecutionPeriod();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         ExecutionPeriod executionPeriod = persistentExecutionPeriod.readBySemesterAndExecutionYear(
                 semester, executionYear.getYear());
 
@@ -68,7 +68,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
         List teachers = department.getCurrentTeachers();
 
         Iterator iter = teachers.iterator();
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
       
         List professorships = new ArrayList();
         List responsibleFors = new ArrayList();
@@ -109,7 +109,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
             }
         }
 
-        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, sp,
+        List detailedProfessorships = getDetailedProfessorships(professorships, responsibleFors, persistentSupport,
                 teacherType);
 
         //Cleaning out possible null elements inside the list
@@ -171,7 +171,7 @@ public class ReadProfessorshipsAndResponsibilitiesByDepartmentAndExecutionPeriod
     }
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente sp, final Integer teacherType) {
+            ISuportePersistente persistentSupport, final Integer teacherType) {
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Transformer() {

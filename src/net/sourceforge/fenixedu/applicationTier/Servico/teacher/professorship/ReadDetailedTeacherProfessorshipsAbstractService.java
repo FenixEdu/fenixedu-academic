@@ -87,7 +87,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
     }
 
     protected List getDetailedProfessorships(List professorships, final List responsibleFors,
-            ISuportePersistente sp) {
+            ISuportePersistente persistentSupport) {
 
         List detailedProfessorshipList = (List) CollectionUtils.collect(professorships,
                 new Professorships2DetailProfessorship());

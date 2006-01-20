@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteTest extends Service {
 
     public void run(final Integer executionCourseId, final Integer testId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentTest persistentTest = persistentSuport.getIPersistentTest();
-        final IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentTest persistentTest = persistentSupport.getIPersistentTest();
+        final IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
 
         Test test = (Test) persistentTest.readByOID(Test.class, testId);
         List<TestQuestion> testQuestionList = test.getTestQuestions();

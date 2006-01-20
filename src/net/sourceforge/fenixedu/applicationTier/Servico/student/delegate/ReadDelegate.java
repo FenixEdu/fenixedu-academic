@@ -24,9 +24,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadDelegate extends Service {
  
     public InfoDelegate run(HashMap hashMap) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
-        final IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentDelegate persistentDelegate = persistentSupport.getIPersistentDelegate();
+        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         final String user = (String) hashMap.get("user");
         final Student student = persistentStudent.readByUsername(user);

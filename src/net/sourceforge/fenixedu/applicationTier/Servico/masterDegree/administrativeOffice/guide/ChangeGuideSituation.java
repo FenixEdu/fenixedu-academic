@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -32,15 +33,11 @@ import net.sourceforge.fenixedu.domain.transactions.PaymentType;
 import net.sourceforge.fenixedu.domain.transactions.TransactionType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ChangeGuideSituation extends Service {
 
@@ -49,8 +46,7 @@ public class ChangeGuideSituation extends Service {
             throws ExcepcaoInexistente, FenixServiceException, ExistingPersistentException,
             ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Guide guide = sp.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
+        Guide guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
                 guideVersion);
 
         if (guide == null) {
@@ -99,19 +95,19 @@ public class ChangeGuideSituation extends Service {
                 guide.setPaymentType(PaymentType.valueOf(paymentType));
 
                 // For Transactions Creation
-                PersonAccount personAccount = sp.getIPersistentPersonAccount().readByPerson(
+                PersonAccount personAccount = persistentSupport.getIPersistentPersonAccount().readByPerson(
                         guide.getPerson().getIdInternal());
                 if (personAccount == null) {
                     personAccount = DomainFactory.makePersonAccount(guide.getPerson());
                 }
 
-                IPersistentGratuitySituation persistentGratuitySituation = sp
+                IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
                         .getIPersistentGratuitySituation();
 
-                Person employeePerson = sp.getIPessoaPersistente().lerPessoaPorUsername(
+                Person employeePerson = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
                         userView.getUtilizador());
                 Person studentPerson = guide.getPerson();
-                Student student = sp.getIPersistentStudent().readByPersonAndDegreeType(
+                Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(
                         studentPerson.getIdInternal(), DegreeType.MASTER_DEGREE);
                 ExecutionDegree executionDegree = guide.getExecutionDegree();
 
@@ -144,7 +140,7 @@ public class ChangeGuideSituation extends Service {
                     // Write Insurance Transaction
                     if (guideEntry.getDocumentType().equals(DocumentType.INSURANCE)) {
 
-                        List insuranceTransactionList = sp.getIPersistentInsuranceTransaction()
+                        List insuranceTransactionList = persistentSupport.getIPersistentInsuranceTransaction()
                                 .readAllNonReimbursedByExecutionYearAndStudent(
                                         executionDegree.getExecutionYear().getIdInternal(),
                                         student.getIdInternal());

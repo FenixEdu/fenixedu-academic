@@ -34,10 +34,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadWebSiteByObjectCode extends Service {
 
     public InfoWebSite run(Integer webSiteCode) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentWebSite persistentWebSite = sp.getIPersistentWebSite();
-        final IPersistentWebSiteSection persistentWebSiteSection = sp.getIPersistentWebSiteSection();
-        final IPersistentWebSiteItem persistentWebSiteItem = sp.getIPersistentWebSiteItem();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentWebSite persistentWebSite = persistentSupport.getIPersistentWebSite();
+        final IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
+        final IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
 
         final List infoWebSiteSections = new ArrayList();

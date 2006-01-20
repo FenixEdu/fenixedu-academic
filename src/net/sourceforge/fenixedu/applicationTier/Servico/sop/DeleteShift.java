@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class DeleteShift extends Service {
 
@@ -37,9 +35,7 @@ public class DeleteShift extends Service {
     }
 
     public static void deleteShift(final Integer shiftID) throws ExcepcaoPersistencia, FenixServiceException {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, shiftID);
+        Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
         if (shift != null) {
             List studentShifts = shift.getStudents();
             if (studentShifts != null && studentShifts.size() > 0) {
@@ -55,7 +51,7 @@ public class DeleteShift extends Service {
             }
 
             // if the shift has summaries it can't be deleted
-            IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+            IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
             List summariesShift = persistentSummary.readByShift(shift.getDisciplinaExecucao()
                     .getIdInternal(), shift.getIdInternal());
             if (summariesShift != null && summariesShift.size() > 0) {
@@ -68,13 +64,13 @@ public class DeleteShift extends Service {
 
             for (final List<Lesson> lessons = shift.getAssociatedLessons();
                     !lessons.isEmpty();
-                    DeleteLessons.deleteLesson(sp, lessons.get(0)));
+                    DeleteLessons.deleteLesson(persistentSupport, lessons.get(0)));
 
             for (final List<SchoolClass> schoolClasses = shift.getAssociatedClasses();
                     !schoolClasses.isEmpty(); shift.removeAssociatedClasses(schoolClasses.get(0)));
 
             shift.setDisciplinaExecucao(null);
-            sp.getITurnoPersistente().deleteByOID(Shift.class, shift.getIdInternal());
+            persistentSupport.getITurnoPersistente().deleteByOID(Shift.class, shift.getIdInternal());
         }
     }
 

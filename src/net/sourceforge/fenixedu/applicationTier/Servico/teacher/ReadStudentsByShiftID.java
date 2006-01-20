@@ -14,10 +14,10 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadStudentsByShiftID extends Service {
 
     public List run(final Integer executionCourseID, final Integer shiftID) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final List infoStudents = new LinkedList();
-        final Shift shift = (Shift) sp.getITurnoPersistente().readByOID(Shift.class, shiftID);
+        final Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
         final List<Student> students = shift.getStudents();
         for (final Student student : students) {
             infoStudents.add(InfoStudent.newInfoFromDomain(student));

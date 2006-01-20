@@ -26,12 +26,12 @@ public class ReadUserCostCenters extends Service {
     public List run(String username, String costCenter, String userNumber) throws ExcepcaoPersistencia {
         List<InfoRubric> infoCostCenterList = new ArrayList<InfoRubric>();
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         List<IRubric> costCenterList = p.getIPersistentProjectUser().getInstitucionalProjectCoordId(new Integer(userNumber));
 
         costCenterList.addAll(p.getIPersistentProjectUser().getInstitucionalProjectByCCIDs(
-                persistentSuport.getIPersistentProjectAccess().readCCCodesByPersonUsernameAndDate(username)));
+                persistentSupport.getIPersistentProjectAccess().readCCCodesByPersonUsernameAndDate(username)));
 
         for (IRubric cc : costCenterList) {
             infoCostCenterList.add(InfoRubric.newInfoFromDomain(cc));

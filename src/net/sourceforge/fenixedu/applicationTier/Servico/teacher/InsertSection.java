@@ -19,9 +19,9 @@ public class InsertSection extends Service {
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, String sectionName,
             Integer sectionOrder) throws FenixServiceException, ExcepcaoPersistencia {
      
-        final ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentSite persistentSite = persistentSuport.getIPersistentSite();
-        final IPersistentSection persistentSection = persistentSuport.getIPersistentSection();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
+        final IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
         final Site site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 
         Section parentSection = null;

@@ -31,9 +31,9 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
 
         List executionDegrees = null;
         List result = new ArrayList();
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        executionDegrees = sp.getIPersistentExecutionDegree()
+        executionDegrees = persistentSupport.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlan(degreeCurricularPlanID);
 
         result = (List) CollectionUtils.collect(executionDegrees, new Transformer() {
@@ -53,9 +53,9 @@ public class ReadPublicExecutionDegreeByDCPID extends Service {
             throws ExcepcaoPersistencia {
 
         ExecutionDegree executionDegree = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        executionDegree = sp.getIPersistentExecutionDegree()
+        executionDegree = persistentSupport.getIPersistentExecutionDegree()
                 .readExecutionDegreesbyDegreeCurricularPlanIDAndExecutionYearID(degreeCurricularPlanID,
                         executionYearID);
 

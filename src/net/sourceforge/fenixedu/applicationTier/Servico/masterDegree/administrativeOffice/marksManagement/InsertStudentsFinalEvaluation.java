@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentEvaluation;
@@ -16,9 +17,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
@@ -30,11 +28,10 @@ public class InsertStudentsFinalEvaluation extends Service {
 
 		List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = sp
+		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
 				.getIPersistentEnrolmentEvaluation();
-		IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-		IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
 

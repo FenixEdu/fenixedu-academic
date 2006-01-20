@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoNonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -27,9 +25,7 @@ public class ReadNonAffiliatedTeachersByName extends Service {
     }
     
     public List run(String nameToSearch) throws ExcepcaoPersistencia{
-        
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentNonAffiliatedTeacher persistentNonAffiliatedTeacher = sp
+        IPersistentNonAffiliatedTeacher persistentNonAffiliatedTeacher = persistentSupport
                 .getIPersistentNonAffiliatedTeacher();
         
         String names[] = nameToSearch.split(" ");

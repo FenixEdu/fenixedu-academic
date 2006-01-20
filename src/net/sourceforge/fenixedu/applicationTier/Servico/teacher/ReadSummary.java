@@ -59,22 +59,22 @@ public class ReadSummary extends Service {
 
     public SiteView run(Integer executionCourseId, Integer summaryId, String userLogged)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");
         }
 
-        IPersistentSite persistentSite = sp.getIPersistentSite();
+        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site site = persistentSite.readByExecutionCourse(executionCourseId);
         if (site == null) {
             throw new FenixServiceException("no.site");
         }
 
-        ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         List shifts = persistentShift.readByExecutionCourse(executionCourse.getIdInternal());
         List infoShifts = new ArrayList();
         if (shifts != null && shifts.size() > 0) {
@@ -97,13 +97,13 @@ public class ReadSummary extends Service {
             });
         }
 
-        IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         List infoProfessorships = new ArrayList();
 
         // We present only the responsible teacher (by gedl)
 
         // teacher logged
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readTeacherByUsername(userLogged);
         if (teacher != null) {
             Professorship professorship = persistentProfessorship.readByTeacherAndExecutionCourse(
@@ -113,7 +113,7 @@ public class ReadSummary extends Service {
             }
         }
 
-        ISalaPersistente persistentRoom = sp.getISalaPersistente();
+        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         List<Room> rooms = persistentRoom.readAll();
         List<InfoRoom> infoRooms = new ArrayList(rooms.size());
         for (final Room room : rooms) {
@@ -124,7 +124,7 @@ public class ReadSummary extends Service {
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        IPersistentSummary persistentSummary = sp.getIPersistentSummary();
+        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
         Summary summary = (Summary) persistentSummary.readByOID(Summary.class, summaryId);
         if (summary == null) {
             throw new FenixServiceException("no.summary");

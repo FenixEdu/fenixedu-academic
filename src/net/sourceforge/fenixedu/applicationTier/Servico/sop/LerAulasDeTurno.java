@@ -28,8 +28,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class LerAulasDeTurno extends Service {
 
     public List run(ShiftKey shiftKey) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final ITurnoPersistente persistentShift = sp.getITurnoPersistente();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
         final Shift shift = persistentShift.readByNameAndExecutionCourse(shiftKey.getShiftName(), shiftKey
                 .getInfoExecutionCourse().getIdInternal());

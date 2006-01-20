@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class RemoveShifts extends Service {
 
     public Boolean run(final InfoClass infoClass, final List shiftOIDs) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class,
+        final SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
         final List<Shift> shifts = schoolClass.getAssociatedShifts();
 

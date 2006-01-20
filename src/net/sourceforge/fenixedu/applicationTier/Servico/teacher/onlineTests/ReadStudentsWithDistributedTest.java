@@ -24,14 +24,14 @@ public class ReadStudentsWithDistributedTest extends Service {
 
 	public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
 		List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-		ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		DistributedTest distributedTest = (DistributedTest) persistentSuport
+		DistributedTest distributedTest = (DistributedTest) persistentSupport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)
 			throw new FenixServiceException();
 
-		List<Student> studentList = persistentSuport.getIPersistentStudentTestQuestion()
+		List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion()
 				.readStudentsByDistributedTest(distributedTest.getIdInternal());
 
 		for (Student student : studentList)

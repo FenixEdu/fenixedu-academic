@@ -16,9 +16,9 @@ public class ReadExecutionCourseOIDByCodeInLatestPeriod extends Service {
 
     public Integer run(String executionCourseCode) throws ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
-        IPersistentExecutionPeriod executionPeriodDAO = sp.getIPersistentExecutionPeriod();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
+        IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
         ExecutionPeriod executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         ExecutionCourse executionCourse = executionCourseDAO

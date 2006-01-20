@@ -32,10 +32,10 @@ public class ReadReport extends Service {
             throws ExcepcaoPersistencia {
         InfoProjectReport infoReport = new InfoProjectReport();
         List<IReportLine> infoLines = new ArrayList<IReportLine>();
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         if (projectCode != null
-                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSuport.getIPersistentProjectAccess()
+                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSupport.getIPersistentProjectAccess()
                         .hasPersonProjectAccess(userView, projectCode))) {
             infoReport.setInfoProject(InfoProject.newInfoFromDomain(p.getIPersistentProject().readProject(projectCode)));
             if (reportType.equals(ReportType.REVENUE)) {

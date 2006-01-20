@@ -49,15 +49,15 @@ public class InsertDistributedTest extends Service {
             Calendar endHour, TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
             List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSuport.getIPersistentExecutionCourse();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
         DistributedTest distributedTest = DomainFactory.makeDistributedTest();
 
-        Test test = (Test) persistentSuport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
@@ -72,14 +72,14 @@ public class InsertDistributedTest extends Service {
         distributedTest.setImsFeedback(imsFeedback);
         distributedTest.setNumberOfQuestions(test.getTestQuestionsCount());
 
-        TestScope testScope = persistentSuport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
+        TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
             testScope = DomainFactory.makeTestScope(executionCourse);
         }
         distributedTest.setTestScope(testScope);
 
-        IPersistentTestQuestion persistentTestQuestion = persistentSuport.getIPersistentTestQuestion();
+        IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
 
         List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(testId);
 
@@ -88,7 +88,7 @@ public class InsertDistributedTest extends Service {
             questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
 
             for (InfoStudent infoStudent : infoStudentList) {
-                Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class, infoStudent.getIdInternal());
+                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, infoStudent.getIdInternal());
                 StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                 studentTestQuestion.setStudent(student);
                 studentTestQuestion.setDistributedTest(distributedTest);

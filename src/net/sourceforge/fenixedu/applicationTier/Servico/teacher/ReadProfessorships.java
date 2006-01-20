@@ -26,13 +26,13 @@ import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstractService {
 
     public List run(IUserView userView, Integer executionPeriodCode) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport;
-        persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport;
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentProfessorship persistentProfessorship = persistentSuport
+        IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        IPersistentTeacher teacherDAO = persistentSuport.getIPersistentTeacher();
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSuport
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
                 .getIPersistentExecutionPeriod();
 
         ExecutionPeriod executionPeriod = null;
@@ -72,7 +72,7 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         }
 
         List detailedProfessorshipList = getDetailedProfessorships(professorshipsList,
-                responsibleForsList, persistentSuport);
+                responsibleForsList, persistentSupport);
         return detailedProfessorshipList;
     }
 }

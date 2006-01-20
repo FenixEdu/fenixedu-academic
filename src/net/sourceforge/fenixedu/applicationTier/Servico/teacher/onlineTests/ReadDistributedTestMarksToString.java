@@ -36,10 +36,10 @@ public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, Integer distributedTestId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport;
+        ISuportePersistente persistentSupport;
 
-        persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        DistributedTest distributedTest = (DistributedTest) persistentSuport
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        DistributedTest distributedTest = (DistributedTest) persistentSupport
                 .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
@@ -52,13 +52,13 @@ public class ReadDistributedTestMarksToString extends Service {
             result.append("\t");
         }
         result.append("Nota");
-        List<StudentTestQuestion> studentTestQuestionList = persistentSuport
+        List<StudentTestQuestion> studentTestQuestionList = persistentSupport
                 .getIPersistentStudentTestQuestion().readByDistributedTest(
                         distributedTest.getIdInternal());
         if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
             throw new FenixServiceException();
         int questionIndex = 0;
-        Double maximumMark = persistentSuport.getIPersistentStudentTestQuestion()
+        Double maximumMark = persistentSupport.getIPersistentStudentTestQuestion()
                 .getMaximumDistributedTestMark(distributedTest.getIdInternal());
         if (maximumMark.doubleValue() > 0)
             result.append("\tNota (%)\n");
@@ -104,16 +104,16 @@ public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, String[] distributedTestCodes)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSuport;
+        ISuportePersistente persistentSupport;
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
-        persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSuport
+        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
                 .getIPersistentStudentTestQuestion();
-        IPersistentDistributedTest persistentDistributedTest = persistentSuport
+        IPersistentDistributedTest persistentDistributedTest = persistentSupport
                 .getIPersistentDistributedTest();
 
-        List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSuport
+        List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSupport
                 .getIFrequentaPersistente().readByExecutionCourse(executionCourseId), new Transformer() {
 
             public Object transform(Object input) {

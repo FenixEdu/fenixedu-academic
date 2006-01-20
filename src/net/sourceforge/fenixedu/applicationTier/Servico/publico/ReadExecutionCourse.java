@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionCourse extends Service {
 
     public Object run(InfoExecutionPeriod infoExecutionPeriod, String code) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentExecutionCourse executionCourseDAO = sp.getIPersistentExecutionCourse();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
         ExecutionCourse iExecCourse = executionCourseDAO
                 .readByExecutionCourseInitialsAndExecutionPeriodId(code, infoExecutionPeriod

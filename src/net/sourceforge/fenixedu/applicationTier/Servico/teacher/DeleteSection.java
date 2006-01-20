@@ -23,8 +23,8 @@ public class DeleteSection extends Service {
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSection persistentSection = sp.getIPersistentSection();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
 
         Section sectionToDelete = (Section) persistentSection.readByOID(Section.class, sectionCode);
 

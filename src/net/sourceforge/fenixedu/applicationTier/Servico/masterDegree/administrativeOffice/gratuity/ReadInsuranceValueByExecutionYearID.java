@@ -1,13 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.gratuity;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInsuranceValue;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -21,12 +19,10 @@ public class ReadInsuranceValueByExecutionYearID extends Service {
 
 		InfoInsuranceValue infoInsuranceValue = null;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		ExecutionYear executionYear = (ExecutionYear) sp.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear().readByOID(
 				ExecutionYear.class, executionYearID);
 
-		InsuranceValue insuranceValue = sp.getIPersistentInsuranceValue().readByExecutionYear(
+		InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue().readByExecutionYear(
 				executionYear.getIdInternal());
 
 		if (insuranceValue != null) {

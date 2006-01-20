@@ -23,11 +23,11 @@ public class DeleteClasses extends Service {
 
     public Object run(List classOIDs) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         for (int i = 0; i < classOIDs.size(); i++) {
             Integer classId = (Integer) classOIDs.get(i);
-            final SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(
+            final SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(
                     SchoolClass.class, classId);
 
             // Shift
@@ -47,7 +47,7 @@ public class DeleteClasses extends Service {
             schoolClass.getExecutionPeriod().getSchoolClasses().remove(schoolClass);
             schoolClass.setExecutionPeriod(null);
 
-            sp.getITurmaPersistente().deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
+            persistentSupport.getITurmaPersistente().deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
         }
 
         return new Boolean(true);

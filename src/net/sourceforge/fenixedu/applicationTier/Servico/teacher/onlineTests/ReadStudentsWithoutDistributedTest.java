@@ -24,9 +24,9 @@ public class ReadStudentsWithoutDistributedTest extends Service {
 
     public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        List<Attends> attendList = persistentSuport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
-        List<Student> studentList = persistentSuport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTestId);
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        List<Attends> attendList = persistentSupport.getIFrequentaPersistente().readByExecutionCourse(executionCourseId);
+        List<Student> studentList = persistentSupport.getIPersistentStudentTestQuestion().readStudentsByDistributedTest(distributedTestId);
         for (Attends attend : attendList) {
             if (!studentList.contains(attend.getAluno()))
                 infoStudentList.add(InfoStudentWithInfoPerson.newInfoFromDomain(attend.getAluno()));

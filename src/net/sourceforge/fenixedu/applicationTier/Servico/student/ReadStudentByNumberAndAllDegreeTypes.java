@@ -17,15 +17,15 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadStudentByNumberAndAllDegreeTypes extends Service {
 
     public Object run(Integer number) throws ExcepcaoPersistencia {
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         InfoStudent infoStudent = null;
 
-        Student student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+        Student student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
                 DegreeType.DEGREE);
 
         if (student == null) {
-            student = sp.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
+            student = persistentSupport.getIPersistentStudent().readStudentByNumberAndDegreeType(number,
                     DegreeType.MASTER_DEGREE);
         }
         if (student != null) {

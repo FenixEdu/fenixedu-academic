@@ -47,21 +47,21 @@ public class SearchExecutionCourses extends Service {
 
         List result = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) sp.getIPersistentExecutionPeriod()
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
         ExecutionDegree executionDegree = null;
 
         if (infoExecutionDegree != null) {
-            executionDegree = (ExecutionDegree) sp.getIPersistentExecutionDegree().readByOID(
+            executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree().readByOID(
                     ExecutionDegree.class, infoExecutionDegree.getIdInternal());
         }
 
         Integer curricularYearID = (infoCurricularYear != null) ? infoCurricularYear.getIdInternal()
                 : null;
 
-        List executionCourses = sp.getIPersistentExecutionCourse()
+        List executionCourses = persistentSupport.getIPersistentExecutionCourse()
                 .readByExecutionPeriodAndExecutionDegreeAndCurricularYearAndName(
                         executionPeriod.getIdInternal(),
                         executionDegree.getDegreeCurricularPlan().getIdInternal(), curricularYearID,
@@ -97,7 +97,7 @@ public class SearchExecutionCourses extends Service {
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
                 if (executionCourse.getAssociatedCurricularCourses() != null) {
-                    ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+                    ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
                     InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
                     int enrolledInCurricularCourse = 0;
@@ -108,7 +108,7 @@ public class SearchExecutionCourses extends Service {
                         CurricularCourse curricularCourse = (CurricularCourse) iter.next();
 
                         List enrolled = getEnrolled(executionCourse.getExecutionPeriod(),
-                                curricularCourse, sp);
+                                curricularCourse, persistentSupport);
                         if (enrolled != null) {
                             enrolledInCurricularCourse += enrolled.size();
                             evaluated += getEvaluated(enrolled).intValue();
@@ -121,7 +121,7 @@ public class SearchExecutionCourses extends Service {
 
                     infoExecutionCourse.setInfoSiteEvaluationStatistics(infoSiteEvaluationStatistics);
 
-                    IPersistentCourseReport persistentCourseReport = sp.getIPersistentCourseReport();
+                    IPersistentCourseReport persistentCourseReport = persistentSupport.getIPersistentCourseReport();
                     CourseReport courseReport = persistentCourseReport
                             .readCourseReportByExecutionCourse(executionCourse.getIdInternal());
                     if (courseReport != null) {
@@ -134,7 +134,7 @@ public class SearchExecutionCourses extends Service {
 
             /**
              * @param curricularCourses
-             * @param sp
+             * @param persistentSupport
              * @return
              */
             private Integer getApproved(List enrolments) {
@@ -165,9 +165,9 @@ public class SearchExecutionCourses extends Service {
             }
 
             private List getEnrolled(ExecutionPeriod executionPeriod,
-                    CurricularCourse curricularCourse, ISuportePersistente sp)
+                    CurricularCourse curricularCourse, ISuportePersistente persistentSupport)
                     throws ExcepcaoPersistencia {
-                IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
+                IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
                 List enrolments = persistentEnrolment.readByCurricularCourseAndExecutionPeriod(
                         curricularCourse.getIdInternal(), executionPeriod.getIdInternal());
                 return enrolments;
@@ -197,7 +197,7 @@ public class SearchExecutionCourses extends Service {
             private InfoExecutionCourse getOccupancyLevels(Object arg0) throws ExcepcaoPersistencia {
                 InfoExecutionCourse infoExecutionCourse;
                 // Get the associated Shifs
-                ISuportePersistente spTemp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+                ISuportePersistente persistentSupportTemp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
                 // FIXME: Find a better way to get the total
@@ -210,7 +210,7 @@ public class SearchExecutionCourses extends Service {
                 Integer doubtsCapacity = new Integer(0);
                 Integer reserveCapacity = new Integer(0);
 
-                List shifts = spTemp.getITurnoPersistente().readByExecutionCourse(
+                List shifts = persistentSupportTemp.getITurnoPersistente().readByExecutionCourse(
                         executionCourse.getIdInternal());
                 Iterator iterator = shifts.iterator();
                 while (iterator.hasNext()) {

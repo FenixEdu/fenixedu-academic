@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administra
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegreeWithInfoExecutionYearAndDegreeCurricularPlan;
@@ -24,11 +25,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:frnp@mega.ist.utl.pt">Francisco Paulo </a>
@@ -41,9 +39,8 @@ public class CreateMasterDegreeCandidate extends Service {
             String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType)
             throws Exception {
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
-        IPersistentMasterDegreeCandidate masterDegreeCandidateDAO = sp
+        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
+        IPersistentMasterDegreeCandidate masterDegreeCandidateDAO = persistentSupport
                 .getIPersistentMasterDegreeCandidate();
 
         // Read the Execution of this degree in the current execution Year
@@ -76,18 +73,18 @@ public class CreateMasterDegreeCandidate extends Service {
         masterDegreeCandidate.setExecutionDegree(executionDegree);
 
         // Generate the Candidate's number
-        Integer number = sp.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
+        Integer number = persistentSupport.getIPersistentMasterDegreeCandidate().generateCandidateNumber(
                 executionDegree.getExecutionYear().getYear(),
                 executionDegree.getDegreeCurricularPlan().getDegree().getSigla(), degreeType);
         masterDegreeCandidate.setCandidateNumber(number);
 
         // Check if the person Exists
-        Person person = sp.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
                 identificationDocumentNumber, identificationDocumentType);
 
-        List<Person> persons = (List<Person>) sp.getIPessoaPersistente().readAll(Person.class);
+        List<Person> persons = (List<Person>) persistentSupport.getIPessoaPersistente().readAll(Person.class);
 
-        Role personRole = sp.getIPersistentRole().readByRoleType(RoleType.PERSON);
+        Role personRole = persistentSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
 
         if (person == null) {
             // Create the new Person
@@ -122,7 +119,7 @@ public class CreateMasterDegreeCandidate extends Service {
         }
 
         if (!person.hasRole(RoleType.MASTER_DEGREE_CANDIDATE)) {
-            person.addPersonRoles(sp.getIPersistentRole().readByRoleType(
+            person.addPersonRoles(persistentSupport.getIPersistentRole().readByRoleType(
                     RoleType.MASTER_DEGREE_CANDIDATE));
         }
         masterDegreeCandidate.setPerson(person);

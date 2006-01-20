@@ -27,8 +27,8 @@ public class ReadOldInquiryTeachersResById extends Service {
 		if (internalId == null) {
 			throw new FenixServiceException("nullInternalId");
 		}
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentOldInquiriesTeachersRes poits = sp.getIPersistentOldInquiriesTeachersRes();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentOldInquiriesTeachersRes poits = persistentSupport.getIPersistentOldInquiriesTeachersRes();
 
 		OldInquiriesTeachersRes oits = poits.readByInternalId(internalId);
 

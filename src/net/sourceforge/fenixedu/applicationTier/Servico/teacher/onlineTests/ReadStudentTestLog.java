@@ -26,20 +26,20 @@ public class ReadStudentTestLog extends Service {
 
 	public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSuport;
+		ISuportePersistente persistentSupport;
 		List infoStudentTestLogList = new ArrayList();
-		persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		Student student = (Student) persistentSuport.getIPersistentStudent().readByOID(Student.class,
+		persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
 				studentId);
 		if (student == null) {
 			throw new FenixServiceException();
 		}
-		DistributedTest distributedTest = (DistributedTest) persistentSuport
+		DistributedTest distributedTest = (DistributedTest) persistentSupport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null) {
 			throw new FenixServiceException();
 		}
-		List<StudentTestLog> studentTestLogList = persistentSuport.getIPersistentStudentTestLog()
+		List<StudentTestLog> studentTestLogList = persistentSupport.getIPersistentStudentTestLog()
 				.readByStudentAndDistributedTest(student, distributedTest);
 
 		for (StudentTestLog studentTestLog : studentTestLogList) {

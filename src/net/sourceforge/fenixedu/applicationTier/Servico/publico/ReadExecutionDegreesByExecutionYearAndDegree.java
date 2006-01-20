@@ -29,8 +29,8 @@ public class ReadExecutionDegreesByExecutionYearAndDegree extends Service {
 			ExcepcaoPersistencia {
         List infoExecutionDegrees = new ArrayList();
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
             List executionDegrees = executionDegreeDAO.readByDegreeAndExecutionYear(curso
                     .getIdInternal(), year.getYear(), CurricularStage.OLD);

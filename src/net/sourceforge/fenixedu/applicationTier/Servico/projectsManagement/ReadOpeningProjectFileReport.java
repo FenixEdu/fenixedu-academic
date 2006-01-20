@@ -24,12 +24,12 @@ public class ReadOpeningProjectFileReport extends Service {
 
     public InfoOpeningProjectFileReport run(String userView, String costCenter, Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         InfoOpeningProjectFileReport infoOpeningProjectFileReport = new InfoOpeningProjectFileReport();
         if (userNumber != null
                 && projectCode != null
-                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSuport.getIPersistentProjectAccess()
+                && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSupport.getIPersistentProjectAccess()
                         .hasPersonProjectAccess(userView, projectCode))) {
 
             IPersistentOpeningProjectFileReport persistentOpeningProjectFile = p.getIPersistentOpeningProjectFileReport();

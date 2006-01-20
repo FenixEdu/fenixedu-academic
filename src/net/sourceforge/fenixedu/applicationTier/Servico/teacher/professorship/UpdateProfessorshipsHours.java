@@ -25,8 +25,8 @@ public class UpdateProfessorshipsHours extends Service {
     public Boolean run(Integer teacherId, Integer executionYearId, final HashMap hours)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentProfessorship professorshipDAO = sp.getIPersistentProfessorship();
+            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+            IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
            
             Iterator entries = hours.entrySet().iterator();
             while (entries.hasNext()) {

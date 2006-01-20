@@ -21,8 +21,8 @@ public class LerTurma extends Service {
     public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final SchoolClass turma = sp.getITurmaPersistente()
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final SchoolClass turma = persistentSupport.getITurmaPersistente()
                 .readByNameAndExecutionDegreeAndExecutionPeriod(className,
                         infoExecutionDegree.getIdInternal(), infoExecutionPeriod.getIdInternal());
 

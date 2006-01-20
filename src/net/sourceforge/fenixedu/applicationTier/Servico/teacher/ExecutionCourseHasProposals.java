@@ -22,9 +22,9 @@ public class ExecutionCourseHasProposals extends Service {
 		boolean result = false;
 		IPersistentExecutionCourse persistentExecutionCourse = null;
 
-		ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-		persistentExecutionCourse = ps.getIPersistentExecutionCourse();
+		persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
 		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
 				ExecutionCourse.class, executionCourseCode);

@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.guide;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.GuideSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -14,15 +12,12 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteGuideSituationInManager extends Service {
 
     public void run(Integer guideSituationID) throws ExcepcaoPersistencia {
-
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        GuideSituation guideSituation = (GuideSituation) sp.getIPersistentObject().readByOID(
+        GuideSituation guideSituation = (GuideSituation) persistentSupport.getIPersistentObject().readByOID(
                 GuideSituation.class, guideSituationID);
 
         guideSituation.removeGuide();
 
-        sp.getIPersistentObject().deleteByOID(GuideSituation.class, guideSituationID);
+        persistentSupport.getIPersistentObject().deleteByOID(GuideSituation.class, guideSituationID);
 
     }
 

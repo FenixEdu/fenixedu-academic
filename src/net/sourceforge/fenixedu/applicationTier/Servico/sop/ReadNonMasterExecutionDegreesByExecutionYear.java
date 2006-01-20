@@ -37,18 +37,18 @@ public class ReadNonMasterExecutionDegreesByExecutionYear extends Service {
 
         List infoExecutionDegreeList = null;
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         String yearToSearch;
         if (infoExecutionYear.getYear() == null || infoExecutionYear.getYear().length() == 0) {
-            IPersistentExecutionYear executionYearDAO = sp.getIPersistentExecutionYear();
+            IPersistentExecutionYear executionYearDAO = persistentSupport.getIPersistentExecutionYear();
             ExecutionYear executionYear = executionYearDAO.readCurrentExecutionYear();
             yearToSearch = executionYear.getYear();
         } else {
             yearToSearch = infoExecutionYear.getYear();
         }
 
-        IPersistentExecutionDegree executionDegreeDAO = sp.getIPersistentExecutionDegree();
+        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
         List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(yearToSearch,
                 DegreeType.DEGREE);
 

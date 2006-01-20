@@ -9,17 +9,15 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -28,22 +26,19 @@ public class ChooseGuideByPersonID extends Service {
 
 	public List run(Integer personID) throws Exception {
 
-		ISuportePersistente sp = null;
+		ISuportePersistente persistentSupport = null;
 		List guides = null;
 		Person person = null;
 
 		// Check if person exists
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		person = (Person) sp.getIPessoaPersistente().readByOID(Person.class, personID);
+		person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class, personID);
 
 		if (person == null) {
 			throw new NonExistingServiceException();
 		}
 
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		guides = sp.getIPersistentGuide().readByPerson(person.getNumeroDocumentoIdentificacao(),
+		guides = persistentSupport.getIPersistentGuide().readByPerson(person.getNumeroDocumentoIdentificacao(),
 				person.getIdDocumentType());
 
 		BeanComparator numberComparator = new BeanComparator("number");

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -17,10 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 10/07/2003
@@ -30,12 +28,10 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 
 	public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView)
 			throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
-		IPersistentEnrollment persistentEnrolment = sp.getIPersistentEnrolment();
-		IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
-		IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
+		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
+		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 
 		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 		Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());

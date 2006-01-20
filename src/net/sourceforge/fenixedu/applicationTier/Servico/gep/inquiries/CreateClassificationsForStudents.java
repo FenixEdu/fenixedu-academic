@@ -115,19 +115,19 @@ public class CreateClassificationsForStudents extends Service {
         Arrays.sort(approvationRatioLimits);
         Arrays.sort(arithmeticMeanLimits);
 
-        HashMap<Character, List<Student>> splitedStudentsByEntryGrade = splitStudentsByClassification(
+        HashMap<Character, List<Student>> splitedStudentsByEntryGrade = persistentSupportlitStudentsByClassification(
                 entryGradeLimits, firstYearStudents, "entryGrade", getEntryGradeTransformer,
                 setEntryGradeClosure);
         ByteArrayOutputStream entryGradeStream = studentsRenderer(splitedStudentsByEntryGrade,
                 getEntryGradeTransformer);
 
-        HashMap<Character, List<Student>> splitedStudentsByApprovationRatio = splitStudentsByClassification(
+        HashMap<Character, List<Student>> persistentSupportlitedStudentsByApprovationRatio = persistentSupportlitStudentsByClassification(
                 approvationRatioLimits, otherYearsStudents, "approvationRatio",
                 getApprovationRatioTransformer, setApprovationRatioClosure);
         ByteArrayOutputStream approvationRatioStream = studentsRenderer(
-                splitedStudentsByApprovationRatio, getApprovationRatioTransformer);
+                persistentSupportlitedStudentsByApprovationRatio, getApprovationRatioTransformer);
 
-        HashMap<Character, List<Student>> splitedStudentsByArithmeticMean = splitStudentsByClassification(
+        HashMap<Character, List<Student>> splitedStudentsByArithmeticMean = persistentSupportlitStudentsByClassification(
                 arithmeticMeanLimits, otherYearsStudents, "arithmeticMean",
                 getArithmeticMeanTransformer, setArithmeticMeanClosure);
         ByteArrayOutputStream arithmeticMeanStream = studentsRenderer(splitedStudentsByArithmeticMean,
@@ -137,7 +137,7 @@ public class CreateClassificationsForStudents extends Service {
 
     }
 
-    private HashMap<Character, List<Student>> splitStudentsByClassification(Integer[] limits,
+    private HashMap<Character, List<Student>> persistentSupportlitStudentsByClassification(Integer[] limits,
             List<Student> students, String field, Transformer fieldGetter, Closure fieldSetter) {
         HashMap<Character, List<Student>> studentsClassifications = new HashMap<Character, List<Student>>(
                 limits.length);

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -7,9 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 28/10/2003
@@ -25,8 +23,7 @@ public class EndCurricularCourseScope extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentCurricularCourseScope persistentCurricularCourseScope = ps
+        final IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
                 .getIPersistentCurricularCourseScope();
         CurricularCourseScope oldCurricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope
                 .readByOID(CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal());

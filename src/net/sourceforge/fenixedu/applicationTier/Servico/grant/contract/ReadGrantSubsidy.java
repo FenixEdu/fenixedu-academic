@@ -30,7 +30,7 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
 		return GrantSubsidy.class;
 	}
 
-	protected IPersistentObject getIPersistentObject(ISuportePersistente sp) {
+	protected IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport) {
 		return persistentSupport.getIPersistentGrantSubsidy();
 	}
 

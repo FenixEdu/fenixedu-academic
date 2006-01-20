@@ -22,8 +22,8 @@ public class VerifyIfGroupPropertiesHasProjectProposal extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		boolean result = true;
 
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExportGrouping persistentExportGrouping = sp.getIPersistentExportGrouping();
+		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
 		ExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(
 				groupPropertiesId, executionCourseId);
 		if (groupPropertiesExecutionCourse == null) {

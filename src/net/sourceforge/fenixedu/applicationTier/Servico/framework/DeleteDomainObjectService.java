@@ -30,7 +30,7 @@ public abstract class DeleteDomainObjectService extends Service {
 
 	/**
 	 * @param domainObject
-	 * @param sp
+	 * @param persistentSupport
 	 */
 	protected void doBeforeDelete(DomainObject domainObject) throws Exception {
 	}
@@ -61,10 +61,10 @@ public abstract class DeleteDomainObjectService extends Service {
 	protected abstract Class getDomainObjectClass();
 
 	/**
-	 * @param sp
+	 * @param persistentSupport
 	 * @return
 	 */
-	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente sp)
+	protected abstract IPersistentObject getIPersistentObject(ISuportePersistente persistentSupport)
 			throws ExcepcaoPersistencia;
 
 	protected abstract void deleteDomainObject(DomainObject domainObject);

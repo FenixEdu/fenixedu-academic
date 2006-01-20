@@ -24,9 +24,9 @@ public class WriteDislocatedStudentAnswer extends Service {
 
     public void run(Integer studentID, Integer countryID, Integer dislocatedCountryID, Integer districtID) throws ExcepcaoPersistencia{
         
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentCountry persistentCountry = sp.getIPersistentCountry();
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        IPersistentCountry persistentCountry = persistentSupport.getIPersistentCountry();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         
         Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
         Country country = (Country) persistentCountry.readByOID(Country.class, countryID);
@@ -34,7 +34,7 @@ public class WriteDislocatedStudentAnswer extends Service {
         if(dislocatedCountryID != null){
             dislocatedCountry = (Country) persistentCountry.readByOID(Country.class, dislocatedCountryID);
         }
-        District district = (District) sp.getIPersistentObject().readByOID(District.class, districtID);
+        District district = (District) persistentSupport.getIPersistentObject().readByOID(District.class, districtID);
         
         DislocatedStudent dislocatedStudent = DomainFactory.makeDislocatedStudent();
         dislocatedStudent.setStudent(student);

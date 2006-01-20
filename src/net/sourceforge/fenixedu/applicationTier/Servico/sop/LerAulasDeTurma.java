@@ -38,9 +38,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class LerAulasDeTurma extends Service {
 
     public List run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         
-        SchoolClass schoolClass = (SchoolClass) sp.getITurmaPersistente().readByOID(SchoolClass.class, infoClass.getIdInternal());
+        SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class, infoClass.getIdInternal());
         
         final List<Shift> shiftList = schoolClass.getAssociatedShifts();
 
