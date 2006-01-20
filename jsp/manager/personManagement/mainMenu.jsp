@@ -41,3 +41,11 @@
 		<bean:message bundle="MANAGER_RESOURCES" key="link.functions.management"/>
 	</html:link>		
 </strong></p>
+
+<!-- 
+<p><strong>&raquo;
+	<html:link module="/manager" page="/mergePersons.do?method=prepare">
+		<bean:message bundle="MANAGER_RESOURCES" key="label.manager.mergePersons" />
+	</html:link>
+</strong></p>
+ -->
