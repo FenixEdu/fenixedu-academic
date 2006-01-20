@@ -6,16 +6,17 @@
 
 <script language="JavaScript">
 function check(e,v)
-{
+{	
+	var contextPath = '<%= request.getContextPath() %>';	
 	if (e.style.display == "none")
 	  {
 	  e.style.display = "";
-	  v.src = "/ciapl/images/toggle_minus10.gif";
+	  v.src = contextPath + '/images/toggle_minus10.gif';
 	  }
 	else
 	  {
 	  e.style.display = "none";
-	  v.src = "/ciapl/images/toggle_plus10.gif";
+	  v.src = contextPath + '/images/toggle_plus10.gif';
 	  }
 }
 </script>
