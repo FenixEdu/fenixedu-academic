@@ -9107,7 +9107,7 @@
 		</filterChains>				
 	</service>
 	<!--######################################-->
-    <service>
+	<service>
 		<name>AuthenticationExpired</name>
 		<implementationClass>
 			net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateExpiredKerberos
@@ -9308,7 +9308,7 @@
         </filterChains>     
     </service>
     <service>
-	    <name>ComputeCompetenceCourseStatistics</name>
+    <name>ComputeCompetenceCourseStatistics</name>
         <implementationClass> net.sourceforge.fenixedu.applicationTier.Servico.department.ComputeCompetenceCourseStatistics</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
@@ -9525,4 +9525,22 @@
         <isTransactional>true</isTransactional>  
         <filterChains></filterChains>     
     </service>	
+	<service>
+   	 	<name>TransferDomainObjectProperty</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.TransferDomainObjectProperty</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+	<service>
+   	 	<name>DeletePersonByOID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DeletePersonByOID</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
 </serviceDefinitions>    
