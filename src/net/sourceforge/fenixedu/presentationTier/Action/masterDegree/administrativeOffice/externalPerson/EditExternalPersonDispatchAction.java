@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -122,7 +123,7 @@ public class EditExternalPersonDispatchAction extends DispatchAction {
         IUserView userView = SessionUtils.getUserView(request);
 
         DynaActionForm editExternalPersonForm = (DynaActionForm) form;
-
+               
         Integer externalPersonId = (Integer) editExternalPersonForm.get("externalPersonID");
         String name = (String) editExternalPersonForm.get("name");
         Integer institutionID = (Integer) editExternalPersonForm.get("institutionID");
@@ -143,6 +144,11 @@ public class EditExternalPersonDispatchAction extends DispatchAction {
         } catch (FenixServiceException e) {
             getInstitutions(request);
             throw new FenixActionException(e.getMessage(), mapping.findForward("start"));
+        } catch (DomainException e){
+            ActionErrors actionErrors = new ActionErrors();
+            actionErrors.add("error", new ActionError(e.getMessage()));
+            saveErrors(request, actionErrors);              
+            return mapping.findForward("error");
         }
 
         return mapping.findForward("success");

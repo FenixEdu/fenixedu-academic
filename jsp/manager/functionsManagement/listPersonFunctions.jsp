@@ -29,7 +29,7 @@
 		<h:outputText styleClass="error" rendered="#{!empty managerFunctionsManagementBackingBean.errorMessage}"
 				value="#{bundle[managerFunctionsManagementBackingBean.errorMessage]}" escape="false"/>		
 					
-		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}<h3/>" escape="false" />
+		<h:outputText value="<br/><br/><h3>#{bundle['label.active.functions']}</h3>" escape="false" />
 	
 		<h:dataTable value="#{managerFunctionsManagementBackingBean.activeFunctions}" var="person_function"
 			 headerClass="listClasses-header" columnClasses="listClasses" rendered="#{!empty managerFunctionsManagementBackingBean.activeFunctions}">

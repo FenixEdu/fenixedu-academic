@@ -62,6 +62,7 @@ public class InfoCourseReport extends InfoObject {
         if (courseReport != null) {
             setLastModificationDate(courseReport.getLastModificationDate());
             setReport(courseReport.getReport());
+            setInfoExecutionCourse(InfoExecutionCourse.newInfoFromDomain(courseReport.getExecutionCourse()));
         }
     }
 

@@ -40,11 +40,14 @@ public class ExternalPerson extends ExternalPerson_Base {
      * PRIVATE METHODS *
      **************************************************************************/
 
-    private boolean externalPersonsAlreadyExists(String name, String address,
-            Institution institution, List<ExternalPerson> allExternalPersons) {
+    private boolean externalPersonsAlreadyExists(String name, String address, Institution institution,
+            List<ExternalPerson> allExternalPersons) {
         for (ExternalPerson externalPerson : allExternalPersons) {
-            if (externalPerson.getPerson().getNome().equals(name)
-                    && externalPerson.getPerson().getMorada().equals(address)
+            Person person = externalPerson.getPerson();
+            if (((person.getNome() != null && person.getNome().equals(name)) || ((person.getNome() == null || person.getNome()
+                    .equals("")) && name.equals("")))
+                    && ((person.getMorada() != null && person.getMorada().equals(address)) || ((person
+                            .getMorada() == null || person.getMorada().equals("")) && address.equals("")))
                     && externalPerson.getInstitution().equals(institution)
                     && !externalPerson.equals(this))
 

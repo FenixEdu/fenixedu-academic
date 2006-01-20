@@ -5,12 +5,13 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.gesdis;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.gep.ReadCoursesInformation;
@@ -62,13 +63,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
+import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
  * @author Leonor Almeida
@@ -81,7 +81,7 @@ public class ReadCourseInformation extends Service {
             ExcepcaoPersistencia {
         TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView();
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
+        ISuportePersistente sp = persistentSupport;
         IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
 
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
@@ -228,12 +228,7 @@ public class ReadCourseInformation extends Service {
 
         List infoSiteEvaluationsHistory = new ArrayList();
 
-        SortedSet<ExecutionPeriod> executionPeriods = new TreeSet(new Comparator<ExecutionPeriod>() {
-            public int compare(ExecutionPeriod executionPeriod1, ExecutionPeriod executionPeriod2) {
-                return executionPeriod1.getExecutionYear().getYear().compareTo(
-                        executionPeriod2.getExecutionYear().getYear());
-            }
-        });
+        Set<ExecutionPeriod> executionPeriods = new HashSet<ExecutionPeriod>();
 
         for (Iterator executionCourseIter = curricularCourse.getAssociatedExecutionCourses().iterator(); executionCourseIter
                 .hasNext();) {
@@ -264,6 +259,8 @@ public class ReadCourseInformation extends Service {
             infoSiteEvaluationsHistory.add(infoSiteEvaluationStatistics);
         }
 
+        Collections.sort(infoSiteEvaluationsHistory, new ReverseComparator(new BeanComparator("infoExecutionPeriod.infoExecutionYear.year")));
+        
         return infoSiteEvaluationsHistory;
     }
 

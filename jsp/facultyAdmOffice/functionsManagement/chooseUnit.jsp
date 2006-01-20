@@ -3,24 +3,24 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 
-<script language="JavaScript">
-function check(e,v)
-{	
-	var contextPath = '<%= request.getContextPath() %>';	
-	if (e.style.display == "none")
-	  {
-	  e.style.display = "";
-	  v.src = contextPath + '/images/toggle_minus10.gif';
-	  }
-	else
-	  {
-	  e.style.display = "none";
-	  v.src = contextPath + '/images/toggle_plus10.gif';
-	  }
-}
-</script>
-
 <ft:tilesView definition="facultyAdmOffice.masterPage" attributeName="body-inline">
+
+	<script language="JavaScript">
+	function check(e,v)
+	{	
+		var contextPath = '<%= request.getContextPath() %>';	
+		if (e.style.display == "none")
+		  {
+		  e.style.display = "";
+		  v.src = contextPath + '/images/toggle_minus10.gif';
+		  }
+		else
+		  {
+		  e.style.display = "none";
+		  v.src = contextPath + '/images/toggle_plus10.gif';
+		  }
+	}
+	</script>
 
 	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
 	
