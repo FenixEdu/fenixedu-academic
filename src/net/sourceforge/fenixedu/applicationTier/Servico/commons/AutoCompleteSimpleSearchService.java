@@ -8,9 +8,6 @@ import java.util.Map;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.beanutils.BeanUtils;
@@ -22,10 +19,6 @@ import sun.text.Normalizer;
 public class AutoCompleteSimpleSearchService extends Service {
 
     public List run(Map<String, String> arguments) throws ExcepcaoPersistencia, FenixServiceException {
-
-        final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentObject persistentObject = sp.getIPersistentObject();
-
         final Class clazz;
         String className = arguments.get("class");
         try {

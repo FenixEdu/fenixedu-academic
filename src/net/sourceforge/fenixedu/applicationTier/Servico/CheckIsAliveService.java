@@ -4,18 +4,15 @@ import java.io.IOException;
 import java.util.Properties;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 import org.apache.log4j.Logger;
 import org.apache.slide.common.SlideException;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CheckIsAliveService extends Service {
 
@@ -64,9 +61,7 @@ public class CheckIsAliveService extends Service {
     }
 
     private void checkFenixDatabaseOps() throws ExcepcaoPersistencia {
-        final ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPersistentExecutionYear persistentExecutionYear = persistenceSupport
+        final IPersistentExecutionYear persistentExecutionYear = persistentSupport
                 .getIPersistentExecutionYear();
 
         final ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();

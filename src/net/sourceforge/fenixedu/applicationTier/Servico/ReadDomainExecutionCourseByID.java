@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
@@ -20,11 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadDomainExecutionCourseByID extends Service {
     public ExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 
-        ExecutionCourse executionCourse = null;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse().readByOID(
-                ExecutionCourse.class, idInternal);
-
+        ExecutionCourse executionCourse = (ExecutionCourse)
+        		persistentObject.readByOID(ExecutionCourse.class, idInternal);
         if (executionCourse == null) {
             throw new NonExistingServiceException();
         }

@@ -24,8 +24,6 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -123,9 +121,7 @@ public class Authenticate extends Service {
     public IUserView run(final String username, final String password, final String requestURL)
             throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
 
-        final ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPessoaPersistente persistentPerson = persistenceSupport.getIPessoaPersistente();
+        final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         final Person person = persistentPerson.lerPessoaPorUsername(username);
         if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
