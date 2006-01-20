@@ -72,12 +72,12 @@ public class CourseGroup extends CourseGroup_Base {
         return result;
     }
 
-    public Double computeEctsCredits() {
+    public Double getEctsCredits() {
         Double result = 0.0;
         
         for (Context context : this.getCourseGroupContexts()) {
-            if (context.getDegreeModule() != null && context.getDegreeModule().computeEctsCredits() != null) {
-                result += context.getDegreeModule().computeEctsCredits();    
+            if (context.getDegreeModule() != null && context.getDegreeModule().getEctsCredits() != null) {
+                result += context.getDegreeModule().getEctsCredits();    
             }
         }
         

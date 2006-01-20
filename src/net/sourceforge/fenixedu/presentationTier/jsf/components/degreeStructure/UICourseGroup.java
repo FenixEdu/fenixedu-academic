@@ -176,7 +176,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("class", "aright highlight01", null);
         writer.writeAttribute("width", "73px", null);
         writer.append(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", "credits")).append(" ");
-        writer.append(this.degreeModule.computeEctsCredits().toString());
+        writer.append(this.degreeModule.getEctsCredits().toString());
         writer.endElement("td");        
         if (this.toEdit) {
             writer.startElement("td", this);

@@ -56,7 +56,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
         return (hasAnyDegreeModuleContexts()) ? getDegreeModuleContexts().get(0).getCourseGroup() : null;
     }
 
-    public abstract Double computeEctsCredits();
+    public abstract Double getEctsCredits();
 
     public abstract void print(StringBuilder stringBuffer, String tabs, Context previousContext);
 

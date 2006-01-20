@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
-import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan";
@@ -82,38 +82,97 @@ public class UIDegreeCurricularPlan extends UIInput {
             writer.startElement("td", this);
             writer.writeAttribute("align", "center", null);
             writer.startElement("i", this);
-            writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "empty.curricularPlan"));
+            writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources",
+                    "empty.curricularPlan"));
             writer.endElement("i");
             writer.endElement("td");
             writer.endElement("tr");
             writer.endElement("table");
         } else {
-        int maxYears = 1;
-        if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.DEGREE)) {
-            maxYears = 3;
-        } else if (dcp.getDegree().getBolonhaDegreeType().equals(BolonhaDegreeType.MASTER_DEGREE)) {
-            maxYears = 2;
-        } else if (dcp.getDegree().getBolonhaDegreeType().equals(
-                BolonhaDegreeType.INTEGRATED_MASTER_DEGREE)) {
-            maxYears = 5;
-        }
+//            int maxYears = dcp.getDegree().getBolonhaDegreeType().getYears();
+//
+//            List<CurricularCourse> dcpCurricularCourses = dcp.getDcpCurricularCourses();
+//            for (int year = 1; year <= maxYears; year++) {
+//                List<CurricularCourse> anualCurricularCourses = collectCurrentYearCurricularCoursesBySemester(
+//                        year, 0, dcpCurricularCourses);
+//                if (!anualCurricularCourses.isEmpty()) {
+//                    encodeSemesterTable(year, 0, anualCurricularCourses);
+//                }
+//                encodeSemesterTable(year, 1, collectCurrentYearCurricularCoursesBySemester(year, 1,
+//                        dcpCurricularCourses));
+//                encodeSemesterTable(year, 2, collectCurrentYearCurricularCoursesBySemester(year, 2,
+//                        dcpCurricularCourses));
+//            }
 
-        List<CurricularCourse> dcpCurricularCourses = dcp.getDcpCurricularCourses();
-        for (int year = 1; year <= maxYears; year++) {
-            List<CurricularCourse> anualCurricularCourses = collectCurrentYearCurricularCoursesBySemester(
-                    year, 0, dcpCurricularCourses);
-            if (!anualCurricularCourses.isEmpty()) {
-                encodeSemesterTable(year, 0, anualCurricularCourses);
+            CurricularPeriod degreeStructure = dcp.getDegreeStructure();
+            for (CurricularPeriod child : degreeStructure.getChilds()) {
+                encodePeriodTable(child);
             }
-            encodeSemesterTable(year, 1, collectCurrentYearCurricularCoursesBySemester(year, 1,
-                    dcpCurricularCourses));
-            encodeSemesterTable(year, 2, collectCurrentYearCurricularCoursesBySemester(year, 2,
-                    dcpCurricularCourses));
+        }
+    }
+
+    private void encodePeriodTable(CurricularPeriod curricularPeriod) throws IOException {
+        if (curricularPeriod.hasAnyChilds()) {
+            for (CurricularPeriod child : curricularPeriod.getChilds()) {
+                encodePeriodTable(child);    
+            }
+        } else {
+            writer.startElement("table", this);
+            writer.writeAttribute("class", "showinfo1 sp thleft", null);
+            writer.writeAttribute("style", "width: 60em;", null);
+
+            encodeHeader(curricularPeriod.getFullLabel());
+            if (curricularPeriod.hasAnyContexts()) {
+                double totalCredits = encodeCurricularCourses(curricularPeriod.getContexts());
+                encodeTotalCreditsFooter(totalCredits);
+            } else {
+                encodeEmptySemesterInfo();
+            }
+            
+            writer.endElement("table");
+        }
+    }
+    
+    private double encodeCurricularCourses(List<Context> contexts) throws IOException {
+        double totalCredits = 0.0;
+        for (Context context : contexts) {
+            DegreeModule degreeModule = context.getDegreeModule();
+            if (degreeModule instanceof CurricularCourse) {
+                totalCredits += ((CurricularCourse) degreeModule).getEctsCredits();
+                new UICurricularCourse((CurricularCourse) degreeModule, this.toEdit, context).encodeBegin(facesContext);
+            }
+        }
+        
+        return totalCredits;
+    }
+
+    private void encodeHeader(String label) throws IOException {
+        writer.startElement("tr", this);
+
+        writer.startElement("th", this);
+        writer.writeAttribute("class", "bgcolor2", null);
+        writer.startElement("strong", this);
+        writer.append(label);
+        writer.endElement("strong");
+        writer.endElement("th");
+
+        if (this.toEdit) {
+            encodeCourseGroupOptions();
         }
 
+        writer.endElement("tr");
     }
+    
+    private void encodeCourseGroupOptions() throws IOException {
+        writer.startElement("th", this);
+        writer.writeAttribute("class", "aleft", null);
+        writer.writeAttribute("width", "73px", null);
+        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID="
+                + this.facesContext.getExternalContext().getRequestParameterMap().get(
+                        "degreeCurricularPlanID"), "create.curricular.course");
+        writer.endElement("th");
     }
-
+    
     private List<CurricularCourse> collectCurrentYearCurricularCoursesBySemester(int year, int semester,
             List<CurricularCourse> dcpCurricularCourses) {
         List<CurricularCourse> currentYearCurricularCoursesBySemester = new ArrayList<CurricularCourse>();
@@ -135,16 +194,13 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("table", this);
         writer.writeAttribute("class", "style2", null);
         encodeHeader(year, semester);
-        double totalCredits = 0.0;
         if (currentSemesterCurricularCourses.size() > 0) {
-            totalCredits = encodeCurricularCourses(semester, currentSemesterCurricularCourses);
+            double totalCredits = encodeCurricularCourses(semester, currentSemesterCurricularCourses);
+            encodeTotalCreditsFooter(totalCredits);
         } else {
             encodeEmptySemesterInfo();
         }
 
-        if (currentSemesterCurricularCourses.size() > 0) {
-            encodeTotalCreditsFooter(totalCredits);
-        }
         writer.endElement("table");
     }
 
@@ -176,11 +232,10 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("th", this);
         writer.writeAttribute("class", "aleft", null);
         writer.writeAttribute("width", "73px", null);
-        encodeLink(
-                "createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap().get("degreeCurricularPlanID")
-                + "&curricularYearID=" + year
-                + "&curricularSemesterID=" + semester,
-                "create.curricular.course");
+        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID="
+                + this.facesContext.getExternalContext().getRequestParameterMap().get(
+                        "degreeCurricularPlanID") + "&curricularYearID=" + year
+                + "&curricularSemesterID=" + semester, "create.curricular.course");
         writer.endElement("th");
     }
 
@@ -192,7 +247,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             for (Context ccContext : cc.getDegreeModuleContexts()) {
                 if ((((CurricularPeriod) ccContext.getCurricularPeriod())
                         .getOrderByType(CurricularPeriodType.SEMESTER) == semester)) {
-                    totalCredits += cc.computeEctsCredits();
+                    totalCredits += cc.getEctsCredits();
                     new UICurricularCourse(cc, this.toEdit, ccContext).encodeBegin(facesContext);
                 }
             }

@@ -368,10 +368,11 @@ public class CurricularCourse extends CurricularCourse_Base {
         return latestCurriculum;
     }
     
-    public Double computeEctsCredits() {
+    @Override
+    public Double getEctsCredits() {
         Double result = 0.0;        
-        if (this.getEctsCredits() != null) {
-            result = this.getEctsCredits();
+        if (super.getEctsCredits() != null) {
+            result = super.getEctsCredits();
         } else if (this.getCompetenceCourse() != null) {
             result = this.getCompetenceCourse().getEctsCredits();
         }       

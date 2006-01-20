@@ -88,7 +88,7 @@ public class UICurricularCourse extends UIDegreeModule {
         
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
-        writer.append(((CurricularCourse)this.degreeModule).computeEctsCredits().toString());
+        writer.append(((CurricularCourse)this.degreeModule).getEctsCredits().toString());
         writer.endElement("td");
         
         if (this.toEdit) {
