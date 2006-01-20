@@ -63,14 +63,15 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
 
         if (getId() == null) {
-            return viewState.getId() == null;
+            if (viewState.getId() != null) {
+                return false;
+            }
         }
-
-        if (viewState.getId() == null) {
+        else if (! getId().equals(viewState.getId())) {
             return false;
-        } else {
-            return viewState.getId().equals(getId());
         }
+        
+        return getInputDestination().equals(viewState.getInputDestination());
     }
 
     @Override
@@ -149,11 +150,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
         return response.encodeURL(actionMappingURL);
     }
 
-    protected String getSubmitPath() {
-        // TODO: make this configurable 
-        return TagUtils.getInstance().getActionMappingURL("editObject", pageContext);
-    }
-
     protected IViewState getViewState() {
         return (IViewState) pageContext.findAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
     }
@@ -175,10 +171,10 @@ public class EditObjectTag extends BaseRenderObjectTag {
             MetaObject metaObject = MetaObjectFactory.createObject(targetObject, schema);
             viewState.setMetaObject(metaObject);
             
+            viewState.setInputDestination(getInputDestination());
+
             String currentPath = getCurrentPath();
-    
             ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
-            viewState.setInputDestination(new ViewDestination(currentPath, module.getPrefix(), false));
     
             for (String name : this.destinations.keySet()) {
                 ViewDestination destination = this.destinations.get(name);
@@ -190,6 +186,13 @@ public class EditObjectTag extends BaseRenderObjectTag {
         return viewState;
     }
 
+    protected ViewDestination getInputDestination() {
+        String currentPath = getCurrentPath();
+        ModuleConfig module = TagUtils.getInstance().getModuleConfig(pageContext);
+        
+        return new ViewDestination(currentPath, module.getPrefix(), false);       
+    }
+    
     protected String getCurrentPath() {
         ActionMapping mapping = (ActionMapping) pageContext.findAttribute(Globals.MAPPING_KEY);
         String currentPath = TagUtils.getInstance().getActionMappingURL(mapping.getPath(), pageContext);
@@ -203,6 +206,11 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
         if (module != null && currentPath.startsWith(module.getPrefix())) {
             currentPath = currentPath.substring(module.getPrefix().length());
+        }
+        
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+        if (request.getQueryString() != null) {
+            currentPath = currentPath + "?" + request.getQueryString();
         }
         
         return currentPath;

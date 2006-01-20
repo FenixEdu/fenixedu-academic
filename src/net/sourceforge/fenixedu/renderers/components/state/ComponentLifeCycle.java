@@ -75,6 +75,10 @@ public class ComponentLifeCycle {
             destination = viewState.getDestination(viewState.isValid() ? "success" : "invalid");
         }
         
+        if (destination == null && !viewState.isValid()) {
+            destination = viewState.getInputDestination();
+        }
+        
         return destination;
     }
 

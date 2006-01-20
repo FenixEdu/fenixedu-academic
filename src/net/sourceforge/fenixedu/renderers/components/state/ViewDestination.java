@@ -39,4 +39,32 @@ public class ViewDestination implements Serializable {
     public void setRedirect(boolean redirect) {
         this.redirect = redirect;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (! (other instanceof ViewDestination)) {
+            return false;
+        }
+
+        ViewDestination otherDestination = (ViewDestination) other;
+
+        if (getPath() != null && ! getPath().equals(otherDestination.getPath())) {
+            return false;
+        }
+        
+        if (getModule() != null && ! getModule().equals(otherDestination.getModule())) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        String path = getPath();
+        String module = getModule();
+        
+        return (path != null ? path.hashCode() : 0) + (module != null ? module.hashCode() : 0); 
+    }
+    
 }

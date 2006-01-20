@@ -1839,19 +1839,11 @@
       <set-property property="pathnames" 
 		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-manager.xml"/>
 	</plug-in>
-	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-definitions.xml,/WEB-INF/tiles/manager/tiles-manager-pages-definitions.xml" />
 		<set-property property="moduleAware" value="true" />
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>    
-
-    <plug-in className="net.sourceforge.fenixedu.renderers.plugin.RenderersPlugin">
-      <set-property property="config" value="/WEB-INF/fenix-renderers-config.xml"/>
-      <set-property property="schemas" value="/WEB-INF/fenix-renderers-schemas.xml"/>
-      <set-property property="metaObjectFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"/>
-      <set-property property="userIdentityFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory"/>
-      <set-property property="schemaFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"/>
-    </plug-in>
 
 </struts-config>
