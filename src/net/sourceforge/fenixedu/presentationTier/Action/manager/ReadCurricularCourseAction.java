@@ -71,7 +71,7 @@ public class ReadCurricularCourseAction extends FenixAction {
         List curricularCourseScopes = new ArrayList();
         try {
             curricularCourseScopes = (List) ServiceUtils.executeService(userView,
-                    "ReadActiveCurricularCourseScopes", args);
+                    "ReadInterminatedCurricularCourseScopes", args);
 
         } catch (FenixServiceException e) {
             throw new FenixActionException(e);

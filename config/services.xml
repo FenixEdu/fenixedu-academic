@@ -1226,9 +1226,9 @@
 		<filterChains />
 	</service>
 	<service>
-		<name>ReadActiveCurricularCourseScopes</name>
+		<name>ReadInterminatedCurricularCourseScopes</name>
 		<implementationClass> 
-            net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadActiveCurricularCourseScopes</implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadInterminatedCurricularCourseScopes</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>

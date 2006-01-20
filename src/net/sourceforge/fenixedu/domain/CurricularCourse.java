@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -104,6 +105,17 @@ public class CurricularCourse extends CurricularCourse_Base {
         return getMandatory().booleanValue();
     }
 
+    public List<CurricularCourseScope> getInterminatedScopes() {
+        List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
+        for (CurricularCourseScope curricularCourseScope : this.getScopes()) {
+            if (curricularCourseScope.getEndDate() == null) {
+                result.add(curricularCourseScope);
+            }
+        }
+        
+        return result;
+    }
+    
     public List<CurricularCourseScope> getActiveScopesInExecutionPeriod(
             final ExecutionPeriod executionPeriod) {
         final List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
@@ -474,5 +486,6 @@ public class CurricularCourse extends CurricularCourse_Base {
             return this.getCompetenceCourse().isBasic();
         }
         return super.getBasic();
-    }    
+    }
+    
 }
