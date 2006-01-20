@@ -1,25 +1,15 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.person;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class GenerateNewPasswordService extends Service {
 
 	public String run(Integer personID) throws Exception {
-		ISuportePersistente sp;
-		Person person;
-
-		sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPessoaPersistente personDAO = sp.getIPessoaPersistente();
-
-		person = (Person) personDAO.readByOID(Person.class, personID);
-
+		Person person = (Person) persistentObject.readByOID(Person.class, personID);
 		if (person == null) {
 			throw new ExcepcaoInexistente("Unknown Person!");
 		}
