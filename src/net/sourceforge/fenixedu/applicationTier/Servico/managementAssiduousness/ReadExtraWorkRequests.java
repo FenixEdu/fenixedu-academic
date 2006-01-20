@@ -6,18 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.managementAssiduousness
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoExtraWorkRequestsWithAll;
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author T�nia Pous�o
@@ -29,13 +26,8 @@ public class ReadExtraWorkRequests extends Service {
 			String costCenterCodeMoney) throws Exception {
 		List infoExtraWorkRequestsListAfter = null;
 		List extraWorkRequestsList = null;
-		ISuportePersistente sp;
 
-		sp = SuportePersistenteOJB.getInstance();
-
-		// Read employee logged
-		IPersistentCostCenter costCenterDAO = sp.getIPersistentCostCenter();
-
+		IPersistentCostCenter costCenterDAO = persistentSupport.getIPersistentCostCenter();
 		CostCenter costCenter = costCenterDAO.readCostCenterByCode(costCenterCode);
 		if (costCenter == null) {
 			// TODO
@@ -45,7 +37,7 @@ public class ReadExtraWorkRequests extends Service {
 		if (costCenterMoney == null) {
 			// TODO
 		}
-		IPersistentExtraWorkRequests extraWorkRequestsDAO = sp.getIPersistentExtraWorkRequests();
+		IPersistentExtraWorkRequests extraWorkRequestsDAO = persistentSupport.getIPersistentExtraWorkRequests();
 		extraWorkRequestsList = extraWorkRequestsDAO.readExtraWorkRequestBetweenDaysAndByCC(beginDate,
 				endDate, costCenter.getIdInternal(), costCenterMoney.getIdInternal());
 		if (extraWorkRequestsList != null && extraWorkRequestsList.size() > 0) {
