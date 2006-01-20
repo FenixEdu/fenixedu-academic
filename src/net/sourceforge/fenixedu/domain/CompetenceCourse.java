@@ -191,7 +191,11 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
     
     public double getEctsCredits() {
-        return getRecentCompetenceCourseInformation().getEctsCredits();
+        double result = 0.0;
+        if (getRecentCompetenceCourseInformation() != null) {
+            result = getRecentCompetenceCourseInformation().getEctsCredits();
+        }
+        return result;
     }
     
     public Map<Degree, List<CurricularCourse>> getAssociatedCurricularCoursesGroupedByDegree() {
