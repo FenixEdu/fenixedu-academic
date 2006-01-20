@@ -8,8 +8,6 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
 
     private String type;
 
-    private Boolean disabled;
-
     private String alternateText;
 
     private Integer tabIndex;
@@ -22,7 +20,6 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
         super();
         
         this.type = type;
-        this.disabled = false;
     }
 
     public String getAccessKey() {
@@ -39,14 +36,6 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
 
     public void setAlternateText(String alternateText) {
         this.alternateText = alternateText;
-    }
-
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
     }
 
     public int getTabIndex() {
@@ -84,9 +73,11 @@ public class HtmlInputComponent extends HtmlSimpleValueComponent {
         tag.setName("input");
         
         tag.setAttribute("type", this.type);
-        if (this.disabled) {
-            tag.setAttribute("disabled", this.disabled);
+        
+        if (isDisabled()) {
+            tag.setAttribute("disabled", true);
         }
+
         tag.setAttribute("alt", this.alternateText);
         tag.setAttribute("tabindex", this.tabIndex);
         tag.setAttribute("accesskey", this.accessKey);

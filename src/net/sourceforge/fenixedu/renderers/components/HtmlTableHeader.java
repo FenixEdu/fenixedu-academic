@@ -27,6 +27,10 @@ public class HtmlTableHeader extends HtmlComponent {
         return new ArrayList<HtmlComponent>(rows);
     }
 
+    public List<HtmlTableRow> getRows() {
+        return this.rows;
+    }
+    
     @Override
     public HtmlTag getOwnTag(PageContext context) {
         HtmlTag tag = super.getOwnTag(context);

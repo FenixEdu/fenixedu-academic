@@ -87,27 +87,30 @@ public class CollectionRenderer extends OutputRenderer {
     
     @Override
     protected Layout getLayout(Object object, Class type) {
-        String schemaName = getContext().getMetaObject().getSchema();
-        Schema schema = RenderKit.getInstance().findSchema(schemaName);
-        
-        List<MetaObject> metaObjects = new ArrayList<MetaObject>();
-        
-        Collection collection = (Collection) object;
-        for (Iterator iter = collection.iterator(); iter.hasNext();) {
-            Object collectionObject = (Object) iter.next();
-            
-            metaObjects.add(MetaObjectFactory.createObject(collectionObject, schema));
-        }
-        
-        return new CollectionTabularLayout(metaObjects);
+        return new CollectionTabularLayout((Collection) object);
     }
     
-    class CollectionTabularLayout extends TabularLayout {
+    public class CollectionTabularLayout extends TabularLayout {
 
         List<MetaObject> metaObjects;
 
-        public CollectionTabularLayout(List<MetaObject> metaObjects) {
-            this.metaObjects = metaObjects;
+        public CollectionTabularLayout(Collection object) {
+            this.metaObjects = getMetaObjects(object);
+        }
+
+        private List<MetaObject> getMetaObjects(Collection collection) {
+            String schemaName = getContext().getMetaObject().getSchema();
+            Schema schema = RenderKit.getInstance().findSchema(schemaName);
+            
+            List<MetaObject> metaObjects = new ArrayList<MetaObject>();
+            
+            for (Iterator iter = collection.iterator(); iter.hasNext();) {
+                Object collectionObject = (Object) iter.next();
+                
+                metaObjects.add(MetaObjectFactory.createObject(collectionObject, schema));
+            }
+            
+            return metaObjects;
         }
 
         @Override
@@ -131,7 +134,7 @@ public class CollectionRenderer extends OutputRenderer {
             return this.metaObjects.size();
         }
 
-        private MetaObject getObject(int index) {
+        protected MetaObject getObject(int index) {
             return this.metaObjects.get(index);
         }
         

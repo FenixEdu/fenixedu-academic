@@ -147,7 +147,9 @@ public class HtmlTableCell extends HtmlComponent {
     public List<HtmlComponent> getChildren() {
         List<HtmlComponent> children = new ArrayList<HtmlComponent>(super.getChildren());
         
-        children.add(getBody());
+        if (getBody() != null) {
+            children.add(getBody());
+        }
         
         return children;
     }

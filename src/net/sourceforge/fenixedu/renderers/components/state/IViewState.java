@@ -6,6 +6,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 
@@ -67,14 +68,24 @@ public interface IViewState extends Serializable {
 
     public void setProperties(Properties properties);
 
+    public void setContext(PresentationContext context);
+
+    public PresentationContext getContext();
+
     public Class getContextClass();
 
     public void setContextClass(Class contextClass);
 
+    public void setLocalAttribute(String name, Object value);
+    
     public void setAttribute(String name, Object value);
 
+    public Object getLocalAttribute(String name);
+    
     public Object getAttribute(String name);
 
+    public void removeLocalAttribute(String name);
+    
     public void removeAttribute(String name);
 
 }

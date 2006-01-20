@@ -27,6 +27,7 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
         super();
         
         this.name = getNewName();
+        this.disabled = false;
     }
 
     public String getName() {

@@ -19,6 +19,8 @@ public abstract class TabularLayout extends Layout {
 
     private String headerClasses;
 
+    private HtmlTable table;
+    
     public void setCaption(String caption) {
         this.caption = caption;
     }
@@ -35,6 +37,14 @@ public abstract class TabularLayout extends Layout {
         this.rowClasses = rowClasses;
     }
 
+    public HtmlTable getTable() {
+        return this.table;
+    }
+
+    public void setTable(HtmlTable table) {
+        this.table = table;
+    }
+
     @Override
     public String[] getPropertyNames() {
         return mergePropertyNames(super.getPropertyNames(), new String[] { "caption", "rowClasses",
@@ -44,6 +54,7 @@ public abstract class TabularLayout extends Layout {
     @Override
     public HtmlComponent createComponent(Object object, Class type) {
         HtmlTable table = new HtmlTable();
+        setTable(table);
 
         int rowNumber = getNumberOfRows();
         int columnNumber = getNumberOfColumns();

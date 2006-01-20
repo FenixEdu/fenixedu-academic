@@ -12,6 +12,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 
@@ -25,6 +26,8 @@ public class ViewState implements IViewState {
 
     private Properties properties;
 
+    private transient PresentationContext context;
+    
     private Class contextClass;
 
     private Map<String, Object> attributes;
@@ -192,6 +195,18 @@ public class ViewState implements IViewState {
         this.contextClass = contextClass;
     }
 
+    public void setLocalAttribute(String name, Object value) {
+        setAttribute(name, value);
+    }
+
+    public Object getLocalAttribute(String name) {
+        return getAttribute(name);
+    }
+
+    public void removeLocalAttribute(String name) {
+        removeAttribute(name);
+    }
+
     public void setAttribute(String name, Object value) {
         this.attributes.put(name, value);
     }
@@ -226,5 +241,17 @@ public class ViewState implements IViewState {
         ObjectInputStream stream = new ObjectInputStream(byteInputStream);
 
         return (IViewState) stream.readObject();
+    }
+
+    public void setContext(PresentationContext context) {
+        this.context = context;
+        
+        if (this.context != null) {
+            setContextClass(this.context.getClass());
+        }
+    }
+
+    public PresentationContext getContext() {
+        return this.context;
     }
 }

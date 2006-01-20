@@ -138,8 +138,14 @@ public class HtmlTable extends HtmlComponent {
             tag.addChild(header.getOwnTag(context));
         }
         
-        for (HtmlTableRow row : this.rows) {
-            tag.addChild(row.getOwnTag(context));
+        if (this.rows.size() >= 0) {
+            for (HtmlTableRow row : this.rows) {
+                tag.addChild(row.getOwnTag(context));
+            }
+        }
+        else {
+            HtmlTag innerTag = new HtmlTag("tbody");
+            tag.addChild(innerTag);
         }
         
         return tag;

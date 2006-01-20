@@ -85,15 +85,24 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
     @Override
     protected PresentationContext createPresentationContext(Object object, String layout, String schema, Properties properties) {
-        InputContext context = new InputContext();
+        IViewState viewState = createViewState(object);
 
-        context.setLayout(layout);
-        context.setProperties(properties);
-
-        IViewState viewState = createViewState(object, context);
-        context.setViewState(viewState);
-        
-        return context;
+        if (viewState.getContext() != null) {
+            return viewState.getContext();
+        }
+        else {
+            InputContext context = new InputContext();
+    
+            context.setLayout(layout);
+            context.setProperties(properties);
+    
+            viewState.setContextClass(context.getClass());
+            viewState.setContext(context);
+            
+            context.setViewState(viewState);
+            
+            return context;
+        }
     }
 
     @Override
@@ -149,7 +158,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
         return (IViewState) pageContext.findAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
     }
     
-    protected IViewState createViewState(Object targetObject, PresentationContext context) {
+    protected IViewState createViewState(Object targetObject) {
         IViewState viewState;
 
         if (isPostBack()) {
@@ -160,7 +169,6 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
             viewState.setLayout(getLayout());
             viewState.setProperties(getRenderProperties());
-            viewState.setContextClass(context.getClass());
             viewState.setRequest((HttpServletRequest) pageContext.getRequest());
             
             Schema schema = RenderKit.getInstance().findSchema(getSchema());

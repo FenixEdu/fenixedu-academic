@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlForm;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.ViewStateWrapper;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
+import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
 import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 import net.sourceforge.fenixedu.renderers.utils.RenderMode;
@@ -14,6 +15,8 @@ public class InputContext extends PresentationContext {
 
     public InputContext() {
         super();
+        
+        setRenderMode(RenderMode.getMode("input"));
     }
 
     protected InputContext(InputContext parent) {
@@ -25,16 +28,18 @@ public class InputContext extends PresentationContext {
         IViewState viewState = super.getViewState();
         
         if (getMetaObject() instanceof MetaSlot) {
-            return new ViewStateWrapper(viewState, getMetaObject().getKey().toString());
+            MetaObjectKey key = getMetaObject().getKey();
+            
+            if (key != null) {
+                return new ViewStateWrapper(viewState, key.toString());
+            }
+            else {
+                return viewState;
+            }
         }
         else {
             return viewState;
         }
-    }
-
-    @Override
-    public RenderMode getRenderMode() {
-        return RenderMode.getMode("input");
     }
 
     protected UserIdentity getUser() {
@@ -58,10 +63,13 @@ public class InputContext extends PresentationContext {
     public InputContext createSubContext(MetaObject metaObject) {
         InputContext context = new InputContext(this);
         
+        // TODO: check this and compare with the version in OutputContext
         context.setLayout(getLayout());
         context.setMetaObject(metaObject);
         context.setProperties(metaObject.getProperties());
-        
+
+        context.setRenderMode(getRenderMode());
+
         return context;
     }
 }

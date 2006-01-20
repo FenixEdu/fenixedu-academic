@@ -7,15 +7,12 @@ public class OutputContext extends PresentationContext {
 
     public OutputContext() {
         super();
+        
+        setRenderMode(RenderMode.getMode("output"));
     }
     
     protected OutputContext(OutputContext parent) {
         super(parent);
-    }
-
-    @Override
-    public RenderMode getRenderMode() {
-        return RenderMode.getMode("output");
     }
 
     @Override
@@ -25,6 +22,8 @@ public class OutputContext extends PresentationContext {
         //context.setLayout(getLayout());
         context.setMetaObject(metaObject);
         //context.setProperties(metaObject.getProperties());
+        
+        context.setRenderMode(getRenderMode());
         
         return context;
     }

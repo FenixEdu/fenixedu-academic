@@ -101,7 +101,14 @@ public class ComponentLifeCycle {
 
     private void runControllers(ComponentCollector collector, IViewState viewState) {
         for (HtmlController controller : collector.getControllers()) {
-            controller.execute(viewState);
+            HtmlFormComponent formComponent = (HtmlFormComponent) controller.getControlledComponent();
+            
+            if (formComponent != null) {
+                controller.execute(new ViewStateWrapper(viewState, formComponent.getName()));
+            }
+            else {
+                controller.execute(viewState);
+            }
         }
     }
 
@@ -128,6 +135,7 @@ public class ComponentLifeCycle {
 
         Object object = viewState.getMetaObject().getObject();
         viewState.setComponent(RenderKit.getInstance().render(context, object));
+        viewState.setContext(context);
 
         return viewState.getComponent();
     }
@@ -146,7 +154,7 @@ public class ComponentLifeCycle {
                 }
 
                 ((HtmlMultipleValueComponent) formComponent).setValues(values);
-            } else {
+            } else if (formComponent instanceof HtmlSimpleValueComponent) {
                 String value = editRequest.getParameter(name);
 
                 ((HtmlSimpleValueComponent) formComponent).setValue(value);

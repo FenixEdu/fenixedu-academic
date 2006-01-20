@@ -5,6 +5,7 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 
@@ -20,15 +21,27 @@ public class ViewStateWrapper implements IViewState {
     }
 
     public Object getAttribute(String name) {
-        return viewState.getAttribute(attributesPrefix + name);
+        return this.viewState.getAttribute(name);
     }
 
     public void removeAttribute(String name) {
-        viewState.removeAttribute(attributesPrefix + name);
+        viewState.removeAttribute(name);
     }
 
     public void setAttribute(String name, Object value) {
+        this.viewState.setAttribute(name, value);
+    }
+
+    public void setLocalAttribute(String name, Object value) {
         viewState.setAttribute(attributesPrefix + name, value);
+    }
+
+    public Object getLocalAttribute(String name) {
+        return viewState.getAttribute(attributesPrefix + name);
+    }
+
+    public void removeLocalAttribute(String name) {
+        viewState.removeAttribute(attributesPrefix + name);
     }
 
     public String getId() {
@@ -149,5 +162,13 @@ public class ViewStateWrapper implements IViewState {
 
     public MetaObject getMetaObject() {
         return viewState.getMetaObject();
+    }
+
+    public void setContext(PresentationContext context) {
+        this.viewState.setContext(context);
+    }
+
+    public PresentationContext getContext() {
+        return this.viewState.getContext();
     }
 }

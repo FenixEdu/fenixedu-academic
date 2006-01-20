@@ -15,17 +15,25 @@ public abstract class HtmlComponent implements Serializable {
 
     private boolean visible;
     
+    // %core
     private String id;
-    
     private String classes;
-    
     private String style;
-    
     private String title;
     
     // TODO: %i18n
     
-    // TODO: %events
+    // %event
+    private String onClick;
+    private String onDblClick;
+    private String onMouseDown;
+    private String onMouseUp;
+    private String onMouseOver;
+    private String onMouseMove;
+    private String onMouseOut;
+    private String onKeyPress;
+    private String onKeyDown;
+    private String onKeyUp;
     
     public HtmlComponent() {
         this.visible = true;
@@ -75,6 +83,86 @@ public abstract class HtmlComponent implements Serializable {
         this.visible = visible;
     }
 
+    public String getOnClick() {
+        return this.onClick;
+    }
+
+    public void setOnClick(String onclick) {
+        this.onClick = onclick;
+    }
+
+    public String getOnDblClick() {
+        return this.onDblClick;
+    }
+
+    public void setOnDblClick(String ondblclick) {
+        this.onDblClick = ondblclick;
+    }
+
+    public String getOnKeyDown() {
+        return this.onKeyDown;
+    }
+
+    public void setOnKeyDown(String onkeydown) {
+        this.onKeyDown = onkeydown;
+    }
+
+    public String getOnKeyPress() {
+        return this.onKeyPress;
+    }
+
+    public void setOnKeyPress(String onkeypress) {
+        this.onKeyPress = onkeypress;
+    }
+
+    public String getOnKeyUp() {
+        return this.onKeyUp;
+    }
+
+    public void setOnKeyUp(String onkeyup) {
+        this.onKeyUp = onkeyup;
+    }
+
+    public String getOnMouseDown() {
+        return this.onMouseDown;
+    }
+
+    public void setOnMouseDown(String onmousedown) {
+        this.onMouseDown = onmousedown;
+    }
+
+    public String getOnMouseMove() {
+        return this.onMouseMove;
+    }
+
+    public void setOnMouseMove(String onmousemove) {
+        this.onMouseMove = onmousemove;
+    }
+
+    public String getOnMouseOut() {
+        return this.onMouseOut;
+    }
+
+    public void setOnMouseOut(String onmouseout) {
+        this.onMouseOut = onmouseout;
+    }
+
+    public String getOnMouseOver() {
+        return this.onMouseOver;
+    }
+
+    public void setOnMouseOver(String onmouseover) {
+        this.onMouseOver = onmouseover;
+    }
+
+    public String getOnMouseUp() {
+        return this.onMouseUp;
+    }
+
+    public void setOnMouseUp(String onmouseup) {
+        this.onMouseUp = onmouseup;
+    }
+
     public List<HtmlComponent> getChildren() {
         return new ArrayList<HtmlComponent>();
     }
@@ -91,6 +179,17 @@ public abstract class HtmlComponent implements Serializable {
         tag.setAttribute("class", getClasses());
         tag.setAttribute("style", getStyle());
         tag.setAttribute("title", getTitle());
+        
+        tag.setAttribute("onclick", getOnClick());;
+        tag.setAttribute("ondblclick", getOnDblClick());;
+        tag.setAttribute("onmousedown", getOnMouseDown());;
+        tag.setAttribute("onmouseup", getOnMouseUp());;
+        tag.setAttribute("onmouseover", getOnMouseOver());;
+        tag.setAttribute("onmousemove", getOnMouseMove());;
+        tag.setAttribute("onmouseout", getOnMouseOut());;
+        tag.setAttribute("onkeypress", getOnKeyPress());;
+        tag.setAttribute("onkeydown", getOnKeyDown());;
+        tag.setAttribute("onkeyup", getOnKeyUp());;
         
         tag.setVisible(isVisible());
         

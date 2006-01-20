@@ -80,6 +80,8 @@
 
     <!-- input -->
   
+    <renderer mode="input" type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
+
     <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
