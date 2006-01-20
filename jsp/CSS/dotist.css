@@ -15,8 +15,6 @@ body {
 	font-size: 71%;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	}
-table { font-size: 100%; }
-table table { font-size: 100%; }
 
 .center { text-align: center; }
 .left { text-align: left; }
@@ -280,6 +278,10 @@ a:hover {
 /*****************************************************************
 	TABLE Classes: Info TD + Info TD with Icons + ListClasses
 ******************************************************************/
+
+table { line-height: 1.0em; }
+table { font-size: 100%; }
+table table { font-size: 100%; }
 
 .infoop {
 	background-color: #EBECED;
