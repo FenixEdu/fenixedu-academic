@@ -12,6 +12,7 @@ import java.util.Locale;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
+import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ClassTimeTableWithoutLinksLessonContentRenderer;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers.ShiftEnrollmentTimeTableLessonContentRenderer;
 
 import org.apache.struts.Globals;
@@ -71,7 +72,7 @@ public class TimeTableRenderer {
 
         for (int hourIndex = 0; hourIndex < timeTable.getNumberOfHours().intValue(); hourIndex++) {
             strBuffer.append("<tr>\r\n");
-            strBuffer.append("<td width='15%' class='period-hours'>");
+            strBuffer.append("<td class='period-hours'>");
             strBuffer.append(getHourLabelByIndex(hourIndex)).append("</td>\r\n");
 
             /* iterate over days */
@@ -145,6 +146,12 @@ public class TimeTableRenderer {
                                 strBuffer.append(lessonSlotContentRendererShift
                                         .lastRender(infoLessonWrapperHashMap.getLessonSlot()));
                             } else {
+                                if (infoLessonWrapper != null
+                                        && this.lessonSlotContentRenderer instanceof ClassTimeTableWithoutLinksLessonContentRenderer) {
+                                    strBuffer.append(this.lessonSlotContentRenderer.render(infoLessonWrapper
+                                            .getLessonSlot()));
+                                }
+
                                 strBuffer.append("&nbsp;");
                             }
                         }
@@ -242,7 +249,7 @@ public class TimeTableRenderer {
             hourDaysTitle = "???label.timesAndDays???";
         }
 
-        strBuffer.append("<th width='15%'>");
+        strBuffer.append("<th>");
         strBuffer.append(hourDaysTitle);
         strBuffer.append("</th>\r\n");
 

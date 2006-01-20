@@ -21,27 +21,39 @@ public class ClassTimeTableWithoutLinksLessonContentRenderer implements LessonSl
      */
     public StringBuilder render(LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
-        // InfoLesson lesson =
-        // lessonSlot.getInfoLessonWrapper().getInfoLesson();
         InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 
         if (showOccupation instanceof InfoLesson) {
             InfoLesson lesson = (InfoLesson) showOccupation;
-
-            strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
-            strBuffer.append("&nbsp;");
-            List infoShiftList = lesson.getInfoShiftList();
-            for (int index = 0; index < infoShiftList.size(); index++) {
-                strBuffer.append("&nbsp;(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+            if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
+                strBuffer.append(lesson.getInfoShift().getInfoDisciplinaExecucao().getSigla());
             }
 
-            strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+            if (lessonSlot.isSinleSlot()) {
+                strBuffer.append("<br/>");
+            }
 
-            // TODO(rspl): Will it stay like this the interface for showing
-            // it is a quinzenal lesson?
-            if (lesson.getInfoRoomOccupation().getFrequency() != null
-                    && lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
-                strBuffer.append("&nbsp;&nbsp;[Q]");
+            if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
+                
+                List infoShiftList = lesson.getInfoShiftList();
+                for (int index = 0; index < infoShiftList.size(); index++) {
+                    strBuffer.append("(").append(lesson.getTipo().getSiglaTipoAula()).append(")&nbsp;");
+                }
+
+                strBuffer.append(lesson.getInfoRoomOccupation().getInfoRoom().getNome());
+
+                if (lesson.getInfoRoomOccupation().getFrequency() != null
+                        && lesson.getInfoRoomOccupation().getFrequency().intValue() == RoomOccupation.QUINZENAL) {
+                    strBuffer.append("&nbsp;&nbsp;[Q]");
+                }
+            }
+
+            if (lessonSlot.isSinleSlot() || (lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended() && !lessonSlot.getInfoLessonWrapper().isSecondRowAlreadyAppended())) {
+                lessonSlot.getInfoLessonWrapper().setSecondRowAlreadyAppended(true);
+            }
+
+            if (lessonSlot.isSinleSlot() || !lessonSlot.getInfoLessonWrapper().isFirstRowAlreadyAppended()) {
+                lessonSlot.getInfoLessonWrapper().setFirstRowAlreadyAppended(true);
             }
         } else if (showOccupation instanceof InfoExam) {
             InfoExam infoExam = (InfoExam) showOccupation;
