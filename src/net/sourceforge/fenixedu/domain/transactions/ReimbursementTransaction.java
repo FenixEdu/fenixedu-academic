@@ -42,5 +42,6 @@ public class ReimbursementTransaction extends ReimbursementTransaction_Base {
 		setResponsiblePerson(responsiblePerson);
 		setPersonAccount(personAccount);
         setReimbursementGuideEntry(reimbursementGuideEntry);
+        setOjbConcreteClass(getClass().getName());
     }
 }
