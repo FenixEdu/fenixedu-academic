@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import relations.PersonRole;
+
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePassword;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -185,7 +187,7 @@ public class Person extends Person_Base {
 
     public Student getStudentByType(DegreeType degreeType) {
         for (Student student : this.getStudents()) {
-            if (student.getDegreeType().equals(degreeType)){
+            if (student.getDegreeType().equals(degreeType)) {
                 return student;
             }
         }
@@ -219,7 +221,8 @@ public class Person extends Person_Base {
         setDistritoNaturalidade(infoPerson.getDistritoNaturalidade());
         setEmail(infoPerson.getEmail());
         setEnderecoWeb(infoPerson.getEnderecoWeb());
-        setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson.getMaritalStatus());
+        setMaritalStatus((infoPerson.getMaritalStatus() == null) ? MaritalStatus.UNKNOWN : infoPerson
+                .getMaritalStatus());
         setFreguesiaMorada(infoPerson.getFreguesiaMorada());
         setFreguesiaNaturalidade(infoPerson.getFreguesiaNaturalidade());
         setLocalEmissaoDocumentoIdentificacao(infoPerson.getLocalEmissaoDocumentoIdentificacao());
@@ -250,39 +253,56 @@ public class Person extends Person_Base {
     private void updateProperties(InfoPerson infoPerson) {
 
         setNome(valueToUpdateIfNewNotNull(getNome(), infoPerson.getNome()));
-        setNumeroDocumentoIdentificacao(valueToUpdateIfNewNotNull(getNumeroDocumentoIdentificacao(), infoPerson.getNumeroDocumentoIdentificacao()));
+        setNumeroDocumentoIdentificacao(valueToUpdateIfNewNotNull(getNumeroDocumentoIdentificacao(),
+                infoPerson.getNumeroDocumentoIdentificacao()));
         setIdDocumentType((IDDocumentType) valueToUpdateIfNewNotNull(getIdDocumentType(), infoPerson
                 .getTipoDocumentoIdentificacao()));
         setCodigoFiscal(valueToUpdateIfNewNotNull(getCodigoFiscal(), infoPerson.getCodigoFiscal()));
         setCodigoPostal(valueToUpdateIfNewNotNull(getCodigoPostal(), infoPerson.getCodigoPostal()));
         setConcelhoMorada(valueToUpdateIfNewNotNull(getConcelhoMorada(), infoPerson.getConcelhoMorada()));
-        setConcelhoNaturalidade(valueToUpdateIfNewNotNull(getConcelhoNaturalidade(), infoPerson.getConcelhoNaturalidade()));
-        setDataEmissaoDocumentoIdentificacao((Date) valueToUpdateIfNewNotNull(getDataEmissaoDocumentoIdentificacao(), infoPerson.getDataEmissaoDocumentoIdentificacao()));
-        setDataValidadeDocumentoIdentificacao((Date) valueToUpdateIfNewNotNull(getDataValidadeDocumentoIdentificacao(), infoPerson.getDataValidadeDocumentoIdentificacao()));
+        setConcelhoNaturalidade(valueToUpdateIfNewNotNull(getConcelhoNaturalidade(), infoPerson
+                .getConcelhoNaturalidade()));
+        setDataEmissaoDocumentoIdentificacao((Date) valueToUpdateIfNewNotNull(
+                getDataEmissaoDocumentoIdentificacao(), infoPerson
+                        .getDataEmissaoDocumentoIdentificacao()));
+        setDataValidadeDocumentoIdentificacao((Date) valueToUpdateIfNewNotNull(
+                getDataValidadeDocumentoIdentificacao(), infoPerson
+                        .getDataValidadeDocumentoIdentificacao()));
         setDistritoMorada(valueToUpdateIfNewNotNull(getDistritoMorada(), infoPerson.getDistritoMorada()));
-        setDistritoNaturalidade(valueToUpdateIfNewNotNull(getDistritoNaturalidade(), infoPerson.getDistritoNaturalidade()));
+        setDistritoNaturalidade(valueToUpdateIfNewNotNull(getDistritoNaturalidade(), infoPerson
+                .getDistritoNaturalidade()));
         setEmail(valueToUpdate(getEmail(), infoPerson.getEmail()));
         setEnderecoWeb(valueToUpdate(getEnderecoWeb(), infoPerson.getEnderecoWeb()));
-        MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(), infoPerson.getMaritalStatus());        
+        MaritalStatus maritalStatus = (MaritalStatus) valueToUpdateIfNewNotNull(getMaritalStatus(),
+                infoPerson.getMaritalStatus());
         setMaritalStatus((maritalStatus == null) ? MaritalStatus.UNKNOWN : maritalStatus);
-        setFreguesiaMorada(valueToUpdateIfNewNotNull(getFreguesiaMorada(), infoPerson.getFreguesiaMorada()));
-        setFreguesiaNaturalidade(valueToUpdateIfNewNotNull(getFreguesiaNaturalidade(), infoPerson.getFreguesiaNaturalidade()));
-        setLocalEmissaoDocumentoIdentificacao(valueToUpdateIfNewNotNull(getLocalEmissaoDocumentoIdentificacao(), infoPerson.getLocalEmissaoDocumentoIdentificacao()));
+        setFreguesiaMorada(valueToUpdateIfNewNotNull(getFreguesiaMorada(), infoPerson
+                .getFreguesiaMorada()));
+        setFreguesiaNaturalidade(valueToUpdateIfNewNotNull(getFreguesiaNaturalidade(), infoPerson
+                .getFreguesiaNaturalidade()));
+        setLocalEmissaoDocumentoIdentificacao(valueToUpdateIfNewNotNull(
+                getLocalEmissaoDocumentoIdentificacao(), infoPerson
+                        .getLocalEmissaoDocumentoIdentificacao()));
         setLocalidade(valueToUpdateIfNewNotNull(getLocalidade(), infoPerson.getLocalidade()));
-        setLocalidadeCodigoPostal(valueToUpdateIfNewNotNull(getLocalidadeCodigoPostal(), infoPerson.getLocalidadeCodigoPostal()));
+        setLocalidadeCodigoPostal(valueToUpdateIfNewNotNull(getLocalidadeCodigoPostal(), infoPerson
+                .getLocalidadeCodigoPostal()));
         setMorada(valueToUpdateIfNewNotNull(getMorada(), infoPerson.getMorada()));
         setNascimento((Date) valueToUpdateIfNewNotNull(getNascimento(), infoPerson.getNascimento()));
         setNomeMae(valueToUpdateIfNewNotNull(getNomeMae(), infoPerson.getNomeMae()));
         setNomePai(valueToUpdateIfNewNotNull(getNomePai(), infoPerson.getNomePai()));
-        setNumContribuinte(valueToUpdateIfNewNotNull(getNumContribuinte(), infoPerson.getNumContribuinte()));
+        setNumContribuinte(valueToUpdateIfNewNotNull(getNumContribuinte(), infoPerson
+                .getNumContribuinte()));
         setProfissao(valueToUpdateIfNewNotNull(getProfissao(), infoPerson.getProfissao()));
         setGender((Gender) valueToUpdateIfNewNotNull(getGender(), infoPerson.getSexo()));
         setTelefone(valueToUpdate(getTelefone(), infoPerson.getTelefone()));
         setTelemovel(valueToUpdate(getTelemovel(), infoPerson.getTelemovel()));
-//        setAvailableEmail((Boolean) valueToUpdate(getAvailableEmail(), infoPerson.getAvailableEmail()));
-//        setAvailablePhoto((Boolean) valueToUpdate(getAvailablePhoto(), infoPerson.getAvailablePhoto()));
-//        setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(), infoPerson
-//                .getAvailableWebSite()));
+        // setAvailableEmail((Boolean) valueToUpdate(getAvailableEmail(),
+        // infoPerson.getAvailableEmail()));
+        // setAvailablePhoto((Boolean) valueToUpdate(getAvailablePhoto(),
+        // infoPerson.getAvailablePhoto()));
+        // setAvailableWebSite((Boolean) valueToUpdate(getAvailableWebSite(),
+        // infoPerson
+        // .getAvailableWebSite()));
         setWorkPhone(valueToUpdate(getWorkPhone(), infoPerson.getWorkPhone()));
 
         // setPassword(valueToUpdate(getPassword(),
@@ -475,23 +495,23 @@ public class Person extends Person_Base {
         }
     }
 
-//    public Iterator<UserGroup> getUserGroupsIterator()
-//    {
-//    	return this.getOwnedGroupsIterator();
-//    }
-//
-//	public int getUserGroupsCount()
-//	{
-//		int groupsCount = 0;
-//		Iterator<UserGroup> iterator = this.getUserGroupsIterator();
-//		while (iterator.hasNext())
-//		{
-//			iterator.next();
-//			groupsCount++;
-//		}
-//		return groupsCount;
-//	}
-	
+    // public Iterator<UserGroup> getUserGroupsIterator()
+    // {
+    // return this.getOwnedGroupsIterator();
+    // }
+    //
+    // public int getUserGroupsCount()
+    // {
+    // int groupsCount = 0;
+    // Iterator<UserGroup> iterator = this.getUserGroupsIterator();
+    // while (iterator.hasNext())
+    // {
+    // iterator.next();
+    // groupsCount++;
+    // }
+    // return groupsCount;
+    // }
+
     public List<PersonFunction> getActiveFunctions() {
 
         List<PersonFunction> activeFunctions = new ArrayList<PersonFunction>();
@@ -509,14 +529,14 @@ public class Person extends Person_Base {
         List<PersonFunction> inactiveFunctions = new ArrayList<PersonFunction>();
 
         for (PersonFunction personFunction : this.getPersonFunctions()) {
-           if (!personFunction.isActive(Calendar.getInstance().getTime())) {
+            if (!personFunction.isActive(Calendar.getInstance().getTime())) {
                 inactiveFunctions.add(personFunction);
             }
         }
         return inactiveFunctions;
     }
 
-    public List<Function> getActiveInherentFunctions(){
+    public List<Function> getActiveInherentFunctions() {
 
         List<Function> inherentFunctions = new ArrayList<Function>();
         for (PersonFunction personFunction : this.getActiveFunctions()) {
@@ -534,17 +554,17 @@ public class Person extends Person_Base {
         }
         return false;
     }
-    
+
     public List<PersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
 
         List<PersonFunction> result = new ArrayList<PersonFunction>();
-        
+
         for (PersonFunction personFunction : getPersonFunctions()) {
             if (personFunction.belongsToPeriod(beginDate, endDate)) {
                 result.add(personFunction);
             }
         }
-        
+
         return result;
     }
 
@@ -554,4 +574,102 @@ public class Person extends Person_Base {
     public PersonGroup getPersonGroup() {
         return new PersonGroup(this);
     }
+
+    /**
+     * 
+     * IMPORTANT: This method is evil and should NOT be used! You are NOT God!
+     * 
+     * 
+     * @return true if the person have been deleted, false otherwise
+     */
+    public boolean delete() {
+
+        if (canBeDeleted()) {
+            if (hasPersonalPhoto()) {
+                getPersonalPhoto().delete();
+            }
+            for (Role role : getPersonRoles()) {
+                PersonRole.forceRemove(this, role);
+            }
+            getManageableDepartmentCredits().clear();
+            getAdvisories().clear();
+            removeCms();
+            removePais();
+
+            deleteDomainObject();
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean canBeDeleted() {
+
+        if (getStudentsCount() > 0) {
+            return false;
+        }
+        if (getSentSmsCount() > 0) {
+            return false;
+        }
+        if (getExportGroupingReceiversCount() > 0) {
+            return false;
+        }
+        if (getPersonFunctionsCount() > 0) {
+            return false;
+        }
+        if (getAssociatedQualificationsCount() > 0) {
+            return false;
+        }
+        if (getAssociatedAlteredCurriculumsCount() > 0) {
+            return false;
+        }
+        if (getEnrolmentEvaluationsCount() > 0) {
+            return false;
+        }
+        if (getExportGroupingSendersCount() > 0) {
+            return false;
+        }
+        if (getEditedWebSiteItemsCount() > 0) {
+            return false;
+        }
+        if (getResponsabilityTransactionsCount() > 0) {
+            return false;
+        }
+        if (getMasterDegreeCandidatesCount() > 0) {
+            return false;
+        }
+        if (getCreatedContentsCount() > 0) {
+            return false;
+        }
+        if (getGuidesCount() > 0) {
+            return false;
+        }
+        if (getProjectAccessesCount() > 0) {
+            return false;
+        }
+        if (getPersonAuthorshipsCount() > 0) {
+            return false;
+        }
+        if (getOwnedContentsCount() > 0) {
+            return false;
+        }
+
+        if (getEmployee() != null) {
+            return false;
+        }
+        if (getExternalPerson() != null) {
+            return false;
+        }
+        if (getTeacher() != null) {
+            return false;
+        }
+        if (getAssociatedPersonAccount() != null) {
+            return false;
+        }
+        if (getGrantOwner() != null) {
+            return false;
+        }
+        return true;
+    }
+
 }
