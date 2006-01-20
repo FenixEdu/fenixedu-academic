@@ -29,7 +29,7 @@
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnum"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'"/>
+		<h:outputText escape="false" value="<input id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>
 
 		<fc:breadCrumbs degree="#{publicEvaluations.degree}" trailingCrumb="#{bundle['public.degree.information.label.evaluations']}"/>
 

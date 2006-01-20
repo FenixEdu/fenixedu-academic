@@ -13,7 +13,7 @@
 
 	<h:form>
 		<fc:viewState binding="#{CurricularPlansMembersManagementBackingBean.viewState}"/>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{CurricularPlansMembersManagementBackingBean.selectedCurricularPlanID}'"/><br/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{CurricularPlansMembersManagementBackingBean.selectedCurricularPlanID}'/>"/><br/>
 				
 		<h:messages styleClass="error"/>
 				

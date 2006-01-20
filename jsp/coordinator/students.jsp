@@ -17,8 +17,8 @@ vertical-align: top;
 	<h:outputFormat value="<h2>#{bundle['list.students']}</h2/><hr>" escape="false"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}'"/>
-		<h:outputText escape="false" value="<input id='sortBy' name='sortBy' type='hidden' value='#{CoordinatorStudentsBackingBean.sortBy}'"/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorStudentsBackingBean.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input id='sortBy' name='sortBy' type='hidden' value='#{CoordinatorStudentsBackingBean.sortBy}'/>"/>
 
 		<h:panelGrid columns="2" styleClass="infoop" columnClasses="alignright,,"  rowClasses=",,,valigntop">
 			<h:outputText value="#{bundle['label.student.curricular.plan.state']}: " />

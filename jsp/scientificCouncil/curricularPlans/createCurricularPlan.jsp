@@ -10,7 +10,7 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'"/>
+		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'/>"/>
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{scouncilBundle['curricularPlan.data']}:</h4>" escape="false"/>

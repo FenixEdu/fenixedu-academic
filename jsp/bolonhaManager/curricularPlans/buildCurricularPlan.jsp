@@ -37,14 +37,14 @@
 		<f:param name="organizeBy" value="years"/>		
 	</h:outputLink>
 
-	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
+	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 	<h:outputText value="<br/><br/>" escape="false"/>
 	<h:messages styleClass="error" infoClass="infoMsg"/>
 	<h:outputText value="<br/><br/>" escape="false"/>
 	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="true" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 
 		<h:outputText value="<br/><hr/>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}"

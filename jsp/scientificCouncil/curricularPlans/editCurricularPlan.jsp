@@ -12,7 +12,7 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
 
 		<h:panelGrid styleClass="simpleblock4" columns="2" border="0">
 			<h:outputText value="#{scouncilBundle['curricularStage']}: " />

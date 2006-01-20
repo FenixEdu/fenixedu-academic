@@ -19,8 +19,7 @@
 	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'"/>
-		<h:outputText escape="false" value="<input id='parentCourseGroupID' name='parentCourseGroupID' type='hidden' value='#{CourseGroupManagement.parentCourseGroupID}'"/>
-		
+		<h:outputText escape="false" value="<input id='parentCourseGroupID' name='parentCourseGroupID' type='hidden' value='#{CourseGroupManagement.parentCourseGroupID}'}'/>"/>	
 		<h:panelGrid columnClasses="alignRight infocell, infocell," columns="2" border="0">
 			<h:outputText value="#{bolonhaBundle['name']}: "/>
 			<h:panelGroup>

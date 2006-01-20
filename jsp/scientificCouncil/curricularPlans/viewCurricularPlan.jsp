@@ -18,7 +18,7 @@
 	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" />
 
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
 
 		<h:outputText value="<br/><br/><hr/>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}"

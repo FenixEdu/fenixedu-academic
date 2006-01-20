@@ -71,7 +71,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 
 	<h:form>
 		<h:outputText value="<div class='infoop' style='width: 30em'>" escape="false" />
-			<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}'"/>
+			<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CoordinatorEvaluationsBackingBean.degreeCurricularPlanID}'/>"/>
 			<h:panelGrid columns="2">
 				<h:outputText value="#{bundle['label.coordinator.selectedExecutionPeriod']}:" styleClass="boldFontClass"/>
 				<h:outputText value=""/>

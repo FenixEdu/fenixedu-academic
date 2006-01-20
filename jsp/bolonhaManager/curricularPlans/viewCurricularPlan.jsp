@@ -19,7 +19,7 @@
 
 	<h:outputText value="<br/><br/><hr/>" escape="false"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'"/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:panelGroup rendered="#{empty CurricularCourseManagement.action}">
 			<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}"
 				action="curricularPlansManagement"/>

@@ -18,8 +18,8 @@
 	</h:outputFormat>
 	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
-		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'"/>
-		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'"/>
+		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
+		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'/>"/>
 		<br/>
 		<h:panelGroup styleClass="bgcolor1">
 			<h:outputText style="font-weight: bold" value="#{bolonhaBundle['name']}: "/>

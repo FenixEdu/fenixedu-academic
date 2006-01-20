@@ -12,7 +12,7 @@
 		<f:param value="#{scouncilBundle['curricularPlan']}" />
 	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'"/>
+		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
 		
 		<h:outputText value="<b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
 		
