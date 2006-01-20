@@ -18,6 +18,25 @@ public class InfoLessonWrapper implements Comparable {
 
     private Integer numberOfCollisions = new Integer(0);
 
+    private boolean firstRowAlreadyAppended = false;
+    private boolean secondRowAlreadyAppended = false;
+
+    public boolean isFirstRowAlreadyAppended() {
+        return firstRowAlreadyAppended;
+    }
+
+    public void setFirstRowAlreadyAppended(boolean firstRowAlreadyAppended) {
+        this.firstRowAlreadyAppended = firstRowAlreadyAppended;
+    }
+
+    public boolean isSecondRowAlreadyAppended() {
+        return secondRowAlreadyAppended;
+    }
+
+    public void setSecondRowAlreadyAppended(boolean secondRowAlreadyAppended) {
+        this.secondRowAlreadyAppended = secondRowAlreadyAppended;
+    }
+
     /*
      * public InfoLessonWrapper(InfoLesson infoLesson) { this.infoLesson =
      * infoLesson; this.locked = false; }
