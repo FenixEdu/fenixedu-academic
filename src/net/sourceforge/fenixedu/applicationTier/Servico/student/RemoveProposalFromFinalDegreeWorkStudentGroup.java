@@ -4,17 +4,14 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -27,7 +24,6 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends Service {
     }
 
     public boolean run(Integer groupOID, Integer groupProposalOID) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 

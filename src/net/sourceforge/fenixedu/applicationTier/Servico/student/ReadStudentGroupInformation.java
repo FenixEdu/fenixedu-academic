@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
@@ -19,12 +20,8 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
@@ -40,7 +37,6 @@ public class ReadStudentGroupInformation extends Service {
         Grouping grouping = null;
         List groupAttendsList = null;
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(StudentGroup.class,
                 studentGroupCode);
 

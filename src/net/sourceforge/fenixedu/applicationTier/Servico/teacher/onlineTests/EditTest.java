@@ -7,10 +7,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -18,7 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditTest extends Service {
 
     public void run(Integer executionCourseId, Integer testId, String title, String information) throws ExcepcaoPersistencia {
-        Test test = (Test) PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
         test.setTitle(title);
         test.setInformation(information);
         test.setLastModifiedDate(Calendar.getInstance().getTime());

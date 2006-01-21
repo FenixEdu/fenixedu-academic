@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
@@ -11,14 +12,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
@@ -28,9 +25,6 @@ public class DeleteTeacher extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer teacherCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
         IPersistentSupportLesson supportLessonDAO = persistentSupport.getIPersistentSupportLesson();
         IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport.getIPersistentShiftProfessorship();

@@ -8,6 +8,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestLog;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestLogWithStudentAndDistributedTest;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -26,9 +24,7 @@ public class ReadStudentTestLog extends Service {
 
 	public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport;
 		List infoStudentTestLogList = new ArrayList();
-		persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
 				studentId);
 		if (student == null) {

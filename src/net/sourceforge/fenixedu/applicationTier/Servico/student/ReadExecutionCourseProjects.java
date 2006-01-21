@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
@@ -19,9 +20,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoSiteProjects;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
@@ -34,8 +32,6 @@ public class ReadExecutionCourseProjects extends Service {
 
         InfoSiteProjects infoSiteProjects = null;
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
                 .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseID);
 

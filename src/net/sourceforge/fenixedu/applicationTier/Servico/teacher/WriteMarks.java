@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidMarksServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -15,16 +16,12 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class WriteMarks extends Service {
 
     public void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
             throws ExcepcaoPersistencia, FenixServiceException {
     	final List<DomainException> exceptionList = new ArrayList<DomainException>(); 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         
         final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationOID);

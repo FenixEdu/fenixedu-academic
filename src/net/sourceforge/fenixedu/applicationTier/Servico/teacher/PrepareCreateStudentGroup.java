@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
@@ -18,12 +19,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author ansr and scpo
@@ -33,8 +30,6 @@ public class PrepareCreateStudentGroup extends Service {
 
     public ISiteComponent run(Integer executionCourseCode, Integer groupPropertiesCode)
             throws ExcepcaoPersistencia, ExistingServiceException {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
                 groupPropertiesCode);

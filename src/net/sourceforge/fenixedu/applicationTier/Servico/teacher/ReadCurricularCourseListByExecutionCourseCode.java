@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -21,13 +22,9 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Tânia Pousão
@@ -41,7 +38,6 @@ public class ReadCurricularCourseListByExecutionCourseCode extends Service {
 
         List infoCurricularCourseList = new ArrayList();
         Site site = null;
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
         ExecutionCourse executionCourse = (ExecutionCourse) executionCourseDAO.readByOID(
                 ExecutionCourse.class, executionCourseCode);

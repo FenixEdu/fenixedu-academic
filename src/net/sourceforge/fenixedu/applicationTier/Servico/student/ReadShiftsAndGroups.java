@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
@@ -24,18 +25,12 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadShiftsAndGroups extends Service {
 
     public static ISiteComponent run(Integer groupingCode, String username) throws ExcepcaoPersistencia, FenixServiceException {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();

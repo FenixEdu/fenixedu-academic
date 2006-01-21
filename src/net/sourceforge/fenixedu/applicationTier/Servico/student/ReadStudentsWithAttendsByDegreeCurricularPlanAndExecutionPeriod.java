@@ -9,6 +9,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoFrequenta;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithAttendsAndInquiriesRegistries;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -42,7 +40,6 @@ public class ReadStudentsWithAttendsByDegreeCurricularPlanAndExecutionPeriod
             throw new FenixServiceException("nullOnlyAttendsWithTeachers");
 		}
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
 		
 		List<Attends> attendsList =

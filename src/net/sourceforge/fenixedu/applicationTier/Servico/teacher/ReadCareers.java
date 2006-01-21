@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacherWithPersonAndCategory;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
@@ -15,18 +16,12 @@ import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadCareers extends Service {
 
     public SiteView run(CareerType careerType, String user) throws ExcepcaoPersistencia {
-        
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(user);
         
         final InfoSiteCareers bodyComponent = new InfoSiteCareers();

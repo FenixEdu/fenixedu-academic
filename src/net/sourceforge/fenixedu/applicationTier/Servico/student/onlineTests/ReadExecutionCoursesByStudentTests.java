@@ -7,15 +7,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionCoursesByStudentTests extends Service {
 
     public Object run(String userName) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
 
         final Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);

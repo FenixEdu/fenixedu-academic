@@ -5,15 +5,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -26,7 +24,6 @@ public class ConfirmAttributionOfFinalDegreeWork extends Service {
 
     public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 

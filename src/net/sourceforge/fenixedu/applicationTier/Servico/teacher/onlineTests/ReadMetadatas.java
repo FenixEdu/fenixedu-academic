@@ -8,13 +8,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -22,7 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadMetadatas extends Service {
 
     public List<InfoMetadata> run(Integer executionCourseId, Integer testId, Boolean distributedTest) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
         List<Metadata> metadatas = null;
         if (testId == null) {

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -13,10 +14,7 @@ import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ProposalState;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
@@ -26,8 +24,6 @@ public class ExecutionCourseWaitingAnswer extends Service {
 
     public boolean run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 

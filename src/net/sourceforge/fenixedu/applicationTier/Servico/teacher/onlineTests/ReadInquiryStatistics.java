@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
@@ -22,8 +23,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
@@ -32,8 +31,6 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -47,7 +44,6 @@ public class ReadInquiryStatistics extends Service {
 		this.path = path.replace('\\', '/');
 		InfoSiteInquiryStatistics infoSiteInquiryStatistics = new InfoSiteInquiryStatistics();
 		List infoInquiryStatisticsList = new ArrayList();
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		DistributedTest distributedTest = (DistributedTest) persistentSupport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)

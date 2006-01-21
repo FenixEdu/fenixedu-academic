@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -23,9 +24,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa and rmalo
@@ -36,8 +34,6 @@ public class UnEnrollGroupShift extends Service {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(
                 Grouping.class, groupPropertiesCode);
 

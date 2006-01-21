@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidSituationServiceException;
@@ -25,9 +26,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
@@ -37,9 +35,6 @@ public class GroupEnrolment extends Service {
 
     public boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
             String studentUsername) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(
                 Grouping.class, groupingID);
         if (grouping == null) {

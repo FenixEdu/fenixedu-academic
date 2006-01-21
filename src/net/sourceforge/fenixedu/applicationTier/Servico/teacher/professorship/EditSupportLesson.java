@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -11,9 +12,6 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -23,8 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditSupportLesson extends Service {
 
     public void run(SupportLessonDTO supportLessonDTO) throws ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         SupportLesson supportLesson = (SupportLesson) persistentSupport.getIPersistentSupportLesson()
                 .readByOID(SupportLesson.class, supportLessonDTO.getIdInternal());
 

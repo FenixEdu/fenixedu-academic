@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
@@ -20,12 +21,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
@@ -93,10 +91,6 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
                 new Professorships2DetailProfessorship());
 
         return detailedProfessorshipList;
-    }
-
-    protected ISuportePersistente getDAOFactory() throws ExcepcaoPersistencia {
-        return PersistenceSupportFactory.getDefaultPersistenceSupport();
     }
 
     /**

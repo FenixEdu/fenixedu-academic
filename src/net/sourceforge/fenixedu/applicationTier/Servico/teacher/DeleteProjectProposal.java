@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Advisory;
@@ -24,9 +25,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
@@ -37,8 +35,6 @@ public class DeleteProjectProposal extends Service {
 
     public boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();

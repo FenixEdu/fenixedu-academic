@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
@@ -14,12 +15,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -27,7 +26,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteExercise extends Service {
 
     public void run(Integer executionCourseId, Integer metadataId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
         Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId);
         if (metadata == null)

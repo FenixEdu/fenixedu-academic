@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
@@ -25,15 +26,11 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -46,7 +43,6 @@ public class EditDistributedTest extends Service {
             Calendar endDate, Calendar endHour, TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback,
             String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
                 executionCourseId);
         if (executionCourse == null)

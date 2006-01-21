@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
@@ -26,8 +24,6 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 public class ReadActualPersonalDataAuthorizationAnswer extends Service {
 
     public StudentPersonalDataAuthorizationChoice run(Integer studentID) throws ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         IPersistentStudentPersonalDataAuthorization persistentStudentPersonalDataAuthorization = persistentSupport

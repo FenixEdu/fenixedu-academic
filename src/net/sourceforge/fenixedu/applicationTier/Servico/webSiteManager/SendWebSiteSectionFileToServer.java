@@ -21,8 +21,6 @@ import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Ftp;
 import net.sourceforge.fenixedu.util.Mes;
 
@@ -42,7 +40,6 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 	public Boolean run(final Integer sectionCode, InfoWebSiteItem lastInfoWebSiteItem)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
 				.getIPersistentWebSiteSection();
 		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();

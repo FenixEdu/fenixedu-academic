@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTest;
@@ -14,11 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestionW
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -29,7 +27,7 @@ public class ReadTest extends Service {
 
     public InfoTest run(Integer executionCourseId, Integer testId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
+
         Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
@@ -57,7 +55,6 @@ public class ReadTest extends Service {
     }
 
     public InfoTest run(Integer executionCourseId, Integer testId) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();

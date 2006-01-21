@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.ArrayList;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -22,9 +23,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -32,7 +30,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadFinalDegreeWorkStudentGroupByUsername extends Service {
 
     public InfoGroup run(String username) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 

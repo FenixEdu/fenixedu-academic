@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
@@ -11,9 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
@@ -25,8 +23,6 @@ public class CreateGrouping extends Service {
     public boolean run(Integer executionCourseID, InfoGrouping infoGrouping)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 

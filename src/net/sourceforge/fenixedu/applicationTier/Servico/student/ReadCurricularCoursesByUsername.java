@@ -9,14 +9,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -31,7 +29,6 @@ public class ReadCurricularCoursesByUsername extends Service {
 	public List run(String username) throws BDException, ExcepcaoPersistencia {
 		List curricularCourses = new LinkedList();
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		List curricularPlans = persistentSupport.getIStudentCurricularPlanPersistente().readByUsername(username);
 		for (Iterator iterator = curricularPlans.iterator(); iterator.hasNext();) {
 			StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
@@ -14,10 +15,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.ProposalState;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
@@ -27,8 +25,6 @@ public class PrepareEditGroupingMembers extends Service {
 
     public List run(Integer executionCourseCode, Integer groupingID)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();        
         final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingID);
         if (grouping == null) {
             throw new InvalidArgumentsServiceException();

@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Fernanda Quitério 30/09/2003
@@ -29,7 +27,6 @@ public class EditWebSiteItem extends ManageWebSiteItem {
             throws FenixServiceException, ExcepcaoPersistencia {
 
         Boolean result = Boolean.FALSE;
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                 .getIPersistentWebSiteSection();
         IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
@@ -16,12 +17,8 @@ import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -29,7 +26,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteExerciseVariation extends Service {
 
     public List<LabelValueBean> run(Integer executionCourseId, Integer questionCode) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List<LabelValueBean> result = new ArrayList<LabelValueBean>();
 
         Question question = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, questionCode);

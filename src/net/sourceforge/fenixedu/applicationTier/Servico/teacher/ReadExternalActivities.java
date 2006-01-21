@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
@@ -14,14 +15,10 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
@@ -31,8 +28,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExternalActivities extends Service {
 
     public SiteView run(String user) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readTeacherByUsername(user);
         InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);

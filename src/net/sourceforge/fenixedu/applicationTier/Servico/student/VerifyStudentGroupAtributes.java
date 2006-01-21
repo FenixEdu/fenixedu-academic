@@ -5,6 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author asnr and scpo
@@ -31,10 +29,7 @@ public class VerifyStudentGroupAtributes extends Service {
 
 	private boolean checkGroupStudentEnrolment(Integer studentGroupCode, String username)
 			throws FenixServiceException, ExcepcaoPersistencia {
-
 		boolean result = false;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
@@ -67,11 +62,7 @@ public class VerifyStudentGroupAtributes extends Service {
 
 	private boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
 			throws FenixServiceException, ExcepcaoPersistencia {
-
 		boolean result = false;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(
 				Grouping.class, groupPropertiesCode);
 
@@ -107,8 +98,6 @@ public class VerifyStudentGroupAtributes extends Service {
 
 		boolean result = false;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
 				StudentGroup.class, studentGroupCode);
 
@@ -139,10 +128,7 @@ public class VerifyStudentGroupAtributes extends Service {
 
 	private boolean checkEditStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode,
 			String username) throws FenixServiceException, ExcepcaoPersistencia {
-
 		boolean result = false;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
@@ -179,11 +165,7 @@ public class VerifyStudentGroupAtributes extends Service {
 
 	private boolean checkEnrollStudentGroupShift(Integer studentGroupCode, Integer groupPropertiesCode,
 			String username) throws FenixServiceException, ExcepcaoPersistencia {
-
 		boolean result = false;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
 				groupPropertiesCode);
 

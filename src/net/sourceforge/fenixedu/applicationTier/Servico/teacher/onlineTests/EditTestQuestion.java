@@ -3,14 +3,12 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -19,7 +17,6 @@ public class EditTestQuestion extends Service {
 
     public void run(Integer executionCourseId, Integer testQuestionId, Integer testQuestionOrder, Double testQuestionValue, CorrectionFormula formula)
             throws ExcepcaoPersistencia, FenixServiceException {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         TestQuestion testQuestion = (TestQuestion) persistentSupport.getIPersistentTestQuestion().readByOID(TestQuestion.class, testQuestionId);
         if (testQuestion == null) {
             throw new InvalidArgumentsServiceException();

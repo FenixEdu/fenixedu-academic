@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTutorWithInfoStudent;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -14,9 +15,6 @@ import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa and rmalo
@@ -33,8 +31,6 @@ public class ViewStudentsByTutor extends Service {
         }
 
         List infoTutorStudents = new ArrayList();
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = persistentTeacher.readTeacherByUsername(userName);
 

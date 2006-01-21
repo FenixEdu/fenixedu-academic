@@ -3,15 +3,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.services;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -23,7 +21,6 @@ public class CreateTeacherInstitutionWorkTime extends Service {
     public void run(Integer teacherID, Integer executioPeriodID,
             InstitutionWorkTimeDTO institutionWorkTimeDTO) throws ExcepcaoPersistencia {
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Teacher teacher = (Teacher) persistentSupport.getIPersistentTeacher().readByOID(Teacher.class,
                 teacherID);
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport

@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
@@ -16,13 +17,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -36,7 +34,6 @@ public class InsertTestQuestion extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		this.path = path.replace('\\', '/');
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		for (int i = 0; i < metadataId.length; i++) {
 			Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(
 					Metadata.class, new Integer(metadataId[i]));

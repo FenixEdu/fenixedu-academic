@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
@@ -23,10 +24,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -36,7 +34,6 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 	
 
 	public List run(String username, Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		
 

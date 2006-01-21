@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.student.schoolRegistration.InfoResidenceCandidacy;
@@ -27,9 +28,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
@@ -39,9 +37,7 @@ public class SchoolRegistration extends Service {
 
     public Boolean run(final IUserView userView, final InfoPerson infoPerson, final InfoResidenceCandidacy infoResidenceCandidacy) 
             throws ExcepcaoPersistencia {
-
-        final ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentStudent persistentStudent = suportePersistente.getIPersistentStudent();
+        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         final String username = userView.getUtilizador();
         final Student student = persistentStudent.readByUsername(username);
@@ -53,9 +49,9 @@ public class SchoolRegistration extends Service {
             return Boolean.FALSE;
         }
 
-        updatePersonalInfo(suportePersistente, infoPerson, person);
+        updatePersonalInfo(infoPerson, person);
         writeResidenceCandidacy(student, infoResidenceCandidacy);
-        updateStudentInfo(suportePersistente, student);
+        updateStudentInfo(student);
 
         return Boolean.TRUE;
     }
@@ -64,7 +60,7 @@ public class SchoolRegistration extends Service {
         return !pessoa.hasRole(RoleType.FIRST_TIME_STUDENT);
     }
 
-    private void updatePersonalInfo(final ISuportePersistente persistentSupport, final InfoPerson infoPerson, final Person person)
+    private void updatePersonalInfo(final InfoPerson infoPerson, final Person person)
             throws ExcepcaoPersistencia {
 
         final IPersistentCountry persistentCountry = persistentSupport.getIPersistentCountry();
@@ -112,7 +108,7 @@ public class SchoolRegistration extends Service {
         }
     }
 
-    private void updateStudentInfo(final ISuportePersistente persistentSupport, final Student student)
+    private void updateStudentInfo(final Student student)
             throws ExcepcaoPersistencia {
 
         final IPersistentExecutionYear pExecutionYear = persistentSupport.getIPersistentExecutionYear();

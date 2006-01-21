@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.GroupEnrolmentStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategy;
 import net.sourceforge.fenixedu.applicationTier.strategy.groupEnrolment.strategys.IGroupEnrolmentStrategyFactory;
@@ -17,10 +18,7 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadEnroledExecutionCourses extends Service {
 
@@ -56,7 +54,6 @@ public class ReadEnroledExecutionCourses extends Service {
     public List run(String username) throws ExcepcaoPersistencia {
         List allInfoExecutionCourses = new ArrayList();
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 

@@ -4,13 +4,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author joaosa & rmalo
@@ -22,7 +20,6 @@ public class VerifyIfGroupPropertiesHasProjectProposal extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		boolean result = true;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
 		ExportGrouping groupPropertiesExecutionCourse = persistentExportGrouping.readBy(
 				groupPropertiesId, executionCourseId);

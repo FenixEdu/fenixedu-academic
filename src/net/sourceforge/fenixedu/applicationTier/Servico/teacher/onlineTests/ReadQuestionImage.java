@@ -7,19 +7,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -30,7 +27,6 @@ public class ReadQuestionImage extends Service {
 
     public String run(Integer exerciseId, Integer imageId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Question question = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, exerciseId);
         ParseQuestion parse = new ParseQuestion();
         String image;
@@ -45,7 +41,6 @@ public class ReadQuestionImage extends Service {
     public String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId, String path)
             throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Question question = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, questionId);
         InfoStudentTestQuestion infoStudentTestQuestion = new InfoStudentTestQuestion();
         try {

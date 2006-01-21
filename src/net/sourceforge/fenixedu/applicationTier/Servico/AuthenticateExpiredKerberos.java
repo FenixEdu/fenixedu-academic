@@ -3,19 +3,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswordServiceException;
-import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 
 public class AuthenticateExpiredKerberos extends Authenticate {
 	
     public IUserView run(final String username, final String password, final String newPassword, final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
-    	IPessoaPersistente pessoaPersistente = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPessoaPersistente();
+    	IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
     	final Person person = pessoaPersistente.lerPessoaPorUsername(username);
     	
         if (person == null) {

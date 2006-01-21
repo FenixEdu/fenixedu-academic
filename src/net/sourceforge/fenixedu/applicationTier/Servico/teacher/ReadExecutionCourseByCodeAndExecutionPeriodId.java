@@ -4,15 +4,13 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -26,7 +24,6 @@ public class ReadExecutionCourseByCodeAndExecutionPeriodId extends Service {
 		ExecutionCourse iExecCourse = null;
 		InfoExecutionCourse infoExecCourse = null;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 		iExecCourse = executionCourseDAO.readByExecutionCourseInitialsAndExecutionPeriodId(code,
 				executionPeriodId);

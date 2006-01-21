@@ -6,18 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCategory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
@@ -27,8 +24,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCategories extends Service {
 
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		IPersistentCategory persistentCategory = persistentSupport.getIPersistentCategory();
 		List categories = persistentCategory.readAll();
 

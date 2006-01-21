@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Advisory;
@@ -22,14 +23,10 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -42,7 +39,6 @@ public class AddStudentsToDistributedTest extends Service {
         if (infoStudentList == null || infoStudentList.size() == 0)
             return null;
         this.contextPath = contextPath.replace('\\', '/');
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentDistributedTest persistentDistributedTest = persistentSupport.getIPersistentDistributedTest();
         DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)

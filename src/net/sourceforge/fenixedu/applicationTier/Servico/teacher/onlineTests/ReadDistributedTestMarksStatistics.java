@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
@@ -18,11 +19,8 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentsT
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -33,10 +31,8 @@ public class ReadDistributedTestMarksStatistics extends Service {
 	public SiteView run(Integer executionCourseId, Integer distributedTestId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport;
 		InfoSiteStudentsTestMarksStatistics infoSiteStudentsTestMarksStatistics = new InfoSiteStudentsTestMarksStatistics();
 
-		persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		DistributedTest distributedTest = (DistributedTest) persistentSupport
 				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)

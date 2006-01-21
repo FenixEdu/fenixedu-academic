@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /*
  * Created on Mar 8, 2004
@@ -25,10 +23,7 @@ public class ReadExecutionDegreesOfTypeDegree extends Service {
 	public List run() throws ExcepcaoPersistencia {
 		List executionDegrees = null;
 		List infoExecutionDegrees = new ArrayList();
-
-		ISuportePersistente suportePersistente = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		executionDegrees = suportePersistente
+		executionDegrees = persistentSupport
 				.getIPersistentExecutionDegree()
 				.readExecutionDegreesOfTypeDegree();
 

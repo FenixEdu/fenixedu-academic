@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author jpvl
@@ -31,14 +30,12 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
 
     public List run(Integer teacherID, Integer executionYearID) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        ISuportePersistente suportePersistente = getDAOFactory();
-        IPersistentProfessorship persistentProfessorship = suportePersistente
+        IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        IPersistentTeacher persistentTeacher = suportePersistente.getIPersistentTeacher();
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
       
         if (executionYearID == null) {
-            IPersistentExecutionYear persistentExecutionYear = suportePersistente
+            IPersistentExecutionYear persistentExecutionYear = persistentSupport
                     .getIPersistentExecutionYear();
             ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
             executionYearID = executionYear.getIdInternal();
@@ -56,6 +53,6 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
                 responsibleFors.add(professorship);
         }                
 
-        return getDetailedProfessorships(professorships, responsibleFors, suportePersistente);
+        return getDetailedProfessorships(professorships, responsibleFors, persistentSupport);
     }
 }

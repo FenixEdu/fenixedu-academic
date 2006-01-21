@@ -5,18 +5,16 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoTestQuestionWithInfoQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.ResponseProcessing;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -28,7 +26,6 @@ public class ReadTestQuestion extends Service {
 	public InfoTestQuestion run(Integer executionCourseId, Integer testId, Integer questionId,
 			String path) throws FenixServiceException, ExcepcaoPersistencia {
 		this.path = path.replace('\\', '/');
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		TestQuestion testQuestion = persistentSupport.getIPersistentTestQuestion()
 				.readByTestAndQuestion(testId, questionId);
 		InfoTestQuestion infoTestQuestion = InfoTestQuestionWithInfoQuestion

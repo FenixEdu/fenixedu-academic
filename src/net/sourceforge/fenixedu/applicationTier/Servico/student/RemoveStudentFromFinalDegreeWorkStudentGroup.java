@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
@@ -11,12 +12,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -30,7 +27,6 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(String username, Integer groupOID, Integer studentToRemoveID)
             throws ExcepcaoPersistencia, FenixServiceException {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
  */
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorizedServiceDeleteException;
 import net.sourceforge.fenixedu.domain.Item;
@@ -13,17 +14,12 @@ import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class DeleteSection extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
 
         Section sectionToDelete = (Section) persistentSection.readByOID(Section.class, sectionCode);

@@ -3,13 +3,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 26/09/2003
@@ -18,7 +16,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteItems extends Service {
 
 	public boolean run(Integer sectionCode, List itemsToDelete) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
 		Iterator iterItemsCode = itemsToDelete.iterator();

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Exam;
@@ -12,18 +13,12 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class WrittenEvaluationRoomDistribution extends Service {
 
     public void run(Integer executionCourseID, Integer evaluationID, List<Integer> roomIDs,
             Boolean sendSMS, Boolean distributeOnlyEnroledStudents) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
                 .getIPersistentObject().readByOID(Exam.class, evaluationID);

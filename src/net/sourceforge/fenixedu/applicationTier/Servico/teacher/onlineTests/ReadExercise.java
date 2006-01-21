@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadata;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoMetadataWithExecutionCourse;
@@ -14,11 +15,8 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -26,7 +24,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExercise extends Service {
     public InfoMetadata run(Integer executionCourseId, Integer metadataId, Integer variationId, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
         if (metadata == null || !metadata.getVisibility().booleanValue()) {
             return null;

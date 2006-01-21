@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Student;
@@ -13,13 +14,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Cruz
@@ -28,7 +25,6 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
 
     public boolean run(Integer groupOID, String username) throws ExcepcaoPersistencia,
             FenixServiceException {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -16,11 +17,8 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.struts.util.LabelValueBean;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -29,8 +27,6 @@ public class ReadStudentsByIdArray extends Service {
 
     public List<InfoStudent> run(Integer executionCourseId, String[] selected, Boolean insertByShifts) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         if (selected != null && selected.length != 0) {
@@ -43,8 +39,6 @@ public class ReadStudentsByIdArray extends Service {
     }
 
     public List<InfoStudent> run(Integer executionCourseId, ArrayList lavelValueBeanList) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         List<InfoStudent> studentList = new ArrayList<InfoStudent>();
         for (LabelValueBean lvb : (ArrayList<LabelValueBean>) lavelValueBeanList) {
             if (!lvb.getLabel().equals(" (Ficha Fechada)")) {

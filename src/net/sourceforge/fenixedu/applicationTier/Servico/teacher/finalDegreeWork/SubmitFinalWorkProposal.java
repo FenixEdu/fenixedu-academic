@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
@@ -19,9 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
@@ -30,9 +28,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class SubmitFinalWorkProposal extends Service {
 
     public void run(InfoProposal infoProposal) throws FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();

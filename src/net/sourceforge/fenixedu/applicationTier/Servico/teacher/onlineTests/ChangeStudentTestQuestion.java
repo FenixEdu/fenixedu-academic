@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoAdvisory;
@@ -38,7 +39,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
@@ -47,8 +47,6 @@ import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -59,8 +57,6 @@ public class ChangeStudentTestQuestion extends Service {
             Integer newMetadataId, Integer studentId, TestQuestionChangesType changesType, Boolean delete,
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         Question oldQuestion = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, oldQuestionId);
         if (oldQuestion == null)

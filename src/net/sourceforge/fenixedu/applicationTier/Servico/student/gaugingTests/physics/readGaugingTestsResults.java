@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.student.gaugingTests.physics;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.gaugingTests.physics.InfoGaugingTestResult;
 import net.sourceforge.fenixedu.domain.Person;
@@ -14,10 +15,7 @@ import net.sourceforge.fenixedu.domain.gaugingTests.physics.GaugingTestResult;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.OJB.gaugingTests.physics.IPersistentGaugingTestResult;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">João Mota </a>
@@ -27,7 +25,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class readGaugingTestsResults extends Service {
 
 	public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentGaugingTestResult persistentGaugingTestResult = persistentSupport.getIPersistentGaugingTestResult();
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());

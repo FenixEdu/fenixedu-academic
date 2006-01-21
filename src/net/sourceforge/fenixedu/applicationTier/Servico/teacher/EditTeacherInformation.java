@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoOrientation;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoPublicationsNumber;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoServiceProviderRegime;
@@ -19,9 +20,6 @@ import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Leonor Almeida
@@ -41,7 +39,6 @@ public class EditTeacherInformation extends Service {
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
             List<InfoPublicationsNumber> infoPublicationsNumbers) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		persistentObject = persistentSupport.getIPersistentObject();
 
         final IPersistentTeacher pteacher = persistentSupport.getIPersistentTeacher();

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.workingTime;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -18,14 +19,10 @@ import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTi
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author jpvl
@@ -36,7 +33,6 @@ public class ReadTeacherInstitutionWorkingTime extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         TeacherInstitutionWorkingTimeDTO teacherInstitutionWorkingTimeDTO = new TeacherInstitutionWorkingTimeDTO();
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = persistentSupport
                 .getIPersistentTeacherInstitutionWorkingTime();
         IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();

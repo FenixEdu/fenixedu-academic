@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.StudentTestLog;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionType;
 import net.sourceforge.fenixedu.util.tests.Response;
@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.util.tests.ResponseSTR;
 import net.sourceforge.fenixedu.util.tests.TestQuestionStudentsChangesType;
 import net.sourceforge.fenixedu.util.tests.TestType;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -50,7 +49,6 @@ public class ChangeStudentTestQuestionMark extends Service {
     public List<InfoSiteDistributedTestAdvisory> run(Integer executionCourseId, Integer distributedTestId, Double newMark, Integer questionId,
             Integer studentId, TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         path = path.replace('\\', '/');
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport.getIPersistentStudentTestQuestion();
         List<StudentTestQuestion> studentsTestQuestionList = new ArrayList<StudentTestQuestion>();

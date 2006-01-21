@@ -6,15 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
 import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Luis Egidio, luis.egidio@ist.utl.pt
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditSeniorInfo extends Service {
 
     public void run(InfoSenior changedInfoSenior) throws ExcepcaoPersistencia, FenixServiceException {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentSenior persistentSenior = persistentSupport.getIPersistentSenior();
             
             Senior seniorToEdit = (Senior) persistentSenior.readByOID(Senior.class, changedInfoSenior.getIdInternal());

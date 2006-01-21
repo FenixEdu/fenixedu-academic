@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarDateComparator;
 import net.sourceforge.fenixedu.dataTransferObject.comparators.CalendarHourComparator;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoDistributedTest;
@@ -16,9 +17,6 @@ import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoSiteStudentDi
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -27,7 +25,6 @@ public class ReadStudentTests extends Service {
 
     public Object run(String userName, Integer executionCourseId) throws ExcepcaoPersistencia {
         InfoSiteStudentDistributedTests infoSite = new InfoSiteStudentDistributedTests();
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Student student = persistentSupport.getIPersistentStudent().readByUsername(userName);
         List<DistributedTest> distributedTestList = persistentSupport.getIPersistentDistributedTest().readByStudentAndExecutionCourse(
                 student.getIdInternal(), executionCourseId);

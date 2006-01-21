@@ -6,14 +6,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.Calendar;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * 
@@ -25,8 +23,6 @@ public class EditExercise extends Service {
 	public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
 			String difficulty, Calendar learningTime, String level, String mainSubject,
 			String secondarySubject) throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
 

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -17,16 +18,12 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -36,9 +33,6 @@ public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, Integer distributedTestId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport;
-
-        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         DistributedTest distributedTest = (DistributedTest) persistentSupport
                 .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
@@ -104,10 +98,8 @@ public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, String[] distributedTestCodes)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport;
         StringBuilder result = new StringBuilder();
         result.append("Número\tNome\t");
-        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
                 .getIPersistentStudentTestQuestion();
         IPersistentDistributedTest persistentDistributedTest = persistentSupport

@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoProfessorship;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author gedl@rnl.ist.utl.pt
@@ -26,9 +24,6 @@ public class ReadProfessorshipByTeacherIDandExecutionCourseID extends
 
     public InfoProfessorship run(Integer teacherID, Integer executionCourseID)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-            ISuportePersistente persistentSupport;
-            persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentProfessorship persistentProfessorship = persistentSupport
                     .getIPersistentProfessorship();
 

@@ -5,14 +5,12 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -21,7 +19,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteCareer extends Service {
 
 	public void run(Integer careerId) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCareer pc = persistentSupport.getIPersistentCareer();
 		
 		Career career = (Career) pc.readByOID(Career.class, careerId);

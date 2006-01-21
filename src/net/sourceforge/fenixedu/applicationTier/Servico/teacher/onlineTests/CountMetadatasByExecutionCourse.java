@@ -5,9 +5,8 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
  * @author Susana Fernandes
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class CountMetadatasByExecutionCourse extends Service {
 
     public Integer run(Integer executionCourseId) throws ExcepcaoPersistencia {
-        return new Integer(PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentMetadata()
-                .countByExecutionCourse(executionCourseId));
+        return Integer.valueOf(persistentSupport.getIPersistentMetadata().countByExecutionCourse(executionCourseId));
     }
 }

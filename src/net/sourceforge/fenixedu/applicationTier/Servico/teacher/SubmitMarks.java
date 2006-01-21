@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -31,13 +32,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Ftp;
 
 import org.apache.commons.lang.StringUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class SubmitMarks extends Service {
 	
@@ -50,11 +47,10 @@ public class SubmitMarks extends Service {
 	private static final String IMPROVMENT_DIR = "melhorias/";
 	
 	public void run(Integer executionCourseID, Integer evaluationID, String[] attendsIDs, Date evaluationDate, IUserView userView) throws ExcepcaoPersistencia, InvalidArgumentsServiceException, OutOfPeriodException {
-		ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-		IPersistentExecutionCourse persistentExecutionCourse = suportePersistente.getIPersistentExecutionCourse();
+		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 		
 		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseID);
-		FinalEvaluation finalEvaluation = (FinalEvaluation) suportePersistente.getIPersistentObject().readByOID(FinalEvaluation.class, evaluationID);
+		FinalEvaluation finalEvaluation = (FinalEvaluation) persistentSupport.getIPersistentObject().readByOID(FinalEvaluation.class, evaluationID);
 		
 		if(executionCourse == null || finalEvaluation == null) {
 			throw new InvalidArgumentsServiceException();

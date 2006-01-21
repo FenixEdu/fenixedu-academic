@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSentServiceException;
@@ -14,9 +15,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
@@ -26,8 +24,6 @@ public class PublishMarks extends Service {
     public Object run(Integer executionCourseCode, Integer evaluationCode, String publishmentMessage,
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         // Site
         IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
         Site site = siteDAO.readByExecutionCourse(executionCourseCode);

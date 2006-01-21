@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
@@ -39,15 +40,11 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -59,8 +56,6 @@ public class ReadSummary extends Service {
 
     public SiteView run(Integer executionCourseId, Integer summaryId, String userLogged)
             throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, executionCourseId);

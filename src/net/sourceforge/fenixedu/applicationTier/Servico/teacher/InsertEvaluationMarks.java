@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.TeacherAdministrationSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -32,9 +33,6 @@ import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério
@@ -51,7 +49,6 @@ public class InsertEvaluationMarks extends Service {
         List attendList = null;
         HashMap newHashMarks = new HashMap();
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
         IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
@@ -142,7 +139,6 @@ public class InsertEvaluationMarks extends Service {
         StudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentStudentCurricularPlan curricularPlanPersistente = persistentSupport
                     .getIStudentCurricularPlanPersistente();
 

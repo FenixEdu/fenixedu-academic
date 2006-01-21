@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolment;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentWithInfoCurricularCourse;
@@ -22,13 +23,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Nuno Correia
@@ -37,12 +34,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadStudentEnrollmentsAndClass extends Service {
 
     public List run(IUserView userView) throws ExcepcaoPersistencia {
-
-        ISuportePersistente suportePersistente = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        IPersistentStudentCurricularPlan pSCP = suportePersistente
+        IPersistentStudentCurricularPlan pSCP = persistentSupport
                 .getIStudentCurricularPlanPersistente();
-        IPersistentExecutionPeriod persistentExecutionPeriod = suportePersistente
+        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
                 .getIPersistentExecutionPeriod();
 
         String user = userView.getUtilizador();

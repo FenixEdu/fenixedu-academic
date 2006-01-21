@@ -5,6 +5,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoExternalActivity;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -12,9 +13,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class EditExternalActivity extends Service {
 
     public void run(Integer externalActivityId, InfoExternalActivity infoExternalActivity) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentObject po = persistentSupport.getIPersistentObject();
 		
 		ExternalActivity externalActivity = (ExternalActivity) po.readByOID(ExternalActivity.class, externalActivityId);

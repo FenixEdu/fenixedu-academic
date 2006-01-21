@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
@@ -16,13 +17,10 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.util.tests.QuestionDifficultyType;
 import net.sourceforge.fenixedu.util.tests.XMLQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -37,7 +35,6 @@ public class CreateExercise extends Service {
 			Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
 				.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
 		if (executionCourse == null) {

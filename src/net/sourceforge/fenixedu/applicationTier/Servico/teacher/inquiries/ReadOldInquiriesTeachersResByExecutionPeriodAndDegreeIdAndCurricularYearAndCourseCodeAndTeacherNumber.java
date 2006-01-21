@@ -6,18 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.inquiries;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesTeachersRes;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -45,7 +42,6 @@ public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricula
 		if (teacherNumber == null) {
 			throw new FenixServiceException("nullTeacherNumber");
 		}
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentOldInquiriesTeachersRes poits = persistentSupport.getIPersistentOldInquiriesTeachersRes();
 
 		oldInquiriesTeachersResList = poits

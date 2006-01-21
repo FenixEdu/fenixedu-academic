@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Fernanda Quitério 25/09/2003
@@ -28,7 +26,6 @@ public class AddItem extends ManageWebSiteItem {
 
         List infoWebSiteSections = new ArrayList();
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                 .getIPersistentWebSiteSection();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();

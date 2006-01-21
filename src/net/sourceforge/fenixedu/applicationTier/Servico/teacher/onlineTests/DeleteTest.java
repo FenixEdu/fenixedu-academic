@@ -6,15 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.onlineTests;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -22,7 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteTest extends Service {
 
     public void run(final Integer executionCourseId, final Integer testId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentTest persistentTest = persistentSupport.getIPersistentTest();
         final IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
 

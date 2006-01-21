@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.webSiteManager;
 
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
@@ -12,9 +13,6 @@ import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Fernanda Quitério 22/Abr/2004
@@ -23,7 +21,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ConfigureWebSiteSections extends Service {
 
 	public boolean run(InfoWebSite infoWebSite) throws FenixServiceException, ExcepcaoPersistencia {
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
 				.getIPersistentWebSiteSection();
 		IPersistentWebSite persistentWebSite = persistentSupport.getIPersistentWebSite();
