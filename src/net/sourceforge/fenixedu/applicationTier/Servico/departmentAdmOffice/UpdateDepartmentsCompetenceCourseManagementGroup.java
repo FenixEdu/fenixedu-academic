@@ -56,7 +56,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
             List<Person> result = new ArrayList<Person>();
             
             for (Integer personID : personsIDs) {
-                result.add((Person) persistentSupport.getIPersistentObject().readByOID(Person.class, personID));
+                result.add((Person) persistentObject.readByOID(Person.class, personID));
             }
             
             return result;
@@ -72,7 +72,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
     }
 
     private boolean belongsToOtherGroupsWithSameRole(ISuportePersistente persistentSupport, Department departmentWhoAsks, Person person) throws ExcepcaoPersistencia {
-        List<Department> departments = (List<Department>) persistentSupport.getIPersistentObject().readAll(Department.class);
+        List<Department> departments = (List<Department>) persistentObject.readAll(Department.class);
         for (Department department : departments) {
             if (department != departmentWhoAsks) {
                 Group group = department.getCompetenceCourseMembersGroup();
@@ -82,7 +82,7 @@ public class UpdateDepartmentsCompetenceCourseManagementGroup extends Service {
             }
         }
 
-        List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport.getIPersistentObject().readAll(DegreeCurricularPlan.class);
+        List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentObject.readAll(DegreeCurricularPlan.class);
         for (DegreeCurricularPlan dcp : dcps) {
             Group group = dcp.getCurricularPlanMembersGroup();
             if (group != null && group.isMember(person)) {

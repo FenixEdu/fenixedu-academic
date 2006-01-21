@@ -57,7 +57,7 @@ public class InsertEvaluationMarks extends Service {
         site = persistentSite.readByExecutionCourse(executionCourseCode);
 
         //Evaluation
-        evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationCode);
 
         //Attend List
         attendList = persistentAttend.readByExecutionCourse(executionCourseCode);

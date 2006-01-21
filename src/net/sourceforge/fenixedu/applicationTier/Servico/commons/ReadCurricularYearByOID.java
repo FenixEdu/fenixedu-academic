@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -23,8 +22,7 @@ public class ReadCurricularYearByOID extends Service {
 
         InfoCurricularYear result = null;
 
-            IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-            CurricularYear curricularYear = (CurricularYear) persistentObject.readByOID(
+        CurricularYear curricularYear = (CurricularYear) persistentObject.readByOID(
                     CurricularYear.class, oid);
             if (curricularYear != null) {
                 result = InfoCurricularYear.newInfoFromDomain(curricularYear);

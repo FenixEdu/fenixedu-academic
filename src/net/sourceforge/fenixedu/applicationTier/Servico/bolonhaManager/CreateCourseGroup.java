@@ -16,8 +16,8 @@ public class CreateCourseGroup extends Service {
     public void run(final Integer parentCourseGroupID, final String name) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        final CourseGroup parentCourseGroup = (CourseGroup) persistentSupport.getIPersistentObject()
-                .readByOID(CourseGroup.class, parentCourseGroupID);
+        final CourseGroup parentCourseGroup = (CourseGroup)
+        		persistentObject.readByOID(CourseGroup.class, parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
@@ -28,8 +27,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
  */
 public class EditTeacherInformation extends Service {
 	
-	private IPersistentObject persistentObject;
-
     /**
      * Executes the service.
      * 
@@ -38,8 +35,6 @@ public class EditTeacherInformation extends Service {
     public Boolean run(InfoServiceProviderRegime infoServiceProviderRegime,
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
             List<InfoPublicationsNumber> infoPublicationsNumbers) throws ExcepcaoPersistencia {
-
-		persistentObject = persistentSupport.getIPersistentObject();
 
         final IPersistentTeacher pteacher = persistentSupport.getIPersistentTeacher();
         Teacher teacher = (Teacher) pteacher.readByOID(Teacher.class, infoServiceProviderRegime

@@ -14,15 +14,15 @@ public class UpdateNonAffiliatedTeachersProfessorship extends Service {
     public void run(List<Integer> nonAffiliatedTeachersIds, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentObject().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
         for (final Integer nonAffiliatedTeachersId : nonAffiliatedTeachersIds) {
-            final NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) persistentSupport
-                    .getIPersistentObject().readByOID(NonAffiliatedTeacher.class,
+            final NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) persistentObject
+            		.readByOID(NonAffiliatedTeacher.class,
                             nonAffiliatedTeachersId);
             executionCourse.removeNonAffiliatedTeachers(nonAffiliatedTeacher);
         }

@@ -35,8 +35,8 @@ public class EditCompetenceCourseLoad extends Service {
                         curricularPeriodType);
                 
             } else {
-                final CompetenceCourseLoad competenceCourseLoad = (CompetenceCourseLoad) persistentSupport
-                        .getIPersistentObject().readByOID(CompetenceCourseLoad.class, courseLoad.getIdentification());
+                final CompetenceCourseLoad competenceCourseLoad = (CompetenceCourseLoad) persistentObject
+                		.readByOID(CompetenceCourseLoad.class, courseLoad.getIdentification());
                 
                 if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
                     competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad

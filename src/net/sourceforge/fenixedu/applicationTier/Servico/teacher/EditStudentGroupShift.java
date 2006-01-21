@@ -29,7 +29,7 @@ public class EditStudentGroupShift extends Service {
 
 		persistentShift = persistentSupport.getITurnoPersistente();
 
-		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null) {
@@ -40,7 +40,7 @@ public class EditStudentGroupShift extends Service {
 
 		// grouping.checkShiftCapacity(shift);
 
-		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {

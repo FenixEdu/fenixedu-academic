@@ -41,7 +41,6 @@ public class SelectCandidaciesService extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		SelectCandidaciesDTO result = new SelectCandidaciesDTO();
 
-		IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 		IPersistentSeminary persistentSeminary = persistentSupport.getIPersistentSeminary();
 		List seminaries = persistentSeminary.readAll();
 		List infoSeminaries = getSeminaries(inEnrollmentPeriod, seminaries);

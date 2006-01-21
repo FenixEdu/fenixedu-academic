@@ -24,7 +24,7 @@ public class EditGrantPart extends Service {
                 .getIPersistentGrantSubsidy();
         final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-        GrantPart grantPart = (GrantPart) persistentSupport.getIPersistentObject().readByOID(
+        GrantPart grantPart = (GrantPart) persistentObject.readByOID(
                 GrantPart.class, infoGrantPart.getIdInternal());
         if (grantPart == null) {
             grantPart = DomainFactory.makeGrantPart();

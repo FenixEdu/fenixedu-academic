@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -16,14 +15,13 @@ import org.apache.commons.collections.Predicate;
 public class CreateBuilding extends Service {
 
     public void run(final String buildingName, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
-        final List buildings = (List) persistentSupport.getIPersistentObject().readAll(Building.class);
+        final List buildings = (List) persistentObject.readAll(Building.class);
 
         if (exists(buildings, buildingName)) {
             throw new ExistingServiceException();
         }
 
-        final IPersistentCampus persistentCampus = persistentSupport.getIPersistentCampus();
-        final Campus campus = (Campus) persistentCampus.readByOID(Campus.class, campusID);
+        final Campus campus = (Campus) persistentObject.readByOID(Campus.class, campusID);
 
         final Building building = DomainFactory.makeBuilding();
         building.setName(buildingName);

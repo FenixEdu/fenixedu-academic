@@ -24,8 +24,7 @@ public class PrepareEditStudentGroupMembers extends Service {
 
     public List run(Integer executionCourseID, Integer studentGroupID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final StudentGroup studentGroup = (StudentGroup) persistentSupport
-                .getIPersistentObject().readByOID(StudentGroup.class, studentGroupID);
+        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(StudentGroup.class, studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();
         }

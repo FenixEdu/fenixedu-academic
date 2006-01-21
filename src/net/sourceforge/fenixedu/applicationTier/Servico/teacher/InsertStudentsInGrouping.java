@@ -38,7 +38,7 @@ public class InsertStudentsInGrouping extends Service {
 		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentAttend = persistentSupport.getIFrequentaPersistente();
 
-		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (groupProperties == null) {

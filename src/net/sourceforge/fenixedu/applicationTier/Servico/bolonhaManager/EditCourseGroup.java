@@ -12,7 +12,7 @@ public class EditCourseGroup extends Service {
 
     public void run(final Integer courseGroupID, final String name) throws ExcepcaoPersistencia,
             FenixServiceException {
-        final CourseGroup courseGroup = (CourseGroup) persistentSupport.getIPersistentObject()
+        final CourseGroup courseGroup = (CourseGroup) persistentObject
                 .readByOID(CourseGroup.class, courseGroupID);
         if (courseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");

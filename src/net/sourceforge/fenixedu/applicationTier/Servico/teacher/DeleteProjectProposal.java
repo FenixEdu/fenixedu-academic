@@ -40,7 +40,7 @@ public class DeleteProjectProposal extends Service {
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
         Person withdrawalPerson = persistentTeacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
-        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupPropertiesCode);
+        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class, groupPropertiesCode);
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseCode);
         ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, objectCode);
 

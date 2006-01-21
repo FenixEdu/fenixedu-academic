@@ -29,7 +29,7 @@ public class GroupStudentEnrolment extends Service {
 
     public Boolean run(Integer studentGroupCode, String username) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
                 StudentGroup.class, studentGroupCode);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();

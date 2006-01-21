@@ -49,7 +49,7 @@ public class AcceptNewProjectProposal extends Service {
 		IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesId);
 
 		if (grouping == null) {

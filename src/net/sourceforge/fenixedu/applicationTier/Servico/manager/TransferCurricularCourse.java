@@ -22,10 +22,10 @@ public class TransferCurricularCourse extends Service {
     public void run(Integer sourceExecutionCourseId, final Integer curricularCourseId,
             Integer destinationExecutionCourseId) throws ExcepcaoPersistencia {
 
-        final ExecutionCourse sourceExecutionCourse = (ExecutionCourse) persistentSupport
-                .getIPersistentObject().readByOID(ExecutionCourse.class, sourceExecutionCourseId);
-        final ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentSupport
-                .getIPersistentObject().readByOID(ExecutionCourse.class, destinationExecutionCourseId);
+        final ExecutionCourse sourceExecutionCourse = (ExecutionCourse) persistentObject
+        		.readByOID(ExecutionCourse.class, sourceExecutionCourseId);
+        final ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentObject
+        		.readByOID(ExecutionCourse.class, destinationExecutionCourseId);
 
         final CurricularCourse curricularCourse = (CurricularCourse) CollectionUtils.find(
                 sourceExecutionCourse.getAssociatedCurricularCourses(), new Predicate() {

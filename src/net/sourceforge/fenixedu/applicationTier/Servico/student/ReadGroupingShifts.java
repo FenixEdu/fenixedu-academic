@@ -39,13 +39,13 @@ public class ReadGroupingShifts extends Service {
 		boolean result = false;
 
 		StudentGroup studentGroup = null;
-		grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingCode);
+		grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingCode);
 		if (grouping == null) {
 			throw new ExistingServiceException();
 		}
 		if (studentGroupCode != null) {
 
-			studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(StudentGroup.class,
+			studentGroup = (StudentGroup) persistentObject.readByOID(StudentGroup.class,
 					studentGroupCode);
 
 			if (studentGroup == null) {

@@ -39,7 +39,7 @@ public class ValidateSubmitMarks extends Service {
                 ExecutionCourse.class, executionCourseCode);
 
         //evaluation
-        Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class,
                 evaluationCode);
 
         //attend list

@@ -15,7 +15,7 @@ public class DeleteAnnouncementService extends Service {
     public boolean run(Integer announcementCode)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        Announcement announcement = (Announcement) persistentSupport.getIPersistentObject().readByOID(
+        Announcement announcement = (Announcement) persistentObject.readByOID(
                 Announcement.class, announcementCode);
         if (announcement == null) {
             throw new InvalidArgumentsServiceException();

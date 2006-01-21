@@ -32,8 +32,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
 
         for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
 
-            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                    .getIPersistentObject()
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
             List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();

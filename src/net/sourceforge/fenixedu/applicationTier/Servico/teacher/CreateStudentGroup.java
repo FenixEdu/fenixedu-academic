@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author ansr & scpo
@@ -37,15 +36,12 @@ public class CreateStudentGroup extends Service {
 
     public boolean run(Integer executionCourseID, Integer groupNumber, Integer groupingID,
             Integer shiftID, List studentUserNames) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        
-        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingID);
+        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingID);
         
         if (grouping == null)
             throw new FenixServiceException();
         
-        Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftID);
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftID);
         
         List studentList = buildStudentList(studentUserNames, grouping);
         

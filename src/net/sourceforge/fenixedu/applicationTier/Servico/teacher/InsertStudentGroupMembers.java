@@ -29,7 +29,7 @@ public class InsertStudentGroupMembers extends Service {
     public Boolean run(Integer executionCourseID, Integer studentGroupID, Integer groupPropertiesID,
             List studentUsernames) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
                 StudentGroup.class, studentGroupID);
         if (studentGroup == null) {
             throw new ExistingServiceException();

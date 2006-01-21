@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
@@ -34,7 +33,6 @@ import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends Service {
 
     public InfoExecutionCourse run(final Integer oid) throws ExcepcaoPersistencia {
-        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
         InfoExecutionCourse infoExecutionCourse = null;

@@ -17,8 +17,7 @@ public class EditExecutionDegreePeriods extends Service {
 
     public void run(InfoExecutionDegree infoExecutionDegree) throws ExcepcaoPersistencia {
 
-        final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentSupport
-                .getIPersistentObject().readByOID(ExecutionDegree.class,
+        final ExecutionDegree oldExecutionDegree = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class,
                         infoExecutionDegree.getIdInternal());
 
         OccupationPeriod periodLessonsFirstSemester = setCompositePeriod(infoExecutionDegree

@@ -14,9 +14,9 @@ public class MergePrecedencesForDegreeCurricularPlan extends Service {
 			throw new InvalidArgumentsServiceException("error.manager.samePrecedencesForMerge");
 		}
 
-		Precedence firstPrecedence = (Precedence) persistentSupport.getIPersistentObject().readByOID(Precedence.class,
+		Precedence firstPrecedence = (Precedence) persistentObject.readByOID(Precedence.class,
 				firstPrecedenceID);
-		Precedence secondPrecedence = (Precedence) persistentSupport.getIPersistentObject().readByOID(Precedence.class,
+		Precedence secondPrecedence = (Precedence) persistentObject.readByOID(Precedence.class,
 				secondPrecedenceID);
 
 		firstPrecedence.mergePrecedences(secondPrecedence);

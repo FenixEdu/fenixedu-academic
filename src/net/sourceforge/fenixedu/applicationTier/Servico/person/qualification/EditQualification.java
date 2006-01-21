@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -22,13 +21,11 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 public class EditQualification extends Service {
 
     public void run(Integer qualificationId, InfoQualification infoQualification) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentObject po = persistentSupport.getIPersistentObject();
-		
-		Qualification qualification = (Qualification) po.readByOID(Qualification.class, qualificationId);
+		Qualification qualification = (Qualification) persistentObject.readByOID(Qualification.class, qualificationId);
 		//If it doesn't exist in the database, a new one has to be created
-		Country country = (Country) po.readByOID(Country.class, infoQualification.getInfoCountry().getIdInternal());
+		Country country = (Country) persistentObject.readByOID(Country.class, infoQualification.getInfoCountry().getIdInternal());
 		if(qualification == null) {
-			Person person = (Person) po.readByOID(Person.class, infoQualification.getInfoPerson().getIdInternal());
+			Person person = (Person) persistentObject.readByOID(Person.class, infoQualification.getInfoPerson().getIdInternal());
 			qualification = DomainFactory.makeQualification(person, country, infoQualification);
 		
 		} else {

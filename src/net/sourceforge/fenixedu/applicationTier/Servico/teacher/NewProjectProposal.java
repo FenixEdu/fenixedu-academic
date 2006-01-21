@@ -47,7 +47,7 @@ public class NewProjectProposal extends Service {
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
       
-        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(
+        Grouping groupProperties = (Grouping) persistentObject.readByOID(
                 Grouping.class, groupPropertiesId);
         ExecutionCourse goalExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                 ExecutionCourse.class, goalExecutionCourseId);

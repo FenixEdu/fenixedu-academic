@@ -25,7 +25,7 @@ public class UnEnrollStudentInGroup extends Service {
             ExcepcaoPersistencia {
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
                 StudentGroup.class, studentGroupCode);
 
         if (studentGroup == null) {
@@ -56,7 +56,7 @@ public class UnEnrollStudentInGroup extends Service {
         if (resultEmpty) {
             groupProperties.removeStudentGroups(studentGroup);
             studentGroup.setShift(null);
-            persistentSupport.getIPersistentObject().deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
+            persistentObject.deleteByOID(StudentGroup.class, studentGroup.getIdInternal());
             return Boolean.FALSE;
         }
 

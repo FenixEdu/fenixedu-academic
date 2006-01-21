@@ -49,7 +49,7 @@ public class WriteExtraWorkRequests extends Service {
             ExtraWorkRequests extraWorkRequests = null;
             if (infoExtraWorkRequests.getIdInternal() != null
                     && infoExtraWorkRequests.getIdInternal().intValue() > 0) {
-                extraWorkRequests = (ExtraWorkRequests) persistentSupport.getIPersistentObject().readByOID(
+                extraWorkRequests = (ExtraWorkRequests) persistentObject.readByOID(
                         ExtraWorkRequests.class, infoExtraWorkRequests.getIdInternal());
             }
             if (extraWorkRequests == null) {

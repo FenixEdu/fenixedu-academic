@@ -43,7 +43,7 @@ public class SaveTeachersBody extends Service {
         }
 
         for (final Integer teacherID : auxProfessorshipTeacherIDs) {
-            final Teacher teacher = (Teacher) persistentSupport.getIPersistentObject().readByOID(Teacher.class,
+            final Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                     teacherID);
             final Boolean isResponsible = Boolean.valueOf(responsibleTeachersIds.contains(teacherID));
             Professorship.create(isResponsible, executionCourse, teacher, null);

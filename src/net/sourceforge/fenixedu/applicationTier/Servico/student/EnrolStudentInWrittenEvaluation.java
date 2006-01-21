@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 public class EnrolStudentInWrittenEvaluation extends Service {
@@ -16,7 +15,6 @@ public class EnrolStudentInWrittenEvaluation extends Service {
 		final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 		final Student student = persistentStudent.readByUsername(username);
 
-		final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 		final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(
 				WrittenEvaluation.class, writtenEvaluationOID);
 		if (writtenEvaluation == null || student == null) {

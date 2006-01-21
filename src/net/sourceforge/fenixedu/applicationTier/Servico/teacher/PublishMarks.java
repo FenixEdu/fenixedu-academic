@@ -28,7 +28,7 @@ public class PublishMarks extends Service {
         IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
         Site site = siteDAO.readByExecutionCourse(executionCourseCode);
         // find what type of evaluation we are dealing with
-        Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class,
+        Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class,
                 evaluationCode);
 
         if (publishmentMessage == null || publishmentMessage.length() == 0) {

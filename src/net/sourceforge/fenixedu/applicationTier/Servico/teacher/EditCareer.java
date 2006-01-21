@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
 import net.sourceforge.fenixedu.domain.teacher.TeachingCareer;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -35,14 +34,12 @@ public class EditCareer extends Service {
     }
 
 	private void editCareer(Integer careerId, InfoTeachingCareer infoTeachingCareer) throws ExcepcaoPersistencia {
-		IPersistentObject po = persistentSupport.getIPersistentObject();
+		TeachingCareer teachingCareer = (TeachingCareer) persistentObject.readByOID(TeachingCareer.class, careerId);
 		
-		TeachingCareer teachingCareer = (TeachingCareer) po.readByOID(TeachingCareer.class, careerId);
-		
-        Category category = (Category)po.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
+        Category category = (Category) persistentObject.readByOID(Category.class,infoTeachingCareer.getInfoCategory().getIdInternal());
 		//If it doesn't exist in the database, a new one has to be created
 		if(teachingCareer == null) {
-			Teacher teacher = (Teacher) po.readByOID(Teacher.class, infoTeachingCareer.getInfoTeacher().getIdInternal());
+			Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeachingCareer.getInfoTeacher().getIdInternal());
 			teachingCareer = DomainFactory.makeTeachingCareer(teacher, category, infoTeachingCareer);
 
 		} else {
@@ -54,13 +51,11 @@ public class EditCareer extends Service {
 	}
 
 	private void editCareer(Integer careerId, InfoProfessionalCareer infoProfessionalCareer) throws ExcepcaoPersistencia {
-		IPersistentObject po = persistentSupport.getIPersistentObject();
-		
-		ProfessionalCareer professionalCareer = (ProfessionalCareer) po.readByOID(ProfessionalCareer.class, careerId);
+		ProfessionalCareer professionalCareer = (ProfessionalCareer) persistentObject.readByOID(ProfessionalCareer.class, careerId);
 		
 		//If it doesn't exist in the database, a new one has to be created
 		if(professionalCareer == null) {
-			Teacher teacher = (Teacher) po.readByOID(Teacher.class, infoProfessionalCareer.getInfoTeacher().getIdInternal());
+			Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoProfessionalCareer.getInfoTeacher().getIdInternal());
 			professionalCareer = DomainFactory.makeProfessionalCareer(teacher, infoProfessionalCareer);
 		} else {
 			professionalCareer.edit(infoProfessionalCareer);

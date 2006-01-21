@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 public class EditBuilding extends Service {
 
     public void run(final Integer buildingID, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
-        final Building building = (Building) persistentSupport.getIPersistentObject().readByOID(Building.class, buildingID);
+        final Building building = (Building) persistentObject.readByOID(Building.class, buildingID);
 
         final IPersistentCampus persistentCampus = persistentSupport.getIPersistentCampus();
         final Campus campus = (Campus) persistentCampus.readByOID(Campus.class, campusID);

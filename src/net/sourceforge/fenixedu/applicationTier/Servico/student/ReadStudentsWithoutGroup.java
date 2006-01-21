@@ -40,7 +40,7 @@ public class ReadStudentsWithoutGroup extends Service {
 			ExcepcaoPersistencia {
 
 		final InfoSiteStudentsWithoutGroup infoSiteStudentsWithoutGroup = new InfoSiteStudentsWithoutGroup();
-		final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject()
+		final Grouping grouping = (Grouping) persistentObject
 				.readByOID(Grouping.class, groupPropertiesCode);
 
 		if (grouping == null) {

@@ -39,7 +39,7 @@ public class ReadStudentsAndGroupsByShiftID extends Service {
 
         ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+        Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
                 groupPropertiesId);
         infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(groupProperties));
         Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftId);

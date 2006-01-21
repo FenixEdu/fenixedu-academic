@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
@@ -36,7 +35,7 @@ public class EditStudentGroupsShift extends Service {
 
 		persistentShift = persistentSupport.getITurnoPersistente();
 
-		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null) {
@@ -55,8 +54,7 @@ public class EditStudentGroupsShift extends Service {
 			throw new NonValidChangeServiceException();
 		}
 
-		List<StudentGroup> studentGroups = buildStudentGroupsList(studentGroupsCodes,
-				persistentSupport.getIPersistentObject());
+		List<StudentGroup> studentGroups = buildStudentGroupsList(studentGroupsCodes);
 
 		for (StudentGroup studentGroup : studentGroups) {
 			if (!studentGroup.getGrouping().equals(grouping)) {
@@ -70,8 +68,7 @@ public class EditStudentGroupsShift extends Service {
 		return Boolean.TRUE;
 	}
 
-	private List buildStudentGroupsList(List studentGroupsCodes,
-			IPersistentObject persistentObject) throws ExcepcaoPersistencia,
+	private List buildStudentGroupsList(List studentGroupsCodes) throws ExcepcaoPersistencia,
 			InvalidSituationServiceException {
 
 		List studentGroups = new ArrayList();

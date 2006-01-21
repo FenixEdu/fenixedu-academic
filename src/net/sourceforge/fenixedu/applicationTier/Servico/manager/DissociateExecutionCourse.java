@@ -13,13 +13,13 @@ public class DissociateExecutionCourse extends Service {
 
     public void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final CurricularCourse curricularCourse = (CurricularCourse) persistentSupport.getIPersistentObject()
+        final CurricularCourse curricularCourse = (CurricularCourse) persistentObject
                 .readByOID(CurricularCourse.class, curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentObject().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);

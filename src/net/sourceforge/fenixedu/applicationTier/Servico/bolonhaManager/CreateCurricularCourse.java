@@ -23,19 +23,19 @@ public class CreateCurricularCourse extends Service {
             Integer competenceCourseID, Integer courseGroupID, Integer year, Integer semester,
             Integer degreeCurricularPlanID) throws ExcepcaoPersistencia, FenixServiceException {
 
-        CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
-                .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
+        CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.
+        		readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
-        CourseGroup courseGroup = (CourseGroup) persistentSupport.getIPersistentObject().readByOID(
+        CourseGroup courseGroup = (CourseGroup) persistentObject.readByOID(
                 CourseGroup.class, courseGroupID);
         if (courseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentObject().readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.
+        		readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
         CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan
                 .getDegreeStructure();

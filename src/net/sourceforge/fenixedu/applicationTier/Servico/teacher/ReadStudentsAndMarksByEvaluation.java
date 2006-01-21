@@ -54,7 +54,7 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
 
         //Evaluation
 
-        Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
+        Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 

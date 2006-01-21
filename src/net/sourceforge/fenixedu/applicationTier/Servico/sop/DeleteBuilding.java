@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteBuilding extends Service {
 
     public void run(final Integer buildingId) throws ExcepcaoPersistencia, NotEmptyServiceException {
-        final Building building = (Building) persistentSupport.getIPersistentObject().readByOID(Building.class, buildingId);
+        final Building building = (Building) persistentObject.readByOID(Building.class, buildingId);
         if (!building.getRooms().isEmpty()) {
             throw new NotEmptyServiceException();
         }
-        persistentSupport.getIPersistentObject().deleteByOID(Building.class,buildingId);
+        persistentObject.deleteByOID(Building.class,buildingId);
     }
 
 }

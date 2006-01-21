@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.classProperties.ExecutionCourseProperty;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -71,7 +70,6 @@ public class DeleteExecutionCourses extends Service {
 
     private void deleteExecutionCourseProperties(final ISuportePersistente persistentSupport,
             final ExecutionCourse executionCourse) throws ExcepcaoPersistencia {
-        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
         final List<ExecutionCourseProperty> executionCourseProperties = executionCourse
                 .getExecutionCourseProperties();
         for (final ExecutionCourseProperty executionCourseProperty : executionCourseProperties) {

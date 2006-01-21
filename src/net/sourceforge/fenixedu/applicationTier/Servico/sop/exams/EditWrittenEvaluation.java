@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -39,8 +38,6 @@ public class EditWrittenEvaluation extends Service {
             List<String> curricularCourseScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID,
             Season examSeason, String writtenTestDescription) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(
                 WrittenEvaluation.class, writtenEvaluationOID);
         if (writtenEvaluation == null) {

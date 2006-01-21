@@ -25,7 +25,7 @@ public class CreateNewFunction extends Service {
         if (functionID == null) {
             function = DomainFactory.makeFunction();
         } else {
-            function = (Function) persistentSupport.getIPersistentObject().readByOID(Function.class,
+            function = (Function) persistentObject.readByOID(Function.class,
                     functionID);
             if (function == null) {
                 throw new FenixServiceException("error.noFunction");

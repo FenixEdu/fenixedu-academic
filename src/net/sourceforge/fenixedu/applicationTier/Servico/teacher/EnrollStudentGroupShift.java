@@ -29,7 +29,7 @@ public class EnrollStudentGroupShift extends Service {
 
 		ITurnoPersistente persistentShift = null;
 
-		Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesCode);
 
 		if (grouping == null) {
@@ -43,7 +43,7 @@ public class EnrollStudentGroupShift extends Service {
 			throw new InvalidSituationServiceException();
 		}
 
-		StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+		StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
 				StudentGroup.class, studentGroupCode);
 
 		if (studentGroup == null) {

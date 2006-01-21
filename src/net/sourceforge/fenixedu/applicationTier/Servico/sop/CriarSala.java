@@ -49,7 +49,7 @@ public class CriarSala extends Service {
 
     protected Building findBuilding(final ISuportePersistente persistentSupport, final String edificio)
             throws ExcepcaoPersistencia {
-        final List buildings = (List) persistentSupport.getIPersistentObject().readAll(Building.class);
+        final List buildings = (List) persistentObject.readAll(Building.class);
         return (Building) CollectionUtils.find(buildings, new Predicate() {
             public boolean evaluate(Object arg0) {
                 final Building building = (Building) arg0;

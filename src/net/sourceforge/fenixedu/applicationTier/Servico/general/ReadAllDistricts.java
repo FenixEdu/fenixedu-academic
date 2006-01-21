@@ -21,7 +21,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadAllDistricts extends Service {
 
     public List run() throws ExcepcaoPersistencia{
-        List districts = (List) persistentSupport.getIPersistentObject().readAll(District.class);
+        List districts = (List) persistentObject.readAll(District.class);
         
         List infoDistricts = (List) CollectionUtils.collect(districts, new Transformer(){
 

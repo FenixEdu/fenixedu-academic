@@ -26,7 +26,7 @@ public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupPropertiesCode);
+        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();

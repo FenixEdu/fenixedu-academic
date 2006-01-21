@@ -29,8 +29,7 @@ public class ReadStudentsEnrolledInWrittenEvaluation extends Service {
     public SiteView run(Integer executionCourseID, Integer writtenEvaluationID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
-                .getIPersistentObject().readByOID(WrittenEvaluation.class, writtenEvaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(WrittenEvaluation.class, writtenEvaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

@@ -74,7 +74,7 @@ public class CreateGratuitySituationsForCurrentExecutionYear extends Service {
         }
 
         for (GratuitySituation gratuitySituationToDelete : this.gratuitySituationsToDelete) {
-            persistentSupport.getIPersistentObject().deleteByOID(GratuitySituation.class,
+        	persistentObject.deleteByOID(GratuitySituation.class,
                     gratuitySituationToDelete.getIdInternal());
         }
     }

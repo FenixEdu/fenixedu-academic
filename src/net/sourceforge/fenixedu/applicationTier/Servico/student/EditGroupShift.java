@@ -35,13 +35,13 @@ public class EditGroupShift extends Service {
 
     public boolean run(Integer studentGroupID, Integer groupingID, Integer newShiftID, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
                 groupingID);
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+        final StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
                 StudentGroup.class, studentGroupID);
         if (studentGroup == null) {
             throw new InvalidArgumentsServiceException();

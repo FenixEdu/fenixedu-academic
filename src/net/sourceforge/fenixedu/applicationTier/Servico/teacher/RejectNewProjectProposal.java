@@ -44,7 +44,7 @@ public class RejectNewProjectProposal extends Service {
 		IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-		Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class,
+		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesId);
 
 		if (groupProperties == null) {

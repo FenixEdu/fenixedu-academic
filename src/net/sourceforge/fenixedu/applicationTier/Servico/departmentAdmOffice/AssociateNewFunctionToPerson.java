@@ -22,13 +22,13 @@ public class AssociateNewFunctionToPerson extends Service {
     public void run(Integer functionID, Integer personID, Double credits,
             Date beginDate, Date endDate) throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class, personID);
+        Person person = (Person) persistentObject.readByOID(Person.class, personID);
         
         if(person == null){
             throw new FenixServiceException("error.noPerson");
         }
                        
-        Function function = (Function) persistentSupport.getIPersistentObject().readByOID(Function.class, functionID);
+        Function function = (Function) persistentObject.readByOID(Function.class, functionID);
         
         if(function == null){
             throw new FenixServiceException("error.noFunction");

@@ -37,7 +37,7 @@ public class ReadStudentGroupInformation extends Service {
         Grouping grouping = null;
         List groupAttendsList = null;
 
-        studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(StudentGroup.class,
+        studentGroup = (StudentGroup) persistentObject.readByOID(StudentGroup.class,
                 studentGroupCode);
 
         if (studentGroup == null) {

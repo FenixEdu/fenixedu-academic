@@ -34,14 +34,14 @@ public class UnEnrollGroupShift extends Service {
 
     public boolean run(Integer studentGroupCode, Integer groupPropertiesCode, String username)
             throws FenixServiceException, ExcepcaoPersistencia {
-        Grouping groupProperties = (Grouping) persistentSupport.getIPersistentObject().readByOID(
+        Grouping groupProperties = (Grouping) persistentObject.readByOID(
                 Grouping.class, groupPropertiesCode);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();
         }
 
-        StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
                 StudentGroup.class, studentGroupCode);
 
         if (studentGroup == null)

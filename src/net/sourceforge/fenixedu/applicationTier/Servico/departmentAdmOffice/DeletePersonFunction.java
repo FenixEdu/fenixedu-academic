@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeletePersonFunction extends Service {
 
     public void run(Integer personFunctionID) throws ExcepcaoPersistencia {
-        PersonFunction person_Function = (PersonFunction) persistentSupport.getIPersistentObject()
+        PersonFunction person_Function = (PersonFunction) persistentObject
                 .readByOID(PersonFunction.class, personFunctionID);
 
         person_Function.delete();

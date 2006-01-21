@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExportGroupingsByGrouping extends Service {
 
     public List<InfoExportGrouping> run(Integer groupingOID) throws ExcepcaoPersistencia {
-        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingOID);
+        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingOID);
         final List<ExportGrouping> exportGroupings = grouping.getExportGroupings();
 
         final List<InfoExportGrouping> infoExportGroupings = new ArrayList<InfoExportGrouping>(exportGroupings.size());

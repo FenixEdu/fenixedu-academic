@@ -37,10 +37,10 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		
 
-		final ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentObject().readByOID(ExecutionYear.class, executionYearID);
+		final ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class, executionYearID);
 		final List<ExecutionPeriod> executionPeriodList = executionYear.getExecutionPeriods();
 		
-		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentSupport.getIPersistentObject().readAll(ExecutionPeriod.class);
+		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentObject.readAll(ExecutionPeriod.class);
 		
 		final ExecutionPeriod startPeriod = findStartPeriod(allExecutionPeriods);
 

@@ -24,7 +24,7 @@ public class WriteMarks extends Service {
     	final List<DomainException> exceptionList = new ArrayList<DomainException>(); 
         final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         
-        final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationOID);
+        final Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationOID);
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executioCourseOID);
         
         for (final Entry<Integer, String> entry : marks.entrySet()) {

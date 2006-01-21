@@ -54,7 +54,7 @@ public class ReadPublishedMarksByExam extends Service {
 
         // Evaluation
 
-        evaluation = (Evaluation) persistentSupport.getIPersistentObject().readByOID(Evaluation.class, evaluationCode);
+        evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationCode);
 
         infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 

@@ -41,7 +41,7 @@ public class EditarSala extends Service {
 
 	protected Building findBuilding(final String edificio)
 			throws ExcepcaoPersistencia {
-		final List<Building> buildings = (List<Building>) persistentSupport.getIPersistentObject().readAll(Building.class);
+		final List<Building> buildings = (List<Building>) persistentObject.readAll(Building.class);
 		return (Building) CollectionUtils.find(buildings, new Predicate() {
 			public boolean evaluate(Object arg0) {
 				final Building building = (Building) arg0;

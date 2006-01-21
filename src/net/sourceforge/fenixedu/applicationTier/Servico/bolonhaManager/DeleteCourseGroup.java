@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteCourseGroup extends Service {
 
     public void run(final Integer courseGroupID) throws ExcepcaoPersistencia, FenixServiceException {
-        final CourseGroup courseGroup = (CourseGroup) persistentSupport.getIPersistentObject()
+        final CourseGroup courseGroup = (CourseGroup) persistentObject
                 .readByOID(CourseGroup.class, courseGroupID);
         if (courseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");

@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
  * 
@@ -16,7 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 public class ReadCurricularCourseByID extends Service {
 
     public InfoCurricularCourse run(Integer curricularCourseID) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
         CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class,
                 curricularCourseID);
 

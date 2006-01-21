@@ -50,7 +50,7 @@ public class SubmitMarks extends Service {
 		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 		
 		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseID);
-		FinalEvaluation finalEvaluation = (FinalEvaluation) persistentSupport.getIPersistentObject().readByOID(FinalEvaluation.class, evaluationID);
+		FinalEvaluation finalEvaluation = (FinalEvaluation) persistentObject.readByOID(FinalEvaluation.class, evaluationID);
 		
 		if(executionCourse == null || finalEvaluation == null) {
 			throw new InvalidArgumentsServiceException();

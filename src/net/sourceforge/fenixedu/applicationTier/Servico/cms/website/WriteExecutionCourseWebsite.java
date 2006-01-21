@@ -80,7 +80,7 @@ public class WriteExecutionCourseWebsite extends CmsService
 		website.setName(parameters.getName());
 		website.setDescription(parameters.getDescription());
 		
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentObject().readByOID(ExecutionCourse.class,parameters.getExecutionCourseID());
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,parameters.getExecutionCourseID());
 		if (executionCourse.getExecutionCourseWebsite()!=null)
 		{
 			throw new ExecutionCourseAlreadyHasWebsiteException("The selected execution course already have a website");

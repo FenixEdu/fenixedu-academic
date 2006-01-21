@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.tools.Profiler;
 
 public class ReadDepartmentTeachersCreditsDetailsService extends Service {
@@ -69,8 +68,6 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
 
     protected List<Teacher> doSearch(HashMap searchParameters) throws ExcepcaoPersistencia {
         Integer departmentId = Integer.valueOf((String) searchParameters.get("idInternal"));
-
-        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
         final Department department = (Department) persistentObject.readByOID(Department.class,
                 departmentId);

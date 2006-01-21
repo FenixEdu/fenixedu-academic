@@ -10,14 +10,14 @@ public class InsertProfessorShipNonAffiliatedTeacher extends Service {
 
     public void run(Integer nonAffiliatedTeacherID, Integer executionCourseID) throws Exception {
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentObject().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null) {
             throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
         }
 
-        final NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) persistentSupport
-                .getIPersistentObject().readByOID(NonAffiliatedTeacher.class, nonAffiliatedTeacherID);
+        final NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) persistentObject.
+        		readByOID(NonAffiliatedTeacher.class, nonAffiliatedTeacherID);
         if (nonAffiliatedTeacher == null) {
             throw new NonExistingServiceException("message.non.existing.nonAffiliatedTeacher", null);
         }

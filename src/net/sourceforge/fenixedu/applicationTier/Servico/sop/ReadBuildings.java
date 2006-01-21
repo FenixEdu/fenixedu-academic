@@ -17,7 +17,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadBuildings extends Service {
 
     public List run() throws ExcepcaoPersistencia {
-        return (List) CollectionUtils.collect(persistentSupport.getIPersistentObject().readAll(Building.class), new Transformer() {
+        return (List) CollectionUtils.collect(persistentObject.readAll(Building.class), new Transformer() {
             public Object transform(Object arg0) {
                 final Building building = (Building) arg0;
                 return InfoBuilding.newInfoFromDomain(building);

@@ -30,7 +30,7 @@ public class WriteDislocatedStudentAnswer extends Service {
         if(dislocatedCountryID != null){
             dislocatedCountry = (Country) persistentCountry.readByOID(Country.class, dislocatedCountryID);
         }
-        District district = (District) persistentSupport.getIPersistentObject().readByOID(District.class, districtID);
+        District district = (District) persistentObject.readByOID(District.class, districtID);
         
         DislocatedStudent dislocatedStudent = DomainFactory.makeDislocatedStudent();
         dislocatedStudent.setStudent(student);

@@ -20,8 +20,7 @@ public class WrittenEvaluationRoomDistribution extends Service {
             Boolean sendSMS, Boolean distributeOnlyEnroledStudents) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentSupport
-                .getIPersistentObject().readByOID(Exam.class, evaluationID);
+        final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(Exam.class, evaluationID);
         if (writtenEvaluation == null) {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }

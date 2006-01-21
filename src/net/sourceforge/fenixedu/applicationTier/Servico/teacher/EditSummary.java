@@ -41,7 +41,7 @@ public class EditSummary extends Service {
         final Summary summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary
                 .getIdInternal());
         
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentObject().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         
         final Shift shift = SummaryUtils.getShift(persistentSupport, summary, infoSummary);

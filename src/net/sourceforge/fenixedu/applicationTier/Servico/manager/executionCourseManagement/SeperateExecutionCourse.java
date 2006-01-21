@@ -30,8 +30,6 @@ public class SeperateExecutionCourse extends Service {
             final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer)
             throws ExcepcaoPersistencia {
 
-        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
-
         final ExecutionCourse originExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, originExecutionCourseOid);
         ExecutionCourse destinationExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, destinationExecutionCourseId);
         if (destinationExecutionCourse == null) {

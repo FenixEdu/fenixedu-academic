@@ -41,13 +41,13 @@ public class EditGrantContractRegime extends EditDomainObjectService {
         grantContractRegime.setCostCenterKey(infoGrantContractRegime.getCostCenterKey());
         grantContractRegime.setState(infoGrantContractRegime.getState());
 
-        GrantContract grantContract = (GrantContract) persistentSupport.getIPersistentObject().readByOID(
+        GrantContract grantContract = (GrantContract) persistentObject.readByOID(
                 GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
         grantContractRegime.setGrantContract(grantContract);
 
         if (grantContract.getCostCenterKey() != null
                 && grantContract.getCostCenterKey() != new Integer(0)) {
-            GrantCostCenter grantCostCenter = (GrantCostCenter) persistentSupport.getIPersistentObject().readByOID(
+            GrantCostCenter grantCostCenter = (GrantCostCenter) persistentObject.readByOID(
                     GrantCostCenter.class, infoGrantContractRegime.getIdInternal());
             grantContractRegime.setGrantCostCenter(grantCostCenter);
         } else {
@@ -75,7 +75,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
     protected DomainObject readObjectByUnique(InfoObject infoObject)
             throws ExcepcaoPersistencia {
         InfoGrantContractRegime infoGrantContractRegime = (InfoGrantContractRegime) infoObject;
-        return persistentSupport.getIPersistentObject().readByOID(GrantContractRegime.class,
+        return persistentObject.readByOID(GrantContractRegime.class,
                 infoGrantContractRegime.getIdInternal());
     }
 
@@ -97,7 +97,7 @@ public class EditGrantContractRegime extends EditDomainObjectService {
             IPersistentGrantCostCenter pGrantCostCenter = persistentSupport.getIPersistentGrantCostCenter();
             IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
 
-            GrantContract grantContract = (GrantContract) persistentSupport.getIPersistentObject().readByOID(
+            GrantContract grantContract = (GrantContract) persistentObject.readByOID(
                     GrantContract.class, infoGrantContractRegime.getInfoGrantContract().getIdInternal());
 
             if (infoGrantContractRegime.getGrantCostCenterInfo() != null

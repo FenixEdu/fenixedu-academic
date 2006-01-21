@@ -19,7 +19,7 @@ public class CreateCompetenceCourse extends Service {
     public CompetenceCourse run(String name, String nameEn, String acronym, Boolean basic,
             RegimeType regimeType, Integer unitID) throws ExcepcaoPersistencia, FenixServiceException {
 
-        final Unit unit = (Unit) persistentSupport.getIPersistentObject().readByOID(Unit.class, unitID);
+        final Unit unit = (Unit) persistentObject.readByOID(Unit.class, unitID);
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }

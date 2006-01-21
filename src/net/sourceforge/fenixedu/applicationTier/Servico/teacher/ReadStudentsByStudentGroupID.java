@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -32,9 +31,7 @@ public class ReadStudentsByStudentGroupID extends Service {
 
         List infoStudents = new LinkedList();
         
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-
-        StudentGroup studentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+        StudentGroup studentGroup = (StudentGroup) persistentObject.readByOID(
                 StudentGroup.class, groupId);
        
         Iterator iter = studentGroup.getAttends().iterator();
@@ -42,7 +39,7 @@ public class ReadStudentsByStudentGroupID extends Service {
         while(iter.hasNext()) {
             Attends attend = (Attends) iter.next();
             Integer studentID = attend.getAluno().getIdInternal();
-            Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
+            Student student = (Student) persistentObject.readByOID(Student.class, studentID);
             infoStudents.add(InfoStudent.newInfoFromDomain(student));
         }
         return infoStudents;

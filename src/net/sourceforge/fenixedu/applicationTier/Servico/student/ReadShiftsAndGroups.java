@@ -31,7 +31,7 @@ import org.apache.commons.beanutils.BeanComparator;
 public class ReadShiftsAndGroups extends Service {
 
     public static ISiteComponent run(Integer groupingCode, String username) throws ExcepcaoPersistencia, FenixServiceException {
-        final Grouping grouping = (Grouping) persistentSupport.getIPersistentObject().readByOID(Grouping.class, groupingCode);
+        final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingCode);
         if (grouping == null) {
             throw new InvalidSituationServiceException();
         }

@@ -27,7 +27,7 @@ public class EditGrantInsurance extends Service {
         final IPersistentGrantPaymentEntity persistentGrantPaymentEntity = persistentSupport
                 .getIPersistentGrantPaymentEntity();
 
-        GrantInsurance grantInsurance = (GrantInsurance) persistentSupport.getIPersistentObject()
+        GrantInsurance grantInsurance = (GrantInsurance) persistentObject
                 .readByOID(GrantInsurance.class, infoGrantInsurance.getIdInternal());
         if (grantInsurance == null) {
             grantInsurance = DomainFactory.makeGrantInsurance();

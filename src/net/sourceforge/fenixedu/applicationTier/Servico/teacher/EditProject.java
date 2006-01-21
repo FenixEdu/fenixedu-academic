@@ -15,7 +15,7 @@ public class EditProject extends Service {
 
     public void run(Integer executionCourseID, Integer projectID, String name, Date begin, Date end,
             String description) throws ExcepcaoPersistencia, FenixServiceException {
-        final Project project = (Project) persistentSupport.getIPersistentObject().readByOID(
+        final Project project = (Project) persistentObject.readByOID(
                 Project.class, projectID);
         if (project == null) {
             throw new FenixServiceException("error.noEvaluation");

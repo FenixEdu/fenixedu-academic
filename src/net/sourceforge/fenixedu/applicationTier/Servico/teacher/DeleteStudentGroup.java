@@ -18,14 +18,14 @@ public class DeleteStudentGroup extends Service {
 
     public Boolean run(Integer executionCourseCode, Integer studentGroupCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        StudentGroup deletedStudentGroup = (StudentGroup) persistentSupport.getIPersistentObject().readByOID(
+        StudentGroup deletedStudentGroup = (StudentGroup) persistentObject.readByOID(
                 StudentGroup.class, studentGroupCode);
         
         if (deletedStudentGroup == null)
             throw new ExistingServiceException();     
 
         deletedStudentGroup.delete();
-        persistentSupport.getIPersistentObject().deleteByOID(StudentGroup.class, deletedStudentGroup.getIdInternal());
+        persistentObject.deleteByOID(StudentGroup.class, deletedStudentGroup.getIdInternal());
 
         return Boolean.TRUE;
     }
