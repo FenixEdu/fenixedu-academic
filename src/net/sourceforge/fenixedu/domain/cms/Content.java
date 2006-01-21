@@ -6,10 +6,6 @@ package net.sourceforge.fenixedu.domain.cms;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.Person;
-import relations.CmsUsers;
-import relations.ContentCreation;
-import relations.ContentHierarchy;
-import relations.ContentOwnership;
 
 public abstract class Content extends Content_Base implements Comparable<Content>
 {
@@ -42,14 +38,14 @@ public abstract class Content extends Content_Base implements Comparable<Content
 			ContentHierarchy.remove(this, parent);
 		}
 
-		ContentCreation.remove(this.getCreator(), this);
+		ContentCreation.remove(this, this.getCreator());
 
 		for (Person owner : this.getOwners())
 		{
-			ContentOwnership.remove(owner, this);
+			ContentOwnership.remove(this, owner);
 			if (owner.getCreatedContents().size() == 0 && owner.getOwnedContents().size() == 0)
 			{
-				CmsUsers.remove(this.getCms(), owner);
+				Cms.CmsUsers.remove(this.getCms(), owner);
 			}
 		}
 

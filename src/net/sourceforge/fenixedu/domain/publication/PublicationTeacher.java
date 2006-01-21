@@ -7,6 +7,10 @@ import net.sourceforge.fenixedu.util.PublicationArea;
 
 public class PublicationTeacher extends PublicationTeacher_Base {
 
+    static {
+        Teacher.PublicationTeacherTeacher.addListener(new PublicationTeacherTeacherListener());
+    }
+
     
     public PublicationTeacher()
     {
@@ -46,4 +50,14 @@ public class PublicationTeacher extends PublicationTeacher_Base {
         if (!isAuthor) throw new DomainException("error.publication.teacherNotAuthor");
     }
 
+
+
+    private static class PublicationTeacherTeacherListener extends dml.runtime.RelationAdapter<Teacher,PublicationTeacher> {
+        @Override
+        public void beforeAdd(Teacher teacher, PublicationTeacher publication) {
+            if (! teacher.canAddPublicationToTeacherInformationSheet(publication.getPublicationArea())) {
+                throw new DomainException("error.teacherSheetFull", publication.getPublicationArea().getName());
+            }
+        }
+    }
 }

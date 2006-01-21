@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.stm;
 import jvstm.VBoxBody;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
-public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
+public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject,dml.runtime.FenixVBox<E> {
     static final Object NOT_LOADED_VALUE = new Object();
 
     public VBox() {
@@ -20,6 +20,15 @@ public class VBox<E> extends jvstm.VBox<E> implements VersionedSubject {
 
     public E get(Object obj, String attrName) {
         return Transaction.currentFenixTransaction().getBodyForRead(this, obj, attrName).value;
+    }
+
+    public void put(Object obj, String attrName, E newValue) {
+        // TODO: eventually remove this 
+        if (! (attrName.equals("idInternal") || attrName.equals("ackOptLock"))) {
+            // the set of the idInternal or ackOptLock is performed by OJB and should not be logged
+            Transaction.storeObject((DomainObject)obj, attrName);
+        }
+        put(newValue);
     }
     
     public boolean hasValue() {

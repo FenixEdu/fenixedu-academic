@@ -9,11 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import relations.CmsContents;
-import relations.CmsUsers;
-import relations.ContentCreation;
-import relations.ContentOwnership;
-import relations.ExecutionCourseWebsiteRelation;
+
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
@@ -85,17 +81,17 @@ public class WriteExecutionCourseWebsite extends CmsService
 		{
 			throw new ExecutionCourseAlreadyHasWebsiteException("The selected execution course already have a website");
 		}
-		ExecutionCourseWebsiteRelation.add(website,executionCourse);
+		website.setExecutionCourse(executionCourse);
 		
-		ContentCreation.add(parameters.getPerson(),website);
-		ContentOwnership.add(parameters.getPerson(),website);
+		website.setCreator(parameters.getPerson());
+		website.addOwners(parameters.getPerson());
 		this.updateRootObjectReferences(website);
 		return website;
 	}
 
 	private void updateRootObjectReferences(ExecutionCourseWebsite website) throws ExcepcaoPersistencia
 	{
-		CmsContents.add(this.readFenixCMS(),website);
-		CmsUsers.add(this.readFenixCMS(),website.getCreator());
+            this.readFenixCMS().addContents(website);
+            this.readFenixCMS().addUsers(website.getCreator());
 	}
 }

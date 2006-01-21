@@ -12,6 +12,11 @@ import org.apache.commons.collections.Predicate;
 
 public class Advise extends Advise_Base {
 
+    static {
+        TeacherAdviseService.AdviseTeacherAdviseService.addListener(new AdviseTeacherAdviseServiceListener());
+    }
+
+
     public Advise(Teacher teacher, Student student, AdviseType adviseType,
             ExecutionPeriod startPeriod, ExecutionPeriod endPeriod) {
         super();
@@ -122,6 +127,36 @@ public class Advise extends Advise_Base {
 
         public AdviseType getAdviseType() {
             return adviseType;
+        }
+    }
+
+    private static class AdviseTeacherAdviseServiceListener extends dml.runtime.RelationAdapter<TeacherAdviseService,Advise> {
+        @Override
+        public void afterAdd(TeacherAdviseService teacherAdviseServices, Advise advise) {
+            ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
+                .getExecutionPeriod();
+            if (executionPeriod.getEndDate().after(advise.getEndExecutionPeriod().getEndDate())) {
+                advise.setEndExecutionPeriod(executionPeriod);
+            }
+            if (executionPeriod.getBeginDate().before(advise.getStartExecutionPeriod().getEndDate())) {
+                advise.setStartExecutionPeriod(executionPeriod);
+            }
+        }
+        
+        @Override
+        public void afterRemove(TeacherAdviseService teacherAdviseServices, Advise advise) {
+            if (advise != null) {
+                if (advise.getTeacherAdviseServices() == null || advise.getTeacherAdviseServices().isEmpty()) {
+                    advise.delete();
+                } else if (teacherAdviseServices != null) {
+                    ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService().getExecutionPeriod();
+                    if (executionPeriod == advise.getEndExecutionPeriod()) {
+                        advise.updateEndExecutionPeriod();
+                    } else if (executionPeriod == advise.getStartExecutionPeriod()) {
+                        advise.updateStartExecutionPeriod();
+                    }
+                }
+            }
         }
     }
 }

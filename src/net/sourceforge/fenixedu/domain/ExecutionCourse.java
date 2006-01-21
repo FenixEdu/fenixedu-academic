@@ -23,6 +23,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 public class ExecutionCourse extends ExecutionCourse_Base implements INode {
+
+    static {
+        CurricularCourseExecutionCourse.addListener(new CurricularCourseExecutionCourseListener());
+    }
+
+
 	public String toString() {
 		String result = "[EXECUTION_COURSE";
 		result += ", codInt=" + getIdInternal();
@@ -540,4 +546,47 @@ public class ExecutionCourse extends ExecutionCourse_Base implements INode {
 		return orderedAttends;
 	}
 
+
+    private static class CurricularCourseExecutionCourseListener extends dml.runtime.RelationAdapter<ExecutionCourse,CurricularCourse> {
+        @Override
+        public void afterAdd(ExecutionCourse execution, CurricularCourse curricular) {
+            for (final Enrolment enrolment : curricular.getEnrolments()) {
+                if (enrolment.getExecutionPeriod().equals(execution.getExecutionPeriod())) {
+                    associateAttend(enrolment, execution);
+                }
+            }
+        }
+
+        @Override
+        public void afterRemove(ExecutionCourse execution, CurricularCourse curricular) {
+            if (execution != null) {
+                for (Attends attends : execution.getAttends()) {
+                    if ((attends.getEnrolment() != null)
+                        && (attends.getEnrolment().getCurricularCourse().equals(curricular))) {
+                        attends.setEnrolment(null);
+                    }
+                }
+            }
+        }
+
+        private static void associateAttend(Enrolment enrolment, ExecutionCourse executionCourse) {
+            if (!alreadyHasAttend(enrolment, executionCourse.getExecutionPeriod())) {
+                Attends attends = executionCourse.getAttendsByStudent(enrolment.getStudentCurricularPlan()
+                                                                      .getStudent());
+                if (attends == null) {
+                    attends = new Attends(enrolment.getStudentCurricularPlan().getStudent(), executionCourse);
+                }
+                enrolment.addAttends(attends);
+            }
+        }
+        
+        private static boolean alreadyHasAttend(Enrolment enrolment, ExecutionPeriod executionPeriod) {
+            for (Attends attends : enrolment.getAttends()) {
+                if (attends.getDisciplinaExecucao().getExecutionPeriod().equals(executionPeriod)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }

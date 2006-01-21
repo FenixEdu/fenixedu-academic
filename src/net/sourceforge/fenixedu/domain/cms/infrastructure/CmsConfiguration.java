@@ -56,7 +56,7 @@ public class CmsConfiguration extends CmsConfiguration_Base
 		
 	public void delete()
 	{
-		relations.CmsConfiguration.remove(this.getCms(),this);
-		super.deleteDomainObject();
+            CmsConfiguration.remove(this, this.getCms());
+            super.deleteDomainObject();
 	}		
 }

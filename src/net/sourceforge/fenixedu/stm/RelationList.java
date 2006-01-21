@@ -1,45 +1,55 @@
 package net.sourceforge.fenixedu.stm;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
+
 import java.lang.ref.SoftReference;
 import java.util.AbstractList;
 import java.util.Iterator;
+import java.util.Set;
 
 import jvstm.PerTxBox;
+import dml.runtime.Relation;
 
-public abstract class RelationList<E> extends AbstractList<E> implements VersionedSubject {
-    private Object listHolder;
+public class RelationList<E1,E2> extends AbstractList<E2> implements VersionedSubject,Set<E2>,dml.runtime.RelationBaseSet<E2> {
+    private E1 listHolder;
+    private Relation<E1,E2> relation;
     private String attributeName;
-    private SoftReference<VBox<FunctionalSet<E>>> elementsRef;
-    private PerTxBox<FunctionalSet<E>> elementsToAdd = new PerTxBox<FunctionalSet<E>>(FunctionalSet.EMPTY) {
-        public void commit(FunctionalSet<E> toAdd) {
-	    consolidateElementsIfLoaded();
-        }
-    };
-    private PerTxBox<FunctionalSet<E>> elementsToRemove = new PerTxBox<FunctionalSet<E>>(FunctionalSet.EMPTY) {
-        public void commit(FunctionalSet<E> toRemove) {
+
+    private SoftReference<VBox<FunctionalSet<E2>>> elementsRef;
+
+    private PerTxBox<FunctionalSet<E2>> elementsToAdd = new PerTxBox<FunctionalSet<E2>>(FunctionalSet.EMPTY) {
+        public void commit(FunctionalSet<E2> toAdd) {
 	    consolidateElementsIfLoaded();
         }
     };
 
-    public RelationList(Object listHolder, String attributeName, boolean allocateOnly) {
+    private PerTxBox<FunctionalSet<E2>> elementsToRemove = new PerTxBox<FunctionalSet<E2>>(FunctionalSet.EMPTY) {
+        public void commit(FunctionalSet<E2> toRemove) {
+	    consolidateElementsIfLoaded();
+        }
+    };
+
+    public RelationList(E1 listHolder, Relation<E1,E2> relation, String attributeName, boolean allocateOnly) {
 	this.listHolder = listHolder;
+        this.relation = relation;
 	this.attributeName = attributeName;
+
 	VBox elementsBox = null;
 	if (allocateOnly) {
 	    elementsBox = VBox.makeNew(allocateOnly, true);
 	} else {
-	    elementsBox = new ReferenceBox<FunctionalSet<E>>(FunctionalSet.EMPTY);
+	    elementsBox = new ReferenceBox<FunctionalSet<E2>>(FunctionalSet.EMPTY);
 	}
-	this.elementsRef = new SoftReference<VBox<FunctionalSet<E>>>(elementsBox);
+	this.elementsRef = new SoftReference<VBox<FunctionalSet<E2>>>(elementsBox);
     }
 
     // The access to the elementsRef field should be synchronized
-    private synchronized VBox<FunctionalSet<E>> getElementsBox() {
-	VBox<FunctionalSet<E>> box = elementsRef.get();
+    private synchronized VBox<FunctionalSet<E2>> getElementsBox() {
+	VBox<FunctionalSet<E2>> box = elementsRef.get();
 	if (box == null) {
 	    box = VBox.makeNew(true, true);
 	    box.initKnownVersions(listHolder, attributeName);
-	    this.elementsRef = new SoftReference<VBox<FunctionalSet<E>>>(box);
+	    this.elementsRef = new SoftReference<VBox<FunctionalSet<E2>>>(box);
 	}
 	return box;
     }
@@ -47,7 +57,7 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 
     // The access to the elementsRef field should be synchronized
     public synchronized void addNewVersion(int txNumber) {
-	VBox<FunctionalSet<E>> box = elementsRef.get();
+	VBox<FunctionalSet<E2>> box = elementsRef.get();
 	if (box != null) {
 	    box.addNewVersion(txNumber);
 	}
@@ -57,18 +67,14 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 	getElementsBox().initKnownVersions(obj, attr);
     }
 
-
-    protected abstract void addToRelation(E element);
-    protected abstract void removeFromRelation(E element);
-
-    private FunctionalSet<E> elementSet() {
+    private FunctionalSet<E2> elementSet() {
 	consolidateElements();
 	return getElementsBox().get(listHolder, attributeName);
     }
 
     protected void consolidateElementsIfLoaded() {
 	if (elementsToAdd.get().size() + elementsToRemove.get().size() > 0) {
-	    VBox<FunctionalSet<E>> box = getElementsBox();
+	    VBox<FunctionalSet<E2>> box = getElementsBox();
 	    if (box.hasValue()) {
 		consolidateElements();
 	    } else {
@@ -78,12 +84,12 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
     }
 
     private void consolidateElements() {
-	VBox<FunctionalSet<E>> box = getElementsBox();
-	FunctionalSet<E> origSet = box.get(listHolder, attributeName);
-	FunctionalSet<E> newSet = origSet;
+	VBox<FunctionalSet<E2>> box = getElementsBox();
+	FunctionalSet<E2> origSet = box.get(listHolder, attributeName);
+	FunctionalSet<E2> newSet = origSet;
 
 	if (elementsToRemove.get().size() > 0) {
-	    Iterator<E> iter = elementsToRemove.get().iterator();
+	    Iterator<E2> iter = elementsToRemove.get().iterator();
 	    while (iter.hasNext()) {
 		newSet = newSet.remove(iter.next());
 	    }
@@ -91,7 +97,7 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 	}
 
 	if (elementsToAdd.get().size() > 0) {
-	    Iterator<E> iter = elementsToAdd.get().iterator();
+	    Iterator<E2> iter = elementsToAdd.get().iterator();
 	    while (iter.hasNext()) {
 		newSet = newSet.add(iter.next());
 	    }
@@ -107,12 +113,14 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 	getElementsBox().setFromOJB(obj, attr, ojbList.getElements());
     }
 
-    public void justAdd(E obj) {
+    public void justAdd(E2 obj) {
+        Transaction.logAttrChange((DomainObject)listHolder, attributeName);
 	elementsToAdd.put(elementsToAdd.get().add(obj));
 	elementsToRemove.put(elementsToRemove.get().remove(obj));
     }
 
-    public void justRemove(E obj) {
+    public void justRemove(E2 obj) {
+        Transaction.logAttrChange((DomainObject)listHolder, attributeName);
 	elementsToRemove.put(elementsToRemove.get().add(obj));
 	elementsToAdd.put(elementsToAdd.get().remove(obj));
     }
@@ -122,12 +130,12 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 	return elementSet().size();
     }
 
-    public E get(int index) {
+    public E2 get(int index) {
         return elementSet().get(index);
     }
 
-    public E set(int index, E element) {
-        E oldElement = get(index);
+    public E2 set(int index, E2 element) {
+        E2 oldElement = get(index);
 
         int oldModCount = modCount;
         if (oldElement != element) {
@@ -139,38 +147,36 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
         return oldElement;
     }
 
-    public void add(int index, E element) {
-        addToRelation(element);
+    public void add(int index, E2 element) {
+        relation.add(listHolder, element);
         modCount++;
     }
 
-    public E remove(int index) {
-        E elemToRemove = get(index);
+    public E2 remove(int index) {
+        E2 elemToRemove = get(index);
         remove(elemToRemove);
 	return elemToRemove;
     }
 
     public boolean remove(Object o) {
         modCount++;
-        removeFromRelation((E) o);
+        relation.remove(listHolder, (E2)o);
 	// HACK!!! What to return here?
 	// I wouldn't like to force a load of the list to be able to return the correct boolean value
 	return true;
     }
 
-    public Iterator<E> iterator() {
-	return new RelationListIterator<E>(this);
+    public Iterator<E2> iterator() {
+	return new RelationListIterator<E2>();
     }
 
-    private static class RelationListIterator<X> implements Iterator<X> {
-	private RelationList<X> relList;
+    private class RelationListIterator<X> implements Iterator<X> {
 	private Iterator<X> iter;
 	private boolean canRemove = false;
 	private X previous = null;
 
-	RelationListIterator(RelationList<X> relList) {
-	    this.relList = relList;
-	    this.iter = relList.elementSet().iterator();
+	RelationListIterator() {
+	    this.iter = RelationList.this.elementSet().iterator();
 	}
 
 	public boolean hasNext() {
@@ -189,7 +195,7 @@ public abstract class RelationList<E> extends AbstractList<E> implements Version
 		throw new IllegalStateException();
 	    } else {
 		canRemove = false;
-		relList.justRemove(previous);
+		RelationList.this.remove(previous);
 	    }
 	}
     }

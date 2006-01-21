@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 import net.sourceforge.fenixedu.stm.Transaction;
-import relations.MailingListQueueOutgoingMails;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -66,9 +65,9 @@ public class MailSender
 		for (MailMessage message : mailingList.getQueue().getMessages())
 		{
 			// enviar !!!!!!!!!! n esquecer do REPLY TO LIST se for o caso
-			MailingListQueueOutgoingMails.remove(mailingList.getQueue(), message);
-			String hello = mailingList.getCms().getConfiguration().getSmtpServerAddressToUse();
-			System.out.println("Deveria estar a usar este SMTP: " + hello);
+                    mailingList.getQueue().removeMessages(message);
+                    String hello = mailingList.getCms().getConfiguration().getSmtpServerAddressToUse();
+                    System.out.println("Deveria estar a usar este SMTP: " + hello);
 		}
 	}
 }

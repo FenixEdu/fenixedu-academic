@@ -15,6 +15,10 @@ import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
  */
 public class CurricularPeriod extends CurricularPeriod_Base {
 
+    static {
+        CurricularPeriodParentChilds.addListener(new CurricularPeriodParentChildsListener());
+    }
+
     public CurricularPeriod(CurricularPeriodType curricularPeriodType) {
         super();
         setPeriodType(curricularPeriodType);
@@ -139,5 +143,35 @@ public class CurricularPeriod extends CurricularPeriod_Base {
     
     public String getFullLabel() {
         return CurricularPeriodLabelFormatter.getFullLabel(this);
+    }
+
+
+    private static class CurricularPeriodParentChildsListener extends dml.runtime.RelationAdapter<CurricularPeriod,CurricularPeriod> {
+        @Override
+        public void beforeAdd(CurricularPeriod child, CurricularPeriod parent) {
+
+            if (child.getPeriodType().getWeight() >= parent.getPeriodType().getWeight()) {
+                throw new DomainException("error.childTypeGreaterThanParentType");
+            }
+
+            float childsWeight = child.getPeriodType().getWeight();
+            for (CurricularPeriod period : parent.getChilds()) {
+                childsWeight += period.getPeriodType().getWeight();
+            }
+
+            if (childsWeight > parent.getPeriodType().getWeight()) {
+                throw new DomainException("error.childWeightOutOfLimit");
+            }
+
+            // re-order childs
+            Integer order = child.getOrder();
+            if (order == null) {
+                child.setOrder(parent.getChildsCount() + 1);
+            } else {
+                if (parent.getChildByOrder(order) != null) {
+                    throw new DomainException("error.childAlreadyExists");
+                }
+            }
+        }
     }
 }

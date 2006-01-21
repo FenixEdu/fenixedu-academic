@@ -26,11 +26,6 @@ import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import relations.CmsContents;
-import relations.CmsUsers;
-import relations.ContentCreation;
-import relations.ContentHierarchy;
-import relations.MailingListQueueOutgoingMails;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -91,7 +86,7 @@ public class ProcessReceivedMail extends CmsService
 						// the same message is added to all subsequent
 						// mailingLists
 					}
-					MailingListQueueOutgoingMails.add(mailingList.getQueue(), mailMessage);
+					mailingList.getQueue().addMessages(mailMessage);
 					this.addMailMessageToMailingList(mailMessage, mailingList, creator);
 				}
 			}
@@ -162,12 +157,12 @@ public class ProcessReceivedMail extends CmsService
 			conversation.setName(conversation.getSubject());
 			conversation.setDescription(conversation.getName() + "@"
 					+ new Date(System.currentTimeMillis()));
-			ContentHierarchy.add(conversation, mailingList);
-			ContentCreation.add(creator, conversation);
+			mailingList.addChildren(conversation);
+			conversation.setCreator(creator);
 		}
-		ContentCreation.add(creator, mailMessage);
-		ContentHierarchy.add(mailMessage, conversation);
-		ContentHierarchy.add(mailMessage, mailingList);
+		mailMessage.setCreator(creator);
+		conversation.addChildren(mailMessage);
+		mailingList.addChildren(mailMessage);
 	}
 
 	/**
@@ -224,17 +219,17 @@ public class ProcessReceivedMail extends CmsService
 
 	protected void updateRootObjectReferences(MailMessage message) throws ExcepcaoPersistencia
 	{
-		CmsContents.add(this.readFenixCMS(), message);
-		CmsUsers.add(this.readFenixCMS(), message.getCreator());
-		Iterator<MailConversation> conversationsInterator = message.getMailConversationsIterator();
-		while (conversationsInterator.hasNext())
+            this.readFenixCMS().addContents(message);
+            this.readFenixCMS().addUsers(message.getCreator());
+            Iterator<MailConversation> conversationsInterator = message.getMailConversationsIterator();
+            while (conversationsInterator.hasNext())
 		{ // TODO: gedl aqui talvez seja necessário verificar se a relação
-			// ainda não existe (enviei mail ao João Cachopo em 27-10-2005,
-			// 18:35)
-			// em caso afirmativo verificar nos outros serviços do CMS ou
-			// alterar as classes não base de relação
-			MailConversation conversation = conversationsInterator.next();
-			CmsContents.add(message.getCms(), conversation);
+                    // ainda não existe (enviei mail ao João Cachopo em 27-10-2005,
+                    // 18:35)
+                    // em caso afirmativo verificar nos outros serviços do CMS ou
+                    // alterar as classes não base de relação
+                    MailConversation conversation = conversationsInterator.next();
+                    message.getCms().addContents(conversation);
 		}
 	}
 }

@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.cms.website;
 
-import relations.ExecutionCourseWebsiteRelation;
 public class ExecutionCourseWebsite extends ExecutionCourseWebsite_Base {
     
     public ExecutionCourseWebsite() {

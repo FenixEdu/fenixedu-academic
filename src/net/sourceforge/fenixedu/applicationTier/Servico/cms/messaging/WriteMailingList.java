@@ -14,11 +14,6 @@ import net.sourceforge.fenixedu.domain.cms.infrastructure.MailAddressAlias;
 import net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import relations.CmsContents;
-import relations.CmsUsers;
-import relations.ContentCreation;
-import relations.MailingListAlias;
-import relations.MailingListQueue;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -41,8 +36,8 @@ public class WriteMailingList extends CmsService
 		mailingList.setMembersOnly(membersOnly);
 		mailingList.setReplyToList(replyToList);
 
-		ContentCreation.add(owner, mailingList);
-		MailingListQueue.add(mailingList, queue);
+		mailingList.setCreator(owner);
+		mailingList.setQueue(queue);
 		Collection<MailAddressAlias> aliases = new ArrayList<MailAddressAlias>();
 		for (String aliasAddress : aliasAdresses)
 		{
@@ -56,7 +51,7 @@ public class WriteMailingList extends CmsService
 		}
 		for (MailAddressAlias alias : aliases)
 		{
-			MailingListAlias.add(mailingList, alias);
+                    mailingList.addAliases(alias);
 		}
         
         mailingList.setGroup(mailingListGroup);
@@ -67,7 +62,7 @@ public class WriteMailingList extends CmsService
 
 	protected void updateRootObjectReferences(MailingList mailingList) throws ExcepcaoPersistencia
 	{
-		CmsUsers.add(this.readFenixCMS(), mailingList.getCreator());
-		CmsContents.add(this.readFenixCMS(), mailingList);
+            this.readFenixCMS().addUsers(mailingList.getCreator());
+            this.readFenixCMS().addContents(mailingList);
 	}
 }

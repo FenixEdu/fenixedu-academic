@@ -20,6 +20,11 @@ import org.apache.commons.collections.Predicate;
 
 public class TeacherService extends TeacherService_Base {
 
+    static {
+        TeacherServiceTeacherServiceItem.addListener(new TeacherServiceTeacherServiceItemListener());
+    }
+
+
     public TeacherService(Teacher teacher, ExecutionPeriod executionPeriod) {
         super();
         if (teacher == null || executionPeriod == null) {
@@ -228,4 +233,13 @@ public class TeacherService extends TeacherService_Base {
         return new Double(rounded / 100.0);
     }
 
+
+    private static class TeacherServiceTeacherServiceItemListener extends dml.runtime.RelationAdapter<TeacherService,TeacherServiceItem> {
+        @Override
+        public void afterRemove(TeacherService teacherService, TeacherServiceItem serviceItem) {
+            if ((teacherService != null) && teacherService.getServiceItems().isEmpty()) {
+                teacherService.delete();
+            }
+        }
+    }
 }

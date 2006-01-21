@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.domain.cms;
 
 import net.sourceforge.fenixedu.domain.Person;
-import relations.CmsContents;
-import relations.CmsUsers;
 
 public class Cms extends Cms_Base {
     

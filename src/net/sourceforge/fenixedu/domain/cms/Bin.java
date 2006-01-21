@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.cms;
 
-import relations.ContentHierarchy;
 public abstract class Bin extends Bin_Base {
     
     public Bin() {
@@ -8,18 +7,15 @@ public abstract class Bin extends Bin_Base {
     }
     
     @Override
-    public void delete()
-    {
-    	for (Content child : this.getChildren())
-		{
-			ContentHierarchy.remove(child,this);
-		}
-    	for(Bin parent : this.getParents())
-    	{
-    		ContentHierarchy.remove(this,parent);
+    public void delete() {
+    	for (Content child : this.getChildren()) {
+            this.removeChildren(child);
+        }
+
+    	for(Bin parent : this.getParents()) {
+            parent.removeChildren(this);
     	}
     	
     	super.delete();
     }
-    
 }
