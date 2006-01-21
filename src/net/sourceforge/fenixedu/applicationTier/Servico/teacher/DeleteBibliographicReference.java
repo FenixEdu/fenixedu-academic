@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.BibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 
 /**
  * @author Fernanda Quitério
@@ -15,18 +14,14 @@ public class DeleteBibliographicReference extends Service {
 
     public boolean run(Integer bibliographicReferenceOID) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
-                .getIPersistentBibliographicReference();
-
-        BibliographicReference bibliographicReference = (BibliographicReference) persistentBibliographicReference
+        BibliographicReference bibliographicReference = (BibliographicReference) persistentObject
                 .readByOID(BibliographicReference.class, bibliographicReferenceOID);
 
         if (bibliographicReference == null) {
             throw new InvalidArgumentsServiceException();
         }
         bibliographicReference.delete();
-        persistentBibliographicReference.deleteByOID(BibliographicReference.class,
+        persistentObject.deleteByOID(BibliographicReference.class,
                 bibliographicReference.getIdInternal());
 
         return true;

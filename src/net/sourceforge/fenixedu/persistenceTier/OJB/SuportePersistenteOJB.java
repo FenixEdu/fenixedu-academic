@@ -19,7 +19,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
@@ -494,11 +493,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentCandidateSituation getIPersistentCandidateSituation()
 	{
 		return new CandidateSituationOJB();
-	}
-
-	public IPersistentBibliographicReference getIPersistentBibliographicReference()
-	{
-		return new BibliographicReferenceOJB();
 	}
 
 	/**

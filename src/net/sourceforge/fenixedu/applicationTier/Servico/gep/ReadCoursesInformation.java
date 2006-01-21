@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
@@ -271,10 +270,7 @@ public class ReadCoursesInformation extends Service {
 
     private List getInfoBibliographicReferences(ExecutionCourse executionCourse, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
-        IPersistentBibliographicReference persistentBibliographicReference = persistentSupport
-                .getIPersistentBibliographicReference();
-        List bibliographicReferences = persistentBibliographicReference
-                .readBibliographicReference(executionCourse.getIdInternal());
+        List bibliographicReferences = executionCourse.getAssociatedBibliographicReferences();
         List infoBibliographicReferences = new ArrayList();
         Iterator iter = bibliographicReferences.iterator();
         while (iter.hasNext()) {

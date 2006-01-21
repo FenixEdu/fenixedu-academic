@@ -144,8 +144,6 @@ public interface ISuportePersistente
 
 	public IPersistentSenior getIPersistentSenior();
 
-	public IPersistentBibliographicReference getIPersistentBibliographicReference();
-
 	public IPersistentDepartment getIDepartamentoPersistente();
 
 	public IPersistentDegreeCurricularPlan getIPersistentDegreeCurricularPlan();

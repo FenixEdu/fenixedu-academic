@@ -70,7 +70,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -527,21 +526,12 @@ public class ExecutionCourseSiteComponentBuilder {
 
 	private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, Site site)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		List references = null;
-		List infoBibRefs = null;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = persistentSupport
-				.getIPersistentBibliographicReference();
-
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 
-		references = persistentBibliographicReference.readBibliographicReference(executionCourse
-				.getIdInternal());
+		List references = executionCourse.getAssociatedBibliographicReferences();
 
 		Iterator iterator = references.iterator();
-		infoBibRefs = new ArrayList();
+		List infoBibRefs = new ArrayList();
 		while (iterator.hasNext()) {
 			BibliographicReference bibRef = (BibliographicReference) iterator.next();
 

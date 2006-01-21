@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
@@ -39,8 +38,6 @@ public class ReadBibliographicReference extends Service {
 		try {
 			IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
 			IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-			IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = persistentSupport
-					.getIPersistentBibliographicReference();
 			IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
 			ExecutionYear executionYear = persistentExecutionYear
@@ -51,8 +48,7 @@ public class ReadBibliographicReference extends Service {
 			ExecutionCourse executionCourse = persistentExecutionCourse
 					.readByExecutionCourseInitialsAndExecutionPeriodId(infoExecutionCourse.getSigla(),
 							executionPeriod.getIdInternal());
-			references = persistentBibliographicReference.readBibliographicReference(executionCourse
-					.getIdInternal());
+			references = executionCourse.getAssociatedBibliographicReferences();
 
 			Iterator iterator = references.iterator();
 			infoBibRefs = new ArrayList();

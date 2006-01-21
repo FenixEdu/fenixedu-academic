@@ -96,7 +96,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
@@ -454,22 +453,13 @@ public class TeacherAdministrationSiteComponentBuilder {
 	 */
 	private ISiteComponent getInfoSiteBibliography(InfoSiteBibliography component, Site site)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		List references = null;
-		List infoBibRefs = null;
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-		IPersistentBibliographicReference persistentBibliographicReference = persistentBibliographicReference = persistentSupport
-				.getIPersistentBibliographicReference();
-
 		ExecutionCourse executionCourse = site.getExecutionCourse();
 
-		references = persistentBibliographicReference.readBibliographicReference(executionCourse
-				.getIdInternal());
+		List references = executionCourse.getAssociatedBibliographicReferences();
 
 		if (references != null) {
 			Iterator iterator = references.iterator();
-			infoBibRefs = new ArrayList();
+			List infoBibRefs = new ArrayList();
 			while (iterator.hasNext()) {
 				BibliographicReference bibRef = (BibliographicReference) iterator.next();
 
@@ -496,7 +486,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		BibliographicReference iBibliographicReference = (BibliographicReference) persistentSupport
-				.getIPersistentBibliographicReference().readByOID(BibliographicReference.class,
+				.getIPersistentObject().readByOID(BibliographicReference.class,
 						bibliographicReferenceCode);
 
 		InfoBibliographicReference infoBibliographicReference = InfoBibliographicReference
