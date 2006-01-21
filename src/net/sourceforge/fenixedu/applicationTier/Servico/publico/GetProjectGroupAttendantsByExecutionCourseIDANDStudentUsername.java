@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.StudentGroupAttendacyInformation;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -15,10 +16,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -31,13 +29,10 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername exte
 
     public StudentGroupAttendacyInformation run(Integer executionCourseID, String username)
             throws BDException, ExcepcaoPersistencia {
+        IFrequentaPersistente persistentAttendacy = persistentSupport.getIFrequentaPersistente();
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
-        ISuportePersistente persistenceSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        IFrequentaPersistente persistentAttendacy = persistenceSupport.getIFrequentaPersistente();
-        Student student = persistenceSupport.getIPersistentStudent().readByUsername(username);
-
-        IPersistentExecutionCourse persistentExecutionCourse = persistenceSupport
+        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
                 .getIPersistentExecutionCourse();
 
         ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(

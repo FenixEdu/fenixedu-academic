@@ -7,17 +7,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.IReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCoordinatorReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -26,7 +24,6 @@ public class ReadSummaryReport extends Service {
 
     public InfoCoordinatorReport run(String username, String costCenter, Integer coordinatorCode, String userNumber) throws ExcepcaoPersistencia {
         InfoCoordinatorReport infoReport = new InfoCoordinatorReport();
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         if (coordinatorCode == null)

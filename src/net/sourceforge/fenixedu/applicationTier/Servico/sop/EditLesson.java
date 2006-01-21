@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InterceptingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -18,10 +19,7 @@ import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditLesson extends Service {
 
@@ -29,7 +27,6 @@ public class EditLesson extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoLessonServiceResult result = null;
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IAulaPersistente aulaPersistente = persistentSupport.getIAulaPersistente();
 
         Room salaNova = persistentSupport.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());

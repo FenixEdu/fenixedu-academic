@@ -12,21 +12,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class RemoveClasses extends Service {
 
     public Boolean run(InfoShift infoShift, List classOIDs) throws ExcepcaoPersistencia {
 
         boolean result = false;
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
                 infoShift.getIdInternal());

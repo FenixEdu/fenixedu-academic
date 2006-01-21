@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.IReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoMovementReport;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
@@ -17,11 +18,8 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -32,7 +30,6 @@ public class ReadReport extends Service {
             throws ExcepcaoPersistencia {
         InfoProjectReport infoReport = new InfoProjectReport();
         List<IReportLine> infoLines = new ArrayList<IReportLine>();
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         if (projectCode != null
                 && (p.getIPersistentProject().isUserProject(new Integer(userNumber), projectCode) || persistentSupport.getIPersistentProjectAccess()

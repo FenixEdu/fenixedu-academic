@@ -2,25 +2,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
-
 public class CreateBuilding extends Service {
 
     public void run(final String buildingName, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         final List buildings = (List) persistentSupport.getIPersistentObject().readAll(Building.class);
 
         if (exists(buildings, buildingName)) {

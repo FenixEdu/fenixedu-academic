@@ -2,15 +2,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curri
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateDegree extends Service {
 
@@ -22,8 +20,6 @@ public class CreateDegree extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final List<Degree> degrees = (List<Degree>) persistentSupport.getICursoPersistente()
                 .readAllFromNewDegreeStructure();
 

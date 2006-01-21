@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
@@ -12,9 +13,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author tfc130
@@ -22,7 +20,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCurricularCourseListOfExecutionCourse extends Service {
 
     public Object run(InfoExecutionCourse infoExecCourse) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
         ExecutionCourse executionCourse = executionCourseDAO

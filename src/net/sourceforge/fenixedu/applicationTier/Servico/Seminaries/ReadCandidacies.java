@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseWithInfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentWithInfoPerson;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacyDetails;
@@ -27,11 +28,8 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -47,9 +45,7 @@ public class ReadCandidacies extends Service {
 			Integer curricularCourseID, Integer degreeID, Boolean approved) throws BDException, ExcepcaoPersistencia {
 		List infoCandidacies = new LinkedList();
 
-		ISuportePersistente persistenceSupport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
+		IPersistentSeminaryCandidacy persistentCandidacy = persistentSupport
 				.getIPersistentSeminaryCandidacy();
 		List candidacies = persistentCandidacy.readByUserInput(modalityID, seminaryID, themeID, case1Id,
 				case2Id, case3Id, case4Id, case5Id, curricularCourseID, degreeID, approved);

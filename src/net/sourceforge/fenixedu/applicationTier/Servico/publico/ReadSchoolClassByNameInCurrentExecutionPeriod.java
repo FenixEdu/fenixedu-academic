@@ -27,8 +27,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadSchoolClassByNameInCurrentExecutionPeriod extends Service {
 
 	public SchoolClassDTO run(final String schoolClassName) throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
 				.getIPersistentExecutionPeriod();
 		ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();

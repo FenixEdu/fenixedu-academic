@@ -8,15 +8,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.Seminaries.CaseStudyChoice;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudyChoice;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -28,12 +26,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class DeleteCandidacy extends Service {
 
 	public void run(Integer id) throws BDException, ExcepcaoPersistencia {
-
-		ISuportePersistente persistenceSupport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
+		IPersistentSeminaryCandidacy persistentCandidacy = persistentSupport
 				.getIPersistentSeminaryCandidacy();
-		IPersistentSeminaryCaseStudyChoice persistentChoice = persistenceSupport
+		IPersistentSeminaryCaseStudyChoice persistentChoice = persistentSupport
 				.getIPersistentSeminaryCaseStudyChoice();
 		Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class, id);
 		List choices = candidacy.getCaseStudyChoices();

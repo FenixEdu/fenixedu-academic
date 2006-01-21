@@ -5,15 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScopeWithCurricularCourseAndDegreeAndBranchAndSemesterAndYear;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author T�nia Pous�o Created on 10/Out/2003
@@ -21,11 +19,9 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadCurricularCourseScopeListByDegreeCurricularPlan extends Service {
 
     public List run(Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport;
         List allCurricularCourses = null;
         List allCurricularCourseScope = new ArrayList();
 
-        persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
                         idDegreeCurricularPlan);

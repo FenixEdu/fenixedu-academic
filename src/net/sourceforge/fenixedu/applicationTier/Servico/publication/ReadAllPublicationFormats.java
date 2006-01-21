@@ -3,19 +3,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationFormat;
 import net.sourceforge.fenixedu.domain.publication.PublicationFormat;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationFormat;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadAllPublicationFormats extends Service {
 
     public List<InfoPublicationFormat> run(int publicationTypeId) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentPublicationFormat persistentPublicationFormat = persistentSupport
                 .getIPersistentPublicationFormat();
 

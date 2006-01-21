@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DiaSemana;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ana e Ricardo
@@ -22,9 +20,6 @@ public class ReadAvailableRoomsForExam extends Service {
     public List run(Calendar periodStart, Calendar periodEnd, Calendar startTime, Calendar endTime,
             DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,
             Integer frequency, Integer weekOfStart, Boolean withLabs) throws ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         final List<Room> rooms;
         if (normalCapacity != null) {

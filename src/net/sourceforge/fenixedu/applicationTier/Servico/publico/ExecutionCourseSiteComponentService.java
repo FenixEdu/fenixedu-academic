@@ -5,6 +5,7 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Factory.ExecutionCourseSiteComponentBuilder;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingAssociatedCurricularCoursesServiceException;
@@ -14,9 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Jo�o Mota
@@ -29,7 +27,6 @@ public class ExecutionCourseSiteComponentService extends Service {
             Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
         final Site site;

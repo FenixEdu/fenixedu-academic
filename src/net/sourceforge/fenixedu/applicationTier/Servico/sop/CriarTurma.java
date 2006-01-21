@@ -13,6 +13,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -20,20 +21,14 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
-
 public class CriarTurma extends Service {
 
     public Object run(final InfoClass infoTurma) throws ExcepcaoPersistencia, ExistingServiceException {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         final ITurmaPersistente schoolClassDAO = persistentSupport.getITurmaPersistente();
         final List<SchoolClass> listSchoolClasses = schoolClassDAO.readByExecutionPeriodAndCurricularYearAndExecutionDegree(
                 infoTurma.getInfoExecutionPeriod().getIdInternal(), 

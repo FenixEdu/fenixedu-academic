@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.Seminaries;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCandidacy;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoCaseStudyChoice;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -20,13 +21,10 @@ import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
@@ -35,29 +33,27 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class WriteCandidacy extends Service {
 
     public void run(InfoCandidacy infoCandidacy) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         Candidacy candidacy = DomainFactory.makeCandidacy();
         candidacy.setApproved(infoCandidacy.getApproved());
         candidacy.setMotivation(infoCandidacy.getMotivation());
         
         // Modality
-        final IPersistentSeminaryModality persistentModality = persistenceSupport.getIPersistentSeminaryModality();
+        final IPersistentSeminaryModality persistentModality = persistentSupport.getIPersistentSeminaryModality();
         final Modality modality = (Modality) persistentModality.readByOID(Modality.class,infoCandidacy.getInfoModality().getIdInternal());        
         candidacy.setModality(modality);
 
         // Student
-        final IPersistentStudent persistentStudent = persistenceSupport.getIPersistentStudent();
+        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         final Student readStudent = (Student) persistentStudent.readByOID(Student.class, infoCandidacy.getInfoStudent().getIdInternal());
         candidacy.setStudent(readStudent);
 
         // Seminary
-        final IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();
+        final IPersistentSeminary persistentSeminary = persistentSupport.getIPersistentSeminary();
         final Seminary readSeminary = (Seminary) persistentSeminary.readByOID(Seminary.class, infoCandidacy.getInfoSeminary().getIdInternal());
         candidacy.setSeminary(readSeminary);
         
         // Curricular Course
-        final IPersistentCurricularCourse persistentCurricularCourse = persistenceSupport.getIPersistentCurricularCourse();
+        final IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
         final CurricularCourse readCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, infoCandidacy.getCurricularCourse().getIdInternal());
         candidacy.setCurricularCourse(readCurricularCourse);
 
@@ -65,7 +61,7 @@ public class WriteCandidacy extends Service {
         if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
             candidacy.setTheme(null);
         } else {
-            final IPersistentSeminaryTheme persistentTheme = persistenceSupport.getIPersistentSeminaryTheme();
+            final IPersistentSeminaryTheme persistentTheme = persistentSupport.getIPersistentSeminaryTheme();
             final Theme readTheme = (Theme) persistentTheme.readByOID(Theme.class, infoCandidacy.getTheme().getIdInternal());
             candidacy.setTheme(readTheme);
         }
@@ -74,7 +70,7 @@ public class WriteCandidacy extends Service {
         }
 
         // Seminary Case Study Choices
-        final IPersistentSeminaryCaseStudy persistentSeminaryCaseStudy = persistenceSupport.getIPersistentSeminaryCaseStudy();
+        final IPersistentSeminaryCaseStudy persistentSeminaryCaseStudy = persistentSupport.getIPersistentSeminaryCaseStudy();
         for (InfoCaseStudyChoice infoCaseStudyChoice : (List<InfoCaseStudyChoice>) infoCandidacy.getCaseStudyChoices()) {
             final CaseStudyChoice caseStudyChoice = DomainFactory.makeCaseStudyChoice();
             

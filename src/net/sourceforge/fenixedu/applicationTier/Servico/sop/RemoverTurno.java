@@ -7,24 +7,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @version
  */
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
-import net.sourceforge.fenixedu.applicationTier.Service;
-
 public class RemoverTurno extends Service {
 
     public Object run(final InfoShift infoShift, final InfoClass infoClass) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
         final Shift shift = (Shift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());

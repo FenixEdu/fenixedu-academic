@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
@@ -11,16 +12,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditPublication extends Service {
 
     public void run(InfoPublication infoPublication) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
         final IPersistentPublicationType persistentPublicationType = persistentSupport.getIPersistentPublicationType();
 

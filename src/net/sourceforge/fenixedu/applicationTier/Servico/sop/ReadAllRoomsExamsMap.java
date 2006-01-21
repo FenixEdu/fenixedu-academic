@@ -57,7 +57,6 @@ public class ReadAllRoomsExamsMap extends Service {
         endSeason2.set(Calendar.SECOND, 0);
         endSeason2.set(Calendar.MILLISECOND, 0);
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List rooms = persistentSupport.getISalaPersistente().readForRoomReservation();
 
         for (int i = 0; i < rooms.size(); i++) {

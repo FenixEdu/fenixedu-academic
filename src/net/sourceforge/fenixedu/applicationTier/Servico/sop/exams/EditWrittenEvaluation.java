@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
@@ -21,9 +22,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class EditWrittenEvaluation extends Service {
 
@@ -40,9 +39,6 @@ public class EditWrittenEvaluation extends Service {
             List<String> curricularCourseScopeIDs, List<String> roomIDs, Integer writtenEvaluationOID,
             Season examSeason, String writtenTestDescription) throws FenixServiceException,
             ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
 
         final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) persistentObject.readByOID(

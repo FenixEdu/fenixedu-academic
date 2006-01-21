@@ -6,18 +6,15 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico.inquiries;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InfoOldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentOldInquiriesSummary;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Fialho & Rita Ferreira
@@ -31,7 +28,6 @@ public class ReadOldIquiriesSummaryByDegreeID extends Service {
 		if (degreeID == null) {
 			throw new FenixServiceException("nullDegreeId");
 		}
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentOldInquiriesSummary pois = persistentSupport.getIPersistentOldInquiriesSummary();
 
 		oldInquiriesSummaryList = pois.readByDegreeId(degreeID);

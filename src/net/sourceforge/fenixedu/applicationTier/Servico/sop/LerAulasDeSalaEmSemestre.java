@@ -12,15 +12,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class LerAulasDeSalaEmSemestre extends Service {
 
@@ -31,7 +29,6 @@ public class LerAulasDeSalaEmSemestre extends Service {
             executionPeriodId = infoExecutionPeriod.getIdInternal();
         }
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final List<Lesson> lessonList = persistentSupport.getIAulaPersistente().readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriodId);
 
         List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();

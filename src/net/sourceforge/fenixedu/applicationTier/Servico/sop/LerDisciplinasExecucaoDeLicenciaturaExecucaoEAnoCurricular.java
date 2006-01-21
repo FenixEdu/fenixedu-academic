@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
@@ -18,9 +19,6 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends Service {
 
@@ -30,7 +28,6 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends 
         List listDCDE = null;
         List listInfoDE = null;
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
             IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
             CurricularYear curricularYearFromDB = (CurricularYear) persistentSupport.getIPersistentCurricularYear()

@@ -6,20 +6,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Pedro Santos & Rita Carvalho
@@ -27,7 +24,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadExecutionDegreeRecentByDegreeId extends Service {
 
     public InfoExecutionDegree run(final Integer degreeId) throws ExcepcaoPersistencia{
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         List listExecutionDegrees = persistentExecutionDegree.readAll();
         CollectionUtils.filter(listExecutionDegrees, new Predicate(){

@@ -9,13 +9,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.publication.Attribute;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Ricardo Rodrigues
@@ -29,8 +27,6 @@ public class ReadAttributesByPublicationType extends Service {
      * @throws ExcepcaoPersistencia 
      */
     public HashMap run(Integer publicationTypeID) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentPublicationType persistentPublicationType = persistentSupport
                 .getIPersistentPublicationType();
         PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(

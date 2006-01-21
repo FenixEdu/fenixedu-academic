@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curri
 import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateDegreeCurricularPlan extends Service {
 
@@ -30,8 +28,6 @@ public class CreateDegreeCurricularPlan extends Service {
 
         final Person creator = AccessControl.getUserView().getPerson();
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final Degree degree = (Degree) persistentSupport.getICursoPersistente().readByOID(Degree.class,
                 degreeId);
 
@@ -57,8 +53,6 @@ public class CreateDegreeCurricularPlan extends Service {
 
     private void assertUniques(Degree degree, String name) throws ExcepcaoPersistencia,
             FenixServiceException {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final List<DegreeCurricularPlan> dcps = (List<DegreeCurricularPlan>) persistentSupport
                 .getIPersistentDegreeCurricularPlan().readFromNewDegreeStructure();
 
@@ -72,8 +66,6 @@ public class CreateDegreeCurricularPlan extends Service {
 
     private void addBolonhaRoleToCreator(Person creator) throws ExcepcaoPersistencia {
         if (!creator.hasRole(RoleType.BOLONHA_MANAGER)) {
-            final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
             final Role bolonhaRole = persistentSupport.getIPersistentRole().readByRoleType(
                     RoleType.BOLONHA_MANAGER);
             creator.addPersonRoles(bolonhaRole);

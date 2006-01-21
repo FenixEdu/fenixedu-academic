@@ -9,14 +9,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoModality;
 import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -30,9 +28,7 @@ public class GetAllModalities extends Service {
 	public List run() throws BDException, ExcepcaoPersistencia {
 		List infoCases = new LinkedList();
 
-		ISuportePersistente persistenceSupport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentSeminaryModality persistentModality = persistenceSupport
+		IPersistentSeminaryModality persistentModality = persistentSupport
 				.getIPersistentSeminaryModality();
 		List cases = persistentModality.readAll();
 

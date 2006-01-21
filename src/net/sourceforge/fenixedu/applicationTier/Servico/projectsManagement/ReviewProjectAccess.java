@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
@@ -12,23 +13,16 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.projectsManagement.IPersistentProjectAccess;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
 public class ReviewProjectAccess extends Service {
 
-    public ReviewProjectAccess() {
-    }
-
     public void run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentProjectAccess persistentProjectAccess = persistentSupport.getIPersistentProjectAccess();
         Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
         Role role = persistentSupport.getIPersistentRole().readByRoleType(RoleType.PROJECTS_MANAGER);

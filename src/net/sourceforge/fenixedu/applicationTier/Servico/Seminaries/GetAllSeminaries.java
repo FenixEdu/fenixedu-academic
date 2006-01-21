@@ -11,14 +11,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalencies;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -32,9 +30,7 @@ public class GetAllSeminaries extends Service {
 	public List run(Boolean inEnrollmentPeriod) throws BDException, ExcepcaoPersistencia {
 		List seminariesInfo = new LinkedList();
 
-		ISuportePersistente persistenceSupport = PersistenceSupportFactory
-				.getDefaultPersistenceSupport();
-		IPersistentSeminary persistentSeminary = persistenceSupport.getIPersistentSeminary();
+		IPersistentSeminary persistentSeminary = persistentSupport.getIPersistentSeminary();
 		List seminaries = persistentSeminary.readAll();
 		for (Iterator iterator = seminaries.iterator(); iterator.hasNext();) {
 

@@ -10,6 +10,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @author tfc130
  * @author Pedro Santos e Rita Carvalho
  */
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
@@ -18,15 +19,11 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CriarTurno extends Service {
 
     public InfoShift run(InfoShift infoTurno) throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
 
         final Shift existingShift = shiftDAO.readByNameAndExecutionCourse(infoTurno.getNome(),

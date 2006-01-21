@@ -13,6 +13,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidTimeIntervalServiceException;
@@ -30,17 +31,12 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class CreateLesson extends Service {
 
     public InfoLessonServiceResult run(InfoLesson infoLesson, InfoShift infoShift)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
                 .readByOID(
                         ExecutionPeriod.class,
@@ -98,7 +94,6 @@ public class CreateLesson extends Service {
 
     private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final Room room = (Room) persistentSupport.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 

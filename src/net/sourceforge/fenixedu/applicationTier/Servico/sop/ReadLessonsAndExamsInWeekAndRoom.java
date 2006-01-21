@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -41,10 +42,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalendarUtil;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
@@ -52,7 +50,6 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
         ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
@@ -161,8 +158,6 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
     private InfoPeriod calculateLessonsSeason(ExecutionPeriod executionPeriod) throws FenixServiceException {
         try {
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             int semester = executionPeriod.getSemester().intValue();
 
             List executionDegreesList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYear(

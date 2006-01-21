@@ -28,9 +28,6 @@ public class ReadExamsByDate extends Service {
 
     public InfoViewExam run(Calendar examDay, Calendar examStartTime, Calendar examEndTime)
             throws ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final List<Exam> filteredExams = persistentSupport.getIPersistentExam().readBy(examDay,
                 examStartTime, examEndTime);
 

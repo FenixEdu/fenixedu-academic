@@ -7,13 +7,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProject;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -22,8 +20,6 @@ public class ReadUserProjects extends Service {
 
     public List<InfoProject> run(String username, String costCenter, Boolean all, String userNumber) throws ExcepcaoPersistencia {
         List<InfoProject> infoProjectList = new ArrayList<InfoProject>();
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         List<Project> projectList = p.getIPersistentProject().readByUserLogin(userNumber);

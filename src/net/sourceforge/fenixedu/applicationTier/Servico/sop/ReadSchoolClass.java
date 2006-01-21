@@ -5,14 +5,12 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  *  
  */
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadSchoolClass extends Service {
 
@@ -20,7 +18,6 @@ public class ReadSchoolClass extends Service {
 
 		InfoClass result = null;
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
 		SchoolClass schoolClass = (SchoolClass) persistentSchoolClass.readByOID(SchoolClass.class,
 				infoSchoolClass.getIdInternal());

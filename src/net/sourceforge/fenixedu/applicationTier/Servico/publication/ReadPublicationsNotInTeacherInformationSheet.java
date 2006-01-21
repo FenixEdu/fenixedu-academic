@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublication;
@@ -13,16 +14,12 @@ import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 
 public class ReadPublicationsNotInTeacherInformationSheet extends Service {
 
     public SiteView run(String user) throws ExcepcaoPersistencia {
         InfoSitePublications infoSitePublications = new InfoSitePublications();
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         
         Teacher teacher = persistentTeacher.readTeacherByUsername(user);

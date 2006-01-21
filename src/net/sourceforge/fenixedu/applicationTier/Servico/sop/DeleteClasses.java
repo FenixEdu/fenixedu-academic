@@ -12,19 +12,14 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class DeleteClasses extends Service {
 
     public Object run(List classOIDs) throws ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         for (int i = 0; i < classOIDs.size(); i++) {
             Integer classId = (Integer) classOIDs.get(i);
             final SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(

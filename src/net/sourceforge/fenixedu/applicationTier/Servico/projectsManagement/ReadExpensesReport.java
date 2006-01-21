@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoAdiantamentosReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoCabimentosReportLine;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoExpensesReport;
@@ -16,14 +17,11 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummar
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoSummaryPTEReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesResume;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
@@ -32,9 +30,6 @@ public class ReadExpensesReport extends Service {
 
     public InfoExpensesReport run(String username, String costCenter, ReportType reportType, Integer projectCode, String rubric, String userNumber)
             throws ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentSuportOracle p = PersistentSuportOracle.getInstance();
         Integer coordID = new Integer(userNumber);
         InfoExpensesReport infoReport = new InfoExpensesReport();

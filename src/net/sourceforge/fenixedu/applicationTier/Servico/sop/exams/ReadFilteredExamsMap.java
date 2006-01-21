@@ -56,7 +56,6 @@ public class ReadFilteredExamsMap extends Service {
         infoExamsMap.setCurricularYears(curricularYears);
 
         // Translate to execute following queries
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()

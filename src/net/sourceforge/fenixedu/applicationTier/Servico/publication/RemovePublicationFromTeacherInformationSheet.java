@@ -1,19 +1,16 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.publication;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class RemovePublicationFromTeacherInformationSheet extends Service {
     
     public void run(Integer teacherId, final Integer publicationId) throws ExcepcaoPersistencia, DomainException {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
 

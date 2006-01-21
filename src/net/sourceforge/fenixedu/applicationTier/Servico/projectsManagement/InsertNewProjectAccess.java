@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.Project;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 
@@ -62,7 +60,6 @@ public class InsertNewProjectAccess extends Service {
 
     public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
             GregorianCalendar endDate, String userNumber) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
         if (person == null)
             throw new IllegalArgumentException();

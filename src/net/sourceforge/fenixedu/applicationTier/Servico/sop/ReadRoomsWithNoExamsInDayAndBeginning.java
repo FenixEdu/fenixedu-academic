@@ -14,21 +14,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
 
     public List run(Calendar day, Calendar beginning) throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         List exams = persistentSupport.getIPersistentExam().readBy(day, beginning);
         List allRooms = persistentSupport.getISalaPersistente().readAll();
 

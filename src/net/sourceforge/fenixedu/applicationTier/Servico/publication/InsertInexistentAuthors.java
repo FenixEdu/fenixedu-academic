@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPersons;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class InsertInexistentAuthors extends Service {
 
@@ -27,7 +25,6 @@ public class InsertInexistentAuthors extends Service {
         
         List<Integer> externalPersonsIndexes = new ArrayList<Integer>();
         
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
         
         List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>();

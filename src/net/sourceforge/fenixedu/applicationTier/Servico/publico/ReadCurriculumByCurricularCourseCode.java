@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.publico;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
@@ -17,10 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadCurriculumByCurricularCourseCode extends Service {
 
@@ -31,7 +29,6 @@ public class ReadCurriculumByCurricularCourseCode extends Service {
             throw new FenixServiceException("nullCurricularCourse");
         }
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
         final CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(

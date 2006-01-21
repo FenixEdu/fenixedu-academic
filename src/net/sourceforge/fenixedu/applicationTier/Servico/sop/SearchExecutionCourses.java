@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -30,14 +31,11 @@ import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
-
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class SearchExecutionCourses extends Service {
 
@@ -46,8 +44,6 @@ public class SearchExecutionCourses extends Service {
             throws ExcepcaoPersistencia {
 
         List result = null;
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
@@ -97,7 +93,6 @@ public class SearchExecutionCourses extends Service {
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
                 if (executionCourse.getAssociatedCurricularCourses() != null) {
-                    ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
                     InfoSiteEvaluationStatistics infoSiteEvaluationStatistics = new InfoSiteEvaluationStatistics();
                     int enrolledInCurricularCourse = 0;
@@ -197,7 +192,6 @@ public class SearchExecutionCourses extends Service {
             private InfoExecutionCourse getOccupancyLevels(Object arg0) throws ExcepcaoPersistencia {
                 InfoExecutionCourse infoExecutionCourse;
                 // Get the associated Shifs
-                ISuportePersistente persistentSupportTemp = PersistenceSupportFactory.getDefaultPersistenceSupport();
                 ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 
                 // FIXME: Find a better way to get the total
@@ -210,7 +204,7 @@ public class SearchExecutionCourses extends Service {
                 Integer doubtsCapacity = new Integer(0);
                 Integer reserveCapacity = new Integer(0);
 
-                List shifts = persistentSupportTemp.getITurnoPersistente().readByExecutionCourse(
+                List shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(
                         executionCourse.getIdInternal());
                 Iterator iterator = shifts.iterator();
                 while (iterator.hasNext()) {

@@ -5,13 +5,11 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author João Mota
@@ -25,7 +23,6 @@ public class EditCurriculum extends Service {
 			String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,
 			String generalObjectivesEn, Boolean basic) throws FenixServiceException, ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 		Curriculum curriculum = (Curriculum) persistentCurriculum.readByOID(Curriculum.class,
 				curriculumId);

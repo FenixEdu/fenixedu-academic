@@ -33,8 +33,6 @@ public class EditarTurno extends Service {
 		newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(),
 				infoShiftNew.getLotacao());
 
-		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		Shift shiftToEdit = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
 				infoShiftOld.getIdInternal());
 

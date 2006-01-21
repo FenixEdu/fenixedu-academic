@@ -15,13 +15,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class LerTurnosDeDisciplinaExecucao extends Service {
 
@@ -30,7 +28,6 @@ public class LerTurnosDeDisciplinaExecucao extends Service {
         List infoShiftList = new ArrayList();
         List infoShiftAndLessons = new ArrayList();
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         infoShiftList = persistentSupport.getITurnoPersistente().readByExecutionCourse(infoExecutionCourse.getIdInternal());
         Iterator itShiftList = infoShiftList.iterator();
 

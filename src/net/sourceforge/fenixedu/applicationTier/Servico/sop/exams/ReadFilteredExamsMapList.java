@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularYear;
@@ -29,17 +30,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadFilteredExamsMapList extends Service {
 
     public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSuppot = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
-        final IPersistentExecutionDegree persistentExecutionDegree = persistentSuppot
+        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
                 .getIPersistentExecutionDegree();
 
         // Object to be returned
@@ -71,7 +67,6 @@ public class ReadFilteredExamsMapList extends Service {
         infoExamsMap.setStartSeason2(null);
         infoExamsMap.setEndSeason2(endSeason2);
 
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
         // List of execution courses

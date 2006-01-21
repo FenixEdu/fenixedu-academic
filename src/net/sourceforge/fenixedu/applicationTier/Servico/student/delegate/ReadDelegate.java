@@ -6,15 +6,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.student.delegate;
 
 import java.util.HashMap;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoDelegate;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author <a href="mailto:lesa@mega.ist.utl.pt">Leonor Almeida </a>
@@ -24,7 +22,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 public class ReadDelegate extends Service {
  
     public InfoDelegate run(HashMap hashMap) throws ExcepcaoPersistencia {
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final IPersistentDelegate persistentDelegate = persistentSupport.getIPersistentDelegate();
         final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 

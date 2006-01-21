@@ -7,21 +7,18 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  * @version
  */
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoClass;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class LerTurma extends Service {
 
     public InfoClass run(String className, InfoExecutionDegree infoExecutionDegree,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         final SchoolClass turma = persistentSupport.getITurmaPersistente()
                 .readByNameAndExecutionDegreeAndExecutionPeriod(className,
                         infoExecutionDegree.getIdInternal(), infoExecutionPeriod.getIdInternal());

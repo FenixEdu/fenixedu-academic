@@ -13,6 +13,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
@@ -24,18 +25,13 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.Season;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadExamsByExecutionCourseInitialsAndSeasonAndExecutionPeriod extends Service {
 
 	public InfoViewExamByDayAndShift run(String executionCourseInitials, Season season,
 			InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
 		InfoViewExamByDayAndShift infoViewExamByDayAndShift = new InfoViewExamByDayAndShift();
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
 		ExecutionCourse executionCourse = persistentSupport.getIPersistentExecutionCourse()
 				.readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,

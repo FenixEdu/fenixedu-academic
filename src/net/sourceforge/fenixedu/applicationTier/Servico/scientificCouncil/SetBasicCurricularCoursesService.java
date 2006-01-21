@@ -8,15 +8,13 @@ package net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Jo�o Mota
@@ -28,9 +26,6 @@ public class SetBasicCurricularCoursesService extends Service {
 
 	public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId)
 			throws FenixServiceException, ExcepcaoPersistencia {
-
-		ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
 		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
 				.getIPersistentDegreeCurricularPlan();

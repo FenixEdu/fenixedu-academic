@@ -1,19 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.sop;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class DefineExamComment extends Service {
 
     public void run(String executionCourseInitials, Integer executionPeriodId, String comment)
             throws FenixServiceException, ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final ExecutionCourse executionCourse = persistentSupport.getIPersistentExecutionCourse()
                 .readByExecutionCourseInitialsAndExecutionPeriodId(executionCourseInitials,
                         executionPeriodId);

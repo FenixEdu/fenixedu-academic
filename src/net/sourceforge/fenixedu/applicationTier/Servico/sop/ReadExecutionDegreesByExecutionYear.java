@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
@@ -22,8 +23,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 public class ReadExecutionDegreesByExecutionYear extends Service {
 
@@ -31,7 +30,6 @@ public class ReadExecutionDegreesByExecutionYear extends Service {
 
 		final List infoExecutionDegreeList = new ArrayList();
 
-		final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
 		final List executionDegrees = readExecutionDegrees(infoExecutionYear, persistentSupport, executionDegreeDAO);

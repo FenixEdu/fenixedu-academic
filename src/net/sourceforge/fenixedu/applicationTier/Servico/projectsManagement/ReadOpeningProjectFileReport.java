@@ -4,27 +4,20 @@
 
 package net.sourceforge.fenixedu.applicationTier.Servico.projectsManagement;
 
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.IOpeningProjectFileReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentOpeningProjectFileReport;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
-import net.sourceforge.fenixedu.applicationTier.Service;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadOpeningProjectFileReport extends Service {
 
-    public ReadOpeningProjectFileReport() {
-    }
-
     public InfoOpeningProjectFileReport run(String userView, String costCenter, Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
-
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         PersistentSuportOracle p = PersistentSuportOracle.getInstance();
         InfoOpeningProjectFileReport infoOpeningProjectFileReport = new InfoOpeningProjectFileReport();
         if (userNumber != null

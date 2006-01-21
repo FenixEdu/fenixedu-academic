@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjec
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjectAccess;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentSuportOracle;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOracle;
 
@@ -25,8 +23,6 @@ import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentSuportOra
 public class ReadProjectAccesses extends Service {
 
     public List run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         IPersistentSuportOracle persistentSupportOracle = PersistentSuportOracle.getInstance();
         if (persistentSupportOracle.getIPersistentProject().countUserProject(new Integer(userNumber)) == 0)
             throw new InvalidArgumentsServiceException();
@@ -44,7 +40,6 @@ public class ReadProjectAccesses extends Service {
     }
 
     public List run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         Integer personCoordinator = new Integer(userNumber);
         List<ProjectAccess> projectAcessesList = persistentSupport.getIPersistentProjectAccess().readByPersonUsernameAndCoordinatorAndDate(username,
                 personCoordinator);
@@ -61,7 +56,6 @@ public class ReadProjectAccesses extends Service {
 
     public InfoProjectAccess run(String username, String costCenter, Integer personCode, Integer projectCode, String userNumber)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         IPersistentSuportOracle spOracle = PersistentSuportOracle.getInstance();
         InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(persistentSupport.getIPersistentProjectAccess().readByPersonIdAndProjectAndDate(
                 personCode, projectCode));
