@@ -15,10 +15,6 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class FAQSectionOJB extends PersistentObjectOJB implements IPersistentFAQSection {
 
-    public List readAll() throws ExcepcaoPersistencia {
-        return queryList(FAQSection.class, null);
-    }
-
     public List readSubSectionsInSection(Integer sectionId) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         if (sectionId != null) {

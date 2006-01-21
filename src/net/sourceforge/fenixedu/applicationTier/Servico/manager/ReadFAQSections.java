@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.support.InfoFAQSection;
 import net.sourceforge.fenixedu.domain.support.FAQSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFAQSection;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -22,9 +21,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadFAQSections extends Service {
 
     public Collection run() throws ExcepcaoPersistencia {
-        IPersistentFAQSection dao = persistentSupport.getIPersistentFAQSection();
-
-        List faqSections = dao.readAll();
+        List faqSections = (List) persistentObject.readAll(FAQSection.class);
         return CollectionUtils.collect(faqSections, new Transformer() {
             public Object transform(Object arg0) {
                 FAQSection faqSection = (FAQSection) arg0;

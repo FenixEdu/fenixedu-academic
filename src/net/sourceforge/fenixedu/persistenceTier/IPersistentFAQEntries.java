@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface IPersistentFAQEntries extends IPersistentObject {
 
-    public List readAll() throws ExcepcaoPersistencia;
-
     public List readEntriesInSection(Integer sectionId) throws ExcepcaoPersistencia;
 
 }
