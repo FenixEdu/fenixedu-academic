@@ -626,8 +626,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		</ant>
 	</target>
 
-	<target name="install"
-    		depends="compile"
+	<target name="install-without-depends"
             description="Deploys standalone application to web server">
 		<exec executable="ant.bat" failonerror="false" failifexecutionfails="false" os="Windows XP, Windows 2000, Windows 98, Windows NT, Windows 95">
 			<arg line="-f"/>
@@ -639,6 +638,12 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg line="build_compile.xml"/>
 			<arg line="deploy-linux"/>
 		</exec>
+	</target>
+
+	<target name="install"
+    		depends="compile"
+            description="Deploys standalone application to web server">
+		<antcall target="install-without-depends"/>
 	</target>
 
 	<target name="jar"
