@@ -17,20 +17,23 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerAulasDeSalaEmSemestre extends Service {
 
     public List run(InfoExecutionPeriod infoExecutionPeriod, InfoRoom infoRoom, Integer executionPeriodId)
             throws ExcepcaoPersistencia {
-        
         if (executionPeriodId == null) {
             executionPeriodId = infoExecutionPeriod.getIdInternal();
         }
 
-        final List<Lesson> lessonList = persistentSupport.getIAulaPersistente().readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriodId);
+    	final Room room = (Room) persistentObject.readByOID(Room.class, infoRoom.getIdInternal());
+    	final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
 
+        final List<Lesson> lessonList = room.findLessonsForExecutionPeriod(executionPeriod);
         List<InfoLesson> infoAulas = new ArrayList<InfoLesson>();
         for (Lesson elem : lessonList) {
             if (elem.getShift() == null) {

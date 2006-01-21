@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class EditLesson extends Service {
@@ -27,10 +26,8 @@ public class EditLesson extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoLessonServiceResult result = null;
 
-        IAulaPersistente aulaPersistente = persistentSupport.getIAulaPersistente();
-
         Room salaNova = persistentSupport.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
-        Lesson aula = (Lesson) aulaPersistente.readByOID(Lesson.class, aulaAntiga.getIdInternal());
+        Lesson aula = (Lesson) persistentObject.readByOID(Lesson.class, aulaAntiga.getIdInternal());
         Shift shift = aula.getShift();
 
         RoomOccupation roomOccupation = aula.getRoomOccupation();

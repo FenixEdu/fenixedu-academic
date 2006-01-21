@@ -23,39 +23,34 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoomOccupation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.dataTransferObject.InfoViewRoomSchedule;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 public class ReadPavillionsRoomsLessons extends Service {
 
     public List run(List pavillions, InfoExecutionPeriod infoExecutionPeriod)
             throws ExcepcaoPersistencia {
+    	final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
+    			.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+
         final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
-        final IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
+        final List<Room> rooms = roomDAO.readByPavillions(pavillions);
 
         final List infoViewRoomScheduleList = new ArrayList();
-
-        // Read pavillions rooms
-        final List rooms = roomDAO.readByPavillions(pavillions);
-
-        // Read rooms classes
-        for (final Iterator iterator = rooms.iterator(); iterator.hasNext();) {
-            final Room room = (Room) iterator.next();
-
+        for (final Room room : rooms) {
             final InfoViewRoomSchedule infoViewRoomSchedule = new InfoViewRoomSchedule();
             infoViewRoomScheduleList.add(infoViewRoomSchedule);
 
             final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             infoViewRoomSchedule.setInfoRoom(infoRoom);
 
-            final List lessons = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(),
-                    infoExecutionPeriod.getIdInternal());
+            final List lessons = room.findLessonsForExecutionPeriod(executionPeriod);
             final List infoLessons = new ArrayList(lessons.size());
             for (final Iterator iterator2 = lessons.iterator(); iterator2.hasNext();) {
                 final Lesson lesson = (Lesson) iterator2.next();

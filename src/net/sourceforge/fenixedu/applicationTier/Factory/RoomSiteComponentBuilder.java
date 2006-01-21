@@ -36,7 +36,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.CalendarUtil;
@@ -77,9 +76,6 @@ public class RoomSiteComponentBuilder {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-            ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
-
             Calendar startDay = Calendar.getInstance();
             startDay.setTimeInMillis(day.getTimeInMillis());
             startDay.add(Calendar.DATE, Calendar.MONDAY - day.get(Calendar.DAY_OF_WEEK));
@@ -90,7 +86,7 @@ public class RoomSiteComponentBuilder {
             InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
             if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
                 //adicionar as aulas
-                List lessonList = lessonDAO.readByRoomAndExecutionPeriod(room.getIdInternal(), executionPeriod.getIdInternal());
+            	List lessonList = room.findLessonsForExecutionPeriod(executionPeriod);
                 Iterator iterator = lessonList.iterator();
 
                 while (iterator.hasNext()) {

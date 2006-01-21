@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -21,11 +20,9 @@ import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 public class ReadLessonByOID extends Service {
 
 	public InfoLesson run(Integer oid) throws FenixServiceException, ExcepcaoPersistencia {
-
 		InfoLesson result = null;
 
-		IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
-		Lesson lesson = (Lesson) lessonDAO.readByOID(Lesson.class, oid);
+		Lesson lesson = (Lesson) persistentObject.readByOID(Lesson.class, oid);
 		if (lesson != null) {
 			InfoLesson infoLesson = InfoLessonWithInfoRoomAndInfoRoomOccupationAndInfoPeriod
 					.newInfoFromDomain(lesson);

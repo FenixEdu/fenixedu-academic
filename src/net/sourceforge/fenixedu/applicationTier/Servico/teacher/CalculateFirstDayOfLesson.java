@@ -9,7 +9,6 @@ import java.util.Calendar;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 
 /**
  * @author Luis Cruz
@@ -17,12 +16,9 @@ import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
  */
 public class CalculateFirstDayOfLesson extends Service {
 
-	public Calendar run(Integer lessonId) throws ExcepcaoPersistencia {
-	    IAulaPersistente persistentLesson = persistentSupport.getIAulaPersistente();
-
-	    Lesson lesson = (Lesson) persistentLesson.readByOID(Lesson.class, lessonId);
-	    Calendar startDate = lesson.getRoomOccupation().getPeriod().getStartDate();
-	    return startDate;
+	public Calendar run(final Integer lessonId) throws ExcepcaoPersistencia {
+	    final Lesson lesson = (Lesson) persistentObject.readByOID(Lesson.class, lessonId);
+	    return lesson.getRoomOccupation().getPeriod().getStartDate();
     }
 
 }

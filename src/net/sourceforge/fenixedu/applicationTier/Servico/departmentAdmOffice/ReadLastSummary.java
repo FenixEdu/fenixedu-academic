@@ -17,10 +17,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -36,20 +33,16 @@ public class ReadLastSummary extends Service {
         InfoSummary summary = null;
 
         IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        IAulaPersistente aulaPersistente = persistentSupport.getIAulaPersistente();
 
-        Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftId);
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
         if (shift == null)
             throw new FenixServiceException("no.shift");
 
-        Lesson aula = (Lesson) aulaPersistente.readByOID(Lesson.class, lessonID);
+        Lesson aula = (Lesson) persistentObject.readByOID(Lesson.class, lessonID);
         if (aula == null)
             throw new FenixServiceException("no.lesson");
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");

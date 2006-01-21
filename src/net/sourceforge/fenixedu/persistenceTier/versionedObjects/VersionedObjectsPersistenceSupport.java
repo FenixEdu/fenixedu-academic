@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects;
 
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
@@ -183,7 +182,6 @@ import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentTransact
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.CMSVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailAdressAliasVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.cms.MailingListVO;
-import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AulaVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.AuthorshipVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BibliographicReferenceVO;
 import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.BranchVO;
@@ -770,10 +768,6 @@ public class VersionedObjectsPersistenceSupport implements ISuportePersistente {
 
     public IPersistentExportGrouping getIPersistentExportGrouping() {
         return null;
-    }
-
-    public IAulaPersistente getIAulaPersistente() {
-        return new AulaVO();
     }
 
     public IPersistentSibsPaymentFileEntry getIPersistentSibsPaymentFileEntry() {

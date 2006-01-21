@@ -1,7 +1,11 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -62,4 +66,14 @@ public class Room extends Room_Base {
         return result;
     }
 
+    public List<Lesson> findLessonsForExecutionPeriod(final ExecutionPeriod executionPeriod) {
+        final List<Lesson> lessons = new ArrayList<Lesson>();
+        for (final RoomOccupation roomOccupation : getRoomOccupations()) {
+            final Lesson lesson = roomOccupation.getLesson();
+            if (lesson != null && lesson.getExecutionPeriod() == executionPeriod) {
+                lessons.add(lesson);
+            }
+        }
+        return lessons;
+    }
 }

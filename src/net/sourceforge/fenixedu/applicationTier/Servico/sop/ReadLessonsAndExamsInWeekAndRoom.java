@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.util.CalendarUtil;
@@ -48,10 +47,11 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
     // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
+    	final Room room = (Room) persistentObject.readByOID(Room.class, infoRoom.getIdInternal());
+
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        IAulaPersistente lessonDAO = persistentSupport.getIAulaPersistente();
         ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
 
         ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
@@ -67,7 +67,8 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
         InfoPeriod lessonsInfoPeriod = calculateLessonsSeason(executionPeriod);
         if (this.intersectPeriods(day, endDay,lessonsInfoPeriod)) {
             //adicionar as aulas
-            List lessonList = lessonDAO.readByRoomAndExecutionPeriod(infoRoom.getIdInternal(), executionPeriod.getIdInternal());
+        	
+            List lessonList = room.findLessonsForExecutionPeriod(executionPeriod);
             Iterator iterator = lessonList.iterator();
 
             while (iterator.hasNext()) {
@@ -123,7 +124,6 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
             }
         }
 
-        final Room room = (Room) persistentRoom.readByOID(Room.class, infoRoom.getIdInternal());
         final Date startDate = startDay.getTime();
         final Date endDate = endDay.getTime();
         for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {

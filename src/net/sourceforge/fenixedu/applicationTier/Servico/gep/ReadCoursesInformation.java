@@ -39,7 +39,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IAulaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBibliographicReference;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
@@ -194,7 +193,6 @@ public class ReadCoursesInformation extends Service {
             throws ExcepcaoPersistencia {
         final String lessonTypeForPredicate = lessonType;
         ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        IAulaPersistente persistentLesson = persistentSupport.getIAulaPersistente();
         List lessonsOfType = (List) CollectionUtils.select(infoLessons, new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -213,7 +211,7 @@ public class ReadCoursesInformation extends Service {
                 // Shift shift2;
 
                 InfoLesson infoLesson = (InfoLesson) iter.next();
-                Lesson lesson = (Lesson) persistentLesson.readByOID(Lesson.class, infoLesson
+                Lesson lesson = (Lesson) persistentObject.readByOID(Lesson.class, infoLesson
                         .getIdInternal());
 
                 // shifts = persistentShift.readByLesson(lesson);

@@ -116,8 +116,6 @@ public interface ISuportePersistente
 
 	public Integer getNumberCachedItems();
 
-	public IAulaPersistente getIAulaPersistente();
-
 	public ISalaPersistente getISalaPersistente();
 
 	public ITurmaPersistente getITurmaPersistente();
