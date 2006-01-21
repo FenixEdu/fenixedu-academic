@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.ExcepcaoSessaoInexistente;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
@@ -21,23 +20,22 @@ public abstract class FenixAction extends Action {
 
     protected HttpSession getSession(HttpServletRequest request) throws ExcepcaoSessaoInexistente {
         HttpSession result = request.getSession(false);
-        if (result == null)
+        if (result == null) {
             throw new ExcepcaoSessaoInexistente();
-
+        }
         return result;
     }
 
-    protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException,
-            FenixServiceException {
-        IUserView userView = SessionUtils.getUserView(request);
-        Person person = (Person) ServiceManagerServiceFactory.executeService(userView,
-                "ReadDomainPersonByUsername", new Object[] { userView.getUtilizador() });
-        return person;
+    protected IUserView getUserView(HttpServletRequest request) {
+    	return SessionUtils.getUserView(request);
+    }
+
+    protected Person getLoggedPerson(HttpServletRequest request) {
+    	return getUserView(request).getPerson();
     }
 
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         return super.execute(mapping, actionForm, request, response);
     }
 
