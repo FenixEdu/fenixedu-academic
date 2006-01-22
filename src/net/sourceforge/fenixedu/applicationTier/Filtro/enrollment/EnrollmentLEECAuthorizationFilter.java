@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Tânia Pousão
@@ -57,25 +55,22 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         try {
             List roles = getRoleList(id.getRoles());
 
-            ISuportePersistente sp = null;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             //verify if the student making the enrollment is a LEEC degree
             // student
             if (roles.contains(RoleType.STUDENT)) {
-                Student student = readStudent(id, sp);
+                Student student = readStudent(id);
                 if (student == null) {
                     return "noAuthorization";
                 }
 
-                if (!verifyStudentLEEC(arguments, sp)) {
+                if (!verifyStudentLEEC(arguments)) {
                     return new String("error.student.degreeCurricularPlan.LEEC");
                 }
                 if (!curriculumOwner(student, id)) {
                     return "noAuthorization";
 
                 }
-                Tutor tutor = verifyStudentWithTutor(student, sp);
+                Tutor tutor = verifyStudentWithTutor(student);
                 if (tutor != null) {
                     return new String("error.enrollment.student.withTutor+"
                             + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -83,46 +78,45 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
                 }
             } else {
                 //verify if the student to enroll is a LEEC degree student
-                if (!verifyStudentLEEC(arguments, sp)) {
+                if (!verifyStudentLEEC(arguments)) {
                     return new String("error.student.degreeCurricularPlan.LEEC");
                 }
 
                 //verify if the coodinator is of the LEEC degree
                 if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
-                    Teacher teacher = readTeacher(id, sp);
+                    Teacher teacher = readTeacher(id);
                     if (teacher == null) {
                         return "noAuthorization";
                     }
 
-                    if (!verifyCoordinatorLEEC(teacher, arguments, sp)) {
+                    if (!verifyCoordinatorLEEC(teacher, arguments)) {
                         return "noAuthorization";
                     }
                 } else if (roles.contains(RoleType.TEACHER)) {
-                    Teacher teacher = readTeacher(id, sp);
+                    Teacher teacher = readTeacher(id);
                     if (teacher == null) {
                         return "noAuthorization";
                     }
 
-                    Student student = readStudent(arguments, sp);
+                    Student student = readStudent(arguments);
                     if (student == null) {
                         return "noAuthorization";
                     }
 
-                    if (!verifyStudentTutor(teacher, student, sp)) {
+                    if (!verifyStudentTutor(teacher, student)) {
                         return new String("error.enrollment.notStudentTutor+"
                                 + student.getNumber().toString());
                     }
 
                 } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                         || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                    StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments,
-                            sp);
+                    StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
 
                     if (studentCurricularPlan.getStudent() == null) {
                         return "noAuthorization";
                     }
-                    if (insideEnrollmentPeriod(studentCurricularPlan, sp)) {
-                        Tutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent(), sp);
+                    if (insideEnrollmentPeriod(studentCurricularPlan)) {
+                        Tutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent());
                         if (tutor != null) {
                             return new String("error.enrollment.student.withTutor+"
                                     + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -141,9 +135,9 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         return null;
     }
 
-    private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
+    private boolean verifyStudentLEEC(Object[] arguments)
             throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
+        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
         if (studentCurricularPlan == null) {
             return false;
         }
@@ -157,10 +151,10 @@ public class EnrollmentLEECAuthorizationFilter extends EnrollmentAuthorizationFi
         return DEGREE_LEEC_CODE.equals(degreeCode);
     }
 
-    private boolean verifyCoordinatorLEEC(Teacher teacher, Object[] arguments, ISuportePersistente sp)
+    private boolean verifyCoordinatorLEEC(Teacher teacher, Object[] arguments)
             throws ExcepcaoPersistencia {
 
-        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
         Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
                 teacher.getIdInternal(), (Integer) arguments[0]);
         if (coordinator == null) {

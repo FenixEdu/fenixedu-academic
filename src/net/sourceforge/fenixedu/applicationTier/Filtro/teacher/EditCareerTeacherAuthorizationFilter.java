@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentCareer;
 
 /**
@@ -32,9 +30,8 @@ public class EditCareerTeacherAuthorizationFilter extends EditDomainObjectAuthor
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
         try {
             InfoCareer infoCareer = (InfoCareer) infoOject;
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCareer persistentCareer = sp.getIPersistentCareer();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentCareer persistentCareer = persistentSupport.getIPersistentCareer();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 

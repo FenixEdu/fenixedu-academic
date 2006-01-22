@@ -6,8 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits;
 
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 
 /**
  * @author jpvl
@@ -25,13 +23,11 @@ public class ReadDeleteTeacherDegreeFinalProjectStudentAuthorization extends
      * 
      * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
      */
-    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
+    protected Integer getTeacherId(Object[] arguments)
             throws ExcepcaoPersistencia {
         Integer teacherDegreeFinalProjectStudentId = (Integer) arguments[0];
-        IPersistentTeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudentDAO = sp
-                .getIPersistentTeacherDegreeFinalProjectStudent();
 
-        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) teacherDegreeFinalProjectStudentDAO
+        TeacherDegreeFinalProjectStudent teacherDegreeFinalProjectStudent = (TeacherDegreeFinalProjectStudent) persistentObject
                 .readByOID(TeacherDegreeFinalProjectStudent.class, teacherDegreeFinalProjectStudentId);
         return teacherDegreeFinalProjectStudent != null ? teacherDegreeFinalProjectStudent.getTeacher()
                 .getIdInternal() : null;

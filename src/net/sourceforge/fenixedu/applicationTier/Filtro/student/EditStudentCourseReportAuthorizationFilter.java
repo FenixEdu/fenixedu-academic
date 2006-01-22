@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentStudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.student.IPersistentDelegate;
 import net.sourceforge.fenixedu.util.DelegateYearType;
@@ -51,11 +49,10 @@ public class EditStudentCourseReportAuthorizationFilter extends DomainObjectAuth
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-            IPersistentStudentCourseReport persistentStudentCourseReport = sp
+            IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
+            IPersistentStudentCourseReport persistentStudentCourseReport = persistentSupport
                     .getIPersistentStudentCourseReport();
-            IPersistentDelegate persistentDelegate = sp.getIPersistentDelegate();
+            IPersistentDelegate persistentDelegate = persistentSupport.getIPersistentDelegate();
 
             Student student = persistentStudent.readByUsername(id.getUtilizador());
             Delegate delegate = persistentDelegate.readByStudent(student);

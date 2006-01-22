@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Tânia Pousão
@@ -46,21 +44,18 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
 
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         try {
-            ISuportePersistente sp = null;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             //verify if the degree type is LICENCIATURA_OBJ
             if (!verifyDegreeTypeIsNonMaster(arguments)) {
                 return new String("error.degree.type");
             }
 
             //verify if the student to enroll is a non master degree student
-            if (!verifyStudentNonMasterDegree(arguments, sp)) {
+            if (!verifyStudentNonMasterDegree(arguments)) {
                 return new String("error.student.degree.nonMaster");
             }
 
             //verify if the student to enroll is a LEEC degree student
-            if (!verifyStudentLEEC(arguments, sp)) {
+            if (!verifyStudentLEEC(arguments)) {
                 return new String("error.student.degree.nonMaster");
             }
 
@@ -81,14 +76,14 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
         return isNonMaster;
     }
 
-    private boolean verifyStudentNonMasterDegree(Object[] arguments, ISuportePersistente sp)
+    private boolean verifyStudentNonMasterDegree(Object[] arguments)
             throws ExcepcaoPersistencia {
         boolean isNonMaster = false;
 
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
                 Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         DEGREE_TYPE);
                 if (student != null) {
@@ -101,14 +96,14 @@ public class EnrollmentLEECWithoutRulesAuthorizationFilter extends Authorization
     }
 
     //with student number and degree type
-    private boolean verifyStudentLEEC(Object[] arguments, ISuportePersistente sp)
+    private boolean verifyStudentLEEC(Object[] arguments)
             throws ExcepcaoPersistencia {
         boolean isLEEC = false;
 
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+                IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                         .getIStudentCurricularPlanPersistente();
 
                 StudentCurricularPlan studentCurricularPlan = persistentStudentCurricularPlan

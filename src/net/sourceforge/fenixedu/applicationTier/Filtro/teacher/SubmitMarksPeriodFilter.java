@@ -5,8 +5,6 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.OutOfPeriodFilterException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -23,9 +21,8 @@ public class SubmitMarksPeriodFilter extends Filtro {
 		Date now = new Date();
 		Integer executionPeriodId = 83;
 		
-		ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 		Object[] arguments = getServiceCallArguments(request);
-		ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentObject().readByOID(ExecutionCourse.class, (Integer) arguments[0]);
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, (Integer) arguments[0]);
 		if(executionCourse != null) {
 			if(executionCourse.getExecutionPeriod().getIdInternal().equals(executionPeriodId)) {
 				if(now.after(start) && now.before(end)) {

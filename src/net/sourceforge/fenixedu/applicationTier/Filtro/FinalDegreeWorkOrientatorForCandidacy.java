@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -40,8 +38,6 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
             return;
         }
 
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         final Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());

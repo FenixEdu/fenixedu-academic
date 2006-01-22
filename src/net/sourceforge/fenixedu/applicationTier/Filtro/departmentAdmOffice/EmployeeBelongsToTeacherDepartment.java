@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -30,12 +28,10 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
 	public void execute(ServiceRequest request, ServiceResponse response)
 			throws FilterException, Exception {
 	    
-	    ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        
-	    IPersistentDepartment persistentDepartment = persistentSuport.getIDepartamentoPersistente();
-	    IPersistentTeacher persistentTeacher = persistentSuport.getIPersistentTeacher();
-        IPersistentEmployee persistentEmployee = persistentSuport.getIPersistentEmployee();
-        IPessoaPersistente pessoaPersistente = persistentSuport.getIPessoaPersistente();
+	    IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();
+	    IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+        IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
+        IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
 	         
 	    IUserView userView = getRemoteUser(request);
         Object[] argumentos = getServiceCallArguments(request);

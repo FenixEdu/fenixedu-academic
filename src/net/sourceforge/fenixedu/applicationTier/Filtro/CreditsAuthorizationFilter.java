@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -42,14 +40,13 @@ public class CreditsAuthorizationFilter extends Filtro {
 
         Collection roles = requester.getRoles();
         boolean authorizedRequester = false;
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
         // ATTENTION: ifs order matters...
         if (AuthorizationUtils.containsRole(roles, RoleType.CREDITS_MANAGER)) {
             authorizedRequester = true;
         } else if (AuthorizationUtils.containsRole(roles, RoleType.DEPARTMENT_CREDITS_MANAGER)) {
-            Teacher teacherToEdit = readTeacher(arguments[0], sp);
+            Teacher teacherToEdit = readTeacher(arguments[0]);
 
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+            IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
             Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();            
@@ -57,7 +54,7 @@ public class CreditsAuthorizationFilter extends Filtro {
             authorizedRequester = departmentsWithAccessGranted.contains(department);
 
         } else if (AuthorizationUtils.containsRole(roles, RoleType.TEACHER)) {
-            Teacher teacherToEdit = readTeacher(arguments[0], sp);
+            Teacher teacherToEdit = readTeacher(arguments[0]);
             authorizedRequester = teacherToEdit.getPerson().getUsername().equals(
                     requester.getUtilizador());
 
@@ -75,13 +72,13 @@ public class CreditsAuthorizationFilter extends Filtro {
      * @return @throws
      *         ExcepcaoPersistencia
      */
-    private Teacher readTeacher(Object object, ISuportePersistente sp) throws ExcepcaoPersistencia {
+    private Teacher readTeacher(Object object) throws ExcepcaoPersistencia {
         Integer teacherOID = null;
         if (object instanceof InfoTeacher) {
             teacherOID = ((InfoTeacher) object).getIdInternal();
         } else if (object instanceof Integer) {
             teacherOID = (Integer) object;
         }
-        return (Teacher) sp.getIPersistentTeacher().readByOID(Teacher.class, teacherOID);
+        return (Teacher) persistentObject.readByOID(Teacher.class, teacherOID);
     }
 }

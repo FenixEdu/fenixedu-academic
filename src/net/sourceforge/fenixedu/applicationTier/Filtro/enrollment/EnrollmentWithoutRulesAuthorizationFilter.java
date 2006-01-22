@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Tânia Pousão
@@ -50,9 +48,6 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         try {
-            ISuportePersistente sp = null;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             List roles = getRoleList(id.getRoles());
 
             if (roles.contains(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE)) {
@@ -62,7 +57,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
                     return new String("error.masterDegree.type");
                 }
                 //verify if the student to enroll is a master degree student
-                if (!verifyStudentType(arguments, sp, MASTER_DEGREE_TYPE)) {
+                if (!verifyStudentType(arguments, MASTER_DEGREE_TYPE)) {
                     return new String("error.student.degree.master");
                 }
             }
@@ -76,7 +71,7 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
 
                 //verify if the student to enroll is a non master degree
                 // student
-                if (!verifyStudentType(arguments, sp, DEGREE_TYPE)) {
+                if (!verifyStudentType(arguments, DEGREE_TYPE)) {
                     return new String("error.student.degree.nonMaster");
                 }
             }
@@ -98,14 +93,14 @@ public class EnrollmentWithoutRulesAuthorizationFilter extends AuthorizationByMa
         return isEqual;
     }
 
-    private boolean verifyStudentType(Object[] arguments, ISuportePersistente sp, DegreeType degreeType)
+    private boolean verifyStudentType(Object[] arguments, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         boolean isRightType = false;
 
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
                 Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         degreeType);
                 if (student != null) {

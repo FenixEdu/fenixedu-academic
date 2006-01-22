@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.credits.otherTypeCreditL
 import net.sourceforge.fenixedu.applicationTier.Filtro.credits.AbstractTeacherDepartmentAuthorization;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.credits.IPersistentOtherTypeCreditLine;
 
 /**
@@ -21,14 +20,12 @@ public class CreditsServiceWithOtherCreditLineIdFirstArgumentFilter extends
      * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[],
      *      ServidorPersistente.ISuportePersistente)
      */
-    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp) {
+    protected Integer getTeacherId(Object[] arguments) {
         Integer id = (Integer) arguments[0];
-
-        IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = sp.getIPersistentOtherTypeCreditLine();
 
         OtherTypeCreditLine otherTypeCreditLine;
         try {
-            otherTypeCreditLine = (OtherTypeCreditLine) otherTypeCreditLineDAO.readByOID(
+            otherTypeCreditLine = (OtherTypeCreditLine) persistentObject.readByOID(
                     OtherTypeCreditLine.class, id);
         } catch (ExcepcaoPersistencia e) {
             return null;

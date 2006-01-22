@@ -5,9 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -28,8 +25,6 @@ public class EditWrittenEvaluationAuthorization extends Filtro {
 
     private WrittenEvaluation readWrittenEvaluation(final Object[] arguments) throws ExcepcaoPersistencia {
         final Integer writtenEvaluationID = getWrittenEvaluationID(arguments);
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
         return (WrittenEvaluation) persistentObject.readByOID(WrittenEvaluation.class, writtenEvaluationID);
     }
 

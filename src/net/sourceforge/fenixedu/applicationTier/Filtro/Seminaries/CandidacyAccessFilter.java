@@ -12,9 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorized
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Seminaries.Candidacy;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCandidacy;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -66,13 +63,10 @@ public class CandidacyAccessFilter extends Filtro {
     boolean checkCandidacyOwnership(IUserView id, Object[] arguments) throws Exception {
         boolean result = true;
         Integer candidacyID = (Integer) arguments[0];
-        ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
-                .getIPersistentSeminaryCandidacy();
-        //
-        Student student = persistenceSupport.getIPersistentStudent().readByUsername(id.getUtilizador());
+
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(id.getUtilizador());
         if (student != null) {
-            Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class,
+            Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class,
                     candidacyID);
             //
             if ((candidacy != null)

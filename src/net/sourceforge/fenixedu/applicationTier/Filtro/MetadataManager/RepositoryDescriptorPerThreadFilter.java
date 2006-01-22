@@ -5,8 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Filtro.MetadataManager;
  * @version
  */
 
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.applicationTier.Filtro.Filter;
 import net.sourceforge.fenixedu.persistenceTier.OJB.SuportePersistenteOJB;
 
 import org.apache.ojb.broker.metadata.DescriptorRepository;
@@ -15,9 +14,8 @@ import org.apache.ojb.broker.metadata.MetadataManager;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.FilterParameters;
-import pt.utl.ist.berserk.logic.filterManager.IFilter;
 
-public class RepositoryDescriptorPerThreadFilter implements IFilter {
+public class RepositoryDescriptorPerThreadFilter extends Filter {
 
     /*
      * (non-Javadoc)
@@ -30,12 +28,11 @@ public class RepositoryDescriptorPerThreadFilter implements IFilter {
         MetadataManager mm = MetadataManager.getInstance();
         // tell the manager to use per thread mode
         mm.setEnablePerThreadChanges(true);
-        ISuportePersistente ps = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        DescriptorRepository descriptorRepository = ((SuportePersistenteOJB) ps)
+        DescriptorRepository descriptorRepository = ((SuportePersistenteOJB) persistentSupport)
                 .getDescriptor("lightVersion");
         if (descriptorRepository == null) {
             descriptorRepository = mm.readDescriptorRepository("OJB/lightVersion/repository.xml");
-            ((SuportePersistenteOJB) ps).setDescriptor(descriptorRepository, "lightVersion");
+            ((SuportePersistenteOJB) persistentSupport).setDescriptor(descriptorRepository, "lightVersion");
         }
 
         mm.setDescriptor(descriptorRepository);

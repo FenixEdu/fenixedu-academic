@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -60,7 +58,6 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
     private boolean sectionBelongsExecutionCourse(IUserView id, Object[] argumentos) {
         InfoExecutionCourse infoExecutionCourse = null;
         ExecutionCourse executionCourse = null;
-        ISuportePersistente sp;
         Section section = null;
         InfoSection infoSection = null;
 
@@ -68,9 +65,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
             return false;
         }
         try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
@@ -79,7 +74,7 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
                 executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
-            IPersistentSection persistentSection = sp.getIPersistentSection();
+            IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
             if (argumentos[1] == null) {
                 return true;
             }
@@ -111,9 +106,6 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
             return false;
         }
         try {
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourseID = infoExecutionCourse.getIdInternal();
@@ -121,11 +113,11 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
                 executionCourseID = (Integer) argumentos[0];
             }
 
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
                         .getIdInternal(), executionCourseID);
             }

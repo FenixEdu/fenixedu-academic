@@ -7,8 +7,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PersonRole;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -39,8 +37,7 @@ public class ChangeStudentInfoAuthorization extends AuthorizationByRoleFilter {
         
         InfoPerson infoPerson = (InfoPerson) request.getServiceParameters().parametersArray()[0];
         
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class, infoPerson.getIdInternal());
+        Person person = (Person) persistentObject.readByOID(Person.class, infoPerson.getIdInternal());
         Role teacherRole = (Role) persistentSupport.getIPersistentRole().readByRoleType(RoleType.TEACHER);
         Role employeeRole = (Role) persistentSupport.getIPersistentRole().readByRoleType(RoleType.EMPLOYEE);
         

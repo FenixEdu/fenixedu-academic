@@ -11,9 +11,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 
 /**
  * @author Leonor Almeida
@@ -29,12 +26,10 @@ public class ExternalActivityTeacherAuthorizationFilter extends DomainObjectAuth
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExternalActivity persistentExternalActivity = sp.getIPersistentExternalActivity();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            ExternalActivity externalActivity = (ExternalActivity) persistentExternalActivity
+            ExternalActivity externalActivity = (ExternalActivity) persistentObject
                     .readByOID(ExternalActivity.class, objectId);
 
             return externalActivity.getTeacher().equals(teacher);

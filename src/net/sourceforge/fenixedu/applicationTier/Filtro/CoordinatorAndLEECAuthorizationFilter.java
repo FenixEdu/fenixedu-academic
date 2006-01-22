@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -75,11 +74,10 @@ public class CoordinatorAndLEECAuthorizationFilter extends AuthorizationByRoleFi
         ISuportePersistente sp;
         String degreeCode = null;
         try {
-        	sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             
-           	IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+           	IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
             Coordinator coordinator = persistentCoordinator
                     .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), (Integer) argumentos[0]);
             if (coordinator != null && coordinator.getExecutionDegree() != null

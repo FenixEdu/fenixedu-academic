@@ -28,8 +28,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -82,11 +80,8 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         try {
             List roles = getRoleList(id.getRoles());
 
-            ISuportePersistente sp = null;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             if (roles.contains(RoleType.STUDENT)) {
-                Student student = readStudent(id, sp);
+                Student student = readStudent(id);
                 if (student == null) {
                     return "noAuthorization";
                 }
@@ -103,7 +98,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
                 if (!curriculumOwner(student, id)) {
                     return "noAuthorization";
                 }
-                Tutor tutor = verifyStudentWithTutor(student, sp);
+                Tutor tutor = verifyStudentWithTutor(student);
                 if (tutor != null) {
                     return new String("error.enrollment.student.withTutor+"
                             + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -112,7 +107,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
 
                 // check if the student is in the list of secretary enrolments
                 // students
-                SecretaryEnrolmentStudent secretaryEnrolmentStudent = sp
+                SecretaryEnrolmentStudent secretaryEnrolmentStudent = persistentSupport
                         .getIPersistentSecretaryEnrolmentStudent().readByStudentNumber(
                                 student.getNumber());
                 if (secretaryEnrolmentStudent != null) {
@@ -148,40 +143,39 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
             } else {
 
                 if (roles.contains(RoleType.COORDINATOR) && arguments[0] != null) {
-                    Teacher teacher = readTeacher(id, sp);
+                    Teacher teacher = readTeacher(id);
                     if (teacher == null) {
                         return "noAuthorization";
                     }
 
-                    if (!verifyCoordinator(teacher, arguments, sp)) {
+                    if (!verifyCoordinator(teacher, arguments)) {
                         return "noAuthorization";
                     }
                 } else if (roles.contains(RoleType.TEACHER)) {
-                    Teacher teacher = readTeacher(id, sp);
+                    Teacher teacher = readTeacher(id);
                     if (teacher == null) {
                         return "noAuthorization";
                     }
 
-                    Student student = readStudent(arguments, sp);
+                    Student student = readStudent(arguments);
                     if (student == null) {
                         return "noAuthorization";
                     }
 
-                    if (!verifyStudentTutor(teacher, student, sp)) {
+                    if (!verifyStudentTutor(teacher, student)) {
                         return new String("error.enrollment.notStudentTutor+"
                                 + student.getNumber().toString());
                     }
 
                 } else if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                         || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
-                    StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments,
-                            sp);
+                    StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
 
                     if (studentCurricularPlan.getStudent() == null) {
                         return "noAuthorization";
                     }
-                    if (insideEnrollmentPeriod(studentCurricularPlan, sp)) {
-                        Tutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent(), sp);
+                    if (insideEnrollmentPeriod(studentCurricularPlan)) {
+                        Tutor tutor = verifyStudentWithTutor(studentCurricularPlan.getStudent());
                         if (tutor != null) {
                             return new String("error.enrollment.student.withTutor+"
                                     + tutor.getTeacher().getTeacherNumber().toString() + "+"
@@ -205,8 +199,8 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
      * @param sp
      * @return
      */
-    protected boolean insideEnrollmentPeriod(StudentCurricularPlan studentCurricularPlan,
-            ISuportePersistente sp) throws ExcepcaoPersistencia {
+    protected boolean insideEnrollmentPeriod(StudentCurricularPlan studentCurricularPlan)
+    		throws ExcepcaoPersistencia {
         try {
             ShowAvailableCurricularCoursesWithoutEnrollmentPeriod
                     .getEnrolmentPeriod(studentCurricularPlan);
@@ -216,9 +210,9 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         return true;
     }
 
-    protected StudentCurricularPlan readStudentCurricularPlan(Object[] arguments, ISuportePersistente sp)
+    protected StudentCurricularPlan readStudentCurricularPlan(Object[] arguments)
             throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
 
         StudentCurricularPlan studentCurricularPlan = null;
@@ -234,15 +228,14 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         return studentCurricularPlan;
     }
 
-    protected Student readStudent(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = sp.getIPersistentStudent();
-
+    protected Student readStudent(IUserView id) throws ExcepcaoPersistencia {
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         return persistentStudent.readByUsername(id.getUtilizador());
     }
 
-    protected Student readStudent(Object[] arguments, ISuportePersistente sp)
+    protected Student readStudent(Object[] arguments)
             throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
+        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
         if (studentCurricularPlan == null) {
             return null;
         }
@@ -262,17 +255,14 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
      * @param sp
      * @return
      */
-    protected Tutor verifyStudentWithTutor(Student student, ISuportePersistente sp)
+    protected Tutor verifyStudentWithTutor(Student student)
             throws ExcepcaoPersistencia {
-        IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-
-        Tutor tutor = persistentTutor.readTeachersByStudent(student);
-
-        return tutor;
+        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
+        return persistentTutor.readTeachersByStudent(student);
     }
 
-    protected Teacher readTeacher(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia {
-        IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+    protected Teacher readTeacher(IUserView id) throws ExcepcaoPersistencia {
+        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
         return persistentTeacher.readTeacherByUsername(id.getUtilizador());
     }
@@ -283,19 +273,19 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
      * @param sp
      * @return
      */
-    protected boolean verifyStudentTutor(Teacher teacher, Student student, ISuportePersistente sp)
+    protected boolean verifyStudentTutor(Teacher teacher, Student student)
             throws ExcepcaoPersistencia {
-        IPersistentTutor persistentTutor = sp.getIPersistentTutor();
+        IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
 
         Tutor tutor = persistentTutor.readTutorByTeacherAndStudent(teacher, student);
 
         return (tutor != null);
     }
 
-    protected boolean verifyCoordinator(Teacher teacher, Object[] arguments, ISuportePersistente sp)
+    protected boolean verifyCoordinator(Teacher teacher, Object[] arguments)
             throws ExcepcaoPersistencia {
     	
-        IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
         Coordinator coordinator = persistentCoordinator.readCoordinatorByTeacherIdAndExecutionDegreeId(
                 teacher.getIdInternal(), (Integer) arguments[0]);
         if (coordinator == null) {
@@ -307,7 +297,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
     		return false;
     	}
 
-        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments, sp);
+        StudentCurricularPlan studentCurricularPlan = readStudentCurricularPlan(arguments);
         if (studentCurricularPlan == null) {
             return false;
         }

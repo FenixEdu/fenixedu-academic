@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -73,8 +71,6 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
         List roles = getRoleList(id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.MASTER_DEGREE_ADMINISTRATIVE_OFFICE);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
@@ -91,18 +87,17 @@ public class ReadCandidateEnrolmentsByCandidateIDAuthorizationFilter extends Fil
 
                 Integer candidateID = (Integer) arguments[0];
 
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
-                MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) sp
-                        .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
-                                candidateID);
+                MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
+                		.readByOID(MasterDegreeCandidate.class, candidateID);
 
                 if (masterDegreeCandidate == null) {
                     return false;
                 }
 
                 //modified by Tânia Pousão
-                Coordinator coordinator = sp.getIPersistentCoordinator()
+                Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
                         .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
                                 masterDegreeCandidate.getExecutionDegree().getIdInternal());
                 if (coordinator != null) {

@@ -12,11 +12,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Leonor Almeida
@@ -32,13 +29,11 @@ public class ReadCourseInformationCoordinatorAuthorizationFilter extends DomainO
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
+            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                     ExecutionCourse.class, objectId);
             List executionDegrees = persistentExecutionDegree.readByExecutionCourseAndByTeacher(
                     executionCourse.getIdInternal(), teacher.getIdInternal());

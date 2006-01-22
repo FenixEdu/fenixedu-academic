@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -47,15 +45,14 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
     private void verifyTeacherPermission(IUserView requester, Integer teacherNumber)
             throws FenixServiceException {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
+            IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
 
             Teacher teacher = teacherDAO.readByNumber(teacherNumber);
             if (teacher == null) {
                 throw new NonExistingServiceException("Teacher doesn't exists");
             }
 
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+            IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
             Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
             if (requesterPerson == null) {
                 throw new NotAuthorizedException("No person with that userView");

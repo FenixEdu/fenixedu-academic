@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author nmgo
@@ -56,20 +54,17 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
      */
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         try {
-            ISuportePersistente sp = null;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             List roles = getRoleList(id.getRoles());
 
             if (roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE)
                     || roles.contains(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER)) {
                 //verify if the user is employee
-                if (!verifyEmployee(id, sp)) {
+                if (!verifyEmployee(id)) {
                     return "noAuthorization";
                 }
 
                 //verify if the student to enroll is a non master degree student
-                if (!verifyStudentType(arguments, sp, DEGREE_TYPE)) {
+                if (!verifyStudentType(arguments, DEGREE_TYPE)) {
                     return "error.student.degree.nonMaster";
                 }
             }
@@ -81,14 +76,14 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         }
     }
 
-    private boolean verifyStudentType(Object[] arguments, ISuportePersistente sp, DegreeType degreeType)
+    private boolean verifyStudentType(Object[] arguments, DegreeType degreeType)
             throws ExcepcaoPersistencia {
         boolean isRightType = false;
 
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = (Integer) arguments[0];
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
                 Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         degreeType);
                 if (student != null) {
@@ -100,15 +95,15 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         return isRightType;
     }
     
-    private boolean verifyEmployee(IUserView id, ISuportePersistente sp) throws ExcepcaoPersistencia{
+    private boolean verifyEmployee(IUserView id) throws ExcepcaoPersistencia{
         
         String user = id.getUtilizador();
         
         if(user != null) {
-            IPessoaPersistente pessoaPersistente = sp.getIPessoaPersistente(); 
+            IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente(); 
             Person pessoa = pessoaPersistente.lerPessoaPorUsername(user);
             if(pessoa != null) {
-                IPersistentEmployee persistentEmployee = sp.getIPersistentEmployee();
+                IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
                 Employee employee = persistentEmployee.readByPerson(pessoa);
                 if(employee != null) {
                     return true;

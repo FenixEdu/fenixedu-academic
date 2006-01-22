@@ -25,8 +25,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -68,10 +66,9 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
     private String authorizedCoordinator(IUserView id, Object[] arguments) {
         try {
             String username = (String) arguments[0];
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = sp.getIPersistentFinalDegreeWork();
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport.getIPersistentFinalDegreeWork();
 
-            Student student1 = sp.getIPersistentStudent().readByUsername(username);
+            Student student1 = persistentSupport.getIPersistentStudent().readByUsername(username);
 
             List students = student1.getPerson().getStudents();
 
@@ -126,7 +123,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                 }
                 /*-----*/
 
-                IPersistentExecutionDegree persistentExecutionDegree = sp
+                IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
                         .getIPersistentExecutionDegree();
                 List studentCurricularPlans = student.getStudentCurricularPlans();
 
@@ -142,7 +139,7 @@ public class StudentDegreeCoordinatorAuthorizationFilter extends AccessControlFi
                         continue;
                     }
 
-                    IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+                    IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
 
                     for (Iterator executionDegreeIterator = executionDegrees.iterator(); executionDegreeIterator
                             .hasNext();) {

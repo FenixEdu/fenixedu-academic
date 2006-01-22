@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.PeriodState;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -61,8 +59,6 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
     }
 
     private boolean isCoordinatorOfCurrentExecutionDegree(IUserView id, Object[] argumentos) {
-
-        ISuportePersistente sp;
         boolean result = false;
         if (argumentos == null) {
             return result;
@@ -71,13 +67,10 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
             return result;
         }
         try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
-            IPersistentExecutionDegree persistentExecutionDegree = sp.getIPersistentExecutionDegree();
+            IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
+            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
             ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
                     ExecutionDegree.class, (Integer) argumentos[0]);
             ExecutionYear executionYear = executionDegree.getExecutionYear();

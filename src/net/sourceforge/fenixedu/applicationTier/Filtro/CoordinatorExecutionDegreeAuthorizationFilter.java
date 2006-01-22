@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -74,8 +72,6 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
         List roles = getRoleList(id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.TIME_TABLE_MANAGER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
@@ -96,8 +92,8 @@ public class CoordinatorExecutionDegreeAuthorizationFilter extends Filtro {
                 if (executionDegreeID == null) {
                     return false;
                 }
-                Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
-                Coordinator coordinator = sp.getIPersistentCoordinator()
+                Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
                         .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(), executionDegreeID);
                 if (coordinator != null) {
                     return true;

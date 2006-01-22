@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -74,29 +73,24 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         ExecutionCourse executionCourse = null;
         CurricularCourse curricularCourse = null;
         InfoCurricularCourse infoCurricularCourse = null;
-        ISuportePersistente sp;
         if (argumentos == null) {
             return false;
         }
         try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, (Integer) argumentos[1]);
             }
 
@@ -114,7 +108,6 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         }
         try {
             Integer executionCourseID = null;
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
@@ -123,11 +116,11 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
                 executionCourseID = (Integer) argumentos[0];
             }
 
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher.getIdInternal(),
                         executionCourseID);
             }
@@ -151,11 +144,8 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         CurricularCourse curricularCourse = null;
         Degree degree = null;
 
-        ISuportePersistente sp;
         try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
+            IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
                 curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
@@ -188,17 +178,13 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         InfoCurricularCourse infoCurricularCourse = null;
         CurricularCourse curricularCourse = null;
 
-        ISuportePersistente sp;
         try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentCurricularCourse persistentCurricularCourse = sp.getIPersistentCurricularCourse();
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, (Integer) argumentos[1]);
             }
         } catch (Exception e) {

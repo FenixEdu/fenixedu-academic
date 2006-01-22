@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthorizationFilter {
 
@@ -23,9 +21,6 @@ public class DegreeCurricularPlanAuthorizationFilter extends DomainObjectAuthori
     @Override
     protected boolean verifyCondition(IUserView id, Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {
-
-        final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                .getDefaultPersistenceSupport();
         final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
                 id.getUtilizador());
 

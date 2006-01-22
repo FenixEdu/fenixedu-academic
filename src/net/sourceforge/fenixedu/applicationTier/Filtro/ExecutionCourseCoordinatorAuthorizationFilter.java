@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -63,15 +61,12 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
         boolean result = false;
         InfoExecutionCourse infoExecutionCourse = null;
         ExecutionCourse executionCourse = null;
-        ISuportePersistente sp;
 
         if (argumentos == null) {
             return result;
         }
         try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
@@ -80,9 +75,9 @@ public class ExecutionCourseCoordinatorAuthorizationFilter extends Authorization
                 executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
-            IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+            IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
 
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
 
             if (teacher != null && executionCourse != null) {

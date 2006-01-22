@@ -21,11 +21,8 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -117,7 +114,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = PersistenceSupportFactory.getDefaultPersistenceSupport().getIStudentCurricularPlanPersistente();
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 
             studentCurricularPlan = readStudentCurricularPlan(studentCurricularPlanID,
                     persistentStudentCurricularPlan);
@@ -133,7 +130,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         try {
             Student student = studentCurricularPlan.getStudent();
 
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = PersistenceSupportFactory.getDefaultPersistenceSupport()
+            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
 
             Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(student
@@ -195,17 +192,13 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
             roleTemp.add(RoleType.COORDINATOR);
             if (CollectionUtils.containsAny(roles, roleTemp)) {
                 try {
-                    ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-                    IPersistentExecutionDegree persistentExecutionDegree = sp
-                            .getIPersistentExecutionDegree();
-
-                    ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree
+                    ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
                             .readByOID(ExecutionDegree.class, (Integer) arguments[0]);
 
                     if (executionDegree == null) {
                         return "noAuthorization";
                     }
-                    IPersistentCoordinator persistentCoordinator = sp.getIPersistentCoordinator();
+                    IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
                     List coordinatorsList = persistentCoordinator
                             .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
                     if (coordinatorsList == null) {
@@ -281,7 +274,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
         roleTemp.add(RoleType.TEACHER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
             try {
-                Teacher teacher = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTeacher()
+                Teacher teacher = persistentSupport.getIPersistentTeacher()
                         .readTeacherByUsername(id.getUtilizador());
                 if (teacher == null) {
                     return "noAuthorization";
@@ -312,8 +305,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     }
 
     private boolean verifyStudentTutor(Teacher teacher, Student student) throws ExcepcaoPersistencia {
-        Tutor tutor = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTutor()
-                .readTutorByTeacherAndStudent(teacher, student);
+        Tutor tutor = persistentSupport.getIPersistentTutor().readTutorByTeacherAndStudent(teacher, student);
 
         return (tutor != null);
     }

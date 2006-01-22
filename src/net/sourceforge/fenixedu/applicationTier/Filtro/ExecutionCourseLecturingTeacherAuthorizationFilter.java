@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -59,8 +57,6 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
             return false;
         }
         try {
-            final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
             final Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(
                     id.getUtilizador());
             if (teacher == null) {

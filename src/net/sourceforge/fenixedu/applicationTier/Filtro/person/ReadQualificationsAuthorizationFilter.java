@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -83,9 +81,8 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
      */
     private boolean isGrantOwner(String user) {
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPessoaPersistente persistentPerson = persistentSuport.getIPessoaPersistente();
-            IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
+            IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
+            IPersistentGrantOwner persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 
             Person person = persistentPerson.lerPessoaPorUsername(user);
             //Try to read the grant owner from de database

@@ -16,8 +16,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -61,9 +59,6 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             return false;
         }
         try {
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourseID = infoExecutionCourse.getIdInternal();
@@ -71,11 +66,11 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
                 executionCourseID = (Integer) argumentos[0];
             }
 
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
                         .getIdInternal(), executionCourseID);
             }
@@ -94,8 +89,7 @@ public class ExecutionCourseAndExamLecturingTeacherAuthorizationFilter extends A
             return false;
         }
         try {
-            final ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];

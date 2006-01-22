@@ -14,10 +14,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author Luis Cruz
@@ -52,11 +49,9 @@ public class AccessFinalDegreeWorkProposalAuthorizationFilter extends DomainObje
                 return false;
             }
 
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = sp.getIPersistentFinalDegreeWork();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-            Proposal proposal = (Proposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+            Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
                     objectId);
             if (proposal == null) {
                 return false;

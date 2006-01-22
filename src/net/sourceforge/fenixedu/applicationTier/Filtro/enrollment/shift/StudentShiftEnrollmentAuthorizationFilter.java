@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -89,13 +87,11 @@ public class StudentShiftEnrollmentAuthorizationFilter extends Filtro {
         StudentCurricularPlan studentCurricularPlan = null;
 
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-            Student student = (Student) sp.getIPersistentStudent().readByOID(Student.class,
+            Student student = (Student) persistentObject.readByOID(Student.class,
                     infoStudent.getIdInternal());
 
             Integer studentNumber = student.getNumber();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
+            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                     .getIStudentCurricularPlanPersistente();
 
             studentCurricularPlan = persistentStudentCurricularPlan

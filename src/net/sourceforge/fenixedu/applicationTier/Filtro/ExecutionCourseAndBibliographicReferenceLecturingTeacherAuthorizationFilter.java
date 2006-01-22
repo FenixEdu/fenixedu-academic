@@ -15,10 +15,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -53,9 +50,6 @@ public class ExecutionCourseAndBibliographicReferenceLecturingTeacherAuthorizati
 
         boolean result = false;
         try {
-            final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            final IPersistentObject persistentObject = persistentSupport.getIPersistentObject();
             final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             final Integer bibliographicReferenceID = getBibliographicReference(args);

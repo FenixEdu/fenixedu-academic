@@ -14,9 +14,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -82,9 +80,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
 
         // Read The DegreeCurricularPlan
         try {
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentDegreeCurricularPlan();
-
-            degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan.readByOID(
+            degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
                     DegreeCurricularPlan.class, degreeCurricularPlanID);
         } catch (Exception e) {
             return false;
@@ -111,7 +107,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
 
             // Read The ExecutionDegree
             try {
-                IPersistentExecutionDegree persistentExecutionDegree = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentExecutionDegree();
+                IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
                 List executionDegrees = persistentExecutionDegree
                         .readByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
@@ -121,7 +117,7 @@ public class StudentListByDegreeAuthorizationFilter extends Filtro {
                 // IMPORTANT: It's assumed that the coordinator for a Degree is
                 // ALWAYS the same
                 //modified by Tânia Pousão
-                List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCoordinator()
+                List coodinatorsList = persistentSupport.getIPersistentCoordinator()
                         .readCoordinatorsByExecutionDegree(((ExecutionDegree) executionDegrees.get(0)).getIdInternal());
                 if (coodinatorsList == null) {
                     return false;

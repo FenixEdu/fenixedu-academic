@@ -65,9 +65,7 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             return false;
         }
         try {
-
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentExecutionCourse persistentExecutionCourse = sp.getIPersistentExecutionCourse();
+            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
@@ -76,7 +74,7 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
                 executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
-            IPersistentItem persistentItem = sp.getIPersistentItem();
+            IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
             if (argumentos[1] instanceof InfoItem) {
                 infoItem = (InfoItem) argumentos[1];
 
@@ -104,9 +102,6 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             return false;
         }
         try {
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourseID = infoExecutionCourse.getIdInternal();
@@ -114,11 +109,11 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
                 executionCourseID = (Integer) argumentos[0];
             }
 
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
                         .getIdInternal(), executionCourseID);
             }

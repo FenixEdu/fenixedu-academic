@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -56,9 +54,8 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
         boolean result = false;
         try
         {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            StudentCurricularPlan scp = (StudentCurricularPlan)sp.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,SCPIDInternal);
-            List candidacies = sp.getIPersistentSeminaryCandidacy().readByStudentID(scp.getStudent().getIdInternal());
+            StudentCurricularPlan scp = (StudentCurricularPlan)persistentSupport.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,SCPIDInternal);
+            List candidacies = persistentSupport.getIPersistentSeminaryCandidacy().readByStudentID(scp.getStudent().getIdInternal());
             if (candidacies != null && candidacies.size() > 0)
                 result = true;
         }

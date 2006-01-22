@@ -19,8 +19,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -83,8 +81,6 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
         List roles = getRoleList(id.getRoles());
         CollectionUtils.intersection(roles, getNeededRoles());
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
         List roleTemp = new ArrayList();
         roleTemp.add(RoleType.TIME_TABLE_MANAGER);
         if (CollectionUtils.containsAny(roles, roleTemp)) {
@@ -101,9 +97,9 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
                 Integer executionCourseID = (Integer) arguments[0];
 
-                teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+                teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
-                ExecutionCourse executionCourse = (ExecutionCourse) sp.getIPersistentExecutionCourse()
+                ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
                         .readByOID(ExecutionCourse.class, executionCourseID);
 
                 // For all Associated Curricular Courses
@@ -116,7 +112,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                     // Read All Execution Degrees for this Degree Curricular
                     // Plan
 
-                    List executionDegrees = sp.getIPersistentExecutionDegree()
+                    List executionDegrees = persistentSupport.getIPersistentExecutionDegree()
                             .readByDegreeCurricularPlan(
                                     curricularCourse.getDegreeCurricularPlan().getIdInternal());
 
@@ -127,7 +123,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                                 .next();
 
                         // modified by Tânia Pousão
-                        Coordinator coordinator = sp.getIPersistentCoordinator()
+                        Coordinator coordinator = persistentSupport.getIPersistentCoordinator()
                                 .readCoordinatorByTeacherIdAndExecutionDegreeId(teacher.getIdInternal(),
                                         executionDegree.getIdInternal());
                         if (coordinator != null) {
@@ -167,9 +163,6 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
             return false;
         }
         try {
-
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 InfoExecutionCourse infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
                 executionCourseID = infoExecutionCourse.getIdInternal();
@@ -177,11 +170,11 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
                 executionCourseID = (Integer) argumentos[0];
             }
 
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             Professorship professorship = null;
             if (teacher != null) {
-                IPersistentProfessorship persistentProfessorship = sp.getIPersistentProfessorship();
+                IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
                 professorship = persistentProfessorship.readByTeacherAndExecutionCourse(teacher
                         .getIdInternal(), executionCourseID);
             }

@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.domain.publication.Authorship;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
 
 public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizationFilter {
@@ -35,9 +33,8 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
      */
     protected boolean verifyCondition(IUserView id, Integer objectId) {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentPublication persistentPublication = sp.getIPersistentPublication();
-            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
+            IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
             Publication publication = (Publication) persistentPublication.readByOID(Publication.class, objectId);
             

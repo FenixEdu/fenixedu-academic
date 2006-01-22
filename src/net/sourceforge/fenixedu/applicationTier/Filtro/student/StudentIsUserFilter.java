@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -30,9 +28,7 @@ public class StudentIsUserFilter extends Filtro {
         Integer studentId = (Integer) serviceRequest.getArguments()[0];
         IUserView userView = getRemoteUser(serviceRequest);
         
-        ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
-        Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
+        Student student = (Student) persistentObject.readByOID(Student.class,
                 studentId);
         if (student == null || userView == null
                 || !userView.getUtilizador().equals(student.getPerson().getUsername())) {

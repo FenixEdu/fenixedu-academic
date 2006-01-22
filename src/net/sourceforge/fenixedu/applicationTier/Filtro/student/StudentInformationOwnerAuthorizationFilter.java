@@ -6,9 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -46,11 +43,7 @@ public class StudentInformationOwnerAuthorizationFilter extends Filtro {
     private boolean curriculumOwner(IUserView id, Object[] arguments) {
         StudentCurricularPlan studentCurricularPlan;
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
-                    .getIStudentCurricularPlanPersistente();
-
-            studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
+            studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(
                     StudentCurricularPlan.class, (Integer) arguments[1]);
             if (studentCurricularPlan == null) {
                 return false;

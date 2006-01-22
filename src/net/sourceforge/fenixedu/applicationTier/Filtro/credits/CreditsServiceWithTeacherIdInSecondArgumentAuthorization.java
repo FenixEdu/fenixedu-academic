@@ -16,7 +16,7 @@ public class CreditsServiceWithTeacherIdInSecondArgumentAuthorization extends
      * 
      * @see ServidorAplicacao.Filtro.credits.AbstractTeacherDepartmentAuthorization#getTeacherId(java.lang.Object[])
      */
-    protected Integer getTeacherId(Object[] arguments, ISuportePersistente sp) {
+    protected Integer getTeacherId(Object[] arguments) {
         Integer teacherId = (Integer) arguments[1];
         return teacherId;
     }

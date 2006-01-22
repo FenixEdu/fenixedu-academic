@@ -12,9 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationUtils;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.StudentCurricularPlanIDDomainType;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -71,11 +68,7 @@ public class StudentCurricularPlanOwnerAuthorizationFilter extends
 	    
 	    
 	    try {
-	        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-	        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = sp
-	                .getIStudentCurricularPlanPersistente();
-	
-	        studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
+	        studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(
 	                StudentCurricularPlan.class, studentCurricularPlanID);
 	        if (studentCurricularPlan == null)
 	        {

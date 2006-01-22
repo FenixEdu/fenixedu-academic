@@ -34,13 +34,10 @@ public class CandidacyOwnershipFilter extends Filtro {
      */
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
         Integer candidacyID = (Integer) getServiceCallArguments(request)[0];
-        ISuportePersistente persistenceSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentSeminaryCandidacy persistentCandidacy = persistenceSupport
-                .getIPersistentSeminaryCandidacy();
-        //
-        Student student = persistenceSupport.getIPersistentStudent().readByUsername(
+
+        Student student = persistentSupport.getIPersistentStudent().readByUsername(
                 getRemoteUser(request).getUtilizador());
-        Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class, candidacyID);
+        Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class, candidacyID);
         //
         if ((candidacy != null)
                 && (candidacy.getStudent().getIdInternal().intValue() != student.getIdInternal()

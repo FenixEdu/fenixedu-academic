@@ -18,8 +18,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -67,10 +65,10 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter
     	    try 
     	    {
     	        String username = (String)arguments[0];
-    	        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-    	        Teacher teacher = sp.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
+
+    	        Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
     	        
-    	        Student student = sp.getIPersistentStudent().readByUsername(username);
+    	        Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
     	        if (student == null) 
 		        {
 		            return "noAuthorization";
@@ -110,7 +108,7 @@ public class StudentTutorAuthorizationFilter extends AccessControlFilter
             for (Iterator it = students.iterator(); it.hasNext();)
             {
                 student = (Student)it.next();
-                tutor = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentTutor().readTutorByTeacherAndStudent(teacher, student);
+                tutor = persistentSupport.getIPersistentTutor().readTutorByTeacherAndStudent(teacher, student);
 
                 if (tutor != null)
                     return true;

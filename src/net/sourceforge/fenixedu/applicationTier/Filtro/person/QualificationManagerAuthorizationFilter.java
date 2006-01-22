@@ -14,10 +14,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -97,8 +94,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
      */
     private boolean isGrantOwner(InfoQualification infoQualification) {
         try {
-            ISuportePersistente persistentSuport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentGrantOwner persistentGrantOwner = persistentSuport.getIPersistentGrantOwner();
+            IPersistentGrantOwner persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 
             //Try to read the grant owner from de database
             GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(infoQualification
@@ -121,8 +117,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
      */
     private boolean isOwnQualification(String username, InfoQualification infoQualification) {
         try {
-            ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPessoaPersistente persistentPerson = sp.getIPessoaPersistente();
+            IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
             Person person = persistentPerson.lerPessoaPorUsername(username);
 
             boolean isNew = (infoQualification.getIdInternal() == null)
@@ -130,8 +125,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
             if (isNew)
                 return true;
 
-            IPersistentQualification persistentQualification = sp.getIPersistentQualification();
-            Qualification qualification = (Qualification) persistentQualification.readByOID(
+            Qualification qualification = (Qualification) persistentObject.readByOID(
                     Qualification.class, infoQualification.getIdInternal());
 
             return qualification.getPerson().equals(person);

@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -181,8 +179,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @throws ExcepcaoPersistencia
      */
     private Student getStudent(Integer studentNumber, DegreeType degreeType) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudent studentDAO = persistenceDAO.getIPersistentStudent();
+        IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
         return studentDAO.readStudentByNumberAndDegreeType(studentNumber, degreeType);
     }
 
@@ -192,9 +189,8 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      * @throws ExcepcaoPersistencia
      */
     private List getExecutionDegreesOfThisCoordinator(String username) throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentTeacher teacherDAO = persistenceDAO.getIPersistentTeacher();
-        IPersistentCoordinator coordinatorDAO = persistenceDAO.getIPersistentCoordinator();
+        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
+        IPersistentCoordinator coordinatorDAO = persistentSupport.getIPersistentCoordinator();
 
         Teacher teacher = teacherDAO.readTeacherByUsername(username);
         return coordinatorDAO.readExecutionDegreesByTeacher(teacher.getIdInternal());
@@ -207,8 +203,7 @@ public class EquivalenceAuthorizationFilter extends Filtro {
      */
     private StudentCurricularPlan getStudentCurricularPlan(Student student)
             throws ExcepcaoPersistencia {
-        ISuportePersistente persistenceDAO = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistenceDAO
+        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport
                 .getIStudentCurricularPlanPersistente();
         return studentCurricularPlanDAO.readActiveByStudentNumberAndDegreeType(student.getNumber(),
                 student.getDegreeType());

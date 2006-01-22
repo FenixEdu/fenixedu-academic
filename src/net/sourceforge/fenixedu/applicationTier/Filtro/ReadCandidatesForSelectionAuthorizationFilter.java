@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -86,8 +85,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
         // Read The DegreeCurricularPlan
         try {
 
-            executionDegree = (ExecutionDegree) PersistenceSupportFactory.getDefaultPersistenceSupport()
-                    .getIPersistentExecutionDegree().readByOID(ExecutionDegree.class, executionDegreeID);
+            executionDegree = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class, executionDegreeID);
 
         } catch (Exception e) {
             return false;
@@ -119,7 +117,7 @@ public class ReadCandidatesForSelectionAuthorizationFilter extends Filtro {
                 // ALWAYS the same
 
                 //modified by Tânia Pousão
-                List coodinatorsList = PersistenceSupportFactory.getDefaultPersistenceSupport().getIPersistentCoordinator()
+                List coodinatorsList = persistentSupport.getIPersistentCoordinator()
                         .readCoordinatorsByExecutionDegree(executionDegree.getIdInternal());
                 if (coodinatorsList == null) {
                     return false;

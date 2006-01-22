@@ -16,10 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -39,16 +36,13 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
             throw new NotAuthorizedException();
         }
 
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        
-        Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray(), sp);
+        Integer teacherId = getTeacherId(serviceRequest.getServiceParameters().parametersArray());
         if (teacherId != null) {
 
-            IPessoaPersistente personDAO = sp.getIPessoaPersistente();
+            IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
             Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
-            IPersistentTeacher teacherDAO = sp.getIPersistentTeacher();
 
-            Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherId);
+            Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
 
             Department teacherDepartment = teacher.getCurrentWorkingDepartment();
 
@@ -61,6 +55,6 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
 
     }
 
-    protected abstract Integer getTeacherId(Object[] arguments, ISuportePersistente sp)
-            throws FenixServiceException, ExcepcaoPersistencia;
+    protected abstract Integer getTeacherId(Object[] arguments)
+    	throws FenixServiceException, ExcepcaoPersistencia;
 }

@@ -10,9 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -33,11 +30,8 @@ public abstract class ReadStudentTestBaseFilter extends AuthorizationByRoleFilte
         super.execute(request, response);
 
         Integer testId = (Integer) request.getServiceParameters().parametersArray()[1];
-        ISuportePersistente sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
 
-        IPersistentDistributedTest distributedTestDAO = sp.getIPersistentDistributedTest();
-
-        DistributedTest distributedTest = (DistributedTest) distributedTestDAO.readByOID(
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
                 DistributedTest.class, testId);
 
         if (distributedTest != null) {

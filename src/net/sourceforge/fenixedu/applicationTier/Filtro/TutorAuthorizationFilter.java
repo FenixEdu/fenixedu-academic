@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -55,13 +53,10 @@ public class TutorAuthorizationFilter extends AuthorizationByRoleFilter {
             return false;
         }
         if(argumentos[0] == null)return false;	
-        
-        ISuportePersistente sp;
-        
+
         try {
-        	sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-            IPersistentTutor persistentTutor = sp.getIPersistentTutor();
-            IPersistentTeacher persistentTeacher = sp.getIPersistentTeacher();
+            IPersistentTutor persistentTutor = persistentSupport.getIPersistentTutor();
+            IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             
             Teacher teacher = persistentTeacher.readTeacherByUsername((String) argumentos[0]);
 

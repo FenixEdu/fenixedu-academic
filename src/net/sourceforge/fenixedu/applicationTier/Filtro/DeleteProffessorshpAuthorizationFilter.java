@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -38,8 +36,7 @@ public class DeleteProffessorshpAuthorizationFilter extends AuthorizationByRoleF
 
     private boolean isSamePersonAsBeingRemoved(IUserView id, Object[] argumentos) 
             throws ExcepcaoPersistencia {
-        final ISuportePersistente persistenteSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
-        final IPersistentProfessorship persistentProfessorship = persistenteSupport.getIPersistentProfessorship();
+        final IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
 
         final Integer executionCourseID = (Integer) argumentos[0];
         final Integer teacherID = (Integer) argumentos[1];

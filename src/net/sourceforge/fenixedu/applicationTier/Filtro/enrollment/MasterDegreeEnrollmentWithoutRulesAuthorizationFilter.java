@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 /**
  * @author David Santos in Mar 1, 2004
@@ -40,14 +38,11 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
 
     protected String hasPrevilege(IUserView id, Object[] arguments) {
         try {
-            ISuportePersistente sp = null;
-            sp = PersistenceSupportFactory.getDefaultPersistenceSupport();
-
             if (!verifyDegreeTypeIsMasterDegree(arguments)) {
                 return new String("error.degree.type");
             }
 
-            if (!verifyStudentIsFromMasterDegree(arguments, sp)) {
+            if (!verifyStudentIsFromMasterDegree(arguments)) {
                 return new String("error.student.degree.nonMaster");
             }
 
@@ -68,14 +63,14 @@ public class MasterDegreeEnrollmentWithoutRulesAuthorizationFilter extends
         return isNonMaster;
     }
 
-    private boolean verifyStudentIsFromMasterDegree(Object[] arguments, ISuportePersistente sp)
+    private boolean verifyStudentIsFromMasterDegree(Object[] arguments)
             throws ExcepcaoPersistencia {
         boolean isFromMasterDegree = false;
 
         if (arguments != null && arguments[0] != null) {
             Integer studentNumber = ((InfoStudent) arguments[0]).getNumber();
             if (studentNumber != null) {
-                IPersistentStudent persistentStudent = sp.getIPersistentStudent();
+                IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
                 Student student = persistentStudent.readStudentByNumberAndDegreeType(studentNumber,
                         DEGREE_TYPE);
                 if (student != null) {

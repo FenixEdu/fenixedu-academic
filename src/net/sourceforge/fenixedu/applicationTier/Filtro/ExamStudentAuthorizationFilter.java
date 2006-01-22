@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -60,9 +58,7 @@ public class ExamStudentAuthorizationFilter extends AuthorizationByRoleFilter {
             } else {
                 return false;
             }
-            final ISuportePersistente persistentSupport = PersistenceSupportFactory
-                    .getDefaultPersistenceSupport();
-            final Evaluation evaluation = (Evaluation) persistentSupport.getIPersistentObject()
+            final Evaluation evaluation = (Evaluation) persistentObject
                     .readByOID(Evaluation.class, evaluationID);
 
             final String studentUsername = (String) args[0];
