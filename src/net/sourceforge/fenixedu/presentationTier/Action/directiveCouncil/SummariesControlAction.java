@@ -61,9 +61,9 @@ public class SummariesControlAction extends DispatchAction {
 
         if (departmentID != null && !departmentID.equals("") && executionPeriodID != null
                 && !executionPeriodID.equals("")) {
-                        
+                                   
             getListing(request, departmentID, executionPeriodID);
-            if (request.getParameter("sorted") == null) {
+            if (request.getParameter("sorted") == null) {                
                 request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);                
             }            
         }
@@ -103,7 +103,7 @@ public class SummariesControlAction extends DispatchAction {
             runProcess = false;
         }
 
-        if (runProcess) {                       
+        if (runProcess) {                                   
             getListing(request, departmentID, executionPeriodID);
             if (request.getParameter("sorted") == null) {
                 request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);                
@@ -146,6 +146,7 @@ public class SummariesControlAction extends DispatchAction {
 
                 if (professorship.belongsToExecutionPeriod(executionPeriod)
                         && !professorship.getExecutionCourse().isMasterDegreeOnly()) {
+                    
                     for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
 
                         DegreeTeachingService degreeTeachingService = null;
@@ -162,7 +163,7 @@ public class SummariesControlAction extends DispatchAction {
                             }
                         }
 
-                        // GET SUMMARIES HOURS
+                        // GET SHIFT SUMMARIES HOURS
                         if (degreeTeachingService != null) {
                             for (Summary summary : shift.getAssociatedSummaries()) {
                                 if (summary.getProfessorship() != null
@@ -172,30 +173,29 @@ public class SummariesControlAction extends DispatchAction {
                                         summaryHours += lesson.hours();
                                     } else {
                                         if (!shift.getAssociatedLessons().isEmpty()) {
-                                            totalSummaryHours += shift.getAssociatedLessons().get(0)
-                                                    .hours();
+                                            summaryHours += shift.getAssociatedLessons().get(0).hours();
                                         }
                                     }
                                 }
                             }
-                        }
-
+                        } 
+                        
                         // GET TOTAL SUMMARY HOURS
                         for (Summary summary : shift.getAssociatedSummaries()) {
                             if (summary.getProfessorship() != null
                                     && summary.getProfessorship().equals(professorship)) {
                                 Lesson lesson = SummaryUtils.getSummaryLesson(summary);
                                 if (lesson != null) {
-                                    totalSummaryHours += lesson.hours();
+                                    totalSummaryHours += lesson.hours();                                    
                                 } else {
-                                    if (!shift.getAssociatedLessons().isEmpty()) {
-                                        totalSummaryHours += shift.getAssociatedLessons().get(0).hours();
+                                    if (!shift.getAssociatedLessons().isEmpty()) {                                                                              
+                                        totalSummaryHours += shift.getAssociatedLessons().get(0).hours();                                        
                                     }
-                                }
+                                }                                                                                               
                             }
                         }
                     }
-
+                                       
                     summaryHours = NumberUtils.formatNumber(summaryHours, 1);
                     lessonHours = NumberUtils.formatNumber(lessonHours, 1);
                     difference = getDifference(lessonHours, summaryHours);

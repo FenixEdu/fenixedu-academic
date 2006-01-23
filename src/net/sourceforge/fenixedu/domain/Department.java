@@ -34,46 +34,49 @@ public class Department extends Department_Base {
     }
 
     public List<Employee> getCurrentActiveWorkingEmployees() {
-        Unit unit = this.getUnit();
+       
+        Unit departmentUnit = this.getUnit();
         Set<Employee> employees = new HashSet<Employee>();
         Date currentDate = Calendar.getInstance().getTime();
 
-        if (unit != null) {
-            for (Contract contract : unit.getWorkingContracts()) {
-                Employee employee = contract.getEmployee();
-                if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
-                    employees.add(employee);
-                }
-            }
-            for (Unit subUnit : unit.getSubUnits()) {
-                for (Contract contract : subUnit.getWorkingContracts()) {
-                    Employee employee = contract.getEmployee();
-                    if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
-                        employees.add(employee);
-                    }
-                }
-            }
+        if (departmentUnit != null) {
+            readAndSaveEmployees(departmentUnit, employees, currentDate);
         }
         return new ArrayList<Employee>(employees);
     }
-
-    public List<Employee> getWorkingEmployees(Date begin, Date end) {
-        Unit unit = this.getUnit();
+    
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date currentDate){
+        for (Contract contract : unit.getWorkingContracts()) {
+            Employee employee = contract.getEmployee();
+            if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
+                employees.add(employee);
+            }
+        }
+        for (Unit subUnit : unit.getSubUnits()) {
+            readAndSaveEmployees(subUnit, employees, currentDate);
+        }        
+    }
+      
+    public List<Employee> getWorkingEmployees(Date begin, Date end) {        
+        
+        Unit departmentUnit = this.getUnit();
         Set<Employee> employees = new HashSet<Employee>();
 
-        if (unit != null) {
-            for (Contract contract : unit.getWorkingContracts(begin, end)) {
-                employees.add(contract.getEmployee());
-            }
-            for (Unit subUnit : unit.getSubUnits()) {
-                for (Contract contract : subUnit.getWorkingContracts(begin, end)) {
-                    employees.add(contract.getEmployee());
-                }
-            }
+        if (departmentUnit != null) {
+            readAndSaveEmployees(departmentUnit, employees, begin, end);
         }
         return new ArrayList<Employee>(employees);
     }
 
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end){
+        for (Contract contract : unit.getWorkingContracts(begin, end)) {
+            employees.add(contract.getEmployee());
+        }
+        for (Unit subUnit : unit.getSubUnits()) {               
+            readAndSaveEmployees(subUnit, employees, begin, end);               
+        }                
+    }
+    
     public List<Teacher> getCurrentTeachers() {
         Date currentDate = Calendar.getInstance().getTime();
         List<Teacher> teachers = new ArrayList<Teacher>();

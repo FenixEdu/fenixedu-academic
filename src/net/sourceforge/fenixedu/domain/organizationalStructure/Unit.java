@@ -6,7 +6,9 @@ package net.sourceforge.fenixedu.domain.organizationalStructure;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Contract;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -64,23 +66,39 @@ public class Unit extends Unit_Base {
     }  
     
     public List<Unit> getInactiveSubUnits(Date currentDate) {
-        List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
+        
+        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();        
         for (Unit subUnit : this.getSubUnits()) {
-            if (!subUnit.isActive(currentDate)) {
-                allInactiveSubUnits.add(subUnit);
-            }
-        }
-        return allInactiveSubUnits;
+            readAndSaveInactiveSubUnits(subUnit, allInactiveSubUnits, currentDate);
+        }        
+        
+        return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
-    public List<Unit> getActiveSubUnits(Date currentDate) {
-        List<Unit> allActiveSubUnits = new ArrayList<Unit>();
-        for (Unit subUnit : this.getSubUnits()) {
-            if (subUnit.isActive(currentDate)) {
-                allActiveSubUnits.add(subUnit);
-            }
+    private void readAndSaveInactiveSubUnits(Unit unit, Set<Unit> allInactiveSubUnits, Date currentDate){
+        if (!unit.isActive(currentDate)) {
+            allInactiveSubUnits.add(unit);
         }
-        return allActiveSubUnits;
+        for (Unit subUnit : this.getSubUnits()) {
+            readAndSaveInactiveSubUnits(subUnit, allInactiveSubUnits, currentDate);
+        }  
+    }
+        
+    public List<Unit> getActiveSubUnits(Date currentDate) {
+        Set<Unit> allActiveSubUnits = new HashSet<Unit>();
+        for (Unit subUnit : this.getSubUnits()) {
+            readAndSaveActiveSubUnits(subUnit, allActiveSubUnits, currentDate);
+        }
+        return new ArrayList<Unit>(allActiveSubUnits);
+    }
+  
+    private void readAndSaveActiveSubUnits(Unit unit, Set<Unit> allActiveSubUnits, Date currentDate) {
+        if (unit.isActive(currentDate)) {
+            allActiveSubUnits.add(unit);
+        }
+        for (Unit subUnit : this.getSubUnits()) {
+            readAndSaveActiveSubUnits(subUnit, allActiveSubUnits, currentDate);
+        } 
     }
 
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,

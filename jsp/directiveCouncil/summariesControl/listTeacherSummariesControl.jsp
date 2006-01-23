@@ -33,14 +33,14 @@
 	<html:hidden property="executionPeriod"/>
 	<html:hidden property="sorted" value="true"/>
 	
-	<logic:present name="listElements">		
+	<logic:present name="listElements">			
 		<p><fr:edit name="listElements" schema="summaries.control.list">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="rowClasses" value="listClasses"/>
 					<fr:property name="prefixes" value=",,,,,,,<strong>"/>
 					<fr:property name="suffixes" value=",,,,h,h,h,%</strong>"/>
 				</fr:layout>
-		</fr:edit></p>	
-	</logic:present>	
+		</fr:edit></p>		
+	</logic:present>
 				
 </html:form>
