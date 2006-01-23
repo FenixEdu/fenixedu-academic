@@ -25,7 +25,7 @@ public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod ex
     public void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID)
             throws ExcepcaoPersistencia {
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
                 .readByOID(ExecutionPeriod.class, executionPeriodID);
 
         Set<String> existentsExecutionCoursesSiglas = readExistingExecutionCoursesSiglas(executionPeriod);

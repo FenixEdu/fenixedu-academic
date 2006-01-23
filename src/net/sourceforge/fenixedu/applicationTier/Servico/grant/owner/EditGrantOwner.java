@@ -65,7 +65,7 @@ public class EditGrantOwner extends Service {
 		Country country = null;
 
 		if (infoGrantOwner.getPersonInfo().getInfoPais() != null) {
-			country = (Country) persistentSupport.getIPersistentCountry().readByOID(Country.class,
+			country = (Country) persistentObject.readByOID(Country.class,
 					infoGrantOwner.getPersonInfo().getInfoPais().getIdInternal());
 		} else {
 			// If the person country is undefined it is set to default
@@ -80,7 +80,7 @@ public class EditGrantOwner extends Service {
 		if (infoGrantOwner.getPersonInfo().getIdInternal() == null) {
 			person = DomainFactory.makePerson(infoGrantOwner.getPersonInfo(), country);
 		} else {
-			person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
+			person = (Person) persistentObject.readByOID(Person.class,
 					infoGrantOwner.getPersonInfo().getIdInternal());
 			person.edit(infoGrantOwner.getPersonInfo(), country);
 		}

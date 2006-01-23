@@ -38,8 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPersonAccount;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuide;
-import net.sourceforge.fenixedu.persistenceTier.guide.IPersistentReimbursementGuideEntry;
 import net.sourceforge.fenixedu.util.State;
 
 /**
@@ -67,11 +65,7 @@ public class EditReimbursementGuide extends Service {
 
 	public void run(Integer reimbursementGuideId, String situation, Date officialDate, String remarks,
 			IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-
-		IPersistentReimbursementGuide persistentReimbursementGuide = persistentSupport
-				.getIPersistentReimbursementGuide();
-
-		ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentReimbursementGuide
+		ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentObject
 				.readByOID(ReimbursementGuide.class, reimbursementGuideId);
 
 		if (reimbursementGuide == null) {
@@ -249,9 +243,6 @@ public class EditReimbursementGuide extends Service {
 	 */
 	private boolean checkReimbursementGuideEntriesSum(ReimbursementGuideEntry reimbursementGuideEntry,
 			ISuportePersistente suportePersistente) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentReimbursementGuideEntry persistentReimbursementGuideEntry = suportePersistente
-				.getIPersistentReimbursementGuideEntry();
-
 		GuideEntry guideEntry = reimbursementGuideEntry.getGuideEntry();
 		Double guideEntryValue = new Double(guideEntry.getPrice().doubleValue()
 				* guideEntry.getQuantity().intValue());
@@ -269,7 +260,7 @@ public class EditReimbursementGuide extends Service {
 
 			// because of an OJB with cache bug we have to read the guide
 			// entry again
-			reimbursementGuideEntryTmp = (ReimbursementGuideEntry) persistentReimbursementGuideEntry
+			reimbursementGuideEntryTmp = (ReimbursementGuideEntry) persistentObject
 					.readByOID(ReimbursementGuideEntry.class, reimbursementGuideEntryTmp.getIdInternal());
 
 			if (reimbursementGuideEntryTmp.getReimbursementGuide()

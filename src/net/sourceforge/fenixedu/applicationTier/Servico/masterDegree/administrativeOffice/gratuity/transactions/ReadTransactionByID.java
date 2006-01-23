@@ -17,7 +17,7 @@ public class ReadTransactionByID extends Service {
 	public InfoTransaction run(Integer transactionId) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoTransaction infoTransaction = null;
 
-		Transaction transaction = (Transaction) persistentSupport.getIPersistentTransaction().readByOID(
+		Transaction transaction = (Transaction) persistentObject.readByOID(
 				Transaction.class, transactionId);
 
 		if (transaction == null) {

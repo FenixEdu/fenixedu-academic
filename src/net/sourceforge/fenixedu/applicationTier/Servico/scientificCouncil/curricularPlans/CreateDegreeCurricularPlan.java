@@ -28,7 +28,7 @@ public class CreateDegreeCurricularPlan extends Service {
 
         final Person creator = AccessControl.getUserView().getPerson();
 
-        final Degree degree = (Degree) persistentSupport.getICursoPersistente().readByOID(Degree.class,
+        final Degree degree = (Degree) persistentObject.readByOID(Degree.class,
                 degreeId);
 
         assertExistingObjectsToAssociate(creator, degree);

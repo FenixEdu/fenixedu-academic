@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentMetadata;
 
 /**
  * 
@@ -23,10 +22,7 @@ public class EditExercise extends Service {
 	public boolean run(Integer executionCourseId, Integer metadataId, String author, String description,
 			String difficulty, Calendar learningTime, String level, String mainSubject,
 			String secondarySubject) throws FenixServiceException, ExcepcaoPersistencia {
-
-		IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
-
-		Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId);
+		Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
 		if (metadata == null)
 			throw new InvalidArgumentsServiceException();
 		if (author != null)

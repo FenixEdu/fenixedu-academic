@@ -13,9 +13,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularSemester;
 
 /**
  * @author lmac1
@@ -26,27 +23,21 @@ public class InsertCurricularCourseScopeAtCurricularCourse extends Service {
         Branch branch = null;
         CurricularSemester curricularSemester = null;
         try {
-            IPersistentCurricularSemester persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();
-            IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-            IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
-
-			
-			
-            curricularSemester = (CurricularSemester) persistentCurricularSemester.readByOID(
+            curricularSemester = (CurricularSemester) persistentObject.readByOID(
                     CurricularSemester.class, infoCurricularCourseScope.getInfoCurricularSemester().getIdInternal());
             if (curricularSemester == null)
                 throw new NonExistingServiceException("message.non.existing.curricular.semester", null);
          
 			
             
-			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+			CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 					CurricularCourse.class, infoCurricularCourseScope.getInfoCurricularCourse().getIdInternal());
             if (curricularCourse == null)
                 throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
 
 			
 			
-            branch = (Branch) persistentBranch.readByOID(
+            branch = (Branch) persistentObject.readByOID(
 					Branch.class, infoCurricularCourseScope.getInfoBranch().getIdInternal());
             if (branch == null)
                 throw new NonExistingServiceException("message.non.existing.branch", null);

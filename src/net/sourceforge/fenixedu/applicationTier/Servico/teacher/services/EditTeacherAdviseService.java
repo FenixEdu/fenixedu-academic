@@ -29,10 +29,9 @@ public class EditTeacherAdviseService extends Service {
 
     public void run(Integer teacherID, Integer executionPeriodID, final Integer studentNumber,
             Double percentage, AdviseType adviseType) throws ExcepcaoPersistencia, FenixServiceException {
-        Teacher teacher = (Teacher) persistentSupport.getIPersistentTeacher().readByOID(Teacher.class,
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                 teacherID);
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
-                .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, executionPeriodID);
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
         
         List<Student> students = persistentSupport.getIPersistentStudent().readAll();
         Student student = (Student) CollectionUtils.find(students, new Predicate(){

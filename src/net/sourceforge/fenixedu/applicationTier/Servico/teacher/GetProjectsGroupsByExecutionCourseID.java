@@ -34,10 +34,7 @@ public class GetProjectsGroupsByExecutionCourseID extends Service {
 
         final List infosGroupProjectStudents = new LinkedList();
 
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
         final List<Grouping> groupings = executionCourse.getGroupings();
 

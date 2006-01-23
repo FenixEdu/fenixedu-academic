@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWith
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -25,9 +24,7 @@ public class ReadCandidatesForSelection extends Service {
 
 		// Read the candidates
 
-		IPersistentExecutionDegree executionDegreeDAO = persistentSupport
-				.getIPersistentExecutionDegree();
-		ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO
+		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
 				.readByOID(ExecutionDegree.class, executionDegreeID);
 
 		resultTemp = persistentSupport.getIPersistentCandidateSituation()

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutor;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTutor;
@@ -35,8 +34,7 @@ public class InsertTutorShipWithManyStudent extends InsertTutorShip {
         List<Integer> studentsErrors = new ArrayList<Integer>();
         try {
             //execution degree
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeId);
             String degreeCode = null;
             if (executionDegree != null && executionDegree.getDegreeCurricularPlan() != null

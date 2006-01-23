@@ -9,17 +9,15 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 public class GroupSiteComponentService extends Service {
 
     public Object run(ISiteComponent commonComponent, ISiteComponent bodyComponent,
             Integer infoSiteCode, Integer groupPropertiesCode, Integer code, Integer shiftCode,
             Integer value) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         Site site = null;
         if (infoSiteCode != null) {
-            site = (Site) persistentSite.readByOID(Site.class, infoSiteCode);
+            site = (Site) persistentObject.readByOID(Site.class, infoSiteCode);
             if (site == null) {
                 throw new NonExistingServiceException();
             }

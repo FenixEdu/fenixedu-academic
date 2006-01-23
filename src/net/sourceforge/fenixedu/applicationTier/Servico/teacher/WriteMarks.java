@@ -15,17 +15,15 @@ import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidMarkDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 public class WriteMarks extends Service {
 
     public void run(final Integer executioCourseOID, final Integer evaluationOID, final Map<Integer, String> marks)
             throws ExcepcaoPersistencia, FenixServiceException {
     	final List<DomainException> exceptionList = new ArrayList<DomainException>(); 
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         
         final Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationOID);
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executioCourseOID);
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executioCourseOID);
         
         for (final Entry<Integer, String> entry : marks.entrySet()) {
             final Integer studentNumber = entry.getKey();

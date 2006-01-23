@@ -24,8 +24,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -100,14 +98,10 @@ public class ReadTeacherExecutionCourseShiftsPercentage extends Service {
     }
 
     private Teacher readTeacher(InfoTeacher infoTeacher) throws ExcepcaoPersistencia {
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
-        return (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        return (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
     }
 
     private ExecutionCourse readExecutionCourse(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-        IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
-
-        return (ExecutionCourse) executionCourseDAO.readByOID(
-                ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+        return (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
     }
 }

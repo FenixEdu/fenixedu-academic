@@ -54,7 +54,7 @@ public class GroupEnrolment extends Service {
         }
         Shift shift = null;
         if (shiftID != null) {
-            shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
+            shift = (Shift) persistentObject.readByOID(Shift.class, shiftID);
         }
         Integer result = strategy.enrolmentPolicyNewGroup(grouping, studentUsernames.size() + 1, shift);
 

@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.publication.Attribute;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 
 /**
  * @author Ricardo Rodrigues
@@ -27,9 +26,7 @@ public class ReadAttributesByPublicationType extends Service {
      * @throws ExcepcaoPersistencia 
      */
     public HashMap run(Integer publicationTypeID) throws ExcepcaoPersistencia {
-        IPersistentPublicationType persistentPublicationType = persistentSupport
-                .getIPersistentPublicationType();
-        PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
+        PublicationType publicationType = (PublicationType) persistentObject.readByOID(
                 PublicationType.class, new Integer(publicationTypeID));
 
         HashMap result = new HashMap();

@@ -85,7 +85,7 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
             List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
         Site site = null;
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, executionCourseCode);
         InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                 .newInfoFromDomain(executionCourse);

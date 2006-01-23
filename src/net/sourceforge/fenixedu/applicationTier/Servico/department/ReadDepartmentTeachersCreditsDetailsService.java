@@ -60,7 +60,7 @@ public class ReadDepartmentTeachersCreditsDetailsService extends Service {
         if (executionPeriodId == null) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
         return executionPeriod;

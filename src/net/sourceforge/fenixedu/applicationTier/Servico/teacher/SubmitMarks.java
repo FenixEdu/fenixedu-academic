@@ -31,7 +31,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.util.Ftp;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,9 +46,7 @@ public class SubmitMarks extends Service {
 	private static final String IMPROVMENT_DIR = "melhorias/";
 	
 	public void run(Integer executionCourseID, Integer evaluationID, String[] attendsIDs, Date evaluationDate, IUserView userView) throws ExcepcaoPersistencia, InvalidArgumentsServiceException, OutOfPeriodException {
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-		
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseID);
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
 		FinalEvaluation finalEvaluation = (FinalEvaluation) persistentObject.readByOID(FinalEvaluation.class, evaluationID);
 		
 		if(executionCourse == null || finalEvaluation == null) {

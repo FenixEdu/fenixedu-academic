@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -28,9 +27,7 @@ public class ReadDegreeInfoByExecutionDegree extends Service {
             }
 
             //Execution degree
-            IPersistentExecutionDegree cursoExecucaoPersistente = persistentSupport
-                    .getIPersistentExecutionDegree();
-            ExecutionDegree executionDegree = (ExecutionDegree) cursoExecucaoPersistente.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, infoExecutionDegreeId);
 
             if (executionDegree == null) {

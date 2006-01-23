@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentSupportLesson;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -67,9 +66,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 		if (end.before(begin)) {
 			throw new InvalidPeriodException();
 		}
-		IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
-
-		Professorship professorship = (Professorship) professorshipDAO.readByOID(Professorship.class,
+		Professorship professorship = (Professorship) persistentObject.readByOID(Professorship.class,
 				infoSupportLesson.getInfoProfessorship().getIdInternal());
 		Teacher teacher = professorship.getTeacher();
 		ExecutionPeriod executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
@@ -110,8 +107,7 @@ public class EditSupportLessonByOID extends EditDomainObjectService {
 		SupportLesson supportLesson = (SupportLesson) domainObject;
 		supportLesson.setEndTime(infoSupportLesson.getEndTime());
 
-		IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-		Professorship professorship = (Professorship) persistentProfessorship.readByOID(
+		Professorship professorship = (Professorship) persistentObject.readByOID(
 				Professorship.class, infoSupportLesson.getInfoProfessorship().getIdInternal());
 		supportLesson.setProfessorship(professorship);
 

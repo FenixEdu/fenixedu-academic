@@ -36,16 +36,15 @@ public class ReadTeacherInstitutionWorkingTime extends Service {
         IPersistentTeacherInstitutionWorkingTime teacherInstitutionWorkingTimeDAO = persistentSupport
                 .getIPersistentTeacherInstitutionWorkingTime();
         IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
 
-        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacherWithPersonAndCategory.newInfoFromDomain(teacher);
 
         ExecutionPeriod executionPeriod = null;
         if ((executionPeriodId == null) || (executionPeriodId.intValue() == 0)) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);

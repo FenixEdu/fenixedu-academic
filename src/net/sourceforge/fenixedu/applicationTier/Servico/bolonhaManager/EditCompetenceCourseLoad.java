@@ -18,8 +18,7 @@ public class EditCompetenceCourseLoad extends Service {
 
     public void run(Integer competenceCourseID, RegimeType regimeType, List<CourseLoad> courseLoads)
             throws ExcepcaoPersistencia, FenixServiceException {
-        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
-                .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }

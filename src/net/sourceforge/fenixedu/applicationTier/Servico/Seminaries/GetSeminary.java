@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEq
 import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoSeminaryWithEquivalenciesWithAll;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -25,8 +24,7 @@ public class GetSeminary extends Service {
 	public InfoSeminaryWithEquivalencies run(Integer seminaryID) throws BDException, ExcepcaoPersistencia {
 		InfoSeminaryWithEquivalencies infoSeminary = null;
 
-		IPersistentSeminary persistentSeminary = persistentSupport.getIPersistentSeminary();
-		Seminary seminary = (Seminary) persistentSeminary.readByOID(Seminary.class, seminaryID);
+		Seminary seminary = (Seminary) persistentObject.readByOID(Seminary.class, seminaryID);
 		if (seminary != null) {
 
 			infoSeminary = InfoSeminaryWithEquivalenciesWithAll.newInfoFromDomain(seminary);

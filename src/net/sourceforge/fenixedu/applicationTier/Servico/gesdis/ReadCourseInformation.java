@@ -58,7 +58,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -80,9 +79,7 @@ public class ReadCourseInformation extends Service {
             ExcepcaoPersistencia {
         TeacherAdministrationSiteView siteView = new TeacherAdministrationSiteView();
 
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
 
         InfoSiteCourseInformation infoSiteCourseInformation = new InfoSiteCourseInformation();

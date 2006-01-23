@@ -16,10 +16,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -97,9 +94,8 @@ public class EditWrittenEvaluation extends Service {
             throws ExcepcaoPersistencia, FenixServiceException {
 
         final List<Room> result = new ArrayList<Room>();
-        final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
         for (final String roomID : roomIDs) {
-            final Room room = (Room) persistentRoom.readByOID(Room.class, Integer.valueOf(roomID));
+            final Room room = (Room) persistentObject.readByOID(Room.class, Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }
@@ -116,10 +112,8 @@ public class EditWrittenEvaluation extends Service {
             throw new FenixServiceException("error.InvalidCurricularCourseScope");
         }
         final List<CurricularCourseScope> result = new ArrayList<CurricularCourseScope>();
-        final IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
-                .getIPersistentCurricularCourseScope();
         for (final String curricularCourseScopeID : curricularCourseScopeIDs) {
-            final CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope
+            final CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentObject
                     .readByOID(CurricularCourseScope.class, Integer.valueOf(curricularCourseScopeID));
             if (curricularCourseScope == null) {
                 throw new FenixServiceException("error.InvalidCurricularCourseScope");
@@ -136,10 +130,8 @@ public class EditWrittenEvaluation extends Service {
             throw new FenixServiceException("error.invalidExecutionCourse");
         }
         final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
         for (final String executionCourseID : executionCourseIDs) {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                     .readByOID(ExecutionCourse.class, Integer.valueOf(executionCourseID));
             if (executionCourse == null) {
                 throw new FenixServiceException("error.invalidExecutionCourse");

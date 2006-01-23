@@ -12,20 +12,14 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantInsurance;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 
 public class EditGrantInsurance extends Service {
 
     public void run(InfoGrantInsurance infoGrantInsurance) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final IPersistentGrantContract persistentGrantContract = persistentSupport
-                .getIPersistentGrantContract();
         final IPersistentGrantContractRegime persistentGrantContractRegime = persistentSupport
                 .getIPersistentGrantContractRegime();
-        final IPersistentGrantPaymentEntity persistentGrantPaymentEntity = persistentSupport
-                .getIPersistentGrantPaymentEntity();
 
         GrantInsurance grantInsurance = (GrantInsurance) persistentObject
                 .readByOID(GrantInsurance.class, infoGrantInsurance.getIdInternal());
@@ -46,11 +40,11 @@ public class EditGrantInsurance extends Service {
             grantInsurance.setDateEndInsurance(infoGrantInsurance.getDateEndInsurance());
         }
 
-        final GrantContract grantContract = (GrantContract) persistentGrantContract.readByOID(
+        final GrantContract grantContract = (GrantContract) persistentObject.readByOID(
                 GrantContract.class, infoGrantInsurance.getInfoGrantContract().getIdInternal());
         grantInsurance.setGrantContract(grantContract);
 
-        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentGrantPaymentEntity
+        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentObject
                 .readByOID(GrantPaymentEntity.class, infoGrantInsurance.getInfoGrantPaymentEntity()
                         .getIdInternal());
         grantInsurance.setGrantPaymentEntity(grantPaymentEntity);

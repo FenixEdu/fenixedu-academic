@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 
 /**
  * @author Fernanda Quitério
@@ -16,9 +15,7 @@ public class InsertItem extends Service {
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode, InfoItem infoItem)
             throws FenixServiceException, ExcepcaoPersistencia, DomainException {
 
-        final IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
-                       
-        final Section section = (Section) persistentSection.readByOID(Section.class, sectionCode);
+        final Section section = (Section) persistentObject.readByOID(Section.class, sectionCode);
               
         if (infoItem.getItemOrder() == -1) {
             infoItem.setItemOrder(section.getAssociatedItemsCount());

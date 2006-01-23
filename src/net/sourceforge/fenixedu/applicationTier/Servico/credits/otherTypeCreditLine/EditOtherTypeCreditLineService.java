@@ -12,9 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.OtherTypeCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author jpvl
@@ -28,13 +26,11 @@ public class EditOtherTypeCreditLineService extends EditDomainObjectService {
 
         otherTypeCreditLine.setCredits(infoOtherTypeCreditLine.getCredits());
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, infoOtherTypeCreditLine.getInfoExecutionPeriod().getIdInternal());
         otherTypeCreditLine.setExecutionPeriod(executionPeriod);
 
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, infoOtherTypeCreditLine
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoOtherTypeCreditLine
                 .getInfoTeacher().getIdInternal());
         otherTypeCreditLine.setTeacher(teacher);
 

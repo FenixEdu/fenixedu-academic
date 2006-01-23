@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -20,8 +19,7 @@ public class ReadCompetenceCoursesByDepartment extends Service{
 	public List<InfoCompetenceCourse> run(Integer departmentID) throws Exception {
 		List<InfoCompetenceCourse> result = new ArrayList<InfoCompetenceCourse>();
 		if(departmentID != null) {
-			IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();
-			Department department = (Department) persistentDepartment.readByOID(Department.class, departmentID);
+			Department department = (Department) persistentObject.readByOID(Department.class, departmentID);
 			if(department == null) {
 				throw new NotExistingServiceException("error.manager.noDepartment");
 			}

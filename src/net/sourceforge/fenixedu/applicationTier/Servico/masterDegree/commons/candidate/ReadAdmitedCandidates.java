@@ -37,8 +37,7 @@ public class ReadAdmitedCandidates extends Service {
                         || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_FINALIST_STRING)
                         || candidateList[i].equals(SituationName.ADMITED_CONDICIONAL_OTHER_STRING)) {
 
-                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-                            .getIPersistentMasterDegreeCandidate().readByOID(
+                    MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(
                                     MasterDegreeCandidate.class, new Integer(ids[i]));
                     if (!masterDegreeCandidate.getSpecialization().equals(
                             Specialization.SPECIALIZATION)) {

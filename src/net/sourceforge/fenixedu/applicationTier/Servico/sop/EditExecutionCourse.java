@@ -11,16 +11,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 public class EditExecutionCourse extends Service {
 
     public InfoExecutionCourse run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia,
             FenixServiceException {
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, infoExecutionCourse.getIdInternal());
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();

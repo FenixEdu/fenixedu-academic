@@ -30,7 +30,7 @@ public class AddStudentToFinalDegreeWorkStudentGroup extends Service {
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
         Student student = persistentStudent.readByUsername(username);
         if (group == null
                 || student == null

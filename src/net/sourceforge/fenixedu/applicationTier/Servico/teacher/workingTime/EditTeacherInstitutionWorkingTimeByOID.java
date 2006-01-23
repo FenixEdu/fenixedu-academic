@@ -21,9 +21,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.workTime.TeacherInstitutionWorkTime;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.teacher.workingTime.IPersistentTeacherInstitutionWorkingTime;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
@@ -107,14 +105,12 @@ public class EditTeacherInstitutionWorkingTimeByOID extends EditDomainObjectServ
 		TeacherInstitutionWorkTime teacherInstitutionWorkTime = (TeacherInstitutionWorkTime) domainObject;
 		teacherInstitutionWorkTime.setEndTime(infoTeacherInstitutionWorkTime.getEndTime());
 
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
 				ExecutionPeriod.class, infoTeacherInstitutionWorkTime.getInfoExecutionPeriod()
 						.getIdInternal());
 		teacherInstitutionWorkTime.setExecutionPeriod(executionPeriod);
 
-		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-		Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+		Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
 				infoTeacherInstitutionWorkTime.getInfoTeacher().getIdInternal());
 		teacherInstitutionWorkTime.setKeyTeacher(teacher.getIdInternal());
 		teacherInstitutionWorkTime.setStartTime(infoTeacherInstitutionWorkTime.getStartTime());

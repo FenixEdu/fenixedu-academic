@@ -70,8 +70,7 @@ public class CurrentDegreeCoordinatorAuthorizationFilter extends AuthorizationBy
             IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
             IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, (Integer) argumentos[0]);
             ExecutionYear executionYear = executionDegree.getExecutionYear();
 

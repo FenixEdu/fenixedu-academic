@@ -48,8 +48,7 @@ public class ReadCurricularCoursesByDegree extends Service {
     }
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
         List<InfoCurricularCourse> infoCurricularCourses = new ArrayList<InfoCurricularCourse>();

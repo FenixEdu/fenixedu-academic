@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author naat
@@ -21,11 +19,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
     public List<ExecutionCourse> run(Integer teacherID, Integer executionYearID, DegreeType degreeType)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                .getIPersistentExecutionYear();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
 
         List<ExecutionCourse> lecturedExecutionCourses;
 
@@ -33,7 +27,7 @@ public class ReadLecturedExecutionCoursesByTeacherIDAndExecutionYearIDAndDegreeT
             lecturedExecutionCourses = teacher.getAllLecturedExecutionCourses();
 
         } else {
-            ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+            ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                     ExecutionYear.class, executionYearID);
             lecturedExecutionCourses = teacher.getLecturedExecutionCoursesByExecutionYear(executionYear);
         }

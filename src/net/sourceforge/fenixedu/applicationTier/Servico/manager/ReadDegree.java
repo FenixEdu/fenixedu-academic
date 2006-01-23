@@ -19,7 +19,7 @@ public class ReadDegree extends Service {
      * @throws ExcepcaoPersistencia 
      */
     public InfoDegree run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
-		Degree degree = (Degree) persistentSupport.getICursoPersistente().readByOID(Degree.class,idInternal);
+		Degree degree = (Degree) persistentObject.readByOID(Degree.class,idInternal);
 
 		if (degree == null) {
             throw new NonExistingServiceException();

@@ -23,8 +23,7 @@ public class ReadStudentsWithDistributedTest extends Service {
 	public List run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException, ExcepcaoPersistencia {
 		List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
 
-		DistributedTest distributedTest = (DistributedTest) persistentSupport
-				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+		DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null)
 			throw new FenixServiceException();
 

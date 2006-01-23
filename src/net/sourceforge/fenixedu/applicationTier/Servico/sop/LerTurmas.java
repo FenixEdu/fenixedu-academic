@@ -32,10 +32,10 @@ public class LerTurmas extends Service {
 
         ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         if (curricularYear != null) {

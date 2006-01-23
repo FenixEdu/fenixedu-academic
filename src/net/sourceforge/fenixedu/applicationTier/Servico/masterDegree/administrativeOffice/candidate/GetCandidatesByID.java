@@ -34,7 +34,7 @@ public class GetCandidatesByID extends Service {
 			throw new NonExistingServiceException();
 		}
 
-		masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport.getIPersistentMasterDegreeCandidate()
+		masterDegreeCandidate = (MasterDegreeCandidate) persistentObject
 				.readByOID(MasterDegreeCandidate.class, candidateID);
 
 		InfoMasterDegreeCandidate infoMasterDegreeCandidate = InfoMasterDegreeCandidateWithInfoPerson

@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 public class ReadExercise extends Service {
     public InfoMetadata run(Integer executionCourseId, Integer metadataId, Integer variationId, String path) throws FenixServiceException,
             ExcepcaoPersistencia {
-        Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
+        Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
         if (metadata == null || !metadata.getVisibility().booleanValue()) {
             return null;
         }

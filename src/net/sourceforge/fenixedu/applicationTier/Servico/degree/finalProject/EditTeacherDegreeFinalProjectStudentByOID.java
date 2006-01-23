@@ -30,16 +30,14 @@ public class EditTeacherDegreeFinalProjectStudentByOID extends Service {
             throw new FenixServiceException("message.student-not-found");
         }
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
-                .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class,
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
                         infoTeacherDegreeFinalProjectStudent.getInfoExecutionPeriod().getIdInternal());
         if (executionPeriod == null) {
             throw new FenixServiceException("message.execution-period-not-found");
         }
 
         final InfoTeacher infoTeacher = infoTeacherDegreeFinalProjectStudent.getInfoTeacher();
-        final Teacher teacher = (Teacher) persistentSupport.getIPersistentTeacher().readByOID(
-                Teacher.class, infoTeacher.getIdInternal());
+        final Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
         if (teacher == null) {
             throw new FenixServiceException("message.teacher-not-found");
         }

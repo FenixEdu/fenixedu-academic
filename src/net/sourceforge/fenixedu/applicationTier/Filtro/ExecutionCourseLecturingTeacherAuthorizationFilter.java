@@ -62,8 +62,7 @@ public class ExecutionCourseLecturingTeacherAuthorizationFilter extends Authoriz
             if (teacher == null) {
                 return false;
             }
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
-                    .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseID);
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
             if (executionCourse == null) {
                 return false;
             }

@@ -20,7 +20,7 @@ public class ReadExecutionPeriod extends Service {
 		InfoExecutionPeriod infoExecutionPeriod = null;
 		ExecutionPeriod executionPeriod = null;
 
-		executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod().readByOID(
+		executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
 				ExecutionPeriod.class, executionPeriodId);
 
 		if (executionPeriod == null) {

@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.fileSuport.FileSuport;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.fileSuport.IFileSuport;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 public class StoreApplicationDocuments extends Service {
 
@@ -23,8 +22,7 @@ public class StoreApplicationDocuments extends Service {
         result[0] = result[1] = result[2] = result[3] = false;
         
         try {
-        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-        Person person = (Person) persistentPerson.readByOID(Person.class, personId);
+        Person person = (Person) persistentObject.readByOID(Person.class, personId);
         IFileSuport fileSuport = FileSuport.getInstance();
         String uri = person.getSlideNameForCandidateDocuments();
 

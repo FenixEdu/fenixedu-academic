@@ -9,15 +9,12 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoPublicationSu
 import net.sourceforge.fenixedu.domain.publication.PublicationSubtype;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 
 
 public class ReadPublicationSubtypesByPublicationType extends Service {
 
     public List<InfoPublicationSubtype> run(int publicationTypeId) throws ExcepcaoPersistencia {
-        IPersistentPublicationType persistentPublicationType = persistentSupport
-                .getIPersistentPublicationType();
-        PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
+        PublicationType publicationType = (PublicationType) persistentObject.readByOID(
                 PublicationType.class, new Integer(publicationTypeId));
 
         List<InfoPublicationSubtype> result = new ArrayList<InfoPublicationSubtype>();

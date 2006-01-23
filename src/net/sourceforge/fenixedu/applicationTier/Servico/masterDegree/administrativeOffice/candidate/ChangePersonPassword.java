@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt)
@@ -26,9 +25,7 @@ public class ChangePersonPassword extends Service {
 
 		Person person = null;
 
-        IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-
-		person = (Person) personDAO.readByOID(Person.class, personID);
+		person = (Person) persistentObject.readByOID(Person.class, personID);
 
 		if (person == null)
 			throw new ExcepcaoInexistente("Unknown Person!");

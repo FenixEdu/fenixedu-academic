@@ -32,10 +32,8 @@ public class InsertStudentsInGrouping extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		IFrequentaPersistente persistentAttend = null;
-		IPersistentStudent persistentStudent = null;
 		List students = new ArrayList();
 
-		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentAttend = persistentSupport.getIFrequentaPersistente();
 
 		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
@@ -56,7 +54,7 @@ public class InsertStudentsInGrouping extends Service {
 			String number = (String) iterator.next();
 			if (number.equals("Todos os Alunos")) {
 			} else {
-				Student student = (Student) persistentStudent.readByOID(Student.class, new Integer(
+				Student student = (Student) persistentObject.readByOID(Student.class, new Integer(
 						number));
 				students.add(student);
 			}

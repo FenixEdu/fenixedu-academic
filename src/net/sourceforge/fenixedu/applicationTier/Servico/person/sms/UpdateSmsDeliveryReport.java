@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.sms.SentSms;
 import net.sourceforge.fenixedu.domain.sms.SmsDeliveryType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -21,10 +20,8 @@ import net.sourceforge.fenixedu.persistenceTier.sms.IPersistentSentSms;
 public class UpdateSmsDeliveryReport extends Service {
 
 	public void run(Integer smsId, SmsDeliveryType smsDeliveryType) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentSentSms persistentSentSms = persistentSupport.getIPersistentSentSms();
-
 		// read sentSms Object
-		SentSms sentSms = (SentSms) persistentSentSms.readByOID(SentSms.class, smsId);
+		SentSms sentSms = (SentSms) persistentObject.readByOID(SentSms.class, smsId);
 
 		if (sentSms == null) {
 			throw new FenixServiceException();

@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author joaosa and rmalo
@@ -43,8 +42,7 @@ public class EnrollGroupShift extends Service {
         if (studentGroup == null)
             throw new InvalidArgumentsServiceException();
 
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        Shift shift = (Shift) persistentShift.readByOID(Shift.class, newShiftCode);
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, newShiftCode);
         if (groupProperties.getShiftType() == null || studentGroup.getShift() != null
                 || (!groupProperties.getShiftType().equals(shift.getTipo()))) {
             throw new InvalidStudentNumberServiceException();

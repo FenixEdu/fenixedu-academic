@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 /**
  * 
@@ -27,9 +26,8 @@ public class ReadCoordinationTeam extends Service {
 
     public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeId);
         if (executionDegree == null) {
             throw new FenixServiceException("errors.invalid.execution.degree");

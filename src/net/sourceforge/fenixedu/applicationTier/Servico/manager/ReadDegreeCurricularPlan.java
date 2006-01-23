@@ -17,21 +17,10 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class ReadDegreeCurricularPlan extends Service {
 
-    /**
-     * The constructor of this class.
-     */
-    public ReadDegreeCurricularPlan() {
-    }
-
-    /**
-     * Executes the service. Returns the current InfoDegreeCurricularPlan.
-     * 
-     * @throws ExcepcaoPersistencia
-     */
     public InfoDegreeCurricularPlan run(final Integer idInternal) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport.getIPersistentDegreeCurricularPlan()
+		final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, idInternal);
 
         if (degreeCurricularPlan == null) {

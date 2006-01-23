@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 /**
@@ -40,11 +39,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	public void run(IUserView userView, Integer studentCurricularPlanId, String currentState,
 			Double credits, String startDate, List extraCurricularCourses, String observations,
 			Integer branchId, String specialization) throws FenixServiceException, ExcepcaoPersistencia {
-
-		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-				.getIStudentCurricularPlanPersistente();
-
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
 				.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
 		if (studentCurricularPlan == null) {
 			throw new InvalidArgumentsServiceException();
@@ -56,7 +51,6 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
-		IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
 
 		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 		if (person == null) {
@@ -68,7 +62,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 			throw new InvalidArgumentsServiceException();
 		}
 
-		Branch branch = (Branch) persistentBranch.readByOID(Branch.class, branchId);
+		Branch branch = (Branch) persistentObject.readByOID(Branch.class, branchId);
 		if (branch == null) {
 			throw new InvalidArgumentsServiceException();
 		}

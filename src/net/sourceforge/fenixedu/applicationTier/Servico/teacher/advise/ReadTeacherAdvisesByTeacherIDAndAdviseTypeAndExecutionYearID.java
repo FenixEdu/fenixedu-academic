@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author naat
@@ -25,14 +23,11 @@ public class ReadTeacherAdvisesByTeacherIDAndAdviseTypeAndExecutionYearID extend
 
     public List<Advise> run(AdviseType adviseType, Integer teacherID, Integer executionYearID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
         List<Advise> result;
 
         if (executionYearID != null) {
-            IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                    .getIPersistentExecutionYear();
-            ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+            ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                     ExecutionYear.class, executionYearID);
 
             result = teacher.getAdvisesByAdviseTypeAndExecutionYear(adviseType, executionYear);

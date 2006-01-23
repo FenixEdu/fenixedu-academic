@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.precedences.Restriction;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionByCurricularCourse;
 import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCurrentlyEnrolledInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRestriction;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -28,9 +27,8 @@ public class DeleteEnrolment extends Service {
     public void run(Integer executionDegreeId, Integer studentCurricularPlanId, Integer enrolmentID)
             throws FenixServiceException, DomainException, ExcepcaoPersistencia {
 
-        IPersistentEnrollment enrolmentDAO = persistentSupport.getIPersistentEnrolment();
         IPersistentRestriction persistentRestriction = persistentSupport.getIPersistentRestriction();
-        final Enrolment enrollment1 = (Enrolment) enrolmentDAO.readByOID(Enrolment.class, enrolmentID);
+        final Enrolment enrollment1 = (Enrolment) persistentObject.readByOID(Enrolment.class, enrolmentID);
 
         List<Enrolment> enrollments2Delete = new ArrayList<Enrolment>();
         List studentEnrolledEnrollmentsInExecutionPeriod = enrollment1.getStudentCurricularPlan()

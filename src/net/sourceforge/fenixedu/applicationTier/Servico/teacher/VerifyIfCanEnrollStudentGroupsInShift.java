@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author joaosa & rmalo
@@ -24,15 +23,13 @@ public class VerifyIfCanEnrollStudentGroupsInShift extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupPropertiesCode, Integer shiftCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
         final Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupPropertiesCode);
 
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftCode);
+        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftCode);
 
         if (grouping.getShiftType() != shift.getTipo()) {
             return false;

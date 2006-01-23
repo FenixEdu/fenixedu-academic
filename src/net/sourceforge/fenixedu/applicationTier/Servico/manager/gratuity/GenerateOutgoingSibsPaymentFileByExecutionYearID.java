@@ -61,7 +61,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
 		StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
-		ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
 				ExecutionYear.class, executionYearID);
 
 		IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();

@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
@@ -51,11 +50,10 @@ public class ReadStudentsAndMarksByCurricularCourse extends Service {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		Date lastEvaluationDate = null;
 
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseCode);
 
 		List enrolments = null;

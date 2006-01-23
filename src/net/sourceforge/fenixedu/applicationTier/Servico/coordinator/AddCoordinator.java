@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
@@ -29,8 +28,8 @@ public class AddCoordinator extends Service {
         if (teacher == null) {
             throw new NonExistingServiceException();
         }
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeId);
         if (executionDegree == null) {
             throw new InvalidArgumentsServiceException();

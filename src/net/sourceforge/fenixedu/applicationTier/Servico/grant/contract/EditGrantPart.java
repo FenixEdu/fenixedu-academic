@@ -12,16 +12,10 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
 public class EditGrantPart extends Service {
 
     public void run(InfoGrantPart infoGrantPart) throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentGrantPaymentEntity persistentGrantPaymentEntity = persistentSupport
-                .getIPersistentGrantPaymentEntity();
-        final IPersistentGrantSubsidy persistentGrantSubsidy = persistentSupport
-                .getIPersistentGrantSubsidy();
         final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
         GrantPart grantPart = (GrantPart) persistentObject.readByOID(
@@ -30,7 +24,7 @@ public class EditGrantPart extends Service {
             grantPart = DomainFactory.makeGrantPart();
         }
 
-        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentGrantPaymentEntity
+        final GrantPaymentEntity grantPaymentEntity = (GrantPaymentEntity) persistentObject
                 .readByOID(GrantPaymentEntity.class, infoGrantPart.getInfoGrantPaymentEntity()
                         .getIdInternal());
         if (grantPaymentEntity == null) {
@@ -38,7 +32,7 @@ public class EditGrantPart extends Service {
         }
         grantPart.setGrantPaymentEntity(grantPaymentEntity);
 
-        final GrantSubsidy grantSubsidy = (GrantSubsidy) persistentGrantSubsidy.readByOID(
+        final GrantSubsidy grantSubsidy = (GrantSubsidy) persistentObject.readByOID(
                 GrantSubsidy.class, infoGrantPart.getInfoGrantSubsidy().getIdInternal());
         grantPart.setGrantSubsidy(grantSubsidy);
 

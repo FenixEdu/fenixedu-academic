@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -52,16 +51,13 @@ public class MergeExecutionCourses extends Service {
             throw new SourceAndDestinationAreTheSameException();
         }
 
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, executionCourseSourceId);
         if (executionCourseFrom == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, executionCourseDestinationId);
         if (executionCourseTo == null) {
             throw new InvalidArgumentsServiceException();

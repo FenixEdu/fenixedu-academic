@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGrouping;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * @author asnr and scpo
@@ -23,10 +22,7 @@ public class CreateGrouping extends Service {
     public boolean run(Integer executionCourseID, InfoGrouping infoGrouping)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();

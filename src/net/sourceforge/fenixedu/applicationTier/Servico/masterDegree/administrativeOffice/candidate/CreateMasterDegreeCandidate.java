@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMasterDegreeCandidate;
 import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
@@ -39,12 +38,11 @@ public class CreateMasterDegreeCandidate extends Service {
             String name, String identificationDocumentNumber, IDDocumentType identificationDocumentType)
             throws Exception {
 
-        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
         IPersistentMasterDegreeCandidate masterDegreeCandidateDAO = persistentSupport
                 .getIPersistentMasterDegreeCandidate();
 
         // Read the Execution of this degree in the current execution Year
-        ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeID);
 
         MasterDegreeCandidate masterDegreeCandidateFromDB = masterDegreeCandidateDAO

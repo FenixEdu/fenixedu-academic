@@ -107,7 +107,7 @@ public class CreateGuideFromTransactions extends Service {
 
         while (iterator.hasNext()) {
             transactionId = (Integer) iterator.next();
-            transaction = (PaymentTransaction) persistentSupport.getIPersistentTransaction().readByOID(
+            transaction = (PaymentTransaction) persistentObject.readByOID(
                     Transaction.class, transactionId);
 
             if (transaction == null) {

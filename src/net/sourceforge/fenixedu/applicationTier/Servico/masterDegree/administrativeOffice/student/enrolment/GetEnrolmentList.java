@@ -61,8 +61,7 @@ public class GetEnrolmentList extends Service {
 
 		// Read the list
 
-		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
-				.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+		StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
 						studentCurricularPlanID);
 		enrolmentList = studentCurricularPlan.getEnrolments();
 

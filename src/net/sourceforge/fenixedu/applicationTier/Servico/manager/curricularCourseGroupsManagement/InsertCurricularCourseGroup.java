@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 
 /**
@@ -24,19 +22,14 @@ public class InsertCurricularCourseGroup extends Service {
     public void run(Integer groupId, String name, Integer branchId, Integer minimumValue,
             Integer maximumValue, AreaType areaType, String className) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {
-
-        IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
-        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
-                .getIPersistentCurricularCourseGroup();
-
-        Branch branch = (Branch) persistentBranch.readByOID(Branch.class, branchId);
+        Branch branch = (Branch) persistentObject.readByOID(Branch.class, branchId);
         if (branch == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         CurricularCourseGroup curricularCourseGroup = null;
         if (groupId != null) {
-            curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup.readByOID(CurricularCourseGroup.class, groupId);
+            curricularCourseGroup = (CurricularCourseGroup) persistentObject.readByOID(CurricularCourseGroup.class, groupId);
             if (curricularCourseGroup == null) {
                 throw new InvalidArgumentsServiceException();
             }

@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 /**
  * @author Jo�o Mota
@@ -27,10 +26,8 @@ public class SetBasicCurricularCoursesService extends Service {
 	public boolean run(List curricularCoursesIds, Integer degreeCurricularPlanId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-				.getIPersistentDegreeCurricularPlan();
 
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
 				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
 		List basicCurricularCourses = persistentCurricularCourse
@@ -50,7 +47,7 @@ public class SetBasicCurricularCoursesService extends Service {
 
 		while (itId.hasNext()) {
 
-			CurricularCourse curricularCourseBasic = (CurricularCourse) persistentCurricularCourse
+			CurricularCourse curricularCourseBasic = (CurricularCourse) persistentObject
 					.readByOID(CurricularCourse.class, (Integer) itId.next());
 			curricularCourseBasic.setBasic(new Boolean(true));
 

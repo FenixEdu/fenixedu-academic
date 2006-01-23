@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 public class EnrollStudentInShifts extends Service {
 
@@ -20,12 +18,9 @@ public class EnrollStudentInShifts extends Service {
 
     public ShiftEnrollmentErrorReport run(final Integer studentId, final Integer shiftId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
         final ShiftEnrollmentErrorReport errorReport = new ShiftEnrollmentErrorReport();
 
-        final Student student = (Student) persistentStudent.readByOID(Student.class, studentId);
+        final Student student = (Student) persistentObject.readByOID(Student.class, studentId);
         if (student == null) {
             throw new StudentNotFoundServiceException();
         }
@@ -34,7 +29,7 @@ public class EnrollStudentInShifts extends Service {
             throw new FenixServiceException("error.exception.notAuthorized.student.warningTuition");
         }
 
-        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftId);
+        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
         if (shift == null) {
             errorReport.getUnExistingShifts().add(shiftId);
         }             

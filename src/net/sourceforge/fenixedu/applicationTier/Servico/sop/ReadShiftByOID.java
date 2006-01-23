@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
@@ -38,8 +37,7 @@ import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 public class ReadShiftByOID extends Service {
 
     public InfoShift run(final Integer oid) throws ExcepcaoPersistencia {
-        final ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
-        final Shift shift = (Shift) shiftDAO.readByOID(Shift.class, oid);
+        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, oid);
 
         if (shift != null) {
             final InfoShift infoShift = InfoShift.newInfoFromDomain(shift);

@@ -34,10 +34,8 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -56,8 +54,7 @@ public class ReadSummary extends Service {
 
     public SiteView run(Integer executionCourseId, Integer summaryId, String userLogged)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executioncourse");
@@ -119,8 +116,7 @@ public class ReadSummary extends Service {
         }
         Collections.sort(infoRooms, new BeanComparator("nome"));
 
-        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-        Summary summary = (Summary) persistentSummary.readByOID(Summary.class, summaryId);
+        Summary summary = (Summary) persistentObject.readByOID(Summary.class, summaryId);
         if (summary == null) {
             throw new FenixServiceException("no.summary");
         }

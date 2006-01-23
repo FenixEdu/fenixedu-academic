@@ -27,8 +27,7 @@ public class ReadDegreeCurricularPlanHistoryByDegreeCurricularPlanID extends Ser
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
         if (degreeCurricularPlan != null) {

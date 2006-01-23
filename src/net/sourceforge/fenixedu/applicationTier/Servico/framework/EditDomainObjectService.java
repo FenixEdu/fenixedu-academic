@@ -140,7 +140,7 @@ public abstract class EditDomainObjectService extends Service {
 		// if the editing means alter unique keys or the there is no unique
 		// then read by oid to get the object from database.
 		if (objectFromDatabase == null && !isNew(infoObject)) {
-			objectFromDatabase = getIPersistentObject().readByOID(getDomainObjectClass(),
+			objectFromDatabase = persistentObject.readByOID(getDomainObjectClass(),
 					infoObject.getIdInternal());
 			// if the object still null then the object doesn't exist.
 			if (objectFromDatabase == null) {

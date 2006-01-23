@@ -9,22 +9,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 public class AddSchoolClassesToShift extends Service {
 
 	public void run(InfoShift infoShift, List<Integer> schoolClassOIDs) throws ExcepcaoPersistencia,
 			FenixServiceException {
-		final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
 
-		final Shift shift = (Shift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
+		final Shift shift = (Shift) persistentObject.readByOID(Shift.class, infoShift.getIdInternal());
 		if (shift == null)
 			throw new InvalidArgumentsServiceException();
 
-		final ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
 		for (final Integer schoolClassOID : schoolClassOIDs) {
-			final SchoolClass schoolClass = (SchoolClass) persistentSchoolClass.readByOID(
+			final SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(
 					SchoolClass.class, schoolClassOID);
 			if (schoolClass == null) {
 				throw new InvalidArgumentsServiceException();

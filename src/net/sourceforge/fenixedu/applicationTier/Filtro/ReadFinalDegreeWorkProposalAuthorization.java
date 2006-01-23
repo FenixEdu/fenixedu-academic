@@ -7,7 +7,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -25,10 +24,7 @@ public class ReadFinalDegreeWorkProposalAuthorization extends Filtro {
         IUserView id = getRemoteUser(request);
         Integer finalDegreeWorkProposalOID = (Integer) request.getServiceParameters().parametersArray()[0];
         if (finalDegreeWorkProposalOID != null) {
-            IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                    .getIPersistentFinalDegreeWork();
-
-            Proposal proposal = (Proposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+            Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
                     finalDegreeWorkProposalOID);
             if (proposal != null) {
                 if (proposal.getStatus() != null

@@ -21,7 +21,7 @@ public class InsertExternalPerson extends Service {
             throw new ExistingServiceException(
                     "error.exception.commons.externalPerson.existingExternalPerson");
 
-        Institution institutionLocation = (Institution) persistentSupport.getIPersistentInstitution().readByOID(
+        Institution institutionLocation = (Institution) persistentObject.readByOID(
                 Institution.class, institutionID);
 
         // generate new identification number

@@ -29,7 +29,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadShiftsByClass extends Service {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class,
+        SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
         List<Shift> shifts = schoolClass.getAssociatedShifts();

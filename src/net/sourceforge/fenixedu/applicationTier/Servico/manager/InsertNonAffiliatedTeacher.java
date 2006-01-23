@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 
 /**
@@ -25,9 +24,8 @@ public class InsertNonAffiliatedTeacher extends Service {
 
         IPersistentNonAffiliatedTeacher persistentNonAffiliatedTeacher = persistentSupport
                 .getIPersistentNonAffiliatedTeacher();
-        IPersistentInstitution persistentInstitution = persistentSupport.getIPersistentInstitution();
 
-        Institution institution = (Institution) persistentInstitution.readByOID(Institution.class,
+        Institution institution = (Institution) persistentObject.readByOID(Institution.class,
                 institutionID);
 
         if (institution == null) {

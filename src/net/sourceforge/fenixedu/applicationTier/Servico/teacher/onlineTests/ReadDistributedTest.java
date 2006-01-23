@@ -17,7 +17,7 @@ public class ReadDistributedTest extends Service {
 
     public InfoDistributedTest run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia,
             InvalidArgumentsServiceException {
-        DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();

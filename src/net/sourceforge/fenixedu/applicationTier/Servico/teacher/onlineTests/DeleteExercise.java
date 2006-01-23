@@ -27,7 +27,7 @@ public class DeleteExercise extends Service {
 
     public void run(Integer executionCourseId, Integer metadataId) throws ExcepcaoPersistencia, InvalidArgumentsServiceException {
         IPersistentMetadata persistentMetadata = persistentSupport.getIPersistentMetadata();
-        Metadata metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, metadataId);
+        Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
         if (metadata == null)
             throw new InvalidArgumentsServiceException();
         List<Question> questionList = persistentSupport.getIPersistentQuestion().readByMetadata(metadata);
@@ -57,7 +57,7 @@ public class DeleteExercise extends Service {
     private void removeTestQuestionFromTest(ISuportePersistente persistentSupport, TestQuestion testQuestion) throws ExcepcaoPersistencia {
         IPersistentTestQuestion persistentTestQuestion = persistentSupport.getIPersistentTestQuestion();
 
-        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testQuestion.getKeyTest());
+        Test test = (Test) persistentObject.readByOID(Test.class, testQuestion.getKeyTest());
         if (test == null)
             throw new ExcepcaoPersistencia();
         List<TestQuestion> testQuestionList = persistentTestQuestion.readByTest(test.getIdInternal());

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
@@ -38,7 +37,6 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
             String stringExecutionYear) throws FenixServiceException, ExcepcaoPersistencia {
         InfoCurriculum infoCurriculum = null;
 
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
         IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
@@ -52,7 +50,7 @@ public class ReadCurriculumHistoryByCurricularCourseCodeAndExecutionYearName ext
         if (stringExecutionYear == null || stringExecutionYear.length() == 0) {
             throw new FenixServiceException("nullExecutionYearName");
         }
-        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");

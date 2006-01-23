@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -31,14 +29,12 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 
 		List executionCourseList = null;
 		IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-		IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
 		if (executionPeriodId == null) {
 			throw new FenixServiceException("nullExecutionPeriodId");
 		}
 
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
 				ExecutionPeriod.class, executionPeriodId);
 
 		if (executionDegreeId == null && curricularYear == null) {
@@ -46,7 +42,7 @@ public class ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYe
 					.readByExecutionPeriodWithNoCurricularCourses(executionPeriod.getIdInternal());
 
 		} else {
-			ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+			ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
 					ExecutionDegree.class, executionDegreeId);
 
 			executionCourseList = executionCourseDAO

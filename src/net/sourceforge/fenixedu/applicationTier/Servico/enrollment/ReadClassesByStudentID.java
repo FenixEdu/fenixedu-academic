@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -36,12 +35,11 @@ import org.apache.commons.collections.Transformer;
 public class ReadClassesByStudentID extends Service {
 
     public List run(final Integer studentID, final Integer executionCourseID) throws ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
         final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 
-        final Student student = (Student) persistentStudent.readByOID(Student.class, studentID);
+        final Student student = (Student) persistentObject.readByOID(Student.class, studentID);
         
         List<ExecutionCourse> executionCourses = new ArrayList();
         for (Iterator iter = student.getAssociatedAttends().iterator(); iter.hasNext();) {

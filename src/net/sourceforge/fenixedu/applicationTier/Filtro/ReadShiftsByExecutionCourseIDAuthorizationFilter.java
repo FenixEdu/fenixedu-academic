@@ -99,7 +99,7 @@ public class ReadShiftsByExecutionCourseIDAuthorizationFilter extends Filtro {
 
                 teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(id.getUtilizador());
 
-                ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
+                ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                         .readByOID(ExecutionCourse.class, executionCourseID);
 
                 // For all Associated Curricular Courses

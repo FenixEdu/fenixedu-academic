@@ -29,12 +29,12 @@ public class ReadSectionsBySiteAndSuperiorSection extends Service {
 	 */
 	public List run(InfoSite infoSite, InfoSection infoSuperiorSection) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		Site site = (Site) persistentSupport.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
+		Site site = (Site) persistentObject.readByOID(Site.class, infoSite.getIdInternal());
 		List allSections = null;
 
 		Section superiorSection = null;
 		if (infoSuperiorSection != null) {
-			superiorSection = (Section) persistentSupport.getIPersistentSection().readByOID(Section.class,
+			superiorSection = (Section) persistentObject.readByOID(Section.class,
 					infoSuperiorSection.getIdInternal());
 			superiorSection.setSite(site);
 		}

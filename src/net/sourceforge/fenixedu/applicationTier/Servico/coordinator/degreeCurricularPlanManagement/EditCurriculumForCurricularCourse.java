@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -31,7 +30,6 @@ public class EditCurriculumForCurricularCourse extends Service {
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
         IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
         if (oldCurriculumId == null) {
             throw new FenixServiceException("nullCurriculumCode");
@@ -46,7 +44,7 @@ public class EditCurriculumForCurricularCourse extends Service {
             throw new FenixServiceException("nullUsername");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");
@@ -57,7 +55,7 @@ public class EditCurriculumForCurricularCourse extends Service {
             throw new NonExistingServiceException("noPerson");
         }
 
-        Curriculum oldCurriculum = (Curriculum) persistentCurriculum.readByOID(Curriculum.class,
+        Curriculum oldCurriculum = (Curriculum) persistentObject.readByOID(Curriculum.class,
                 oldCurriculumId);
 
         if (oldCurriculum == null) {

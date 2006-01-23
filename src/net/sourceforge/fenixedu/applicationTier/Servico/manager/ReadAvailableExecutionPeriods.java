@@ -33,7 +33,7 @@ public class ReadAvailableExecutionPeriods extends Service {
 		Iterator iter = unavailableExecutionPeriodsIds.iterator();
 		while (iter.hasNext()) {
 
-			executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+			executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
 					ExecutionPeriod.class, (Integer) iter.next());
 			executionPeriods.remove(executionPeriod);
 		}

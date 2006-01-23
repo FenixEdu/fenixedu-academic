@@ -21,12 +21,11 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditSupportLesson extends Service {
 
     public void run(SupportLessonDTO supportLessonDTO) throws ExcepcaoPersistencia {
-        SupportLesson supportLesson = (SupportLesson) persistentSupport.getIPersistentSupportLesson()
+        SupportLesson supportLesson = (SupportLesson) persistentObject
                 .readByOID(SupportLesson.class, supportLessonDTO.getIdInternal());
 
         if (supportLesson == null) {
-            Professorship professorship = (Professorship) persistentSupport
-                    .getIPersistentProfessorship().readByOID(Professorship.class,
+            Professorship professorship = (Professorship) persistentObject.readByOID(Professorship.class,
                             supportLessonDTO.getProfessorshipID());
             supportLesson = DomainFactory.makeSupportLesson();
             supportLesson.setProfessorship(professorship);

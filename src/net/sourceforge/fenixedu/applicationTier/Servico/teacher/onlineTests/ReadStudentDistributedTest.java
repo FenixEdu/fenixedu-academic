@@ -24,10 +24,10 @@ public class ReadStudentDistributedTest extends Service {
             ExcepcaoPersistencia {
         path = path.replace('\\', '/');
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
-        Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
+        Student student = (Student) persistentObject.readByOID(Student.class, studentId);
         if (student == null)
             throw new FenixServiceException();
-        DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
@@ -43,13 +42,12 @@ public class EditDistributedTest extends Service {
             Calendar endDate, Calendar endHour, TestType testType, CorrectionAvailability correctionAvailability, Boolean imsFeedback,
             String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
                 executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
-        IPersistentDistributedTest persistentDistributedTest = persistentSupport.getIPersistentDistributedTest();
-        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 

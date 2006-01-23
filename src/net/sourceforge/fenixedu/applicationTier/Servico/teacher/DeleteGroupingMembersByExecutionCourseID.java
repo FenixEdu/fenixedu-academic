@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * @author joaosa & rmalo
@@ -29,14 +28,13 @@ public class DeleteGroupingMembersByExecutionCourseID extends Service {
 
     public boolean run(Integer executionCourseCode, Integer groupingCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class, groupingCode);
         
         if (grouping == null) {
             throw new ExistingServiceException();
         }
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseCode);
        
         if (executionCourse == null) {

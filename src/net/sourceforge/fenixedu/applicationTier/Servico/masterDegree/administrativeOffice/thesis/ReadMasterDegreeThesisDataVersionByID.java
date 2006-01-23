@@ -20,8 +20,7 @@ public class ReadMasterDegreeThesisDataVersionByID extends Service {
 		InfoMasterDegreeThesisDataVersion infoMasterDegreeThesisDataVersion = null;
 		MasterDegreeThesisDataVersion masterDegreeThesisDataVersion = null;
 
-		masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) persistentSupport
-				.getIPersistentMasterDegreeThesisDataVersion().readByOID(
+		masterDegreeThesisDataVersion = (MasterDegreeThesisDataVersion) persistentObject.readByOID(
 						MasterDegreeThesisDataVersion.class, masterDegreeThesisDataVersionID);
 
 		if (masterDegreeThesisDataVersion == null)

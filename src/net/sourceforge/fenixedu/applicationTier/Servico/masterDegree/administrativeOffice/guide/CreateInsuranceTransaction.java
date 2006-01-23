@@ -31,7 +31,7 @@ public class CreateInsuranceTransaction extends Service {
     public void run(Integer guideEntryID, IUserView userView) throws ExcepcaoPersistencia,
             ExistingServiceException {
 
-        GuideEntry guideEntry = (GuideEntry) persistentSupport.getIPersistentGuideEntry().readByOID(GuideEntry.class,
+        GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(GuideEntry.class,
                 guideEntryID);
         Guide guide = guideEntry.getGuide();
 

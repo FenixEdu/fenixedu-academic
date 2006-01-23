@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantPaymentEntity;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantProject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPaymentEntity;
 
 /**
  * @author Barbosa
@@ -30,8 +28,7 @@ public class EditGrantPaymentEntity extends Service {
 
     public void run(InfoGrantCostCenter infoObject) throws FenixServiceException,
     				ExcepcaoPersistencia{
-        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= persistentSupport.getIPersistentGrantPaymentEntity();
-        GrantCostCenter grantCostCenter = (GrantCostCenter)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        GrantCostCenter grantCostCenter = (GrantCostCenter)persistentObject.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
         if(grantCostCenter == null){
         	grantCostCenter = DomainFactory.makeGrantCostCenter();
         } 
@@ -50,9 +47,7 @@ public class EditGrantPaymentEntity extends Service {
 
     public void run(InfoGrantProject infoObject) throws FenixServiceException,
     				ExcepcaoPersistencia {
-        IPersistentGrantPaymentEntity persistentGrantPaymentEntity= persistentSupport.getIPersistentGrantPaymentEntity();
-        IPersistentGrantCostCenter persistentGrantCostCenter= persistentSupport.getIPersistentGrantCostCenter();
-        GrantProject grantProject = (GrantProject)persistentGrantPaymentEntity.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
+        GrantProject grantProject = (GrantProject)persistentObject.readByOID(GrantPaymentEntity.class,infoObject.getIdInternal() );
         if(grantProject == null){
         	grantProject = DomainFactory.makeGrantProject();
         } 
@@ -60,7 +55,7 @@ public class EditGrantPaymentEntity extends Service {
     	grantProject.setNumber(infoObject.getNumber());
     	//Grant Cost Center
     	if (infoObject.getInfoGrantCostCenter() != null ){
-	    	final GrantCostCenter  grantCostCenter = (GrantCostCenter) persistentGrantCostCenter.readByOID(GrantCostCenter.class,infoObject.getInfoGrantCostCenter().getIdInternal());
+	    	final GrantCostCenter  grantCostCenter = (GrantCostCenter) persistentObject.readByOID(GrantCostCenter.class,infoObject.getInfoGrantCostCenter().getIdInternal());
 	    	if(grantCostCenter == null)
 	    		throw new GrantOrientationTeacherNotFoundException();
 	    	grantProject.setGrantCostCenter(grantCostCenter);

@@ -37,7 +37,7 @@ public class CriarTurno extends Service {
         Integer availabilityFinal = new Integer(new Double(Math.ceil(1.10 * infoTurno.getLotacao()
                 .doubleValue())).intValue());
         newShift.setAvailabilityFinal(availabilityFinal);
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, infoTurno.getInfoDisciplinaExecucao().getIdInternal());
         newShift.setDisciplinaExecucao(executionCourse);
         newShift.setNome(infoTurno.getNome());

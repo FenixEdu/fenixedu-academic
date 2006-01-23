@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.precedences.Precedence;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 public class ReadPrecedencesFromDegreeCurricularPlan extends Service {
 
@@ -22,10 +21,7 @@ public class ReadPrecedencesFromDegreeCurricularPlan extends Service {
 
 		Map finalListOfInfoPrecedences = new HashMap();
 
-		IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSupport
-				.getIPersistentDegreeCurricularPlan();
-
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) degreeCurricularPlanDAO
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
 				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
 		List curricularCourses = degreeCurricularPlan.getCurricularCourses();

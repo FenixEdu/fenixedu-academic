@@ -34,14 +34,14 @@ public class GenetareStudentTestForSimulation extends Service {
             Boolean imsfeedback, String testInformation) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoStudentTestQuestion> infoStudentTestQuestionList = new ArrayList<InfoStudentTestQuestion>();
         path = path.replace('\\', '/');
-        final Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
+        final Test test = (Test) persistentObject.readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
         TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                     ExecutionCourse.class, executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();

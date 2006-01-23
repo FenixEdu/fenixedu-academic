@@ -34,8 +34,7 @@ public class ChangeMasterDegreeProof extends Service {
             Integer attachedCopiesNumber, List<Integer> teacherJuriesNumbers,
             List<Integer> externalJuriesIDs) throws FenixServiceException, ExcepcaoPersistencia {
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
-                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
         MasterDegreeThesis storedMasterDegreeThesis = persistentSupport.getIPersistentMasterDegreeThesis()

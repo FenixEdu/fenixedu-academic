@@ -19,7 +19,7 @@ public class ReadInsuranceValueByExecutionYearID extends Service {
 
 		InfoInsuranceValue infoInsuranceValue = null;
 
-		ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
 				ExecutionYear.class, executionYearID);
 
 		InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue().readByExecutionYear(

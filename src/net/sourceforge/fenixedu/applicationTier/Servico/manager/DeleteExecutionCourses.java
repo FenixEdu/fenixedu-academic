@@ -32,7 +32,7 @@ public class DeleteExecutionCourses extends Service {
         final List<String> undeletedExecutionCoursesCodes = new ArrayList<String>();
 
         for (final Integer executionCourseID : (List<Integer>) executionCourseIDs) {
-            final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse
+            final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                     .readByOID(ExecutionCourse.class, executionCourseID);
 
             if (!deleteExecutionCourses(persistentSupport, persistentExecutionCourse, executionCourse)) {

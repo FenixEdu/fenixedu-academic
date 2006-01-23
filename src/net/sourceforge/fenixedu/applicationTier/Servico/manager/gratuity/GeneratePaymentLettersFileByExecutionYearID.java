@@ -233,7 +233,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends Service {
 	 * @throws ExcepcaoPersistencia 
 	 */
 	public void run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
-		ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear().readByOID(
+		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
 				ExecutionYear.class, executionYearID);
 
 		IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();

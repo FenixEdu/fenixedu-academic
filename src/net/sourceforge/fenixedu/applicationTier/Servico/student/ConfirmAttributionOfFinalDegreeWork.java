@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -24,10 +23,7 @@ public class ConfirmAttributionOfFinalDegreeWork extends Service {
 
     public boolean run(String username, Integer selectedGroupProposalOID) throws ExcepcaoPersistencia,
             FenixServiceException {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
-        GroupProposal groupProposal = (GroupProposal) persistentFinalDegreeWork.readByOID(
+        GroupProposal groupProposal = (GroupProposal) persistentObject.readByOID(
                 GroupProposal.class, selectedGroupProposalOID);
 
         if (groupProposal != null) {

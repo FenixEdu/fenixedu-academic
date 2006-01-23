@@ -33,7 +33,7 @@ public class ReadCandidateListByPersonAndExecutionDegree extends Service {
 
 		// Read the candidates
 
-		Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
+		Person person = (Person) persistentObject.readByOID(Person.class,
 				infoPerson.getIdInternal());
 
 		result = persistentSupport.getIPersistentMasterDegreeCandidate().readByExecutionDegreeAndPersonAndNumber(

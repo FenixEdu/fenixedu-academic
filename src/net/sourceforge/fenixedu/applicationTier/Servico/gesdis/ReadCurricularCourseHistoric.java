@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.gesdis.CourseHistoric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
@@ -37,10 +36,9 @@ public class ReadCurricularCourseHistoric extends Service {
 
 	public InfoSiteCourseHistoric run(Integer curricularCourseId) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseId);
 
 		ExecutionPeriod executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();

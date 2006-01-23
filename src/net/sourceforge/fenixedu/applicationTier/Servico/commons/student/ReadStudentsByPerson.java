@@ -20,8 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadStudentsByPerson extends Service {
 
     public List run(InfoPerson infoPerson) throws ExcepcaoPersistencia {
-        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
-                infoPerson.getIdInternal());
+        Person person = (Person) persistentObject.readByOID(Person.class, infoPerson.getIdInternal());
 
         final List students = person.getStudents();
         final List infoStudents = new ArrayList(students.size());

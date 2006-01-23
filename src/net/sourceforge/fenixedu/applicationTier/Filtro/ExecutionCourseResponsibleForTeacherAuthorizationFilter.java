@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -62,13 +61,12 @@ public class ExecutionCourseResponsibleForTeacherAuthorizationFilter extends Aut
             return false;
         }
         try {
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
 

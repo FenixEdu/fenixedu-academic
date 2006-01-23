@@ -22,8 +22,7 @@ public class EditDegreeInfoByDegreeCurricularPlanID extends Service {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
         DegreeInfo degreeInfo = DomainFactory.makeDegreeInfo();

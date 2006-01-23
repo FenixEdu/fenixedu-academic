@@ -41,7 +41,7 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
 
         List reimbursementTransactionList = new ArrayList();
 
-        GratuitySituation gratuitySituation = (GratuitySituation) persistentSupport.getIPersistentGratuitySituation()
+        GratuitySituation gratuitySituation = (GratuitySituation) persistentObject
                 .readByOID(GratuitySituation.class, gratuitySituationID);
 
         List insuranceTransactionList = persistentSupport.getIPersistentInsuranceTransaction()
@@ -91,13 +91,11 @@ public class ReadAllTransactionsByGratuitySituationID extends Service {
                             .next();
 
                     // we have to read again because of OJB bug
-                    ReimbursementGuideEntry newReimbursementGuideEntry = (ReimbursementGuideEntry) persistentSupport
-                            .getIPersistentReimbursementGuideEntry().readByOID(
+                    ReimbursementGuideEntry newReimbursementGuideEntry = (ReimbursementGuideEntry) persistentObject.readByOID(
                                     ReimbursementGuideEntry.class,
                                     reimbursementGuideEntry.getIdInternal());
 
-                    ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentSupport
-                            .getIPersistentReimbursementGuide().readByOID(
+                    ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentObject.readByOID(
                                     ReimbursementGuide.class,
                                     reimbursementGuideEntry.getKeyReimbursementGuide());
 

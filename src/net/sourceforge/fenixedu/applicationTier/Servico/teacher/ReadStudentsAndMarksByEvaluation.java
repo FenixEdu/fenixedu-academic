@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
@@ -44,8 +43,7 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
 
         //Execution Course
 
-        IPersistentExecutionCourse disciplinaExecucaoDAO = persistentSupport.getIPersistentExecutionCourse();
-        final ExecutionCourse executionCourse = (ExecutionCourse) disciplinaExecucaoDAO.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         //Site

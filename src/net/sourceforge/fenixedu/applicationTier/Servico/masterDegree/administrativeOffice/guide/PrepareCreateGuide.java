@@ -75,7 +75,7 @@ public class PrepareCreateGuide extends Service {
 
 		ExecutionDegree executionDegree = null;
 
-		executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree().readByOID(
+		executionDegree = (ExecutionDegree) persistentObject.readByOID(
 				ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
 		// Check if the Requester is a Candidate

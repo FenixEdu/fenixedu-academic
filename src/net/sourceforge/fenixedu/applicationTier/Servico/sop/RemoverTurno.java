@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -21,9 +20,7 @@ import org.apache.commons.collections.Predicate;
 public class RemoverTurno extends Service {
 
     public Object run(final InfoShift infoShift, final InfoClass infoClass) throws ExcepcaoPersistencia {
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
-        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, infoShift.getIdInternal());
+        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, infoShift.getIdInternal());
         if (shift == null) {
             return Boolean.FALSE;
         }

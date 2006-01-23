@@ -25,8 +25,8 @@ public class AddFinalDegreeWorkProposalCandidacyForGroup extends Service {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
-        Proposal proposal = (Proposal) persistentFinalDegreeWork
+        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
+        Proposal proposal = (Proposal) persistentObject
                 .readByOID(Proposal.class, proposalOID);
         if (group != null && group.getGroupProposals() != null
         /* && !CollectionUtils.exists(group.getStudents(), ) */) {

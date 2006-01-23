@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ApagarTurma extends Service {
 
     public Object run(InfoClass infoClass) throws ExcepcaoPersistencia {
-        final SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(
+        final SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(
                 SchoolClass.class, infoClass.getIdInternal());
 
         // Shift
@@ -43,7 +43,7 @@ public class ApagarTurma extends Service {
         schoolClass.getExecutionPeriod().getSchoolClasses().remove(schoolClass);
         schoolClass.setExecutionPeriod(null);
 
-        persistentSupport.getITurmaPersistente().deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
+        persistentObject.deleteByOID(SchoolClass.class, schoolClass.getIdInternal());
 
         return new Boolean(true);
     }

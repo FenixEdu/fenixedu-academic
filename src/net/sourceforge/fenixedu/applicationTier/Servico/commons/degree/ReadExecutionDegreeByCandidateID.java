@@ -18,12 +18,10 @@ public class ReadExecutionDegreeByCandidateID extends Service {
 
         ExecutionDegree executionDegree = null;
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-                .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
-        executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree().readByOID(
-                ExecutionDegree.class, masterDegreeCandidate.getExecutionDegree().getIdInternal());
+        executionDegree = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class, masterDegreeCandidate.getExecutionDegree().getIdInternal());
 
         if (executionDegree == null) {
             throw new NonExistingServiceException();

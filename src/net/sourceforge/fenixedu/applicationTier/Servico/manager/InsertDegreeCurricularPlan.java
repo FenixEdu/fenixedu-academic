@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 
 public class InsertDegreeCurricularPlan extends Service {
 
@@ -32,8 +31,7 @@ public class InsertDegreeCurricularPlan extends Service {
             }
         }
 
-        final ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-        final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, infoDcp
+        final Degree degree = (Degree) persistentObject.readByOID(Degree.class, infoDcp
                 .getInfoDegree().getIdInternal());
         if (degree == null) {
             throw new FenixServiceException("error.degreeCurricularPlan.non.existing.degree");

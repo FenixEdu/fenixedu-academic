@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 
 /**
  * @author Tânia Pousão Create on 3/Dez/2003
@@ -39,9 +38,7 @@ public class CourseOfTheExpectedDegree extends Service {
 		CurricularCourse curricularCourse = null;
 		Degree degree = null;
 
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-
-		curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+		curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseCode);
 
 		degree = curricularCourse.getDegreeCurricularPlan().getDegree();
@@ -60,8 +57,7 @@ public class CourseOfTheExpectedDegree extends Service {
 		boolean result = false;
 		CurricularCourse curricularCourse = null;
 
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-		curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+		curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseCode);
 		result = curricularCourse.getBasic().equals(Boolean.FALSE);
 

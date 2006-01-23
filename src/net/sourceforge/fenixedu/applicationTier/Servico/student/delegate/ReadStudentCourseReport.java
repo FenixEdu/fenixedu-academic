@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -44,12 +43,11 @@ import org.apache.commons.collections.Transformer;
 public class ReadStudentCourseReport extends Service {
 
 	public InfoSiteStudentCourseReport run(Integer objectId) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		IPersistentStudentCourseReport persistentStudentCourseReport = persistentSupport
 				.getIPersistentStudentCourseReport();
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, objectId);
 		StudentCourseReport studentCourseReport = persistentStudentCourseReport
 				.readByCurricularCourse(curricularCourse);

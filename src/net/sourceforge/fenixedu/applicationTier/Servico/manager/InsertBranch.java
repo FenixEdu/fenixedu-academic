@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 /**
  * @author lmac1
@@ -18,10 +17,8 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 public class InsertBranch extends Service {
 
     public void run(InfoBranch infoBranch) throws ExcepcaoPersistencia, NonExistingServiceException {
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-                .getIPersistentDegreeCurricularPlan();
         final Integer degreeCurricularPlanId = infoBranch.getInfoDegreeCurricularPlan().getIdInternal();
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
         if (degreeCurricularPlan == null)

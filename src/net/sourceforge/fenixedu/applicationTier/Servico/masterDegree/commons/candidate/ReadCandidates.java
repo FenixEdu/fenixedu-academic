@@ -24,7 +24,7 @@ public class ReadCandidates extends Service {
 		for (i = 0; i < size; i++) {
 
 			result.add(InfoMasterDegreeCandidateWithInfoPerson
-					.newInfoFromDomain((MasterDegreeCandidate) persistentSupport.getIPersistentMasterDegreeCandidate()
+					.newInfoFromDomain((MasterDegreeCandidate) persistentObject
 							.readByOID(MasterDegreeCandidate.class, new Integer(candidateList[i]))));
 		}
 

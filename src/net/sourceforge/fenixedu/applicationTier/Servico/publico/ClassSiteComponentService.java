@@ -39,7 +39,6 @@ public class ClassSiteComponentService extends Service {
         final IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         final IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
         final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-        final ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
 
         ExecutionYear executionYear = persistentExecutionYear
                 .readExecutionYearByName(executionYearName);
@@ -59,7 +58,7 @@ public class ClassSiteComponentService extends Service {
             }
         } else {
 
-            domainClass = (SchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classId);
+            domainClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class, classId);
         }
         bodyComponent = componentBuilder.getComponent(bodyComponent, domainClass);
         SiteView siteView = new SiteView(bodyComponent);

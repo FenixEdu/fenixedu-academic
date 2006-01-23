@@ -31,7 +31,7 @@ public class ReadReimbursementGuidesByGuide extends Service {
     public List run(Integer guideId) throws ExcepcaoPersistencia {
 
         // guide
-        Guide guide = (Guide) persistentSupport.getIPersistentGuide().readByOID(Guide.class, guideId);
+        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideId);
 
         // reimbursement Guides
         List reimbursementGuides = guide.getReimbursementGuides();

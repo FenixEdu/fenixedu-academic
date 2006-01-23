@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 /**
@@ -28,8 +27,7 @@ public class InsertCurriculum extends Service {
             ExcepcaoPersistencia {
 
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseId);
 
         if (curricularCourse == null) {

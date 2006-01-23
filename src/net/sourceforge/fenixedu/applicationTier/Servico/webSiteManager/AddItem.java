@@ -30,7 +30,7 @@ public class AddItem extends ManageWebSiteItem {
                 .getIPersistentWebSiteSection();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        WebSiteSection webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+        WebSiteSection webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
                 sectionCode);
         InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
         InfoWebSite infoWebSite = InfoWebSite.newInfoFromDomain(webSiteSection.getWebSite());

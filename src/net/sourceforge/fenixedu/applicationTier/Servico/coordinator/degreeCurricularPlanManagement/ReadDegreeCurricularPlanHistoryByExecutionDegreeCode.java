@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -29,13 +28,11 @@ public class ReadDegreeCurricularPlanHistoryByExecutionDegreeCode extends Servic
 
         InfoDegreeCurricularPlan infoDegreeCurricularPlan = null;
 
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-
         if (executionDegreeCode == null) {
             throw new FenixServiceException("nullDegree");
         }
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeCode);
 
         if (executionDegree == null) {

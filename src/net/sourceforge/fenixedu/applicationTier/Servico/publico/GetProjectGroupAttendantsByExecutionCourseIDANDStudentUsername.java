@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -32,10 +31,7 @@ public class GetProjectGroupAttendantsByExecutionCourseIDANDStudentUsername exte
         IFrequentaPersistente persistentAttendacy = persistentSupport.getIFrequentaPersistente();
         Student student = persistentSupport.getIPersistentStudent().readByUsername(username);
 
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
 
         Attends attendacy = persistentAttendacy.readByAlunoAndDisciplinaExecucao(student

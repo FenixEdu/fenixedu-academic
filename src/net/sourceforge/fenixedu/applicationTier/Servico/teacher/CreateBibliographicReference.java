@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * @author Fernanda Quitério
@@ -16,10 +15,7 @@ public class CreateBibliographicReference extends Service {
             String newBibliographyAuthors, String newBibliographyReference, String newBibliographyYear,
             Boolean newBibliographyOptional) throws FenixServiceException, ExcepcaoPersistencia {
 
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, infoExecutionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();

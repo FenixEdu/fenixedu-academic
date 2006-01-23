@@ -15,23 +15,17 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 public class ComputeExecutionCourseStatistics extends ComputeCourseStatistics {
 
     public List<ExecutionCourseStatisticsDTO> run(Integer competenceCourseId, Integer degreeId,
             Integer executionYearId) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCompetenceCourse persistentCompetenceCourse = persistentSupport.getIPersistentCompetenceCourse();
-        CompetenceCourse competenceCourse = (CompetenceCourse) persistentCompetenceCourse.readByOID(
+        CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(
                 CompetenceCourse.class, competenceCourseId);
 
-        ICursoPersistente persistenteDegree = persistentSupport.getICursoPersistente();
-        Degree degree = (Degree) persistenteDegree.readByOID(Degree.class, degreeId);
+        Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
 
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearId);
 
         List<CurricularCourse> curricularCourses = competenceCourse

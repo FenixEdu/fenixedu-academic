@@ -40,7 +40,7 @@ public class ReadAvailableShiftsForClass extends Service {
 
         List infoShifts = null;
 
-        SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class,
+        SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
 
         List shifts = persistentSupport.getITurnoPersistente().readAvailableShiftsForClass(schoolClass.getIdInternal());

@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -35,10 +34,9 @@ public class PrepareInsertSummary extends Service {
 
     public SiteView run(Integer executionCourseId, String userLogged) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");

@@ -13,8 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.managementAssiduousness.InfoE
 import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWorkRequests;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentExtraWorkRequests;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -30,12 +28,9 @@ public class ReadAndDeleteExtraWorkRequests extends Service {
 		List infoExtraWorkRequestsListAfter = null;
 		List extraWorkRequestsList = null;
 
-		IPersistentEmployee employeeDAO = persistentSupport.getIPersistentEmployee();
-
 		Iterator iterator = infoExtraWorkRequestsList.listIterator();
 		extraWorkRequestsList = new ArrayList();
 		IPersistentExtraWorkRequests extraWorkRequestsDAO = persistentSupport.getIPersistentExtraWorkRequests();
-		IPersistentCostCenter costCenterDAO = persistentSupport.getIPersistentCostCenter();
 		while (iterator.hasNext()) {
 			InfoExtraWorkRequests infoExtraWorkRequests = (InfoExtraWorkRequests) iterator.next();
 			if (infoExtraWorkRequests.getForDelete() != null
@@ -45,14 +40,14 @@ public class ReadAndDeleteExtraWorkRequests extends Service {
 						.getIdInternal());
 			} else {
 				// read
-				ExtraWorkRequests extraWorkRequests = (ExtraWorkRequests) extraWorkRequestsDAO
+				ExtraWorkRequests extraWorkRequests = (ExtraWorkRequests) persistentObject
 						.readByOID(ExtraWorkRequests.class, infoExtraWorkRequests.getIdInternal());
 				if (extraWorkRequests == null) {
 					// TODO
 					continue;
 				}
 
-				Employee employee = (Employee) employeeDAO.readByOID(Employee.class, extraWorkRequests
+				Employee employee = (Employee) persistentObject.readByOID(Employee.class, extraWorkRequests
 						.getEmployeeKey());
 				if (employee == null) {
 					// TODO
@@ -60,7 +55,7 @@ public class ReadAndDeleteExtraWorkRequests extends Service {
 				}
 				extraWorkRequests.setEmployee(employee);
 
-				CostCenter costCenter = (CostCenter) costCenterDAO.readByOID(CostCenter.class,
+				CostCenter costCenter = (CostCenter) persistentObject.readByOID(CostCenter.class,
 						extraWorkRequests.getCostCenterExtraWorkKey());
 				if (costCenter == null) {
 					// TODO
@@ -68,7 +63,7 @@ public class ReadAndDeleteExtraWorkRequests extends Service {
 				}
 				extraWorkRequests.setCostCenterExtraWork(costCenter);
 
-				CostCenter costCenterMoney = (CostCenter) costCenterDAO.readByOID(CostCenter.class,
+				CostCenter costCenterMoney = (CostCenter) persistentObject.readByOID(CostCenter.class,
 						extraWorkRequests.getCostCenterMoneyKey());
 				if (costCenterMoney == null) {
 					// TODO

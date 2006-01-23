@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -27,8 +26,7 @@ public class EditObjectives extends Service {
             ExcepcaoPersistencia {
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-        
+
         // Person who change all information        
         Person person = persistentPerson.lerPessoaPorUsername(username);
         if (person == null) {
@@ -45,7 +43,7 @@ public class EditObjectives extends Service {
             throw new FenixServiceException("nullCurricularCourseCode");
         }
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, infoCurricularCourseCode);
         if (curricularCourse == null) {
             throw new NonExistingServiceException("noCurricularCourse");

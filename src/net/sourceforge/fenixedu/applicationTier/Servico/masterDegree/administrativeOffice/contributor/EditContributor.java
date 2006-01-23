@@ -19,7 +19,7 @@ public class EditContributor extends Service {
             String contributorName, String contributorAddress) throws ExcepcaoPersistencia,
             NonExistingContributorServiceException, ExistingServiceException {
 
-        final Contributor storedContributor = (Contributor) persistentSupport.getIPersistentContributor().readByOID(
+        final Contributor storedContributor = (Contributor) persistentObject.readByOID(
                 Contributor.class, infoContributor.getIdInternal());
 
         if (storedContributor == null) {

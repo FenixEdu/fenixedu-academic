@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -28,11 +26,9 @@ public class ComputeCompetenceCourseStatistics extends ComputeCourseStatistics {
 
     public List<CompetenceCourseStatisticsDTO> run(Integer departementID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();
-        Department department = (Department) persistentDepartment.readByOID(Department.class,
+        Department department = (Department) persistentObject.readByOID(Department.class,
                 departementID);
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearID);
 
         List<CompetenceCourse> competenceCourses = department

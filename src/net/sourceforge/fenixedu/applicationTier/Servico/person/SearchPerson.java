@@ -57,7 +57,7 @@ public class SearchPerson extends Service {
             }
 
             if (degreeId != null) {
-                degree = (Degree) persistentSupport.getICursoPersistente().readByOID(Degree.class, degreeId);
+                degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
             }
 
             if (degreeTypeString != null && degreeTypeString.length() > 0) {
@@ -65,7 +65,7 @@ public class SearchPerson extends Service {
             }
 
             if (departmentId != null) {
-                department = (Department) persistentSupport.getIDepartamentoPersistente().readByOID(Department.class,
+                department = (Department) persistentObject.readByOID(Department.class,
                         departmentId);
             }
         }

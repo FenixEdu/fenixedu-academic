@@ -15,7 +15,7 @@ public class ReadExecutionCourseByID extends Service {
 		ExecutionCourse executionCourse = null;
 		InfoExecutionCourseWithNonAffiliatedTeachers infoExecutionCourse = new InfoExecutionCourseWithNonAffiliatedTeachers();
 
-		executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(
+		executionCourse = (ExecutionCourse) persistentObject.readByOID(
 				ExecutionCourse.class, idInternal);
 
 		if (executionCourse == null) {

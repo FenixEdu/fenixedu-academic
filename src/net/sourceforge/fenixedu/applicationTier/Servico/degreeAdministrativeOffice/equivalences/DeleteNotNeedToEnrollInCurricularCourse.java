@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Servico.degreeAdministrativeOff
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnrollInCurricularCourse;
 
 /**
  * @author Ricardo Rodrigues
@@ -16,17 +15,14 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentNotNeedToEnro
 public class DeleteNotNeedToEnrollInCurricularCourse extends Service {
 
     public void run(Integer notNeedToEnrollInCurricularCourseID) throws ExcepcaoPersistencia {
-        IPersistentNotNeedToEnrollInCurricularCourse persistentNotNeedToEnrollInCurricularCourse = persistentSupport
-                .getIPersistentNotNeedToEnrollInCurricularCourse();
-
         NotNeedToEnrollInCurricularCourse notNeedToEnrollInCurricularCourse = (NotNeedToEnrollInCurricularCourse) 
-            persistentNotNeedToEnrollInCurricularCourse.readByOID(NotNeedToEnrollInCurricularCourse.class,
+            persistentObject.readByOID(NotNeedToEnrollInCurricularCourse.class,
                     notNeedToEnrollInCurricularCourseID);
       
         notNeedToEnrollInCurricularCourse.setCurricularCourse(null);
         notNeedToEnrollInCurricularCourse.setStudentCurricularPlan(null);
 
-        persistentNotNeedToEnrollInCurricularCourse.deleteByOID(NotNeedToEnrollInCurricularCourse.class,
+        persistentObject.deleteByOID(NotNeedToEnrollInCurricularCourse.class,
                 notNeedToEnrollInCurricularCourseID);
     }
 

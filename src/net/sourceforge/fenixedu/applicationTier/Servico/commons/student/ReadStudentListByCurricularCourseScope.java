@@ -27,7 +27,7 @@ public class ReadStudentListByCurricularCourseScope extends Service {
 
     public List run(IUserView userView, Integer curricularCourseScopeID) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentSupport.getIPersistentCurricularCourseScope()
+        CurricularCourseScope curricularCourseScope = (CurricularCourseScope) persistentObject
                 .readByOID(CurricularCourseScope.class, curricularCourseScopeID);
 
         List enrolmentList = curricularCourseScope.getCurricularCourse().getEnrolments();

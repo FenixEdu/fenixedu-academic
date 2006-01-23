@@ -23,8 +23,7 @@ public class ReadActiveMasterDegreeProofVersionByStudentCurricularPlan extends S
     public InfoMasterDegreeProofVersion run(Integer studentCurricularPlanID)
             throws FenixServiceException, ExcepcaoPersistencia {
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
-                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory

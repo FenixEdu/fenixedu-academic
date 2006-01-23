@@ -27,7 +27,7 @@ public class ReadSections extends Service {
 	 * @throws ExcepcaoPersistencia
 	 */
 	public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
-		Site site = (Site) persistentSupport.getIPersistentSite().readByOID(Site.class, infoSite.getIdInternal());
+		Site site = (Site) persistentObject.readByOID(Site.class, infoSite.getIdInternal());
 		List allSections = null;
 
 		allSections = persistentSupport.getIPersistentSection().readBySite(site.getExecutionCourse().getSigla(),

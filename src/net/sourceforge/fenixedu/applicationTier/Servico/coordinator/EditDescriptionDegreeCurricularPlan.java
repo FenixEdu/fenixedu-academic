@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 /**
  * @author Tânia Pousão Created on 17/Nov/2003
@@ -21,10 +20,8 @@ public class EditDescriptionDegreeCurricularPlan extends Service {
         if (infoExecutionDegreeId == null || infoDegreeCurricularPlan == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-                .getIPersistentDegreeCurricularPlan();
 
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlan.getIdInternal());
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
@@ -49,10 +46,7 @@ public class EditDescriptionDegreeCurricularPlan extends Service {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");
         }
 
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-                .getIPersistentDegreeCurricularPlan();
-
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, infoDegreeCurricularPlan.getIdInternal());
         if (degreeCurricularPlan == null) {
             throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);

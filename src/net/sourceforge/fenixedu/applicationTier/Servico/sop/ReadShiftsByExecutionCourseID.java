@@ -19,7 +19,7 @@ public class ReadShiftsByExecutionCourseID extends Service {
         final InfoExecutionCourseOccupancy infoExecutionCourseOccupancy = new InfoExecutionCourseOccupancy();
         infoExecutionCourseOccupancy.setInfoShifts(new ArrayList());
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, executionCourseID);
         final List<Shift> shifts = executionCourse.getAssociatedShifts();
 

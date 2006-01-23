@@ -33,8 +33,7 @@ public class InsertTutorShipWithOneStudent extends InsertTutorShip {
         try {
 
             //execution degree
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeId);
             String degreeCode = null;
             if (executionDegree != null && executionDegree.getDegreeCurricularPlan() != null

@@ -25,7 +25,7 @@ public class UpdateDegreeTeachingServices extends Service {
 
     public void run(Integer professorshipID, List<ShiftIDTeachingPercentage> shiftsIDsTeachingPercentages)
             throws ExcepcaoPersistencia {
-        Professorship professorship = (Professorship) persistentSupport.getIPersistentProfessorship().readByOID(
+        Professorship professorship = (Professorship) persistentObject.readByOID(
                 Professorship.class, professorshipID);        
 
         Teacher teacher = professorship.getTeacher();
@@ -35,7 +35,7 @@ public class UpdateDegreeTeachingServices extends Service {
             teacherService = DomainFactory.makeTeacherService(teacher, executionPeriod);
         }
         for (ShiftIDTeachingPercentage shiftIDTeachingPercentage : shiftsIDsTeachingPercentages) {
-            Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
+            Shift shift = (Shift) persistentObject.readByOID(Shift.class,
                     shiftIDTeachingPercentage.getShiftID());
             DegreeTeachingService degreeTeachingService = teacherService
                     .getDegreeTeachingServiceByShiftAndProfessorship(shift, professorship);

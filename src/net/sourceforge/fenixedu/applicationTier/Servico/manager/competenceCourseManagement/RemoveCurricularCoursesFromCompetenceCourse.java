@@ -4,20 +4,16 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 
 public class RemoveCurricularCoursesFromCompetenceCourse extends Service {
 	public void run(Integer competenceCourseID, Integer[] curricularCoursesIDs) throws Exception {
-		IPersistentCompetenceCourse persistentCompetenceCourse = persistentSupport.getIPersistentCompetenceCourse();
-		CompetenceCourse competenceCourse = (CompetenceCourse) persistentCompetenceCourse.readByOID(CompetenceCourse.class, competenceCourseID);
+		CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
 		if(competenceCourse == null) {
 			throw new NotExistingServiceException("error.manager.noCompetenceCourse");
 		}
 		
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		for (Integer curricularCourseID : curricularCoursesIDs) {
-			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, curricularCourseID);
+			CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseID);
 			if(curricularCourse != null) {
 				competenceCourse.getAssociatedCurricularCourses().remove(curricularCourse);
 			}

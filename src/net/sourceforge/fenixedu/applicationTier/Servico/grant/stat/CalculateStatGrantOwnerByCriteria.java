@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 
 /**
  * @author Pica
@@ -45,8 +44,7 @@ public class CalculateStatGrantOwnerByCriteria extends Service {
 
 		if (infoStatGrantOwner.getGrantType() != null) {
 			// Read the sigla for presentation reasons
-			IPersistentGrantType persistentGrantType = persistentSupport.getIPersistentGrantType();
-			GrantType granttype = (GrantType) persistentGrantType.readByOID(GrantType.class,
+			GrantType granttype = (GrantType) persistentObject.readByOID(GrantType.class,
 					infoStatGrantOwner.getGrantType());
 			infoStatGrantOwner.setGrantTypeSigla(granttype.getSigla());
 		}

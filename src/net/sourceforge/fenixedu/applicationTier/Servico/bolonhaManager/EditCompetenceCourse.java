@@ -13,8 +13,7 @@ public class EditCompetenceCourse extends Service {
     
     public void run(Integer competenceCourseID, String objectives, String program, String evaluationMethod,
             String objectivesEn, String programEn, String evaluationMethodEn) throws ExcepcaoPersistencia, FenixServiceException {
-        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
-                .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
@@ -23,8 +22,7 @@ public class EditCompetenceCourse extends Service {
 
     public void run(Integer competenceCourseID, String name, String nameEn, String acronym,
             Boolean basic, CurricularStage curricularStage) throws ExcepcaoPersistencia, FenixServiceException {
-        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentSupport
-                .getIPersistentCompetenceCourse().readByOID(CompetenceCourse.class, competenceCourseID);
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }

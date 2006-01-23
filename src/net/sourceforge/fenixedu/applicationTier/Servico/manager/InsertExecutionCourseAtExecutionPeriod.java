@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
@@ -26,9 +25,7 @@ public class InsertExecutionCourseAtExecutionPeriod extends Service {
         ExecutionPeriod executionPeriod = null;
         ExecutionCourse existentExecutionCourse = null;
         try {
-            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                    .getIPersistentExecutionPeriod();
-            executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                     ExecutionPeriod.class, infoExecutionCourse.getInfoExecutionPeriod().getIdInternal());
 
             if (executionPeriod == null) {

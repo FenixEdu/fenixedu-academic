@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -26,8 +24,6 @@ public class LoggedCoordinatorCanEdit extends Service {
 
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 
         if (executionDegreeCode == null) {
             throw new FenixServiceException("nullExecutionDegreeCode");
@@ -41,12 +37,12 @@ public class LoggedCoordinatorCanEdit extends Service {
 
         Teacher teacher = persistentTeacher.readTeacherByUsername(username);
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeCode);
 
         ExecutionYear executionYear = executionDegree.getExecutionYear();
 
-        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseCode);
 
         if (curricularCourse == null) {

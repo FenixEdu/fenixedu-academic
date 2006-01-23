@@ -35,14 +35,12 @@ public class UnEnrollStudentFromShift extends Service {
 			ShiftEnrolmentNotFoundServiceException, FenixServiceException,
 			ExcepcaoPersistencia {
 
-		Shift shift = (Shift) persistentSupport.getITurnoPersistente()
-				.readByOID(Shift.class, shiftId);
+		Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
 		if (shift == null) {
 			throw new ShiftNotFoundServiceException();
 		}
 
-		Student student = (Student) persistentSupport.getIPersistentStudent()
-				.readByOID(Student.class, studentId);
+		Student student = (Student) persistentObject.readByOID(Student.class, studentId);
 		if (student == null) {
 			throw new StudentNotFoundServiceException();
 		}

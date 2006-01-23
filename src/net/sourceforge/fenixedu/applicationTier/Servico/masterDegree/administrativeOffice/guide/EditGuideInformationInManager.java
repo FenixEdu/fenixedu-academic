@@ -15,7 +15,7 @@ public class EditGuideInformationInManager extends Service {
 
     public void run(Integer guideID, Integer degreeCurricularPlanID, String executionYear, String newPaymentType)
             throws ExcepcaoPersistencia {
-        Guide guide = (Guide) persistentSupport.getIPersistentGuide().readByOID(Guide.class, guideID);
+        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideID);
         ExecutionDegree cursoExecucao = persistentSupport.getIPersistentExecutionDegree()
                 .readByDegreeCurricularPlanIDAndExecutionYear(degreeCurricularPlanID, executionYear);
 

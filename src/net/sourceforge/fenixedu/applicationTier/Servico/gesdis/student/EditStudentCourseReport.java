@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.gesdis.StudentCourseReport;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
 /**
@@ -27,8 +26,7 @@ public class EditStudentCourseReport extends EditDomainObjectService {
         InfoStudentCourseReport infoStudentCourseReport = (InfoStudentCourseReport) infoObject;
         StudentCourseReport studentCourseReport = (StudentCourseReport) domainObject;
 
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, infoStudentCourseReport.getInfoCurricularCourse()
                         .getIdInternal());
         studentCourseReport.setCurricularCourse(curricularCourse);

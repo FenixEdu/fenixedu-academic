@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author João Mota
@@ -38,9 +37,7 @@ public class ReadAvailableClassesForShift extends Service {
 
         List infoClasses = null;
 
-        ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
-
-        Shift shift = (Shift) shiftDAO.readByOID(Shift.class, shiftOID);
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftOID);
 
         List curricularCourses = shift.getDisciplinaExecucao().getAssociatedCurricularCourses();
         List scopes = new ArrayList();

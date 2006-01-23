@@ -10,8 +10,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author David Santos in Apr 14, 2004
@@ -24,23 +22,20 @@ public class WriteStudentAreasWithoutRestrictions extends Service {
     // service.
     public void run(InfoStudent infoStudent, DegreeType degreeType, Integer studentCurricularPlanID,
             Integer specializationAreaID, Integer secundaryAreaID) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
 
         if (studentCurricularPlan == null) {
             throw new NonExistingServiceException();
         }
 
-        Branch specializationArea = (Branch) persistentBranch.readByOID(Branch.class,
+        Branch specializationArea = (Branch) persistentObject.readByOID(Branch.class,
                 specializationAreaID);
 
         Branch secundaryArea = null;
         if (secundaryAreaID != null) {
-            secundaryArea = (Branch) persistentBranch.readByOID(Branch.class, secundaryAreaID);
+            secundaryArea = (Branch) persistentObject.readByOID(Branch.class, secundaryAreaID);
         }
 
         try {

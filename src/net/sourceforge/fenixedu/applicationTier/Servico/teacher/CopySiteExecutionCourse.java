@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * @author tfs
@@ -23,15 +22,12 @@ public class CopySiteExecutionCourse extends Service {
     public void run(Integer executionCourseFromID, Integer executionCourseToID)
             throws ExcepcaoPersistencia, FenixServiceException, DomainException {
 
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseFrom = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, executionCourseFromID);
         if (executionCourseFrom == null)
             throw new InvalidArgumentsServiceException();
 
-        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentExecutionCourse
+        final ExecutionCourse executionCourseTo = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, executionCourseToID);
         if (executionCourseTo == null)
             throw new InvalidArgumentsServiceException();

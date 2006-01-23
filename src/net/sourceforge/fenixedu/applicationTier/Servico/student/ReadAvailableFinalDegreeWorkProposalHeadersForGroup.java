@@ -30,7 +30,7 @@ public class ReadAvailableFinalDegreeWorkProposalHeadersForGroup extends Service
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
 
-        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
 
         if (group != null && group.getExecutionDegree() != null) {
             List finalDegreeWorkProposals = persistentFinalDegreeWork

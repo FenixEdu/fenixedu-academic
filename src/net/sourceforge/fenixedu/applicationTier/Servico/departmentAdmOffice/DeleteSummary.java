@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 
 /**
  * @author João Mota
@@ -23,14 +22,12 @@ public class DeleteSummary extends Service {
 
     public boolean run(Integer executionCourseId, Integer summaryID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-
-        final Summary summary = (Summary) persistentSummary.readByOID(Summary.class, summaryID);
+        final Summary summary = (Summary) persistentObject.readByOID(Summary.class, summaryID);
         if (summary == null)
             throw new InvalidArgumentsServiceException();
 
         summary.delete();
-        persistentSummary.deleteByOID(Summary.class, summary.getIdInternal());
+        persistentObject.deleteByOID(Summary.class, summary.getIdInternal());
 
         return true;
     }

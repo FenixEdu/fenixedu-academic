@@ -6,7 +6,6 @@ package net.sourceforge.fenixedu.applicationTier.Filtro;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -21,10 +20,8 @@ public class ExecutionDataIsForNotYetOpenedPeriodFilter extends Filtro {
         Integer executionCourseDestinationId = (Integer) serviceArgs[0];
         Integer executionCourseSourceId = (Integer) serviceArgs[1];
 
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-
-        ExecutionCourse executionCourseDestination = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseDestinationId);
-        ExecutionCourse executionCourseSource = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseSourceId);
+        ExecutionCourse executionCourseDestination = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseDestinationId);
+        ExecutionCourse executionCourseSource = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseSourceId);
 
         long now = System.currentTimeMillis();
         if (executionCourseDestination.getExecutionPeriod().getBeginDate().getTime() < now

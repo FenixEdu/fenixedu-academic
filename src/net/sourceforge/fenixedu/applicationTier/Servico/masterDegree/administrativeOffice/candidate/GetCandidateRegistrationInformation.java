@@ -25,8 +25,7 @@ public class GetCandidateRegistrationInformation extends Service {
 	public InfoCandidateRegistration run(Integer candidateID) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoCandidateRegistration infoCandidateRegistration = null;
 
-		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
 						candidateID);
 
 		Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(

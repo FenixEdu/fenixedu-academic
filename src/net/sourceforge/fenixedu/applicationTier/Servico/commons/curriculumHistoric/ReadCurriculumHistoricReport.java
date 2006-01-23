@@ -26,10 +26,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -44,9 +42,7 @@ public class ReadCurriculumHistoricReport extends Service {
             Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
 
         // read ExecutionYear
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                .getIPersistentExecutionYear();
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearID);
 
         // read ExecutionPeriod
@@ -56,9 +52,7 @@ public class ReadCurriculumHistoricReport extends Service {
                 semester, executionYear.getYear());
 
         // read CurricularCourse
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
-                .getIPersistentCurricularCourse();
-        CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseID);
         // read all enrollments
         IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();

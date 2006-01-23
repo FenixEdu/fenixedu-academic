@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /*
@@ -46,10 +44,7 @@ public class DeleteStudentAttendingCourse extends Service {
 
     private ExecutionCourse readExecutionCourse(final ISuportePersistente persistentSupport,
             final Integer executionCourseID) throws ExcepcaoPersistencia, FenixServiceException {
-
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null) {
             throw new FenixServiceException("error.noExecutionCourse");
@@ -59,9 +54,7 @@ public class DeleteStudentAttendingCourse extends Service {
 
     private Student readStudent(final ISuportePersistente persistentSupport,
             final InfoStudent infoStudent) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final Student student = (Student) persistentStudent.readByOID(Student.class, infoStudent
+        final Student student = (Student) persistentObject.readByOID(Student.class, infoStudent
                 .getIdInternal());
         if (student == null) {
             throw new FenixServiceException("error.exception.noStudents");

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.finalProject.TeacherDegreeFinalProjectStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.degree.finalProject.IPersistentTeacherDegreeFinalProjectStudent;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,14 +31,13 @@ public class ReadTeacherDFPStudentsService extends Service {
             throws ExcepcaoPersistencia {
         TeacherDegreeFinalProjectStudentsDTO teacherDfpStudentsDTO = new TeacherDegreeFinalProjectStudentsDTO();
 
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
         IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
 
         ExecutionPeriod executionPeriod = getExecutionPeriod(executionPeriodId, executionPeriodDAO);
 
         InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriod.newInfoFromDomain(executionPeriod);
 
-        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, infoTeacher.getIdInternal());
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());
         InfoTeacher infoTeacher2 = InfoTeacher.newInfoFromDomain(teacher);
 
         IPersistentTeacherDegreeFinalProjectStudent teacherDfpStudentDAO = persistentSupport
@@ -80,7 +78,7 @@ public class ReadTeacherDFPStudentsService extends Service {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
 
         } else {
-            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
         return executionPeriod;

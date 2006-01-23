@@ -12,19 +12,14 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublication;
-import net.sourceforge.fenixedu.persistenceTier.publication.IPersistentPublicationType;
 
 public class EditPublication extends Service {
 
     public void run(InfoPublication infoPublication) throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentPublication persistentPublication = persistentSupport.getIPersistentPublication();
-        final IPersistentPublicationType persistentPublicationType = persistentSupport.getIPersistentPublicationType();
-
-        final Publication publication = (Publication) persistentPublication.readByOID(
+        final Publication publication = (Publication) persistentObject.readByOID(
                 Publication.class, infoPublication.getIdInternal());
 
-        final PublicationType publicationType = (PublicationType) persistentPublicationType.readByOID(
+        final PublicationType publicationType = (PublicationType) persistentObject.readByOID(
                 PublicationType.class, infoPublication.getInfoPublicationType().getIdInternal());
 
         final List<InfoAuthor> infoAuthors = new ArrayList<InfoAuthor>();

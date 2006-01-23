@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
@@ -28,10 +26,7 @@ public class InsertStudentsFinalEvaluation extends Service {
 
 		List<InfoEnrolmentEvaluation> infoEvaluationsWithError = new ArrayList<InfoEnrolmentEvaluation>();
 
-		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
-				.getIPersistentEnrolmentEvaluation();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
 		for (InfoEnrolmentEvaluation infoEnrolmentEvaluation : evaluations) {
 
@@ -40,14 +35,14 @@ public class InsertStudentsFinalEvaluation extends Service {
 				throw new NonExistingServiceException();
 			}
 
-			Student student = (Student) persistentStudent.readByOID(Student.class,
+			Student student = (Student) persistentObject.readByOID(Student.class,
 					infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan()
 							.getInfoStudent().getIdInternal());
 
 			infoEnrolmentEvaluation.getInfoEnrolment().getInfoStudentCurricularPlan().getInfoStudent()
 					.setNumber(student.getNumber());
 
-			EnrolmentEvaluation enrolmentEvaluationFromDb = (EnrolmentEvaluation) persistentEnrolmentEvaluation
+			EnrolmentEvaluation enrolmentEvaluationFromDb = (EnrolmentEvaluation) persistentObject
 					.readByOID(EnrolmentEvaluation.class, infoEnrolmentEvaluation.getIdInternal());
 
 			try {

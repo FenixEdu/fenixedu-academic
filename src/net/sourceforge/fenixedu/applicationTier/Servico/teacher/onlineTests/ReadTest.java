@@ -28,7 +28,7 @@ public class ReadTest extends Service {
     public InfoTest run(Integer executionCourseId, Integer testId, String path) throws FenixServiceException, ExcepcaoPersistencia {
         this.path = path.replace('\\', '/');
 
-        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentObject.readByOID(Test.class, testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }
@@ -55,7 +55,7 @@ public class ReadTest extends Service {
     }
 
     public InfoTest run(Integer executionCourseId, Integer testId) throws FenixServiceException, ExcepcaoPersistencia {
-        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentObject.readByOID(Test.class, testId);
         if (test == null) {
             throw new InvalidArgumentsServiceException();
         }

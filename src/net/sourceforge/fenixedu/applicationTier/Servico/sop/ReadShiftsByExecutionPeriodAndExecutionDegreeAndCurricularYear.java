@@ -36,14 +36,14 @@ public class ReadShiftsByExecutionPeriodAndExecutionDegreeAndCurricularYear exte
 
         List infoShifts = null;
 
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
-        CurricularYear curricularYear = (CurricularYear) persistentSupport.getIPersistentCurricularYear().readByOID(
-                CurricularYear.class, infoCurricularYear.getIdInternal());
+        CurricularYear curricularYear = (CurricularYear) persistentObject
+        		.readByOID(CurricularYear.class, infoCurricularYear.getIdInternal());
 
         List shifts = persistentSupport.getITurnoPersistente()
                 .readByExecutionPeriodAndExecutionDegreeAndCurricularYear(

@@ -15,11 +15,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -145,13 +142,12 @@ public class CurricularCourseLecturingTeacherAndNotBasicAndDegreeAeroAuthorizati
         Degree degree = null;
 
         try {
-            IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, (Integer) argumentos[1]);
             }
 

@@ -32,7 +32,7 @@ public class ReadStudentTestQuestionImage extends Service {
         if (student == null)
             throw new FenixServiceException();
 
-        DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();

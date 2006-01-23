@@ -26,8 +26,7 @@ public class ReadStudentsFromDegreeCurricularPlan extends Service {
     public List run(Integer degreeCurricularPlanID, DegreeType degreeType) throws FenixServiceException,
             ExcepcaoPersistencia {
         // Read the Students
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
 
         List students = degreeCurricularPlan.getStudentCurricularPlans();

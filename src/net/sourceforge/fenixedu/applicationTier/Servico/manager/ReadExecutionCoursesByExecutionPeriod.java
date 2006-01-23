@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourseWithExecut
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 /**
  * @author lmac1
@@ -32,9 +31,7 @@ public class ReadExecutionCoursesByExecutionPeriod extends Service {
 		List allExecutionCoursesFromExecutionPeriod = null;
 		List allExecutionCourses = null;
 
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-
-		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+		ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
 				ExecutionPeriod.class, executionPeriodId);
 
 		if (executionPeriod == null) {

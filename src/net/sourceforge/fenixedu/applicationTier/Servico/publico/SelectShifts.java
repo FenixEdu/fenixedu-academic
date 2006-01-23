@@ -15,8 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SelectShifts extends Service {
 
     public Object run(InfoShift infoShift) throws ExcepcaoPersistencia {
-
-        Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class,
                 infoShift.getIdInternal());
 
         final List<Shift> shifts = persistentSupport.getITurnoPersistente().readByExecutionCourse(

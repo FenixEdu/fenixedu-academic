@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /*
  * 
@@ -19,17 +17,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 public class AssociateCurricularCoursesToExecutionCourse extends Service {
 
 	public void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-				.getIPersistentExecutionCourse();
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
-				.getIPersistentCurricularCourse();
-
 		if (executionCourseId == null) {
 			throw new FenixServiceException("nullExecutionCourseId");
 		}
 
 		if (curricularCourseIds != null) {
-			ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+			ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
 					ExecutionCourse.class, executionCourseId);
 
 			if (executionCourse == null) {
@@ -40,7 +33,7 @@ public class AssociateCurricularCoursesToExecutionCourse extends Service {
 			while (iter.hasNext()) {
 				Integer curricularCourseId = (Integer) iter.next();
 
-				CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse
+				CurricularCourse curricularCourse = (CurricularCourse) persistentObject
 						.readByOID(CurricularCourse.class, curricularCourseId);
 				if (curricularCourse == null) {
 					throw new NonExistingServiceException("noCurricularCourse");

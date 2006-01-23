@@ -104,7 +104,7 @@ public class ChangeStudentTestQuestionMark extends Service {
                 } else {
                     OnlineTest onlineTest = (OnlineTest) persistentSupport.getIPersistentOnlineTest().readByDistributedTest(
                             studentTestQuestion.getDistributedTest().getIdInternal());
-                    ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(
+                    ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                             ExecutionCourse.class, executionCourseId);
                     Attends attend = persistentSupport.getIFrequentaPersistente().readByAlunoAndDisciplinaExecucao(
                             studentTestQuestion.getStudent().getIdInternal(), executionCourse.getIdInternal());

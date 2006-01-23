@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.notAuthorized
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 /**
@@ -19,9 +18,7 @@ public class DeleteItem extends Service {
 
     public Boolean run(final Integer infoExecutionCourseCode, final Integer itemCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        
-        final IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
-        final Item deletedItem = (Item) persistentItem.readByOID(Item.class, itemCode);
+        final Item deletedItem = (Item) persistentObject.readByOID(Item.class, itemCode);
         
         if (deletedItem == null) {
             return new Boolean(true);

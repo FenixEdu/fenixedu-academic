@@ -20,14 +20,12 @@ public class ApproveCandidates extends Service {
 
         for (int i = 0; i < situations.length; i++) {
 
-            MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-                    .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+            MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
                             new Integer(ids[i]));
             CandidateSituation candidateSituationOld = masterDegreeCandidate
                     .getActiveCandidateSituation();
 
-            CandidateSituation candidateSituationOldFromBD = (CandidateSituation) persistentSupport
-                    .getIPersistentCandidateSituation().readByOID(CandidateSituation.class,
+            CandidateSituation candidateSituationOldFromBD = (CandidateSituation)persistentObject.readByOID(CandidateSituation.class,
                             candidateSituationOld.getIdInternal());
             candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
 

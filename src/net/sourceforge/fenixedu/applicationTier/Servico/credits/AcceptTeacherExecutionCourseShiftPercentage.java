@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 import net.sourceforge.fenixedu.util.DiaSemana;
 
 /**
@@ -37,10 +36,10 @@ public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
 
     }
 
-    private Shift getShift(ITurnoPersistente shiftDAO, InfoShiftProfessorship infoShiftProfessorship)
+    private Shift getShift(InfoShiftProfessorship infoShiftProfessorship)
             throws ExcepcaoPersistencia {
 
-        Shift shift = (Shift) shiftDAO.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
                 .getIdInternal());
         return shift;
     }
@@ -49,7 +48,6 @@ public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
             List infoShiftProfessorshipList) throws FenixServiceException, ExcepcaoPersistencia {
         List shiftWithErrors = new ArrayList();
 
-        ITurnoPersistente shiftDAO = persistentSupport.getITurnoPersistente();
         IPersistentShiftProfessorship shiftProfessorshipDAO = persistentSupport.getIPersistentTeacherShiftPercentage();
         IPersistentProfessorship professorshipDAO = persistentSupport.getIPersistentProfessorship();
 
@@ -62,7 +60,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
 
             List<ShiftProfessorship> shiftProfessorshipDeleted = new ArrayList<ShiftProfessorship>();
 
-            List shiftProfessorshipAdded = addShiftProfessorships(shiftDAO, shiftProfessorshipDAO,
+            List shiftProfessorshipAdded = addShiftProfessorships(shiftProfessorshipDAO,
                     professorship, iterator, shiftProfessorshipDeleted);
 
             validateShiftProfessorshipAdded(shiftProfessorshipAdded);
@@ -72,7 +70,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
         // erros!
     }
 
-    private List addShiftProfessorships(ITurnoPersistente shiftDAO,
+    private List addShiftProfessorships(
             IPersistentShiftProfessorship shiftProfessorshipDAO, Professorship professorship,
             Iterator iterator, List<ShiftProfessorship> shiftProfessorshipDeleted)
             throws InvalidProfessorshipPercentage, ExcepcaoPersistencia, OverlappingPeriodException,
@@ -87,7 +85,7 @@ public class AcceptTeacherExecutionCourseShiftPercentage extends Service {
                 throw new InvalidProfessorshipPercentage();
             }
 
-            Shift shift = getShift(shiftDAO, infoShiftProfessorship);
+            Shift shift = getShift(infoShiftProfessorship);
 
             ShiftProfessorship shiftProfessorship = shiftProfessorshipDAO.readByProfessorshipAndShift(
                     professorship, shift);

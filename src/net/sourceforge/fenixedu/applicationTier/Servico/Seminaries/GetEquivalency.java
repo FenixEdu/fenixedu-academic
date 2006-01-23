@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.dataTransferObject.Seminaries.InfoTheme;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -31,9 +30,7 @@ public class GetEquivalency extends Service {
 	public InfoEquivalency run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
 		InfoEquivalency infoEquivalency = null;
 
-		IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistentSupport
-				.getIPersistentSeminaryCurricularCourseEquivalency();
-		CourseEquivalency equivalency = (CourseEquivalency) persistentEquivalency.readByOID(
+		CourseEquivalency equivalency = (CourseEquivalency) persistentObject.readByOID(
 				CourseEquivalency.class, equivalencyID);
 		if (equivalency != null) {
 			infoEquivalency = InfoEquivalency.newInfoFromDomain(equivalency);

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class RemoveShifts extends Service {
 
     public Boolean run(final InfoClass infoClass, final List shiftOIDs) throws ExcepcaoPersistencia {
-        final SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class,
+        final SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class,
                 infoClass.getIdInternal());
         final List<Shift> shifts = schoolClass.getAssociatedShifts();
 

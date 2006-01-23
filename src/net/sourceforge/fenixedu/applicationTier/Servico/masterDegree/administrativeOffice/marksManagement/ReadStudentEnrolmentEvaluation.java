@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
@@ -34,10 +33,8 @@ public class ReadStudentEnrolmentEvaluation extends Service {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		List infoEnrolmentEvaluations = new ArrayList();
 
-		IPersistentEnrolmentEvaluation persistentEnrolmentEvaluation = persistentSupport
-				.getIPersistentEnrolmentEvaluation();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-		enrolmentEvaluation = (EnrolmentEvaluation) persistentEnrolmentEvaluation.readByOID(
+		enrolmentEvaluation = (EnrolmentEvaluation) persistentObject.readByOID(
 				EnrolmentEvaluation.class, studentEvaluationCode);
 
 		infoEnrolment = InfoEnrolmentWithStudentPlanAndCourseAndExecutionPeriod

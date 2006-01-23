@@ -30,9 +30,7 @@ public class EditSummary extends Service {
                 || infoSummary.getIsExtraLesson() == null || infoSummary.getSummaryDate() == null) {
             throw new FenixServiceException("error.summary.impossible.edit");
         }
-        final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-
-        final Summary summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary
+        final Summary summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary
                 .getIdInternal());
         
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(

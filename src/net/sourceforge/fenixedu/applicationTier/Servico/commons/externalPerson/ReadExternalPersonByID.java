@@ -19,8 +19,7 @@ public class ReadExternalPersonByID extends Service {
         InfoExternalPerson infoExternalPerson = null;
         ExternalPerson externalPerson = null;
 
-        externalPerson = (ExternalPerson) persistentSupport.getIPersistentExternalPerson().readByOID(
-                ExternalPerson.class, externalPersonID);
+        externalPerson = (ExternalPerson) persistentObject.readByOID(ExternalPerson.class, externalPersonID);
 
         if (externalPerson == null)
             throw new NonExistingServiceException("error.exception.commons.ExternalPersonNotFound");

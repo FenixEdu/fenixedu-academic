@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWith
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author Tânia Pousão 6/Out/2003
@@ -23,10 +22,7 @@ public class ReadPosGradStudentCurricularPlanById extends Service {
     public Object run(Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
         InfoStudentCurricularPlan infoStudentCurricularPlan = null;
 
-        IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
 
         if (studentCurricularPlan != null) {

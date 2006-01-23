@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -31,10 +30,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan extends Service {
         try {
             Integer degreeCurricularPlanId = infoCurricularCourse.getInfoDegreeCurricularPlan()
                     .getIdInternal();
-            IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-                    .getIPersistentDegreeCurricularPlan();
-
-            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+            DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                     .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
             if (degreeCurricularPlan == null)

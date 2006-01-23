@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -44,8 +43,7 @@ public class ReadImprovmentsToEnroll extends Service {
         List beforeBeforePreviousExecPeriodAprovedEnrol = new ArrayList();
 
         // Read Execution Periods
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        ExecutionPeriod actualExecPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+        ExecutionPeriod actualExecPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
         if (actualExecPeriod == null) {
             throw new InvalidArgumentsServiceException("error.executionPeriod.notExist");

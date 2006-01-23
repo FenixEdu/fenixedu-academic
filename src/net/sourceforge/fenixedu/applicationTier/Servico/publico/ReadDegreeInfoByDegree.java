@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeInfo;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeInfo;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -19,9 +18,7 @@ public class ReadDegreeInfoByDegree extends Service {
             throw new FenixServiceException("error.impossibleDegreeSite");
         }
 
-        final ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-
-        final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
+        final Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
         if (degree == null || degree.getDegreeInfos().isEmpty()) {
             throw new FenixServiceException("error.impossibleDegreeSite");
         }

@@ -18,7 +18,7 @@ public class ReadExecutionPeriodsByExecutionYear extends Service {
         final IPersistentExecutionYear executionYearDAO = persistentSupport.getIPersistentExecutionYear();
 
         final ExecutionYear executionYear = (infoExecutionYear != null) ?
-                (ExecutionYear) executionYearDAO.readByOID(ExecutionYear.class, infoExecutionYear.getIdInternal())
+                (ExecutionYear) persistentObject.readByOID(ExecutionYear.class, infoExecutionYear.getIdInternal())
                 : executionYearDAO.readCurrentExecutionYear();
 
         final List<InfoExecutionPeriod> infoExecutionPeriods = new ArrayList<InfoExecutionPeriod>();

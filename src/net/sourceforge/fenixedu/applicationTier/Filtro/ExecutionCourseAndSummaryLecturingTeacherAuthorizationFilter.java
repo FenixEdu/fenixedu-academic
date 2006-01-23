@@ -17,9 +17,7 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -79,9 +77,8 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     private List getExecutionCourseTeachers(Object[] arguments, ServiceRequest request)
             throws ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, ((Integer) arguments[0]));
 
         List professorShips = persistentProfessorship.readByExecutionCourse(executionCourse
@@ -144,9 +141,8 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
     private List getResponsibleTeachers(Integer executionCourseId) throws NotAuthorizedFilterException {
         try {
             List result = null;
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
 
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                     ExecutionCourse.class, executionCourseId);
 
             result = executionCourse.responsibleFors();
@@ -309,12 +305,11 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
         Summary summary = null;
         InfoSummary infoSummary = null;
 
-        IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
         if (arguments[1] instanceof InfoSummary) {
             infoSummary = (InfoSummary) arguments[1];
-            summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary.getIdInternal());
+            summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary.getIdInternal());
         } else {
-            summary = (Summary) persistentSummary.readByOID(Summary.class, (Integer) arguments[1]);
+            summary = (Summary) persistentObject.readByOID(Summary.class, (Integer) arguments[1]);
         }
         return summary;
     }
@@ -345,26 +340,24 @@ public class ExecutionCourseAndSummaryLecturingTeacherAuthorizationFilter extend
             return false;
         }
         try {
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
-            IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
             if (argumentos[1] instanceof InfoSummary) {
                 infoSummary = (InfoSummary) argumentos[1];
 
-                summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary
+                summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary
                         .getIdInternal());
                 if (summary == null) {
                     return false;
                 }
             } else {
-                summary = (Summary) persistentSummary.readByOID(Summary.class, (Integer) argumentos[1]);
+                summary = (Summary) persistentObject.readByOID(Summary.class, (Integer) argumentos[1]);
                 if (summary == null) {
                     return false;
                 }

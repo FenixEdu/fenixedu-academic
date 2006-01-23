@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -46,8 +45,7 @@ public class ReadPublishedMarksByExam extends Service {
         InfoEvaluation infoEvaluation = null;
 
         //Site
-        IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
-        site = (Site) siteDAO.readByOID(Site.class, siteCode);
+        site = (Site) persistentObject.readByOID(Site.class, siteCode);
 
         //Execution Course
         ExecutionCourse executionCourse = site.getExecutionCourse();

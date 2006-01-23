@@ -102,8 +102,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
         {
             // obter o CP epersistentSupportecificado como curricularPlanID
 
-            studentCurricularPlans.add(persistentSupport.getIStudentCurricularPlanPersistente().readByOID(
-                    StudentCurricularPlan.class, curricularPlanID.getId()));
+            studentCurricularPlans.add(persistentObject.readByOID(StudentCurricularPlan.class, curricularPlanID.getId()));
         }
 
         InfoStudentCurricularPlansWithSelectedEnrollments currPlanEnrol = new InfoStudentCurricularPlansWithSelectedEnrollments();

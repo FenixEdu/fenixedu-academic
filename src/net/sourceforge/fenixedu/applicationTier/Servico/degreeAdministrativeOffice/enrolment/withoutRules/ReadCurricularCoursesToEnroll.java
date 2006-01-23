@@ -31,8 +31,6 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
@@ -71,8 +69,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
 
         IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
                 .getIStudentCurricularPlanPersistente();
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                 ExecutionPeriod.class, executionPeriodID);
 
         if (infoStudent == null || infoStudent.getNumber() == null) {
@@ -86,8 +83,7 @@ public class ReadCurricularCoursesToEnroll extends Service {
         }
 
         // Execution Degree
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeID);
         if (executionDegree == null) {
             throw new FenixServiceException("error.degree.noData");

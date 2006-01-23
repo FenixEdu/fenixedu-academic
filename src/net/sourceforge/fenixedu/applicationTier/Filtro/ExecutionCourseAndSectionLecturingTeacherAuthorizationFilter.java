@@ -14,9 +14,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -65,26 +63,24 @@ public class ExecutionCourseAndSectionLecturingTeacherAuthorizationFilter extend
             return false;
         }
         try {
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
-            IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
             if (argumentos[1] == null) {
                 return true;
             }
             if (argumentos[1] instanceof InfoSection) {
                 infoSection = (InfoSection) argumentos[1];
 
-                section = (Section) persistentSection.readByOID(Section.class, infoSection
+                section = (Section) persistentObject.readByOID(Section.class, infoSection
                         .getIdInternal());
             } else {
-                section = (Section) persistentSection.readByOID(Section.class, (Integer) argumentos[1]);
+                section = (Section) persistentObject.readByOID(Section.class, (Integer) argumentos[1]);
 
             }
         } catch (Exception e) {

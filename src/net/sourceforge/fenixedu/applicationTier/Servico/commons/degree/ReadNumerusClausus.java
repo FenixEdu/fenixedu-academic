@@ -4,7 +4,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -19,9 +18,7 @@ public class ReadNumerusClausus extends Service {
 
         DegreeCurricularPlan degreeCurricularPlan = null;
 
-        IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSupport
-                .getIPersistentDegreeCurricularPlan();
-        degreeCurricularPlan = (DegreeCurricularPlan) degreeCurricularPlanDAO.readByOID(
+        degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID);
 
         if (degreeCurricularPlan == null) {

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.student.InfoSenior;
 import net.sourceforge.fenixedu.domain.student.Senior;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 
 /**
  * @author Luis Egidio, luis.egidio@ist.utl.pt
@@ -21,9 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.student.IPersistentSenior;
 public class EditSeniorInfo extends Service {
 
     public void run(InfoSenior changedInfoSenior) throws ExcepcaoPersistencia, FenixServiceException {
-            IPersistentSenior persistentSenior = persistentSupport.getIPersistentSenior();
-            
-            Senior seniorToEdit = (Senior) persistentSenior.readByOID(Senior.class, changedInfoSenior.getIdInternal());
+            Senior seniorToEdit = (Senior) persistentObject.readByOID(Senior.class, changedInfoSenior.getIdInternal());
             if (seniorToEdit == null) {
                 throw new NonExistingServiceException("Object doesn't exist!");
             }

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -38,8 +37,7 @@ public class ReadCurricularCourseListByExecutionCourseCode extends Service {
 
         List infoCurricularCourseList = new ArrayList();
         Site site = null;
-        IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
-        ExecutionCourse executionCourse = (ExecutionCourse) executionCourseDAO.readByOID(
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         if (executionCourse != null && executionCourse.getAssociatedCurricularCourses() != null) {

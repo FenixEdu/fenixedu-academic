@@ -6,8 +6,6 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.TeacherExpectationDefinitionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 /**
  * 
@@ -18,13 +16,9 @@ public class ReadTeacherExpectationDefinitionPeriodByDepartmentIDAndExecutionYea
 
     public TeacherExpectationDefinitionPeriod run(Integer departmentID, Integer executionYearID)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                .getIPersistentExecutionYear();
-
-        Department department = (Department) persistentDepartment.readByOID(Department.class,
+        Department department = (Department) persistentObject.readByOID(Department.class,
                 departmentID);
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearID);
 
         return department.readTeacherExpectationDefinitionPeriodByExecutionYear(executionYear);

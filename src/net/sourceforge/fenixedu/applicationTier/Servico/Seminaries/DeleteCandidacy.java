@@ -30,7 +30,7 @@ public class DeleteCandidacy extends Service {
 				.getIPersistentSeminaryCandidacy();
 		IPersistentSeminaryCaseStudyChoice persistentChoice = persistentSupport
 				.getIPersistentSeminaryCaseStudyChoice();
-		Candidacy candidacy = (Candidacy) persistentCandidacy.readByOID(Candidacy.class, id);
+		Candidacy candidacy = (Candidacy) persistentObject.readByOID(Candidacy.class, id);
 		List choices = candidacy.getCaseStudyChoices();
 		for (Iterator iterator = choices.iterator(); iterator.hasNext();) {
 			CaseStudyChoice choice = (CaseStudyChoice) iterator.next();

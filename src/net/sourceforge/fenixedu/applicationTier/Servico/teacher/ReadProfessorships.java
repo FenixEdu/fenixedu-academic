@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
@@ -28,12 +27,10 @@ public class ReadProfessorships extends ReadDetailedTeacherProfessorshipsAbstrac
         IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
         IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport
-                .getIPersistentExecutionPeriod();
 
         ExecutionPeriod executionPeriod = null;
         if (executionPeriodCode != null) {
-            executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
                     ExecutionPeriod.class, executionPeriodCode);
         }
 

@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.ITurmaPersistente;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -37,11 +36,10 @@ import org.apache.commons.collections.Predicate;
 public class ReadClassTimeTableByStudent extends Service {
     
     public List run(final String username, final Integer classID, final Integer executionCourseID) throws ExcepcaoPersistencia {
-        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();        
-        ITurmaPersistente persistentSchoolClass = persistentSupport.getITurmaPersistente();
+        IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
         
         Student student = persistentStudent.readByUsername(username);
-        SchoolClass schoolClass = (SchoolClass) persistentSchoolClass.readByOID(SchoolClass.class, classID);
+        SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class, classID);
         
         List studentAttends = student.getAssociatedAttends();
         

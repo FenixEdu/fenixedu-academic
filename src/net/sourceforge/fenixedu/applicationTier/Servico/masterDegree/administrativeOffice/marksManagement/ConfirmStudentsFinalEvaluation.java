@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
@@ -28,7 +27,6 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 
 	public Boolean run(Integer curricularCourseCode, String yearString, IUserView userView)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
@@ -36,7 +34,7 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
 		Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseCode);
 
 		List enrolments = null;

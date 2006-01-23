@@ -20,8 +20,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -44,8 +42,7 @@ public class PrepareDegreesListByStudentNumber extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         List result = null;
 
-            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-            ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, executionPeriodID);
+            ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
             InfoExecutionPeriod infoExecutionPeriod = InfoExecutionPeriodWithInfoExecutionYear.newInfoFromDomain(executionPeriod);
             
             //read execution degrees by execution year and degree type
@@ -89,9 +86,8 @@ public class PrepareDegreesListByStudentNumber extends Service {
 
         //read the execution degree chosen
         if (executionDegreeIdChosen != null) {
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeIdChosen);
             if (executionDegree != null) {
                 return InfoExecutionDegree.newInfoFromDomain(executionDegree);

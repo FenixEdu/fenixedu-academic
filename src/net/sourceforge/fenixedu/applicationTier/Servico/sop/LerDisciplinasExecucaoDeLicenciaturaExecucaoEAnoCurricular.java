@@ -30,7 +30,7 @@ public class LerDisciplinasExecucaoDeLicenciaturaExecucaoEAnoCurricular extends 
 
             IPersistentExecutionCourse executionCourseDAO = persistentSupport.getIPersistentExecutionCourse();
 
-            CurricularYear curricularYearFromDB = (CurricularYear) persistentSupport.getIPersistentCurricularYear()
+            CurricularYear curricularYearFromDB = (CurricularYear) persistentObject
                     .readByOID(CurricularYear.class, curricularYear);
 
             listDCDE = executionCourseDAO

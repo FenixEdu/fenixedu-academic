@@ -51,8 +51,7 @@ public class RegisterCandidate extends Service {
 
     public InfoCandidateRegistration run(Integer candidateID, Integer branchID, Integer studentNumber,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-                .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
                         candidateID);
         Person person = masterDegreeCandidate.getPerson();
         Student student = person.getStudentByType(DegreeType.MASTER_DEGREE);
@@ -170,7 +169,7 @@ public class RegisterCandidate extends Service {
     private StudentCurricularPlan createNewStudentCurricularPlan(Student student, Integer branchID,
             MasterDegreeCandidate masterDegreeCandidate, ISuportePersistente persistentSupport)
             throws ExcepcaoPersistencia {
-        Branch branch = (Branch) persistentSupport.getIPersistentBranch().readByOID(Branch.class, branchID);
+        Branch branch = (Branch) persistentObject.readByOID(Branch.class, branchID);
         DegreeCurricularPlan degreecurricularPlan = masterDegreeCandidate.getExecutionDegree()
                 .getDegreeCurricularPlan();
         Date startDate = Calendar.getInstance().getTime();

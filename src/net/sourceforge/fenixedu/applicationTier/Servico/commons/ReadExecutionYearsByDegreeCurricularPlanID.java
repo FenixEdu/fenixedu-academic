@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -28,10 +27,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadExecutionYearsByDegreeCurricularPlanID extends Service {
 
     public List run(Integer degreeCurricularPlanID) throws ExcepcaoPersistencia {
-
-        IPersistentDegreeCurricularPlan degreeCurricularPlanDAO = persistentSupport
-                .getIPersistentDegreeCurricularPlan();
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) degreeCurricularPlanDAO
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
         List<ExecutionYear> executionYears = (List<ExecutionYear>) CollectionUtils.collect(

@@ -313,7 +313,7 @@ public class StudentCurriculumAuthorizationFilter extends Filtro {
     private StudentCurricularPlan readStudentCurricularPlan(Integer studentCurricularPlanID,
             IPersistentStudentCurricularPlan persistentStudentCurricularPlan)
             throws ExcepcaoPersistencia {
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject
                 .readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
         return studentCurricularPlan;
     }

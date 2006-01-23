@@ -31,7 +31,7 @@ public class RemoveStudentFromFinalDegreeWorkStudentGroup extends Service {
                 .getIPersistentFinalDegreeWork();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
-        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
         Student student = persistentStudent.readByUsername(username);
         if (group == null || student == null || group.getGroupStudents() == null
                 || student.getIdInternal().equals(studentToRemoveID)) {

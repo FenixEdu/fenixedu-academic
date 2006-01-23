@@ -44,14 +44,13 @@ public class NewProjectProposal extends Service {
         if (groupPropertiesId == null) {
             return result;
         }
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
       
         Grouping groupProperties = (Grouping) persistentObject.readByOID(
                 Grouping.class, groupPropertiesId);
-        ExecutionCourse goalExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse goalExecutionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, goalExecutionCourseId);
-        ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, objectCode);
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         Person senderPerson = persistentTeacher.readTeacherByUsername(senderPersonUsername).getPerson();

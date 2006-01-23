@@ -14,12 +14,10 @@ import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 
@@ -65,22 +63,21 @@ public class ExecutionCourseAndItemLecturingTeacherAuthorizationFilter extends A
             return false;
         }
         try {
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
             IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
             if (argumentos[1] instanceof InfoItem) {
                 infoItem = (InfoItem) argumentos[1];
 
-                item = (Item) persistentItem.readByOID(Item.class, infoItem.getIdInternal());
+                item = (Item) persistentObject.readByOID(Item.class, infoItem.getIdInternal());
             } else {
-                item = (Item) persistentItem.readByOID(Item.class, (Integer) argumentos[1]);
+                item = (Item) persistentObject.readByOID(Item.class, (Integer) argumentos[1]);
 
             }
         } catch (Exception e) {

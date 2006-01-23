@@ -6,15 +6,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgume
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 
 
 public class DeleteCurricularCourseGroup extends Service {
 
     public void run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
-                .getIPersistentCurricularCourseGroup();
-        CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup
+        CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentObject
                 .readByOID(CurricularCourseGroup.class, groupId);
 		if (curricularCourseGroup != null) {
 			try {

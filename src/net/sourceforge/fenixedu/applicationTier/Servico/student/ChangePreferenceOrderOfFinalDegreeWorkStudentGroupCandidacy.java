@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -20,11 +19,8 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy extends
 
     public boolean run(Integer groupOID, Integer groupProposalOID, Integer orderOfPreference)
             throws ExcepcaoPersistencia {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
-        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
-        GroupProposal groupProposal = (GroupProposal) persistentFinalDegreeWork.readByOID(
+        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
+        GroupProposal groupProposal = (GroupProposal) persistentObject.readByOID(
                 GroupProposal.class, groupProposalOID);
         if (group != null && groupProposal != null) {
             for (int i = 0; i < group.getGroupProposals().size(); i++) {

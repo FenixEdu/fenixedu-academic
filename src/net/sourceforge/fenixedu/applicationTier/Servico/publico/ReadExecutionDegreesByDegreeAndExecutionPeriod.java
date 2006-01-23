@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
@@ -41,7 +40,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 			executionPeriod = persistentExecutionPeriod.readActualExecutionPeriod();
 		} else {
 
-			executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(
+			executionPeriod = (ExecutionPeriod) persistentObject.readByOID(
 					ExecutionPeriod.class, executionPeriodId);
 		}
 
@@ -55,8 +54,7 @@ public class ReadExecutionDegreesByDegreeAndExecutionPeriod extends Service {
 		}
 
 		// Degree
-		ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-		Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
+		Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
 		if (degree == null) {
 			throw new FenixServiceException("error.impossibleDegreeSite");
 		}

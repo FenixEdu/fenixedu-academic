@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.publication.InfoAuthor;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
 public class InsertInexistentAuthors extends Service {
 
@@ -24,9 +23,7 @@ public class InsertInexistentAuthors extends Service {
         final List<Person> authorsList = new ArrayList<Person>(infoAuthorsList.size());
         
         List<Integer> externalPersonsIndexes = new ArrayList<Integer>();
-        
-        IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-        
+
         List<InfoExternalPerson> infoExternalPersons = new ArrayList<InfoExternalPerson>();
         int index = 0;
         for (InfoAuthor infoAuthor : infoAuthorsList) {
@@ -43,7 +40,7 @@ public class InsertInexistentAuthors extends Service {
                 externalPersonsIndexes.add(index);
             }
             else {
-                Person person = (Person) personDAO.readByOID(Person.class, infoAuthor.getIdInternal());
+                Person person = (Person) persistentObject.readByOID(Person.class, infoAuthor.getIdInternal());
                 authorsList.add(person);
             }
             index++;

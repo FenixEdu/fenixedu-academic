@@ -50,7 +50,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 			sections = persistentWebSiteSection.readAll();
 		} else {
 			WebSiteSection webSiteSectionTmp;
-			webSiteSectionTmp = (WebSiteSection) persistentWebSiteSection.readByOID(
+			webSiteSectionTmp = (WebSiteSection) persistentObject.readByOID(
 					WebSiteSection.class, sectionCode);
 			sections.add(webSiteSectionTmp);
 		}

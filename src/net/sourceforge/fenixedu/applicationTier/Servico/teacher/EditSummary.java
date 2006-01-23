@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 
 /**
  * @author João Mota
@@ -36,9 +35,7 @@ public class EditSummary extends Service {
             throw new FenixServiceException("error.summary.impossible.edit");
         }
 
-        final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
-
-        final Summary summary = (Summary) persistentSummary.readByOID(Summary.class, infoSummary
+        final Summary summary = (Summary) persistentObject.readByOID(Summary.class, infoSummary
                 .getIdInternal());
         
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(

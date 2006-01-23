@@ -32,7 +32,7 @@ public class ChooseGuideByPersonID extends Service {
 
 		// Check if person exists
 
-		person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class, personID);
+		person = (Person) persistentObject.readByOID(Person.class, personID);
 
 		if (person == null) {
 			throw new NonExistingServiceException();

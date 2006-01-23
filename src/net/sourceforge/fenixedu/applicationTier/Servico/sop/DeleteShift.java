@@ -35,7 +35,7 @@ public class DeleteShift extends Service {
     }
 
     public static void deleteShift(final Integer shiftID) throws ExcepcaoPersistencia, FenixServiceException {
-        Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, shiftID);
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftID);
         if (shift != null) {
             List studentShifts = shift.getStudents();
             if (studentShifts != null && studentShifts.size() > 0) {

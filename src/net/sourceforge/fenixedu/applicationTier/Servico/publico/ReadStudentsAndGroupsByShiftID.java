@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -37,12 +36,10 @@ public class ReadStudentsAndGroupsByShiftID extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoSiteStudentsAndGroups infoSiteStudentsAndGroups = new InfoSiteStudentsAndGroups();
 
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-
         Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
                 groupPropertiesId);
         infoSiteStudentsAndGroups.setInfoGrouping(InfoGrouping.newInfoFromDomain(groupProperties));
-        Shift shift = (Shift) persistentShift.readByOID(Shift.class, shiftId);
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, shiftId);
 
         if (groupProperties == null) {
             throw new ExistingServiceException();

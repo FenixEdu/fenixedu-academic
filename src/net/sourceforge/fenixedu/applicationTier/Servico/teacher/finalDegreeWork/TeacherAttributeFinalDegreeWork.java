@@ -26,7 +26,7 @@ public class TeacherAttributeFinalDegreeWork extends Service {
 		IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
 				.getIPersistentFinalDegreeWork();
 
-		GroupProposal groupProposal = (GroupProposal) persistentFinalWork.readByOID(
+		GroupProposal groupProposal = (GroupProposal) persistentObject.readByOID(
 				GroupProposal.class, selectedGroupProposalOID);
 		if (groupProposal != null) {
 			Proposal proposal = groupProposal.getFinalDegreeWorkProposal();

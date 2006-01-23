@@ -19,9 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup
 public class ReadCurricularCourseGroup extends Service {
 
 	public InfoCurricularCourseGroup run(Integer groupId) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
-				.getIPersistentCurricularCourseGroup();
-		CurricularCourseGroup group = (CurricularCourseGroup) persistentCurricularCourseGroup
+		CurricularCourseGroup group = (CurricularCourseGroup) persistentObject
 				.readByOID(CurricularCourseGroup.class, groupId);
 		return InfoCurricularCourseGroupWithInfoBranch.newInfoFromDomain(group);
 	}

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -47,8 +46,7 @@ public class ReadStudentsByCurricularCourse extends Service {
         if (courseCode == null) {
             infoStudentList = getAllAttendingStudents(site);
         } else {
-            IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-            curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+            curricularCourse = (CurricularCourse) persistentObject.readByOID(
                     CurricularCourse.class, courseCode);
 
             infoStudentList = getCurricularCourseStudents(curricularCourse, persistentSupport);

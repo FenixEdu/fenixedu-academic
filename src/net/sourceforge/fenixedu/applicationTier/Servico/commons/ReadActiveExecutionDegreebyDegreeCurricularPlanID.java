@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 /**
@@ -33,13 +32,11 @@ public class ReadActiveExecutionDegreebyDegreeCurricularPlanID extends Service {
 
     public InfoExecutionDegree run(final Integer degreeCurricularPlanID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-                .getIPersistentDegreeCurricularPlan();
         final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
                 .getIPersistentExecutionDegree();
 
         // degree curricular plan
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.impossibleEditDegreeInfo");

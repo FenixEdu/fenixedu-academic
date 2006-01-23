@@ -31,8 +31,7 @@ public class ReadSubstituteCandidates extends Service {
 
 				Integer idInternal = new Integer(ids[i]);
 
-				MasterDegreeCandidate masterDegreeCandidateToWrite = (MasterDegreeCandidate) persistentSupport
-						.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+				MasterDegreeCandidate masterDegreeCandidateToWrite = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
 								idInternal);
 				result.add(InfoMasterDegreeCandidateWithInfoPerson
 						.newInfoFromDomain(masterDegreeCandidateToWrite));

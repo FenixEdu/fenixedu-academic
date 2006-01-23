@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
@@ -43,9 +42,7 @@ public class TeacherResponsibleByExecutionCourse extends Service {
     private boolean CurricularCourseNotBasic(Integer curricularCourseCode) throws ExcepcaoPersistencia {
         boolean result = false;
         CurricularCourse curricularCourse = null;
-
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-        curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+        curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseCode);
         result = curricularCourse.getBasic().equals(Boolean.FALSE);
 

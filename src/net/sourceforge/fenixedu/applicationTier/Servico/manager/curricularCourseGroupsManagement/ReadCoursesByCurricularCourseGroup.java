@@ -32,9 +32,7 @@ import org.apache.commons.collections.Transformer;
 public class ReadCoursesByCurricularCourseGroup extends Service {
 
     public InfoCurricularCourseGroupWithCoursesToAdd run(Integer groupId) throws ExcepcaoPersistencia {
-        IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
-                .getIPersistentCurricularCourseGroup();
-        CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup
+        CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentObject
                 .readByOID(CurricularCourseGroup.class, groupId);
 
         List courses = curricularCourseGroup.getCurricularCourses();

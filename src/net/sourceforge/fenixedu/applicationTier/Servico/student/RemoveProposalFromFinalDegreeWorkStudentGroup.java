@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupProposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -24,10 +23,7 @@ public class RemoveProposalFromFinalDegreeWorkStudentGroup extends Service {
     }
 
     public boolean run(Integer groupOID, Integer groupProposalOID) throws ExcepcaoPersistencia {
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
-        Group group = (Group) persistentFinalDegreeWork.readByOID(Group.class, groupOID);
+        Group group = (Group) persistentObject.readByOID(Group.class, groupOID);
         GroupProposal groupProposal = (GroupProposal) CollectionUtils.find(group.getGroupProposals(),
                 new PREDICATE_FIND_BY_ID(groupProposalOID));
         if (groupProposal != null) {

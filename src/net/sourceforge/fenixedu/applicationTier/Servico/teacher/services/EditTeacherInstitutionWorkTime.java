@@ -16,8 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditTeacherInstitutionWorkTime extends Service {
 
     public void run(InstitutionWorkTimeDTO institutionWorkTimeDTO) throws ExcepcaoPersistencia {
-        InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) persistentSupport
-                .getIPersistentInstitutionWorkTime().readByOID(InstitutionWorkTime.class,
+        InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) persistentObject.readByOID(InstitutionWorkTime.class,
                         institutionWorkTimeDTO.getIdInternal());
         
         institutionWorkTime.update(institutionWorkTimeDTO);

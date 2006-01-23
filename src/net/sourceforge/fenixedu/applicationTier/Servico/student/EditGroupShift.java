@@ -24,7 +24,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author asnr and scpo
@@ -47,8 +46,7 @@ public class EditGroupShift extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
-        final Shift shift = (Shift) persistentShift.readByOID(Shift.class, newShiftID);
+        final Shift shift = (Shift) persistentObject.readByOID(Shift.class, newShiftID);
         if (grouping.getShiftType() == null || !grouping.getShiftType().equals(shift.getTipo())) {
             throw new InvalidStudentNumberServiceException();
         }

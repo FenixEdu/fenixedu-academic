@@ -20,11 +20,8 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
-import net.sourceforge.fenixedu.persistenceTier.places.campus.IPersistentCampus;
 
 /**
  * @author lmac1
@@ -37,27 +34,20 @@ public class InsertExecutionDegreeAtDegreeCurricularPlan extends Service {
 		ExecutionYear executionYear = null;
 
 		try {
-			IPersistentCampus campusDAO = persistentSupport.getIPersistentCampus();
-			IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-					.getIPersistentDegreeCurricularPlan();
-
-			Campus campus = (Campus) campusDAO.readByOID(Campus.class, infoExecutionDegree
+			Campus campus = (Campus) persistentObject.readByOID(Campus.class, infoExecutionDegree
 					.getInfoCampus().getIdInternal());
 			if (campus == null) {
 				throw new NonExistingServiceException("message.nonExistingCampus", null);
 			}
 
-			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
 					.readByOID(DegreeCurricularPlan.class, infoExecutionDegree
 							.getInfoDegreeCurricularPlan().getIdInternal());
 
 			if (degreeCurricularPlan == null) {
 				throw new NonExistingServiceException("message.nonExistingDegreeCurricularPlan", null);
 			}
-			IPersistentExecutionYear persistentExecutionYear = persistentSupport
-					.getIPersistentExecutionYear();
-
-			executionYear = (ExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
+			executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
 					infoExecutionDegree.getInfoExecutionYear().getIdInternal());
 
 			if (executionYear == null) {

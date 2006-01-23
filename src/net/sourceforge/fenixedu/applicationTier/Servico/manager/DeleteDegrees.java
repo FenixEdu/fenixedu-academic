@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 
 /**
  * @author lmac1
@@ -19,8 +18,6 @@ public class DeleteDegrees extends Service {
 
     // delete a set of degrees
     public List run(List degreesInternalIds) throws FenixServiceException, ExcepcaoPersistencia {
-            ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-
             Iterator iter = degreesInternalIds.iterator();
 
             List undeletedDegreesNames = new ArrayList();
@@ -28,7 +25,7 @@ public class DeleteDegrees extends Service {
             while (iter.hasNext()) {
 
                 Integer internalId = (Integer) iter.next();
-                Degree degree = (Degree)persistentDegree.readByOID(Degree.class,internalId);
+                Degree degree = (Degree)persistentObject.readByOID(Degree.class,internalId);
                 
                 if (degree != null) {
                 

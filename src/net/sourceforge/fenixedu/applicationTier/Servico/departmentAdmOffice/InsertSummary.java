@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * @author mrsp and jdnf
@@ -33,10 +32,7 @@ public class InsertSummary extends Service {
                 || infoSummary.getIsExtraLesson() == null || infoSummary.getSummaryDate() == null) {
             throw new FenixServiceException("error.summary.impossible.insert");
         }
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();

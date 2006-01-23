@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 public class WriteStudentAttendingCourse extends Service {
@@ -31,15 +29,12 @@ public class WriteStudentAttendingCourse extends Service {
 	public Boolean run(InfoStudent infoStudent, Integer executionCourseId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-				.getIPersistentExecutionCourse();
 		IPersistentEnrollment persistentEnrolment = persistentSupport
 				.getIPersistentEnrolment();
 		IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport
 				.getIStudentCurricularPlanPersistente();
 
-		IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
-		Student student = (Student) studentDAO.readByOID(Student.class,
+		Student student = (Student) persistentObject.readByOID(Student.class,
 				infoStudent.getIdInternal());
 		infoStudent.setNumber(student.getNumber());
 
@@ -51,8 +46,7 @@ public class WriteStudentAttendingCourse extends Service {
 			StudentCurricularPlan studentCurricularPlan = findStudentCurricularPlan(
 					infoStudent, persistentStudentCurricularPlan);
 
-			ExecutionCourse executionCourse = findExecutionCourse(
-					executionCourseId, persistentExecutionCourse);
+			ExecutionCourse executionCourse = findExecutionCourse(executionCourseId);
 
 			// Read every course the student attends to:
 			List attends = persistentAttend
@@ -106,11 +100,9 @@ public class WriteStudentAttendingCourse extends Service {
 		}
 	}
 
-	private ExecutionCourse findExecutionCourse(Integer executionCourseId,
-			IPersistentExecutionCourse persistentExecutionCourse)
+	private ExecutionCourse findExecutionCourse(Integer executionCourseId)
 			throws FenixServiceException, ExcepcaoPersistencia {
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse
-				.readByOID(ExecutionCourse.class, executionCourseId);
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
 
 		if (executionCourse == null) {
 			throw new FenixServiceException("noExecutionCourse");

@@ -93,9 +93,8 @@ public class CreateClassificationsForStudents extends Service {
         List<Student> otherYearsStudents = new ArrayList<Student>();
         List<Student> firstYearStudents = new ArrayList<Student>();
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
-                        degreeCurricularPlanID);
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
+        		.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
         List<StudentCurricularPlan> studentCurricularPlans = degreeCurricularPlan
                 .getStudentCurricularPlans();
 

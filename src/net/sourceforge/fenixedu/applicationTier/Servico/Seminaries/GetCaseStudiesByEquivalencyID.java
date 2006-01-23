@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Seminaries.CaseStudy;
 import net.sourceforge.fenixedu.domain.Seminaries.CourseEquivalency;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCurricularCourseEquivalency;
 import net.sourceforge.fenixedu.presentationTier.Action.Seminaries.Exceptions.BDException;
 
 /**
@@ -30,10 +29,8 @@ public class GetCaseStudiesByEquivalencyID extends Service {
 	public List run(Integer equivalencyID) throws BDException, ExcepcaoPersistencia {
 		List infoCases = new LinkedList();
 
-		IPersistentSeminaryCurricularCourseEquivalency persistentEquivalency = persistentSupport
-				.getIPersistentSeminaryCurricularCourseEquivalency();
 		//
-		CourseEquivalency equivalency = (CourseEquivalency) persistentEquivalency.readByOID(
+		CourseEquivalency equivalency = (CourseEquivalency) persistentObject.readByOID(
 				CourseEquivalency.class, equivalencyID);
 		//
 		List cases = new LinkedList();

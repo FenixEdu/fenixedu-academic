@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 /**
@@ -21,9 +20,7 @@ public class EditBranch extends Service {
 
     public void run(InfoBranch infoBranch) throws FenixServiceException, ExcepcaoPersistencia {
         try {
-			IPersistentBranch persistentbranch = persistentSupport.getIPersistentBranch();
-
-			Branch branch = (Branch) persistentbranch.readByOID(Branch.class, infoBranch.getIdInternal());
+			Branch branch = (Branch) persistentObject.readByOID(Branch.class, infoBranch.getIdInternal());
 
             if (branch == null) {
                 throw new NonExistingServiceException();

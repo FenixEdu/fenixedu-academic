@@ -10,9 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDepartment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * 
@@ -23,21 +20,16 @@ public class SearchDepartmentTeachersExpectationsByExecutionYearIDAndTeacherID e
 
     public List<TeacherPersonalExpectation> run(Integer departmentID, Integer executionYearID,
             Integer teacherID) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentDepartment persistentDepartment = persistentSupport.getIDepartamentoPersistente();
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                .getIPersistentExecutionYear();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-        Department department = (Department) persistentDepartment.readByOID(Department.class,
+        Department department = (Department) persistentObject.readByOID(Department.class,
                 departmentID);
 
         List<TeacherPersonalExpectation> result = new ArrayList<TeacherPersonalExpectation>();
 
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearID);
 
         if (teacherID != null) {
-            Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
+            Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
             TeacherPersonalExpectation teacherPersonalExpectation = teacher
                     .getTeacherPersonalExpectationByExecutionYear(executionYear);
 

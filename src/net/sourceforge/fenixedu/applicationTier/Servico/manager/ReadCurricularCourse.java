@@ -22,7 +22,7 @@ public class ReadCurricularCourse extends Service {
 	 */
 	public InfoCurricularCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
 		CurricularCourse curricularCourse;
-		curricularCourse = (CurricularCourse) persistentSupport.getIPersistentCurricularCourse().readByOID(
+		curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, idInternal);
 
 		if (curricularCourse == null) {

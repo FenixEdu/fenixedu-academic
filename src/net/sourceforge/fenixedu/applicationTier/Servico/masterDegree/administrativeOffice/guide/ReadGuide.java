@@ -20,7 +20,7 @@ public class ReadGuide extends Service {
 	public InfoGuide run(Integer guideId) throws FenixServiceException, ExcepcaoPersistencia {
 		Guide guide;
 		InfoGuide infoGuide = null;
-		guide = (Guide) persistentSupport.getIPersistentGuide().readByOID(Guide.class, guideId);
+		guide = (Guide) persistentObject.readByOID(Guide.class, guideId);
 		if (guide == null) {
 			throw new InvalidArgumentsServiceException();
 		}

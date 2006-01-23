@@ -65,8 +65,7 @@ public class CreateMasterDegreeThesis extends Service {
 
         Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
         Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
-                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
         MasterDegreeThesis masterDegreeThesis = DomainFactory.makeMasterDegreeThesis();

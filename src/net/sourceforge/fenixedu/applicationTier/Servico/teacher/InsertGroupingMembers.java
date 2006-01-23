@@ -31,11 +31,9 @@ public class InsertGroupingMembers extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 
 		IFrequentaPersistente persistentAttend = null;
-		IPersistentStudent persistentStudent = null;
 
 		List students = new ArrayList();
 
-		persistentStudent = persistentSupport.getIPersistentStudent();
 		persistentAttend = persistentSupport.getIFrequentaPersistente();
 
 		Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class,
@@ -48,7 +46,7 @@ public class InsertGroupingMembers extends Service {
 		Iterator iterator = studentCodes.iterator();
 
 		while (iterator.hasNext()) {
-			Student student = (Student) persistentStudent.readByOID(Student.class, (Integer) iterator
+			Student student = (Student) persistentObject.readByOID(Student.class, (Integer) iterator
 					.next());
 			students.add(student);
 		}

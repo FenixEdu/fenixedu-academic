@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExportGrouping;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
@@ -35,14 +34,13 @@ public class DeleteProjectProposal extends Service {
 
     public boolean run(Integer objectCode, Integer groupPropertiesCode, Integer executionCourseCode,
             String withdrawalPersonUsername) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         IPersistentExportGrouping persistentExportGrouping = persistentSupport.getIPersistentExportGrouping();
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
         Person withdrawalPerson = persistentTeacher.readTeacherByUsername(withdrawalPersonUsername).getPerson();
         Grouping groupProperties = (Grouping) persistentObject.readByOID(Grouping.class, groupPropertiesCode);
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseCode);
-        ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, objectCode);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
+        ExecutionCourse startExecutionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, objectCode);
 
         if (groupProperties == null) {
             throw new InvalidArgumentsServiceException("error.noGroupProperties");

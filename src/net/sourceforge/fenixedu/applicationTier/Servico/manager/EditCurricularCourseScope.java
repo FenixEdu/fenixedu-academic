@@ -9,9 +9,6 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularSemester;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 
@@ -24,12 +21,8 @@ public class EditCurricularCourseScope extends Service {
         Branch newBranch = null;
 
         try {
-            IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
-            IPersistentCurricularSemester persistentCurricularSemester = persistentSupport.getIPersistentCurricularSemester();
-            IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport.getIPersistentCurricularCourseScope();
-
             Integer branchId = newInfoCurricularCourseScope.getInfoBranch().getIdInternal();
-            newBranch = (Branch) persistentBranch.readByOID(Branch.class, branchId);
+            newBranch = (Branch) persistentObject.readByOID(Branch.class, branchId);
 
             if (newBranch == null) {
                 throw new NonExistingServiceException("message.non.existing.branch", null);
@@ -37,7 +30,7 @@ public class EditCurricularCourseScope extends Service {
 
 			
             Integer curricularSemesterId = newInfoCurricularCourseScope.getInfoCurricularSemester().getIdInternal();
-            newCurricularSemester = (CurricularSemester) persistentCurricularSemester.readByOID(
+            newCurricularSemester = (CurricularSemester) persistentObject.readByOID(
                     CurricularSemester.class, curricularSemesterId);
 
             if (newCurricularSemester == null) {
@@ -45,7 +38,7 @@ public class EditCurricularCourseScope extends Service {
             }
 
 			
-            oldCurricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope.readByOID(
+            oldCurricularCourseScope = (CurricularCourseScope) persistentObject.readByOID(
 					CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal());
 
             if (oldCurricularCourseScope == null) {

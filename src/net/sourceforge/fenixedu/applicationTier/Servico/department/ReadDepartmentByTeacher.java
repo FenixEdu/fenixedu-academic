@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author jpvl
@@ -18,10 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 public class ReadDepartmentByTeacher extends Service {
 
     public InfoDepartment run(InfoTeacher infoTeacher) throws ExcepcaoPersistencia {
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        
-        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, infoTeacher.getIdInternal());
-        
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoTeacher.getIdInternal());        
         Department department = teacher.getCurrentWorkingDepartment();
         return InfoDepartment.newInfoFromDomain(department);
     }

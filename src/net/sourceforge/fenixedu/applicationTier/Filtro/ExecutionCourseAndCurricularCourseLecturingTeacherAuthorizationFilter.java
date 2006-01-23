@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import pt.utl.ist.berserk.ServiceRequest;
@@ -71,22 +69,20 @@ public class ExecutionCourseAndCurricularCourseLecturingTeacherAuthorizationFilt
             return false;
         }
         try {
-            IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-            IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
             if (argumentos[0] instanceof InfoExecutionCourse) {
                 infoExecutionCourse = (InfoExecutionCourse) argumentos[0];
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, infoExecutionCourse.getIdInternal());
             } else {
-                executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+                executionCourse = (ExecutionCourse) persistentObject.readByOID(
                         ExecutionCourse.class, (Integer) argumentos[0]);
             }
             if (argumentos[1] instanceof InfoCurricularCourse) {
                 infoCurricularCourse = (InfoCurricularCourse) argumentos[1];
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, infoCurricularCourse.getIdInternal());
             } else {
-                curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+                curricularCourse = (CurricularCourse) persistentObject.readByOID(
                         CurricularCourse.class, (Integer) argumentos[1]);
             }
 

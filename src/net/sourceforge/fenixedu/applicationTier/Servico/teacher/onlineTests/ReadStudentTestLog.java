@@ -25,13 +25,12 @@ public class ReadStudentTestLog extends Service {
 	public List run(Integer executionCourseId, Integer distributedTestId, Integer studentId)
 			throws FenixServiceException, ExcepcaoPersistencia {
 		List infoStudentTestLogList = new ArrayList();
-		Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
+		Student student = (Student) persistentObject.readByOID(Student.class,
 				studentId);
 		if (student == null) {
 			throw new FenixServiceException();
 		}
-		DistributedTest distributedTest = (DistributedTest) persistentSupport
-				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+		DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null) {
 			throw new FenixServiceException();
 		}

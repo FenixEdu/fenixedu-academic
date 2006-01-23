@@ -25,8 +25,7 @@ public class ViewReimbursementGuide extends Service {
     public InfoReimbursementGuide run(Integer reimbursementGuideId) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-        ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentSupport
-                .getIPersistentReimbursementGuide().readByOID(ReimbursementGuide.class,
+        ReimbursementGuide reimbursementGuide = (ReimbursementGuide) persistentObject.readByOID(ReimbursementGuide.class,
                         reimbursementGuideId);
 
         if (reimbursementGuide == null) {

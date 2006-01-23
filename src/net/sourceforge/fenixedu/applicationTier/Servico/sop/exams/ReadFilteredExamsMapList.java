@@ -29,15 +29,11 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 public class ReadFilteredExamsMapList extends Service {
 
     public InfoExamsMap run(List infoExecutionDegreeList, List curricularYears,
             InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia {
-        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport
-                .getIPersistentExecutionDegree();
-
         // Object to be returned
         InfoExamsMap infoExamsMap = new InfoExamsMap();
 
@@ -48,7 +44,7 @@ public class ReadFilteredExamsMapList extends Service {
         // Set List of Curricular Years
         infoExamsMap.setCurricularYears(curricularYears);
 
-        final ExecutionDegree executionDegreeFromDB = (ExecutionDegree) persistentExecutionDegree
+        final ExecutionDegree executionDegreeFromDB = (ExecutionDegree) persistentObject
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         final Calendar startSeason1;

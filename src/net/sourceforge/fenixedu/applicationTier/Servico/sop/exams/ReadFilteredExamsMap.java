@@ -58,7 +58,7 @@ public class ReadFilteredExamsMap extends Service {
         // Translate to execute following queries
         IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
                 .readByOID(ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         OccupationPeriod period = null;

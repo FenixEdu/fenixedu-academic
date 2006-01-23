@@ -21,8 +21,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadCurricularCoursesByDegreeCurricularPlan extends Service {
 
     public List run(final Integer idDegreeCurricularPlan) throws FenixServiceException, ExcepcaoPersistencia {
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         idDegreeCurricularPlan);
 
         final List<CurricularCourse> curricularCourses = degreeCurricularPlan.getCurricularCourses();

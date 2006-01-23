@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExecutionCourse extends Service {
 
     public InfoExecutionCourse run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, idInternal);
 
         if (executionCourse == null) {

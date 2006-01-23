@@ -55,7 +55,7 @@ public class ReadMasterDegreeCandidate extends Service {
 
     public InfoMasterDegreeCandidate run(InfoExecutionDegree infoExecutionDegree, InfoPerson infoPerson)
             throws ExcepcaoPersistencia {
-        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) persistentObject.readByOID(Person.class,
                 infoPerson.getIdInternal());
 
         // Read the candidates

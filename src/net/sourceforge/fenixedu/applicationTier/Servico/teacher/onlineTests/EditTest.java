@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditTest extends Service {
 
     public void run(Integer executionCourseId, Integer testId, String title, String information) throws ExcepcaoPersistencia {
-        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentObject.readByOID(Test.class, testId);
         test.setTitle(title);
         test.setInformation(information);
         test.setLastModifiedDate(Calendar.getInstance().getTime());

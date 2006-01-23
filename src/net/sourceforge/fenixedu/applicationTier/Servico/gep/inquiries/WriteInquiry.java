@@ -36,8 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRe
  * 
  */
 public class WriteInquiry extends Service {
-
-	private IPersistentObject persistentObject;
 	
     public void run(final InfoInquiry inquiry, final InfoStudent infoStudent)
             throws FenixServiceException, ExcepcaoPersistencia {

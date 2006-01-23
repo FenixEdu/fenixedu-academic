@@ -29,15 +29,12 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 public class ReadExecutionCoursesByDegreeAndExecutionPeriodId extends Service {
 
     public List run(Integer degreeId, Integer executionPeriodId) throws FenixServiceException, ExcepcaoPersistencia {
-            IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-            ICursoPersistente persistentDegree = persistentSupport.getICursoPersistente();
-
-            final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod
+            final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
                     .readByOID(ExecutionPeriod.class, executionPeriodId);
             if (executionPeriod == null) {
                 throw new InvalidArgumentsServiceException();
             }
-            final Degree degree = (Degree) persistentDegree.readByOID(Degree.class, degreeId);
+            final Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
             if (degree == null) {
                 throw new InvalidArgumentsServiceException();
             }

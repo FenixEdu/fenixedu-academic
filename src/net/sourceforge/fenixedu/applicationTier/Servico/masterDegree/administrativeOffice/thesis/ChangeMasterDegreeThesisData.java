@@ -47,8 +47,7 @@ public class ChangeMasterDegreeThesisData extends Service {
                     "error.exception.masterDegree.externalGuiderAlreadyChosen");
         }
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport
-                .getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);
 
         MasterDegreeThesisDataVersion storedMasterDegreeThesisDataVersion = persistentSupport

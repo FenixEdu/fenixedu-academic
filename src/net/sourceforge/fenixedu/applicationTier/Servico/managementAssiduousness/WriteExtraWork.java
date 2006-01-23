@@ -41,7 +41,7 @@ public class WriteExtraWork extends Service {
         for (InfoExtraWork infoExtraWork : infoExtraWorkList) {
             ExtraWork extraWork = null;
             if (infoExtraWork.getIdInternal() != null && infoExtraWork.getIdInternal().intValue() > 0) {
-                extraWork = (ExtraWork) extraWorkDAO.readByOID(ExtraWork.class, infoExtraWork
+                extraWork = (ExtraWork) persistentObject.readByOID(ExtraWork.class, infoExtraWork
                         .getIdInternal());
             }
             if (extraWork == null) {

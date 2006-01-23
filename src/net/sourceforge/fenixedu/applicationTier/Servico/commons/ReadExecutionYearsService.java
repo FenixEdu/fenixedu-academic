@@ -39,10 +39,7 @@ public class ReadExecutionYearsService extends Service {
 	}
 	
 	public ExecutionYear run(Integer executionYearID) throws ExcepcaoPersistencia {
-		final IPersistentExecutionYear executionYearDAO = persistentSupport
-				.getIPersistentExecutionYear();
-
-		ExecutionYear executionYear = (ExecutionYear)executionYearDAO.readByOID(ExecutionYear.class,executionYearID);
+		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,executionYearID);
 		return executionYear;
 
 	}

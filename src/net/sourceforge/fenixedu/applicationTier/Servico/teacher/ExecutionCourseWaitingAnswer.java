@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExportGrouping;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.util.ProposalState;
 
 /**
@@ -23,11 +22,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
 public class ExecutionCourseWaitingAnswer extends Service {
 
     public boolean run(Integer executionCourseID) throws FenixServiceException, ExcepcaoPersistencia {
-
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseID);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();

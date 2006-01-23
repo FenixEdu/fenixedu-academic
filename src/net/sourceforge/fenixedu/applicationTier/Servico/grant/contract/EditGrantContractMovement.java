@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractMovement;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractMovement;
 
 /**
  * @author Barbosa
@@ -31,11 +29,9 @@ public class EditGrantContractMovement extends EditDomainObjectService {
     @Override
     protected DomainObject readObjectByUnique(InfoObject infoObject)
             throws ExcepcaoPersistencia {
-        IPersistentGrantContractMovement persistentGrantContractMovement = persistentSupport
-                .getIPersistentGrantContractMovement();
         InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
-        return persistentGrantContractMovement.readByOID(GrantContractMovement.class,
+        return persistentObject.readByOID(GrantContractMovement.class,
                 infoGrantContractMovement.getIdInternal());
     }
 
@@ -50,7 +46,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
             GrantContractMovement grantContractMovement = (GrantContractMovement) domainObjectLocked;
             InfoGrantContractMovement infoGrantContractMovement = (InfoGrantContractMovement) infoObject;
 
-            GrantContract grantContract = (GrantContract) persistentSupport.getIPersistentGrantContract().readByOID(
+            GrantContract grantContract = (GrantContract) persistentObject.readByOID(
                     GrantContract.class,
                     infoGrantContractMovement.getInfoGrantContract().getIdInternal());
             grantContractMovement.setGrantContract(grantContract);
@@ -73,8 +69,7 @@ public class EditGrantContractMovement extends EditDomainObjectService {
         grantContractMovement.setArrivalDate(infoGrantContractMovement.getArrivalDate());
         grantContractMovement.setDepartureDate(infoGrantContractMovement.getDepartureDate());
 
-        IPersistentGrantContract persistentGrantContract = persistentSupport.getIPersistentGrantContract();
-        GrantContract grantContract = (GrantContract) persistentGrantContract.readByOID(GrantContract.class,
+        GrantContract grantContract = (GrantContract) persistentObject.readByOID(GrantContract.class,
                 infoGrantContractMovement.getInfoGrantContract().getIdInternal());
         grantContractMovement.setGrantContract(grantContract);
 

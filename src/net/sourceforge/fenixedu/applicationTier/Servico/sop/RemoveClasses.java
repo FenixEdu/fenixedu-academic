@@ -24,11 +24,11 @@ public class RemoveClasses extends Service {
 
         boolean result = false;
 
-        Shift shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class,
                 infoShift.getIdInternal());
 
         for (int i = 0; i < classOIDs.size(); i++) {
-            SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(SchoolClass.class,
+            SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(SchoolClass.class,
                     (Integer) classOIDs.get(i));
 
             shift.getAssociatedClasses().remove(schoolClass);

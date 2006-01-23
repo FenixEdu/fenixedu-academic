@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 
 /**
  * @author Tânia Pousão
@@ -26,14 +25,12 @@ public class DeleteEnrollmentsList extends Service {
     // some of these arguments may be null. they are only needed for filter
     public void run(InfoStudent infoStudent, DegreeType degreeType, List enrolmentIDList)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentEnrollment enrolmentDAO = persistentSupport.getIPersistentEnrolment();
-
         if (enrolmentIDList != null && enrolmentIDList.size() > 0) {
             ListIterator iterator = enrolmentIDList.listIterator();
             while (iterator.hasNext()) {
                 Integer enrolmentID = (Integer) iterator.next();
 
-                final Enrolment enrollment = (Enrolment) enrolmentDAO.readByOID(Enrolment.class,
+                final Enrolment enrollment = (Enrolment) persistentObject.readByOID(Enrolment.class,
                         enrolmentID);
 
                 if (enrollment != null) {

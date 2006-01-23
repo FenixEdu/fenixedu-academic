@@ -56,12 +56,10 @@ public class ImprovmentEnrollService extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        IPersistentEnrollment persistentEnrollment = persistentSupport.getIPersistentEnrolment();
-
         Iterator iterator = enrolmentsIds.iterator();
         while (iterator.hasNext()) {
             Integer enrolmentId = (Integer) iterator.next();
-            Enrolment enrollment = (Enrolment) persistentEnrollment.readByOID(Enrolment.class,
+            Enrolment enrollment = (Enrolment) persistentObject.readByOID(Enrolment.class,
                     enrolmentId);
             if (enrollment == null) {
                 throw new InvalidArgumentsServiceException();

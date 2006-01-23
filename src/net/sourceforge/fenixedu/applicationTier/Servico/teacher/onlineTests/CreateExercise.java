@@ -35,8 +35,7 @@ public class CreateExercise extends Service {
 			Boolean breakLineAfterResponseBox, String path) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
-				.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseId);
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
 		if (executionCourse == null) {
 			throw new InvalidArgumentsServiceException();
 		}
@@ -53,7 +52,7 @@ public class CreateExercise extends Service {
 			metadata.setLevel(level);
 			metadata.setVisibility(new Boolean(true));
 		} else {
-			metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(Metadata.class,
+			metadata = (Metadata) persistentObject.readByOID(Metadata.class,
 					metadataId);
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();

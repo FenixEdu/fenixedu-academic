@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class InsertTestAsNewTest extends Service {
 
     public Integer run(Integer executionCourseId, Integer oldTestId) throws FenixServiceException, ExcepcaoPersistencia {
-        Test oldTest = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, oldTestId);
+        Test oldTest = (Test) persistentObject.readByOID(Test.class, oldTestId);
         if (oldTest == null) {
             throw new InvalidArgumentsServiceException();
         }

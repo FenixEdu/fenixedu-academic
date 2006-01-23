@@ -33,7 +33,7 @@ public class EditarTurno extends Service {
 		newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(),
 				infoShiftNew.getLotacao());
 
-		Shift shiftToEdit = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class,
+		Shift shiftToEdit = (Shift) persistentObject.readByOID(Shift.class,
 				infoShiftOld.getIdInternal());
 
 		int capacityDiference = infoShiftNew.getLotacao().intValue()
@@ -58,7 +58,7 @@ public class EditarTurno extends Service {
 		shiftToEdit.setAvailabilityFinal(new Integer(shiftToEdit.getAvailabilityFinal().intValue()
 				+ capacityDiference));
 
-		final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
+		final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
 				.readByOID(ExecutionCourse.class,
 						infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 		shiftToEdit.setDisciplinaExecucao(executionCourse);
@@ -83,7 +83,7 @@ public class EditarTurno extends Service {
 		// 1. Read shift lessons
 		List shiftLessons = null;
 		Shift shift = null;
-		shift = (Shift) persistentSupport.getITurnoPersistente().readByOID(Shift.class, infoShiftOld.getIdInternal());
+		shift = (Shift) persistentObject.readByOID(Shift.class, infoShiftOld.getIdInternal());
 		shiftLessons = shift.getAssociatedLessons();
 
 		// 2. Count shift total duration and get maximum lesson room capacity

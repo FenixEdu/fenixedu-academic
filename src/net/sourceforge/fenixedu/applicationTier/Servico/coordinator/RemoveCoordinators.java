@@ -9,15 +9,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
 
 public class RemoveCoordinators extends Service {
 
     public Boolean run(Integer executionDegreeID, List coordinatorsIds) throws ExcepcaoPersistencia {
-        IPersistentCoordinator persistentCoordinator = persistentSupport.getIPersistentCoordinator();
-
         for (final Iterator iter = coordinatorsIds.iterator(); iter.hasNext(); ) {
-            Coordinator coordinator = (Coordinator) persistentCoordinator.readByOID(Coordinator.class, (Integer) iter.next());
+            Coordinator coordinator = (Coordinator) persistentObject.readByOID(Coordinator.class, (Integer) iter.next());
 
             if (coordinator != null) {
                 Teacher teacher = coordinator.getTeacher();
@@ -25,7 +22,7 @@ public class RemoveCoordinators extends Service {
                 coordinator.setExecutionDegree(null);
                 coordinator.setTeacher(null);
 
-                persistentCoordinator.deleteByOID(Coordinator.class, coordinator.getIdInternal());
+                persistentObject.deleteByOID(Coordinator.class, coordinator.getIdInternal());
 
                 if (teacher.getCoordinators().isEmpty()) {
                     Person person = teacher.getPerson();

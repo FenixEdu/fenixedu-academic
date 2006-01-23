@@ -31,7 +31,7 @@ public class ExecutionCourseSiteComponentService extends Service {
 
         final Site site;
         if (infoSiteCode != null)
-            site = (Site) persistentSite.readByOID(Site.class, infoSiteCode);
+            site = (Site) persistentObject.readByOID(Site.class, infoSiteCode);
         else
             site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 

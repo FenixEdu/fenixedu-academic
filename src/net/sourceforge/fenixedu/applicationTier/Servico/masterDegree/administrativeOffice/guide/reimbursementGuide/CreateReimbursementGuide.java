@@ -57,7 +57,7 @@ public class CreateReimbursementGuide extends Service {
     public Integer run(Integer guideId, String remarks, List infoReimbursementGuideEntries,
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
-        Guide guide = (Guide) persistentSupport.getIPersistentGuide().readByOID(Guide.class, guideId);
+        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideId);
 
         if (!guide.getActiveSituation().getSituation().equals(GuideState.PAYED)) {
             throw new InvalidGuideSituationServiceException(
@@ -73,7 +73,7 @@ public class CreateReimbursementGuide extends Service {
                 throw new RequiredJustificationServiceException(
                         "error.exception.masterDegree.requiredJustification");
 
-            GuideEntry guideEntry = (GuideEntry) persistentSupport.getIPersistentGuideEntry().readByOID(
+            GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(
                     GuideEntry.class, infoReimbursementGuideEntry.getInfoGuideEntry().getIdInternal());
             if (checkReimbursementGuideEntriesSum(infoReimbursementGuideEntry, guideEntry) == false)
                 throw new InvalidReimbursementValueServiceException(

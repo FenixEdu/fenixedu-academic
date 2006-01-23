@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 /**
  * @author asnr and scpo
@@ -25,10 +24,6 @@ public class EditStudentGroupShift extends Service {
 			Integer groupPropertiesCode, Integer newShiftCode) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		ITurnoPersistente persistentShift = null;
-
-		persistentShift = persistentSupport.getITurnoPersistente();
-
 		Grouping grouping = (Grouping) persistentObject.readByOID(Grouping.class,
 				groupPropertiesCode);
 
@@ -36,7 +31,7 @@ public class EditStudentGroupShift extends Service {
 			throw new ExistingServiceException();
 		}
 
-		Shift shift = (Shift) persistentShift.readByOID(Shift.class, newShiftCode);
+		Shift shift = (Shift) persistentObject.readByOID(Shift.class, newShiftCode);
 
 		// grouping.checkShiftCapacity(shift);
 

@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 /**
@@ -18,12 +17,11 @@ public class InsertSection extends Service {
             Integer sectionOrder) throws FenixServiceException, ExcepcaoPersistencia {
      
         final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        final IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
         final Site site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
 
         Section parentSection = null;
         if (sectionCode != null) {
-            parentSection = (Section) persistentSection.readByOID(Section.class, sectionCode);
+            parentSection = (Section) persistentObject.readByOID(Section.class, sectionCode);
         }
         site.createSection(sectionName, parentSection, sectionOrder);
          

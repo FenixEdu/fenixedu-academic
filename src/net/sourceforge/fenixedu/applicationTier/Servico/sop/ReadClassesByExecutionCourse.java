@@ -25,7 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadClassesByExecutionCourse extends Service {
 
     public List run(InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse()
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
 
         final List classes = persistentSupport.getITurmaPersistente().readByExecutionCourse(

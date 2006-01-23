@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteSupportLesson extends Service {
 
     public void run(Integer supportLessonID) throws ExcepcaoPersistencia {
-        SupportLesson supportLesson = (SupportLesson) persistentSupport.getIPersistentSupportLesson()
+        SupportLesson supportLesson = (SupportLesson) persistentObject
                 .readByOID(SupportLesson.class, supportLessonID);
         supportLesson.delete();
     }

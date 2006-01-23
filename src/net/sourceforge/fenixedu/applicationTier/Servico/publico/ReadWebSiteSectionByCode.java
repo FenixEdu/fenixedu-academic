@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.CollectionUtils;
@@ -33,10 +32,9 @@ public class ReadWebSiteSectionByCode extends Service {
 		WebSiteSection webSiteSection;
 		InfoWebSiteSection infoWebSiteSection = new InfoWebSiteSection();
 
-		IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
 		IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
-		webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+		webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
 				sectionCode);
 
 		if (webSiteSection == null) {

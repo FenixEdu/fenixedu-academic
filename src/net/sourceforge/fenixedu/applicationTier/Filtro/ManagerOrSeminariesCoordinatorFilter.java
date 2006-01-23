@@ -54,7 +54,7 @@ public class ManagerOrSeminariesCoordinatorFilter extends Filtro {
         boolean result = false;
         try
         {
-            StudentCurricularPlan scp = (StudentCurricularPlan)persistentSupport.getIStudentCurricularPlanPersistente().readByOID(StudentCurricularPlan.class,SCPIDInternal);
+            StudentCurricularPlan scp = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,SCPIDInternal);
             List candidacies = persistentSupport.getIPersistentSeminaryCandidacy().readByStudentID(scp.getStudent().getIdInternal());
             if (candidacies != null && candidacies.size() > 0)
                 result = true;

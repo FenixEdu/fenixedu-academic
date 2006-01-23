@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoItem;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 
 /**
  * @author Fernanda Quitério
@@ -23,9 +22,7 @@ public class EditItem extends Service {
 			throws FenixServiceException, ExcepcaoPersistencia {
 		Item item = null;
 
-		IPersistentItem persistentItem = persistentSupport.getIPersistentItem();
-
-		item = (Item) persistentItem.readByOID(Item.class, itemCode);
+		item = (Item) persistentObject.readByOID(Item.class, itemCode);
 
 		if (item == null) {
 			throw new ExistingServiceException();

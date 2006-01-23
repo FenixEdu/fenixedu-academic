@@ -21,11 +21,9 @@ public class ReadExecutionPeriod extends Service {
 
 	public InfoExecutionPeriod run(Integer executionCourseCode) throws FenixServiceException, ExcepcaoPersistencia {
 
-		IPersistentExecutionCourse persistentExecutionCourse = null;
 		ExecutionPeriod executionPeriod = null;
 
-		persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
 				ExecutionCourse.class, executionCourseCode);
 
 		executionPeriod = executionCourse.getExecutionPeriod();

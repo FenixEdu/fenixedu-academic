@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 import org.apache.struts.util.LabelValueBean;
 
@@ -55,12 +54,11 @@ public class ReadStudentsByIdArray extends Service {
             ExcepcaoPersistencia {
         final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         for (int i = 0; i < shifts.length; i++) {
             if (shifts[i].equals(bundle.getString("label.allShifts"))) {
                 continue;
             }
-            Shift shift = (Shift) persistentShift.readByOID(Shift.class, new Integer(shifts[i]));
+            Shift shift = (Shift) persistentObject.readByOID(Shift.class, new Integer(shifts[i]));
             List<Student> studentList = shift.getStudents();
             for (Student student : studentList) {
                 InfoStudent infoStudent = InfoStudent.newInfoFromDomain(student);
@@ -85,7 +83,7 @@ public class ReadStudentsByIdArray extends Service {
                 }
                 break;
             }
-            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
+            InfoStudent infoStudent = InfoStudent.newInfoFromDomain((Student) persistentObject.readByOID(Student.class,
                     new Integer(students[i])));
             if (!studentsList.contains(infoStudent))
                 studentsList.add(infoStudent);

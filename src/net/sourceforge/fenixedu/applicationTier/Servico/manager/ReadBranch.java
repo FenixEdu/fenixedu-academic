@@ -21,7 +21,7 @@ public class ReadBranch extends Service {
      * @throws ExcepcaoPersistencia 
      */
     public InfoBranch run(Integer idInternal) throws FenixServiceException, ExcepcaoPersistencia {
-		Branch branch = (Branch) persistentSupport.getIPersistentBranch().readByOID(Branch.class, idInternal);
+		Branch branch = (Branch) persistentObject.readByOID(Branch.class, idInternal);
 
         if (branch == null) {
             throw new NonExistingServiceException();

@@ -72,7 +72,7 @@ public class InsertStudentTestResponses extends Service {
         if (student.getNumber().compareTo(studentNumber) != 0)
             throw new NotAuthorizedStudentToDoTestException();
 
-        DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
                 distributedTestId);
         if (distributedTest == null)
             throw new FenixServiceException();

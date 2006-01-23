@@ -22,7 +22,7 @@ public class DeleteClasses extends Service {
     public Object run(List classOIDs) throws ExcepcaoPersistencia {
         for (int i = 0; i < classOIDs.size(); i++) {
             Integer classId = (Integer) classOIDs.get(i);
-            final SchoolClass schoolClass = (SchoolClass) persistentSupport.getITurmaPersistente().readByOID(
+            final SchoolClass schoolClass = (SchoolClass) persistentObject.readByOID(
                     SchoolClass.class, classId);
 
             // Shift

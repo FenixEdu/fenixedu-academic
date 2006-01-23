@@ -37,7 +37,7 @@ public class ReadWebSiteBySectionCode extends Service {
         IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
         WebSiteSection webSiteSection;
-        webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(WebSiteSection.class,
+        webSiteSection = (WebSiteSection) persistentObject.readByOID(WebSiteSection.class,
                 webSiteSectionCode);
 
         if (webSiteSection == null) {

@@ -49,7 +49,7 @@ public class SimulateTest extends Service {
 
         InfoSiteStudentTestFeedback infoSiteStudentTestFeedback = new InfoSiteStudentTestFeedback();
         this.path = path.replace('\\', '/');
-        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentObject.readByOID(Test.class, testId);
         if (test == null)
             throw new FenixServiceException();
 
@@ -61,7 +61,7 @@ public class SimulateTest extends Service {
         TestScope testScope = persistentSupport.getIPersistentTestScope().readByDomainObject(ExecutionCourse.class.getName(), executionCourseId);
 
         if (testScope == null) {
-            ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport.getIPersistentExecutionCourse().readByOID(ExecutionCourse.class,
+            ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class,
                     executionCourseId);
             if (executionCourse == null)
                 throw new InvalidArgumentsServiceException();
@@ -163,7 +163,7 @@ public class SimulateTest extends Service {
             infoStudentTestQuestion.setCorrectionFormula(testQuestionExample.getCorrectionFormula());
             infoStudentTestQuestion.setTestQuestionMark(new Double(0));
             infoStudentTestQuestion.setResponse(null);
-            Question question = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, new Integer(questionCodes[i]));
+            Question question = (Question) persistentObject.readByOID(Question.class, new Integer(questionCodes[i]));
             if (question == null) {
                 throw new InvalidArgumentsServiceException();
             }

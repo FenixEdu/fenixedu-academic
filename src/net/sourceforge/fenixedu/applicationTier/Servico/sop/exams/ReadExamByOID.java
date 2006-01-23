@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadExamByOID extends Service {
 
     public InfoExam run(Integer examID) throws FenixServiceException, ExcepcaoPersistencia {
-        final Exam exam = (Exam) persistentSupport.getIPersistentExam().readByOID(Exam.class, examID);
+        final Exam exam = (Exam) persistentObject.readByOID(Exam.class, examID);
         if (exam == null) {
             throw new FenixServiceException("error.noExam");
         }

@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEmployee;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.managementAssiduousness.IPersistentMoneyCostCenter;
 
 /**
  * @author Tânia Pousão
@@ -47,13 +46,11 @@ public class UpdateAllMoneyCostCenterByYear extends Service {
             if (infoMoneyCostCenterList != null
                     && infoMoneyCostCenterList.size() > 0) {
 
-                IPersistentMoneyCostCenter moneyCostCenterDAO = persistentSupport
-                .getIPersistentMoneyCostCenter();
                 ListIterator iterator = infoMoneyCostCenterList.listIterator();
                 while (iterator.hasNext()) {
                     InfoMoneyCostCenter infoMoneyCostCenter = (InfoMoneyCostCenter) iterator.next();
 
-                    MoneyCostCenter moneyCostCenter = (MoneyCostCenter) moneyCostCenterDAO.readByOID(MoneyCostCenter.class, infoMoneyCostCenter.getIdInternal());
+                    MoneyCostCenter moneyCostCenter = (MoneyCostCenter) persistentObject.readByOID(MoneyCostCenter.class, infoMoneyCostCenter.getIdInternal());
                     Calendar now = Calendar.getInstance();
                     moneyCostCenter.setWhen(now.getTime());
                     moneyCostCenter.setWhoEmployee(employeeWho);

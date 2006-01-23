@@ -74,11 +74,11 @@ public class CreateGuide extends Service {
         infoGuideSituation.setDate(calendar.getTime());
         infoGuideSituation.setSituation(situationOfGuide);
 
-        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
+        Person person = (Person) persistentObject.readByOID(Person.class,
                 infoGuide.getInfoPerson().getIdInternal());
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
                 .readByOID(ExecutionDegree.class, infoGuide.getInfoExecutionDegree().getIdInternal());
-        Contributor contributor = (Contributor) persistentSupport.getIPersistentContributor().readByOID(
+        Contributor contributor = (Contributor) persistentObject.readByOID(
                 Contributor.class, infoGuide.getInfoContributor().getIdInternal());
 
         Guide guide = DomainFactory.makeGuide();

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Curriculum;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 
 /**
  * @author João Mota
@@ -23,8 +22,7 @@ public class EditCurriculum extends Service {
 			String operacionalObjectives, String operacionalObjectivesEn, String generalObjectives,
 			String generalObjectivesEn, Boolean basic) throws FenixServiceException, ExcepcaoPersistencia {
 
-		IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
-		Curriculum curriculum = (Curriculum) persistentCurriculum.readByOID(Curriculum.class,
+		Curriculum curriculum = (Curriculum) persistentObject.readByOID(Curriculum.class,
 				curriculumId);
 		if (curriculum.getCurricularCourse().getBasic().equals(basic)) {
 			curriculum.setProgram(program);

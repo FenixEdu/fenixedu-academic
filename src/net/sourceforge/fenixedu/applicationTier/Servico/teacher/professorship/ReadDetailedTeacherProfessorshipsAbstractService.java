@@ -100,7 +100,7 @@ public class ReadDetailedTeacherProfessorshipsAbstractService extends Service {
      */
     protected Teacher readTeacher(Integer teacherId, IPersistentTeacher teacherDAO)
             throws NotFoundTeacher, ExcepcaoPersistencia {
-        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherId);
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
         if (teacher == null) {
             throw new NotFoundTeacher();
         }

@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * @author lmac1
@@ -20,10 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 public class ReadExecutionCourseResponsiblesIds extends Service {
 
     public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
-
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
         
         List<Professorship> responsibles = executionCourse.responsibleFors();
 

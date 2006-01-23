@@ -132,7 +132,7 @@ public class EditGuideInformation extends Service {
                 while (entryIterator.hasNext()) {
                     InfoGuideEntry infoGuideEntry = (InfoGuideEntry) entryIterator.next();
 
-                    GuideEntry guideEntry = (GuideEntry) persistentSupport.getIPersistentGuideEntry().readByOID(
+                    GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(
                             GuideEntry.class, infoGuideEntry.getIdInternal());
 
                     PaymentTransaction paymentTransaction = persistentSupport.getIPersistentPaymentTransaction()

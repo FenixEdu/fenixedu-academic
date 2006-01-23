@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 
 /**
  * @author lmac1
@@ -17,10 +16,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope
 public class DeleteCurricularCourseScope extends Service {
 
 	public void run(Integer scopeId) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
-				.getIPersistentCurricularCourseScope();
-
-		CurricularCourseScope scope = (CurricularCourseScope) persistentCurricularCourseScope
+		CurricularCourseScope scope = (CurricularCourseScope) persistentObject
 				.readByOID(CurricularCourseScope.class, scopeId);
 		if (scope != null) {
 

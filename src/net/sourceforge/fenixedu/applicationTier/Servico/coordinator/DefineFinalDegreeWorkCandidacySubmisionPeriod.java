@@ -26,7 +26,7 @@ public class DefineFinalDegreeWorkCandidacySubmisionPeriod extends Service {
             IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                     .getIPersistentFinalDegreeWork();
 
-            ExecutionDegree cursoExecucao = (ExecutionDegree) persistentFinalDegreeWork.readByOID(
+            ExecutionDegree cursoExecucao = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeOID);
 
             if (cursoExecucao != null) {

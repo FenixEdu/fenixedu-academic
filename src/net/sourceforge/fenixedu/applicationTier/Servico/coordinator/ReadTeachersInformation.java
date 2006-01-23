@@ -104,7 +104,7 @@ public class ReadTeachersInformation extends Service {
                                 executionYearID, basic);
             }
         } else {
-            ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeId);
 
             if (basic == null) {

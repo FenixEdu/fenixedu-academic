@@ -35,7 +35,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentQualification;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantPart;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantSubsidy;
 
@@ -138,8 +137,7 @@ public class ShowGrantOwner extends Service {
 	public InfoListGrantOwnerComplete run(Integer grantOwnerId) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoListGrantOwnerComplete infoListGrantOwnerComplete = null;
 
-		IPersistentGrantOwner persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
-		GrantOwner grantOwner = (GrantOwner) persistentGrantOwner.readByOID(GrantOwner.class,
+		GrantOwner grantOwner = (GrantOwner) persistentObject.readByOID(GrantOwner.class,
 				grantOwnerId);
 		if (grantOwner != null) {
 			infoListGrantOwnerComplete = new InfoListGrantOwnerComplete();

@@ -18,10 +18,9 @@ public class ReadProfessorshipByTeacherIDAndExecutionCourseID extends Service {
 
     public Professorship run(final Integer teacherID, final Integer executionCourseID)
             throws ExcepcaoPersistencia {
-        Teacher teacher = (Teacher) persistentSupport.getIPersistentTeacher().readByOID(Teacher.class,
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                 teacherID);
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentSupport
-                .getIPersistentExecutionCourse().readByOID(ExecutionCourse.class, executionCourseID);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
 
         return teacher.getProfessorshipByExecutionCourse(executionCourse);
     }

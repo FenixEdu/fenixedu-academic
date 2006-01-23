@@ -11,9 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditPersonalStudentInfo extends Service {
 
     public InfoPerson run(InfoPerson newInfoPerson) throws ExcepcaoPersistencia, ExcepcaoInexistente {
-
-        Person person = (Person) persistentSupport.getIPessoaPersistente().readByOID(Person.class,
-                newInfoPerson.getIdInternal());
+        Person person = (Person) persistentObject.readByOID(Person.class, newInfoPerson.getIdInternal());
 
         if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");

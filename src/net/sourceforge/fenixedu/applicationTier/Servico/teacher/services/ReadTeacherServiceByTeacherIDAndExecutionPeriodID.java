@@ -17,10 +17,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadTeacherServiceByTeacherIDAndExecutionPeriodID extends Service {
 
     public TeacherService run(Integer teacherID, Integer executionPeriodID) throws ExcepcaoPersistencia {
-        Teacher teacher = (Teacher) persistentSupport.getIPersistentTeacher().readByOID(Teacher.class,
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                 teacherID);
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
-                .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, executionPeriodID);
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
 
         return teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
     }

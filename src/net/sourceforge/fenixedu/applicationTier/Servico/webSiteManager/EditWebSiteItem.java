@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteSection;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
@@ -29,16 +28,15 @@ public class EditWebSiteItem extends ManageWebSiteItem {
         Boolean result = Boolean.FALSE;
         IPersistentWebSiteSection persistentWebSiteSection = persistentSupport
                 .getIPersistentWebSiteSection();
-        IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        WebSiteSection webSiteSection = (WebSiteSection) persistentWebSiteSection.readByOID(
+        WebSiteSection webSiteSection = (WebSiteSection) persistentObject.readByOID(
                 WebSiteSection.class, sectionCode);
         InfoWebSiteSection infoWebSiteSection = InfoWebSiteSection.newInfoFromDomain(webSiteSection);
 
         checkData(infoWebSiteItem, webSiteSection);
 
-        WebSiteItem webSiteItem = (WebSiteItem) persistentWebSiteItem.readByOID(WebSiteItem.class,
+        WebSiteItem webSiteItem = (WebSiteItem) persistentObject.readByOID(WebSiteItem.class,
                 infoWebSiteItem.getIdInternal());
 
         InfoWebSiteItem infoItemFromDB = InfoWebSiteItem.newInfoFromDomain(webSiteItem);

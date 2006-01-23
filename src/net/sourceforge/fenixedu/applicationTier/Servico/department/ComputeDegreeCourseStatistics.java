@@ -12,19 +12,15 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 public class ComputeDegreeCourseStatistics extends ComputeCourseStatistics {
 
     public List<DegreeCourseStatisticsDTO> run(Integer competenceCourseId, Integer executionYearId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCompetenceCourse persistentCompetenceCourse = persistentSupport.getIPersistentCompetenceCourse();
-        CompetenceCourse competenceCourse = (CompetenceCourse) persistentCompetenceCourse.readByOID(
+        CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(
                 CompetenceCourse.class, competenceCourseId);
 
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearId);
 
         Map<Degree, List<CurricularCourse>> groupedCourses = competenceCourse

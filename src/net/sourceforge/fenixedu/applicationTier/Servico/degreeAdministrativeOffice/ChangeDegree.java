@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 
@@ -30,7 +29,6 @@ public class ChangeDegree extends Service {
 
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-        final IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
 
         final Person personEmployee = persistentPerson.lerPessoaPorUsername(employeeUsername);
         final Employee employee = personEmployee.getEmployee();
@@ -39,7 +37,7 @@ public class ChangeDegree extends Service {
                 .readActiveStudentCurricularPlan(studentNumber, DegreeType.DEGREE);
         currentActiveStudentCurricularPlan.setCurrentState(StudentCurricularPlanState.INCOMPLETE);
 
-        final ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+        final ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeToChangeTo);
         final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 

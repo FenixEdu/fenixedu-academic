@@ -29,7 +29,7 @@ public class ReadAllTeacherCredits extends Service {
 
     public List<CreditLineDTO> run(Integer teacherID) throws ExcepcaoPersistencia {
 
-        Teacher teacher = (Teacher) persistentSupport.getIPersistentTeacher().readByOID(Teacher.class,
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                 teacherID);
 
         List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentSupport

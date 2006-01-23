@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -27,16 +26,13 @@ public class EditCurricularCourse extends Service {
     }
 
     public void run(InfoCurricularCourse newInfoCurricularCourse) throws FenixServiceException, ExcepcaoPersistencia {
-
-        IPersistentCurricularCourse persistentCurricularCourse = null;
         CurricularCourse oldCurricularCourse = null;
         String newName = null;
         String newNameEn = null;
         String newCode = null;
       
         try {
-            persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-            oldCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+            oldCurricularCourse = (CurricularCourse) persistentObject.readByOID(
                     CurricularCourse.class, newInfoCurricularCourse.getIdInternal());
 
             newName = newInfoCurricularCourse.getName();

@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.domain.onlineTests.TestScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionAvailability;
 import net.sourceforge.fenixedu.util.tests.TestType;
@@ -46,14 +45,13 @@ public class InsertDistributedTest extends Service {
             Calendar endHour, TestType testType, CorrectionAvailability correctionAvaiability, Boolean imsFeedback,
             List<InfoStudent> infoStudentList, String contextPath) throws FenixServiceException, ExcepcaoPersistencia {
         this.contextPath = contextPath.replace('\\', '/');
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null)
             throw new InvalidArgumentsServiceException();
 
         DistributedTest distributedTest = DomainFactory.makeDistributedTest();
 
-        Test test = (Test) persistentSupport.getIPersistentTest().readByOID(Test.class, testId);
+        Test test = (Test) persistentObject.readByOID(Test.class, testId);
         if (test == null)
             throw new InvalidArgumentsServiceException();
 
@@ -84,7 +82,7 @@ public class InsertDistributedTest extends Service {
             questionList.addAll(testQuestion.getQuestion().getMetadata().getVisibleQuestions());
 
             for (InfoStudent infoStudent : infoStudentList) {
-                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, infoStudent.getIdInternal());
+                Student student = (Student) persistentObject.readByOID(Student.class, infoStudent.getIdInternal());
                 StudentTestQuestion studentTestQuestion = DomainFactory.makeStudentTestQuestion();
                 studentTestQuestion.setStudent(student);
                 studentTestQuestion.setDistributedTest(distributedTest);

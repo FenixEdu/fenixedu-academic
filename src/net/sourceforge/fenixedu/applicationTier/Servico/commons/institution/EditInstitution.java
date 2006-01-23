@@ -12,8 +12,7 @@ public class EditInstitution extends Service {
     public void run(Integer oldInstitutionOID, String newInstitutionName) throws FenixServiceException,
             ExcepcaoPersistencia {
         Institution storedInstitution = persistentSupport.getIPersistentInstitution().readByName(newInstitutionName);
-        Institution oldInstitution = (Institution) persistentSupport.getIPersistentInstitution().readByOID(
-                Institution.class, oldInstitutionOID);
+        Institution oldInstitution = (Institution) persistentObject.readByOID(Institution.class, oldInstitutionOID);
 
         if (oldInstitution == null) {
             throw new NonExistingServiceException(

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -26,12 +25,11 @@ public class ReadInfoExecutionCourseByOID extends Service {
 
 		InfoExecutionCourse infoExecutionCourse = new InfoExecutionCourse();
 
-		IPersistentExecutionDegree persistentExecutionCourse = persistentSupport.getIPersistentExecutionDegree();
 		if (executionCourseOID == null) {
 			throw new FenixServiceException("nullId");
 		}
 
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
 				ExecutionCourse.class, executionCourseOID);
 
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();

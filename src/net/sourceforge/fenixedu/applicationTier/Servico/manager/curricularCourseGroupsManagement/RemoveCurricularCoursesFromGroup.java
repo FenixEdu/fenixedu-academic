@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 
 /**
  * @author João Mota
@@ -20,17 +18,13 @@ public class RemoveCurricularCoursesFromGroup extends Service {
 
 	public void run(Integer groupId, Integer[] courseIds) throws FenixServiceException,
 			ExcepcaoPersistencia {
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport
-				.getIPersistentCurricularCourse();
-		IPersistentCurricularCourseGroup persistentCurricularCourseGroup = persistentSupport
-				.getIPersistentCurricularCourseGroup();
-		CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentCurricularCourseGroup
+		CurricularCourseGroup curricularCourseGroup = (CurricularCourseGroup) persistentObject
 				.readByOID(CurricularCourseGroup.class, groupId);
 
 		curricularCourseGroup.getCurricularCourses().clear();
 		for (int i = 0; i < courseIds.length; i++) {
 			Integer courseId = courseIds[i];
-			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse
+			CurricularCourse curricularCourse = (CurricularCourse) persistentObject
 					.readByOID(CurricularCourse.class, courseId);
 			curricularCourseGroup.addCurricularCourses(curricularCourse);
 		}

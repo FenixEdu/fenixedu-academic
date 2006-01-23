@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
@@ -40,13 +39,12 @@ public class InsertExerciseVariation extends Service {
             NotExecuteException, ExcepcaoPersistencia {
         List<String> badXmls = new ArrayList<String>();
         String replacedPath = path.replace('\\', '/');
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }
 
-        Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(Metadata.class, metadataId);
+        Metadata metadata = (Metadata) persistentObject.readByOID(Metadata.class, metadataId);
         if (metadata == null) {
             throw new InvalidArgumentsServiceException();
         }

@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
@@ -26,8 +25,6 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
             FenixServiceException {
         IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentExecutionDegree cursoExecucaoPersistente = persistentSupport
-                .getIPersistentExecutionDegree();
         IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 
         Group group = persistentFinalDegreeWork.readFinalDegreeWorkGroupByUsername(username);
@@ -53,7 +50,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends Service {
 
         if (group.getExecutionDegree() == null
                 || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID)) {
-            ExecutionDegree executionDegree = (ExecutionDegree) cursoExecucaoPersistente.readByOID(
+            ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeOID);
             if (executionDegree != null) {
                 group.setExecutionDegree(executionDegree);

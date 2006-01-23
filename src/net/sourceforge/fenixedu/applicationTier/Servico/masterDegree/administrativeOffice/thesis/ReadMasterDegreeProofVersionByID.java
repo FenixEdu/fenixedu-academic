@@ -17,8 +17,7 @@ public class ReadMasterDegreeProofVersionByID extends Service {
 
     public Object run(Integer masterDegreeProofVersionID) throws FenixServiceException,
             ExcepcaoPersistencia {
-        MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) persistentSupport
-                .getIPersistentMasterDegreeProofVersion().readByOID(MasterDegreeProofVersion.class,
+        MasterDegreeProofVersion masterDegreeProofVersion = (MasterDegreeProofVersion) persistentObject.readByOID(MasterDegreeProofVersion.class,
                         masterDegreeProofVersionID);
 
         if (masterDegreeProofVersion == null)

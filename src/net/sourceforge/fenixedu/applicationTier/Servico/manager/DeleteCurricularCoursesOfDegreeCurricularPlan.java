@@ -27,7 +27,6 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
     // delete a set of curricularCourses
     public List run(List curricularCoursesIds) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
         IPersistentCurriculum persistentCurriculum = persistentSupport.getIPersistentCurriculum();
 
         Iterator iter = curricularCoursesIds.iterator();
@@ -35,7 +34,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends Service {
 
         while (iter.hasNext()) {
 			Integer curricularCourseId = (Integer) iter.next();
-			CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+			CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
                     CurricularCourse.class, curricularCourseId);
             if (curricularCourse != null) {
                 //delete curriculum

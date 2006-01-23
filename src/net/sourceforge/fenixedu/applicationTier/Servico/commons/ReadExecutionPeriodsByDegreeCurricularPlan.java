@@ -31,7 +31,7 @@ public class ReadExecutionPeriodsByDegreeCurricularPlan extends Service {
         Date end = persistentSupport.getIPersistentExecutionYear().readCurrentExecutionYear().getEndDate();
 
         // Start date of the degree curricular plan
-        Date start = ((DegreeCurricularPlan) (persistentSupport.getIPersistentDegreeCurricularPlan().readByOID(
+        Date start = ((DegreeCurricularPlan) (persistentObject.readByOID(
                 DegreeCurricularPlan.class, degreeCurricularPlanID))).getInitialDate();
 
         List<ExecutionPeriod> executionPeriods = persistentSupport.getIPersistentExecutionPeriod()

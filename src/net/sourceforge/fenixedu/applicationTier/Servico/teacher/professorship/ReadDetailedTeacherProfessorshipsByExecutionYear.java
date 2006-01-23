@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author jpvl
@@ -32,7 +31,6 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
             ExcepcaoPersistencia {
         IPersistentProfessorship persistentProfessorship = persistentSupport
                 .getIPersistentProfessorship();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
       
         if (executionYearID == null) {
             IPersistentExecutionYear persistentExecutionYear = persistentSupport
@@ -44,7 +42,7 @@ public class ReadDetailedTeacherProfessorshipsByExecutionYear extends
         List professorships = persistentProfessorship.readByTeacherAndExecutionYear(teacherID,
                 executionYearID);
                                
-        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
         
         final List<Professorship> responsibleForsAux = teacher.responsibleFors();
         final List responsibleFors = new ArrayList();        

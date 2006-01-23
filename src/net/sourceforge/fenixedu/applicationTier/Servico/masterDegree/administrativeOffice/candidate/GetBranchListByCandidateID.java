@@ -24,8 +24,7 @@ public class GetBranchListByCandidateID extends Service {
 
 		List result = null;
 
-		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-				.getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+		MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
 						candidateID);
 		// result =
 		// persistentSupport.getIPersistentBranch().readByExecutionDegree(masterDegreeCandidate.getExecutionDegree());

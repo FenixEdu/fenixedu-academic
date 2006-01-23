@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantSubsidy;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 
 /**
  * @author Pica
@@ -47,10 +46,9 @@ public class ReadGrantSubsidy extends ReadDomainObjectService {
 		// InfoGrantContract.
 		// Now we need to get the references of InfoGrantContract, e.g.,
 		// InfoGrantOwner
-		IPersistentGrantContract pgc = persistentSupport.getIPersistentGrantContract();
 
 		InfoGrantContract infoGrantContract = InfoGrantContractWithGrantOwnerAndGrantType
-				.newInfoFromDomain((GrantContract) pgc.readByOID(GrantContract.class, infoGrantSubsidy
+				.newInfoFromDomain((GrantContract) persistentObject.readByOID(GrantContract.class, infoGrantSubsidy
 						.getInfoGrantContract().getIdInternal()));
 
 		// this section of code is temporary!!!! (see above the reason)

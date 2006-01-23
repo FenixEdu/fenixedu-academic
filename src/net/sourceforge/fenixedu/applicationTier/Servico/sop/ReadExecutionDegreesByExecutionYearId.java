@@ -37,7 +37,7 @@ public class ReadExecutionDegreesByExecutionYearId extends Service {
         if (executionYearId == null) {
             executionYear = persistentExecutionYear.readCurrentExecutionYear();
         } else {
-            executionYear = (ExecutionYear) persistentExecutionYear.readByOID(ExecutionYear.class,
+            executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
                     executionYearId);
         }
 

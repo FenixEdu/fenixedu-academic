@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
@@ -37,10 +36,9 @@ import org.apache.commons.collections.Transformer;
 public class ReadProfessorshipsAndResponsibilitiesByExecutionDegree extends Service {
 
     public List run(Integer executionDegreeId) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
         IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
 
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
         List professorships = persistentProfessorship.readByDegreeCurricularPlanAndExecutionYear(

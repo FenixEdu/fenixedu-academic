@@ -58,7 +58,7 @@ public class ChangeStudentTestQuestion extends Service {
             TestQuestionStudentsChangesType studentsType, String path) throws FenixServiceException, ExcepcaoPersistencia {
         List<InfoSiteDistributedTestAdvisory> infoSiteDistributedTestAdvisoryList = new ArrayList<InfoSiteDistributedTestAdvisory>();
 
-        Question oldQuestion = (Question) persistentSupport.getIPersistentQuestion().readByOID(Question.class, oldQuestionId);
+        Question oldQuestion = (Question) persistentObject.readByOID(Question.class, oldQuestionId);
         if (oldQuestion == null)
             throw new InvalidArgumentsServiceException();
 
@@ -67,7 +67,7 @@ public class ChangeStudentTestQuestion extends Service {
 
         List<Question> availableQuestions = new ArrayList<Question>();
         if (newMetadataId != null) {
-            metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, newMetadataId);
+            metadata = (Metadata) persistentObject.readByOID(Metadata.class, newMetadataId);
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
             availableQuestions.addAll(metadata.getVisibleQuestions());
@@ -82,7 +82,7 @@ public class ChangeStudentTestQuestion extends Service {
         if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.ALL_STUDENTS)
             distributedTestList = persistentStudentTestQuestion.readDistributedTestsByTestQuestion(oldQuestion.getIdInternal());
         else {
-            DistributedTest distributedTest = (DistributedTest) persistentSupport.getIPersistentDistributedTest().readByOID(DistributedTest.class,
+            DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class,
                     distributedTestId);
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();
@@ -97,13 +97,13 @@ public class ChangeStudentTestQuestion extends Service {
             infoSiteDistributedTestAdvisory.setInfoAdvisory(InfoAdvisory.newInfoFromDomain(getAdvisory(distributedTest, path.replace('\\', '/'))));
 
             if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.THIS_STUDENT) {
-                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
+                Student student = (Student) persistentObject.readByOID(Student.class, studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 studentsTestQuestionList.add(persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
                         student.getIdInternal(), distributedTest.getIdInternal()));
             } else if (studentsType.getType().intValue() == TestQuestionStudentsChangesType.STUDENTS_FROM_TEST) {
-                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class, studentId);
+                Student student = (Student) persistentObject.readByOID(Student.class, studentId);
                 if (student == null)
                     throw new InvalidArgumentsServiceException();
                 Integer order = persistentStudentTestQuestion.readByQuestionAndStudentAndDistributedTest(oldQuestion.getIdInternal(),
@@ -163,7 +163,7 @@ public class ChangeStudentTestQuestion extends Service {
         }
 
         if (delete.booleanValue()) {
-            metadata = (Metadata) persistentMetadata.readByOID(Metadata.class, oldQuestion.getKeyMetadata());
+            metadata = (Metadata) persistentObject.readByOID(Metadata.class, oldQuestion.getKeyMetadata());
             if (metadata == null)
                 throw new InvalidArgumentsServiceException();
             removeOldTestQuestion(persistentSupport, oldQuestion);

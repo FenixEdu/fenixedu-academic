@@ -13,16 +13,13 @@ import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Section;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 public class DeleteSection extends Service {
 
     public Boolean run(Integer infoExecutionCourseCode, Integer sectionCode)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentSection persistentSection = persistentSupport.getIPersistentSection();
-
-        Section sectionToDelete = (Section) persistentSection.readByOID(Section.class, sectionCode);
+        Section sectionToDelete = (Section) persistentObject.readByOID(Section.class, sectionCode);
 
         if (sectionToDelete == null) {
             throw new FenixServiceException("non existing section");

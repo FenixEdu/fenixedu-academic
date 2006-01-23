@@ -218,7 +218,7 @@ public class EnrollmentAuthorizationFilter extends AuthorizationByManyRolesFilte
         StudentCurricularPlan studentCurricularPlan = null;
         if (arguments[1] != null) {
 
-            studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOID(
+            studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(
                     StudentCurricularPlan.class, (Integer) arguments[1]);
         } else {
             studentCurricularPlan = persistentStudentCurricularPlan

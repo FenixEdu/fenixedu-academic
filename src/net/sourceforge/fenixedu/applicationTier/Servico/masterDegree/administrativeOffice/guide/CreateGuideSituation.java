@@ -20,7 +20,7 @@ public class CreateGuideSituation extends Service {
     public void run(Integer guideID, String remarks, GuideState situation, Date date)
             throws ExcepcaoPersistencia {
 
-        Guide guide = (Guide) persistentSupport.getIPersistentGuide().readByOID(Guide.class, guideID);
+        Guide guide = (Guide) persistentObject.readByOID(Guide.class, guideID);
 
         for (GuideSituation guideSituation : guide.getGuideSituations()) {
             guideSituation.setState(new State(State.INACTIVE));

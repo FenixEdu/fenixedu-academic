@@ -22,7 +22,6 @@ public class DeleteBranches extends Service {
 
 	// delete a set of branches
 	public List run(List internalIds, Boolean forceDelete) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
 		Iterator iter = internalIds.iterator();
 
 		List undeletedCodes = new ArrayList();
@@ -31,7 +30,7 @@ public class DeleteBranches extends Service {
 
 		while (iter.hasNext()) {
 			internalId = (Integer) iter.next();
-			branch = (Branch) persistentBranch.readByOID(Branch.class, internalId);
+			branch = (Branch) persistentObject.readByOID(Branch.class, internalId);
 			if (branch != null) {
 				try {
 					if (branch.getStudentCurricularPlans().isEmpty()) {

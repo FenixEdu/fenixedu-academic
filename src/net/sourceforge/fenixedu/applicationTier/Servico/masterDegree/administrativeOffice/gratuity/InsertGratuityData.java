@@ -61,7 +61,7 @@ public class InsertGratuityData extends Service {
 						.getIdInternal());
 
 		// execution Degree
-		ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
+		ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
 				.readByOID(ExecutionDegree.class,
 						infoGratuityValues.getInfoExecutionDegree().getIdInternal());
 

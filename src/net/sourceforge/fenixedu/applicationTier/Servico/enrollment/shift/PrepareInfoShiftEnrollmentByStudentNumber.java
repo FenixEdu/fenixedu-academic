@@ -238,8 +238,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
             ExecutionPeriod executionPeriod, InfoExecutionDegree infoExecutionDegree)
             throws ExcepcaoPersistencia, FenixServiceException {
         IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, infoExecutionDegree.getIdInternal());
 
         List executionCourseList = persistentExecutionCourse.readByExecutionPeriodAndExecutionDegree(
@@ -272,9 +271,7 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
 
         // read the execution degree chosen
         if (executionDegreeIdChosen != null) {
-            IPersistentExecutionDegree persistentExecutionDegree = persistentSupport.getIPersistentExecutionDegree();
-
-            executionDegree = (ExecutionDegree) persistentExecutionDegree.readByOID(
+            executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, executionDegreeIdChosen);
             if (executionDegree != null) {
                 return InfoExecutionDegree.newInfoFromDomain(executionDegree);

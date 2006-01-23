@@ -23,21 +23,18 @@ public class ReadExecutionCoursesByDegreeCurricularPlanAndExecutionPeriodAndCurr
     public List<ExecutionCourse> run(Integer degreeCurricularPlanID, Integer executionPeriodID,
             Integer curricularYearID) throws ExcepcaoPersistencia, FenixServiceException {
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
-                .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, executionPeriodID);
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
         if (executionPeriod == null) {
             throw new FenixServiceException("error.no.executionPeriod");
         }
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                         degreeCurricularPlanID);
         if (degreeCurricularPlan == null) {
             throw new FenixServiceException("error.coordinator.noDegreeCurricularPlan");
         }
         CurricularYear curricularYear = null;
         if (curricularYearID != 0) {
-            curricularYear = (CurricularYear) persistentSupport.getIPersistentCurricularYear()
-                    .readByOID(CurricularYear.class, curricularYearID);
+            curricularYear = (CurricularYear) persistentObject.readByOID(CurricularYear.class, curricularYearID);
             if (curricularYear == null) {
                 throw new FenixServiceException("error.no.curYear");
             }

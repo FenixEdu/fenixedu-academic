@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,13 +31,11 @@ public class ReadExecutionCoursesByExecutionDegreeService extends Service {
         if (executionPeriodId == null) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) executionCourseDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
 
-        IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
-
-        ExecutionDegree executionDegree = (ExecutionDegree) executionDegreeDAO.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
         if (executionDegree == null) {

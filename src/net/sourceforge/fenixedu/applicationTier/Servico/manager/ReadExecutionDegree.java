@@ -38,7 +38,7 @@ public class ReadExecutionDegree extends Service {
      */
     public InfoExecutionDegree run(Integer idInternal) throws FenixServiceException,
             ExcepcaoPersistencia {
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree()
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject
                 .readByOID(ExecutionDegree.class, idInternal);
 
         if (executionDegree == null) {

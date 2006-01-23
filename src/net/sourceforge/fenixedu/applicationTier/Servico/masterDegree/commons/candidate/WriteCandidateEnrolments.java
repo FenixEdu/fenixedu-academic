@@ -32,8 +32,7 @@ public class WriteCandidateEnrolments extends Service {
         IPersistentCandidateEnrolment persistentCandidateEnrolment = persistentSupport
                 .getIPersistentCandidateEnrolment();
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-                .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
         if (masterDegreeCandidate == null) {
@@ -110,7 +109,7 @@ public class WriteCandidateEnrolments extends Service {
         Iterator iterCurricularCourseIds = curricularCoursesToEnroll.iterator();
         while (iterCurricularCourseIds.hasNext()) {
 
-            CurricularCourse curricularCourse = (CurricularCourse) persistentSupport.getIPersistentCurricularCourse()
+            CurricularCourse curricularCourse = (CurricularCourse) persistentObject
                     .readByOID(CurricularCourse.class, (Integer) iterCurricularCourseIds.next());
 
             if (curricularCourse == null) {

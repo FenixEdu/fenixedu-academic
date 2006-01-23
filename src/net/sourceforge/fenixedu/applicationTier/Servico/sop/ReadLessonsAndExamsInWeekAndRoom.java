@@ -39,8 +39,6 @@ import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
 public class ReadLessonsAndExamsInWeekAndRoom extends Service {
@@ -51,10 +49,7 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-        IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-        ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentExecutionPeriod.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
         Calendar startDay = Calendar.getInstance();
         startDay.setTimeInMillis(day.getTimeInMillis());

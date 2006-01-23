@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
 import net.sourceforge.fenixedu.domain.teacher.ServiceProviderRegime;
 import net.sourceforge.fenixedu.domain.teacher.WeeklyOcupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Leonor Almeida
@@ -36,8 +35,7 @@ public class EditTeacherInformation extends Service {
             InfoWeeklyOcupation infoWeeklyOcupation, List<InfoOrientation> infoOrientations,
             List<InfoPublicationsNumber> infoPublicationsNumbers) throws ExcepcaoPersistencia {
 
-        final IPersistentTeacher pteacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = (Teacher) pteacher.readByOID(Teacher.class, infoServiceProviderRegime
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, infoServiceProviderRegime
                 .getInfoTeacher().getIdInternal());
 
 		editServiceProviderRegime(infoServiceProviderRegime, teacher);	

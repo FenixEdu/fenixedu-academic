@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
@@ -30,14 +29,12 @@ public class EditShiftProfessorshipByOID extends EditDomainObjectService {
         ShiftProfessorship shiftProfessorship = (ShiftProfessorship) domainObject;
 
         shiftProfessorship.setPercentage(infoShiftProfessorship.getPercentage());
-        IPersistentProfessorship persistentProfessorship = persistentSupport.getIPersistentProfessorship();
-        IPersistentShiftProfessorship persistentShift = persistentSupport.getIPersistentShiftProfessorship();
 
-        Professorship professorship = (Professorship) persistentProfessorship.readByOID(Professorship.class,
+        Professorship professorship = (Professorship) persistentObject.readByOID(Professorship.class,
                 infoShiftProfessorship.getInfoProfessorship().getIdInternal());
         shiftProfessorship.setProfessorship(professorship);
 
-        Shift shift = (Shift) persistentShift.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
+        Shift shift = (Shift) persistentObject.readByOID(Shift.class, infoShiftProfessorship.getInfoShift()
                 .getIdInternal());
         shiftProfessorship.setShift(shift);
     }

@@ -17,7 +17,7 @@ public class FinalResult extends Service {
 
         boolean result = false;
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentSupport.getIStudentCurricularPlanPersistente().
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.
             readByOID(StudentCurricularPlan.class,infoStudentCurricularPlan.getIdInternal());
 
         IDegreeCurricularPlanStrategyFactory degreeCurricularPlanStrategyFactory = DegreeCurricularPlanStrategyFactory

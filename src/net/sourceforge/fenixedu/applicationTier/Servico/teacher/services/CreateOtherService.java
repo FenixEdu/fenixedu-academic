@@ -20,10 +20,9 @@ public class CreateOtherService extends Service {
     public void run(Integer teacherID, Integer executionPeriodID, Double credits, String reason)
             throws ExcepcaoPersistencia {
 
-        Teacher teacher = (Teacher) persistentSupport.getIPersistentTeacher().readByOID(Teacher.class,
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                 teacherID);
-        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport
-                .getIPersistentExecutionPeriod().readByOID(ExecutionPeriod.class, executionPeriodID);
+        ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID);
         
         TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
         if(teacherService == null){

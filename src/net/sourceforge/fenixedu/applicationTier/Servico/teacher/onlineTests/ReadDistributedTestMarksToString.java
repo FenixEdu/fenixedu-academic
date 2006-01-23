@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentStudentTestQuestion;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -33,8 +32,7 @@ public class ReadDistributedTestMarksToString extends Service {
 
     public String run(Integer executionCourseId, Integer distributedTestId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        DistributedTest distributedTest = (DistributedTest) persistentSupport
-                .getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -102,8 +100,6 @@ public class ReadDistributedTestMarksToString extends Service {
         result.append("Número\tNome\t");
         IPersistentStudentTestQuestion persistentStudentTestQuestion = persistentSupport
                 .getIPersistentStudentTestQuestion();
-        IPersistentDistributedTest persistentDistributedTest = persistentSupport
-                .getIPersistentDistributedTest();
 
         List<Student> studentsFromAttendsList = (List) CollectionUtils.collect(persistentSupport
                 .getIFrequentaPersistente().readByExecutionCourse(executionCourseId), new Transformer() {
@@ -120,7 +116,7 @@ public class ReadDistributedTestMarksToString extends Service {
         Double[] maxValues = new Double[distributedTestCodes.length];
 
         for (int i = 0; i < distributedTestCodes.length; i++) {
-            DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(
+            DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(
                     DistributedTest.class, new Integer(distributedTestCodes[i]));
             if (distributedTest == null)
                 throw new InvalidArgumentsServiceException();

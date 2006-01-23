@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituation;
 import net.sourceforge.fenixedu.dataTransferObject.InfoGratuitySituationWithInfoPersonAndInfoExecutionDegree;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 
 /**
  * 
@@ -20,9 +19,7 @@ public class ReadGratuitySituationById extends Service {
 	public InfoGratuitySituation run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
 		InfoGratuitySituation infoGratuitySituation = null;
 
-		IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
-
-		GratuitySituation gratuitySituation = (GratuitySituation) persistentGratuitySituation
+		GratuitySituation gratuitySituation = (GratuitySituation) persistentObject
 				.readByOID(GratuitySituation.class, gratuitySituationID);
 
 		if (gratuitySituation == null) {

@@ -35,8 +35,7 @@ public class ReadDistributedTestMarks extends Service {
 
 		InfoSiteStudentsTestMarks infoSiteStudentsTestMarks = new InfoSiteStudentsTestMarks();
 
-		DistributedTest distributedTest = (DistributedTest) persistentSupport
-				.getIPersistentDistributedTest().readByOID(DistributedTest.class, distributedTestId);
+		DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
 		if (distributedTest == null) {
 			throw new InvalidArgumentsServiceException();
 		}

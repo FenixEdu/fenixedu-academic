@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantCostCenter;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOrientationTeacher;
-import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantType;
 
 public class CreateOrEditGrantContract extends Service {
@@ -29,7 +28,6 @@ public class CreateOrEditGrantContract extends Service {
         IPersistentTeacher pTeacher = persistentSupport.getIPersistentTeacher();
         IPersistentGrantType pGrantType = persistentSupport.getIPersistentGrantType();
         IPersistentGrantContract pGrantContract = persistentSupport.getIPersistentGrantContract();
-        IPersistentGrantOwner pGrantOwner = persistentSupport.getIPersistentGrantOwner();
         IPersistentGrantOrientationTeacher pGrantOrientationTeacher = persistentSupport
                 .getIPersistentGrantOrientationTeacher();
         IPersistentGrantCostCenter pGrantCostCenter = persistentSupport.getIPersistentGrantCostCenter();
@@ -49,7 +47,7 @@ public class CreateOrEditGrantContract extends Service {
                     .getContractNumber(), infoGrantContract.getGrantOwnerInfo().getIdInternal());
         }
 
-        GrantOwner grantOwner = (GrantOwner) pGrantOwner.readByOID(GrantOwner.class, infoGrantContract
+        GrantOwner grantOwner = (GrantOwner) persistentObject.readByOID(GrantOwner.class, infoGrantContract
                 .getGrantOwnerInfo().getIdInternal());
 
         grantContract.setGrantOwner(grantOwner);
@@ -60,7 +58,7 @@ public class CreateOrEditGrantContract extends Service {
             throw new GrantTypeNotFoundException();
         grantContract.setGrantType(grantType);
 
-        GrantOrientationTeacher grantOrientationTeacher = (GrantOrientationTeacher) pGrantOrientationTeacher
+        GrantOrientationTeacher grantOrientationTeacher = (GrantOrientationTeacher) persistentObject
                 .readByOID(GrantOrientationTeacher.class, infoGrantContract
                         .getGrantOrientationTeacherInfo().getIdInternal());
 

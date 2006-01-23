@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
@@ -47,7 +46,6 @@ public class ReadSummaries extends Service {
             Integer shiftId) throws FenixServiceException, ExcepcaoPersistencia {
 
         final IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         final IPersistentSummary persistentSummary = persistentSupport.getIPersistentSummary();
         final ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         
@@ -56,7 +54,7 @@ public class ReadSummaries extends Service {
             throw new FenixServiceException("no.shift");
         }
         
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new FenixServiceException("no.executionCourse");
@@ -171,7 +169,7 @@ public class ReadSummaries extends Service {
             IPersistentSummary persistentSummary, List summaries) throws ExcepcaoPersistencia,
             FenixServiceException {
         if (shiftId != null && shiftId.intValue() > 0) {
-            Shift shiftSelected = (Shift) persistentShift.readByOID(Shift.class, shiftId);
+            Shift shiftSelected = (Shift) persistentObject.readByOID(Shift.class, shiftId);
             if (shiftSelected == null) {
                 throw new FenixServiceException("no.shift");
             }
@@ -197,7 +195,7 @@ public class ReadSummaries extends Service {
             List summaries) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (professorShiftId != null && professorShiftId.intValue() > 0) {
-            Professorship professorshipSelected = (Professorship) persistentProfessorship.readByOID(
+            Professorship professorshipSelected = (Professorship) persistentObject.readByOID(
                     Professorship.class, professorShiftId);
 
             if (professorshipSelected == null || professorshipSelected.getTeacher() == null) {

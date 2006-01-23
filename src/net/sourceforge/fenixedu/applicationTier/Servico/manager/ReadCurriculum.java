@@ -24,7 +24,7 @@ public class ReadCurriculum extends Service {
         CurricularCourse curricularCourse;
         Curriculum curriculum;
 
-        curricularCourse = (CurricularCourse) persistentSupport.getIPersistentCurricularCourse().readByOID(
+        curricularCourse = (CurricularCourse) persistentObject.readByOID(
                 CurricularCourse.class, curricularCourseId);
         if (curricularCourse == null) {
             throw new NonExistingServiceException();

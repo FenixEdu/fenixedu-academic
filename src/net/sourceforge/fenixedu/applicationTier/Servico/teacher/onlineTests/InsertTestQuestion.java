@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTest;
 import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentTestQuestion;
 import net.sourceforge.fenixedu.util.tests.CorrectionFormula;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
@@ -35,7 +34,7 @@ public class InsertTestQuestion extends Service {
 		this.path = path.replace('\\', '/');
 
 		for (int i = 0; i < metadataId.length; i++) {
-			Metadata metadata = (Metadata) persistentSupport.getIPersistentMetadata().readByOID(
+			Metadata metadata = (Metadata) persistentObject.readByOID(
 					Metadata.class, new Integer(metadataId[i]));
 			if (metadata == null) {
 				throw new InvalidArgumentsServiceException();
@@ -49,8 +48,7 @@ public class InsertTestQuestion extends Service {
 			if (question == null) {
 				throw new InvalidArgumentsServiceException();
 			}
-			IPersistentTest persistentTest = persistentSupport.getIPersistentTest();
-			Test test = (Test) persistentTest.readByOID(Test.class, testId);
+			Test test = (Test) persistentObject.readByOID(Test.class, testId);
 			if (test == null) {
 				throw new InvalidArgumentsServiceException();
 			}

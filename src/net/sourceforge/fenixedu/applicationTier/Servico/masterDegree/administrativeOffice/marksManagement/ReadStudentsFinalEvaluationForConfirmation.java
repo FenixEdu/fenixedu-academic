@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -48,12 +47,11 @@ public class ReadStudentsFinalEvaluationForConfirmation extends Service {
 		InfoTeacher infoTeacher = new InfoTeacher();
 		InfoExecutionPeriod infoExecutionPeriod = new InfoExecutionPeriod();
 
-		IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
 		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
 
-		CurricularCourse curricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(
+		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(
 				CurricularCourse.class, curricularCourseCode);
 
 		List enrolments = null;

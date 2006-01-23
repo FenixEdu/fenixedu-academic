@@ -26,7 +26,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
             final Calendar examsSeason2BeginDate, final Calendar examsSeason2EndDate)
             throws ExcepcaoPersistencia {
 
-        final ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear()
+        final ExecutionYear executionYear = (ExecutionYear) persistentObject
                 .readByOID(ExecutionYear.class, executionYearID);
 
         final Campus campus = persistentSupport.getIPersistentCampus().readByName(campusName);
@@ -38,8 +38,7 @@ public class CreateExecutionDegreesForExecutionYear extends Service {
 
         for (Integer degreeCurricularPlanID : degreeCurricularPlansIDs) {
 
-            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentSupport
-                    .getIPersistentDegreeCurricularPlan().readByOID(DegreeCurricularPlan.class,
+            final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class,
                             degreeCurricularPlanID);
 
             ExecutionDegree storedExecutionDegree = persistentSupport.getIPersistentExecutionDegree()

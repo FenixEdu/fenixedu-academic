@@ -47,7 +47,6 @@ public class ReadClassShiftEnrollmentDetails extends Service {
 
 		InfoClassEnrollmentDetails enrollmentDetails = null;
 
-		IPersistentStudent studentDAO = persistentSupport.getIPersistentStudent();
 		ITurmaPersistente classDAO = persistentSupport.getITurmaPersistente();
 		IPersistentExecutionPeriod executionPeriodDAO = persistentSupport
 				.getIPersistentExecutionPeriod();
@@ -58,7 +57,7 @@ public class ReadClassShiftEnrollmentDetails extends Service {
 				.readActualExecutionPeriod();
 
 		// Student
-		Student student = readStudent(infoStudent, studentDAO);
+		Student student = readStudent(infoStudent);
 
 		// Classes
 		List classList = classDAO
@@ -68,7 +67,7 @@ public class ReadClassShiftEnrollmentDetails extends Service {
 		// Class selected
 		SchoolClass klass = null;
 		if (klassId != null) {
-			klass = (SchoolClass) classDAO.readByOID(SchoolClass.class,
+			klass = (SchoolClass) persistentObject.readByOID(SchoolClass.class,
 					klassId);
 		}
 
@@ -251,10 +250,9 @@ public class ReadClassShiftEnrollmentDetails extends Service {
 	 * @throws StudentNotFoundServiceException
 	 * @throws ExcepcaoPersistencia
 	 */
-	private Student readStudent(InfoStudent infoStudent,
-			IPersistentStudent studentDAO)
+	private Student readStudent(InfoStudent infoStudent)
 			throws StudentNotFoundServiceException, ExcepcaoPersistencia {
-		Student student = (Student) studentDAO.readByOID(Student.class,
+		Student student = (Student) persistentObject.readByOID(Student.class,
 				infoStudent.getIdInternal());
 		if (student == null) {
 			throw new StudentNotFoundServiceException();

@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrolmentEvaluation;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,10 +31,9 @@ public class ValidateSubmitMarks extends Service {
             IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 
         //execution course and execution course's site
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
         IPersistentEnrolmentEvaluation enrolmentEvaluationDAO = persistentSupport.getIPersistentEnrolmentEvaluation();
 
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, executionCourseCode);
 
         //evaluation

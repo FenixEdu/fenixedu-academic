@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.utilTests.ParseQuestion;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
@@ -42,8 +41,7 @@ public class InsertExercise extends Service {
         int xmlNumber = 0;
         String replacedPath = path.replace('\\', '/');
 
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-        ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, executionCourseId);
+        ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseId);
         if (executionCourse == null) {
             throw new InvalidArgumentsServiceException();
         }

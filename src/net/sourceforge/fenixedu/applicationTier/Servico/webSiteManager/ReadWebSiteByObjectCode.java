@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.WebSite;
 import net.sourceforge.fenixedu.domain.WebSiteItem;
 import net.sourceforge.fenixedu.domain.WebSiteSection;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentWebSiteSection;
 
@@ -31,14 +30,13 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 public class ReadWebSiteByObjectCode extends Service {
 
     public InfoWebSite run(Integer webSiteCode) throws FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentWebSite persistentWebSite = persistentSupport.getIPersistentWebSite();
         final IPersistentWebSiteSection persistentWebSiteSection = persistentSupport.getIPersistentWebSiteSection();
         final IPersistentWebSiteItem persistentWebSiteItem = persistentSupport.getIPersistentWebSiteItem();
 
 
         final List infoWebSiteSections = new ArrayList();
 
-        final WebSite webSite = (WebSite) persistentWebSite.readByOID(WebSite.class, webSiteCode);
+        final WebSite webSite = (WebSite) persistentObject.readByOID(WebSite.class, webSiteCode);
 
         if (webSite == null) {
             throw new NonExistingServiceException("message.nonExistingWebSite", null);

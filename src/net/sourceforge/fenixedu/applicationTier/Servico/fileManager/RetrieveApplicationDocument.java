@@ -8,15 +8,13 @@ import net.sourceforge.fenixedu.domain.ApplicationDocumentType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.fileSuport.FileSuportObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.fileSupport.JdbcMysqlFileSupport;
 
 public class RetrieveApplicationDocument extends Service {
 
     public FileSuportObject run(Integer personId, ApplicationDocumentType adt)
             throws FenixServiceException, ExcepcaoPersistencia {
-        IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-        Person person = (Person) persistentPerson.readByOID(Person.class, personId);
+        Person person = (Person) persistentObject.readByOID(Person.class, personId);
 
         if (adt == ApplicationDocumentType.CURRICULUM_VITAE)
             return retrieveDocumentByType(person.getSlideNameForCandidateDocuments(), "candidateCV");

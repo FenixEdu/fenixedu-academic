@@ -45,12 +45,12 @@ public class SearchExecutionCourses extends Service {
 
         List result = null;
 
-        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentSupport.getIPersistentExecutionPeriod()
+        final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject
                 .readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
         ExecutionDegree executionDegree = null;
 
         if (infoExecutionDegree != null) {
-            executionDegree = (ExecutionDegree) persistentSupport.getIPersistentExecutionDegree().readByOID(
+            executionDegree = (ExecutionDegree) persistentObject.readByOID(
                     ExecutionDegree.class, infoExecutionDegree.getIdInternal());
         }
 

@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
 
 /**
  * @author Luis Cruz
@@ -32,10 +31,7 @@ public class ReadFinalDegreeWorkProposal extends Service {
     public InfoProposal run(Integer finalDegreeWorkProposalOID) throws FenixServiceException, ExcepcaoPersistencia {
         InfoProposal infoProposal = null;
 
-        IPersistentFinalDegreeWork persistentFinalDegreeWork = persistentSupport
-                .getIPersistentFinalDegreeWork();
-
-        Proposal proposal = (Proposal) persistentFinalDegreeWork.readByOID(Proposal.class,
+        Proposal proposal = (Proposal) persistentObject.readByOID(Proposal.class,
                 finalDegreeWorkProposalOID);
 
         if (proposal != null) {

@@ -19,8 +19,7 @@ public class ReadDepartmentTeachersByDepartmentID extends Service {
             FenixServiceException {
 
         List<InfoTeacher> result = new ArrayList<InfoTeacher>();
-        Department department = (Department) persistentSupport.getIDepartamentoPersistente().readByOID(
-                Department.class, departmentID);
+        Department department = (Department) persistentObject.readByOID(Department.class, departmentID);
 
         List teachers = department.getCurrentTeachers();
 

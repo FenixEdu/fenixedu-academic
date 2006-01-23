@@ -49,10 +49,9 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends S
             throws FenixServiceException, ExcepcaoPersistencia {
         TeacherOtherTypeCreditLineDTO teacherOtherTypeCreditLineDTO = new TeacherOtherTypeCreditLineDTO();
         IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-        IPersistentTeacher teacherDAO = persistentSupport.getIPersistentTeacher();
         IPersistentOtherTypeCreditLine otherTypeCreditLineDAO = persistentSupport.getIPersistentOtherTypeCreditLine();
 
-        Teacher teacher = (Teacher) teacherDAO.readByOID(Teacher.class, teacherId);
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
 
         if (teacher == null) {
             throw new TeacherNotFound();
@@ -63,7 +62,7 @@ public class ReadOtherTypeCreditLineByTeacherAndExecutionPeriodService extends S
         if (executionPeriodId == null || executionPeriodId.intValue() == 0) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,
                     executionPeriodId);
         }
 

@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.onlineTests.DistributedTestAdvisory;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.onlineTests.IPersistentDistributedTest;
 import net.sourceforge.fenixedu.util.tests.TestType;
 
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -39,8 +38,7 @@ public class AddStudentsToDistributedTest extends Service {
         if (infoStudentList == null || infoStudentList.size() == 0)
             return null;
         this.contextPath = contextPath.replace('\\', '/');
-        IPersistentDistributedTest persistentDistributedTest = persistentSupport.getIPersistentDistributedTest();
-        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
         if (distributedTest == null)
             throw new InvalidArgumentsServiceException();
 
@@ -52,7 +50,7 @@ public class AddStudentsToDistributedTest extends Service {
             questionList.addAll(studentTestQuestionExample.getQuestion().getMetadata().getVisibleQuestions());
 
             for (int j = 0; j < infoStudentList.size(); j++) {
-                Student student = (Student) persistentSupport.getIPersistentStudent().readByOID(Student.class,
+                Student student = (Student) persistentObject.readByOID(Student.class,
                         ((InfoStudent) infoStudentList.get(j)).getIdInternal());
                 if (persistentSupport.getIPersistentStudentTestQuestion().readByStudentAndDistributedTest(student.getIdInternal(), distributedTestId)
                         .isEmpty()) {

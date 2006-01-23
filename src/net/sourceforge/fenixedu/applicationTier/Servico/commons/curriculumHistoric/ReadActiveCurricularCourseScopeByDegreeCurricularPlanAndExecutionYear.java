@@ -12,8 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegreeCurricularPlanWithC
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
 /**
  * @author nmgo
@@ -24,12 +22,10 @@ public class ReadActiveCurricularCourseScopeByDegreeCurricularPlanAndExecutionYe
 
     public InfoDegreeCurricularPlanWithCurricularCourseScopes run(Integer degreeCurricularPlanID,
             Integer executioYearID) throws FenixServiceException, ExcepcaoPersistencia {
-        IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
                 .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executioYearID);
         List scopes = super.readActiveCurricularCourseScopesInExecutionYear(degreeCurricularPlan
                 .getIdInternal(), executionYear);

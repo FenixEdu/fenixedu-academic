@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 /**
  * @author lmac1
@@ -21,9 +20,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 public class DeleteDegreeCurricularPlans extends Service {
 
 	public List run(List degreeCurricularPlansIds) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-				.getIPersistentDegreeCurricularPlan();
-
 		Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
 
 		List<String> undeletedDegreeCurricularPlansNames = new ArrayList<String>();
@@ -31,7 +27,7 @@ public class DeleteDegreeCurricularPlans extends Service {
 		while (iter.hasNext()) {
 
 			Integer degreeCurricularPlanId = (Integer) iter.next();
-			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+			DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
 					.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanId);
 
 			try {

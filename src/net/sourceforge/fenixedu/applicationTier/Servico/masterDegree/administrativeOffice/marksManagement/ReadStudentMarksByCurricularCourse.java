@@ -47,7 +47,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
 		// read curricularCourse by ID
-		CurricularCourse curricularCourse = (CurricularCourse) persistentSupport.getIPersistentCurricularCourse()
+		CurricularCourse curricularCourse = (CurricularCourse) persistentObject
 				.readByOID(CurricularCourse.class, curricularCourseID);
 
 		final CurricularCourse curricularCourseTemp = curricularCourse;
@@ -152,7 +152,7 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 
 					if (enrolmentEvaluation != null) {
 						if (enrolmentEvaluation.getEmployee() != null) {
-							Person person2 = (Person) persistentSupport.getIPessoaPersistente()
+							Person person2 = (Person) persistentObject
 									.readByOID(
 											Person.class,
 											enrolmentEvaluation.getEmployee().getPerson()

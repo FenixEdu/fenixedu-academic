@@ -12,17 +12,15 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
 
 public class ChangeStudentsShift extends Service {
 
     public void run(IUserView userView, Integer oldShiftId, Integer newShiftId)
             throws ExcepcaoPersistencia, FenixServiceException {
-        ITurnoPersistente persistentShift = persistentSupport.getITurnoPersistente();
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        Shift oldShift = (Shift) persistentShift.readByOID(Shift.class, oldShiftId);
-        Shift newShift = (Shift) persistentShift.readByOID(Shift.class, newShiftId);
+        Shift oldShift = (Shift) persistentObject.readByOID(Shift.class, oldShiftId);
+        Shift newShift = (Shift) persistentObject.readByOID(Shift.class, newShiftId);
 
         if (oldShift == null || newShift == null || !oldShift.getTipo().equals(newShift.getTipo())
                 || !oldShift.getDisciplinaExecucao().getIdInternal().equals(newShift.getDisciplinaExecucao().getIdInternal())) {

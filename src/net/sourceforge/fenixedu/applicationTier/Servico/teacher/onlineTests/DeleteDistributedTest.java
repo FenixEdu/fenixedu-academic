@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.util.tests.TestType;
 public class DeleteDistributedTest extends Service {
     public void run(Integer executionCourseId, Integer distributedTestId) throws ExcepcaoPersistencia {
         IPersistentDistributedTest persistentDistributedTest = persistentSupport.getIPersistentDistributedTest();
-        DistributedTest distributedTest = (DistributedTest) persistentDistributedTest.readByOID(DistributedTest.class, distributedTestId);
+        DistributedTest distributedTest = (DistributedTest) persistentObject.readByOID(DistributedTest.class, distributedTestId);
 
         persistentSupport.getIPersistentQuestion().cleanQuestions(distributedTest);
         persistentSupport.getIPersistentMetadata().cleanMetadatas();

@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author naat
@@ -18,13 +16,8 @@ public class ReadFinalDegreeWorksByTeacherIDAndExecutionYearID extends Service {
 
     public List<Proposal> run(Integer teacherID, Integer executionYearID) throws ExcepcaoPersistencia,
             FenixServiceException {
-
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport
-                .getIPersistentExecutionYear();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-
-        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class, teacherID);
-        ExecutionYear executionYear = (ExecutionYear) persistentExecutionYear.readByOID(
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherID);
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
                 ExecutionYear.class, executionYearID);
 
         ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();

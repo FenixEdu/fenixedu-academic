@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.credits.ManagementPositionCreditLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author jpvl
@@ -26,8 +25,7 @@ public class EditManagementPositionCreditLineService extends EditDomainObjectSer
         ManagementPositionCreditLine managementPositionCreditLine = (ManagementPositionCreditLine) domainObject;
         managementPositionCreditLine.setCredits(infoManagementPositionCreditLine.getCredits());
         managementPositionCreditLine.setEnd(infoManagementPositionCreditLine.getEnd());
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        Teacher teacher = (Teacher) persistentTeacher.readByOID(Teacher.class,
+        Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class,
                 infoManagementPositionCreditLine.getInfoTeacher().getIdInternal());
 
         managementPositionCreditLine.setPosition(infoManagementPositionCreditLine.getPosition());

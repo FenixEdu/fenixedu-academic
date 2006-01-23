@@ -16,10 +16,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentBranch;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentFinalDegreeWork;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
  * @author Nuno Correia
@@ -30,13 +27,9 @@ public class SubmitFinalWorkProposal extends Service {
     public void run(InfoProposal infoProposal) throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentFinalDegreeWork persistentFinalWork = persistentSupport
                 .getIPersistentFinalDegreeWork();
-        IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
-        IPersistentExecutionCourse persistentExecutionCourse = persistentSupport
-                .getIPersistentExecutionCourse();
-        IPersistentBranch persistentBranch = persistentSupport.getIPersistentBranch();
 
         Integer executionDegreeId = infoProposal.getExecutionDegree().getIdInternal();
-        ExecutionDegree executionDegree = (ExecutionDegree) persistentExecutionCourse.readByOID(
+        ExecutionDegree executionDegree = (ExecutionDegree) persistentObject.readByOID(
                 ExecutionDegree.class, executionDegreeId);
 
         Scheduleing scheduleing = persistentFinalWork.readFinalDegreeWorkScheduleing(executionDegreeId);
@@ -46,7 +39,7 @@ public class SubmitFinalWorkProposal extends Service {
 
         Proposal proposal = null;
         if (infoProposal.getIdInternal() != null) {
-            proposal = (Proposal) persistentFinalWork.readByOID(Proposal.class, infoProposal
+            proposal = (Proposal) persistentObject.readByOID(Proposal.class, infoProposal
                     .getIdInternal());
         }
         if (proposal == null) {
@@ -64,7 +57,7 @@ public class SubmitFinalWorkProposal extends Service {
 
         if (infoProposal.getCoorientator() != null) {
             Integer coorientatorId = infoProposal.getCoorientator().getIdInternal();
-            Teacher coorientator = (Teacher) persistentTeacher
+            Teacher coorientator = (Teacher) persistentObject
                     .readByOID(Teacher.class, coorientatorId);
             proposal.setCoorientator(coorientator);
         } else {
@@ -86,7 +79,7 @@ public class SubmitFinalWorkProposal extends Service {
         proposal.setObservations(infoProposal.getObservations());
 
         Integer orientatorId = infoProposal.getOrientator().getIdInternal();
-        Teacher orientator = (Teacher) persistentTeacher.readByOID(Teacher.class, orientatorId);
+        Teacher orientator = (Teacher) persistentObject.readByOID(Teacher.class, orientatorId);
 
         proposal.setOrientator(orientator);
         proposal.setOrientatorsCreditsPercentage(infoProposal.getOrientatorsCreditsPercentage());
@@ -99,7 +92,7 @@ public class SubmitFinalWorkProposal extends Service {
             for (int i = 0; i < infoProposal.getBranches().size(); i++) {
                 InfoBranch infoBranch = (InfoBranch) infoProposal.getBranches().get(i);
                 if (infoBranch != null && infoBranch.getIdInternal() != null) {
-                    Branch branch = (Branch) persistentBranch.readByOID(Branch.class, infoBranch
+                    Branch branch = (Branch) persistentObject.readByOID(Branch.class, infoBranch
                             .getIdInternal());
                     if (branch != null) {
                         proposal.getBranches().add(branch);

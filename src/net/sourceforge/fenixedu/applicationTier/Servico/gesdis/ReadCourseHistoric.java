@@ -33,8 +33,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 public class ReadCourseHistoric extends Service {
 
 	public List run(Integer executionCourseId) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-		ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(
+		ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
 				ExecutionCourse.class, executionCourseId);
 		Integer semester = executionCourse.getExecutionPeriod().getSemester();
 		List curricularCourses = executionCourse.getAssociatedCurricularCourses();

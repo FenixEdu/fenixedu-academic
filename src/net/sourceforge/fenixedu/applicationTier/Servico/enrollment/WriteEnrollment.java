@@ -11,9 +11,7 @@ import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseEnrollmentType
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
  * @author David Santos Jan 26, 2004
@@ -25,18 +23,16 @@ public class WriteEnrollment extends Service {
             Integer curricularCourseID, Integer executionPeriodID,
             CurricularCourseEnrollmentType enrollmentType, Integer enrollmentClass, IUserView userView)
             throws ExcepcaoPersistencia {
-        IPersistentStudentCurricularPlan studentCurricularPlanDAO = persistentSupport.getIStudentCurricularPlanPersistente();
         IPersistentExecutionPeriod executionPeriodDAO = persistentSupport.getIPersistentExecutionPeriod();
-        IPersistentCurricularCourse curricularCourseDAO = persistentSupport.getIPersistentCurricularCourse();
 
-        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) studentCurricularPlanDAO.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
-        CurricularCourse curricularCourse = (CurricularCourse) curricularCourseDAO.readByOID(CurricularCourse.class, curricularCourseID);
+        StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+        CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, curricularCourseID);
 
         ExecutionPeriod executionPeriod = null;
         if (executionPeriodID == null) {
             executionPeriod = executionPeriodDAO.readActualExecutionPeriod();
         } else {
-            executionPeriod = (ExecutionPeriod) executionPeriodDAO.readByOID(ExecutionPeriod.class,executionPeriodID);
+            executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class,executionPeriodID);
         }
 
 		Enrolment enrollment = studentCurricularPlan.getEnrolmentByCurricularCourseAndExecutionPeriod(curricularCourse,executionPeriod);

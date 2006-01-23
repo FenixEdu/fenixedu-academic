@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
 
@@ -40,9 +39,7 @@ public class ReadGratuityValuesByDegreeCurricularPlanAndExecutionYear extends Se
 		GratuityValues gratuityValues = null;
 		List infoPaymentPhases = null;
 
-		IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport
-				.getIPersistentDegreeCurricularPlan();
-		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
 				.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
 
 		IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();

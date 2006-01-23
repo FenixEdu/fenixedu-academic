@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 
 /**
  * @author Tânia Pousão
@@ -21,9 +20,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 public class DeleteGratuitySituationById extends Service {
 
 	public Boolean run(Integer gratuitySituationID) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentGratuitySituation persistentGratuitySituation = persistentSupport.getIPersistentGratuitySituation();
-
-		GratuitySituation gratuitySituation = (GratuitySituation) persistentGratuitySituation
+		GratuitySituation gratuitySituation = (GratuitySituation) persistentObject
 				.readByOID(GratuitySituation.class, gratuitySituationID);
 		if (gratuitySituation == null) {
 			return Boolean.TRUE;

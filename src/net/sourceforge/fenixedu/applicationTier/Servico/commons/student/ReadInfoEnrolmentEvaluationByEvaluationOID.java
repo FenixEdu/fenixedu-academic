@@ -19,9 +19,7 @@ public class ReadInfoEnrolmentEvaluationByEvaluationOID extends Service {
 
     public InfoEnrolmentEvaluation run(IUserView userView, Integer enrolmentOID)
             throws ExcepcaoInexistente, FenixServiceException, ExcepcaoPersistencia {
-        Enrolment enrolment = (Enrolment) persistentSupport.getIPersistentEnrolment().readByOID(Enrolment.class,
-                enrolmentOID);
-
+        Enrolment enrolment = (Enrolment) persistentObject.readByOID(Enrolment.class, enrolmentOID);
         return (new GetEnrolmentGrade()).run(enrolment);
     }
 

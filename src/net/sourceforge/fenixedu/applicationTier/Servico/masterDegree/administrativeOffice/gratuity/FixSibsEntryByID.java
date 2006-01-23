@@ -5,7 +5,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersistentSibsPaymentFileEntry;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
@@ -15,10 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.gratuity.masterDegree.IPersisten
 public class FixSibsEntryByID extends Service {
 
 	public void run(Integer sibsEntryId) throws FenixServiceException, ExcepcaoPersistencia {
-		IPersistentSibsPaymentFileEntry persistentSibsPaymentFileEntry = persistentSupport
-				.getIPersistentSibsPaymentFileEntry();
-
-		SibsPaymentFileEntry sibsPaymentFileEntry = (SibsPaymentFileEntry) persistentSibsPaymentFileEntry
+		SibsPaymentFileEntry sibsPaymentFileEntry = (SibsPaymentFileEntry) persistentObject
 				.readByOID(SibsPaymentFileEntry.class, sibsEntryId);
 
 		if (sibsPaymentFileEntry == null) {

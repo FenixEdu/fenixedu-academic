@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.ExternalActivity;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
-import net.sourceforge.fenixedu.persistenceTier.teacher.IPersistentExternalActivity;
 
 /**
  * @author Leonor Almeida
@@ -30,7 +29,6 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
     protected boolean verifyCondition(IUserView id, InfoObject infoOject) {
         try {
             InfoExternalActivity infoExternalActivity = (InfoExternalActivity) infoOject;
-            IPersistentExternalActivity persistentExternalActivity = persistentSupport.getIPersistentExternalActivity();
             IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
             Teacher teacher = persistentTeacher.readTeacherByUsername(id.getUtilizador());
@@ -40,7 +38,7 @@ public class EditExternalActivityTeacherAuthorizationFilter extends EditDomainOb
             if (isNew)
                 return true;
 
-            ExternalActivity externalActivity = (ExternalActivity) persistentExternalActivity
+            ExternalActivity externalActivity = (ExternalActivity) persistentObject
                     .readByOID(ExternalActivity.class, infoExternalActivity.getIdInternal());
 
             return externalActivity.getTeacher().equals(teacher);

@@ -29,7 +29,7 @@ public class ReadExecutionDegreesByExecutionYearAndType extends Service {
     public List run(Integer executionYearOID, DegreeType typeOfCourse) throws ExcepcaoPersistencia {
         final IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
 
-        final ExecutionYear executionYear = (ExecutionYear) persistentSupport.getIPersistentExecutionYear()
+        final ExecutionYear executionYear = (ExecutionYear) persistentObject
                 .readByOID(ExecutionYear.class, executionYearOID);
 
         final List executionDegrees = executionDegreeDAO.readByExecutionYearAndDegreeType(executionYear

@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseScope;
 import net.sourceforge.fenixedu.domain.CurricularCourseScope;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseScope;
 
 /**
  * @author Fernanda Quitério 28/10/2003
@@ -23,9 +22,7 @@ public class EndCurricularCourseScope extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
-        final IPersistentCurricularCourseScope persistentCurricularCourseScope = persistentSupport
-                .getIPersistentCurricularCourseScope();
-        CurricularCourseScope oldCurricularCourseScope = (CurricularCourseScope) persistentCurricularCourseScope
+        CurricularCourseScope oldCurricularCourseScope = (CurricularCourseScope) persistentObject
                 .readByOID(CurricularCourseScope.class, newInfoCurricularCourseScope.getIdInternal());
         if (oldCurricularCourseScope == null) {
             throw new NonExistingServiceException("message.non.existing.curricular.course.scope", null);

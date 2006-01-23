@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 
 /**
  * 
@@ -26,9 +25,7 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 public class LerAulasDeDisciplinaExecucao extends Service {
 
     public Object run(final InfoExecutionCourse infoExecutionCourse) throws ExcepcaoPersistencia {
-        final IPersistentExecutionCourse persistentExecutionCourse = persistentSupport.getIPersistentExecutionCourse();
-
-        final ExecutionCourse executionCourse = (ExecutionCourse) persistentExecutionCourse.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
+        final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourse.getIdInternal());
         final List<Shift> shifts = executionCourse.getAssociatedShifts();
 
         // An estimated upper bound for the number of elements is three lessons per shift.

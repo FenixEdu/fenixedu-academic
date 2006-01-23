@@ -19,7 +19,7 @@ public class DeleteGuideEntryAndPaymentTransactionInManager extends Service {
 
     public void run(Integer guideEntryID) throws ExcepcaoPersistencia, InvalidChangeServiceException {
 
-        GuideEntry guideEntry = (GuideEntry) persistentSupport.getIPersistentGuideEntry().readByOID(GuideEntry.class,
+        GuideEntry guideEntry = (GuideEntry) persistentObject.readByOID(GuideEntry.class,
                 guideEntryID);
 
         if (!guideEntry.getReimbursementGuideEntries().isEmpty()) {

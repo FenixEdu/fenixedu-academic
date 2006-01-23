@@ -15,8 +15,7 @@ public class ReadMasterDegreeCandidateByID extends Service {
 
     public InfoMasterDegreeCandidate run(Integer candidateID) throws ExcepcaoPersistencia {
 
-        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentSupport
-                .getIPersistentMasterDegreeCandidate().readByOID(MasterDegreeCandidate.class,
+        MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
                         candidateID);
 
         return InfoMasterDegreeCandidateWithInfoPerson.newInfoFromDomain(masterDegreeCandidate);

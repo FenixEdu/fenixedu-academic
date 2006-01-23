@@ -8,15 +8,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoCurricularCourseEquivalen
 import net.sourceforge.fenixedu.domain.CurricularCourseEquivalence;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentDegreeCurricularPlan;
 
 public class ReadCurricularCourseEquivalenciesByDegreeCurricularPlan extends Service {
 
     public List<InfoCurricularCourseEquivalence> run(final Integer degreeCurricularPlanID)
             throws ExcepcaoPersistencia {
-        final IPersistentDegreeCurricularPlan persistentDegreeCurricularPlan = persistentSupport.getIPersistentDegreeCurricularPlan();
-
-        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentDegreeCurricularPlan
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
         		.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
         if (degreeCurricularPlan != null) {
         	final List<CurricularCourseEquivalence> curricularCourseEquivalencies = degreeCurricularPlan.getCurricularCourseEquivalences();

@@ -19,12 +19,6 @@ import net.sourceforge.fenixedu.domain.Seminaries.Modality;
 import net.sourceforge.fenixedu.domain.Seminaries.Seminary;
 import net.sourceforge.fenixedu.domain.Seminaries.Theme;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourse;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminary;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryCaseStudy;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryModality;
-import net.sourceforge.fenixedu.persistenceTier.Seminaries.IPersistentSeminaryTheme;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
@@ -38,31 +32,26 @@ public class WriteCandidacy extends Service {
         candidacy.setMotivation(infoCandidacy.getMotivation());
         
         // Modality
-        final IPersistentSeminaryModality persistentModality = persistentSupport.getIPersistentSeminaryModality();
-        final Modality modality = (Modality) persistentModality.readByOID(Modality.class,infoCandidacy.getInfoModality().getIdInternal());        
+        final Modality modality = (Modality) persistentObject.readByOID(Modality.class,infoCandidacy.getInfoModality().getIdInternal());        
         candidacy.setModality(modality);
 
         // Student
-        final IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
-        final Student readStudent = (Student) persistentStudent.readByOID(Student.class, infoCandidacy.getInfoStudent().getIdInternal());
+        final Student readStudent = (Student) persistentObject.readByOID(Student.class, infoCandidacy.getInfoStudent().getIdInternal());
         candidacy.setStudent(readStudent);
 
         // Seminary
-        final IPersistentSeminary persistentSeminary = persistentSupport.getIPersistentSeminary();
-        final Seminary readSeminary = (Seminary) persistentSeminary.readByOID(Seminary.class, infoCandidacy.getInfoSeminary().getIdInternal());
+        final Seminary readSeminary = (Seminary) persistentObject.readByOID(Seminary.class, infoCandidacy.getInfoSeminary().getIdInternal());
         candidacy.setSeminary(readSeminary);
         
         // Curricular Course
-        final IPersistentCurricularCourse persistentCurricularCourse = persistentSupport.getIPersistentCurricularCourse();
-        final CurricularCourse readCurricularCourse = (CurricularCourse) persistentCurricularCourse.readByOID(CurricularCourse.class, infoCandidacy.getCurricularCourse().getIdInternal());
+        final CurricularCourse readCurricularCourse = (CurricularCourse) persistentObject.readByOID(CurricularCourse.class, infoCandidacy.getCurricularCourse().getIdInternal());
         candidacy.setCurricularCourse(readCurricularCourse);
 
         // Theme
         if (modality.getIdInternal().equals(infoCandidacy.getInfoModality().getIdInternal())) {
             candidacy.setTheme(null);
         } else {
-            final IPersistentSeminaryTheme persistentTheme = persistentSupport.getIPersistentSeminaryTheme();
-            final Theme readTheme = (Theme) persistentTheme.readByOID(Theme.class, infoCandidacy.getTheme().getIdInternal());
+            final Theme readTheme = (Theme) persistentObject.readByOID(Theme.class, infoCandidacy.getTheme().getIdInternal());
             candidacy.setTheme(readTheme);
         }
         if (!infoCandidacy.getInfoSeminary().getHasThemes().booleanValue()) {
@@ -70,13 +59,12 @@ public class WriteCandidacy extends Service {
         }
 
         // Seminary Case Study Choices
-        final IPersistentSeminaryCaseStudy persistentSeminaryCaseStudy = persistentSupport.getIPersistentSeminaryCaseStudy();
         for (InfoCaseStudyChoice infoCaseStudyChoice : (List<InfoCaseStudyChoice>) infoCandidacy.getCaseStudyChoices()) {
             final CaseStudyChoice caseStudyChoice = DomainFactory.makeCaseStudyChoice();
             
             caseStudyChoice.setOrder(infoCaseStudyChoice.getOrder());
 
-            final CaseStudy caseStudy = (CaseStudy) persistentSeminaryCaseStudy.readByOID(CaseStudy.class, infoCaseStudyChoice.getCaseStudy().getIdInternal());
+            final CaseStudy caseStudy = (CaseStudy) persistentObject.readByOID(CaseStudy.class, infoCaseStudyChoice.getCaseStudy().getIdInternal());
             caseStudyChoice.setCaseStudy(caseStudy);
 
             caseStudyChoice.setCandidacy(candidacy);

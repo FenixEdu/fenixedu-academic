@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteOtherServiceByOID extends Service {
 
     public void run(Integer otherServiceID) throws ExcepcaoPersistencia {
-        OtherService otherService = (OtherService) persistentSupport.getIPersistentOtherService()
+        OtherService otherService = (OtherService) persistentObject
                 .readByOID(OtherService.class, otherServiceID);
         otherService.delete();
     }

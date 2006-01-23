@@ -12,14 +12,11 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 public class ReadEnrolmentsByStudentCurricularPlan extends Service {
 
     public List<InfoEnrolment> run(Integer studentCurricularPlanId) throws ExcepcaoPersistencia {
-        final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
-
-        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentStudentCurricularPlan.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
+        final StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanId);
         final List<InfoEnrolment> infoEnrolments;
         if (studentCurricularPlan != null) {
             final List<Enrolment> enrolments = studentCurricularPlan.getEnrolments();

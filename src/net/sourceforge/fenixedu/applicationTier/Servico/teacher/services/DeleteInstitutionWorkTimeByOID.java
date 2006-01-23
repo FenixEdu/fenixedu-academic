@@ -15,8 +15,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class DeleteInstitutionWorkTimeByOID extends Service {
 
     public void run(Integer institutionWorkTimeID) throws ExcepcaoPersistencia {
-        InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) persistentSupport
-                .getIPersistentInstitutionWorkTime().readByOID(InstitutionWorkTime.class,
+        InstitutionWorkTime institutionWorkTime = (InstitutionWorkTime) persistentObject.readByOID(InstitutionWorkTime.class,
                         institutionWorkTimeID);
         
         institutionWorkTime.delete();
