@@ -179,11 +179,9 @@ public class OrderableCollectionRenderer extends InputRenderer {
         
         InputContext context = inputContext.createSubContext(getContext().getMetaObject());
         context.setRenderMode(RenderMode.getMode("output"));
+        this.collectionRenderer.setContext(context);
 
-        CollectionRenderer collectionRenderer = new CollectionRenderer();
-        collectionRenderer.setContext(context);
-
-        return collectionRenderer.new CollectionTabularLayout((Collection) object) {
+        return this.collectionRenderer.new CollectionTabularLayout((Collection) object) {
 
             @Override
             protected HtmlComponent getHeaderComponent(int columnIndex) {

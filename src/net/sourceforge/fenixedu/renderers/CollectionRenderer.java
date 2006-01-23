@@ -150,30 +150,7 @@ public class CollectionRenderer extends OutputRenderer {
             getContext().setMetaObject(object);
             
             HtmlComponent component = renderSlot(object.getSlots().get(columnIndex));
-            HtmlInlineContainer container = null;
-            
-            String prefix = getStringPart(getPrefixes(), columnIndex);
-            if (prefix != null && prefix.length() > 0) {
-                container = new HtmlInlineContainer();
-                container.addChild(new HtmlText(prefix));
-                container.addChild(component);
-                
-                component = container;
-            }
-            
-            String suffix = getStringPart(getSuffixes(), columnIndex);
-            if (suffix != null && suffix.length() > 0) {
-                if (container != null) {
-                    container.addChild(new HtmlText(suffix));
-                }
-                else {
-                    container = new HtmlInlineContainer();
-                    container.addChild(component);
-                    container.addChild(new HtmlText(suffix));
-                }
-                
-                component = container;
-            }
+            component = wrapPrefixAndSuffix(component, columnIndex);
             
             return component;
         }

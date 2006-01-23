@@ -106,7 +106,7 @@ public abstract class TabularLayout extends Layout {
         super.applyStyle(component);
 
         HtmlTable table = (HtmlTable) component;
-
+       
         table.setCaption(this.caption);
 
         // header
@@ -157,5 +157,9 @@ public abstract class TabularLayout extends Layout {
         }
 
         // footer
+        
+        if (table.getHeader() == null && table.getRows().size() == 0) {
+            table.createRow().setVisible(false);
+        }
     }
 }

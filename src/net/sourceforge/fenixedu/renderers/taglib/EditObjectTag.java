@@ -12,6 +12,7 @@ import javax.servlet.jsp.JspException;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlForm;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
+import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
@@ -30,14 +31,25 @@ import org.apache.struts.taglib.TagUtils;
 
 public class EditObjectTag extends BaseRenderObjectTag {
 
+    private boolean nested;
+    
     private String action;
     
     private Map<String, ViewDestination> destinations;
     
     public EditObjectTag() {
         super();
-        
+
+        this.nested = false;
         this.destinations = new Hashtable<String, ViewDestination>();
+    }
+
+    public boolean isNested() {
+        return this.nested;
+    }
+
+    public void setNested(boolean nested) {
+        this.nested = nested;
     }
 
     public String getAction() {
@@ -52,6 +64,8 @@ public class EditObjectTag extends BaseRenderObjectTag {
     public void release() {
         super.release();
 
+        this.nested = false;
+        this.action = null;
         this.destinations = new Hashtable<String, ViewDestination>();
     }
 
@@ -122,20 +136,34 @@ public class EditObjectTag extends BaseRenderObjectTag {
     @Override
     protected void drawComponent(PresentationContext context, HtmlComponent component) throws JspException, IOException {
         InputContext inputContext = (InputContext) context;
-        HtmlForm form = inputContext.getForm();
-        
-        form.setId(getId());
-        form.setAction(getActionPath());
-        form.setMethod(HtmlForm.POST);
-        form.setEncoding(HtmlForm.URL_ENCODED);
-
-        form.setBody(component);
-        
         IViewState viewState = inputContext.getViewState();
+
+        HtmlComponent componentToDraw;
         HtmlHiddenField htmlHiddenField = new HtmlHiddenField(LifeCycleConstants.VIEWSTATE_PARAM_NAME, ViewState.encodeToBase64(viewState));
-        form.addHiddenField(htmlHiddenField);
         
-        form.draw(pageContext);
+        if (isNested()) {
+            HtmlInlineContainer container = new HtmlInlineContainer();
+            
+            container.addChild(htmlHiddenField);
+            container.addChild(component);
+            
+            componentToDraw = container;
+        }
+        else {
+            HtmlForm form = inputContext.getForm();
+            
+            form.setId(getId());
+            form.setAction(getActionPath());
+            form.setMethod(HtmlForm.POST);
+            form.setEncoding(HtmlForm.URL_ENCODED);
+
+            form.setBody(component);
+            form.addHiddenField(htmlHiddenField);
+            
+            componentToDraw = form;
+        }
+        
+        componentToDraw.draw(pageContext);
     }
 
     protected String getActionPath() {

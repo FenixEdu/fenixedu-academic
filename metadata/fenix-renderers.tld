@@ -84,6 +84,15 @@
          of the Struts html:form taglib.
       </description>
     </attribute>
+    
+    <attribute>
+      <name>nested</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Indicates if the tag is beeing used inside. This controls if a form tag is generated or not.
+      </description>
+    </attribute>
   </tag>
   
   <tag>
@@ -197,6 +206,15 @@
       <description>
          Specifies the target of the form. This attribute is similar with the action attribute
          of the Struts html:form taglib.
+      </description>
+    </attribute>
+    
+    <attribute>
+      <name>nested</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <description>
+         Indicates if the tag is beeing used inside. This controls if a form tag is generated or not.
       </description>
     </attribute>
   </tag>

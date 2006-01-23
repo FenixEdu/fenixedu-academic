@@ -6,6 +6,8 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.renderers.components.state.IViewState;
+import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -183,4 +185,18 @@ public class RenderUtils {
         
         return contextPath + path;
     }
+
+    //
+    // ViewState related accessors to be used in actions
+    // TODO: check the use of the methods for potential problems with the renderers' common lifecycle
+    //
+    
+    public static IViewState getViewState() {
+        return (IViewState) RenderersRequestProcessor.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
+    }
+    
+    public static void invalidateViewState() {
+        RenderersRequestProcessor.getCurrentRequest().setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
+    }
+    
 }
