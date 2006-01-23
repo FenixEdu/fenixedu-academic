@@ -29,13 +29,16 @@
 			</h:outputLink>
 			<h:outputText value="</td></tr>" escape="false"/>
 
-			<h:outputText value="<tr><th>#{bolonhaBundle['curricularPlans']}:</th><td colspan='2'></td></tr>" escape="false" rendered="#{!empty degree.degreeCurricularPlans}"/>			
 			<h:outputText value="<tr><td colspan='3' align='center'><i>#{bolonhaBundle['no.curricularPlan']}.</i></td></tr>" escape="false" rendered="#{empty degree.degreeCurricularPlans}"/>
 	
-			<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}">
+			<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}" rowIndexVar="index">
 				<h:outputText value="<tr>" escape="false"/>
+
+				<h:outputText value="<tr>" escape="false"/>
+				<h:outputText rendered="#{index == 0}" value="<th>#{bolonhaBundle['curricularPlans']}:</th>" escape="false"/>
+				<h:outputText rendered="#{index > 0}" value="<th></th>" escape="false"/>
 	
-				<h:outputText value="<th></th><td><em class='attention2'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> " escape="false" />
+				<h:outputText value="<td><em class='attention2'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> " escape="false" />
 				<h:outputText value="#{degreeCurricularPlan.name}</td>" escape="false" />
 	
 				<h:outputText value="<td>" escape="false"/>
