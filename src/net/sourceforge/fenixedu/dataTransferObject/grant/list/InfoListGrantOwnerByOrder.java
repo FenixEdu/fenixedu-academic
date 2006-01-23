@@ -36,8 +36,28 @@ public class InfoListGrantOwnerByOrder extends InfoObject {
     private String grantType; //Sigla of the grantType
 
     private String insurancePaymentEntity; //Number of the paymentEntity
+    
+    private String numberPaymentEntity;
+    
+    private String designation;
 
-    /**
+    public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public String getNumberPaymentEntity() {
+		return numberPaymentEntity;
+	}
+
+	public void setNumberPaymentEntity(String numberPaymentEntity) {
+		this.numberPaymentEntity = numberPaymentEntity;
+	}
+
+	/**
      * @return Returns the beginContract.
      */
     public Date getBeginContract() {

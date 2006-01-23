@@ -64,22 +64,37 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
         criteria.addEqualTo("contractRegimes.state", new Integer(1));
 
         if (justActiveContracts != null && justActiveContracts.booleanValue()) {
+        	if (dateEndContract != null ) {
+//        		criteria2.addGreaterThan("contractRegimes.dateBeginContract",dateEndContract);
+//                criteria2.addLessThan("contractRegimes.dateEndContract", dateEndContract);
+
+        		criteria.addLessOrEqualThan("contractRegimes.dateBeginContract",dateEndContract);
+                criteria.addGreaterOrEqualThan("contractRegimes.dateEndContract", dateEndContract);
+
+            }else {
             criteria.addGreaterOrEqualThan("contractRegimes.dateEndContract", Calendar.getInstance()
                     .getTime());
+        	}
             criteria.addEqualTo("endContractMotive", "");
         }
         if (justDesactiveContracts != null && justDesactiveContracts.booleanValue()) {
+        	if (dateEndContract != null ) {
+        		criteria.addGreaterThan("contractRegimes.dateBeginContract",dateEndContract);
+                criteria.addLessThan("contractRegimes.dateEndContract", dateEndContract);
+            }else {
             criteria.addLessOrEqualThan("contractRegimes.dateEndContract", Calendar.getInstance()
                     .getTime());
+            }
             criteria.addNotEqualTo("endContractMotive", "");
         }
 
         if (dateBeginContract != null) {
             criteria.addGreaterOrEqualThan("contractRegimes.dateBeginContract", dateBeginContract);
         }
-        if (dateEndContract != null) {
-            criteria.addLessOrEqualThan("contractRegimes.dateEndContract", dateEndContract);
-        }
+
+//        if (dateEndContract != null && (justDesactiveContracts == null ||justDesactiveContracts ==null ){
+//            criteria.addLessOrEqualThan("contractRegimes.dateEndContract", dateEndContract);
+//        }
 
         if (grantTypeId != null) {
             criteria.addEqualTo("grantType.idInternal", grantTypeId);
@@ -97,7 +112,6 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
 
         int begin = (spanNumber.intValue() - 1) * numberOfElementsInSpan.intValue();
         int end = begin + numberOfElementsInSpan.intValue();
-
         if (begin != 0) {
             for (int j = 0; j < (begin - 1) && iter.hasNext(); j++) {
                 iter.next();
@@ -106,6 +120,7 @@ public class GrantContractOJB extends PersistentObjectOJB implements IPersistent
 
         for (int i = begin; i < end && iter.hasNext(); i++) {
             GrantContract grantContract = (GrantContract) iter.next();
+
             result.add(grantContract);
         }
         return result;

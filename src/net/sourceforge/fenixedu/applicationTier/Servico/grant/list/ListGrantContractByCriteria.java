@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContract;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantContractRegime;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantInsurance;
+import net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract.GrantContractVO;
 import net.sourceforge.fenixedu.presentationTier.Action.grant.utils.SessionConstants;
 import net.sourceforge.fenixedu.util.NameUtils;
 
@@ -42,9 +43,8 @@ public class ListGrantContractByCriteria extends Service {
 
 		// Read the grant contracts ordered by persistentSupportan
 		List grantContractBySpanAndCriteria = null;
-		IPersistentGrantContract persistentGrantContract = null;
 
-		persistentGrantContract = persistentSupport.getIPersistentGrantContract();
+		IPersistentGrantContract persistentGrantContract = new GrantContractVO();
 		grantContractBySpanAndCriteria = persistentGrantContract.readAllContractsByCriteria(
 				propertyOrderBy(infoSpanByCriteriaListGrantOwner.getOrderBy()),
 				infoSpanByCriteriaListGrantOwner.getJustActiveContract(),
@@ -121,6 +121,8 @@ public class ListGrantContractByCriteria extends Service {
 		if (grantInsurance != null) {
 			infoListGrantOwnerByOrder.setInsurancePaymentEntity(grantInsurance.getGrantPaymentEntity()
 					.getNumber());
+			infoListGrantOwnerByOrder.setNumberPaymentEntity(grantInsurance.getGrantPaymentEntity().getNumber());
+			infoListGrantOwnerByOrder.setDesignation(grantInsurance.getGrantPaymentEntity().getDesignation());
 		}
 
 		result.add(infoListGrantOwnerByOrder);

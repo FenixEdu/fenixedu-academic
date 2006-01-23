@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.persistenceTier.versionedObjects.dao.grant.contract;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -71,18 +72,24 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
         ComparatorChain comparatorChain = new ComparatorChain(new BeanComparator(orderBy), true);
         Collections.sort(grantContracts, comparatorChain);
 
-        List<GrantContract> result = null;
-        Integer desiredContractRegimeState = new Integer(1);
+        List<GrantContract> result = new ArrayList();
+        Integer desiredContractRegimeState = Integer.valueOf(1);
         long now = System.currentTimeMillis();
 
         for (GrantContract grantContract : grantContracts) {
-
             boolean verifiesConditions = true;
+
             for (GrantContractRegime grantContractRegime : grantContract
                     .getContractRegimes()) {
 
                 if (!grantContractRegime.getState().equals(desiredContractRegimeState)) {
                     verifiesConditions = false;
+                    break;
+                }
+
+                if (!grantContract.getEndContractMotive().equals("")) {
+                    verifiesConditions = false;
+                    break;
                 }
 
                 if (justActiveContracts != null
@@ -90,6 +97,7 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
                         && (grantContractRegime.getDateEndContract().getTime() < now || !grantContract
                                 .getEndContractMotive().equals(""))) {
                     verifiesConditions = false;
+                    break;
                 }
 
                 if (justDesactiveContracts != null
@@ -97,34 +105,32 @@ public class GrantContractVO extends VersionedObjectsBase implements IPersistent
                         && (grantContractRegime.getDateEndContract().getTime() > now || grantContract
                                 .getEndContractMotive().equals(""))) {
                     verifiesConditions = false;
+                    break;
                 }
 
                 if (dateBeginContract != null
                         && grantContractRegime.getDateBeginContract().getTime() < dateBeginContract
                                 .getTime()) {
                     verifiesConditions = false;
+                    break;
                 }
 
                 if (dateEndContract != null
                         && grantContractRegime.getDateEndContract().getTime() > dateEndContract
                                 .getTime()) {
                     verifiesConditions = false;
+                    break;
                 }
 
                 if (grantTypeId != null
                         && !grantContract.getGrantType().getIdInternal().equals(grantTypeId)) {
                     verifiesConditions = false;
-                }
-
-                if (verifiesConditions) {
                     break;
                 }
-                verifiesConditions = true;
             }
 
             if (verifiesConditions) {
                 result.add(grantContract);
-                break;
             }
         }
 

@@ -78,12 +78,14 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
 
             // Read the grant contracts
             Object[] args = { infoSpanByCriteriaListGrantOwner };
+ 
 
             Object[] result = (Object[]) ServiceUtils.executeService(userView,
                     "ListGrantContractByCriteria", args);
+
             List listGrantContracts = (List) result[0];
             infoSpanByCriteriaListGrantOwner = (InfoSpanByCriteriaListGrantContract) result[1];
-
+   
             if (listGrantContracts != null && listGrantContracts.size() != 0) {
                 // Setting the request
                 DynaValidatorForm listForm = (DynaValidatorForm) form;
@@ -104,8 +106,10 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             }
             return mapping.findForward("list-byCriteria-grant-contract");
         } catch (FenixServiceException e) {
+        	e.printStackTrace();
             return setError(request, mapping, "errors.grant.unrecoverable", null, null);
         } catch (Exception e) {
+        	e.printStackTrace();
             return setError(request, mapping, "errors.grant.unrecoverable", null, null);
         }
     }
@@ -151,6 +155,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         form.set("spanNumber", infoSpanByCriteriaListGrantOwner.getSpanNumber());
         form.set("totalElements", infoSpanByCriteriaListGrantOwner.getTotalElements());
         form.set("orderBy", infoSpanByCriteriaListGrantOwner.getOrderBy());
+       
         if (infoSpanByCriteriaListGrantOwner.getJustActiveContract().booleanValue()) {
             form.set("filterType", new Integer(2));
         } else if (infoSpanByCriteriaListGrantOwner.getJustActiveContract().booleanValue()) {
@@ -196,6 +201,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         if (verifyStringParameterInForm(form, "endContract")) {
             infoSpanByCriteriaListGrantOwner.setEndContract(sdf.parse((String) form.get("endContract")));
         }
+ 
         Integer grantTypeId = (Integer) form.get("grantTypeId");
         if (!grantTypeId.equals(new Integer(0))) {
             infoSpanByCriteriaListGrantOwner.setGrantTypeId(grantTypeId);
