@@ -25,7 +25,7 @@
 		<h:outputText value="<tr><th width='120px'>#{scouncilBundle['degree']}:</th>" escape="false"/>
 
 		<h:outputText value="<td>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
-		<h:outputText value="<td width='200px'>" escape="false"/>
+		<h:outputText value="<td width='200em'>" escape="false"/>
 		<h:outputLink value="editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>
 			<f:param name="degreeId" value="#{degree.idInternal}"/>
@@ -33,6 +33,13 @@
 		<h:outputText value=" , " escape="false"/>
 		<h:outputLink value="deleteDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['delete']}"/>
+			<f:param name="degreeId" value="#{degree.idInternal}"/>
+		</h:outputLink>
+		<h:outputText value=" , " escape="false"/>		
+		<h:outputLink value="createCurricularPlan.faces">
+			<h:outputFormat value="#{scouncilBundle['create.param']}">
+				<f:param value="#{scouncilBundle['curricularPlan']}"/>
+			</h:outputFormat>
 			<f:param name="degreeId" value="#{degree.idInternal}"/>
 		</h:outputLink>
 		<h:outputText value="</td></tr>" escape="false"/>
@@ -71,16 +78,6 @@
 			</h:outputLink>
 			<h:outputText value="</td></tr>" escape="false"/>
 		</fc:dataRepeater>
-
-		<h:outputText value="<tr><th></th><td></td>" escape="false"/>
-		<h:outputText value="<td>" escape="false"/>
-		<h:outputLink value="createCurricularPlan.faces">
-			<h:outputFormat value="#{scouncilBundle['create.param']}">
-				<f:param value="#{scouncilBundle['curricularPlan']}"/>
-			</h:outputFormat>
-			<f:param name="degreeId" value="#{degree.idInternal}"/>
-		</h:outputLink>
-		<h:outputText value="</td></tr>" escape="false"/>
 
 		<h:outputText value="</table><br/>" escape="false"/>
 	</fc:dataRepeater>
