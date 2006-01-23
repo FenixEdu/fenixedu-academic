@@ -7,7 +7,7 @@
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 	<h:form>
-		<h:outputText value="<em>#{bolonhaBundle['competenceCoursesManagement']}</em>" escape="false"/>
+		<h:outputText rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}" value="<em>#{bolonhaBundle['competenceCoursesManagement']}</em>" escape="false"/>
 		<h:outputText value="<h2>#{CompetenceCourseManagement.personDepartment.realName}</h2>" escape="false"/>
 		<h:messages infoClass="infoMsg" errorClass="error" layout="table"/>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.scientificAreaUnits}">
