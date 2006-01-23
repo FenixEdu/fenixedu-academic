@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.SummariesControlElementDTO;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
@@ -26,6 +27,7 @@ import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.util.NumberUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -59,7 +61,11 @@ public class SummariesControlAction extends DispatchAction {
 
         if (departmentID != null && !departmentID.equals("") && executionPeriodID != null
                 && !executionPeriodID.equals("")) {
+                        
             getListing(request, departmentID, executionPeriodID);
+            if (request.getParameter("sorted") == null) {
+                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);                
+            }            
         }
         else if (departmentID == null || departmentID.equals("")) {
             ActionErrors actionErrors = new ActionErrors();
@@ -97,13 +103,16 @@ public class SummariesControlAction extends DispatchAction {
             runProcess = false;
         }
 
-        if (runProcess) {
+        if (runProcess) {                       
             getListing(request, departmentID, executionPeriodID);
+            if (request.getParameter("sorted") == null) {
+                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);                
+            }
         }
 
         readAndSaveAllDepartments(request);
         readAndSaveAllExecutionPeriods(request);
-
+                       
         return mapping.findForward("success");
     }
 
@@ -127,7 +136,7 @@ public class SummariesControlAction extends DispatchAction {
                 .getTeachers(executionPeriod.getBeginDate(), executionPeriod.getEndDate())
                 : new ArrayList<Teacher>();
 
-        List<ListElementDTO> allListElements = new ArrayList<ListElementDTO>();
+        List<SummariesControlElementDTO> allListElements = new ArrayList<SummariesControlElementDTO>();
 
         for (Teacher teacher : allDepartmentTeachers) {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
@@ -194,7 +203,7 @@ public class SummariesControlAction extends DispatchAction {
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
 
-                    ListElementDTO listElementDTO = new ListElementDTO(teacher.getPerson().getNome(),
+                    SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher.getPerson().getNome(),
                             professorship.getExecutionCourse().getNome(), teacher.getTeacherNumber(),
                             categoryName, lessonHours, summaryHours, totalSummaryHours, difference);
 
@@ -285,60 +294,6 @@ public class SummariesControlAction extends DispatchAction {
 
         List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);
         request.setAttribute("executionPeriods", executionPeriods);
-    }
-
-    public class ListElementDTO {
-        String teacherName, executionCourseName, categoryName;
-
-        Integer teacherNumber;
-
-        Double lessonHours, summaryHours, totalSummaryHours, difference;
-
-        public ListElementDTO(String teacherName, String executionCourseName, Integer teacherNumber,
-                String categoryName, Double lessonHours, Double summaryHours, Double totalSummaryHours,
-                Double difference) {
-
-            // this.difference = difference;
-            this.difference = difference;
-            this.executionCourseName = executionCourseName;
-            this.lessonHours = lessonHours;
-            this.summaryHours = summaryHours;
-            this.teacherName = teacherName;
-            this.teacherNumber = teacherNumber;
-            this.totalSummaryHours = totalSummaryHours;
-            this.categoryName = categoryName;
-        }
-
-        public Double getDifference() {
-            return difference;
-        }
-
-        public String getExecutionCourseName() {
-            return executionCourseName;
-        }
-
-        public Double getLessonHours() {
-            return lessonHours;
-        }
-
-        public Double getSummaryHours() {
-            return summaryHours;
-        }
-
-        public String getTeacherName() {
-            return teacherName;
-        }
-
-        public Integer getTeacherNumber() {
-            return teacherNumber;
-        }
-
-        public Double getTotalSummaryHours() {
-            return totalSummaryHours;
-        }
-
-        public String getCategoryName() {
-            return categoryName;
-        }
-    }
+    }   
 }
+

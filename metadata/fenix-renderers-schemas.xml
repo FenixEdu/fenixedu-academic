@@ -166,7 +166,7 @@
 	<slot name="professionalActivityMainFocus" />
   </schema>
   
-  <schema name="summaries.control.list" type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction$ListElementDTO">
+  <schema name="summaries.control.list" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.SummariesControlElementDTO">
   	<slot name="teacherName" />
   	<slot name="teacherNumber" />
   	<slot name="categoryName" />

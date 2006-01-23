@@ -24,16 +24,23 @@
 		</html:select></p>		
 	</logic:notEmpty>
 	
-	<br/>
+</html:form>
+
+<html:form action="/summariesControl">
+
+	<html:hidden property="method" value="listSummariesControl"/>
+	<html:hidden property="department"/>
+	<html:hidden property="executionPeriod"/>
+	<html:hidden property="sorted" value="true"/>
 	
 	<logic:present name="listElements">		
-		<p><fr:view name="listElements" schema="summaries.control.list">
-				<fr:layout name="tabular">
+		<p><fr:edit name="listElements" schema="summaries.control.list">
+				<fr:layout name="tabular-sortable">
 					<fr:property name="rowClasses" value="listClasses"/>
 					<fr:property name="prefixes" value=",,,,,,,<strong>"/>
 					<fr:property name="suffixes" value=",,,,h,h,h,%</strong>"/>
 				</fr:layout>
-		</fr:view></p>	
+		</fr:edit></p>	
 	</logic:present>	
 				
 </html:form>
