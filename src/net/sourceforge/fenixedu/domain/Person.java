@@ -487,10 +487,12 @@ public class Person extends Person_Base {
     }
 
     public void indicatePrivledges(final List<Role> roles) {
-        for (int i = 0; i < getPersonRolesCount(); i++) {
+        for (int i = 0; i < getPersonRolesCount(); ) {
             final Role role = getPersonRoles().get(i);
             if (!roles.contains(role)) {
                 removePersonRoles(role);
+            } else {
+                i++;
             }
         }
 
