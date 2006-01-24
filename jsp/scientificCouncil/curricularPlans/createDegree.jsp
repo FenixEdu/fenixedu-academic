@@ -49,7 +49,7 @@
 			<h:message for="bolonhaDegreeType" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
-.
+
 		<h:outputText value="<p><label>#{scouncilBundle['ectsCredits']}:</label>" escape="false"/>
 		<h:panelGroup>
 			<h:inputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}" disabled="true" maxlength="3" size="2"/>
