@@ -25,7 +25,7 @@
 		<h:outputText value="<tr><th width='120px'>#{scouncilBundle['degree']}:</th>" escape="false"/>
 
 		<h:outputText value="<td>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
-		<h:outputText value="<td width='200em'>" escape="false"/>
+		<h:outputText value="<td width='200px'>" escape="false"/>
 		<h:outputLink value="editDegree.faces">
 			<h:outputFormat value="#{scouncilBundle['edit']}"/>
 			<f:param name="degreeId" value="#{degree.idInternal}"/>
