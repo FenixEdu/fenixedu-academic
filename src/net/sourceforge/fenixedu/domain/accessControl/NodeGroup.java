@@ -51,7 +51,7 @@ public abstract class NodeGroup extends Group {
 
         return chain;
     }
-
+    
     @Override
     public boolean equals(Object other) {
         if (other == null) {

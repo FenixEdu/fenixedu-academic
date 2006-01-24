@@ -63,4 +63,14 @@ public final class GroupIntersection extends NodeGroup {
         return new IntersectionIterator();
     }
 
+    @Override
+    public boolean isMember(Person person) {
+        for (Group group : getChildren()) {
+            if (! group.isMember(person)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }

@@ -30,4 +30,15 @@ public final class GroupUnion extends NodeGroup {
 
         return new UniqueFilterIterator(iteratorChain);
     }
+
+    @Override
+    public boolean isMember(Person person) {
+        for (Group group : getChildren()) {
+            if (group.isMember(person)) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

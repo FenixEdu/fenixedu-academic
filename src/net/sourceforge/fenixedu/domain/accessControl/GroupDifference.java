@@ -61,8 +61,12 @@ public final class GroupDifference extends NodeGroup {
     }
 
 	@Override
-	public Iterator<Person> getElementsIterator()
-	{
+	public Iterator<Person> getElementsIterator() {
 		return new DifferenceIterator();
 	}
+
+    @Override
+    public boolean isMember(Person person) {
+        return getIncludeGroup().isMember(person) && !getExcludeGroup().isMember(person);
+    }
 }

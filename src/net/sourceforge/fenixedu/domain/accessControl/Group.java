@@ -16,8 +16,6 @@ import java.util.Iterator;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -55,14 +53,17 @@ public abstract class Group implements Serializable {
      * @author cfgi
      */
     public class DomainReference<T extends DomainObject> implements Serializable {
-        private Class<? extends DomainObject> type;
+        
+        private static final long serialVersionUID = 1L;
 
+        private String className;
         private Integer oid;
 
+        private transient Class type;
         private transient T object;
 
         public DomainReference(T object) {
-            this.type = object.getClass();
+            this.className = object.getClass().getName();
             this.oid = object.getIdInternal();
         }
 
@@ -70,8 +71,21 @@ public abstract class Group implements Serializable {
             return this.oid;
         }
 
+        protected String getClassName() {
+            return this.className;
+        }
+        
         public Class getType() {
-            return this.type;
+            if (this.type != null) {
+                return this.type;
+            }
+            else {
+                try {
+                    return this.type = Class.forName(getClassName());
+                } catch (ClassNotFoundException e) {
+                    throw new DomainException("reference.notFound.class", e, getClassName());
+                }
+            }
         }
 
         public T getObject() {
@@ -84,16 +98,9 @@ public abstract class Group implements Serializable {
             try {
                 Object[] arguments = new Object[] { getType(), getOid() };
                 this.object = (T) ServiceUtils.executeService(userView, "ReadDomainObject", arguments);
-            } catch (FenixFilterException e) {
-                e.printStackTrace();
-            } catch (FenixServiceException e) {
-                e.printStackTrace();
-            }
-
-            if (this.object == null) {
-                throw new DomainException("Reference to unexisting domain object "
-                        + getType().getName() + "/" + getOid());
-            }
+            } catch (Exception e) {
+                throw new DomainException("reference.notFound.object", e, getType().getName(), getOid().toString());
+            } 
 
             return this.object;
         }
@@ -149,7 +156,8 @@ public abstract class Group implements Serializable {
     }
 
     public boolean isMember(Person person) {
-        Iterator<Person> persons = this.getElementsIterator();
+        Iterator<Person> persons = getElementsIterator();
+        
         while (persons.hasNext()) {
             if (person.equals(persons.next())) {
                 return true;
@@ -166,6 +174,6 @@ public abstract class Group implements Serializable {
             return false;
         }
 
-        return this.isMember(person);
+        return isMember(person);
     }
 }
