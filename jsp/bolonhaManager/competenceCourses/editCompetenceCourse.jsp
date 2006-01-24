@@ -30,7 +30,6 @@
 		<h:selectOneMenu value="#{CompetenceCourseManagement.stage}">
 			<f:selectItem itemValue="DRAFT" itemLabel="#{enumerationBundle['DRAFT']}"/>
 			<f:selectItem itemValue="PUBLISHED" itemLabel="#{enumerationBundle['PUBLISHED']}"/>
-			<f:selectItem itemValue="APPROVED" itemLabel="#{enumerationBundle['APPROVED']}"/>
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 
