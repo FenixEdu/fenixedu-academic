@@ -10,10 +10,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditDegreeCurricularPlan extends Service {
 
-    public void run(Integer dcpId, String name, Double ectsCredits, CurricularStage curricularStage,
-            GradeScale gradeScale) throws FenixServiceException, ExcepcaoPersistencia {
+    public void run(Integer dcpId, String name, CurricularStage curricularStage, GradeScale gradeScale) throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (dcpId == null || name == null || ectsCredits == null || curricularStage == null) {
+        if (dcpId == null || name == null || curricularStage == null) {
             throw new InvalidArgumentsServiceException();
         }
 
@@ -29,7 +28,7 @@ public class EditDegreeCurricularPlan extends Service {
             }
         }
         
-        dcpToEdit.edit(name, ectsCredits, curricularStage, gradeScale);
+        dcpToEdit.edit(name, curricularStage, gradeScale);
     }
 
 }

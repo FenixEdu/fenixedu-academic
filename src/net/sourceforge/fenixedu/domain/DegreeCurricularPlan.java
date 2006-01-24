@@ -95,11 +95,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    public DegreeCurricularPlan(Degree degree, String name, Double ectsCredits,
-            CurricularStage curricularStage, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
+    public DegreeCurricularPlan(Degree degree, String name, CurricularStage curricularStage, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
         this(degree);
         commonFieldsChange(name, gradeScale);
-        newStructureFieldsChange(ectsCredits, curricularStage);
+        newStructureFieldsChange(curricularStage);
 
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
         this.setDegreeModule(dcpRoot);
@@ -108,14 +107,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         setCurricularPlanMembersGroup(new FixedSetGroup(creator));
     }
 
-    private void newStructureFieldsChange(Double ectsCredits, CurricularStage curricularStage) {
-        if (ectsCredits == null) {
-            throw new DomainException("degreeCurricularPlan.ectsCredits.not.null");
-        } else if (curricularStage == null) {
+    private void newStructureFieldsChange(CurricularStage curricularStage) {
+        if (curricularStage == null) {
             throw new DomainException("degreeCurricularPlan.curricularStage.not.null");
         }
 
-        this.setEctsCredits(ectsCredits);
         this.setCurricularStage(curricularStage);
     }
 
@@ -128,10 +124,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
                 minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
     }
 
-    public void edit(String name, Double ectsCredits, CurricularStage curricularStage,
-            GradeScale gradeScale) {
+    public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale) {
         commonFieldsChange(name, gradeScale);
-        newStructureFieldsChange(ectsCredits, curricularStage);
+        newStructureFieldsChange(curricularStage);
     }
 
     private Boolean getCanBeDeleted() {

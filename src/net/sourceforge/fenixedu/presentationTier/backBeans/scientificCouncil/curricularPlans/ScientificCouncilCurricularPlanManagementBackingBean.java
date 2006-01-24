@@ -25,7 +25,6 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     private Integer dcpId;
     private DegreeCurricularPlan dcp;
     private String name;
-    private Double ectsCredits;
     private String curricularStage;
     private String gradeScale;
     
@@ -57,14 +56,6 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
         this.name = name;
     }    
 
-    public Double getEctsCredits() throws FenixFilterException, FenixServiceException {
-        return (ectsCredits == null && getDcp() != null) ? (ectsCredits = getDcp().getEctsCredits()) : ectsCredits;
-    }
-
-    public void setEctsCredits(Double ectsCredits) {
-        this.ectsCredits = ectsCredits;
-    }
-    
     public String getCurricularStage() throws FenixFilterException, FenixServiceException {
         return (curricularStage == null && getDcp() != null) ? (curricularStage = getDcp().getCurricularStage().getName()) : curricularStage;
     }
@@ -92,7 +83,7 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     }
     
     public String createCurricularPlan() {
-        Object[] args = { this.getDegreeId(), this.name, this.ectsCredits, CurricularStage.DRAFT, null }; //GradeScale.valueOf(this.gradeScale) };
+        Object[] args = { this.getDegreeId(), this.name, CurricularStage.DRAFT, null }; //GradeScale.valueOf(this.gradeScale) };
         return changeDegreeCurricularPlan("CreateDegreeCurricularPlan", args, "degreeCurricularPlan.created", "error.creatingDegreeCurricularPlan");
     }
     
@@ -107,7 +98,7 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     }
     
     public String editCurricularPlan() {
-        Object[] args = { this.getDcpId(), this.name, this.ectsCredits, CurricularStage.valueOf(this.curricularStage), null }; //GradeScale.valueOf(this.gradeScale) };
+        Object[] args = { this.getDcpId(), this.name, CurricularStage.valueOf(this.curricularStage), null }; //GradeScale.valueOf(this.gradeScale) };
         return changeDegreeCurricularPlan("EditDegreeCurricularPlan", args, "degreeCurricularPlan.edited", "error.editingDegreeCurricularPlan");
     }
     

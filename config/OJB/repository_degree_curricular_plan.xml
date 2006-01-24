@@ -119,11 +119,6 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
         jdbc-type="BLOB"
@@ -306,11 +301,6 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
         jdbc-type="BLOB"
@@ -492,11 +482,6 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
         jdbc-type="BLOB"
@@ -677,11 +662,6 @@
 		column="KEY_DEGREE_CURRICULAR_PERIOD"
 		jdbc-type="INTEGER"
 	/>	
-	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
 	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
@@ -865,11 +845,6 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
         jdbc-type="BLOB"
@@ -1052,11 +1027,6 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
         jdbc-type="BLOB"
@@ -1238,11 +1208,6 @@
 		jdbc-type="INTEGER"
 	/>	
 	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
-	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"
         jdbc-type="BLOB"
@@ -1423,11 +1388,6 @@
 		column="KEY_DEGREE_CURRICULAR_PERIOD"
 		jdbc-type="INTEGER"
 	/>	
-	<field-descriptor
-		name="ectsCredits"
-		column="ECTS_CREDITS"
-		jdbc-type="DOUBLE"
-	/>
 	<field-descriptor
         name="curricularPlanMembersGroup"
         column="DEGREE_CURRICULAR_PLAN_MEMBERS_GROUP"

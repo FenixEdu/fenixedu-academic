@@ -24,13 +24,6 @@
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 
-		<h:outputText value="<p><label>#{scouncilBundle['ectsCredits']}:</label>" escape="false"/>
-		<h:panelGroup>
-			<h:inputText id="ectsCredits" value="#{ScientificCouncilCurricularPlanManagement.ectsCredits}" required="true" maxlength="3" size="2"/>
-			<h:message for="ectsCredits" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
-		</h:panelGroup>
-		<h:outputText value="</p>" escape="false"/>
-
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
 		<br/><hr/>

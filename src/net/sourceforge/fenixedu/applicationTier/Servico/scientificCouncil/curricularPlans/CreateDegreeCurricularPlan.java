@@ -19,17 +19,15 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateDegreeCurricularPlan extends Service {
 
-    public void run(Integer degreeId, String name, Double ectsCredits, CurricularStage curricularStage,
+    public void run(Integer degreeId, String name, CurricularStage curricularStage,
             GradeScale gradeScale) throws FenixServiceException, ExcepcaoPersistencia {
 
-        if (degreeId == null || name == null || ectsCredits == null || curricularStage == null) {
+        if (degreeId == null || name == null || curricularStage == null) {
             throw new InvalidArgumentsServiceException();
         }
 
         final Person creator = AccessControl.getUserView().getPerson();
-
-        final Degree degree = (Degree) persistentObject.readByOID(Degree.class,
-                degreeId);
+        final Degree degree = (Degree) persistentObject.readByOID(Degree.class, degreeId);
 
         assertExistingObjectsToAssociate(creator, degree);
         assertUniques(degree, name);
@@ -37,8 +35,7 @@ public class CreateDegreeCurricularPlan extends Service {
         CurricularPeriod curricularPeriod = DomainFactory.makeCurricularPeriod(degree
                 .getBolonhaDegreeType().getCurricularPeriodType());
 
-        DomainFactory.makeDegreeCurricularPlan(degree, name, ectsCredits, curricularStage, gradeScale,
-                creator, curricularPeriod);
+        DomainFactory.makeDegreeCurricularPlan(degree, name, curricularStage, gradeScale, creator, curricularPeriod);
         addBolonhaRoleToCreator(creator);
     }
 

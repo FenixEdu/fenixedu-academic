@@ -26,8 +26,6 @@
 			<h:outputText value="<b>#{scouncilBundle['name']}</b> " escape="false"/>
 			<h:outputText value="#{ScientificCouncilCurricularPlanManagement.name}"/>
 
-			<h:outputText value="<b>#{scouncilBundle['ectsCredits']}</b> " escape="false"/>
-			<h:outputText value="#{ScientificCouncilCurricularPlanManagement.ectsCredits}"/>
 		</h:panelGrid>
 		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['confirm']}"

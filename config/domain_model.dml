@@ -516,7 +516,6 @@ class net.sourceforge.fenixedu.domain.DegreeCurricularPlan extends net.sourcefor
     Integer degreeModuleKey;
    	Group curricularPlanMembersGroup;
    	Integer keyCurricularPeriod;
-	Double ectsCredits;
 }
 
     class net.sourceforge.fenixedu.domain.DegreeCurricularPlanLEC extends net.sourceforge.fenixedu.domain.DegreeCurricularPlan {
