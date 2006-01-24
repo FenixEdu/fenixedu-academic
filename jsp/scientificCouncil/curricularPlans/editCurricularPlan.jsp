@@ -24,6 +24,8 @@
 			</h:panelGroup>
 		</h:panelGrid>
 
+		<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
+
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{scouncilBundle['curricularPlan.data']}:</h4>" escape="false"/>
 		<h:outputText value="<br/><fieldset class='lfloat'>" escape="false"/>

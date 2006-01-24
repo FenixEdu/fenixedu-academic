@@ -13,12 +13,10 @@
 	</h:outputFormat>
 	<h:form>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
+
+		<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
 		
-		<h:outputText value="<b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
-		
-		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilCurricularPlanManagement.errorMessage}"
-			value="#{ScientificCouncilCurricularPlanManagement.errorMessage}<br/><br/>" escape="false"/>
-		
+		<h:outputText value="<br/><b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
 		<h:panelGrid styleClass="infoselected" columns="2" border="0">
  			<h:outputText value="<b>#{scouncilBundle['curricularStage']}:</b> " escape="false"/>
 			<h:outputText value="#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]}"/>
