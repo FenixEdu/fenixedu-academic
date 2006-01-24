@@ -21,13 +21,6 @@ public class EditDegreeCurricularPlan extends Service {
             throw new FenixServiceException("error.degreeCurricularPlan.no.existing.degreeCurricularPlan");
         }
 
-        // assert unique pair name/degree
-        for (final DegreeCurricularPlan degreeCurricularPlan : dcpToEdit.getDegree().getDegreeCurricularPlans()) {
-            if (degreeCurricularPlan != dcpToEdit && degreeCurricularPlan.getName().equalsIgnoreCase(name)) {
-                throw new FenixServiceException("error.degreeCurricularPlan.existing.name.and.degree");
-            }
-        }
-        
         dcpToEdit.edit(name, curricularStage, gradeScale);
     }
 

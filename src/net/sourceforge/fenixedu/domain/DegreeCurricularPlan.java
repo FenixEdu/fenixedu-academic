@@ -41,10 +41,10 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private DegreeCurricularPlan(Degree degree) {
+        this();
         if (degree == null) {
             throw new DomainException("degreeCurricularPlan.degree.not.null");
         }
-
         this.setDegree(degree);
         this.setOjbConcreteClass(getClass().getName());
     }
@@ -95,16 +95,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    public DegreeCurricularPlan(Degree degree, String name, CurricularStage curricularStage, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
+    public DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
         this(degree);
         commonFieldsChange(name, gradeScale);
-        newStructureFieldsChange(curricularStage);
+        newStructureFieldsChange(CurricularStage.DRAFT);
 
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
         this.setDegreeModule(dcpRoot);
+        
+        if (curricularPeriod == null) {
+            throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
+        }
         this.setDegreeStructure(curricularPeriod);
 
-        setCurricularPlanMembersGroup(new FixedSetGroup(creator));
+        if (creator == null) {
+            throw new DomainException("degreeCurricularPlan.creator.not.null");
+        }
+        this.setCurricularPlanMembersGroup(new FixedSetGroup(creator));
     }
 
     private void newStructureFieldsChange(CurricularStage curricularStage) {
@@ -127,6 +134,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale) {
         commonFieldsChange(name, gradeScale);
         newStructureFieldsChange(curricularStage);
+        
+        // assert unique pair name/degree
+        for (final DegreeCurricularPlan dcp : this.getDegree().getDegreeCurricularPlans()) {
+            if (dcp != this && dcp.getName().equalsIgnoreCase(name)) {
+                throw new DomainException("error.degreeCurricularPlan.existing.name.and.degree");
+            }
+        }
     }
 
     private Boolean getCanBeDeleted() {

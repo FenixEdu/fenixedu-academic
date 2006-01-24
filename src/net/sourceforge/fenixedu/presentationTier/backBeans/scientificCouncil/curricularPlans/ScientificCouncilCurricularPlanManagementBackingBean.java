@@ -83,7 +83,7 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     }
     
     public String createCurricularPlan() {
-        Object[] args = { this.getDegreeId(), this.name, CurricularStage.DRAFT, null }; //GradeScale.valueOf(this.gradeScale) };
+        Object[] args = { this.getDegreeId(), this.name, null }; //GradeScale.valueOf(this.gradeScale) };
         return changeDegreeCurricularPlan("CreateDegreeCurricularPlan", args, "degreeCurricularPlan.created", "error.creatingDegreeCurricularPlan");
     }
     
@@ -109,10 +109,10 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
             this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
             return "curricularPlansManagement";
         } catch (FenixServiceException e) {
-            this.setErrorMessage(scouncilBundle.getString(e.getMessage()));
+            this.addErrorMessage(scouncilBundle.getString(e.getMessage()));
             return "";
         } catch (DomainException e) {
-            this.setErrorMessage(domainExceptionBundle.getString(e.getMessage()));
+            this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
             return "";
         } catch (Exception e) {
             this.addErrorMessage(scouncilBundle.getString(errorMsg));

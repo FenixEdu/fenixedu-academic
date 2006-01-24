@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Iterator;
 
+import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 
 public class Degree extends Degree_Base {
@@ -178,6 +180,22 @@ public class Degree extends Degree_Base {
 
     public GradeScale getGradeScaleChain() {
         return super.getGradeScale() != null ? super.getGradeScale() : getTipoCurso().getGradeScale();
+    }
+
+    public void createDegreeCurricularPlan(String name, GradeScale gradeScale, Person creator, Role bolonhaRole) {
+        for (DegreeCurricularPlan dcp : this.getDegreeCurricularPlans()) {
+            if (dcp.getName().equalsIgnoreCase(name)) {
+                throw new DomainException("error.degreeCurricularPlan.existing.name.and.degree");
+            }
+        }
+        
+        if (!creator.hasPersonRoles(bolonhaRole)) {
+            creator.addPersonRoles(bolonhaRole);
+        }
+
+        CurricularPeriod curricularPeriod = new CurricularPeriod(this.getBolonhaDegreeType().getCurricularPeriodType());
+        
+        new DegreeCurricularPlan(this, name, gradeScale, creator, curricularPeriod);
     }
 
 }
