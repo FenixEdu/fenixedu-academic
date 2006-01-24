@@ -4,10 +4,13 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,6 +32,8 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.util.NumberUtils;
+import net.sourceforge.fenixedu.util.report.Spreadsheet;
+import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -61,21 +66,19 @@ public class SummariesControlAction extends DispatchAction {
 
         if (departmentID != null && !departmentID.equals("") && executionPeriodID != null
                 && !executionPeriodID.equals("")) {
-                                   
+
             getListing(request, departmentID, executionPeriodID);
-            if (request.getParameter("sorted") == null) {                
-                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);                
-            }            
-        }
-        else if (departmentID == null || departmentID.equals("")) {
+            if (request.getParameter("sorted") == null) {
+                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
+            }
+        } else if (departmentID == null || departmentID.equals("")) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("error.no.deparment"));
-            saveErrors(request, actionErrors);                       
-        }
-        else if (executionPeriodID == null || executionPeriodID.equals("")) {
+            saveErrors(request, actionErrors);
+        } else if (executionPeriodID == null || executionPeriodID.equals("")) {
             ActionErrors actionErrors = new ActionErrors();
             actionErrors.add("error", new ActionError("error.no.execution.period"));
-            saveErrors(request, actionErrors);            
+            saveErrors(request, actionErrors);
         }
 
         return prepareSummariesControl(mapping, actionForm, request, response);
@@ -103,21 +106,22 @@ public class SummariesControlAction extends DispatchAction {
             runProcess = false;
         }
 
-        if (runProcess) {                                   
+        if (runProcess) {
             getListing(request, departmentID, executionPeriodID);
             if (request.getParameter("sorted") == null) {
-                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);                
+                request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
             }
         }
 
         readAndSaveAllDepartments(request);
         readAndSaveAllExecutionPeriods(request);
-                       
+
         return mapping.findForward("success");
     }
 
-    private void getListing(HttpServletRequest request, String departmentID, String executionPeriodID)
+    private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID, String executionPeriodID)
             throws FenixFilterException, FenixServiceException {
+       
         final Department department;
         final ExecutionPeriod executionPeriod;
         Object[] args = { Department.class, Integer.valueOf(departmentID) }, args1 = {
@@ -142,11 +146,12 @@ public class SummariesControlAction extends DispatchAction {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             for (Professorship professorship : teacher.getProfessorships()) {
 
-                Double lessonHours = 0.0, summaryHours = 0.0, percentage = 0.0, difference = 0.0, totalSummaryHours = 0.0;
+                Double lessonHours = 0.0, summaryHours = 0.0, percentage = 0.0, shiftDifference = 0.0, 
+                    courseSummaryHours = 0.0, courseDifference = 0.0;
 
                 if (professorship.belongsToExecutionPeriod(executionPeriod)
                         && !professorship.getExecutionCourse().isMasterDegreeOnly()) {
-                    
+
                     for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
 
                         DegreeTeachingService degreeTeachingService = null;
@@ -178,48 +183,114 @@ public class SummariesControlAction extends DispatchAction {
                                     }
                                 }
                             }
-                        } 
-                        
+                        }
+
                         // GET TOTAL SUMMARY HOURS
                         for (Summary summary : shift.getAssociatedSummaries()) {
                             if (summary.getProfessorship() != null
                                     && summary.getProfessorship().equals(professorship)) {
                                 Lesson lesson = SummaryUtils.getSummaryLesson(summary);
                                 if (lesson != null) {
-                                    totalSummaryHours += lesson.hours();                                    
+                                    courseSummaryHours += lesson.hours();
                                 } else {
-                                    if (!shift.getAssociatedLessons().isEmpty()) {                                                                              
-                                        totalSummaryHours += shift.getAssociatedLessons().get(0).hours();                                        
+                                    if (!shift.getAssociatedLessons().isEmpty()) {
+                                        courseSummaryHours += shift.getAssociatedLessons().get(0)
+                                                .hours();
                                     }
-                                }                                                                                               
+                                }
                             }
                         }
                     }
-                                       
+
                     summaryHours = NumberUtils.formatNumber(summaryHours, 1);
                     lessonHours = NumberUtils.formatNumber(lessonHours, 1);
-                    difference = getDifference(lessonHours, summaryHours);
+                    courseSummaryHours = NumberUtils.formatNumber(courseSummaryHours, 1);
+
+                    shiftDifference = getDifference(lessonHours, summaryHours);
+                    courseDifference = getDifference(lessonHours, courseSummaryHours);
 
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
 
-                    SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher.getPerson().getNome(),
-                            professorship.getExecutionCourse().getNome(), teacher.getTeacherNumber(),
-                            categoryName, lessonHours, summaryHours, totalSummaryHours, difference);
+                    SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher
+                            .getPerson().getNome(), professorship.getExecutionCourse().getNome(),
+                            teacher.getTeacherNumber(), categoryName, lessonHours, summaryHours,
+                            courseSummaryHours, shiftDifference, courseDifference);
 
                     allListElements.add(listElementDTO);
                 }
             }
-        }
-
-        Collections.sort(allListElements, new ReverseComparator(new BeanComparator("difference")));
+        }        
+        
+        Collections.sort(allListElements, new ReverseComparator(new BeanComparator("teacherNumber")));                      
         request.setAttribute("listElements", allListElements);
+           
+        return allListElements;
+    }
+    
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException{
+        
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        String departmentID = (String) dynaActionForm.get("department");
+        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");            
+        
+        List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
+        
+        try {
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-disposition", "attachment; filename=" + "xpto" + ".xls");
+            
+            ServletOutputStream writer = response.getOutputStream();            
+            exportToXls(list, writer);
+            
+            writer.flush();              
+            response.flushBuffer();
+        
+        } catch (IOException e) {
+            throw new FenixServiceException();           
+        }        
+        return null;
+    }
+
+    private void exportToXls(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream) throws IOException {        
+        
+        final List<String> headers = getHeaders();
+        final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários", headers);
+        
+        for (final SummariesControlElementDTO summariesControlElementDTO : allListElements) {
+            final Row row = spreadsheet.addRow();
+            row.setCell(summariesControlElementDTO.getTeacherName());
+            row.setCell(summariesControlElementDTO.getTeacherNumber().toString());
+            row.setCell(summariesControlElementDTO.getCategoryName());
+            row.setCell(summariesControlElementDTO.getExecutionCourseName());
+            row.setCell(summariesControlElementDTO.getLessonHours().toString());
+            row.setCell(summariesControlElementDTO.getSummaryHours().toString());
+            row.setCell(summariesControlElementDTO.getShiftDifference().toString());
+            row.setCell(summariesControlElementDTO.getCourseSummaryHours().toString());
+            row.setCell(summariesControlElementDTO.getCourseDifference().toString());                       
+        }
+        spreadsheet.exportToXLSSheet(outputStream);
+    }
+
+    private List<String> getHeaders() {
+        final List<String> headers = new ArrayList<String>();
+        headers.add("Nome");
+        headers.add("Número");
+        headers.add("Categoria");
+        headers.add("Disciplina");
+        headers.add("Horas Declaradas");
+        headers.add("Sumários nos Turnos");
+        headers.add("Percentagem nos Turnos");
+        headers.add("Sumários na Disciplina");
+        headers.add("Percentagem na Disciplina");
+        return headers;
     }
 
     private Double getDifference(Double lessonHours, Double summaryHours) {
         Double difference;
         difference = (1 - ((lessonHours - summaryHours) / lessonHours)) * 100;
-        if (difference.isNaN()) {
+        if (difference.isNaN() || difference.isInfinite()) {
             difference = 0.0;
         } else {
             difference = NumberUtils.formatNumber(difference, 2);
@@ -294,6 +365,5 @@ public class SummariesControlAction extends DispatchAction {
 
         List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);
         request.setAttribute("executionPeriods", executionPeriods);
-    }   
+    }
 }
-

@@ -12,24 +12,25 @@ public class SummariesControlElementDTO extends DataTranferObject {
 
     Integer teacherNumber;
 
-    Double lessonHours, summaryHours, totalSummaryHours, difference;
+    Double lessonHours, summaryHours, courseSummaryHours, shiftDifference, courseDifference;
 
     public SummariesControlElementDTO(String teacherName, String executionCourseName,
             Integer teacherNumber, String categoryName, Double lessonHours, Double summaryHours,
-            Double totalSummaryHours, Double difference) {
+            Double totalSummaryHours, Double shiftDifference, Double courseDifference) {
        
-        this.difference = difference;
+        this.shiftDifference = shiftDifference;
+        this.courseDifference = courseDifference;
         this.executionCourseName = executionCourseName;
         this.lessonHours = lessonHours;
         this.summaryHours = summaryHours;
         this.teacherName = teacherName;
         this.teacherNumber = teacherNumber;
-        this.totalSummaryHours = totalSummaryHours;
+        this.courseSummaryHours = totalSummaryHours;
         this.categoryName = categoryName;
     }
 
-    public Double getDifference() {
-        return difference;
+    public Double getShiftDifference() {
+        return shiftDifference;
     }
 
     public String getExecutionCourseName() {
@@ -52,11 +53,15 @@ public class SummariesControlElementDTO extends DataTranferObject {
         return teacherNumber;
     }
 
-    public Double getTotalSummaryHours() {
-        return totalSummaryHours;
+    public Double getCourseSummaryHours() {
+        return courseSummaryHours;
     }
 
     public String getCategoryName() {
         return categoryName;
+    }
+
+    public Double getCourseDifference() {
+        return courseDifference;
     }
 }

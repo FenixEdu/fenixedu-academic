@@ -173,8 +173,9 @@
   	<slot name="executionCourseName" />
   	<slot name="lessonHours" />
    	<slot name="summaryHours" />	
-   	<slot name="totalSummaryHours" />	
-   	<slot name="difference" />	   	   	  	
+   	<slot name="shiftDifference" />	   	   	  	
+   	<slot name="courseSummaryHours" />	   	
+   	<slot name="courseDifference" />	   	   	  	
   </schema>
   
 </schemas>

@@ -34,7 +34,7 @@ public class Department extends Department_Base {
     }
 
     public List<Employee> getCurrentActiveWorkingEmployees() {
-       
+        
         Unit departmentUnit = this.getUnit();
         Set<Employee> employees = new HashSet<Employee>();
         Date currentDate = Calendar.getInstance().getTime();
