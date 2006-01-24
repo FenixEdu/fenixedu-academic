@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,7 +34,7 @@ public class CreateDegree extends Service {
             }
         }
 
-        new Degree(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale);
+        DomainFactory.makeDegree(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale);
     }
 
 }
