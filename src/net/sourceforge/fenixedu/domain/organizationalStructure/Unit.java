@@ -66,6 +66,26 @@ public class Unit extends Unit_Base {
     }  
     
     public List<Unit> getInactiveSubUnits(Date currentDate) {
+        List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits()) {
+            if (!subUnit.isActive(currentDate)) {
+                allInactiveSubUnits.add(subUnit);
+            }
+        }
+        return allInactiveSubUnits;
+    }
+
+    public List<Unit> getActiveSubUnits(Date currentDate) {
+        List<Unit> allActiveSubUnits = new ArrayList<Unit>();
+        for (Unit subUnit : this.getSubUnits()) {
+            if (subUnit.isActive(currentDate)) {
+                allActiveSubUnits.add(subUnit);
+            }
+        }
+        return allActiveSubUnits;
+    }
+    
+    public List<Unit> getAllInactiveSubUnits(Date currentDate) {
         
         Set<Unit> allInactiveSubUnits = new HashSet<Unit>();        
         for (Unit subUnit : this.getSubUnits()) {
@@ -79,12 +99,12 @@ public class Unit extends Unit_Base {
         if (!unit.isActive(currentDate)) {
             allInactiveSubUnits.add(unit);
         }
-        for (Unit subUnit : this.getSubUnits()) {
+        for (Unit subUnit : unit.getSubUnits()) {
             readAndSaveInactiveSubUnits(subUnit, allInactiveSubUnits, currentDate);
         }  
     }
         
-    public List<Unit> getActiveSubUnits(Date currentDate) {
+    public List<Unit> getAllActiveSubUnits(Date currentDate) {
         Set<Unit> allActiveSubUnits = new HashSet<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
             readAndSaveActiveSubUnits(subUnit, allActiveSubUnits, currentDate);
@@ -96,7 +116,7 @@ public class Unit extends Unit_Base {
         if (unit.isActive(currentDate)) {
             allActiveSubUnits.add(unit);
         }
-        for (Unit subUnit : this.getSubUnits()) {
+        for (Unit subUnit : unit.getSubUnits()) {
             readAndSaveActiveSubUnits(subUnit, allActiveSubUnits, currentDate);
         } 
     }
