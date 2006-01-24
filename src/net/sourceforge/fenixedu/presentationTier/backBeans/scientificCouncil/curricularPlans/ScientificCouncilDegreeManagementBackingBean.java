@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
@@ -98,13 +97,12 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     }
 
     public Double getEctsCredits() throws FenixFilterException, FenixServiceException {
-        if (ectsCredits == null) {
-            if (getDegree() != null) {
-                ectsCredits = getDegree().getEctsCredits();
-            } else if (getBolonhaDegreeType() != null && !getBolonhaDegreeType().equals(this.NO_SELECTION)) {
-                ectsCredits = BolonhaDegreeType.valueOf(getBolonhaDegreeType()).getDefaultEctsCredits();
-            }
+        if (getBolonhaDegreeType() != null && !getBolonhaDegreeType().equals(this.NO_SELECTION)) {
+            ectsCredits = BolonhaDegreeType.valueOf(getBolonhaDegreeType()).getDefaultEctsCredits();
+        } else if (ectsCredits == null && getDegree() != null) {
+            ectsCredits = getDegree().getEctsCredits();
         }
+        
         return ectsCredits;
     }
 
@@ -156,6 +154,13 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
             return "";
         }
 
+        if (this.name == null || this.name.length() == 0
+                || this.nameEn == null || this.nameEn.length() == 0
+                || this.acronym == null || this.acronym.length() == 0) {
+            this.addErrorMessage(scouncilBundle.getString("please.fill.mandatory.fields"));
+            return "";
+        }
+        
         Object[] args = { this.getDegreeId(), this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(getBolonhaDegreeType()), this.getEctsCredits(), null }; //GradeScale.valueOf(this.gradeScale) };
         return changeDegree("EditDegree", args, "degree.edited", "error.editingDegree");
     }
