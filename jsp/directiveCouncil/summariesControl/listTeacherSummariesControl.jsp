@@ -35,11 +35,22 @@
 		
 	<logic:present name="listElements">			
 		<bean:define id="url" type="java.lang.String">/summariesControl.do?method=exportToExcel&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
-		<html:link page="<%= url %>">
-			<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>" altKey="link.exportToExcel"/>
-			<bean:message key="link.export.to.excel"/>
-						
+		<bean:define id="url2" type="java.lang.String">/summariesControl.do?method=exportToCSV&department=<bean:write name="summariesControlForm" property="department"/>&executionPeriod=<bean:write name="summariesControlForm" property="executionPeriod"/></bean:define> 						
+		
+		<p><html:link page="<%= url %>">
+			<html:img border="0" src="<%= request.getContextPath() + "/images/excel.bmp"%>"/>
+			<bean:message key="link.export.to.excel"/>						
 		</html:link>
+		
+		&nbsp;&nbsp;&nbsp;
+		
+		<html:link page="<%= url2 %>">			
+			<html:img border="0" src="<%= request.getContextPath() + "/images/icon_csv.gif"%>"/>
+			<bean:message key="link.export.to.csv"/>						
+		</html:link></p>
+		
+		<br/>
+		
 		<p><fr:edit name="listElements" schema="summaries.control.list">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="rowClasses" value="listClasses"/>

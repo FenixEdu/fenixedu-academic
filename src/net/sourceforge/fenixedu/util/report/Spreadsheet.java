@@ -20,7 +20,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 public class Spreadsheet {
 
     public class Row {
-        private List<String> cells = new ArrayList<String>();
+        private List<Object> cells = new ArrayList<Object>();
 
         protected Row() {
         }
@@ -36,22 +36,22 @@ public class Spreadsheet {
             cells.add(cellValue);
         }
 
-        protected List<String> getCells() {
+        protected List<Object> getCells() {
             return cells;
         }
     }
 
     private String name;
 
-    private List<String> header;
+    private List<Object> header;
 
     private List<Row> rows = new ArrayList<Row>();
 
     public Spreadsheet(final String name) {
-        this(name, new ArrayList<String>());
+        this(name, new ArrayList<Object>());
     }
 
-    public Spreadsheet(final String name, final List<String> header) {
+    public Spreadsheet(final String name, final List<Object> header) {
         setName(name);
         this.header = header;
     }
@@ -99,19 +99,17 @@ public class Spreadsheet {
         }
     }
 
-    private void exportCSVLine(final OutputStream outputStream, final String columnSeperator, final String lineSepeator, final List<String> cells) throws IOException {
+    private void exportCSVLine(final OutputStream outputStream, final String columnSeperator, final String lineSepeator, final List<Object> cells) throws IOException {
         final byte[] columnSeperatorAsBytes = columnSeperator.getBytes();
 
         for (int i = 0; i < cells.size(); i++) {
-            final String cellValue = cells.get(i);
+            final Object cellValue = cells.get(i);
 
             if (i > 0) {
                 outputStream.write(columnSeperatorAsBytes);
             }
-
-            outputStream.write(cellValue.getBytes());            
+            outputStream.write(cellValue.toString().getBytes());            
         }
-
         outputStream.write(lineSepeator.getBytes());
     }
 
@@ -127,28 +125,27 @@ public class Spreadsheet {
         sheet.setDefaultColumnWidth((short) 20);
 
         exportXLSLine(sheet, headerCellStyle, header, 0);
-
+        
         for (final Row row : rows) {
             exportXLSLine(sheet, cellStyle, row.getCells());
         }
     }
 
-    private void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<String> cells) {
+    private void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells) {
         exportXLSLine(sheet, cellStyle, cells, 1);
     }
 
-    private void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<String> cells, final int offset) {
+    private void exportXLSLine(final HSSFSheet sheet, final HSSFCellStyle cellStyle, final List<Object> cells, final int offset) {
         final HSSFRow row = sheet.createRow(sheet.getLastRowNum() + offset);
-
-        for (final String cellValue : cells) {
+        for (final Object cellValue : cells) {
             addColumn(cellStyle, row, cellValue);
         }
     }
 
-    protected static HSSFCell addColumn(final HSSFCellStyle cellStyle, final HSSFRow row, final String cellValue) {
+    protected static HSSFCell addColumn(final HSSFCellStyle cellStyle, final HSSFRow row, final Object cellValue) {
         final HSSFCell cell = row.createCell((short) (row.getLastCellNum() + 1));
         cell.setCellStyle(cellStyle);
-        cell.setCellValue(cellValue);
+        cell.setCellValue(cellValue.toString());
         return cell;
     }
 

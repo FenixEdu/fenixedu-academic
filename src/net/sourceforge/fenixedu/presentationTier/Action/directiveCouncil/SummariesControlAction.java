@@ -7,7 +7,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -36,7 +38,6 @@ import net.sourceforge.fenixedu.util.report.Spreadsheet;
 import net.sourceforge.fenixedu.util.report.Spreadsheet.Row;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
@@ -119,9 +120,9 @@ public class SummariesControlAction extends DispatchAction {
         return mapping.findForward("success");
     }
 
-    private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID, String executionPeriodID)
-            throws FenixFilterException, FenixServiceException {
-       
+    private List<SummariesControlElementDTO> getListing(HttpServletRequest request, String departmentID,
+            String executionPeriodID) throws FenixFilterException, FenixServiceException {
+
         final Department department;
         final ExecutionPeriod executionPeriod;
         Object[] args = { Department.class, Integer.valueOf(departmentID) }, args1 = {
@@ -146,69 +147,36 @@ public class SummariesControlAction extends DispatchAction {
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionPeriod);
             for (Professorship professorship : teacher.getProfessorships()) {
 
-                Double lessonHours = 0.0, summaryHours = 0.0, percentage = 0.0, shiftDifference = 0.0, 
-                    courseSummaryHours = 0.0, courseDifference = 0.0;
+                Double lessonHours = 0.0, summaryHours = 0.0, percentage = 0.0, shiftDifference = 0.0, courseSummaryHours = 0.0, courseDifference = 0.0;
 
                 if (professorship.belongsToExecutionPeriod(executionPeriod)
                         && !professorship.getExecutionCourse().isMasterDegreeOnly()) {
 
                     for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
 
-                        DegreeTeachingService degreeTeachingService = null;
+                        DegreeTeachingService degreeTeachingService = readDegreeTeachingService(
+                                teacherService, shift, professorship);
 
                         // GET LESSON HOURS
-                        if (teacherService != null) {
-                            degreeTeachingService = teacherService
-                                    .getDegreeTeachingServiceByShiftAndProfessorship(shift,
-                                            professorship);
-                            if (degreeTeachingService != null) {
-                                percentage = degreeTeachingService.getPercentage();
-                                lessonHours += getLessonHoursByExecutionCourseAndExecutionPeriod(
-                                        percentage, teacherService, professorship, shift);
-                            }
-                        }
+                        lessonHours = readLessonHours(degreeTeachingService, teacherService,
+                                professorship, shift, percentage, lessonHours);
 
                         // GET SHIFT SUMMARIES HOURS
                         if (degreeTeachingService != null) {
-                            for (Summary summary : shift.getAssociatedSummaries()) {
-                                if (summary.getProfessorship() != null
-                                        && summary.getProfessorship().equals(professorship)) {
-                                    Lesson lesson = SummaryUtils.getSummaryLesson(summary);
-                                    if (lesson != null) {
-                                        summaryHours += lesson.hours();
-                                    } else {
-                                        if (!shift.getAssociatedLessons().isEmpty()) {
-                                            summaryHours += shift.getAssociatedLessons().get(0).hours();
-                                        }
-                                    }
-                                }
-                            }
+                            summaryHours = readSummaryHours(professorship, shift, summaryHours);
                         }
 
                         // GET TOTAL SUMMARY HOURS
-                        for (Summary summary : shift.getAssociatedSummaries()) {
-                            if (summary.getProfessorship() != null
-                                    && summary.getProfessorship().equals(professorship)) {
-                                Lesson lesson = SummaryUtils.getSummaryLesson(summary);
-                                if (lesson != null) {
-                                    courseSummaryHours += lesson.hours();
-                                } else {
-                                    if (!shift.getAssociatedLessons().isEmpty()) {
-                                        courseSummaryHours += shift.getAssociatedLessons().get(0)
-                                                .hours();
-                                    }
-                                }
-                            }
-                        }
+                        courseSummaryHours = readSummaryHours(professorship, shift, courseSummaryHours);
                     }
-
+                                        
                     summaryHours = NumberUtils.formatNumber(summaryHours, 1);
                     lessonHours = NumberUtils.formatNumber(lessonHours, 1);
                     courseSummaryHours = NumberUtils.formatNumber(courseSummaryHours, 1);
-
+                    
                     shiftDifference = getDifference(lessonHours, summaryHours);
                     courseDifference = getDifference(lessonHours, courseSummaryHours);
-
+                   
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
 
@@ -220,44 +188,122 @@ public class SummariesControlAction extends DispatchAction {
                     allListElements.add(listElementDTO);
                 }
             }
-        }        
-        
-        Collections.sort(allListElements, new ReverseComparator(new BeanComparator("teacherNumber")));                      
+        }
+
+        Collections.sort(allListElements, new BeanComparator("teacherNumber"));
         request.setAttribute("listElements", allListElements);
-           
+
         return allListElements;
     }
-    
-    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
-            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException, FenixFilterException{
+
+    private DegreeTeachingService readDegreeTeachingService(TeacherService teacherService, Shift shift,
+            Professorship professorship) {
+        DegreeTeachingService degreeTeachingService = null;
+        if (teacherService != null) {
+            degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(
+                    shift, professorship);
+        }
+        return degreeTeachingService;
+    }
+
+    private Double readLessonHours(DegreeTeachingService degreeTeachingService,
+            TeacherService teacherService, Professorship professorship, Shift shift, Double percentage,
+            Double lessonHours) {
         
+        if (degreeTeachingService != null) {
+            percentage = degreeTeachingService.getPercentage();
+            lessonHours += getLessonHoursByExecutionCourseAndExecutionPeriod(percentage, teacherService,
+                    professorship, shift);
+        }
+        return lessonHours;
+    }
+
+    private Double readSummaryHours(Professorship professorship, Shift shift, Double summaryHours) {
+        for (Summary summary : shift.getAssociatedSummaries()) {
+            if (summary.getProfessorship() != null && summary.getProfessorship().equals(professorship)) {
+                Lesson lesson = SummaryUtils.getSummaryLesson(summary);
+                if (lesson != null) {
+                    summaryHours += lesson.hours();
+                } else {
+                    if (!shift.getAssociatedLessons().isEmpty()) {
+                        summaryHours += shift.getAssociatedLessons().get(0).hours();
+                    }
+                }
+            }
+        }
+        return summaryHours;
+    }
+
+    public ActionForward exportToExcel(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+
         DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
         String departmentID = (String) dynaActionForm.get("department");
-        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");            
-        
+        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
+
         List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
-        
         try {
+            String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename=" + "xpto" + ".xls");
-            
-            ServletOutputStream writer = response.getOutputStream();            
+            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+
+            ServletOutputStream writer = response.getOutputStream();
             exportToXls(list, writer);
-            
-            writer.flush();              
+
+            writer.flush();
             response.flushBuffer();
-        
+
         } catch (IOException e) {
-            throw new FenixServiceException();           
-        }        
+            throw new FenixServiceException();
+        }
         return null;
     }
 
-    private void exportToXls(final List<SummariesControlElementDTO> allListElements, OutputStream outputStream) throws IOException {        
-        
-        final List<String> headers = getHeaders();
+    public ActionForward exportToCSV(ActionMapping mapping, ActionForm actionForm,
+            HttpServletRequest request, HttpServletResponse response) throws FenixServiceException,
+            FenixFilterException {
+
+        DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
+        String departmentID = (String) dynaActionForm.get("department");
+        String executionPeriodID = (String) dynaActionForm.get("executionPeriod");
+
+        List<SummariesControlElementDTO> list = getListing(request, departmentID, executionPeriodID);
+
+        try {
+            String filename = "ControloSumarios:" + getFileName(Calendar.getInstance().getTime());
+            response.setContentType("text/plain");
+            response.setHeader("Content-disposition", "attachment; filename=" + filename + ".csv");
+
+            ServletOutputStream writer = response.getOutputStream();
+            exportToCSV(list, writer);
+
+            writer.flush();
+            response.flushBuffer();
+
+        } catch (IOException e) {
+            throw new FenixServiceException();
+        }
+        return null;
+    }
+
+    private void exportToXls(final List<SummariesControlElementDTO> allListElements,
+            OutputStream outputStream) throws IOException {
+        final List<Object> headers = getHeaders();
         final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários", headers);
-        
+        fillSpreadSheet(allListElements, spreadsheet);
+        spreadsheet.exportToXLSSheet(outputStream);
+    }
+
+    private void exportToCSV(final List<SummariesControlElementDTO> allListElements,
+            OutputStream outputStream) throws IOException {
+        final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários");
+        fillSpreadSheet(allListElements, spreadsheet);
+        spreadsheet.exportToCSV(outputStream, ";");
+    }
+
+    private void fillSpreadSheet(final List<SummariesControlElementDTO> allListElements,
+            final Spreadsheet spreadsheet) {
         for (final SummariesControlElementDTO summariesControlElementDTO : allListElements) {
             final Row row = spreadsheet.addRow();
             row.setCell(summariesControlElementDTO.getTeacherName());
@@ -268,13 +314,12 @@ public class SummariesControlAction extends DispatchAction {
             row.setCell(summariesControlElementDTO.getSummaryHours().toString());
             row.setCell(summariesControlElementDTO.getShiftDifference().toString());
             row.setCell(summariesControlElementDTO.getCourseSummaryHours().toString());
-            row.setCell(summariesControlElementDTO.getCourseDifference().toString());                       
+            row.setCell(summariesControlElementDTO.getCourseDifference().toString());
         }
-        spreadsheet.exportToXLSSheet(outputStream);
     }
 
-    private List<String> getHeaders() {
-        final List<String> headers = new ArrayList<String>();
+    private List<Object> getHeaders() {
+        final List<Object> headers = new ArrayList<Object>();
         headers.add("Nome");
         headers.add("Número");
         headers.add("Categoria");
@@ -365,5 +410,16 @@ public class SummariesControlAction extends DispatchAction {
 
         List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(allExecutionPeriods);
         request.setAttribute("executionPeriods", executionPeriods);
+    }
+
+    private String getFileName(Date date) throws FenixFilterException, FenixServiceException {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minutes = calendar.get(Calendar.MINUTE);
+        return (day + "-" + month + "-" + year + "_" + hour + ":" + minutes);
     }
 }
