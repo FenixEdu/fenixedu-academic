@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -148,5 +149,13 @@ public abstract class DomainObject extends DomainObject_Base implements Serializ
 	    }
 	    myClass = myClass.getSuperclass();
 	}
+    }
+    
+    protected String getUser() {
+    	if(AccessControl.getUserView() != null) {
+    		return AccessControl.getUserView().getUtilizador();
+    	} else {
+    		return System.getProperty("user.name", "FENIX");
+    	}
     }
 }
