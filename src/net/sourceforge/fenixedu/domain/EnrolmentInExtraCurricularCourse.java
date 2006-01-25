@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
+
 
 /**
  * @author dcs-rjao
@@ -8,8 +11,17 @@ package net.sourceforge.fenixedu.domain;
  */
 
 public class EnrolmentInExtraCurricularCourse extends EnrolmentInExtraCurricularCourse_Base {
-    public EnrolmentInExtraCurricularCourse() {
+    protected EnrolmentInExtraCurricularCourse() {
         super();
+    }
+    
+    public EnrolmentInExtraCurricularCourse(StudentCurricularPlan studentCurricularPlan,
+            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+            EnrollmentCondition enrolmentCondition, String createdBy) {
+    	this();
+    	initializeAsNew(studentCurricularPlan, curricularCourse,
+                executionPeriod, enrolmentCondition, createdBy);
+    	createEnrolmentLog(EnrolmentAction.ENROL);
     }
 
     public String toString() {

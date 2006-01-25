@@ -6,11 +6,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.log.EnrolmentLog;
+import net.sourceforge.fenixedu.util.EnrolmentAction;
 import net.sourceforge.fenixedu.util.EnrolmentEvaluationState;
 
 import org.apache.commons.collections.Predicate;
@@ -26,10 +30,19 @@ public class Enrolment extends Enrolment_Base {
 
     private Integer accumulatedWeight;
 
-    public Enrolment() {
+    protected Enrolment() {
         this.setOjbConcreteClass(this.getClass().getName());
     }
 
+    public Enrolment(StudentCurricularPlan studentCurricularPlan,
+            CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
+            EnrollmentCondition enrolmentCondition, String createdBy) {
+    	this();
+    	initializeAsNew(studentCurricularPlan, curricularCourse,
+                executionPeriod, enrolmentCondition, createdBy);
+    	createEnrolmentLog(EnrolmentAction.ENROL);
+    }
+    
     public Integer getAccumulatedWeight() {
         return accumulatedWeight;
     }
@@ -38,7 +51,7 @@ public class Enrolment extends Enrolment_Base {
         this.accumulatedWeight = accumulatedWeight;
     }
 
-    public void initializeAsNew(StudentCurricularPlan studentCurricularPlan,
+    protected void initializeAsNew(StudentCurricularPlan studentCurricularPlan,
             CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             EnrollmentCondition enrolmentCondition, String createdBy) {
         initializeAsNewWithoutEnrolmentEvaluation(studentCurricularPlan, curricularCourse,
@@ -46,7 +59,7 @@ public class Enrolment extends Enrolment_Base {
         createEnrolmentEvaluationWithoutGrade();
     }
 
-    public void initializeAsNewWithoutEnrolmentEvaluation(StudentCurricularPlan studentCurricularPlan,
+    protected void initializeAsNewWithoutEnrolmentEvaluation(StudentCurricularPlan studentCurricularPlan,
             CurricularCourse curricularCourse, ExecutionPeriod executionPeriod,
             EnrollmentCondition enrolmentCondition, String createdBy) {
         setCurricularCourse(curricularCourse);
@@ -87,6 +100,8 @@ public class Enrolment extends Enrolment_Base {
     }
 
     public void delete() {
+    	createEnrolmentLog(EnrolmentAction.UNENROL);
+    	
         removeExecutionPeriod();
         removeStudentCurricularPlan();
         removeCurricularCourse();
@@ -254,7 +269,7 @@ public class Enrolment extends Enrolment_Base {
         return enrolmentEvaluation;
     }
 
-    private void createEnrolmentEvaluationWithoutGrade() {
+    protected void createEnrolmentEvaluationWithoutGrade() {
 
         EnrolmentEvaluation enrolmentEvaluation = getEnrolmentEvaluationByEnrolmentEvaluationTypeAndGrade(
                 EnrolmentEvaluationType.NORMAL, null);
@@ -455,5 +470,9 @@ public class Enrolment extends Enrolment_Base {
 
     public Boolean isFirstTime() {
         return this.getStudentCurricularPlan().getEnrolments(this.getCurricularCourse()).size() == 1;
+    }
+    
+    protected void createEnrolmentLog(EnrolmentAction action) {
+    	EnrolmentLog enrolmentLog = new EnrolmentLog(action, this.getStudentCurricularPlan().getStudent(), this.getCurricularCourse(), this.getExecutionPeriod(), getUser());
     }
 }
