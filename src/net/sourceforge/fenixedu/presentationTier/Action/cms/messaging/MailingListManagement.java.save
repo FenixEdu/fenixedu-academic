@@ -18,9 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.UserGroup;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailConversation;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailMessage;
+import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.domain.cms.messaging.MailingList;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -39,7 +40,7 @@ import org.apache.struts.util.MessageResources;
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
  *         <br/> Created on 8:55:20,18/Out/2005
- * @version $Id$
+ * @version $Id: MailingListManagement.java,v 1.3 2006/01/07 00:42:00 lepc Exp $
  */
 public class MailingListManagement extends FenixDispatchAction
 {
@@ -47,32 +48,32 @@ public class MailingListManagement extends FenixDispatchAction
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException
 	{
 		MessageResources resources = this.getResources(request, "CMS_RESOURCES");
-		StringBuilder mailingListDefaultName = new StringBuilder(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.abbreviation.label"));
-		StringBuilder mailingListDefaultDescription = new StringBuilder(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.mailingList.label"));
+StringBuffer mailingListDefaultName = new StringBuffer(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.abbreviation.label"));
+		StringBuffer mailingListDefaultDescription = new StringBuffer(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.mailingList.label"));
 		DynaActionForm mailingListForm = (DynaActionForm) actionForm;
 		Integer groupID = new Integer((String) request.getParameter("groupId"));
 		mailingListForm.set("groupID", groupID);
-		Group group = null;
+		UserGroup group = null;
 		try
 		{
 			Person person = this.getLoggedPerson(request);
-// FIXME: needs to be implemented in a different way
-//			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
-//			{
-//				UserGroup currentGroup = iter.next();
-//				if (currentGroup.getIdInternal().equals(groupID))
-//				{
-//					group = currentGroup;
-//					break;
-//				}
-//			}
+			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+			{
+				UserGroup currentGroup = iter.next();
+				if (currentGroup.getIdInternal().equals(groupID))
+				{
+					group = currentGroup;
+					break;
+				}
+			}
 		}
 		catch (Exception e)
 		{
 			throw new FenixActionException(e);
 		}
+		mailingListDefaultName.append("_").append(group.getName());
 		mailingListForm.set("name", mailingListDefaultName.toString());
-		mailingListDefaultDescription.append(" ").append(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.for.label"));
+		mailingListDefaultDescription.append(" ").append(resources.getMessage(this.getLocale(request), "cms.messaging.mailingList.for.label")).append(" ").append(group.getName());
 		mailingListForm.set("description", mailingListDefaultDescription.toString());
 		mailingListForm.set("address", mailingListDefaultName.toString().replace(" ", "_"));
 
@@ -115,18 +116,17 @@ public class MailingListManagement extends FenixDispatchAction
 		try
 		{
 			Person person = this.getLoggedPerson(request);
-			Collection<Group> mailingListUserGroups = new ArrayList<Group>();
+			Collection<UserGroup> mailingListUserGroups = new ArrayList<UserGroup>();
 
-// FIXME: needs to be implemented in a different way
-//			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
-//			{
-//				UserGroup group = iter.next();
-//				if (group.getIdInternal().equals(groupId))
-//				{
-//					mailingListUserGroups.add(group);
-//				}
-//
-//			}
+			for (Iterator<UserGroup> iter = person.getUserGroupsIterator(); iter.hasNext();)
+			{
+				UserGroup group = iter.next();
+				if (group.getIdInternal().equals(groupId))
+				{
+					mailingListUserGroups.add(group);
+				}
+
+			}
 			Object writeArgs[] =
 			{ name, description, address, aliases, mailingListUserGroups,true,true, person };
 			mailingList = (MailingList) ServiceUtils.executeService(userView, "WriteMailingList", writeArgs);
@@ -167,7 +167,7 @@ public class MailingListManagement extends FenixDispatchAction
 			throw new FenixActionException(e);
 		}
 
-		StringBuilder fileNameBuffer = new StringBuilder();
+		StringBuffer fileNameBuffer = new StringBuffer();
 		Calendar now = new GregorianCalendar();
 		fileNameBuffer.append(mailingListToView.getAddress()).append("_").append(now.get(Calendar.DAY_OF_MONTH));
 		fileNameBuffer.append("-").append(now.get(Calendar.MONTH)).append("-").append(now.get(Calendar.YEAR));		

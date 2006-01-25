@@ -12,6 +12,13 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.DynaActionForm;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.cms.basic.WriteCmsConfiguration;
@@ -91,10 +98,16 @@ public class CmsConfigurationManagement extends FenixDispatchAction
 			Object[] args = new Object[]
 			{ CmsConfigurationManagement.fenixCmsName, config };
 			ServiceUtils.executeService(userView, "WriteCmsConfiguration", args);
+			
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.configuration.viewConfiguration.writeConfiguration.sucessMessage.label"));
+			saveMessages(request, messages);
 		}
 		catch (FenixServiceException e)
 		{
-			throw new FenixActionException(e);
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.configuration.viewConfiguration.writeConfiguration.errorMessage.label"));
+			saveErrors(request, messages);
 		}
 
 		return this.prepare(mapping, actionForm, request, response);
@@ -152,9 +165,17 @@ public class CmsConfigurationManagement extends FenixDispatchAction
 			Object[] args = new Object[]
 			{ CmsConfigurationManagement.fenixCmsName };
 			ServiceUtils.executeService(userView, "DeleteCms", args);
+			
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.configuration.viewConfiguration.deleteCms.sucessMessage.label"));
+			saveMessages(request, messages);
 		}
 		catch (FenixServiceException e)
 		{
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.configuration.viewConfiguration.deleteCms.errorMessage.label"));
+			saveErrors(request, messages);
+			e.printStackTrace();
 			throw new FenixActionException(e);
 		}
 		return mapping.findForward("cmsDeleted");
@@ -173,10 +194,16 @@ public class CmsConfigurationManagement extends FenixDispatchAction
 			ServiceUtils.executeService(userView, "CreateCms", args);
 			request.setAttribute("cmsExists", true);
 			
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.configuration.viewConfiguration.createCms.sucessMessage.label"));
+			saveMessages(request, messages);
+			
 		}
 		catch (FenixServiceException e)
 		{
-			throw new FenixActionException(e);
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.configuration.viewConfiguration.createCms.errorMessage.label"));
+			saveErrors(request, messages);
 		}
 		return mapping.findForward("cmsCreated");
 	}

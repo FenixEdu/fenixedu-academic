@@ -10,11 +10,10 @@
 <%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroup" %>
 <%@ page import="net.sourceforge.fenixedu.domain.accessControl.UserGroupTypes"%>
 
-<span class="error"><html:errors/></span>
 <logic:present name="group">
 	<bean:define id="group" name="group" type="net.sourceforge.fenixedu.domain.accessControl.UserGroup"/>
 	<bean:define id="readableGroupType" value="<%=UserGroupTypes.userGroupTypeByClass(group.getClass()).toString()%>"/>
-	<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.label"/></h2>	
+	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.label"/></h3>	
 	<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.userGroupsManagement.creating.type.label"/></b> <bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" name="readableGroupType" bundle="ENUMERATION_RESOURCES"/><br/>
 	<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.name.label"/>:</b> <bean:write name="group" property="name"/><br/>
 	<b><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.description.label"/>:</b> <bean:write name="group" property="description"/><br/>

@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
-<h3><bean:message  bundle="CMS_RESOURCES" key="cms.configuration.viewConfiguration.title.label"/></h3>
 <bean:define name="cmsExists" id="cmsPresent"/>
 <logic:equal name="cmsPresent" value="true">
 	<html:form action="/cmsConfigurationManagement">

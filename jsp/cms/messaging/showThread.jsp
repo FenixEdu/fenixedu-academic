@@ -15,7 +15,6 @@
 <%@ page import="java.util.IdentityHashMap" %>
 
 
-<span class="error"><html:errors/></span>
 <logic:present name="mailingList">
 <%
 	Map params = new HashMap();
@@ -26,7 +25,7 @@
 		<bean:define id="mailConversation" name="mailConversation" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailConversation"/>
 		<bean:define id="numberOfMails" type="java.lang.Integer" name="mailingList" property="mailMessagesCount"/>	
 		
-		<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.title.label"/></h2> 
+		<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.title.label"/></h3> 
 		<table>
 		<tr>
 			<td>
@@ -177,7 +176,7 @@
 			</tr>													
 	</table>
 
-	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.firstMessage.label"/></h3>
+	<h4><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.firstMessage.label"/></h4>
 	<bean:define id="firstMessage" name="mailConversation" property="firstMessage" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailMessage"/>
 	
 	<table width="100%" class="style1">
@@ -200,7 +199,7 @@
 			
 	</table>
 
-	<h3>Respostas</h3>
+	<h4>Respostas</h4>
 	<%
 		StringBuilder targetUrl = new StringBuilder();
 		Collection<Integer> allMessagesToExpand = new ArrayList<Integer>();

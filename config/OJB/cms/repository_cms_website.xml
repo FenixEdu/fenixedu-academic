@@ -1,5 +1,5 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.cms.website.Website">
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite" />
+<class-descriptor class="net.sourceforge.fenixedu.domain.cms.website.WebsiteType" table="CMS_WEBSITE_TYPE"
+>
 	<field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -26,12 +26,134 @@
         name="description"
         column="description"
         jdbc-type="VARCHAR"
+    />              
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>	    
+	</reference-descriptor>	 
+	<collection-descriptor auto-retrieve="false"
+    	name="websites"
+        class-ref="net.sourceforge.fenixedu.domain.cms.website.Website">
+	    <inverse-foreignkey field-ref="keyWebsiteTpe"/>	
+   	</collection-descriptor>
+	<collection-descriptor auto-retrieve="false"
+    	name="mandatoryContents"
+        class-ref="net.sourceforge.fenixedu.domain.cms.Content">
+	    <inverse-foreignkey field-ref="keyWebsiteTpe"/>	
+   	</collection-descriptor>   	
+   	
+   		<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="websites" 
+		element-class-ref="net.sourceforge.fenixedu.domain.cms.website.Website"
+		
+		>
+		<inverse-foreignkey field-ref="keyType"/>
+	</collection-descriptor>
+
+</class-descriptor>		
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.cms.website.JSPContent" table="CMS_JSP_CONTENT"
+>
+	<field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>                     
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />   
+    <field-descriptor
+        name="target"
+        column="TARGET"
+        jdbc-type="VARCHAR"
+    />
+    <field-descriptor
+        name="keyWebsiteType"
+        column="KEY_WEBSITE_TYPE"
+        jdbc-type="INTEGER"
+    />                      
+	 <reference-descriptor auto-retrieve="false"
+    	name="creator"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyCreator"/>	    
+	</reference-descriptor>	 
+	 <reference-descriptor auto-retrieve="false"
+    	name="websiteType"
+        class-ref="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
+	    <foreignkey field-ref="keyWebsiteType"/>	    
+	</reference-descriptor>	 
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="websites"
+        class-ref="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
+	    <foreignkey field-ref="keyCreator"/>	
+   	</reference-descriptor>
+   	
+   		<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector" 
+		name="websites" 
+		element-class-ref="net.sourceforge.fenixedu.domain.cms.website.Website"
+		
+		>
+		<inverse-foreignkey field-ref="keyType"/>
+	</collection-descriptor>
+
+</class-descriptor>		
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.cms.website.Website">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite" />
+	<field-descriptor
+        name="idInternal"
+        column="ID_INTERNAL"
+        jdbc-type="INTEGER"
+        primarykey="true"
+        autoincrement="true"
+    />
+    <field-descriptor
+        name="creationDate"
+        column="CREATION_DATE"
+        jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"
+	/>                     
+    <field-descriptor
+        name="keyCreator"
+        column="KEY_CREATOR"
+        jdbc-type="INTEGER"
+    />   
+    <field-descriptor
+        name="name"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />   
+    <field-descriptor
+        name="keyType"
+        column="NAME"
+        jdbc-type="VARCHAR"
+    />       
+    <field-descriptor
+        name="description"
+        column="description"
+        jdbc-type="VARCHAR"
     />           
     <field-descriptor
         name="keyCms"
         column="KEY_CMS"
         jdbc-type="INTEGER"
     />
+    <field-descriptor
+        name="keyWebsiteType"
+        column="KEY_TYPE"
+        jdbc-type="INTEGER"
+    />    
 	 <field-descriptor
         name="readersGroup"
         column="READERS_GROUP"
@@ -44,6 +166,21 @@
         jdbc-type="BLOB"
         conversion="org.apache.ojb.broker.accesslayer.conversions.Object2ByteArrFieldConversion"
     />
+	 <reference-descriptor auto-retrieve="false"
+    	name="readers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.Group">
+	    <foreignkey field-ref="keyReadersGroup"/>
+	</reference-descriptor>	
+	 <reference-descriptor auto-retrieve="false"
+    	name="websiteType"    	
+        class-ref=" net.sourceforge.fenixedu.domain.cms.website.Website">
+	    <foreignkey field-ref="keyWebsiteType"/>
+	</reference-descriptor>		
+	 <reference-descriptor auto-retrieve="false"
+    	name="writers"
+        class-ref="net.sourceforge.fenixedu.domain.accessControl.Group">
+	    <foreignkey field-ref="keyWritersGroup"/>
+	</reference-descriptor>		                
 	<reference-descriptor auto-retrieve="false"
     	name="cms"
         class-ref="net.sourceforge.fenixedu.domain.cms.Cms">
@@ -61,6 +198,14 @@
 			>
 		<fk-pointing-to-element-class column="KEY_PARENT"/>
 		<fk-pointing-to-this-class column="KEY_CHILD" />	 
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="children"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			indirection-table="CMS_CONTENT_HIERARCHY"
+			>
+		<fk-pointing-to-element-class column="KEY_CHILD"/>
+		<fk-pointing-to-this-class column="KEY_PARENT" />	 
 	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="owners"
@@ -144,6 +289,14 @@
 			>
 		<fk-pointing-to-element-class column="KEY_PARENT"/>
 		<fk-pointing-to-this-class column="KEY_CHILD" />	 
+	</collection-descriptor>	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="children"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.Content"
+			indirection-table="CMS_CONTENT_HIERARCHY"
+			>
+		<fk-pointing-to-element-class column="KEY_CHILD"/>
+		<fk-pointing-to-this-class column="KEY_PARENT" />	 
 	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="owners"

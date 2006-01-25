@@ -65,9 +65,11 @@ public enum RoleType {
     
     PROJECTS_MANAGER,
     
-    INSTITUCIONAL_PROJECTS_MANAGER,
+    INSTITUCIONAL_PROJECTS_MANAGER,    
     
-    BOLONHA_MANAGER;
+    BOLONHA_MANAGER,
+    
+    CMS_MANAGER;
     
     public String getName() {
         return name();    

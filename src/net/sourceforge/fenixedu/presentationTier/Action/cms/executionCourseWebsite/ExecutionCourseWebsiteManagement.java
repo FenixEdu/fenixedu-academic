@@ -1,7 +1,10 @@
 /**
  * 
  */
+
+
 package net.sourceforge.fenixedu.presentationTier.Action.cms.executionCourseWebsite;
+
 
 import java.util.Collection;
 import java.util.Collections;
@@ -41,23 +44,22 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.util.MessageResources;
 
 /**
- * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>
- * <br/>
- * <br/>
- * <br/>
+ * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a>  <br/> <br/> <br/>
  * Created on 15:26:21,6/Dez/2005
  * @version $Id$
  */
 public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 {
-	public ActionForward viewAll(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-			HttpServletResponse response) throws FenixActionException, FenixFilterException
-	{		
+	public ActionForward viewAll(ActionMapping mapping, ActionForm actionForm,
+			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+			FenixFilterException
+	{
 		try
 		{
 			IUserView userView = SessionUtils.getUserView(request);
-			Collection<ExecutionCourseWebsite> websites = (Collection<ExecutionCourseWebsite>) ServiceUtils.executeService(userView,"ReadAllDomainObjects",new Object[]{ExecutionCourseWebsite.class});
-			Collection<InfoExecutionPeriod> infoExecutionPeriods = (Collection<InfoExecutionPeriod>) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);		
+			Collection<ExecutionCourseWebsite> websites = (Collection<ExecutionCourseWebsite>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[]
+			{ ExecutionCourseWebsite.class });
+			Collection<InfoExecutionPeriod> infoExecutionPeriods = (Collection<InfoExecutionPeriod>) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
 			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
 			{
 				// exclude closed execution periods
@@ -78,20 +80,20 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 				ComparatorChain comparator = new ComparatorChain();
 				comparator.addComparator(new BeanComparator("infoExecutionYear.year"), true);
 				comparator.addComparator(new BeanComparator("name"), true);
-				
-				request.setAttribute("websites",websites);
+
+				request.setAttribute("websites", websites);
 				request.setAttribute("executionPeriods", infoExecutionPeriods);
 			}
 		}
-			
+
 		catch (Exception e)
 		{
 			throw new FenixActionException(e);
 		}
-		
+
 		return mapping.findForward("showlAllExecutionCourseWebsites");
 	}
-	
+
 	public ActionForward prepareChooseExecutionPeriod(ActionMapping mapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 			FenixFilterException
@@ -131,9 +133,9 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 			comparator.addComparator(new BeanComparator("name"), true);
 			Collections.sort(infoExecutionPeriods, comparator);
 		}
-		
+
 		request.setAttribute("executionPeriods", infoExecutionPeriods);
-		return this.viewAll(mapping,actionForm,request,response);
+		return this.viewAll(mapping, actionForm, request, response);
 	}
 
 	public ActionForward prepareChooseExecDegreeAndCurYear(ActionMapping mapping, ActionForm form,
@@ -251,12 +253,12 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		}
 
 		Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
-		
+
 		request.setAttribute("courses", infoExecutionCourses);
-		request.setAttribute("viewAction",mapping.getPath());
+		request.setAttribute("viewAction", mapping.getPath());
 		return prepareChooseExecDegreeAndCurYear(mapping, form, request, response);
 	}
-	
+
 	public ActionForward createWebsite(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
 			FenixFilterException
@@ -264,53 +266,86 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		try
 		{
 			IUserView userView = SessionUtils.getUserView(request);
-			ExecutionCourseWebSiteManagementForm websiteForm = (ExecutionCourseWebSiteManagementForm) form;			
-			WriteExecutionCourseWebsiteParameters parameters =  new WriteExecutionCourseWebsite.WriteExecutionCourseWebsiteParameters();
-					
+			ExecutionCourseWebSiteManagementForm websiteForm = (ExecutionCourseWebSiteManagementForm) form;
+			WriteExecutionCourseWebsiteParameters parameters = new WriteExecutionCourseWebsite.WriteExecutionCourseWebsiteParameters();
+
 			parameters.setDescription(websiteForm.getDescription());
 			parameters.setName(websiteForm.getName());
 			parameters.setExecutionCourseID(websiteForm.getExecutionCourseID());
 			parameters.setPerson(userView.getPerson());
-			ServiceUtils.executeService(userView,"WriteExecutionCourseWebsite",new Object[]{parameters});
-			
+			ServiceUtils.executeService(userView, "WriteExecutionCourseWebsite", new Object[]
+			{ parameters });
+
 			ActionMessages messages = new ActionMessages();
-			messages.add(ActionMessages.GLOBAL_MESSAGE,new ActionMessage("cms.executionCourseWebsiteManagement.addWebsite.success.label"));
-			saveMessages(request,messages);
-			
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.executionCourseWebsiteManagement.addWebsite.success.label"));
+			saveMessages(request, messages);
+
 		}
 		catch (ExecutionCourseAlreadyHasWebsiteException e)
 		{
 			ActionMessages messages = new ActionMessages();
-			messages.add(ActionMessages.GLOBAL_MESSAGE,new ActionMessage("cms.executionCourseWebsiteManagement.addWebsite.alreadyExists.error.label"));
-			saveErrors(request,messages);
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.executionCourseWebsiteManagement.addWebsite.alreadyExists.error.label"));
+			saveErrors(request, messages);
 		}
 		catch (Exception e)
 		{
 			throw new FenixActionException(e);
 		}
 
-		
-		return this.viewAll(mapping,form,request,response);	
+		return this.viewAll(mapping, form, request, response);
 	}
-	public ActionForward deleteWebsite(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
-			FenixFilterException
+
+	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException
 	{
 
 		try
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			Integer websiteId = new Integer(request.getParameter("websiteId"));
-			ServiceUtils.executeService(userView,"DeleteExecutionCourseWebsite",new Object[]{websiteId});
+			ExecutionCourseWebsite websiteToDelete = (ExecutionCourseWebsite) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]
+			{ ExecutionCourseWebsite.class, websiteId });
+			;
+			if (websiteToDelete != null)
+			{
+				ServiceUtils.executeService(userView, "DeleteExecutionCourseWebsite", new Object[]
+				{ websiteToDelete });
+			}
+
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.executionCourseWebsiteManagement.deleteWebsite.success.label"));
+			saveMessages(request, messages);
 		}
 		catch (Exception e)
 		{
 			ActionMessages messages = new ActionMessages();
-			messages.add(ActionMessages.GLOBAL_MESSAGE,new ActionMessage("cms.executionCourseWebsiteManagement.deleteWebsite.error.label"));
-			saveErrors(request,messages);
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.executionCourseWebsiteManagement.deleteWebsite.error.label"));
+			saveErrors(request, messages);
+			e.printStackTrace();
 		}
-		
-		
-		return this.viewAll(mapping,form,request,response);
+
+		return this.viewAll(mapping, form, request, response);
+	}
+	
+	public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+			HttpServletResponse response) throws FenixActionException, FenixFilterException
+	{
+		try
+		{
+			IUserView userView = SessionUtils.getUserView(request);
+			Integer websiteId = new Integer(request.getParameter("websiteId"));
+			ExecutionCourseWebsite websiteToView = (ExecutionCourseWebsite) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]	
+			{ ExecutionCourseWebsite.class, websiteId });
+			;
+			request.setAttribute("website",websiteToView);
+		}
+		catch (Exception e)
+		{
+			ActionMessages messages = new ActionMessages();
+			messages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("cms.executionCourseWebsiteManagement.viewWebsite.error.label"));
+			saveErrors(request, messages);
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

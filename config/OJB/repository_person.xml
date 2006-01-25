@@ -429,5 +429,11 @@
         name="personalGroups"
         element-class-ref="net.sourceforge.fenixedu.domain.PersonalGroup">
         <inverse-foreignkey field-ref="keyPerson"/>
-    </collection-descriptor>
+    </collection-descriptor>	
+	<collection-descriptor proxy="true" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="createdWebsiteTypes"
+			element-class-ref="net.sourceforge.fenixedu.domain.cms.website.WebsiteType"
+			refresh="true" >
+		<inverse-foreignkey field-ref="keyCreator"/>
+	</collection-descriptor>		
 </class-descriptor>

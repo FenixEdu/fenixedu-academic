@@ -276,6 +276,8 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 	Integer keyCms;
 	Date creationDate;
 	Integer keyCreator;
+	/*ulgy as hell*/
+	Integer keyWebsiteType;
 }
     class net.sourceforge.fenixedu.domain.cms.Bin extends net.sourceforge.fenixedu.domain.cms.Content {
        }
@@ -294,6 +296,20 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
        
     class net.sourceforge.fenixedu.domain.cms.messaging.MailMessage extends net.sourceforge.fenixedu.domain.cms.Content {
        String body;
+    }
+    
+    class net.sourceforge.fenixedu.domain.cms.website.WebsiteType extends net.sourceforge.fenixedu.domain.DomainObject
+     {
+      String name;
+      String description;    
+      Date creationDate;
+      Integer keyCreator;
+
+    }
+               
+    class net.sourceforge.fenixedu.domain.cms.website.JSPContent extends net.sourceforge.fenixedu.domain.cms.Content
+    {
+      String target;      
     }
     
     class net.sourceforge.fenixedu.domain.cms.website.Website extends net.sourceforge.fenixedu.domain.cms.Bin {
@@ -5089,6 +5105,22 @@ relation SeminaryCourseEquivalency {
 }
 
 
+relation WebSiteTypeWebsite {
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole type;
+	net.sourceforge.fenixedu.domain.cms.website.Website playsRole websites
+	{
+		multiplicity *;
+	}
+}
+
+relation WebSiteTypeMandatoryContent {
+	net.sourceforge.fenixedu.domain.cms.Content playsRole mandatoryContents
+	{
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole DO_NOT_USE_ME_IM_HERE_BECAUSE_A_DML_CODE_GENERATOR_BUG;
+}
+
 relation WebSiteItemPerson {
     net.sourceforge.fenixedu.domain.WebSiteItem playsRole editedWebSiteItems {
         multiplicity *;
@@ -5173,6 +5205,15 @@ relation ContentCreation
 {
 	net.sourceforge.fenixedu.domain.Person playsRole creator;
 	net.sourceforge.fenixedu.domain.cms.Content playsRole createdContents
+	{
+		multiplicity *;
+	}
+}
+
+relation WebsiteTypeCreation
+{
+	net.sourceforge.fenixedu.domain.Person playsRole creator;
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole createdWebsiteTypes
 	{
 		multiplicity *;
 	}

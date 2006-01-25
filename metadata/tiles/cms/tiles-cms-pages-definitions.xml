@@ -75,4 +75,11 @@
 		<put name="body" value="/cms/executionCourseWebsite/showAllExecutionCourseWebsites.jsp" />
 	</definition>
 	<!-- =============================================== -->									    
+		<!-- ================= by gedl 16-12-2005 =========== -->
+	<definition name="	viewExecutionCourseWebsite" extends="cms.masterPage" >
+		<put name="body" value="/cms/executionCourseWebsite/viewExecutionCourseWebsite.jsp" />
+	</definition>
+	<!-- =============================================== -->									    
+	
+
 </tiles-definitions>

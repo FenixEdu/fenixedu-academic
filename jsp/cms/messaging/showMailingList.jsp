@@ -17,12 +17,11 @@
 		StringBuilder replyToList = new StringBuilder();
 %>
 
-<span class="error"><html:errors/></span>
 <logic:present name="mailingList">
 	<bean:define id="mailingList" name="mailingList" type="net.sourceforge.fenixedu.domain.cms.messaging.IMailingList"/>
 	<bean:define id="numberOfConversations" type="java.lang.Integer" name="mailingList" property="mailConversationsCount"/>
 	
-	<h2><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.title.label"/></h2> 
+	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.title.label"/></h3> 
 	<table>
 		<tr>
 			<td>
@@ -184,7 +183,7 @@
 			</tr>							
 	</table>
 	
-	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversations.title"/></h3>
+	<h4><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.conversations.title"/></h4>
 	<%
 	replyToList = new StringBuilder().append("mailto:").append(mailingList.getAddress());
 	replyToList.append("@").append(mailingList.getCms().getConfiguration().getMailingListsHostToUse());
@@ -236,7 +235,7 @@
 		</logic:iterate>
 	</table>
 	
-	<h3><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.lastMessages.title"/></h3>
+	<h4><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.lastMessages.title"/></h4>
 	<table width="100%" class="style1">
 			<tr>
 				<th class="listClasses-header" width="15%"><bean:message bundle="MANAGER_RESOURCES" bundle="CMS_RESOURCES" key="cms.messaging.mailingList.viewMailingList.subject.title"/></th>

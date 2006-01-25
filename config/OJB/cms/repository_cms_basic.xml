@@ -38,7 +38,6 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.Content">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.Bin" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailMessage" />
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.Website"/>
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -114,6 +113,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.Bin">              
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailingList" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailConversation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.Website"/>
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
