@@ -160,8 +160,7 @@ public class RegisterCandidate extends Service {
         ExecutionPeriod executionPeriod = persistentSupport.getIPersistentExecutionPeriod()
                 .readActualExecutionPeriod();
         for (CandidateEnrolment candidateEnrolment : candidateEnrolments) {
-            Enrolment enrolment = DomainFactory.makeEnrolment();
-            enrolment.initializeAsNew(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
+            Enrolment enrolment = DomainFactory.makeEnrolment(studentCurricularPlan, candidateEnrolment.getCurricularCourse(),
                     executionPeriod, EnrollmentCondition.FINAL, userView.getUtilizador());
         }
     }

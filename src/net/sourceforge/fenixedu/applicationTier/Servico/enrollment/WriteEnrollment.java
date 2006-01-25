@@ -41,14 +41,12 @@ public class WriteEnrollment extends Service {
 
             Enrolment enrolmentToWrite;
             if (enrollmentClass == null || enrollmentClass.intValue() == 1 || enrollmentClass.intValue() == 0) {
-                enrolmentToWrite = DomainFactory.makeEnrolment();
+                enrolmentToWrite = DomainFactory.makeEnrolment(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
             } else if (enrollmentClass.intValue() == 2) {
-                enrolmentToWrite = DomainFactory.makeEnrolmentInOptionalCurricularCourse();
+                enrolmentToWrite = DomainFactory.makeEnrolmentInOptionalCurricularCourse(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
             } else {
-                enrolmentToWrite = DomainFactory.makeEnrolmentInExtraCurricularCourse();
+                enrolmentToWrite = DomainFactory.makeEnrolmentInExtraCurricularCourse(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
             }
-			
-			enrolmentToWrite.initializeAsNew(studentCurricularPlan,curricularCourse,executionPeriod,getEnrollmentCondition(enrollmentType),userView.getUtilizador());
 
 		} else {
             if (enrollment.getCondition() == EnrollmentCondition.INVISIBLE) {

@@ -92,7 +92,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 				if (extraCurricularCourses.contains(enrolment.getIdInternal())) {
 					if (!(enrolment instanceof EnrolmentInExtraCurricularCourse)) {
 
-						Enrolment auxEnrolment = DomainFactory.makeEnrolmentInExtraCurricularCourse();
+						Enrolment auxEnrolment = DomainFactory.makeEnrolmentInExtraCurricularCourse(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(), enrolment.getCondition(), enrolment.getCreatedBy());
 
 						copyEnrollment(enrolment, auxEnrolment);
 						setEnrolmentCreationInformation(userView, auxEnrolment);
@@ -106,7 +106,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 				} else {
 					if (enrolment instanceof EnrolmentInExtraCurricularCourse) {
 
-						Enrolment auxEnrolment = DomainFactory.makeEnrolment();
+						Enrolment auxEnrolment = DomainFactory.makeEnrolment(enrolment.getStudentCurricularPlan(), enrolment.getCurricularCourse(), enrolment.getExecutionPeriod(), enrolment.getCondition(), enrolment.getCreatedBy());
 
 						copyEnrollment(enrolment, auxEnrolment);
 						setEnrolmentCreationInformation(userView, auxEnrolment);
@@ -136,13 +136,8 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 	 */
 	private void copyEnrollment(Enrolment enrolment, Enrolment auxEnrolment) {
 
-		auxEnrolment.setCreatedBy(enrolment.getCreatedBy());
 		auxEnrolment.setCreationDate(enrolment.getCreationDate());
 		auxEnrolment.setAccumulatedWeight(enrolment.getAccumulatedWeight());
-		auxEnrolment.setCurricularCourse(enrolment.getCurricularCourse());
-		auxEnrolment.setExecutionPeriod(enrolment.getExecutionPeriod());
-		auxEnrolment.setStudentCurricularPlan(enrolment.getStudentCurricularPlan());
-		auxEnrolment.setCondition(enrolment.getCondition());
 		auxEnrolment.setEnrolmentEvaluationType(enrolment.getEnrolmentEvaluationType());
 		auxEnrolment.setEnrollmentState(enrolment.getEnrollmentState());
 
