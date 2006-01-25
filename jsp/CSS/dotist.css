@@ -128,7 +128,7 @@ a:hover {
 	float: left;
 	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
 	font-size: 1.0em;
-	#: 1.25em;
+	line-height: 1.25em;
 	color: #223D4A;
 	text-decoration: none;
 	margin: 0px 10px 0px 10px;
