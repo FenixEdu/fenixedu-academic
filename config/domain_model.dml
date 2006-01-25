@@ -788,8 +788,10 @@ class net.sourceforge.fenixedu.domain.EnrolmentEvaluation extends net.sourceforg
 
 class net.sourceforge.fenixedu.domain.log.EnrolmentLog extends net.sourceforge.fenixedu.domain.DomainObject {
     Integer keyCurricularCourse;
+    Integer keyExecutionPeriod;    
     Date date;
     Integer keyStudent;
+    String who;
     EnrolmentAction action;
 }
     
@@ -4794,6 +4796,13 @@ relation StudentEnrolmentLog {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole student;
+}
+
+relation ExecutionPeriodEnrolmentLog {
+	net.sourceforge.fenixedu.domain.log.EnrolmentLog playsRole enrolmentLogs {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole executionPeriod;
 }
 
 relation StudentExecutionYear {
