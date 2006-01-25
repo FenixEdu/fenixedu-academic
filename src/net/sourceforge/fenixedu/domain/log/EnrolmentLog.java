@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain.log;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
 
@@ -15,9 +16,6 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
  */
 public class EnrolmentLog extends EnrolmentLog_Base {
 
-    public EnrolmentLog() {
-    }
-
     /**
      * @param date
      * @param action
@@ -26,14 +24,13 @@ public class EnrolmentLog extends EnrolmentLog_Base {
      * @param curricularCourse
      * @param keyCurricularCourse
      */
-    public EnrolmentLog(Date date, EnrolmentAction action, Student student, Integer keyStudent,
-            CurricularCourse curricularCourse, Integer keyCurricularCourse) {
-        this.setDate(date);
+    public EnrolmentLog(EnrolmentAction action, Student student, CurricularCourse curricularCourse, ExecutionPeriod executionPeriod, String who) {
+        this.setDate(new Date());
         this.setAction(action);
-        this.setStudent(student);
-        this.setKeyStudent(keyStudent);
+        this.setStudent(student);        
         this.setCurricularCourse(curricularCourse);
-        this.setKeyCurricularCourse(keyCurricularCourse);
+        this.setExecutionPeriod(executionPeriod);
+        this.setWho(who);
     }
 
 }
