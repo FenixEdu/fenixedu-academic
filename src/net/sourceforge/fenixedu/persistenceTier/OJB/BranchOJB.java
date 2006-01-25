@@ -16,22 +16,6 @@ import org.apache.ojb.broker.query.Criteria;
  */
 
 public class BranchOJB extends PersistentObjectOJB implements IPersistentBranch {
-    public BranchOJB() {
-    }
-
-    public List readAll() throws ExcepcaoPersistencia {
-        Criteria crit = new Criteria();
-        return queryList(Branch.class, crit);
-
-    }
-
-//    public List readByExecutionDegree(ExecutionDegree executionDegree) throws ExcepcaoPersistencia {
-//        Criteria crit = new Criteria();
-//        crit.addEqualTo("degreeCurricularPlan.idInternal", executionDegree.getDegreeCurricularPlan()
-//                .getIdInternal());
-//        return queryList(Branch.class, crit);
-//
-//    }
 
     public Branch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId,
             String branchName) throws ExcepcaoPersistencia {

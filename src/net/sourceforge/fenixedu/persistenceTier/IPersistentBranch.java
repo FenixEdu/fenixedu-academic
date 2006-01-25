@@ -14,8 +14,6 @@ import net.sourceforge.fenixedu.domain.branch.BranchType;
 
 public interface IPersistentBranch extends IPersistentObject {
 
-    public List readAll() throws ExcepcaoPersistencia;
-
     public Branch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId,
             String branchName) throws ExcepcaoPersistencia;
 

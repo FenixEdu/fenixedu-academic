@@ -14,10 +14,6 @@ import org.apache.commons.collections.Predicate;
 
 public class BranchVO extends VersionedObjectsBase implements IPersistentBranch {
 
-	public List readAll() throws ExcepcaoPersistencia {
-		return (List)readAll(Branch.class);
-	}
-
 	public Branch readByDegreeCurricularPlanAndBranchName(Integer degreeCurricularPlanId, final String branchName) throws ExcepcaoPersistencia {
 		DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) readByOID(DegreeCurricularPlan.class,degreeCurricularPlanId);
 		
