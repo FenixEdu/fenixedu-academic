@@ -4,6 +4,9 @@
 	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
 </center>
 <br />
+
+<div style="font-size: 1.20em;">
+
 <strong>Mensagens e Avisos</strong>
 <p><strong>&raquo; 
 	<html:link module="/manager" page="/advisoriesManagement/listCurrentAdvisories.faces">
@@ -188,7 +191,6 @@
 	</html:link>
 	
 </strong></p>
-
 <br />
 <strong>Renderers</strong>
 <p>
@@ -198,3 +200,6 @@
 <p>
     <strong>&raquo;<html:link module="/manager" page="/renderers/index.do">Exemplos</html:link></strong>
 </p>
+
+
+</div>
