@@ -4,18 +4,20 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 
 public enum BolonhaDegreeType {
 
-    DEGREE(CurricularPeriodType.THREE_YEAR,3),
+    DEGREE(CurricularPeriodType.THREE_YEAR,3,180),
 
-    MASTER_DEGREE(CurricularPeriodType.TWO_YEAR,2),
+    MASTER_DEGREE(CurricularPeriodType.TWO_YEAR,2,120),
 
-    INTEGRATED_MASTER_DEGREE(CurricularPeriodType.FIVE_YEAR, 5);
+    INTEGRATED_MASTER_DEGREE(CurricularPeriodType.FIVE_YEAR, 5,300);
 
     private CurricularPeriodType curricularPeriodType;
     private int years;
+    private double defaultEctsCredits;
 
-    private BolonhaDegreeType(CurricularPeriodType curricularPeriodType, int years) {
+    private BolonhaDegreeType(CurricularPeriodType curricularPeriodType, int years, double defaultEctsCredits) {
         this.curricularPeriodType = curricularPeriodType;
         this.years = years;
+        this.defaultEctsCredits = defaultEctsCredits;
     }
 
     public String getName() {
@@ -28,6 +30,10 @@ public enum BolonhaDegreeType {
     
     public int getYears() {
         return this.years;
+    }
+
+    public double getDefaultEctsCredits() {
+        return defaultEctsCredits;
     }
 
 }
