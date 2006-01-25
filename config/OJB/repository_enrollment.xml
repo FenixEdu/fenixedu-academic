@@ -419,6 +419,16 @@
 		jdbc-type="INTEGER"
 	/>
 	<field-descriptor
+		name="keyExecutionPeriod"
+		column="KEY_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+		name="who"
+		column="WHO"
+		jdbc-type="VARCHAR"
+	/>	
+	<field-descriptor
 		name="date"
 		column="CREATION_DATE"
 		jdbc-type="TIMESTAMP"
@@ -442,6 +452,12 @@
 			>
 		<foreignkey field-ref="keyCurricularCourse"/>
 	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="executionPeriod"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod"
+			>
+		<foreignkey field-ref="keyExecutionPeriod"/>
+	</reference-descriptor>	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
