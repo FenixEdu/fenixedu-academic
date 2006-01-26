@@ -62,15 +62,17 @@ public enum RoleType {
     DELEGATE,
 
     FIRST_TIME_STUDENT,
-    
+
     PROJECTS_MANAGER,
-    
+
     INSTITUCIONAL_PROJECTS_MANAGER,    
-    
+
     BOLONHA_MANAGER,
-    
-    CMS_MANAGER;
-    
+
+    CMS_MANAGER,
+
+    SPACE_MANAGER;
+
     public String getName() {
         return name();    
 

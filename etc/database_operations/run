@@ -23,3 +23,4 @@ execute "Added column CLASS_NAME to ReimbursementTransaction" alterTableReimburs
 execute "Remove some inactive columns from Employee Table" alterEmployeeTable.sql
 execute "Dropped column ECTS_CREDITS from DegreeCurricularPlan" dropEctsCreditsFromDegreeCurricularPlan.sql
 execute "Add new ENROLMENT_LOG columns" alterEnrolmentLog.sql
+execute "Add SpaceManager role to Table Role" addSpaceManagerRole.sql
