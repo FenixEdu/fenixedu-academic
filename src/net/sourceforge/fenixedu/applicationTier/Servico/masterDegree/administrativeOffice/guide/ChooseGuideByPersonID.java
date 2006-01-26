@@ -26,7 +26,6 @@ public class ChooseGuideByPersonID extends Service {
 
 	public List run(Integer personID) throws Exception {
 
-		ISuportePersistente persistentSupport = null;
 		List guides = null;
 		Person person = null;
 

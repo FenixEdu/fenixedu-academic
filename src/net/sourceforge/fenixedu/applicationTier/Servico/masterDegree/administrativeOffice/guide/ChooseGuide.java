@@ -164,7 +164,6 @@ public class ChooseGuide extends Service {
 	public List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType)
 			throws Exception {
 
-		ISuportePersistente persistentSupport = null;
 		List guides = null;
 		Person person = null;
 

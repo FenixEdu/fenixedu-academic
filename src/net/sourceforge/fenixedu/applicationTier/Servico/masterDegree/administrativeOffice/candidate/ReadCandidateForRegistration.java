@@ -25,7 +25,6 @@ public class ReadCandidateForRegistration extends Service {
 	public List run(Integer executionDegreeCode) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		ISuportePersistente persistentSupport = null;
 		List result = null;
 
 		// Get the Actual Execution Year

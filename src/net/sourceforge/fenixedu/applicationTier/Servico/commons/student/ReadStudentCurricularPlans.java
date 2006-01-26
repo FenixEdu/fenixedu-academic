@@ -25,7 +25,6 @@ public class ReadStudentCurricularPlans extends Service {
 
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-        ISuportePersistente persistentSupport = null;
 
         List studentCurricularPlans = null;
 

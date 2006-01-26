@@ -58,7 +58,6 @@ public class ReadGratuitySituationListByExecutionDegreeAndSpecialization extends
         }
 
         HashMap result = null;
-        ISuportePersistente persistentSupport = null;
 
         try {
             IPersistentExecutionDegree executionDegreeDAO = persistentSupport.getIPersistentExecutionDegree();
