@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.YearMonthDay;
+
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
@@ -13,7 +15,35 @@ import net.sourceforge.fenixedu.util.DiaSemana;
 
 public class Room extends Room_Base {
 
-	public void createRoomOccupation(OccupationPeriod period, Calendar startTime, Calendar endTime,
+	public Room() {
+        super();
+    }
+
+    protected Room(final Space suroundingSpace) {
+        super();
+
+        if (suroundingSpace == null) {
+            throw new NullPointerException("error.surrounding.space");
+        }
+
+        setSuroundingSpace(suroundingSpace);
+        new RoomInformation(this);
+    }
+
+    @Override
+    public RoomInformation getSpaceInformation() {
+        return (RoomInformation) super.getSpaceInformation();
+    }
+
+    @Override
+    public RoomInformation getSpaceInformation(final YearMonthDay when) {
+        return (RoomInformation) super.getSpaceInformation(when);
+    }
+
+
+
+    /** @deprecated */
+    public void createRoomOccupation(OccupationPeriod period, Calendar startTime, Calendar endTime,
 			DiaSemana dayOfWeek, Integer frequency, Integer week, WrittenEvaluation writtenEvaluation) {
 		boolean isFree = isFree(period, startTime, endTime, dayOfWeek, RoomOccupation.DIARIA, null);
 		if (!isFree) {
@@ -26,6 +56,7 @@ public class Room extends Room_Base {
 		roomOccupation.setWrittenEvaluation(writtenEvaluation);
 	}
 
+    /** @deprecated */
 	public void delete() {
         if (canBeDeleted()) {
             setBuilding(null);
@@ -36,6 +67,7 @@ public class Room extends Room_Base {
         }
 	}
 
+	/** @deprecated */
     public boolean isFree(OccupationPeriod period, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             Integer frequency, Integer week) {
         for (final RoomOccupation roomOccupation : getRoomOccupations()) {
@@ -47,23 +79,12 @@ public class Room extends Room_Base {
         return true;
     }
 
+    /** @deprecated */
     private boolean canBeDeleted() {
         return getAssociatedLessons().isEmpty()
                 && getAssociatedSummaries().isEmpty()
                 && getRoomOccupations().isEmpty()
                 && getWrittenEvaluationEnrolments().isEmpty();
-    }
-
-    public String toString() {
-        String result = "[SALA";
-        result += ", codInt=" + getIdInternal();
-        result += ", nome=" + getNome();
-        result += ", piso=" + getPiso();
-        result += ", tipo=" + getTipo();
-        result += ", capacidadeNormal=" + getCapacidadeNormal();
-        result += ", capacidadeExame=" + getCapacidadeExame();
-        result += "]";
-        return result;
     }
 
     public List<Lesson> findLessonsForExecutionPeriod(final ExecutionPeriod executionPeriod) {

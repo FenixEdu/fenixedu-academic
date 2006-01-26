@@ -1,11 +1,91 @@
 package net.sourceforge.fenixedu.domain.space;
 
+import java.util.List;
 
-public class Space extends Space_Base {
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 
-    public Space() {
+import org.joda.time.YearMonthDay;
+
+import dml.runtime.Relation;
+import dml.runtime.RelationAdapter;
+import dml.runtime.RelationListener;
+
+public abstract class Space extends Space_Base {
+
+    static {
+        SpaceSpaceInformation.addListener(new SpaceSpaceInformationListener());
+    }
+
+    protected Space() {
         super();
-        new SpaceInformation(this);
+    }
+
+    public SpaceInformation getSpaceInformation() {
+        return getSpaceInformation(null);
+    }
+    
+    public SpaceInformation getSpaceInformation(final YearMonthDay when) {
+        SpaceInformation selectedSpaceInformation = null;
+
+        for (final SpaceInformation spaceInformation : getSpaceInformations()) {
+            final YearMonthDay validUntil = spaceInformation.getValidUntil();
+
+            if (validUntil == null) {
+                if (selectedSpaceInformation == null) {
+                    selectedSpaceInformation = spaceInformation;
+                }
+            } else {
+                if (validUntil.isAfter((when != null) ? when : new YearMonthDay())) {
+                    if (selectedSpaceInformation == null
+                            || selectedSpaceInformation.getValidUntil() == null
+                            || selectedSpaceInformation.getValidUntil().isAfter(validUntil)) {
+                        selectedSpaceInformation = spaceInformation;
+                    }
+                }
+            }
+        }
+
+        return selectedSpaceInformation;
+    }
+
+    public static class SpaceSpaceInformationListener extends RelationAdapter<Space, SpaceInformation> {
+
+        @Override
+        public void beforeAdd(Space space, SpaceInformation spaceInformation) {
+            for (final SpaceInformation otherSpaceInformation : space.getSpaceInformations()) {
+                if (otherSpaceInformation.getValidUntil() == null) {
+                    otherSpaceInformation.setValidUntil(new YearMonthDay());
+                }
+            }
+        }
+
+        @Override
+        public void afterRemove(Space space, SpaceInformation spaceInformation) {
+            if (space != null) {
+                if (spaceInformation.getValidUntil() == null) {
+                    final SpaceInformation nextMostRecentSpaceInformation = findMostRecentSpaceInformation(space.getSpaceInformations());
+                    if (nextMostRecentSpaceInformation != null) {
+                        nextMostRecentSpaceInformation.setValidUntil(null);
+                    }
+                }
+            }
+        }
+
+        private static SpaceInformation findMostRecentSpaceInformation(final List<SpaceInformation> spaceInformations) {
+            SpaceInformation selectedSpaceInformation = null;
+
+            for (final SpaceInformation spaceInformation : spaceInformations) {
+                final YearMonthDay validUntil = spaceInformation.getValidUntil();
+
+                if (selectedSpaceInformation == null || validUntil.isAfter(selectedSpaceInformation.getValidUntil())) {
+                    selectedSpaceInformation = spaceInformation;
+                }
+            }
+
+            return selectedSpaceInformation;
+        }
+
     }
 
 }

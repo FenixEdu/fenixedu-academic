@@ -1,10 +1,9 @@
 package net.sourceforge.fenixedu.domain.space;
 
-public class SpaceInformation extends SpaceInformation_Base {
-    
-    SpaceInformation(final Space space) {
+public abstract class SpaceInformation extends SpaceInformation_Base {
+
+    protected SpaceInformation() {
         super();
-        setSpace(space);
     }
-    
+
 }

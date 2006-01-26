@@ -99,6 +99,8 @@ valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                    
 valueType net.sourceforge.fenixedu.util.WeekDay													as WeekDay;
 valueType net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType					as CurricularPeriodType;
 valueType net.sourceforge.fenixedu.domain.accessControl.Group                                   as Group;
+valueType org.joda.time.YearMonthDay															as YearMonthDay;
+valueType java.math.BigDecimal																	as BigDecimal;
 
 
 /*
@@ -1909,19 +1911,6 @@ class net.sourceforge.fenixedu.domain.Role extends net.sourceforge.fenixedu.doma
 }
 
 
-class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
-	Integer weekOfQuinzenalStart;
-	Integer keyRoom;
-	Integer frequency;
-	Integer keyPeriod;
-    DiaSemana dayOfWeek;
-    Date startTimeDate;
-    Date endTimeDate;
-    Integer keyWrittenEvaluation;
-    Integer keyLesson;
-}
-
-
 class net.sourceforge.fenixedu.domain.Seminaries.Seminary extends net.sourceforge.fenixedu.domain.DomainObject {
     Boolean hasTheme;
     String description;
@@ -2006,7 +1995,7 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 }
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
-	
+	YearMonthDay validUntil;
 }
 
 	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
@@ -2014,8 +2003,15 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		Integer keyCampus;
 	}
 
+	class net.sourceforge.fenixedu.domain.space.BuildingInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
+		String name;
+	}
+
 	class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
 		Integer level;
+	}
+
+	class net.sourceforge.fenixedu.domain.space.FloorInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
 	}
 
 	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
@@ -2026,6 +2022,30 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 		Integer piso;
 	    TipoSala tipo;
 	}
+
+	class net.sourceforge.fenixedu.domain.space.RoomInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
+		BigDecimal area;
+		String name;
+		Integer capacityForLessons;
+		Integer capacityForExams;
+	}
+
+
+class net.sourceforge.fenixedu.domain.space.SpaceOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+}
+
+	class net.sourceforge.fenixedu.domain.space.RoomOccupation extends net.sourceforge.fenixedu.domain.DomainObject {
+		Integer weekOfQuinzenalStart;
+		Integer keyRoom;
+		Integer frequency;
+		Integer keyPeriod;
+	    DiaSemana dayOfWeek;
+	    Date startTimeDate;
+	    Date endTimeDate;
+	    Integer keyWrittenEvaluation;
+	    Integer keyLesson;
+	}
+
 
 class net.sourceforge.fenixedu.domain.teacher.TeacherService extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyTeacher;
@@ -4691,6 +4711,7 @@ relation SiteAnnouncement {
 	net.sourceforge.fenixedu.domain.Site playsRole site;
 }
 
+
 relation SpaceSpace {
 	net.sourceforge.fenixedu.domain.space.Space playsRole containedSpaces {
 		multiplicity *;
@@ -4700,6 +4721,13 @@ relation SpaceSpace {
 
 relation SpaceSpaceInformation {
 	net.sourceforge.fenixedu.domain.space.SpaceInformation playsRole spaceInformations {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.space.Space playsRole space;
+}
+
+relation SpaceSpaceOccupation {
+	net.sourceforge.fenixedu.domain.space.SpaceOccupation playsRole spaceOccupations {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.space.Space playsRole space;
