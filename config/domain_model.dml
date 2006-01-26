@@ -109,14 +109,12 @@ valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationGroup 
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType                  as JustificationType;
 valueType net.sourceforge.fenixedu.domain.assiduousness.WorkWeek                                as WorkWeek;
 valueType net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval                       as TimeInterval;
-
 valueType org.joda.time.DateTime                                                                as DateTime;
 valueType org.joda.time.Duration                                                                as Duration;
 valueType org.joda.time.Interval                                                                as Interval;
 valueType org.joda.time.Period                                                                  as Period;
 valueType org.joda.time.TimeOfDay                                                               as TimeOfDay;
 valueType org.joda.time.Partial                                                                 as Partial;
-valueType org.joda.time.YearMonthDay                                                            as YearMonthDay;
 
 
 /*
