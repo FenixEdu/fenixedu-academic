@@ -88,6 +88,10 @@ public class Spreadsheet {
         return rows.get(rowNumber);
     }
 
+    public void setRows(List<Row> rows) {
+        this.rows = rows;
+    }
+    
     public void exportToCSV(final OutputStream outputStream, final String columnSeperator) throws IOException {
         exportToCSV(outputStream, columnSeperator, "\n");
     }        
