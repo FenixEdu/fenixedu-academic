@@ -34,7 +34,7 @@ public class Spreadsheet {
 
         public void setCell(final String cellValue) {
             cells.add(cellValue);
-        }
+        } 
 
         protected List<Object> getCells() {
             return cells;
