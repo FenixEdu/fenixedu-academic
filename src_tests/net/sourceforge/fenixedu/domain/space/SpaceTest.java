@@ -1,10 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
-import org.joda.time.YearMonthDay;
-
 import net.sourceforge.fenixedu.domain.DomainTestBase;
-import net.sourceforge.fenixedu.domain.space.Space;
-import net.sourceforge.fenixedu.domain.space.SpaceInformation;
+
+import org.joda.time.YearMonthDay;
 
 public class SpaceTest extends DomainTestBase {
 
@@ -64,6 +62,37 @@ public class SpaceTest extends DomainTestBase {
         assertSame(spaceInformation, space.getSpaceInformation(null));
         assertSame(spaceInformation, space.getSpaceInformation(today.plusDays(1)));
         assertSame(spaceInformation, space.getSpaceInformation(today.plusDays(-1)));
+    }
+
+    public void testSpaceSpaceInformationListenerBeforeAdd() {
+        final Space space = new SpaceImpl();
+        final SpaceInformation spaceInformation = new SpaceInformationImpl(space);
+    
+        assertNull(spaceInformation.getValidUntil());
+
+        final SpaceInformation otherSpaceInformation = new SpaceInformationImpl(space);
+
+        assertNull(otherSpaceInformation.getValidUntil());
+        assertEquals(new YearMonthDay(), spaceInformation.getValidUntil());        
+    }
+
+    public void testSpaceSpaceInformationListenerAfterRemove() {
+        final Space space = new SpaceImpl();
+        final SpaceInformation spaceInformation = new SpaceInformationImpl(space);
+        space.removeSpaceInformations(spaceInformation);
+    
+        assertNull(spaceInformation.getValidUntil());
+
+        space.addSpaceInformations(spaceInformation);
+        final SpaceInformation otherSpaceInformation = new SpaceInformationImpl(space);
+        space.removeSpaceInformations(otherSpaceInformation);
+
+        assertNull(spaceInformation.getValidUntil());
+
+        space.addSpaceInformations(otherSpaceInformation);
+        space.removeSpaceInformations(spaceInformation);
+
+        assertNull(otherSpaceInformation.getValidUntil());
     }
 
 }
