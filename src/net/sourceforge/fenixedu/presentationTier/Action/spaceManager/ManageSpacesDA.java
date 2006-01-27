@@ -34,7 +34,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward createSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
         final IUserView userView = getUserView(request);
 
         final Object[] args = {};
@@ -45,7 +44,6 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward deleteSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-
         final IUserView userView = getUserView(request);
 
         final String spaceID = request.getParameter("spaceID");
@@ -53,7 +51,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         final Object[] args = { Integer.valueOf(spaceID) };
         ServiceUtils.executeService(userView, "DeleteSpace", args);
 
-        return mapping.findForward("ShowSpaces");
+        return viewSpaces(mapping, form, request, response);
     }
 
 }
