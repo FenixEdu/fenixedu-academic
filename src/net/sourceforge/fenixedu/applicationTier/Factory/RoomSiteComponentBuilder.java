@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -59,7 +59,7 @@ public class RoomSiteComponentBuilder {
         return instance;
     }
 
-    public ISiteComponent getComponent(ISiteComponent component, Calendar day, Room room, ExecutionPeriod executionPeriod) throws Exception  {
+    public ISiteComponent getComponent(ISiteComponent component, Calendar day, OldRoom room, ExecutionPeriod executionPeriod) throws Exception  {
 
         if (component instanceof InfoSiteRoomTimeTable) {
             return getInfoSiteRoomTimeTable((InfoSiteRoomTimeTable) component, day, room, executionPeriod);
@@ -72,7 +72,7 @@ public class RoomSiteComponentBuilder {
     // TODO (rspl): alterar as aulas a ler e o dia da semana
     // FIXME duplicated code: this method is (almost?) identical to ReadLessonsAndExamsInWeekAndRoom.run
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day,
-            Room room, ExecutionPeriod executionPeriod) throws Exception {
+            OldRoom room, ExecutionPeriod executionPeriod) throws Exception {
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 

@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -82,7 +82,7 @@ public class ReadStudentTimeTable extends Service {
             InfoRoomOccupation infoRoomOccupation = InfoRoomOccupation.newInfoFromDomain(roomOccupation);
             infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-            Room room = roomOccupation.getRoom();
+            OldRoom room = roomOccupation.getRoom();
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             infoRoomOccupation.setInfoRoom(infoRoom);
 
@@ -97,7 +97,7 @@ public class ReadStudentTimeTable extends Service {
      * @param sala
      * @return
      */
-    private InfoRoom copyISala2InfoRoom(Room sala) {
+    private InfoRoom copyISala2InfoRoom(OldRoom sala) {
         InfoRoom infoRoom = null;
         if (sala != null) {
             infoRoom = new InfoRoom();

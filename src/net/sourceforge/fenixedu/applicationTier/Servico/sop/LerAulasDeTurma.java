@@ -29,7 +29,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -69,7 +69,7 @@ public class LerAulasDeTurma extends Service {
                         .newInfoFromDomain(roomOccupation);
                 infoLesson.setInfoRoomOccupation(infoRoomOccupation);
 
-                final Room room = roomOccupation.getRoom();
+                final OldRoom room = roomOccupation.getRoom();
                 final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
                 infoRoomOccupation.setInfoRoom(infoRoom);
                 infoLesson.setInfoSala(infoRoom);

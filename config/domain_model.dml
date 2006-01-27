@@ -2012,13 +2012,19 @@ class net.sourceforge.fenixedu.domain.Section extends net.sourceforge.fenixedu.d
 }
 
 class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
 }
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
+	String ojbConcreteClass;
+
 	YearMonthDay validUntil;
 }
 
 	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
+	}
+
+	class net.sourceforge.fenixedu.domain.space.OldBuilding extends net.sourceforge.fenixedu.domain.space.Building {
 		String name;
 		Integer keyCampus;
 	}
@@ -2035,6 +2041,9 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	}
 
 	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {
+	}
+
+	class net.sourceforge.fenixedu.domain.space.OldRoom extends net.sourceforge.fenixedu.domain.space.Room {
 		Integer keyBuilding;
 		String nome;
 		Integer capacidadeNormal;
@@ -2785,10 +2794,10 @@ relation BranchCurricularCourseScope {
 
 
 relation BuildingRoom {
-	net.sourceforge.fenixedu.domain.space.Room playsRole rooms {
+	net.sourceforge.fenixedu.domain.space.OldRoom playsRole rooms {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.Building playsRole building;
+	net.sourceforge.fenixedu.domain.space.OldBuilding playsRole building;
 }
 
 relation PersonHasPersonalGroups {
@@ -3461,7 +3470,7 @@ relation WrittenEvaluationEnrolmentRoom {
 	net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment playsRole writtenEvaluationEnrolments {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.Room playsRole room;
+	net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
 }
 
 relation WrittenEvaluationEnrolmentStudent {
@@ -3544,7 +3553,7 @@ relation ExecutionDegreeCampus {
 }
 
 relation BuildingCampus {
-	net.sourceforge.fenixedu.domain.space.Building playsRole buildings {
+	net.sourceforge.fenixedu.domain.space.OldBuilding playsRole buildings {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Campus playsRole campus;
@@ -4116,7 +4125,7 @@ relation InquiriesRoomDomainRoom {
     net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom playsRole associatedInquiriesRooms {
         multiplicity *;
     }
-    net.sourceforge.fenixedu.domain.space.Room playsRole room;
+    net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
 }
 
 relation InquiriesTeacherInquiriesCourse {
@@ -4723,7 +4732,7 @@ relation RoomLesson {
 	net.sourceforge.fenixedu.domain.Lesson playsRole associatedLessons {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.Room playsRole sala;
+	net.sourceforge.fenixedu.domain.space.OldRoom playsRole sala;
 }
 
 
@@ -4732,7 +4741,7 @@ relation RoomRoomOccupation {
 	net.sourceforge.fenixedu.domain.space.RoomOccupation playsRole roomOccupations {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.Room playsRole room;
+	net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
 }
 
 
@@ -4740,7 +4749,7 @@ relation RoomSummary {
 	net.sourceforge.fenixedu.domain.Summary playsRole associatedSummaries {
 		multiplicity *;
 	}
-	net.sourceforge.fenixedu.domain.space.Room playsRole room;
+	net.sourceforge.fenixedu.domain.space.OldRoom playsRole room;
 }
 
 relation SectionItem {

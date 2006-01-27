@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentPeriod;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -46,7 +46,7 @@ public class EditWrittenEvaluation extends Service {
         final List<CurricularCourseScope> curricularCourseScopeToAssociate = readCurricularCourseScopes(
                 persistentSupport, curricularCourseScopeIDs);
 
-        List<Room> roomsToAssociate = null; 
+        List<OldRoom> roomsToAssociate = null; 
         OccupationPeriod period = null; 
         if (roomIDs != null) {
             roomsToAssociate = readRooms(persistentSupport, roomIDs);
@@ -90,12 +90,12 @@ public class EditWrittenEvaluation extends Service {
         return period;
     }
 
-    private List<Room> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
+    private List<OldRoom> readRooms(final ISuportePersistente persistentSupport, final List<String> roomIDs)
             throws ExcepcaoPersistencia, FenixServiceException {
 
-        final List<Room> result = new ArrayList<Room>();
+        final List<OldRoom> result = new ArrayList<OldRoom>();
         for (final String roomID : roomIDs) {
-            final Room room = (Room) persistentObject.readByOID(Room.class, Integer.valueOf(roomID));
+            final OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, Integer.valueOf(roomID));
             if (room == null) {
                 throw new FenixServiceException("error.noRoom");
             }

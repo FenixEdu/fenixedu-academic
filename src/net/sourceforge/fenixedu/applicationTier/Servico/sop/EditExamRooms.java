@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -19,9 +19,9 @@ public class EditExamRooms extends Service {
     public InfoExam run(InfoExam infoExam, final List<Integer> roomsForExam) throws ExcepcaoPersistencia,
             FenixServiceException {
 
-        final List<Room> finalRoomList = new ArrayList<Room>();
+        final List<OldRoom> finalRoomList = new ArrayList<OldRoom>();
         for (final Integer id : roomsForExam) {
-        	finalRoomList.add((Room) persistentObject.readByOID(Room.class, (Integer) id));
+        	finalRoomList.add((OldRoom) persistentObject.readByOID(OldRoom.class, (Integer) id));
         }
 
         final Exam exam = (Exam) persistentObject.readByOID(Exam.class, infoExam.getIdInternal());

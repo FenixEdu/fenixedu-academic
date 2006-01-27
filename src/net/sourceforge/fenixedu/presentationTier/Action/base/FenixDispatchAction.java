@@ -20,27 +20,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
-/**
- * @author joao
- */
 public abstract class FenixDispatchAction extends DispatchAction {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.struts.action.Action#execute(org.apache.struts.action.ActionMapping,
-     *      org.apache.struts.action.ActionForm,
-     *      javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     */
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
         return super.execute(mapping, actionForm, request, response);
     }
-    
-    protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException
-    {
+
+    protected IUserView getUserView(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
+        return SessionUtils.getUserView(request);
+    }
+
+    protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
     	IUserView userView = SessionUtils.getUserView(request);
 		Person person  = (Person) ServiceManagerServiceFactory.executeService(userView,"ReadDomainPersonByUsername",new Object[] {userView.getUtilizador()});
 		return person;
@@ -82,9 +73,7 @@ public abstract class FenixDispatchAction extends DispatchAction {
         if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
             return true;
         }
-
         return false;
-
     }
 
     /*
@@ -95,8 +84,7 @@ public abstract class FenixDispatchAction extends DispatchAction {
         if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {
             return true;
         }
-
         return false;
-
     }
+
 }

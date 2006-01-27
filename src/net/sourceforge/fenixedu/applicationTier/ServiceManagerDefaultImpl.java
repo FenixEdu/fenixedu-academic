@@ -96,18 +96,20 @@ public class ServiceManagerDefaultImpl implements IServiceManagerWrapper {
             ServiceInfo.setCurrentServiceInfo((id == null) ? null : id.getUtilizador(), service, args);
 
             Object serviceResult = null;
-            while (true) {
+            //while (true) {
                 try {
                     serviceResult = manager.execute(id, service, method, args);
-                    break;
+            //        break;
                 } catch (jvstm.CommitException ce) {
+                    ce.printStackTrace();
                     System.out.println("Restarting TX because of CommitException");
                     // repeat service
                 } catch (DomainObject.UnableToDetermineIdException ce) {
+                    ce.printStackTrace();
                     System.out.println("Restarting TX because of UnableToDetermineIdException");
                     // repeat service
                 }
-            }
+            //}
 
             if (serviceLoggingIsOn || (userLoggingIsOn && id != null)) {
                 serviceEndTime = Calendar.getInstance();

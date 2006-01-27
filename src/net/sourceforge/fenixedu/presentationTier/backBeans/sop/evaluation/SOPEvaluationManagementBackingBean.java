@@ -34,7 +34,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -661,7 +661,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         for (final WrittenEvaluation writtenTest : associatedWrittenEvaluations) {
             int totalCapacity = 0;
             final StringBuilder buffer = new StringBuilder(20);
-            for (final Room room : writtenTest.getAssociatedRooms()) {
+            for (final OldRoom room : writtenTest.getAssociatedRooms()) {
                 buffer.append(room.getNome()).append("; ");
                 totalCapacity += room.getCapacidadeExame();
             }
@@ -732,7 +732,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     // END Select Execution Course and Evaluation Type page logic
 
-    // BEGIN Associate Room logic
+    // BEGIN Associate OldRoom logic
     public Integer getOrderCriteria() {
         if (this.orderCriteria == null) {
             orderCriteria = new Integer(0);
@@ -761,7 +761,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         if (this.getViewState().getAttribute("chosenRoomsIDs") == null && this.getEvaluationID() != null) {
             List<Integer> associatedRooms = new ArrayList<Integer>();
 
-            for (Room room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (OldRoom room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 associatedRooms.add(room.getIdInternal());
             }
 
@@ -804,7 +804,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
                 .getUserView(), "ReadAvailableRoomsForExam", args);
 
         if (this.getEvaluationID() != null) {
-            for (Room room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
+            for (OldRoom room : ((WrittenEvaluation) this.getEvaluation()).getAssociatedRooms()) {
                 InfoRoom associatedRoom = InfoRoom.newInfoFromDomain(room);
                 if (!availableInfoRoom.contains(associatedRoom)) {
                     availableInfoRoom.add(associatedRoom);
@@ -860,8 +860,8 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
         if (this.getChosenRoomsIDs() != null && this.getChosenRoomsIDs().length != 0) {
             for (Integer chosenRoomID : this.getChosenRoomsIDs()) {
-                final Object[] args = { Room.class, chosenRoomID };
-                Room room = (Room) ServiceUtils.executeService(null, "ReadDomainObject", args);
+                final Object[] args = { OldRoom.class, chosenRoomID };
+                OldRoom room = (OldRoom) ServiceUtils.executeService(null, "ReadDomainObject", args);
 
                 result.append(room.getNome());
                 result.append("; ");
@@ -892,7 +892,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
         return returnToCreateOrEdit();
     }
 
-    // END Associate Room logic
+    // END Associate OldRoom logic
 
     // BEGIN Create and Edit logic
     public String createWrittenEvaluation() throws FenixFilterException, FenixServiceException {

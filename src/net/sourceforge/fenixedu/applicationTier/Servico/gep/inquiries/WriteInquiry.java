@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 import net.sourceforge.fenixedu.persistenceTier.inquiries.IPersistentInquiriesRegistry;
@@ -125,7 +125,7 @@ public class WriteInquiry extends Service {
     }
 
     private void writeInquiriesRoom(final InfoInquiriesRoom iir, final InquiriesCourse inquiriesCourse) throws ExcepcaoPersistencia {
-		Room room = (Room) persistentObject.readByOID(Room.class, iir.getRoom().getIdInternal());
+		OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, iir.getRoom().getIdInternal());
 		inquiriesCourse.createInquiriesRoom(room, iir);
 
     }

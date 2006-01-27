@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoomExamsMap;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -61,7 +61,7 @@ public class ReadAllRoomsExamsMap extends Service {
 
         for (int i = 0; i < rooms.size(); i++) {
 
-            Room room = (Room) rooms.get(i);
+            OldRoom room = (OldRoom) rooms.get(i);
 
             InfoRoomExamsMap infoExamsMap = new InfoRoomExamsMap();
 

@@ -9,7 +9,7 @@ package net.sourceforge.fenixedu.dataTransferObject;
 /**
  * @author tfc130
  */
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.TipoSala;
 
 public class InfoRoom extends InfoObject implements Comparable {
@@ -112,7 +112,7 @@ public class InfoRoom extends InfoObject implements Comparable {
         return getNome().compareTo(((InfoRoom) obj).getNome());
     }
 
-    public void copyFromDomain(Room sala) {
+    public void copyFromDomain(OldRoom sala) {
         super.copyFromDomain(sala);
         if (sala != null) {
             setNome(sala.getNome());
@@ -128,7 +128,7 @@ public class InfoRoom extends InfoObject implements Comparable {
      * @param sala
      * @return
      */
-    public static InfoRoom newInfoFromDomain(Room sala) {
+    public static InfoRoom newInfoFromDomain(OldRoom sala) {
         InfoRoom infoRoom = null;
         if (sala != null) {
             infoRoom = new InfoRoom();

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -22,7 +22,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     public WrittenEvaluation(Date evaluationDay, Date evaluationBeginningTime, Date evaluationEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
 
         setAttributesAndAssociateRooms(evaluationDay, evaluationBeginningTime, evaluationEndTime,
@@ -160,7 +160,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void setAttributesAndAssociateRooms(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
 
         checkValidHours(beginning, end);
@@ -189,9 +189,9 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         for (; !getAssociatedRoomOccupation().isEmpty(); getAssociatedRoomOccupation().get(0).delete());
     }
 
-    private void associateRooms(final List<Room> rooms, final OccupationPeriod period) {
+    private void associateRooms(final List<OldRoom> rooms, final OccupationPeriod period) {
         final DiaSemana dayOfWeek = new DiaSemana(this.getDay().get(Calendar.DAY_OF_WEEK));
-        for (final Room room : rooms) {
+        for (final OldRoom room : rooms) {
             if (!hasOccupationForRoom(room)) {
                 room.createRoomOccupation(period, this.getBeginning(), this.getEnd(), dayOfWeek,
                         RoomOccupation.DIARIA, null, this);
@@ -199,7 +199,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private boolean hasOccupationForRoom(Room room) {
+    private boolean hasOccupationForRoom(OldRoom room) {
         for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
             if (roomOccupation.getRoom() == room) {
                 return true;
@@ -210,7 +210,7 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     protected void edit(Date day, Date beginning, Date end,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period) {
         setAttributesAndAssociateRooms(day, beginning, end, executionCoursesToAssociate,
                 curricularCourseScopesToAssociate, rooms, period);
@@ -227,8 +227,8 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         super.deleteDomainObject();
     }
 
-    public List<Room> getAssociatedRooms() {
-        final List<Room> result = new ArrayList<Room>();
+    public List<OldRoom> getAssociatedRooms() {
+        final List<OldRoom> result = new ArrayList<OldRoom>();
         for (final RoomOccupation roomOccupation : this.getAssociatedRoomOccupation()) {
             result.add(roomOccupation.getRoom());
         }
@@ -319,12 +319,12 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         return false;
     }
 
-    public void distributeStudentsByRooms(List<Student> studentsToDistribute, List<Room> selectedRooms) {
+    public void distributeStudentsByRooms(List<Student> studentsToDistribute, List<OldRoom> selectedRooms) {
 
         this.checkIfCanDistributeStudentsByRooms();
         this.checkRoomsCapacityForStudents(selectedRooms, studentsToDistribute.size());
 
-        for (final Room room : selectedRooms) {
+        for (final OldRoom room : selectedRooms) {
             for (int numberOfStudentsInserted = 0; numberOfStudentsInserted < room.getCapacidadeExame()
                     && !studentsToDistribute.isEmpty(); numberOfStudentsInserted++) {
                 final Student student = getRandomStudentFromList(studentsToDistribute);
@@ -369,10 +369,10 @@ public class WrittenEvaluation extends WrittenEvaluation_Base {
         }
     }
 
-    private void checkRoomsCapacityForStudents(final List<Room> selectedRooms,
+    private void checkRoomsCapacityForStudents(final List<OldRoom> selectedRooms,
             int studentsToDistributeSize) {
         int totalCapacity = 0;
-        for (final Room room : selectedRooms) {
+        for (final OldRoom room : selectedRooms) {
             totalCapacity += room.getCapacidadeExame();
         }
         if (studentsToDistributeSize > totalCapacity) {

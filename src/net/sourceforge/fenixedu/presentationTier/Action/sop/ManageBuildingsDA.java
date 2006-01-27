@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Campus;
-import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -26,7 +26,7 @@ public class ManageBuildingsDA extends FenixDispatchAction {
 
         final IUserView userView = SessionUtils.getUserView(request);
 
-        final Object args1[] = { Building.class };
+        final Object args1[] = { OldBuilding.class };
         final List buildings = (List) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args1);
         Collections.sort(buildings, new BeanComparator("name"));
         request.setAttribute("buildings", buildings);

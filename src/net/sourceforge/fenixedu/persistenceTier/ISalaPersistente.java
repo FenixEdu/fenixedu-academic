@@ -11,22 +11,22 @@ package net.sourceforge.fenixedu.persistenceTier;
  */
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 public interface ISalaPersistente extends IPersistentObject {
-    public Room readByName(String nome) throws ExcepcaoPersistencia;
+    public OldRoom readByName(String nome) throws ExcepcaoPersistencia;
 
-    public List<Room> readAll() throws ExcepcaoPersistencia;
+    public List<OldRoom> readAll() throws ExcepcaoPersistencia;
 
     public List readSalas(String nome, String edificio, Integer piso, Integer tipo,
             Integer capacidadeNormal, Integer capacidadeExame) throws ExcepcaoPersistencia;
 
     public List readAvailableRooms(Integer examOID) throws ExcepcaoPersistencia;
 
-    public List<Room> readForRoomReservation() throws ExcepcaoPersistencia;
+    public List<OldRoom> readForRoomReservation() throws ExcepcaoPersistencia;
 
     public List readByPavillions(List pavillionsName) throws ExcepcaoPersistencia;
 
-    public List<Room> readByNormalCapacity(Integer capacity) throws ExcepcaoPersistencia;
+    public List<OldRoom> readByNormalCapacity(Integer capacity) throws ExcepcaoPersistencia;
 
 }

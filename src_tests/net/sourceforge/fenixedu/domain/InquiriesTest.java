@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiriesCourse;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRoom;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 import org.apache.commons.lang.NullArgumentException;
 
@@ -39,7 +39,7 @@ public class InquiriesTest extends DomainTestBase {
 	private InfoInquiriesTeacher infoInquiriesTeacher;
 	
 	private InfoInquiriesRoom infoInquiriesRoom;
-	private Room room;
+	private OldRoom room;
 	
 	private Student student;
 	

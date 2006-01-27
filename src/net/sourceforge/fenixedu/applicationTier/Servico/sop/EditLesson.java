@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftServiceResult;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -26,7 +26,7 @@ public class EditLesson extends Service {
             throws FenixServiceException, ExcepcaoPersistencia {
         InfoLessonServiceResult result = null;
 
-        Room salaNova = persistentSupport.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
+        OldRoom salaNova = persistentSupport.getISalaPersistente().readByName(aulaNova.getInfoSala().getNome());
         Lesson aula = (Lesson) persistentObject.readByOID(Lesson.class, aulaAntiga.getIdInternal());
         Shift shift = aula.getShift();
 
@@ -83,7 +83,7 @@ public class EditLesson extends Service {
 
 
     private boolean validNoInterceptingLesson(Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week, Room room, RoomOccupation oldroomOccupation)
+            DiaSemana dayOfWeek, Integer frequency, Integer week, OldRoom room, RoomOccupation oldroomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 

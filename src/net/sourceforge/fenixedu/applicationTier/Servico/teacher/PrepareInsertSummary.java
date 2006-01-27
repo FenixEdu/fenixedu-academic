@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
@@ -69,10 +69,10 @@ public class PrepareInsertSummary extends Service {
             }
         }
 
-        final List<Room> rooms = persistentRoom.readAll();
+        final List<OldRoom> rooms = persistentRoom.readAll();
         final List<InfoRoom> infoRooms = new ArrayList<InfoRoom>(rooms.size());
 
-        for (final Room room : rooms) {
+        for (final OldRoom room : rooms) {
             final InfoRoom infoRoom = new InfoRoom();
             infoRooms.add(infoRoom);
 

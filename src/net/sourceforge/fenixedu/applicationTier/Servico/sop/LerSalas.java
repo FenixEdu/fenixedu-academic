@@ -13,7 +13,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerSalas extends Service {
@@ -27,7 +27,7 @@ public class LerSalas extends Service {
 		Iterator iterator = salas.iterator();
 		infoSalas = new ArrayList();
 		while (iterator.hasNext()) {
-			Room elem = (Room) iterator.next();
+			OldRoom elem = (OldRoom) iterator.next();
 			infoSalas.add(new InfoRoom(elem.getNome(), elem.getBuilding().getName(), elem.getPiso(),
 					elem.getTipo(), elem.getCapacidadeNormal(), elem.getCapacidadeExame()));
 		}

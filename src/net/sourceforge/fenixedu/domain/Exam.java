@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.util.Season;
 
 public class Exam extends Exam_Base {
@@ -12,7 +12,7 @@ public class Exam extends Exam_Base {
     public Exam(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
             List<CurricularCourseScope> curricularCourseScopesToAssociate, 
-            List<Room> rooms,
+            List<OldRoom> rooms,
             OccupationPeriod period, Season season) {
 
         checkScopeAndSeasonConstrains(executionCoursesToAssociate, curricularCourseScopesToAssociate, season);
@@ -57,7 +57,7 @@ public class Exam extends Exam_Base {
     public void edit(Date examDay, Date examStartTime, Date examEndTime, 
             List<ExecutionCourse> executionCoursesToAssociate,
             List<CurricularCourseScope> curricularCourseScopesToAssociate, 
-            List<Room> rooms, OccupationPeriod period, Season season) {
+            List<OldRoom> rooms, OccupationPeriod period, Season season) {
 
         // It's necessary to remove this associations before check some constrains
         this.getAssociatedExecutionCourses().clear();

@@ -7,6 +7,10 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">		
+		<form-bean name="createSpaceForm" 
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+		</form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -30,8 +34,23 @@
     <!-- ========== Action Mapping Definitions =============================== -->
     <action-mappings type="org.apache.struts.action.ActionMapping">
         <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-            <forward name="Success" path="index"/>
+            <forward name="Success" path="/manageSpaces.do?method=viewSpaces"/>
         </action>       
+
+        <action path="/manageSpaces" type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
+        		parameter="method"
+        		>
+            <forward name="ShowSpaces" path="index"/>
+            <forward name="ShowCreateSpaceForm" path="show-create-space-form"/>
+        </action>
+
+        <action path="/createSpace" type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
+        		input="/manageSpaces.do?method=showCreateSpaceForm&amp;page=0"
+        		name="createSpaceForm"
+        		parameter="method"
+        		>
+            <forward name="ShowSpaces" path="/manageSpaces.do?method=viewSpaces&amp;page=0"/>
+        </action>
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

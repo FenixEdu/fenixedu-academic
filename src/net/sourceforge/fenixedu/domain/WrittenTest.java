@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 /**
  * @author Ana e Ricardo
@@ -18,7 +18,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     public WrittenTest(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period, String description) {
 
         checkEvaluationDate(testDate, executionCoursesToAssociate);
@@ -48,7 +48,7 @@ public class WrittenTest extends WrittenTest_Base {
 
     public void edit(Date testDate, Date testStartTime, Date testEndTime,
             List<ExecutionCourse> executionCoursesToAssociate,
-            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<Room> rooms,
+            List<CurricularCourseScope> curricularCourseScopesToAssociate, List<OldRoom> rooms,
             OccupationPeriod period, String description) {
         
         checkEvaluationDate(testDate, executionCoursesToAssociate);

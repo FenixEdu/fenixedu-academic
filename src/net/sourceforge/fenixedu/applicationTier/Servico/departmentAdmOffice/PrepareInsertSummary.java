@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
@@ -95,7 +95,7 @@ public class PrepareInsertSummary extends Service {
             infoRooms = (List) CollectionUtils.collect(rooms, new Transformer() {
 
                 public Object transform(Object arg0) {
-                    Room room = (Room) arg0;
+                    OldRoom room = (OldRoom) arg0;
                     return InfoRoom.newInfoFromDomain(room);
                 }
             });

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -42,7 +42,7 @@ public class InsertSummary extends Service {
             throw new InvalidArgumentsServiceException();
 
         final Shift shift = SummaryUtils.getShift(persistentSupport, null, infoSummary);
-        final Room room = SummaryUtils.getRoom(persistentSupport, null, shift, infoSummary);
+        final OldRoom room = SummaryUtils.getRoom(persistentSupport, null, shift, infoSummary);
 
         final Professorship professorship = SummaryUtils.getProfessorship(persistentSupport,
                 infoSummary);

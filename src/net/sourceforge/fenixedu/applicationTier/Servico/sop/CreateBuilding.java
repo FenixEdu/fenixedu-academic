@@ -6,7 +6,7 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.domain.Campus;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -15,7 +15,7 @@ import org.apache.commons.collections.Predicate;
 public class CreateBuilding extends Service {
 
     public void run(final String buildingName, final Integer campusID) throws ExcepcaoPersistencia, ExistingServiceException {
-        final List buildings = (List) persistentObject.readAll(Building.class);
+        final List buildings = (List) persistentObject.readAll(OldBuilding.class);
 
         if (exists(buildings, buildingName)) {
             throw new ExistingServiceException();
@@ -23,15 +23,15 @@ public class CreateBuilding extends Service {
 
         final Campus campus = (Campus) persistentObject.readByOID(Campus.class, campusID);
 
-        final Building building = DomainFactory.makeBuilding();
+        final OldBuilding building = DomainFactory.makeOldBuilding();
         building.setName(buildingName);
         building.setCampus(campus);
     }
 
     protected boolean exists(final List buildings, final String buildingName) {
-        final Building building = (Building) CollectionUtils.find(buildings, new Predicate() {
+        final OldBuilding building = (OldBuilding) CollectionUtils.find(buildings, new Predicate() {
             public boolean evaluate(Object arg0) {
-                final Building building = (Building) arg0;
+                final OldBuilding building = (OldBuilding) arg0;
                 return building.getName().equalsIgnoreCase(buildingName);
             }});
 

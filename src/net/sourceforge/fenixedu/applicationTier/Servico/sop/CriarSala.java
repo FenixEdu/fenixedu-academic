@@ -19,8 +19,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -33,34 +33,34 @@ public class CriarSala extends Service {
     public Object run(InfoRoom infoSala) throws FenixServiceException, ExcepcaoPersistencia {
         final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
 
-        final Room existingRoom = roomDAO.readByName(infoSala.getNome());
+        final OldRoom existingRoom = roomDAO.readByName(infoSala.getNome());
 
         if (existingRoom != null) {
             throw new ExistingServiceException("Duplicate Entry: " + infoSala.getNome());
         }
 
-        final Building building = findBuilding(persistentSupport, infoSala.getEdificio());
+        final OldBuilding building = findBuilding(persistentSupport, infoSala.getEdificio());
 
-        final Room room = writeRoom(roomDAO, infoSala, building);
+        final OldRoom room = writeRoom(roomDAO, infoSala, building);
 
         return InfoRoom.newInfoFromDomain(room);
 
     }
 
-    protected Building findBuilding(final ISuportePersistente persistentSupport, final String edificio)
+    protected OldBuilding findBuilding(final ISuportePersistente persistentSupport, final String edificio)
             throws ExcepcaoPersistencia {
-        final List buildings = (List) persistentObject.readAll(Building.class);
-        return (Building) CollectionUtils.find(buildings, new Predicate() {
+        final List buildings = (List) persistentObject.readAll(OldBuilding.class);
+        return (OldBuilding) CollectionUtils.find(buildings, new Predicate() {
             public boolean evaluate(Object arg0) {
-                final Building building = (Building) arg0;
+                final OldBuilding building = (OldBuilding) arg0;
                 return building.getName().equalsIgnoreCase(edificio);
             }
         });
     }
 
-    protected Room writeRoom(final ISalaPersistente roomDAO, final InfoRoom infoRoom, final Building building)
+    protected OldRoom writeRoom(final ISalaPersistente roomDAO, final InfoRoom infoRoom, final OldBuilding building)
             throws ExcepcaoPersistencia {
-        final Room room = DomainFactory.makeRoom();
+        final OldRoom room = DomainFactory.makeOldRoom();
         room.setCapacidadeExame(infoRoom.getCapacidadeExame());
         room.setCapacidadeNormal(infoRoom.getCapacidadeNormal());
         room.setNome(infoRoom.getNome());

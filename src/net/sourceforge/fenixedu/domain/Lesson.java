@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain;
  */
 import java.util.Calendar;
 
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.date.TimePeriod;
@@ -19,7 +19,7 @@ public class Lesson extends Lesson_Base {
     public Lesson() {
     }
 
-    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, Room sala,
+    public Lesson(DiaSemana diaSemana, Calendar inicio, Calendar fim, ShiftType tipo, OldRoom sala,
             RoomOccupation roomOccupation, Shift shift) {
         setDiaSemana(diaSemana);
         setInicio(inicio);

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 public class Shift extends Shift_Base {
@@ -44,7 +44,7 @@ public class Shift extends Shift_Base {
         }
     }
 
-    public void transferSummary(Summary summary, Date summaryDate, Date summaryHour, Room room, boolean newSummary) {
+    public void transferSummary(Summary summary, Date summaryDate, Date summaryHour, OldRoom room, boolean newSummary) {
         if(newSummary){
             checkIfSummaryExistFor(summaryDate, summaryHour);
         }

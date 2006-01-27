@@ -30,7 +30,7 @@ public class RoomOccupation extends RoomOccupation_Base {
     public RoomOccupation() {
     }
 
-    public RoomOccupation(Room room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
+    public RoomOccupation(OldRoom room, Calendar startTime, Calendar endTime, DiaSemana dayOfWeek,
             int frequency) {
         this.setRoom(room);
         this.setStartTime(startTime);
@@ -107,7 +107,7 @@ public class RoomOccupation extends RoomOccupation_Base {
     }
 
     public boolean roomOccupationForDateAndTime(OccupationPeriod period, Calendar startTime, Calendar endTime,
-            DiaSemana dayOfWeek, Integer frequency, Integer week, Room room) {
+            DiaSemana dayOfWeek, Integer frequency, Integer week, OldRoom room) {
         if (!room.equals(this.getRoom())) {
             return false;
         }

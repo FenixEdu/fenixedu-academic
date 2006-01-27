@@ -2,14 +2,9 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-
 import org.joda.time.YearMonthDay;
 
-import dml.runtime.Relation;
 import dml.runtime.RelationAdapter;
-import dml.runtime.RelationListener;
 
 public abstract class Space extends Space_Base {
 
@@ -19,6 +14,7 @@ public abstract class Space extends Space_Base {
 
     protected Space() {
         super();
+        setOjbConcreteClass(this.getClass().getName());
     }
 
     public SpaceInformation getSpaceInformation() {
@@ -47,6 +43,12 @@ public abstract class Space extends Space_Base {
         }
 
         return selectedSpaceInformation;
+    }
+
+    public void delete() {
+        final List<SpaceInformation> spaceInformations = getSpaceInformations();
+        for (; !spaceInformations.isEmpty(); spaceInformations.get(0).delete());
+        deleteDomainObject();
     }
 
     public static class SpaceSpaceInformationListener extends RelationAdapter<Space, SpaceInformation> {

@@ -77,6 +77,7 @@
 <!ENTITY curricularPeriod SYSTEM "repository_curricularPeriod.xml">
 <!ENTITY groups SYSTEM "repository_groups.xml">
 <!ENTITY researcher SYSTEM "repository_researcher.xml">
+<!ENTITY space SYSTEM "repository_space.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -158,5 +159,6 @@
 	&curricularPeriod;
     &groups;
     &researcher;
+    &space;
 	
 </descriptor-repository>

@@ -7,16 +7,16 @@ import net.sourceforge.fenixedu.domain.DomainTestBase;
 public class RoomTest extends DomainTestBase {
 
     public void testRoomConstructor() {
-        final Building building = new Building("building1");
+        final OldBuilding building = new OldBuilding("building1");
 
         try {
-            new Room((Space) null);
-            fail("Room cannot be created without a surrounding space.");
+            new OldRoom((Space) null);
+            fail("OldRoom cannot be created without a surrounding space.");
         } catch (NullPointerException ex) {
             assertEquals("error.surrounding.space", ex.getMessage());
         }
 
-        final Room room = new Room(building);
+        final OldRoom room = new OldRoom(building);
         assertEquals(1, room.getSpaceInformationsCount());
         final SpaceInformation spaceInformation = room.getSpaceInformation();
         assertSame(RoomInformation.class, spaceInformation.getClass());
@@ -24,9 +24,9 @@ public class RoomTest extends DomainTestBase {
     }
 
     public void testGetSpaceInformation() {
-        final Building building = new Building("building1");
+        final OldBuilding building = new OldBuilding("building1");
 
-        final Room room = new Room(building);
+        final OldRoom room = new OldRoom(building);
 
         assertSame(RoomInformation.class, room.getSpaceInformation().getClass());
         assertSame(RoomInformation.class, room.getSpaceInformation(new YearMonthDay()).getClass());

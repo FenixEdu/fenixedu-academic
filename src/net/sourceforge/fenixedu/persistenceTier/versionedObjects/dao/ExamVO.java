@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExam;
@@ -92,8 +92,8 @@ public class ExamVO extends VersionedObjectsBase implements IPersistentExam {
                 }
             }
             for (Exam exam : exams) {
-                List<Room> rooms = exam.getAssociatedRooms();
-                for (Room room : rooms) {
+                List<OldRoom> rooms = exam.getAssociatedRooms();
+                for (OldRoom room : rooms) {
                     if (room.getNome().equalsIgnoreCase(roomName)) {
 
                         if (!hashSet.contains(exam.getIdInternal())) {

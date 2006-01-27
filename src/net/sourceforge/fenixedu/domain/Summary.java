@@ -8,7 +8,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 /**
  * @author João Mota
@@ -45,7 +45,7 @@ public class Summary extends Summary_Base {
         setLastModifiedDate(Calendar.getInstance().getTime());
     }
     
-    public void modifyShift(Shift shift, Date summaryDate, Date summaryHour, Room room) {        
+    public void modifyShift(Shift shift, Date summaryDate, Date summaryHour, OldRoom room) {        
         setShift(shift);
         setSummaryDate(summaryDate);
         setSummaryHour(summaryHour);

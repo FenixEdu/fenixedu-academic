@@ -28,7 +28,7 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.exceptions.ExistingPersistentException;
@@ -63,7 +63,7 @@ public class CreateLesson extends Service {
                     roomOccupation.setWeekOfQuinzenalStart(infoLesson.getInfoRoomOccupation()
                             .getWeekOfQuinzenalStart());
 
-                    final Room sala = persistentSupport.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
+                    final OldRoom sala = persistentSupport.getISalaPersistente().readByName(infoLesson.getInfoSala().getNome());
                     roomOccupation.setRoom(sala);
 
                     final OccupationPeriod period = (OccupationPeriod) persistentObject.readByOID(OccupationPeriod.class,
@@ -94,7 +94,7 @@ public class CreateLesson extends Service {
 
     private boolean validNoInterceptingLesson(InfoRoomOccupation infoRoomOccupation)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final Room room = (Room) persistentSupport.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
+        final OldRoom room = (OldRoom) persistentSupport.getISalaPersistente().readByName(infoRoomOccupation.getInfoRoom().getNome());
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();
 
         for (final RoomOccupation roomOccupation : roomOccupations) {

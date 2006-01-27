@@ -32,7 +32,7 @@ import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
@@ -106,9 +106,9 @@ public class ReadSummary extends Service {
         }
 
         ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-        List<Room> rooms = persistentRoom.readAll();
+        List<OldRoom> rooms = persistentRoom.readAll();
         List<InfoRoom> infoRooms = new ArrayList(rooms.size());
-        for (final Room room : rooms) {
+        for (final OldRoom room : rooms) {
             final InfoRoom infoRoom = new InfoRoom();
             infoRooms.add(infoRoom);
             infoRoom.setIdInternal(room.getIdInternal());

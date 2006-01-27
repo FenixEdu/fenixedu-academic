@@ -9543,4 +9543,20 @@
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
     </service>
+	<service>
+   	 	<name>CreateSpace</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.CreateSpace</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>
+	<service>
+   	 	<name>DeleteSpace</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.DeleteSpace</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        </filterChains>     
+    </service>
 </serviceDefinitions>    

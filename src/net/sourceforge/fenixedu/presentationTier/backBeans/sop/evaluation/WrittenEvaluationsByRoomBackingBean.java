@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
@@ -123,15 +123,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRoomIDs;
     }
 
-    private Collection<Room> allRooms = null;
-    private Collection<Room> getAllRooms() throws FenixFilterException, FenixServiceException {
+    private Collection<OldRoom> allRooms = null;
+    private Collection<OldRoom> getAllRooms() throws FenixFilterException, FenixServiceException {
         if (allRooms == null) {
-            allRooms = (Collection<Room>) ServiceUtils.executeService(getUserView(), "ReadAllDomainObjects", new Object[] { Room.class });
+            allRooms = (Collection<OldRoom>) ServiceUtils.executeService(getUserView(), "ReadAllDomainObjects", new Object[] { OldRoom.class });
         }
         return allRooms;
     }
 
-    private Collection<Room> searchRooms() throws FenixFilterException, FenixServiceException {
+    private Collection<OldRoom> searchRooms() throws FenixFilterException, FenixServiceException {
         final String name = getName();
         final Integer building = (getBuilding() != null && getBuilding().length() > 0) ? Integer
                 .valueOf(getBuilding()) : null;
@@ -145,9 +145,9 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
                 .valueOf(getExamCapacity())
                 : null;
 
-        final Collection<Room> rooms = getAllRooms();
-        final Collection<Room> selectedRooms = new ArrayList<Room>();
-        for (final Room room : rooms) {
+        final Collection<OldRoom> rooms = getAllRooms();
+        final Collection<OldRoom> selectedRooms = new ArrayList<OldRoom>();
+        for (final OldRoom room : rooms) {
             boolean matchesCriteria = true;
             if (name != null && name.length() > 0 && !room.getNome().equalsIgnoreCase(name)) {
                 matchesCriteria = false;
@@ -171,24 +171,24 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return selectedRooms;
     }
 
-    public Collection<Room> getRooms() throws FenixFilterException, FenixServiceException {
+    public Collection<OldRoom> getRooms() throws FenixFilterException, FenixServiceException {
         return (getRequestParameter("submittedForm") != null) ? searchRooms() : null;
     }
 
-    public Collection<Room> getRoomsToDisplayMap() throws FenixFilterException, FenixServiceException {
+    public Collection<OldRoom> getRoomsToDisplayMap() throws FenixFilterException, FenixServiceException {
         final Set<Integer> selectedRoomIDs = getSelectedRoomIDs();
         if (selectedRoomIDs != null) {
             return filterRooms(getAllRooms(), selectedRoomIDs);
         } else {
-            final Collection<Room> rooms = getRooms();
+            final Collection<OldRoom> rooms = getRooms();
             return (rooms != null && rooms.size() == 1) ? getRooms() : null;
         }
     }
 
-    private Collection<Room> filterRooms(final Collection<Room> allRooms,
+    private Collection<OldRoom> filterRooms(final Collection<OldRoom> allRooms,
             final Set<Integer> selectedRoomIDs) {
-        final Collection<Room> rooms = new ArrayList<Room>(selectedRoomIDs.size());
-        for (final Room room : allRooms) {
+        final Collection<OldRoom> rooms = new ArrayList<OldRoom>(selectedRoomIDs.size());
+        for (final OldRoom room : allRooms) {
             if (selectedRoomIDs.contains(room.getIdInternal())) {
                 rooms.add(room);
             }
@@ -196,15 +196,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return rooms;
     }
 
-    public Collection<Building> getBuildings() throws FenixFilterException, FenixServiceException {
-        return (Collection<Building>) readAllDomainObjects(Building.class);
+    public Collection<OldBuilding> getBuildings() throws FenixFilterException, FenixServiceException {
+        return (Collection<OldBuilding>) readAllDomainObjects(OldBuilding.class);
     }
 
     public Collection<SelectItem> getBuildingSelectItems() throws FenixFilterException,
             FenixServiceException {
-        final Collection<Building> buildings = getBuildings();
+        final Collection<OldBuilding> buildings = getBuildings();
         final Collection<SelectItem> buildingSelectItems = new ArrayList<SelectItem>();
-        for (final Building building : buildings) {
+        for (final OldBuilding building : buildings) {
             buildingSelectItems.add(new SelectItem(building.getIdInternal().toString(), building.getName()));
         }
         return buildingSelectItems;
@@ -238,15 +238,15 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         return executionPeriod.getEndDate();
     }
 
-    public Map<Room, List<CalendarLink>> getWrittenEvaluationCalendarLinks()
+    public Map<OldRoom, List<CalendarLink>> getWrittenEvaluationCalendarLinks()
             throws FenixFilterException, FenixServiceException {
-        final Collection<Room> rooms = getRoomsToDisplayMap();
+        final Collection<OldRoom> rooms = getRoomsToDisplayMap();
         if (rooms != null) {
-            final Map<Room, List<CalendarLink>> calendarLinksMap = new HashMap<Room, List<CalendarLink>>();
+            final Map<OldRoom, List<CalendarLink>> calendarLinksMap = new HashMap<OldRoom, List<CalendarLink>>();
             // final Collection<List<CalendarLink>>
             // collectionOfCalendarLinkLists = new
             // ArrayList<List<CalendarLink>>();
-            for (final Room room : rooms) {
+            for (final OldRoom room : rooms) {
                 final List<CalendarLink> calendarLinks = new ArrayList<CalendarLink>();
                 for (final RoomOccupation roomOccupation : room.getRoomOccupations()) {
                     final WrittenEvaluation writtenEvaluation = roomOccupation.getWrittenEvaluation();
@@ -273,9 +273,9 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
         }
     }
 
-    public List<Entry<Room, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList() throws FenixFilterException, FenixServiceException {
-        final Map<Room, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
-        return (calendarLinks != null) ? new ArrayList<Entry<Room, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
+    public List<Entry<OldRoom, List<CalendarLink>>> getWrittenEvaluationCalendarLinksEntryList() throws FenixFilterException, FenixServiceException {
+        final Map<OldRoom, List<CalendarLink>> calendarLinks = getWrittenEvaluationCalendarLinks();
+        return (calendarLinks != null) ? new ArrayList<Entry<OldRoom, List<CalendarLink>>>(calendarLinks.entrySet()) : null;
     }
 
     private Map<String, String> constructLinkParameters(final ExecutionCourse executionCourse,

@@ -36,7 +36,7 @@ import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.CalendarUtil;
@@ -45,7 +45,7 @@ public class ReadLessonsAndExamsInWeekAndRoom extends Service {
 
     // FIXME duplicated code: this method is (almost?) identical to RoomSiteComponentBuilder.getInfoSiteRoomTimeTable
     public List run(InfoRoom infoRoom, Calendar day, InfoExecutionPeriod infoExecutionPeriod) throws ExcepcaoPersistencia, FenixServiceException {
-    	final Room room = (Room) persistentObject.readByOID(Room.class, infoRoom.getIdInternal());
+    	final OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, infoRoom.getIdInternal());
 
         List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 

@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
@@ -295,7 +295,7 @@ public class InitializeExecutionPeriod {
     private static void createLesson(final Lesson lesson, final Shift newShift) {
     	final ExecutionCourse executionCourse = newShift.getDisciplinaExecucao();
     	final ExecutionPeriod executionPeriod = executionCourse.getExecutionPeriod();
-    	final Room room = lesson.getSala();
+    	final OldRoom room = lesson.getSala();
 
         final Lesson newLesson = new Lesson();
         newLesson.setDiaSemana(lesson.getDiaSemana());;
@@ -310,7 +310,7 @@ public class InitializeExecutionPeriod {
     }
 
     private static RoomOccupation createRoomOccupation(final RoomOccupation roomOccupation, final Lesson lesson) {
-    	final Room room = roomOccupation.getRoom();
+    	final OldRoom room = roomOccupation.getRoom();
     	final OccupationPeriod period = getPeriod(lesson);
 
         final RoomOccupation newRoomOccupation = new RoomOccupation();

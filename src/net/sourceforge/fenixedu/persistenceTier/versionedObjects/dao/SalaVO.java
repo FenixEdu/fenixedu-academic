@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.Building;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -24,9 +24,9 @@ import net.sourceforge.fenixedu.util.TipoSala;
 
 public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
 
-    public Room readByName(String nome) throws ExcepcaoPersistencia {
-        List<Room> rooms = (List<Room>) readAll(Room.class);
-        for (Room room : rooms) {
+    public OldRoom readByName(String nome) throws ExcepcaoPersistencia {
+        List<OldRoom> rooms = (List<OldRoom>) readAll(OldRoom.class);
+        for (OldRoom room : rooms) {
             if (room.getNome().equalsIgnoreCase(nome)) {
                 return room;
             }
@@ -35,20 +35,20 @@ public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
 
         /*
          * Criteria crit = new Criteria(); crit.addEqualTo("nome", nome); return
-         * (Room) queryObject(Room.class, crit);
+         * (OldRoom) queryObject(OldRoom.class, crit);
          */
     }
 
     public List readAll() throws ExcepcaoPersistencia {
-        return (List) readAll(Room.class);
+        return (List) readAll(OldRoom.class);
     }
 
     public List readSalas(String nome, String edificio, Integer piso, Integer tipo,
             Integer capacidadeNormal, Integer capacidadeExame) throws ExcepcaoPersistencia {
 
-        List<Room> rooms = (List<Room>) readAll(Room.class);
-        List<Room> result = new ArrayList();
-        for (Room room : rooms) {
+        List<OldRoom> rooms = (List<OldRoom>) readAll(OldRoom.class);
+        List<OldRoom> result = new ArrayList();
+        for (OldRoom room : rooms) {
             boolean isAcceptable = true;
             if (nome != null && !room.getNome().equalsIgnoreCase(nome)) {
                 isAcceptable = false;
@@ -79,9 +79,9 @@ public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
 
     public List readAvailableRooms(Integer examOID) throws ExcepcaoPersistencia {
         Exam exam = (Exam) readByOID(Exam.class, examOID);
-        List<Room> result = new ArrayList();
-        List<Room> rooms = (List<Room>) readAll(Room.class);
-        for (Room room : rooms) {
+        List<OldRoom> result = new ArrayList();
+        List<OldRoom> rooms = (List<OldRoom>) readAll(OldRoom.class);
+        for (OldRoom room : rooms) {
             if (!(room.getTipo().getTipo().intValue() == TipoSala.LABORATORIO)) {
                 List<RoomOccupation> roomOccupations = room.getRoomOccupations();
                 boolean isOccupied = false;
@@ -101,9 +101,9 @@ public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
     }
 
     public List readForRoomReservation() throws ExcepcaoPersistencia {
-        List<Room> rooms = (List<Room>) readAll(Room.class);
-        List<Room> result = new ArrayList();
-        for (Room room : rooms) {
+        List<OldRoom> rooms = (List<OldRoom>) readAll(OldRoom.class);
+        List<OldRoom> result = new ArrayList();
+        for (OldRoom room : rooms) {
             if (!(room.getTipo().getTipo().intValue() == TipoSala.LABORATORIO)) {
                 result.add(room);
             }
@@ -115,15 +115,15 @@ public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
          * new TipoSala(TipoSala.LABORATORIO)); //
          * criteria.addNotLike("building.name", "Tagus%"); //
          * criteria.addNotLike("building.name", "Local%"); return
-         * queryList(Room.class, criteria);
+         * queryList(OldRoom.class, criteria);
          */
     }
 
     public List readByPavillions(List pavillionsName) throws ExcepcaoPersistencia {
-        List<Room> result = new ArrayList();
-        List<Building> buildings = (List<Building>) readAll(Building.class);
+        List<OldRoom> result = new ArrayList();
+        List<OldBuilding> buildings = (List<OldBuilding>) readAll(OldBuilding.class);
         for (Object buildingName : pavillionsName) {
-            for (Building building : buildings) {
+            for (OldBuilding building : buildings) {
                 if (((String) buildingName).equalsIgnoreCase(building.getName())) {
                     result.addAll(building.getRooms());
                 }
@@ -133,14 +133,14 @@ public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
 
         /*
          * Criteria criteria = new Criteria(); criteria.addIn("building.name",
-         * pavillionsName); return queryList(Room.class, criteria);
+         * pavillionsName); return queryList(OldRoom.class, criteria);
          */
     }
 
     public List readByNormalCapacity(Integer capacity) throws ExcepcaoPersistencia {
-        List<Room> rooms = (List<Room>) readAll(Room.class);
-        List<Room> result = new ArrayList();
-        for (Room room : rooms) {
+        List<OldRoom> rooms = (List<OldRoom>) readAll(OldRoom.class);
+        List<OldRoom> result = new ArrayList();
+        for (OldRoom room : rooms) {
             if (room.getCapacidadeNormal().intValue() >= capacity.intValue()) {
                 result.add(room);
             }
@@ -150,7 +150,7 @@ public class SalaVO extends VersionedObjectsBase implements ISalaPersistente {
         /*
          * Criteria criteria = new Criteria();
          * criteria.addGreaterOrEqualThan("capacidadeNormal", capacity); return
-         * queryList(Room.class, criteria);
+         * queryList(OldRoom.class, criteria);
          */
     }
 }

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
@@ -128,10 +128,10 @@ public class SummaryUtils {
         return shift;
     }
 
-    public static Room getRoom(final ISuportePersistente persistentSupport, final Summary summary,
+    public static OldRoom getRoom(final ISuportePersistente persistentSupport, final Summary summary,
             final Shift shift, InfoSummary infoSummary) throws ExcepcaoPersistencia,
             FenixServiceException {
-        Room room = null;
+        OldRoom room = null;
         if (infoSummary.getIsExtraLesson()) {
             if (summary != null
                     && summary.getRoom().getIdInternal().equals(
@@ -139,7 +139,7 @@ public class SummaryUtils {
                 room = summary.getRoom();
             } else {
                 final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-                room = (Room) persistentRoom.readByOID(Room.class, infoSummary.getInfoRoom()
+                room = (OldRoom) persistentRoom.readByOID(OldRoom.class, infoSummary.getInfoRoom()
                         .getIdInternal());
             }
         } else {

@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -21,7 +21,7 @@ public class ReadAvailableRoomsForExam extends Service {
             DiaSemana dayOfWeek, Integer roomOccupationToRemoveId, Integer normalCapacity,
             Integer frequency, Integer weekOfStart, Boolean withLabs) throws ExcepcaoPersistencia {
         final ISalaPersistente persistentRoom = persistentSupport.getISalaPersistente();
-        final List<Room> rooms;
+        final List<OldRoom> rooms;
         if (normalCapacity != null) {
             rooms = persistentRoom.readByNormalCapacity(normalCapacity);
         } else if (withLabs.booleanValue()) {
@@ -31,7 +31,7 @@ public class ReadAvailableRoomsForExam extends Service {
         }
 
         final List<InfoRoom> availableInfoRooms = new ArrayList<InfoRoom>();
-        for (final Room room : rooms) {
+        for (final OldRoom room : rooms) {
             if (room.getNome().equals("QA")) {
                 System.out.println();
             }
@@ -44,7 +44,7 @@ public class ReadAvailableRoomsForExam extends Service {
         return availableInfoRooms;
     }
 
-    private boolean isOccupied(final Room room, final Calendar periodStart, final Calendar periodEnd,
+    private boolean isOccupied(final OldRoom room, final Calendar periodStart, final Calendar periodEnd,
             final Calendar startTime, final Calendar endTime, final DiaSemana dayOfWeek,
             Integer frequency, Integer weekOfStart, Integer roomOccupationToRemoveId) {
         final List<RoomOccupation> roomOccupations = room.getRoomOccupations();

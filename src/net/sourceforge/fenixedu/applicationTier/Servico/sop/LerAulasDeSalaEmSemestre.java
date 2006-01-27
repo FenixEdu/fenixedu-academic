@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class LerAulasDeSalaEmSemestre extends Service {
@@ -30,7 +30,7 @@ public class LerAulasDeSalaEmSemestre extends Service {
             executionPeriodId = infoExecutionPeriod.getIdInternal();
         }
 
-    	final Room room = (Room) persistentObject.readByOID(Room.class, infoRoom.getIdInternal());
+    	final OldRoom room = (OldRoom) persistentObject.readByOID(OldRoom.class, infoRoom.getIdInternal());
     	final ExecutionPeriod executionPeriod = (ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodId);
 
         final List<Lesson> lessonList = room.findLessonsForExecutionPeriod(executionPeriod);

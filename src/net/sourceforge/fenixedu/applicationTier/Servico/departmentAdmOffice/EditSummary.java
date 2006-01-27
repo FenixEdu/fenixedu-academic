@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 
@@ -37,7 +37,7 @@ public class EditSummary extends Service {
                 ExecutionCourse.class, executionCourseId);
         
         final Shift shift = SummaryUtils.getShift(persistentSupport, summary, infoSummary);
-        final Room room = SummaryUtils.getRoom(persistentSupport, summary, shift, infoSummary);
+        final OldRoom room = SummaryUtils.getRoom(persistentSupport, summary, shift, infoSummary);
 
         shift.transferSummary(summary, infoSummary.getSummaryDate().getTime(), infoSummary
                 .getSummaryHour().getTime(), room, !summary.getShift().equals(shift));

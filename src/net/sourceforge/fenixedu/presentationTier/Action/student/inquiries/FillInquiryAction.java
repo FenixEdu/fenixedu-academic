@@ -1280,7 +1280,7 @@ public class FillInquiryAction extends FenixDispatchAction {
     }
 
 	private List<InfoInquiriesTeacher> getSelectedAttendingCourseTeachers(DynaActionForm inquiryForm, List<InfoTeacherOrNonAffiliatedTeacherWithRemainingClassTypes> attendingCourseTeachers) {
-        // Building the selected teachers list
+        // OldBuilding the selected teachers list
 		Integer[] selectedAttendingCourseTeachersId = (Integer[]) inquiryForm.get("selectedAttendingCourseTeachersId");
 		Boolean[] selectedAttendingCourseTeacherIsAffiliated = (Boolean[]) inquiryForm.get("selectedAttendingCourseTeacherIsAffiliated");
 		List<InfoInquiriesTeacher> selectedAttendingCourseTeachers = new ArrayList<InfoInquiriesTeacher>(selectedAttendingCourseTeachersId.length);
@@ -1311,7 +1311,7 @@ public class FillInquiryAction extends FenixDispatchAction {
 
 
 	private List<InfoInquiriesRoom> getSelectedAttendingCourseRooms(DynaActionForm inquiryForm, List<InfoRoomWithInfoInquiriesRoom> attendingCourseRooms) {
-        // Building the selected rooms list
+        // OldBuilding the selected rooms list
 		Integer[] selectedAttendingCourseRoomsId = (Integer[]) inquiryForm.get("selectedAttendingCourseRoomsId");		
 		List<InfoInquiriesRoom> selectedAttendingCourseRooms = new ArrayList<InfoInquiriesRoom>(selectedAttendingCourseRoomsId.length);
         int position = 0;

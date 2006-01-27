@@ -45,7 +45,7 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
@@ -787,16 +787,16 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         return WrittenTest.class.getSimpleName();
     }    
 
-    public List<Room> getEvaluationRooms() throws FenixFilterException, FenixServiceException {
-        final Room[] result = new Room[getEvaluationRoomsPositions().size()];
+    public List<OldRoom> getEvaluationRooms() throws FenixFilterException, FenixServiceException {
+        final OldRoom[] result = new OldRoom[getEvaluationRoomsPositions().size()];
         for (final Entry<Integer, Integer> entry : getEvaluationRoomsPositions().entrySet()) {
-            final Room room = getRoom(entry.getKey());
+            final OldRoom room = getRoom(entry.getKey());
             result[entry.getValue() - 1] = room;
         }
         return Arrays.asList(result);
     }
 
-    private Room getRoom(final Integer roomID) throws FenixFilterException, FenixServiceException {
+    private OldRoom getRoom(final Integer roomID) throws FenixFilterException, FenixServiceException {
         for (final RoomOccupation roomOccupation : ((WrittenEvaluation) getEvaluation()).getAssociatedRoomOccupation()) {
             if (roomOccupation.getRoom().getIdInternal().equals(roomID)) {
                 return roomOccupation.getRoom();
@@ -887,9 +887,9 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
     
     private List<Integer> getRoomIDs() throws FenixFilterException, FenixServiceException {
-        final List<Room> rooms = getEvaluationRooms(); 
+        final List<OldRoom> rooms = getEvaluationRooms(); 
         final List<Integer> result = new ArrayList(rooms.size());
-        for (final Room room : rooms) {
+        for (final OldRoom room : rooms) {
             result.add(room.getIdInternal());
         }
         return result;

@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
@@ -176,7 +176,7 @@ public class Student extends Student_Base {
         return false;
     }
 
-    public Room getRoomFor(final WrittenEvaluation writtenEvaluation) {
+    public OldRoom getRoomFor(final WrittenEvaluation writtenEvaluation) {
         for (final WrittenEvaluationEnrolment writtenEvaluationEnrolment : this
                 .getWrittenEvaluationEnrolments()) {
             if (writtenEvaluationEnrolment.getWrittenEvaluation() == writtenEvaluation) {

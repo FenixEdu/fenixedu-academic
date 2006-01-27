@@ -1,0 +1,127 @@
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Space" table="SPACE">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Building" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Floor" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Room" />
+
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceInformation" table="SPACE_INFORMATION">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.BuildingInformation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.FloorInformation" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomInformation" />
+
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="SPACE">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.BuildingInformation" table="SPACE_INFORMATION">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Floor" table="SPACE">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.FloorInformation" table="SPACE_INFORMATION">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="SPACE">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomInformation" table="SPACE_INFORMATION">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+</class-descriptor>

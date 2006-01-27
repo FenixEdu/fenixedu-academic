@@ -17,7 +17,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class SelectRooms extends Service {
@@ -35,10 +35,10 @@ public class SelectRooms extends Service {
 
 		Iterator iter = salas.iterator();
 		List salasView = new ArrayList();
-		Room sala;
+		OldRoom sala;
 
 		while (iter.hasNext()) {
-			sala = (Room) iter.next();
+			sala = (OldRoom) iter.next();
 			salasView.add(InfoRoom.newInfoFromDomain(sala));
 		}
 

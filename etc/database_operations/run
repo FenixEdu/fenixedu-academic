@@ -29,3 +29,5 @@ execute "Add new KEY_UNIT Column" alterExternalPersonTable.sql
 execute "Add new KEY_UNIT Column" alterNonAffiliatedTeacherTable.sql
 execute "Add new KEY_RESEARCHER Column" alterPersonTable.sql
 execute "Add new RESEARCHER Table" createResearcherTable.sql
+execute "Create Table Space" createTableSpace.sql
+execute "Create Table Space" createTableSpaceInformation.sql

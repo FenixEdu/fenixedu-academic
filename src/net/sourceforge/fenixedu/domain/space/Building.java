@@ -4,8 +4,8 @@ import org.joda.time.YearMonthDay;
 
 public class Building extends Building_Base {
 
-	/** @deprecated */
-    public Building() {
+    protected Building() {
+        super();
     }
 
     public Building(final String buildingName) {

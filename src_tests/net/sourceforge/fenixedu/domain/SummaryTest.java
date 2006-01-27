@@ -9,7 +9,7 @@ import java.util.Date;
 
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 public class SummaryTest extends DomainTestBase {
 
@@ -21,7 +21,7 @@ public class SummaryTest extends DomainTestBase {
 
     private Shift shift;
 
-    private Room room;
+    private OldRoom room;
 
     private Summary summary;
 
@@ -42,7 +42,7 @@ public class SummaryTest extends DomainTestBase {
         shift = new Shift();
         shift.setIdInternal(1);
 
-        room = new Room();
+        room = new OldRoom();
         room.setIdInternal(1);
 
         summary = new Summary();
@@ -188,7 +188,7 @@ public class SummaryTest extends DomainTestBase {
         assertEquals("Unexpected size!", 1, professorship.getAssociatedSummariesCount());
         assertNotNull("Expected Not Null Teacher!", summary.getTeacher());
         assertEquals("Unexpected size!", 1, teacher.getAssociatedSummariesCount());
-        assertNotNull("Expected Not Null Room!", summary.getRoom());
+        assertNotNull("Expected Not Null OldRoom!", summary.getRoom());
         assertEquals("Unexpected size!", 1, room.getAssociatedSummariesCount());
         assertNotNull("Expected Not Null Shift!", summary.getShift());
         assertEquals("Unexpected size!", 1, shift.getAssociatedSummariesCount());
@@ -201,7 +201,7 @@ public class SummaryTest extends DomainTestBase {
         assertEquals("Unexpected size!", 0, professorship.getAssociatedSummariesCount());
         assertNull("Expected Null Teacher!", summary.getTeacher());
         assertEquals("Unexpected size!", 0, teacher.getAssociatedSummariesCount());
-        assertNull("Expected Null Room!", summary.getRoom());
+        assertNull("Expected Null OldRoom!", summary.getRoom());
         assertEquals("Unexpected size!", 0, room.getAssociatedSummariesCount());
         assertNull("Expected Null Shift!", summary.getShift());
         assertEquals("Unexpected size!", 0, shift.getAssociatedSummariesCount());
@@ -211,7 +211,7 @@ public class SummaryTest extends DomainTestBase {
             final Integer studentsNumber, final Boolean isExtraLesson, final Date summaryDate,
             final Date summaryHour, final ExecutionCourse executionCourse,
             final Professorship professorship, final Teacher teacher, final String teacherName,
-            final Shift shift, final Room room) {
+            final Shift shift, final OldRoom room) {
 
         assertEquals("Different Summary Title!", title, summary.getTitle());
         assertEquals("Different Summary Text!", summaryText, summary.getSummaryText());
@@ -222,7 +222,7 @@ public class SummaryTest extends DomainTestBase {
         assertEquals("Different Summary Teacher!", teacher, summary.getTeacher());
         assertEquals("Different Summary TeacherName!", teacherName, summary.getTeacherName());
         assertEquals("Different Summary Shift!", shift, summary.getShift());
-        assertEquals("Different Summary Room!", room, summary.getRoom());
+        assertEquals("Different Summary OldRoom!", room, summary.getRoom());
         assertTrue("Different Summary Date!", summary.getSummaryDate().equals(summaryDate));
         assertTrue("Different Summary Hour!", summary.getSummaryHour().equals(summaryHour));
     }

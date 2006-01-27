@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -45,7 +45,7 @@ public class LerAulasDeDisciplinaExecucao extends Service {
 
                 infoLesson.setInfoShift(infoShift);
 
-                final Room room = lesson.getSala();
+                final OldRoom room = lesson.getSala();
                 final InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
                 infoLesson.setInfoSala(infoRoom);
             }

@@ -17,7 +17,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRoom;
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -41,7 +41,7 @@ public class ReadRoomsWithNoExamsInDayAndBeginning extends Service {
         List availableInfoRooms = new ArrayList();
         List availableRooms = (ArrayList) CollectionUtils.subtract(allRooms, occupiedRooms);
         for (int i = 0; i < availableRooms.size(); i++) {
-            Room room = (Room) availableRooms.get(i);
+            OldRoom room = (OldRoom) availableRooms.get(i);
             InfoRoom infoRoom = InfoRoom.newInfoFromDomain(room);
             availableInfoRooms.add(infoRoom);
         }

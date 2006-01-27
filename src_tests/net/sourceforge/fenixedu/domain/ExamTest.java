@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.Season;
@@ -25,7 +25,7 @@ public class ExamTest extends DomainTestBase {
 
     private List<ExecutionCourse> executionCoursesToAssociate;
     private List<CurricularCourseScope> curricularCourseScopesToAssociate;
-    private List<Room> rooms;
+    private List<OldRoom> rooms;
 
     private Exam otherExam;
     
@@ -104,7 +104,7 @@ public class ExamTest extends DomainTestBase {
                     curricularCourseScopesToAssociate, rooms, period, season);
             checkExamAttributes(exam, examDate, examStartTime.getTime(), examEndTime.getTime(), season,
                     executionCoursesToAssociate, curricularCourseScopesToAssociate);
-            // For each Room is created a new RoomOccupation in the Exam
+            // For each OldRoom is created a new RoomOccupation in the Exam
             assertEquals("Unexpected room occupation in exam!", rooms.size(), exam
                     .getAssociatedRoomOccupationCount());
 
@@ -182,9 +182,9 @@ public class ExamTest extends DomainTestBase {
 
         period = new OccupationPeriod(startTime.getTime(), endTime.getTime());
 
-        Room room1 = new Room();
+        OldRoom room1 = new OldRoom();
         room1.setIdInternal(1);
-        Room room2 = new Room();
+        OldRoom room2 = new OldRoom();
         room2.setIdInternal(2);
 
         DiaSemana dayOfWeek = new DiaSemana(exam.getDay().get(Calendar.DAY_OF_WEEK));
@@ -223,12 +223,12 @@ public class ExamTest extends DomainTestBase {
         curricularCourseScopesToAssociate = new ArrayList<CurricularCourseScope>(1);
         curricularCourseScopesToAssociate.add(curricularCourseScope);
 
-        rooms = new ArrayList<Room>(2);
+        rooms = new ArrayList<OldRoom>(2);
 
-        Room roomToAssociate1 = new Room();
+        OldRoom roomToAssociate1 = new OldRoom();
         roomToAssociate1.setIdInternal(3);
 
-        Room roomToAssociate2 = new Room();
+        OldRoom roomToAssociate2 = new OldRoom();
         roomToAssociate2.setIdInternal(4);
 
         rooms.add(roomToAssociate1);

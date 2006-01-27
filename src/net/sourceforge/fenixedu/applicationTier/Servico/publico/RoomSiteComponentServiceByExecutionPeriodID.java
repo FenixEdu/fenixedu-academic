@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.RoomKey;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 
 /**
@@ -37,7 +37,7 @@ public class RoomSiteComponentServiceByExecutionPeriodID extends Service {
         // IPersistentExecutionPeriod persistentExecutionPeriod =
         // persistentSupport.getIPersistentExecutionPeriod();
 
-        Room room = persistentRoom.readByName(roomKey.getNomeSala());
+        OldRoom room = persistentRoom.readByName(roomKey.getNomeSala());
         // ExecutionPeriod executionPeriod = (ExecutionPeriod)
         // persistentExecutionPeriod
         // .readByOID(ExecutionPeriod.class, infoExecutionPeriodCode);

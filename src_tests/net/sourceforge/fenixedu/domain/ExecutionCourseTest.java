@@ -10,7 +10,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 public class ExecutionCourseTest extends DomainTestBase {
 
@@ -19,7 +19,7 @@ public class ExecutionCourseTest extends DomainTestBase {
 	private Student thisStudent = null;
 	private Attends attendsForThisStudent = null;
     private Shift shift;
-    private Room room;
+    private OldRoom room;
     private Teacher teacher;
     private Professorship professorship;
     
@@ -43,7 +43,7 @@ public class ExecutionCourseTest extends DomainTestBase {
 
         shift = new Shift();
 
-        room = new Room();
+        room = new OldRoom();
 
         teacher = new Teacher();
 
@@ -430,7 +430,7 @@ public class ExecutionCourseTest extends DomainTestBase {
             final String summaryText, final Integer studentsNumber, final Boolean isExtraLesson,
             final Date summaryDate, final Date summaryHour, final ExecutionCourse executionCourse,
             final Professorship professorship, final Teacher teacher, final String teacherName,
-            final Shift shift, final Room room) {
+            final Shift shift, final OldRoom room) {
 
         assertEquals("Different Summary Title!", title, summary.getTitle());
         assertEquals("Different Summary Text!", summaryText, summary.getSummaryText());
@@ -441,7 +441,7 @@ public class ExecutionCourseTest extends DomainTestBase {
         assertEquals("Different Summary Teacher!", teacher, summary.getTeacher());
         assertEquals("Different Summary TeacherName!", teacherName, summary.getTeacherName());
         assertEquals("Different Summary Shift!", shift, summary.getShift());
-        assertEquals("Different Summary Room!", room, summary.getRoom());
+        assertEquals("Different Summary OldRoom!", room, summary.getRoom());
         assertTrue("Different Summary Date!", summary.getSummaryDate().equals(summaryDate));
         assertTrue("Different Summary Hour!", summary.getSummaryHour().equals(summaryHour));
     }

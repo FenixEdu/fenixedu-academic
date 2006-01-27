@@ -6,17 +6,17 @@ package net.sourceforge.fenixedu.applicationTier.Servico.sop;
  */
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotEmptyServiceException;
-import net.sourceforge.fenixedu.domain.space.Building;
+import net.sourceforge.fenixedu.domain.space.OldBuilding;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class DeleteBuilding extends Service {
 
     public void run(final Integer buildingId) throws ExcepcaoPersistencia, NotEmptyServiceException {
-        final Building building = (Building) persistentObject.readByOID(Building.class, buildingId);
+        final OldBuilding building = (OldBuilding) persistentObject.readByOID(OldBuilding.class, buildingId);
         if (!building.getRooms().isEmpty()) {
             throw new NotEmptyServiceException();
         }
-        persistentObject.deleteByOID(Building.class,buildingId);
+        persistentObject.deleteByOID(OldBuilding.class,buildingId);
     }
 
 }

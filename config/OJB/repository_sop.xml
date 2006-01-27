@@ -1,4 +1,4 @@
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="BUILDING">
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.OldBuilding" table="BUILDING">
       <field-descriptor
          name="idInternal"
          column="ID_INTERNAL"
@@ -30,13 +30,13 @@
       </reference-descriptor>
      <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="rooms"
-			element-class-ref="net.sourceforge.fenixedu.domain.space.Room"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.OldRoom"
 			>
 		<inverse-foreignkey field-ref="keyBuilding"/>
 	</collection-descriptor>
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.space.Room"
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.OldRoom"
    	  table="ROOM"
    >
       <field-descriptor id="1"
@@ -85,7 +85,7 @@
       />
       <reference-descriptor auto-retrieve="false"
          name="building"
-         class-ref="net.sourceforge.fenixedu.domain.space.Building"
+         class-ref="net.sourceforge.fenixedu.domain.space.OldBuilding"
       >
          <foreignkey field-ref="keyBuilding"/>
       </reference-descriptor>
@@ -377,7 +377,7 @@
       />
       <reference-descriptor auto-retrieve="false"
          name="sala"
-         class-ref="net.sourceforge.fenixedu.domain.space.Room"
+         class-ref="net.sourceforge.fenixedu.domain.space.OldRoom"
       >
          <foreignkey field-ref="chaveSala"/>
       </reference-descriptor>
@@ -509,7 +509,7 @@
       <reference-descriptor auto-retrieve="false" name="student" class-ref="net.sourceforge.fenixedu.domain.Student" >
          <foreignkey field-ref="keyStudent"/>
       </reference-descriptor> 
-      <reference-descriptor auto-retrieve="false" name="room" class-ref="net.sourceforge.fenixedu.domain.space.Room" >
+      <reference-descriptor auto-retrieve="false" name="room" class-ref="net.sourceforge.fenixedu.domain.space.OldRoom" >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor> 
 </class-descriptor>
@@ -827,7 +827,7 @@
       />
       <reference-descriptor auto-retrieve="false"
          name="room"
-         class-ref="net.sourceforge.fenixedu.domain.space.Room"
+         class-ref="net.sourceforge.fenixedu.domain.space.OldRoom"
       >
          <foreignkey field-ref="keyRoom"/>
       </reference-descriptor>

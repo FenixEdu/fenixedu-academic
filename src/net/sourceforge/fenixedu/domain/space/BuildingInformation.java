@@ -3,9 +3,10 @@ package net.sourceforge.fenixedu.domain.space;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class BuildingInformation extends BuildingInformation_Base {
-    
+
     protected BuildingInformation(final Building building, final String buildingName) {
         super();
+        setOjbConcreteClass(this.getClass().getName());
         setSpace(building);
         setName(buildingName);
     }
@@ -20,6 +21,9 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     @Override
     public void setSpace(final Space space) {
+        if (space == null) {
+            setSpace(null);
+        }
         throw new DomainException("error.incompatible.space");
     }
 

@@ -18,7 +18,7 @@ public class BuildingInformationTest extends DomainTestBase {
             assertEquals("error.building.cannot.be.null", ex.getMessage());
         }
 
-        final Building building = new Building("Some building");
+        final OldBuilding building = new OldBuilding("Some building");
         final BuildingInformation buildingInformation = (BuildingInformation) building.getSpaceInformation();
         assertSame(building, buildingInformation.getSpace());
         assertEquals("Some building", buildingInformation.getName());
@@ -38,7 +38,7 @@ public class BuildingInformationTest extends DomainTestBase {
     }
 
     public void testSetName() {
-        final Building building = new Building("Some building");
+        final OldBuilding building = new OldBuilding("Some building");
         final BuildingInformation buildingInformation = (BuildingInformation) building.getSpaceInformation();
 
         try {
@@ -53,7 +53,7 @@ public class BuildingInformationTest extends DomainTestBase {
     }
 
     public void testSetSpace() {
-        final Building building = new Building("Some building");
+        final OldBuilding building = new OldBuilding("Some building");
         final BuildingInformation buildingInformation = building.getSpaceInformation();
 
         try {
@@ -71,7 +71,7 @@ public class BuildingInformationTest extends DomainTestBase {
         }
 
         try {
-            buildingInformation.setSpace(new Building("Some other building"));
+            buildingInformation.setSpace(new OldBuilding("Some other building"));
             fail("Expected a DomainException: cannot change the building of a building information.");
         } catch (DomainException ex) {
             assertEquals("error.cannot.change.building", ex.getMessage());

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Exam;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.util.TipoSala;
@@ -24,14 +24,14 @@ import org.apache.ojb.broker.query.Criteria;
 
 public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
 
-    public Room readByName(String nome) throws ExcepcaoPersistencia {
+    public OldRoom readByName(String nome) throws ExcepcaoPersistencia {
         Criteria crit = new Criteria();
         crit.addEqualTo("nome", nome);
-        return (Room) queryObject(Room.class, crit);
+        return (OldRoom) queryObject(OldRoom.class, crit);
     }
 
     public List readAll() throws ExcepcaoPersistencia {
-        return queryList(Room.class, null);
+        return queryList(OldRoom.class, null);
     }
 
     /**
@@ -47,9 +47,9 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     public List readSalas(String nome, String edificio, Integer piso, Integer tipo,
             Integer capacidadeNormal, Integer capacidadeExame) throws ExcepcaoPersistencia {
         
-        List<Room> rooms = (List<Room>) readAll(Room.class);
-        List<Room> result = new ArrayList();
-        for (Room room : rooms) {
+        List<OldRoom> rooms = (List<OldRoom>) readAll(OldRoom.class);
+        List<OldRoom> result = new ArrayList();
+        for (OldRoom room : rooms) {
             boolean isAcceptable = true;
             if (nome != null && !room.getNome().equalsIgnoreCase(nome)) {
                 continue;
@@ -102,7 +102,7 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
             }
             Criteria crit2 = new Criteria();
             crit2.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
-            List allExamRooms = queryList(Room.class, crit2);
+            List allExamRooms = queryList(OldRoom.class, crit2);
             availableRooms = (List) CollectionUtils.subtract(allExamRooms, occupiedRooms);
 
         }
@@ -112,19 +112,19 @@ public class SalaOJB extends ObjectFenixOJB implements ISalaPersistente {
     public List readForRoomReservation() throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addNotEqualTo("tipo", new TipoSala(TipoSala.LABORATORIO));
-        return queryList(Room.class, criteria);
+        return queryList(OldRoom.class, criteria);
     }
 
     public List readByPavillions(List pavillionsName) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addIn("building.name", pavillionsName);
-        return queryList(Room.class, criteria);
+        return queryList(OldRoom.class, criteria);
     }
 
     public List readByNormalCapacity(Integer capacity) throws ExcepcaoPersistencia {
         Criteria criteria = new Criteria();
         criteria.addGreaterOrEqualThan("capacidadeNormal", capacity);
-        return queryList(Room.class, criteria);
+        return queryList(OldRoom.class, criteria);
     }
 
 }

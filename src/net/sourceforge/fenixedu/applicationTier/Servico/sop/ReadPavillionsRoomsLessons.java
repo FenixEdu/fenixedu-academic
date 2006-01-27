@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.domain.space.RoomOccupation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
@@ -40,10 +40,10 @@ public class ReadPavillionsRoomsLessons extends Service {
     			.readByOID(ExecutionPeriod.class, infoExecutionPeriod.getIdInternal());
 
         final ISalaPersistente roomDAO = persistentSupport.getISalaPersistente();
-        final List<Room> rooms = roomDAO.readByPavillions(pavillions);
+        final List<OldRoom> rooms = roomDAO.readByPavillions(pavillions);
 
         final List infoViewRoomScheduleList = new ArrayList();
-        for (final Room room : rooms) {
+        for (final OldRoom room : rooms) {
             final InfoViewRoomSchedule infoViewRoomSchedule = new InfoViewRoomSchedule();
             infoViewRoomScheduleList.add(infoViewRoomSchedule);
 

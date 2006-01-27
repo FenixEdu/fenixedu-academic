@@ -29,7 +29,7 @@
    </collection-descriptor>             
    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="buildings"
-		element-class-ref="net.sourceforge.fenixedu.domain.space.Building"
+		element-class-ref="net.sourceforge.fenixedu.domain.space.OldBuilding"
 		>
 		<inverse-foreignkey field-ref="keyCampus"/>
    </collection-descriptor>

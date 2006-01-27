@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.space.Room;
+import net.sourceforge.fenixedu.domain.space.OldRoom;
 
 
 /**
@@ -77,7 +77,7 @@ public class InquiriesCourse extends InquiriesCourse_Base {
 		new InquiriesTeacher(this, nonAffiliatedTeacher, shiftType, infoInquiriesTeacher);
 	}
 	
-	public void createInquiriesRoom(Room room, InfoInquiriesRoom infoInquiriesRoom) {
+	public void createInquiriesRoom(OldRoom room, InfoInquiriesRoom infoInquiriesRoom) {
 		new InquiriesRoom(this, room, infoInquiriesRoom);
 	}
 	
