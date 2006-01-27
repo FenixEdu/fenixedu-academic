@@ -5,26 +5,32 @@ import net.sourceforge.fenixedu.renderers.components.HtmlText;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
-import org.apache.log4j.Logger;
 import org.apache.struts.util.MessageResources;
 
 public class EnumRenderer extends OutputRenderer {
 
-    private static Logger logger = Logger.getLogger(EnumRenderer.class);
-    
     protected String getEnumDescription(Enum enumerate) {
         String description = enumerate.toString();
         
         MessageResources resources = getEnumerationResources();
         if (resources != null) {
-            String message = resources.getMessage(enumerate.toString());
-            
-            if (message != null) {
-                description = message;
+            if (resources.isPresent(enumerate.toString())) {               
+                description = resources.getMessage(enumerate.toString());
             }
         }
-            
+
+        resources = getResources();
+        if (resources != null) {
+            if (resources.isPresent(enumerate.toString())) {               
+                description = resources.getMessage(enumerate.toString());
+            }
+        }
+        
         return description;
+    }
+
+    protected MessageResources getResources() {
+        return RenderUtils.getMessageResources();
     }
 
     protected MessageResources getEnumerationResources() {

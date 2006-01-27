@@ -62,6 +62,7 @@
        <form-bean name="executionCourseWebsiteManagementForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.executionCourseWebsite.ExecutionCourseWebSiteManagementForm" dynamic="false"/>
     <!--  ================================================ -->      
     
+       <form-bean name="websiteManagementForm" type="org.apache.struts.action.DynaActionForm" dynamic="false"/>
     </form-beans>
 
 
@@ -104,7 +105,6 @@
 			<forward name="selectOptionsFor_INTERSECTION_GROUP" path="/unsortedGroupOperationsManagement.do?method=prepare"/>
             <forward name="selectOptionsFor_DIFFERENCE_GROUP" path="/differenceGroupOperationsManagement.do?method=prepare"/>
             <forward name="selectOptionsFor_ROLE_GROUP" path="/roleGroupOperationsManagement.do?method=prepare"/>
-            <forward name="selectOptionsFor_PUBLIC_REQUESTER_GROUP" path="/personalGroupsManagement.do?method=createPublicGroup"/>
 			<forward name="showElements" path="showPersonsInGroup"/>										
             <forward name="addGroup" path="addGroup"/>  
 		</action>        
@@ -235,8 +235,22 @@
 			<forward name="showlAllExecutionCourseWebsites" path="showAllExecutionCourseWebsites"/>
 		</action>						
 		<!--  =================================================-->	
-								
 				
+        <action path="/websiteManagement"
+            type="net.sourceforge.fenixedu.presentationTier.Action.cms.websiteTypeManagement.WebsiteTypeManagement"
+            parameter="method"
+            name="websiteManagementForm"
+            scope="request">
+            <forward name="list" path="listWebsiteType"/>
+            <forward name="edit" path="editWebsiteType"/>
+            <forward name="details" path="viewWebsiteType"/>
+            <forward name="create" path="createWebsiteType"/>
+        </action>				
+				
+        <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
+            <forward name="show" path="domain.view"/>
+        </action>
+
     </action-mappings>
     
     <!-- ========== Controller Configuration ================================ -->

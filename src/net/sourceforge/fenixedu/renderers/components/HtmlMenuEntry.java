@@ -43,4 +43,6 @@ public abstract class HtmlMenuEntry extends HtmlComponent {
     }
     
     public abstract void setSelected(String value);
+    
+    public abstract boolean isSelected();
 }

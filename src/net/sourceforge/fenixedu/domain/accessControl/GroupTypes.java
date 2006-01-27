@@ -61,15 +61,7 @@ public enum GroupTypes
 		{
 			return RoleGroup.class;
 		}
-	},
-	PUBLIC_REQUESTER_GROUP
-	{
-		public Class getImplementationClass()
-		{
-			return PublicRequestersGroup.class;
-		}
-	}
-	;
+	};
 	abstract public Class getImplementationClass();
 
 	public static GroupTypes userGroupTypeByClass(Class clazz) throws InvalidUserGroupTypeException

@@ -33,6 +33,10 @@ public class HtmlList extends HtmlComponent {
         
         return children;
     }
+    
+    public List<HtmlListItem> getItems() {
+        return this.items;
+    }
 
     @Override
     public HtmlTag getOwnTag(PageContext context) {

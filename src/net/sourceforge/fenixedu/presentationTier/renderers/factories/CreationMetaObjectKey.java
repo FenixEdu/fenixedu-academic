@@ -29,4 +29,9 @@ public class CreationMetaObjectKey implements MetaObjectKey {
     public int hashCode() {
         return this.type.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return getType().getName();
+    }
 }

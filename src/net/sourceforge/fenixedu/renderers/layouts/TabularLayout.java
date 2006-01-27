@@ -155,11 +155,5 @@ public abstract class TabularLayout extends Layout {
 
             rowIndex++;
         }
-
-        // footer
-        
-        if (table.getHeader() == null && table.getRows().size() == 0) {
-            table.createRow().setVisible(false);
-        }
     }
 }

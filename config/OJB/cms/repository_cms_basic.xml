@@ -38,6 +38,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.Content">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.Bin" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailMessage" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.JSPContent"/>
     <field-descriptor
         name="idInternal"
         column="ID_INTERNAL"
@@ -107,7 +108,7 @@
 			indirection-table="CMS_CONTENT_OWNERSHIP">
 		<fk-pointing-to-element-class column="KEY_OWNER"/>
 		<fk-pointing-to-this-class column="KEY_CONTENT" />	
-	</collection-descriptor>						
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.Bin">              

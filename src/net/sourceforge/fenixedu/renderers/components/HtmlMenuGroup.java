@@ -53,4 +53,15 @@ public class HtmlMenuGroup extends HtmlMenuEntry {
             option.setSelected(value);
         }
     }
+
+    @Override
+    public boolean isSelected() {
+        for (HtmlMenuOption option : this.options) {
+            if (option.isSelected()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

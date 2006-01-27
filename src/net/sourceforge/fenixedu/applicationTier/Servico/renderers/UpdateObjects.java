@@ -53,8 +53,8 @@ public class UpdateObjects extends Service {
     private void setRelation(Object object, String slot, List list) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         List relationList = (List) PropertyUtils.getProperty(object, slot);
         
-        // TODO: I hope this is ok but must check
-        relationList.clear();
+        // TODO: cfgi, I hope this is ok but must check
+        relationList.retainAll(list);
         relationList.addAll(list);
     }
 

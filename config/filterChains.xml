@@ -945,6 +945,14 @@
     </filterChain>
 <!--############# CMS ####################-->
 
+    <filterChain>
+        <name>CmsManagerAuthorization</name>
+        <expression>CmsManagerAuthorization</expression>
+        <description/>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsManagerAuthorizationFilter</filterClass>
+    </filterChain>
+
 <!-- =========by gedl 14-11-2005============  -->
 <filterChain>
 	<name>WriteMailingListPreFilterChain</name>

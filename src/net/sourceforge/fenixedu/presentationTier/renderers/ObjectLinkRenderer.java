@@ -125,7 +125,7 @@ public class ObjectLinkRenderer extends OutputRenderer {
 
     private String getViewUrl() {
         // TODO: remove constant action path
-        return RenderUtils.getModuleRelativePath(getOutputContext().getViewState().getRequest(), "/domain/view.do");
+        return "/domain/view.do";
     }
 
     private String getLinkText() {

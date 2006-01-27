@@ -17,6 +17,10 @@ public class HtmlListItem extends HtmlComponent {
     public void setBody(HtmlComponent body) {
         this.body = body;
     }
+    
+    public HtmlComponent getBody() {
+        return this.body;
+    }
 
     @Override
     public List<HtmlComponent> getChildren() {

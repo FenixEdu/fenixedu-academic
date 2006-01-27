@@ -83,7 +83,7 @@ public class DefaultValues {
     // the value is required. The first argument will always have the null value when the method is called. 
     
     public Object createValue(Object o, Class type, String defaultValue) throws InstantiationException, IllegalAccessException {
-        return type.newInstance();
+        return null;//type.newInstance();
     }
     
     public String createValue(String s, Class type, String defaultValue) {

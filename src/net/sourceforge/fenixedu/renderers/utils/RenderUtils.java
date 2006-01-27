@@ -157,7 +157,12 @@ public class RenderUtils {
                             .copyProperty(target, propertyName, properties.getProperty(propertyName));
                 }
                 else {
-                    logger.warn("The object " + target + " does not support property '" + propertyName + "': Not writeable!");
+                    // even so try to write it because PropertyUtils.isWriteable() does not work for mapped items
+                    try {
+                        PropertyUtils.setProperty(target, propertyName, properties.getProperty(propertyName));
+                    } catch (Exception e) {
+                        logger.warn("The object " + target + " does not support property '" + propertyName + "': Not writeable!");
+                    }
                 }
             } catch (Exception e) {
                 logger.warn("The object " + target + " does not support property '" + propertyName + "': " + e);
@@ -179,11 +184,19 @@ public class RenderUtils {
         
         return getContextRelativePath(request, returnPath);
     }
-    
+
+    public static String getModuleRelativePath(String path) {
+        return getModuleRelativePath(RenderersRequestProcessor.getCurrentRequest(), path);
+    }
+
     public static String getContextRelativePath(HttpServletRequest request, String path) {
         String contextPath = request.getContextPath();
         
         return contextPath + path;
+    }
+
+    public static String getContextRelativePath(String path) {
+        return getContextRelativePath(RenderersRequestProcessor.getCurrentRequest(), path);
     }
 
     //
@@ -197,6 +210,5 @@ public class RenderUtils {
     
     public static void invalidateViewState() {
         RenderersRequestProcessor.getCurrentRequest().setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
-    }
-    
+    }    
 }

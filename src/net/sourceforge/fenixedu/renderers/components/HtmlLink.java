@@ -9,12 +9,14 @@ import java.util.Set;
 import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 
 public class HtmlLink extends HtmlComponent {
 
     private String text;
     
     private String url;
+    private String module;
     private String anchor;
     private String contentType;
     private String charSet;
@@ -59,6 +61,14 @@ public class HtmlLink extends HtmlComponent {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getModule() {
+        return this.module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 
     public void setParameter(String name, String value) {
@@ -120,12 +130,26 @@ public class HtmlLink extends HtmlComponent {
     private String calculateUrl() {
         StringBuilder buffer = new StringBuilder();
         
+        if (getModule() != null) {
+            buffer.append(RenderUtils.getContextRelativePath(getModule()));
+        }
+        
         if (getUrl() != null) {
-            buffer.append(getUrl());
+            if (getModule() != null) {
+                buffer.append(getUrl());
+            }
+            else {
+                buffer.append(RenderUtils.getModuleRelativePath(getUrl()));
+            }
         }
         
         if (! getParameters().isEmpty()) {
-            buffer.append("?");
+            if (getUrl().indexOf('?') == -1) {
+                buffer.append("?");
+            }
+            else {
+                buffer.append("&");
+            }
             
             Set<String> keys = getParameters().keySet();
             

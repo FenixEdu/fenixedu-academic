@@ -148,6 +148,11 @@ public class HtmlTable extends HtmlComponent {
             tag.addChild(innerTag);
         }
         
+        // Always generate end tag
+        if (tag.getChildren().isEmpty()) {
+            tag.addChild(new HtmlTag(null));
+        }
+        
         return tag;
     }
 

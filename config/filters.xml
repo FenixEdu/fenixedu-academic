@@ -824,6 +824,13 @@
     </filter>
 <!--############# CMS ####################-->
 
+<filter>
+    <name>CmsManagerAuthorization</name>
+    <implementationClass>net.sourceforge.fenixedu.applicationTier.Filtro.cms.accessControl.CmsManagerAuthorizationFilter</implementationClass>
+    <description/>
+    <isTransactional>true</isTransactional>
+</filter>
+
 <!-- =========by gedl 14-11-2005============  -->
 <filter>
 	<name>OwnerCanAssociateMailingListToGroupsFilter</name>
@@ -844,6 +851,7 @@
 	<description/>
 	<isTransactional>true</isTransactional>
 </filter>
+
 <!-- ======================================  -->
 <!--######################################-->
     <filter>

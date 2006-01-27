@@ -21,14 +21,23 @@ public class EnumInputRenderer extends InputRenderer {
         
         MessageResources resources = getEnumerationResources();
         if (resources != null) {
-            String message = resources.getMessage(enumerate.toString());
-            
-            if (message != null) {
-                description = message;
+            if (resources.isPresent(enumerate.toString())) {               
+                description = resources.getMessage(enumerate.toString());
             }
         }
-            
+
+        resources = getResources();
+        if (resources != null) {
+            if (resources.isPresent(enumerate.toString())) {               
+                description = resources.getMessage(enumerate.toString());
+            }
+        }
+        
         return description;
+    }
+
+    protected MessageResources getResources() {
+        return RenderUtils.getMessageResources();
     }
 
     protected MessageResources getEnumerationResources() {

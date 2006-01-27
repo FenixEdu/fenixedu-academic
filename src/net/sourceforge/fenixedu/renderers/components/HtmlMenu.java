@@ -21,14 +21,6 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         this.entries = new ArrayList<HtmlMenuEntry>();
     }
     
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
     public int getSize() {
         return size;
     }
@@ -94,11 +86,11 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         
         tag.setName("select");
         
-        tag.setAttribute("size", this.size);
-        if (this.disabled) {
-            tag.setAttribute("disabled", this.disabled);
+        tag.setAttribute("size", getSize());
+        if (isDisabled()) {
+            tag.setAttribute("disabled", true);
         }
-        tag.setAttribute("tabindex", this.tabIndex);
+        tag.setAttribute("tabindex", getTabIndex());
         
         for (HtmlMenuEntry entry : this.entries) {
             tag.addChild(entry.getOwnTag(context));

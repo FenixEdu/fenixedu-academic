@@ -10,15 +10,12 @@ public class HtmlCheckBox extends HtmlInputComponent {
     
     private boolean checked;
 
-    private boolean rendered;
-
-    private String onClick;
+    private String userValue;
     
     public HtmlCheckBox() {
         super("checkbox");
         
         this.checked = false;
-        this.rendered = false;
     }
     
     public HtmlCheckBox(boolean checked) {
@@ -40,14 +37,6 @@ public class HtmlCheckBox extends HtmlInputComponent {
         this.checked = checked;
     }
 
-    public void setOnClick(String script) {
-        this.onClick = script;
-    }
-    
-    public String getOnClick() {
-        return this.onClick;
-    }
-
     public boolean isChecked() {
         return checked;
     }
@@ -64,14 +53,16 @@ public class HtmlCheckBox extends HtmlInputComponent {
         this.text = text;
     }
 
+    public String getUserValue() {
+        return super.getValue();
+    }
+
+    public void setUserValue(String userValue) {
+        super.setValue(userValue);
+    }
+
     @Override
     public void setValue(String value) {
-        // Only allow changing value before rendering because an unchecked checkbox
-        // will be set the value 'null' when submited
-        if (! this.rendered) {
-            super.setValue(value);
-        }
-        
         setChecked(value != null);
     }
 
@@ -83,10 +74,6 @@ public class HtmlCheckBox extends HtmlInputComponent {
             tag.setAttribute("checked", this.checked);
         }
 
-        if (this.onClick != null) {
-            tag.setAttribute("onclick", this.onClick);
-        }
-        
         if (this.text == null) {
             return tag;
         }
@@ -96,8 +83,6 @@ public class HtmlCheckBox extends HtmlInputComponent {
         span.addChild(tag);
         span.addChild(new HtmlTag(null, this.text));
 
-        this.rendered = true;
-                
         return span;
     }
 }

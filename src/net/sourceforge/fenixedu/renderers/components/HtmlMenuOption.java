@@ -63,14 +63,14 @@ public class HtmlMenuOption extends HtmlMenuEntry {
 
         tag.setName("option");
     
-        tag.setText(this.text);
+        tag.setText(getText());
         
         if (this.selected) {
             // XHTML 1.0 Transaction requires the selected attribute to have the value "selected"
             tag.setAttribute("selected", "selected");
         }
         
-        tag.setAttribute("value", this.value == null ? this.text : this.value);
+        tag.setAttribute("value", getValue() == null ? getText() : getValue());
         
         return tag;
     }
