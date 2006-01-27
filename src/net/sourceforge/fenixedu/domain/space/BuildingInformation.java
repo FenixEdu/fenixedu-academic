@@ -22,14 +22,14 @@ public class BuildingInformation extends BuildingInformation_Base {
     @Override
     public void setSpace(final Space space) {
         if (space == null) {
-            setSpace(null);
+            super.setSpace(null);
         }
         throw new DomainException("error.incompatible.space");
     }
 
     public void setSpace(final Building building) {
         if (building == null) {
-            setSpace(null);
+            super.setSpace(null);
             //throw new NullPointerException("error.building.cannot.be.null");
         } else if (getSpace() != null) {
             throw new DomainException("error.cannot.change.building");
