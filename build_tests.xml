@@ -51,6 +51,26 @@
         </junit>
     </target>
 
+	<!-- TODO: give class as an argument -->
+    <target name="run-curricular-period-test"
+    		description="Run single test"
+    		depends="compile-tests">
+		<junit haltonfailure="false" printsummary="yes" dir="${build.home.webinf.classes}">
+            <formatter type="plain" usefile="false"/>
+            <batchtest fork="yes">
+                <fileset dir="${src_tests}">
+				   	<include name="**/CurricularPeriodTest.java"/>
+				</fileset>
+            </batchtest>
+            <classpath>
+                <pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </junit>
+    </target>
+	
     <target name="report-tests"
     		description="Run all tests and generate a report"
     		depends="compile-tests">
