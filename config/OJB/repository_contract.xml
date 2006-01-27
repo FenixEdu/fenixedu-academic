@@ -40,7 +40,12 @@
 	   column="KEY_EMPLOYEE"  
 	   jdbc-type="INTEGER"
     />
-
+	<field-descriptor id="8" 
+	   name="contractType"    
+	   column="CONTRACT_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ContractType2SqlContractTypeConversion"
+    /> 
 	<reference-descriptor auto-retrieve="false"
     	name="salaryUnit"
         class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">

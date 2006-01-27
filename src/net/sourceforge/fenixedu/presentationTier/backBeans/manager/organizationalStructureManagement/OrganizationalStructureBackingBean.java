@@ -137,7 +137,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         for (Unit unit : allUnitsWithoutParent) {
             if (!unit.equals(this.getUnit())
-                    && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getParentUnits()
+                    && (this.getUnit().getParentUnits().isEmpty() || !this.getUnit().getTopUnits()
                             .contains(unit))) {
                 getUnitTreeToChooseParentUnit(buffer, unit);
             }
@@ -199,10 +199,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         for (Unit unit : allUnitsWithoutParent) {
             if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("0")
-                    && (unit.isActive(currentDate) || !unit.getActiveSubUnits(currentDate).isEmpty())) {
+                    && (unit.isActive(currentDate) || !unit.getAllActiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getActiveSubUnits(currentDate), currentDate, true);
             } else if (this.getListingTypeValueToUnitsHidden().getValue().toString().equals("1")
-                    && (!unit.isActive(currentDate) || !unit.getInactiveSubUnits(currentDate).isEmpty())) {
+                    && (!unit.isActive(currentDate) || !unit.getAllInactiveSubUnits(currentDate).isEmpty())) {
                 getUnitTree(buffer, unit, unit.getInactiveSubUnits(currentDate), currentDate, false);
             }
         }
@@ -222,7 +222,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         buffer.append("<li>");
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             buffer.append("<img ").append("src='").append(getContextPath()).append(
                     "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
                     .append("indexed='true' onClick=\"").append("check(document.getElementById('")
@@ -236,11 +236,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 "unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getName())
                 .append("</a>").append("</li>");
 
-        if (parentUnit.hasAnySubUnits()) {
+        if (!subUnits.isEmpty()) {
             buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
                     .append("style='display:none'>\r\n");
         }
 
+        Collections.sort(subUnits, new BeanComparator("name"));
+        
         for (Unit subUnit : subUnits) {
             if (active) {
                 getUnitsList(subUnit, subUnit.getActiveSubUnits(currentDate), buffer, currentDate,

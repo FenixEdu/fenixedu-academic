@@ -37,7 +37,9 @@ public class Unit extends Unit_Base {
 
     public Unit getDepartmentUnit(){
         List<Unit> parentUnits = this.getParentUnits();
-        if (!parentUnits.isEmpty()) {
+        if(unitDepartment(this)) {
+            return this;
+        }else if (!parentUnits.isEmpty()) {
             for (Unit parentUnit : parentUnits) {
                 if (unitDepartment(parentUnit)) {
                     return parentUnit;
@@ -50,8 +52,6 @@ public class Unit extends Unit_Base {
                     }
                 }
             }    
-        } else if (unitDepartment(this)) {
-            return this;
         }
         return null;        
     }

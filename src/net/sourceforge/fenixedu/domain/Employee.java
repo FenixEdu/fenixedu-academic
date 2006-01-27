@@ -66,7 +66,9 @@ public class Employee extends Employee_Base {
 
     private Department getEmployeeDepartmentUnit(Unit unit, boolean onlyActiveEmployees) {
         List<Unit> parentUnits = unit.getParentUnits();
-        if (!parentUnits.isEmpty()) {
+        if (unitDepartment(unit, onlyActiveEmployees)) {
+            return unit.getDepartment();
+        }else if (!parentUnits.isEmpty()) {
             for (Unit parentUnit : parentUnits) {
                 if (unitDepartment(parentUnit, onlyActiveEmployees)) {
                     return parentUnit.getDepartment();
@@ -77,8 +79,6 @@ public class Employee extends Employee_Base {
                     }
                 }
             }
-        } else if (unitDepartment(unit, onlyActiveEmployees)) {
-            return unit.getDepartment();
         }
         return null;
     }

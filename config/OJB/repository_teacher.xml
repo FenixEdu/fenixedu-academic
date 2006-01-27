@@ -221,6 +221,11 @@
     	jdbc-type="INTEGER"
     /> 
     <field-descriptor
+    	name="keyUnit" 
+    	column="KEY_UNIT" 
+    	jdbc-type="INTEGER"
+    /> 
+    <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
@@ -230,6 +235,12 @@
     	name="institution"
     	class-ref="net.sourceforge.fenixedu.domain.Institution" >
 		<foreignkey field-ref="keyInstitution"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+    	name="institutionUnit"
+    	class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit" >
+		<foreignkey field-ref="keyUnit"/>
 	</reference-descriptor>
 	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
@@ -275,6 +286,11 @@
 			>
 		<inverse-foreignkey field-ref="keyInstitution"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="externalPersons"
+			element-class-ref="net.sourceforge.fenixedu.domain.ExternalPerson">
+		<inverse-foreignkey field-ref="keyInstitution"/>
+	</collection-descriptor>	
 </class-descriptor>  
 
 

@@ -22,5 +22,9 @@ public class CourseHistoric extends CourseHistoric_Base {
         result += "]";
         return result;
     }
-
+    
+    public void delete(){
+        removeCurricularCourse();
+        super.deleteDomainObject();
+    }
 }

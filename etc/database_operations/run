@@ -24,3 +24,8 @@ execute "Remove some inactive columns from Employee Table" alterEmployeeTable.sq
 execute "Dropped column ECTS_CREDITS from DegreeCurricularPlan" dropEctsCreditsFromDegreeCurricularPlan.sql
 execute "Add new ENROLMENT_LOG columns" alterEnrolmentLog.sql
 execute "Add SpaceManager role to Table Role" addSpaceManagerRole.sql
+execute "Add new CONTRACT_TYPE Column" alterContractTable.sql
+execute "Add new KEY_UNIT Column" alterExternalPersonTable.sql
+execute "Add new KEY_UNIT Column" alterNonAffiliatedTeacherTable.sql
+execute "Add new KEY_RESEARCHER Column" alterPersonTable.sql
+execute "Add new RESEARCHER Table" createResearcherTable.sql

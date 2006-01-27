@@ -24,7 +24,7 @@
  * 
  */
 
-valueType net.sourceforge.fenixedu.domain.teacher.AdviseType								as AdviseType;
+valueType net.sourceforge.fenixedu.domain.teacher.AdviseType									as AdviseType;
 valueType net.sourceforge.fenixedu.util.AgreementType                                           as AgreementType;
 valueType net.sourceforge.fenixedu.tools.enrollment.AreaType                                    as AreaType;
 valueType net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType                              as BolonhaDegreeType;
@@ -66,7 +66,7 @@ valueType net.sourceforge.fenixedu.util.PublicationArea                         
 valueType net.sourceforge.fenixedu.util.PublicationType                                         as PublicationType;
 valueType net.sourceforge.fenixedu.domain.person.RoleType                                       as RoleType;
 valueType net.sourceforge.fenixedu.domain.gratuity.ReimbursementGuideState                      as ReimbursementGuideState;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                       as RegimeType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.RegimeType                      		as RegimeType;
 valueType net.sourceforge.fenixedu.util.Season                                                  as Season;
 valueType net.sourceforge.fenixedu.util.SecretaryEnrolmentStudentReason                         as SecretaryEnrolmentStudentReason; 
 valueType net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType                          as ServiceExemptionType;
@@ -92,7 +92,7 @@ valueType net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType  
 valueType net.sourceforge.fenixedu.domain.QualificationType										as QualificationType;
 valueType net.sourceforge.fenixedu.util.ByteArray												as ByteArray;
 valueType net.sourceforge.fenixedu.util.ContentType                                             as ContentType;
-valueType net.sourceforge.fenixedu.domain.GradeScale												as GradeScale;
+valueType net.sourceforge.fenixedu.domain.GradeScale											as GradeScale;
 valueType net.sourceforge.fenixedu.util.EvaluationType											as EvaluationType;
 valueType net.sourceforge.fenixedu.util.RegimenType                      			            as RegimenType;
 valueType net.sourceforge.fenixedu.util.LegalRegimenType  		                                as LegalRegimenType;
@@ -115,7 +115,7 @@ valueType org.joda.time.Interval                                                
 valueType org.joda.time.Period                                                                  as Period;
 valueType org.joda.time.TimeOfDay                                                               as TimeOfDay;
 valueType org.joda.time.Partial                                                                 as Partial;
-
+valueType net.sourceforge.fenixedu.util.ContractType  		                                	as ContractType;
 
 /*
 *
@@ -191,6 +191,7 @@ class net.sourceforge.fenixedu.domain.Contract extends net.sourceforge.fenixedu.
 	Integer keySalaryUnit;
 	Integer keyMailingUnit;
 	Integer keyWorkingUnit;
+	ContractType contractType;
 	Date beginDate;
 	Date endDate;
 }
@@ -955,8 +956,8 @@ class net.sourceforge.fenixedu.domain.teacher.ExternalActivity extends net.sourc
 
 class net.sourceforge.fenixedu.domain.ExternalPerson extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyInstitution;
-	Integer keyWorkLocation;
 	Integer keyPerson;
+	Integer keyUnit;
 }
 
 class net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1493,6 +1494,7 @@ class net.sourceforge.fenixedu.domain.managementAssiduousness.MoneyCostCenter ex
 class net.sourceforge.fenixedu.domain.NonAffiliatedTeacher extends net.sourceforge.fenixedu.domain.DomainObject {
     String name;
     Integer keyInstitution;
+    Integer keyUnit;
 }    
 
 class net.sourceforge.fenixedu.domain.degree.enrollment.NotNeedToEnrollInCurricularCourse extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -1735,6 +1737,7 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     IDDocumentType idDocumentType; 
 	Boolean isPassInKerberos;
 	String istUsername;
+	Integer keyResearcher;
 }
 
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2726,6 +2729,10 @@ class net.sourceforge.fenixedu.domain.assiduousness.Balance extends net.sourcefo
 }
 
 
+class net.sourceforge.fenixedu.domain.Researcher extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer keyPerson;
+}
+
 
 /*
  * Relations definitions
@@ -3659,6 +3666,13 @@ relation ExternalPersonInstitution {
 	net.sourceforge.fenixedu.domain.Institution playsRole institution;
 }
 
+relation ExternalPersonUnit {
+	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole institutionUnit;
+}
+
 relation ExtraWorkCostCenter {
 	net.sourceforge.fenixedu.domain.managementAssiduousness.ExtraWork playsRole extraWork {
 		multiplicity *;
@@ -4129,6 +4143,13 @@ relation InquiriesTeacherDomainTeacher {
 
 relation InstitutionNonAffiliatedTeacher {
     net.sourceforge.fenixedu.domain.Institution playsRole institution;
+    net.sourceforge.fenixedu.domain.NonAffiliatedTeacher playsRole associatedNonAffiliatedTeachers {
+        multiplicity *;
+    }
+}
+
+relation UnitNonAffiliatedTeacher {
+    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole institutionUnit;
     net.sourceforge.fenixedu.domain.NonAffiliatedTeacher playsRole associatedNonAffiliatedTeachers {
         multiplicity *;
     }
@@ -5283,7 +5304,6 @@ relation SeminaryCourseEquivalency {
     }
 }
 
-
 relation WebSiteTypeWebsite {
 	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole type;
 	net.sourceforge.fenixedu.domain.cms.website.Website playsRole websites
@@ -5722,4 +5742,9 @@ relation DailyBalanceHasJustification {
 	net.sourceforge.fenixedu.domain.assiduousness.Justification playsRole hasJustification {
     		multiplicity 1;
 	}
+}
+
+relation PersonResearcher {
+    net.sourceforge.fenixedu.domain.Researcher playsRole researcher;    
+	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
