@@ -55,10 +55,12 @@ public abstract class Space extends Space_Base {
 
         @Override
         public void beforeAdd(Space space, SpaceInformation spaceInformation) {
-            for (final SpaceInformation otherSpaceInformation : space.getSpaceInformations()) {
-                if (otherSpaceInformation.getValidUntil() == null) {
-                    otherSpaceInformation.setValidUntil(new YearMonthDay());
-                }
+        	if (space != null) {
+        		for (final SpaceInformation otherSpaceInformation : space.getSpaceInformations()) {
+        			if (otherSpaceInformation.getValidUntil() == null) {
+        				otherSpaceInformation.setValidUntil(new YearMonthDay());
+        			}
+        		}
             }
         }
 

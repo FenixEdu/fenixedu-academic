@@ -6,7 +6,6 @@ public class FloorInformation extends FloorInformation_Base {
     
     protected FloorInformation(final Floor floor) {
         super();
-        setOjbConcreteClass(this.getClass().getName());
         setSpace(floor);
     }
 

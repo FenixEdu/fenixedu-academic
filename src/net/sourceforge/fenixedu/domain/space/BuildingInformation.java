@@ -6,7 +6,6 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     protected BuildingInformation(final Building building, final String buildingName) {
         super();
-        setOjbConcreteClass(this.getClass().getName());
         setSpace(building);
         setName(buildingName);
     }
@@ -21,16 +20,12 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     @Override
     public void setSpace(final Space space) {
-        if (space == null) {
-            super.setSpace(null);
-        }
         throw new DomainException("error.incompatible.space");
     }
 
     public void setSpace(final Building building) {
         if (building == null) {
-            super.setSpace(null);
-            //throw new NullPointerException("error.building.cannot.be.null");
+            throw new NullPointerException("error.building.cannot.be.null");
         } else if (getSpace() != null) {
             throw new DomainException("error.cannot.change.building");
         }

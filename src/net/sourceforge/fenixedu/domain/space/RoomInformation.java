@@ -6,7 +6,6 @@ public class RoomInformation extends RoomInformation_Base {
     
     protected RoomInformation(final Room room) {
         super();
-        setOjbConcreteClass(this.getClass().getName());
         setSpace(room);
     }
 

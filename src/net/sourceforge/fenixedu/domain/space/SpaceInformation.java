@@ -4,10 +4,11 @@ public abstract class SpaceInformation extends SpaceInformation_Base {
 
     protected SpaceInformation() {
         super();
+        setOjbConcreteClass(this.getClass().getName());
     }
 
     public void delete() {
-        setSpace((Space) null);
+        super.setSpace((Space) null);
         deleteDomainObject();
     }
 
