@@ -7,7 +7,7 @@ public abstract class SpaceInformation extends SpaceInformation_Base {
     }
 
     public void delete() {
-        setSpace(null);
+        setSpace((Space) null);
         deleteDomainObject();
     }
 

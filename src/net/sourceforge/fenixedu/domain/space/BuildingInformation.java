@@ -29,7 +29,8 @@ public class BuildingInformation extends BuildingInformation_Base {
 
     public void setSpace(final Building building) {
         if (building == null) {
-            throw new NullPointerException("error.building.cannot.be.null");
+            setSpace(null);
+            //throw new NullPointerException("error.building.cannot.be.null");
         } else if (getSpace() != null) {
             throw new DomainException("error.cannot.change.building");
         }
