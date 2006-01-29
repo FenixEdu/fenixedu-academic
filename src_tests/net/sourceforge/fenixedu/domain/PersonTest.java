@@ -640,4 +640,28 @@ public class PersonTest extends DomainTestBase {
 
 	}
 
+	public void testIndicatePrivledges() {
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(personRole);
+		roles.add(employeeRole);
+		roles.add(teacherRole);
+		roles.add(coordinatorRole);
+
+		Person person = new Person();
+		person.setEmployee(employee);
+		person.setTeacher(teacher);
+		person.setUsername("Abc");
+		person.indicatePrivledges(roles);
+
+		assertTrue(person.getPersonRoles().containsAll(roles));
+		assertTrue(roles.containsAll(person.getPersonRoles()));
+
+		roles.remove(teacherRole);
+		try {
+			person.indicatePrivledges(roles);
+			fail("Expected a domain excpetion for attempting to indicate inconsistent set of roles.");
+		} catch (DomainException ex) {
+		}
+	}
+
 }

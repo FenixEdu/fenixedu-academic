@@ -487,38 +487,9 @@ public class Person extends Person_Base {
     }
 
     public void indicatePrivledges(final List<Role> roles) {
-        for (int i = 0; i < getPersonRolesCount(); ) {
-            final Role role = getPersonRoles().get(i);
-            if (!roles.contains(role)) {
-                removePersonRoles(role);
-            } else {
-                i++;
-            }
-        }
-
-        for (final Role role : roles) {
-            if (!hasPersonRoles(role)) {
-                addPersonRoles(role);
-            }
-        }
+    	getPersonRoles().retainAll(roles);
+    	getPersonRoles().addAll(roles);
     }
-
-    // public Iterator<UserGroup> getUserGroupsIterator()
-    // {
-    // return this.getOwnedGroupsIterator();
-    // }
-    //
-    // public int getUserGroupsCount()
-    // {
-    // int groupsCount = 0;
-    // Iterator<UserGroup> iterator = this.getUserGroupsIterator();
-    // while (iterator.hasNext())
-    // {
-    // iterator.next();
-    // groupsCount++;
-    // }
-    // return groupsCount;
-    // }
 
     public List<PersonFunction> getActiveFunctions() {
 
