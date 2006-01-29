@@ -15,6 +15,12 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="spaceInformations"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
+			>
+		<inverse-foreignkey field-ref="keySpace"/>
+	</collection-descriptor>	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceInformation" table="SPACE_INFORMATION">
@@ -34,6 +40,81 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="validUntil"
+			column="VALID_UNTIL"
+			jdbc-type="VARCHAR"
+			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+			/>
+	<field-descriptor
+			name="keySpace"
+			column="KEY_SPACE"
+			jdbc-type="INTEGER"
+			/>
+	<reference-descriptor auto-retrieve="false"
+			name="space"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySpace"/>
+	</reference-descriptor>
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.Campus" table="SPACE">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="spaceInformations"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
+			>
+		<inverse-foreignkey field-ref="keySpace"/>
+	</collection-descriptor>	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.space.CampusInformation" table="SPACE_INFORMATION">
+	<field-descriptor
+			name="idInternal"
+			column="ID_INTERNAL"
+			jdbc-type="INTEGER"
+			primarykey="true"
+			autoincrement="true"
+			/>
+	<field-descriptor
+			name="ojbConcreteClass"
+			column="CLASS_NAME"
+			jdbc-type="VARCHAR"
+			/>
+	<field-descriptor
+			name="validUntil"
+			column="VALID_UNTIL"
+			jdbc-type="VARCHAR"
+			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+			/>
+	<field-descriptor
+			name="keySpace"
+			column="KEY_SPACE"
+			jdbc-type="INTEGER"
+			/>
+	<field-descriptor
+			name="name"
+			column="NAME"
+			jdbc-type="VARCHAR"
+			/>
+	<reference-descriptor auto-retrieve="false"
+			name="space"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySpace"/>
+	</reference-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Building" table="SPACE">
@@ -49,6 +130,12 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="spaceInformations"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
+			>
+		<inverse-foreignkey field-ref="keySpace"/>
+	</collection-descriptor>	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.BuildingInformation" table="SPACE_INFORMATION">
@@ -64,6 +151,28 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="validUntil"
+			column="VALID_UNTIL"
+			jdbc-type="VARCHAR"
+			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+			/>
+	<field-descriptor
+			name="keySpace"
+			column="KEY_SPACE"
+			jdbc-type="INTEGER"
+			/>
+	<field-descriptor
+			name="name"
+			column="NAME"
+			jdbc-type="VARCHAR"
+			/>
+	<reference-descriptor auto-retrieve="false"
+			name="space"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySpace"/>
+	</reference-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Floor" table="SPACE">
@@ -79,6 +188,12 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="spaceInformations"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
+			>
+		<inverse-foreignkey field-ref="keySpace"/>
+	</collection-descriptor>	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.FloorInformation" table="SPACE_INFORMATION">
@@ -94,6 +209,28 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="validUntil"
+			column="VALID_UNTIL"
+			jdbc-type="VARCHAR"
+			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+			/>
+	<field-descriptor
+			name="keySpace"
+			column="KEY_SPACE"
+			jdbc-type="INTEGER"
+			/>
+	<field-descriptor
+			name="level"
+			column="LEVEL"
+			jdbc-type="INTEGER"
+			/>
+	<reference-descriptor auto-retrieve="false"
+			name="space"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySpace"/>
+	</reference-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Room" table="SPACE">
@@ -109,6 +246,12 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="spaceInformations"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
+			>
+		<inverse-foreignkey field-ref="keySpace"/>
+	</collection-descriptor>	
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomInformation" table="SPACE_INFORMATION">
@@ -124,4 +267,21 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="validUntil"
+			column="VALID_UNTIL"
+			jdbc-type="VARCHAR"
+			conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+			/>
+	<field-descriptor
+			name="keySpace"
+			column="KEY_SPACE"
+			jdbc-type="INTEGER"
+			/>
+	<reference-descriptor auto-retrieve="false"
+			name="space"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySpace"/>
+	</reference-descriptor>
 </class-descriptor>

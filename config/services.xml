@@ -9544,12 +9544,20 @@
         </filterChains>     
     </service>
 	<service>
-   	 	<name>CreateSpace</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.CreateSpace</implementationClass>
+   	 	<name>CreateCampus</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.CreateCampus</implementationClass>
         <description></description>
-        <isTransactional>true</isTransactional>  
+        <isTransactional>true</isTransactional>
         <filterChains>
-        </filterChains>     
+        </filterChains>
+    </service>
+	<service>
+   	 	<name>CreateBuilding</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.CreateBuilding</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
     </service>
 	<service>
    	 	<name>DeleteSpace</name>
@@ -9557,7 +9565,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        </filterChains>     
+        </filterChains>
     </service>
     <service>
         <name>DeleteWebsiteType</name>
@@ -9566,6 +9574,6 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
             <chain name="CmsManagerAuthorization"></chain>
-        </filterChains>     
+        </filterChains>
     </service>
 </serviceDefinitions>    

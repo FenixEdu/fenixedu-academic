@@ -7,4 +7,7 @@
     <definition name="show-create-space-form" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/createSpace.jsp"></put>
     </definition>
+    <definition name="show-manage-space-form" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/manageSpace.jsp"></put>
+    </definition>
 </tiles-definitions>

@@ -8,15 +8,15 @@
 <br/>
 <br/>
 
-<html:link page="/manageSpaces.do?method=showCreateSpaceForm&page=0">
-	<bean:message bundle="SPACE_RESOURCES" key="link.create.space"/>
-</html:link>
-<br/>
-<br/>
-
 <logic:present name="selectedSpace">
 	<bean:write name="selectedSpace" property="idInternal"/>
 </logic:present>
+<br/>
+<br/>
+
+<html:link page="/manageSpaces.do?method=showCreateSpaceForm&page=0">
+	<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
+</html:link>
 <br/>
 <br/>
 

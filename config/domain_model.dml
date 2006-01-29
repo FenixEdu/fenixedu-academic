@@ -2018,9 +2018,16 @@ class net.sourceforge.fenixedu.domain.space.Space extends net.sourceforge.fenixe
 
 class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourceforge.fenixedu.domain.DomainObject {
 	String ojbConcreteClass;
-
 	YearMonthDay validUntil;
+	Integer keySpace;
 }
+
+	class net.sourceforge.fenixedu.domain.space.Campus extends net.sourceforge.fenixedu.domain.space.Space {
+	}
+
+	class net.sourceforge.fenixedu.domain.space.CampusInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
+		String name;
+	}
 
 	class net.sourceforge.fenixedu.domain.space.Building extends net.sourceforge.fenixedu.domain.space.Space {
 	}

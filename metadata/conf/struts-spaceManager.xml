@@ -10,6 +10,8 @@
 		<form-bean name="createSpaceForm" 
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
+			<form-property name="classname" type="java.lang.String"/>
+			<form-property name="spaceName" type="java.lang.String"/>
 		</form-bean>
     </form-beans>
 
@@ -42,13 +44,16 @@
         		>
             <forward name="ShowSpaces" path="index"/>
             <forward name="ShowCreateSpaceForm" path="show-create-space-form"/>
+            <forward name="ManageSpace" path="show-manage-space-form"/>
         </action>
 
         <action path="/createSpace" type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
         		input="/manageSpaces.do?method=showCreateSpaceForm&amp;page=0"
         		name="createSpaceForm"
         		parameter="method"
+        		scope="request"
         		>
+			<forward name="ShowCreateSpaceForm" path="show-create-space-form"/>
             <forward name="ShowSpaces" path="/manageSpaces.do?method=viewSpaces&amp;page=0"/>
         </action>
     </action-mappings>
