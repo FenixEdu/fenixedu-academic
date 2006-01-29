@@ -1,4 +1,5 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.Space" table="SPACE">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Campus" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Building" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Floor" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.Room" />
@@ -24,6 +25,7 @@
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceInformation" table="SPACE_INFORMATION">
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.space.CampusInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.BuildingInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.FloorInformation" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.space.RoomInformation" />
