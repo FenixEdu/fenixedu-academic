@@ -662,6 +662,13 @@ public class PersonTest extends DomainTestBase {
 			fail("Expected a domain excpetion for attempting to indicate inconsistent set of roles.");
 		} catch (DomainException ex) {
 		}
+
+		roles.add(teacherRole);
+		try {
+			person.indicatePrivledges(roles);
+		} catch (DomainException ex) {
+			fail("Order of the arguments should not matter!");
+		}
 	}
 
 }
