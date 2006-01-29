@@ -14,7 +14,7 @@
 <br/>
 <br/>
 
-<html:link page="/manageSpaces.do?method=showCreateSpaceForm&page=0">
+<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceID" paramName="selectedSpace" paramProperty="idInternal">
 	<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
 </html:link>
 <br/>

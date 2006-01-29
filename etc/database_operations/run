@@ -31,4 +31,5 @@ execute "Add new KEY_RESEARCHER Column" alterPersonTable.sql
 execute "Add new RESEARCHER Table" createResearcherTable.sql
 execute "Create Table Space" createTableSpace.sql
 execute "Create Table Space" createTableSpaceInformation.sql
-execute "Alter Table Space" alterTableSpaceInformation.sql
+execute "Alter Table Space" alterTableSpace.sql
+execute "Alter Table Space Information" alterTableSpaceInformation.sql

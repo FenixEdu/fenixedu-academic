@@ -16,12 +16,29 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="keySuroundingSpace"
+			column="KEY_SUROUNDING_SPACE"
+			jdbc-type="INTEGER"
+			/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="spaceInformations"
 			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
 			>
 		<inverse-foreignkey field-ref="keySpace"/>
-	</collection-descriptor>	
+	</collection-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="suroundingSpace"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySuroundingSpace"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="containedSpaces"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<inverse-foreignkey field-ref="keySuroundingSpace"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.SpaceInformation" table="SPACE_INFORMATION">
@@ -74,12 +91,29 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="keySuroundingSpace"
+			column="KEY_SUROUNDING_SPACE"
+			jdbc-type="INTEGER"
+			/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="spaceInformations"
 			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
 			>
 		<inverse-foreignkey field-ref="keySpace"/>
-	</collection-descriptor>	
+	</collection-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="suroundingSpace"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySuroundingSpace"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="containedSpaces"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<inverse-foreignkey field-ref="keySuroundingSpace"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.CampusInformation" table="SPACE_INFORMATION">
@@ -132,12 +166,29 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="keySuroundingSpace"
+			column="KEY_SUROUNDING_SPACE"
+			jdbc-type="INTEGER"
+			/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="spaceInformations"
 			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
 			>
 		<inverse-foreignkey field-ref="keySpace"/>
-	</collection-descriptor>	
+	</collection-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="suroundingSpace"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySuroundingSpace"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="containedSpaces"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<inverse-foreignkey field-ref="keySuroundingSpace"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.BuildingInformation" table="SPACE_INFORMATION">
@@ -190,12 +241,29 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="keySuroundingSpace"
+			column="KEY_SUROUNDING_SPACE"
+			jdbc-type="INTEGER"
+			/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="spaceInformations"
 			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
 			>
 		<inverse-foreignkey field-ref="keySpace"/>
-	</collection-descriptor>	
+	</collection-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="suroundingSpace"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySuroundingSpace"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="containedSpaces"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<inverse-foreignkey field-ref="keySuroundingSpace"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.FloorInformation" table="SPACE_INFORMATION">
@@ -248,12 +316,29 @@
 			column="CLASS_NAME"
 			jdbc-type="VARCHAR"
 			/>
+	<field-descriptor
+			name="keySuroundingSpace"
+			column="KEY_SUROUNDING_SPACE"
+			jdbc-type="INTEGER"
+			/>
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="spaceInformations"
 			element-class-ref="net.sourceforge.fenixedu.domain.space.SpaceInformation"
 			>
 		<inverse-foreignkey field-ref="keySpace"/>
-	</collection-descriptor>	
+	</collection-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="suroundingSpace"
+			class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<foreignkey field-ref="keySuroundingSpace"/>
+	</reference-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="containedSpaces"
+			element-class-ref="net.sourceforge.fenixedu.domain.space.Space"
+			>
+		<inverse-foreignkey field-ref="keySuroundingSpace"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <class-descriptor class="net.sourceforge.fenixedu.domain.space.RoomInformation" table="SPACE_INFORMATION">
