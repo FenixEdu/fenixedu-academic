@@ -18,7 +18,7 @@ public class FloorInformationTest extends DomainTestBase {
             assertEquals("error.floor.cannot.be.null", ex.getMessage());
         }
 
-        final OldBuilding building = new OldBuilding("building1");
+        final Building building = new Building("building1");
 
         final Floor floor = new Floor(building);
         final FloorInformation floorInformation = (FloorInformation) floor.getSpaceInformation();
@@ -32,7 +32,7 @@ public class FloorInformationTest extends DomainTestBase {
     }
 
     public void testSetSpace() {
-        final OldBuilding building = new OldBuilding("building1");
+        final Building building = new Building("building1");
 
         final Floor floor = new Floor(building);
         final FloorInformation floorInformation = floor.getSpaceInformation();

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.DomainTestBase;
 public class FloorTest extends DomainTestBase {
 
     public void testFloorConstructor() {
-        final OldBuilding building = new OldBuilding("building1");
+        final Building building = new Building("building1");
 
         try {
             new Floor((Space) null);
@@ -24,7 +24,7 @@ public class FloorTest extends DomainTestBase {
     }
 
     public void testGetSpaceInformation() {
-        final OldBuilding building = new OldBuilding("building1");
+        final Building building = new Building("building1");
 
         final Floor floor = new Floor(building);
 

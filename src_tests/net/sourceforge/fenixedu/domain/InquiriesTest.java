@@ -104,7 +104,7 @@ public class InquiriesTest extends DomainTestBase {
 		inquiriesCourse = DomainFactory.makeInquiriesCourse(executionCourse, executionDegreeCourse,
 				executionDegreeStudent, executionPeriod, schoolClass, infoInquiriesCourse, null, null, null);
 		
-		room = DomainFactory.makeRoom();
+		room = DomainFactory.makeOldRoom();
 		initializeInfoInquiriesRoom();	
 		
 	}

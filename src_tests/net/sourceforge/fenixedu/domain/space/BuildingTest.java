@@ -8,13 +8,13 @@ public class BuildingTest extends DomainTestBase {
 
     public void testBuildingConstructor() {
         try {
-            new OldBuilding((String) null);
-            fail("OldBuilding name cannot be null.");
+            new Building((String) null);
+            fail("Building name cannot be null.");
         } catch (NullPointerException ex) {
             // all is ok
         }
 
-        final OldBuilding building = new OldBuilding("Some name");
+        final Building building = new Building("Some name");
         assertEquals(1, building.getSpaceInformationsCount());
         final SpaceInformation spaceInformation = building.getSpaceInformation();
         assertSame(BuildingInformation.class, spaceInformation.getClass());
@@ -23,7 +23,7 @@ public class BuildingTest extends DomainTestBase {
     }
 
     public void testGetSpaceInformation() {
-        final OldBuilding building = new OldBuilding("Some name");
+        final Building building = new Building("Some name");
         assertSame(BuildingInformation.class, building.getSpaceInformation().getClass());
         assertSame(BuildingInformation.class, building.getSpaceInformation(new YearMonthDay()).getClass());
     }
