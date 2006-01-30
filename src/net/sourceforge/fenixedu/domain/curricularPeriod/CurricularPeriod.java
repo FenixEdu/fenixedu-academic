@@ -148,7 +148,7 @@ public class CurricularPeriod extends CurricularPeriod_Base {
 
     private static class CurricularPeriodParentChildsListener extends dml.runtime.RelationAdapter<CurricularPeriod,CurricularPeriod> {
         @Override
-        public void beforeAdd(CurricularPeriod child, CurricularPeriod parent) {
+        public void beforeAdd(CurricularPeriod parent, CurricularPeriod child) {
 
             if (child.getPeriodType().getWeight() >= parent.getPeriodType().getWeight()) {
                 throw new DomainException("error.childTypeGreaterThanParentType");
