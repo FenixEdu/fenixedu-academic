@@ -56,7 +56,11 @@ public class AuthenticateKerberos extends Authenticate {
 								|| returnCode
 										.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
 								|| returnCode
-										.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)) {
+										.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
+								|| returnCode
+										.equals(KerberosException.ADD_NOT_ENOUGH_CHARACTER_CLASSES)
+								|| returnCode
+										.equals(KerberosException.ADD_TOO_SHORT)) {
 							throw new InvalidPasswordServiceException(ke.getReturnCode(), userView);
 						}
 		   			}

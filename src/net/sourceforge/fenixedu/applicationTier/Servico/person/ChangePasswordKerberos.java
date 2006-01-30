@@ -43,8 +43,14 @@ public class ChangePasswordKerberos extends Service {
 						|| returnCode
 								.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
 						|| returnCode
-								.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)) {
+								.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
+						|| returnCode
+								.equals(KerberosException.ADD_NOT_ENOUGH_CHARACTER_CLASSES)
+						|| returnCode
+								.equals(KerberosException.ADD_TOO_SHORT)) {
 					throw new InvalidPasswordServiceException(returnCode);
+				} else if(returnCode.equals(KerberosException.WRONG_PASSWORD)) {
+					throw new InvalidPasswordServiceException("error.person.invalidExistingPassword");
 				} else {
 					throw new InvalidPasswordServiceException(
 							"error.person.impossible.change");
