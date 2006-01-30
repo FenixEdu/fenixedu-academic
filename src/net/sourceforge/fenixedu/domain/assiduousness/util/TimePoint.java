@@ -9,26 +9,26 @@ public class TimePoint {
     private Attributes intervalAttributes;
 
     public TimePoint(TimeOfDay timePoint) {
-        this.setPoint(timePoint);
-        this.pointAttributes = new Attributes(AttributeType.NULL);
+        setPoint(timePoint);
+        pointAttributes = new Attributes(AttributeType.NULL);
 //        this.pointAttributes = new Attributes(AttributeType.NULL);
-        this.intervalAttributes = new Attributes();
+        intervalAttributes = new Attributes();
     }
 
     // Sets the attribute interval to the same point attribute
     public TimePoint(TimeOfDay timePoint, AttributeType attribute) {
-        this.setPoint(timePoint);
-        this.pointAttributes = new Attributes(attribute);
-        this.intervalAttributes = new Attributes();
+        setPoint(timePoint);
+        pointAttributes = new Attributes(attribute);
+        intervalAttributes = new Attributes();
     }
 
     
     public TimePoint(TimeOfDay timePoint, AttributeType attribute, AttributeType attributeToInterval) {
-        this.setPoint(timePoint);
-        this.pointAttributes = new Attributes(attribute);
-        this.intervalAttributes = new Attributes();
+        setPoint(timePoint);
+        pointAttributes = new Attributes(attribute);
+        intervalAttributes = new Attributes();
         if (attributeToInterval != null) {
-            this.intervalAttributes.addAttribute(attributeToInterval);
+            intervalAttributes.addAttribute(attributeToInterval);
         }
     }
     
@@ -36,57 +36,57 @@ public class TimePoint {
         return timePoint;
     }
     
-    public void setPoint(TimeOfDay timePoint) {
-        this.timePoint = timePoint;
+    public void setPoint(TimeOfDay newTimePoint) {
+        timePoint = newTimePoint;
     }
      
     public Attributes getIntervalAttributes() {
-        return this.intervalAttributes;
+        return intervalAttributes;
     }
     
-    public void setIntervalAttributes(Attributes intervalAttributes) {
-        this.intervalAttributes = intervalAttributes;
+    public void setIntervalAttributes(Attributes newIntervalAttributes) {
+        intervalAttributes = newIntervalAttributes;
     }
 
     public Attributes getPointAttributes() {
         return pointAttributes;
     }
 
-    public void setPointAttributes(Attributes pointAttributes) {
-        this.pointAttributes = pointAttributes;
+    public void setPointAttributes(Attributes newPointAttributes) {
+        pointAttributes = newPointAttributes;
     }
 
     public boolean isAfter(TimePoint timePoint) {
-        return this.getPoint().isAfter(timePoint.getPoint());
+        return getPoint().isAfter(timePoint.getPoint());
     }
 
     public boolean isBefore(TimePoint timePoint) {
-        return this.getPoint().isBefore(timePoint.getPoint());
+        return getPoint().isBefore(timePoint.getPoint());
     }
     
     public boolean isAtSameTime(TimePoint timePoint) {
-        return this.getPoint().isEqual(timePoint.getPoint());
+        return getPoint().isEqual(timePoint.getPoint());
     }
     
     public boolean equals(TimePoint timePoint) {
-        return (this.getPoint().equals(timePoint.getPoint()) && this.getIntervalAttributes().equals(timePoint.getIntervalAttributes()) && 
-                this.getPointAttributes().equals(timePoint.getPointAttributes()));
+        return (getPoint().equals(timePoint.getPoint()) && getIntervalAttributes().equals(timePoint.getIntervalAttributes()) && 
+                getPointAttributes().equals(timePoint.getPointAttributes()));
     }
 
     // Just to abstract the fact that the TimePoint is a TimeOfDay
     public TimePoint plusSeconds(int seconds) {
-        this.setPoint(this.getPoint().plusSeconds(seconds));
+        setPoint(getPoint().plusSeconds(seconds));
         return this;
     }
 
     // Just to abstract the fact that the TimePoint is a TimeOfDay
     public TimePoint minusSeconds(int seconds) {
-        this.setPoint(this.getPoint().minusSeconds(seconds));
+        setPoint(getPoint().minusSeconds(seconds));
         return this;
     }
 
     public String toString() {
-        return new String(this.timePoint.toString() + ", " + this.getPointAttributes().toString() + ", " + this.getIntervalAttributes().toString());
+        return new String(timePoint.toString() + ", " + getPointAttributes().toString() + ", " + getIntervalAttributes().toString());
     }
 
     // Checks is point has both attributes
@@ -99,9 +99,9 @@ public class TimePoint {
 
     
     public boolean hasAttributes(AttributeType attribute1, Attributes attributes) {
-        return ((this.getPointAttributes().contains(attribute1) && this.getIntervalAttributes().contains(attributes)) ||
-                (this.getPointAttributes().contains(attributes) && this.getIntervalAttributes().contains(attribute1)) || 
-                (this.getPointAttributes().contains(attribute1) && this.getPointAttributes().contains(attributes)));
+        return ((getPointAttributes().contains(attribute1) && getIntervalAttributes().contains(attributes)) ||
+                (getPointAttributes().contains(attributes) && getIntervalAttributes().contains(attribute1)) || 
+                (getPointAttributes().contains(attribute1) && getPointAttributes().contains(attributes)));
     }
 
 }

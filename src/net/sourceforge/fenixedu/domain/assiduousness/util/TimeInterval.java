@@ -17,46 +17,46 @@ public class TimeInterval implements Serializable {
    
     
     public TimeInterval(TimeOfDay startTime, TimeOfDay endTime, Boolean nextDay) {
-        this.setStartTime(startTime);
-        this.setEndTime(endTime);
+        setStartTime(startTime);
+        setEndTime(endTime);
 //        this.setNextDay(nextDay);
         // never trust the data from the user :D
         if (startTime.isAfter(endTime)) {
-            this.setNextDay(true);
+            setNextDay(true);
         } else {
-            this.setNextDay(nextDay);
+            setNextDay(nextDay);
         }
     }    
 
     public TimeInterval(TimeOfDay startTime, TimeOfDay endTime) {
         if (startTime.isAfter(endTime)) {
-            this.setNextDay(true);
+            setNextDay(true);
         } else {
-            this.setNextDay(false);
+            setNextDay(false);
         }
-        this.setStartTime(startTime);
-        this.setEndTime(endTime);
+        setStartTime(startTime);
+        setEndTime(endTime);
     }    
    
     
-    private void setNextDay(boolean nextDay) {
-        this.nextDay = nextDay;
+    private void setNextDay(boolean newNextDay) {
+        nextDay = newNextDay;
     }
     
-    private void setStartTime(TimeOfDay startTime) {
-        this.startTime = startTime;
+    private void setStartTime(TimeOfDay newStartTime) {
+        startTime = newStartTime;
     }
     
-    private void setEndTime(TimeOfDay endTime) {
-        this.endTime = endTime;
+    private void setEndTime(TimeOfDay newEndTime) {
+        endTime = newEndTime;
     }
 
     public Boolean getNextDay() {
         return nextDay;
     }
 
-    public void setNextDay(Boolean nextDay) {
-        this.nextDay = nextDay;
+    public void setNextDay(Boolean newNextDay) {
+        nextDay = newNextDay;
     }
 
     public TimeOfDay getEndTime() {
@@ -69,9 +69,9 @@ public class TimeInterval implements Serializable {
 
     // Returns the duration of the time interval
     public Duration getDuration() {
-        DateTime startDate = this.getStartTime().toDateTimeToday();
-        DateTime endDate = this.getEndTime().toDateTimeToday();
-        if (this.getNextDay()) {
+        DateTime startDate = getStartTime().toDateTimeToday();
+        DateTime endDate = getEndTime().toDateTimeToday();
+        if (getNextDay()) {
             endDate.plusDays(1);
         }
         return new Duration(startDate, endDate);
@@ -83,17 +83,17 @@ public class TimeInterval implements Serializable {
     
     public boolean contains(TimeOfDay timeOfDay, boolean nextDay) {
         if (nextDay == false) {
-            if ((this.getStartTime().isBefore(timeOfDay) || this.getStartTime().isEqual(timeOfDay)) && (this.getEndTime().isAfter(timeOfDay) || 
-                    this.getEndTime().isEqual(timeOfDay))) {
+            if ((getStartTime().isBefore(timeOfDay) || getStartTime().isEqual(timeOfDay)) && (getEndTime().isAfter(timeOfDay) || 
+                    getEndTime().isEqual(timeOfDay))) {
                 return true;
             } else {
                 return false;
             }
         } else { // nextDay == true
-            if (this.getNextDay() == false) {
+            if (getNextDay() == false) {
                 return false;
             } else { // nextDay e this.nextDay
-                if (this.getEndTime().isAfter(timeOfDay) || this.getEndTime().isEqual(timeOfDay)) {
+                if (getEndTime().isAfter(timeOfDay) || getEndTime().isEqual(timeOfDay)) {
                     return true;
                 } else {
                     return false;
@@ -210,10 +210,10 @@ public class TimeInterval implements Serializable {
     // completes the YearMonthDay with the date from variable date.
     public Interval toInterval(DateTime date) {
         YearMonthDay datePartial = new YearMonthDay(date);
-        if (this.getNextDay()) {
+        if (getNextDay()) {
             datePartial.plusDays(1); // adds a day if the interval ends the next day
         }
-        return (new Interval(datePartial.toDateTime(this.getStartTime()), datePartial.toDateTime(this.getEndTime())));
+        return (new Interval(datePartial.toDateTime(getStartTime()), datePartial.toDateTime(getEndTime())));
     }
     
 //    // TODO change to more suitable class
@@ -236,29 +236,29 @@ public class TimeInterval implements Serializable {
     }
 
     public TimePoint startPointToTimePoint(AttributeType attribute) {
-        return this.intervalLimitToTimePoint(this.getStartTime(), attribute);
+        return this.intervalLimitToTimePoint(getStartTime(), attribute);
     }
     
     public TimePoint endPointToTimePoint(AttributeType attribute) {
-        return this.intervalLimitToTimePoint(this.getEndTime(), attribute);
+        return this.intervalLimitToTimePoint(getEndTime(), attribute);
     }
     
     public String toString() {
-        return new String(this.getStartTime() + "-" + getEndTime() + " today: " + getNextDay());
+        return new String(getStartTime() + "-" + getEndTime() + " today: " + getNextDay());
     }
     
     public boolean equals(TimeInterval timeInterval) {
-        return (this.getStartTime().equals(timeInterval.getStartTime()) && (this.getEndTime().equals(timeInterval.getEndTime()))
-                && (this.getNextDay().equals(timeInterval.getNextDay())));
+        return (getStartTime().equals(timeInterval.getStartTime()) && (getEndTime().equals(timeInterval.getEndTime()))
+                && (getNextDay().equals(timeInterval.getNextDay())));
     }
 
     
     public boolean isTimeIntervalBeforeTime(TimeOfDay timeOfDay, boolean nextDay) {
-        if ((nextDay && this.getNextDay()) || (nextDay == false && this.getNextDay() == false)) {
-            return (this.getEndTime().isBefore(timeOfDay) || this.getEndTime().isEqual(timeOfDay));
-        } else if (nextDay && this.getNextDay() == false) {
+        if ((nextDay && getNextDay()) || (nextDay == false && getNextDay() == false)) {
+            return (getEndTime().isBefore(timeOfDay) || getEndTime().isEqual(timeOfDay));
+        } else if (nextDay && getNextDay() == false) {
             return true;
-        } else if (nextDay == false && this.getNextDay()) {
+        } else if (nextDay == false && getNextDay()) {
             return false;
         }
         return false;

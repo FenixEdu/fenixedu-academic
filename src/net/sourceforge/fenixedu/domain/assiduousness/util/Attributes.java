@@ -31,85 +31,85 @@ public class Attributes {
     
     // Adds one attribute
     public void addAttribute(AttributeType attributeType) {
-        attributes.add(attributeType);
+        getAttributes().add(attributeType);
     }
     
     // Adds a set of attributes
-    public void addAttributes(EnumSet<AttributeType> attributes) {
-        for (AttributeType attribute: attributes) {
-            this.attributes.add(attribute);
+    public void addAttributes(EnumSet<AttributeType> newAttributes) {
+        for (AttributeType attribute: newAttributes) {
+            getAttributes().add(attribute);
         }
     }
     
     public void addNullTime() {
-        this.addAttribute(AttributeType.NULL);
+        addAttribute(AttributeType.NULL);
     }
 
     public void addNormalWorkPeriod1Time() {
-        this.addAttribute(AttributeType.NWP1);
+        addAttribute(AttributeType.NWP1);
     }
 
     public void addNormalWorkPeriod2Time() {
-        this.addAttribute(AttributeType.NWP2);
+        addAttribute(AttributeType.NWP2);
     }
 
     public void addFixedPeriod1Time() {
-        this.addAttribute(AttributeType.FP1);
+        addAttribute(AttributeType.FP1);
     }
 
     public void addFixedPeriod2Time() {
-        this.addAttribute(AttributeType.FP2);
+        addAttribute(AttributeType.FP2);
     }
 
     public void addMealTime() {
-        this.addAttribute(AttributeType.MEAL);
+        addAttribute(AttributeType.MEAL);
     }
     
     // Remove one attribute
     public void removeAttribute(AttributeType attribute) {
-        this.attributes.remove(attribute);
+        getAttributes().remove(attribute);
     }
 
     // Removes a set of attributes
-    public void removeAttributes(EnumSet<AttributeType> attributes) {
-        for (AttributeType attribute: attributes) {
-            this.attributes.remove(attribute);
+    public void removeAttributes(EnumSet<AttributeType> newAttributes) {
+        for (AttributeType attribute: newAttributes) {
+            getAttributes().remove(attribute);
         }
     }
     
     public void removeNullTime() {
-        this.removeAttribute(AttributeType.NULL);
+        removeAttribute(AttributeType.NULL);
     }
 
     public void removeNormalWorkPeriod1Time() {
-        this.removeAttribute(AttributeType.NWP1);
+        removeAttribute(AttributeType.NWP1);
     }
 
     public void removeNormalWorkPeriod2Time() {
-        this.removeAttribute(AttributeType.NWP2);
+        removeAttribute(AttributeType.NWP2);
     }
 
     public void removeFixedPeriod1Time() {
-        this.removeAttribute(AttributeType.FP1);
+        removeAttribute(AttributeType.FP1);
     }
 
     public void removeFixedPeriod2Time() {
-        this.removeAttribute(AttributeType.FP2);
+        removeAttribute(AttributeType.FP2);
     }
 
     public void removeMealTime() {
-        this.removeAttribute(AttributeType.MEAL);
+        removeAttribute(AttributeType.MEAL);
     }
     
     // Check if this Attribute contains AttributeType
     public boolean contains(AttributeType attribute) {
-        return this.getAttributes().contains(attribute);
+        return getAttributes().contains(attribute);
     }
     
     // Check if Attribute contains another Attribute
     public boolean contains(Attributes attributes) {
         for (AttributeType attribute: attributes.getAttributes()) {
-            if (this.contains(attribute)) {
+            if (contains(attribute)) {
                 return true;
             }
         }
@@ -117,13 +117,13 @@ public class Attributes {
     }
 
     public boolean equals(Attributes attributes) {
-        return this.getAttributes().equals(attributes.getAttributes());
+        return getAttributes().equals(attributes.getAttributes());
     }
     
     // TODO carefull! usar apenas qd se sabe q a interseccao da 1 elemento
     public AttributeType intersects(Attributes attributes) {
         for (AttributeType attribute: attributes.getAttributes()) {
-            if (this.getAttributes().contains(attribute)) {
+            if (getAttributes().contains(attribute)) {
                 return attribute;
             }
         }
@@ -132,7 +132,7 @@ public class Attributes {
     
     
     public String toString() {
-        return new String(this.getAttributes().toString());
+        return new String(getAttributes().toString());
     }
     
 }
