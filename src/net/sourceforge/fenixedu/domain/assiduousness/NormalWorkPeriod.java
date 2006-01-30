@@ -8,14 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
-import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
-import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 
 import org.joda.time.Duration;
-import org.joda.time.Interval;
-import org.joda.time.TimeOfDay;
 
 /**
  * @author velouria
@@ -48,7 +44,7 @@ public class NormalWorkPeriod extends NormalWorkPeriod_Base {
     }
     
     public Duration getNormalWorkPeriod2Duration() {
-       if (this.definedNormalWorkPeriod2()) {
+       if (definedNormalWorkPeriod2()) {
             return getNormalWorkPeriod2().getDuration();
         } else {
             return Duration.ZERO;
@@ -57,22 +53,22 @@ public class NormalWorkPeriod extends NormalWorkPeriod_Base {
     
     public Duration getTotalNormalWorkPeriodDuration() {
         if (getNormalWorkPeriod2() != null) {
-            return this.getNormalWorkPeriod1Duration().plus(getNormalWorkPeriod2Duration());
+            return getNormalWorkPeriod1Duration().plus(getNormalWorkPeriod2Duration());
         } else {
-            return this.getNormalWorkPeriod1Duration();
+            return getNormalWorkPeriod1Duration();
         }   
     }   
        
     // Returns a list with the start and end points of both Normal Work Periods if defined
     public List<TimePoint> toTimePoints() {
         List<TimePoint> pointList = new ArrayList();
-        if (this.definedNormalWorkPeriod1()) {
-            pointList.add(this.getNormalWorkPeriod1().startPointToTimePoint(this.getNormalWorkPeriod1Attribute()));
-            pointList.add(this.getNormalWorkPeriod1().endPointToTimePoint(this.getNormalWorkPeriod1Attribute()));
+        if (definedNormalWorkPeriod1()) {
+            pointList.add(getNormalWorkPeriod1().startPointToTimePoint(getNormalWorkPeriod1Attribute()));
+            pointList.add(getNormalWorkPeriod1().endPointToTimePoint(getNormalWorkPeriod1Attribute()));
         }
-        if (this.definedNormalWorkPeriod2()) {
-            pointList.add(this.getNormalWorkPeriod2().startPointToTimePoint(this.getNormalWorkPeriod2Attribute()));
-            pointList.add(this.getNormalWorkPeriod2().endPointToTimePoint(this.getNormalWorkPeriod2Attribute()));
+        if (definedNormalWorkPeriod2()) {
+            pointList.add(getNormalWorkPeriod2().startPointToTimePoint(getNormalWorkPeriod2Attribute()));
+            pointList.add(getNormalWorkPeriod2().endPointToTimePoint(getNormalWorkPeriod2Attribute()));
         }
         return pointList;
     }
@@ -86,7 +82,7 @@ public class NormalWorkPeriod extends NormalWorkPeriod_Base {
     }
     
     public String getName() {
-        return this.getNormalWorkPeriod1().getStartTime().toString()  + "/" + this.getNormalWorkPeriod2().getEndTime().toString();
+        return getNormalWorkPeriod1().getStartTime().toString()  + "/" + getNormalWorkPeriod2().getEndTime().toString();
     }
 
     

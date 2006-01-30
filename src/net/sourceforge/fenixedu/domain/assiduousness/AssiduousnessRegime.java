@@ -9,21 +9,21 @@ public class AssiduousnessRegime extends AssiduousnessRegime_Base {
     }
 
     public AssiduousnessRegime(String description, String acronym) {
-        this.setDescription(description);
-        this.setAcronym(acronym);
+        setDescription(description);
+        setAcronym(acronym);
     }
     
     public AssiduousnessRegime(String acronym) {
-        this.setAcronym(acronym);
+        setAcronym(acronym);
     }
 
     public AssiduousnessRegime(RegimeType regimeType) {
-        this.setAcronym(regimeType.toString());
+        setAcronym(regimeType.toString());
     }
 
     public AssiduousnessRegime(RegimeType regimeType, String description) {
-        this.setDescription(description);
-        this.setAcronym(regimeType.toString());
+        setDescription(description);
+        setAcronym(regimeType.toString());
     }
 
     public boolean equals(AssiduousnessRegime regime) {

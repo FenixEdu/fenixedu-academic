@@ -142,9 +142,5 @@ public class ScheduleExemption extends ScheduleExemption_Base {
     
     public ScheduleType getType() {
         return ScheduleType.EXEMPTION;
-    }
-    public String getName() {
-        return "Isencao";
-    }
-    
+    }    
 }

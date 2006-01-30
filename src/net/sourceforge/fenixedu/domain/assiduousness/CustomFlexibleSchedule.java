@@ -74,9 +74,9 @@ public class CustomFlexibleSchedule extends CustomFlexibleSchedule_Base {
     public final Attributes getAttributes() {
         EnumSet<AttributeType> attributeSet = EnumSet.of(AttributeType.NWP1, AttributeType.NWP2, AttributeType.MEAL);
         Attributes attributes = new Attributes(attributeSet);
-        if (this.definedFixedPeriod()) {
+        if (definedFixedPeriod()) {
             attributes.addAttribute(AttributeType.FP1);
-            if (((FixedPeriod)this.getFixedPeriod()).definedFixedPeriod2()) {
+            if (((FixedPeriod)getFixedPeriod()).definedFixedPeriod2()) {
                 attributes.addAttribute(AttributeType.FP2);
             }
         }
@@ -214,9 +214,9 @@ public class CustomFlexibleSchedule extends CustomFlexibleSchedule_Base {
         return customFlexibleSchedule;
 	}
 	
-    public String getName() {
-        return "FlexivelAjustado";
-    }
+//    public String getName() {
+//        return "FlexivelAjustado";
+//    }
 
 }
 

@@ -40,20 +40,16 @@ public class WorkSchedule extends WorkSchedule_Base {
         super();
     }
  
-//    protected WorkSchedule(Body body) {
-//        super(body);
-//    }
-//    
     public boolean isTemplate() {
-        return this.getTemplateSchedule();
+        return getTemplateSchedule();
     }
     
     public void turnTemplateSchedule() {
-        this.setTemplateSchedule(true);
+        setTemplateSchedule(true);
     }
 
     public void turnWorkSchedule() {
-        this.setTemplateSchedule(false);        
+        setTemplateSchedule(false);        
     }
     
     public static WorkSchedule createWorkSchedule(DTO presentationDTO) throws FenixDomainException {
@@ -82,16 +78,16 @@ public class WorkSchedule extends WorkSchedule_Base {
     // Returns the schedule Attributes
     public Attributes getAttributes() {
         Attributes attributes = new Attributes(AttributeType.NWP1);
-        if (((NormalWorkPeriod)this.getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
+        if (((NormalWorkPeriod)getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
             attributes.addAttribute(AttributeType.NWP2);
         }
-        if (this.definedFixedPeriod()) {
+        if (definedFixedPeriod()) {
             attributes.addAttribute(AttributeType.FP1);
-            if (((FixedPeriod)this.getFixedPeriod()).definedFixedPeriod2()) {
+            if (((FixedPeriod)getFixedPeriod()).definedFixedPeriod2()) {
                 attributes.addAttribute(AttributeType.FP2);
             }
         }
-        if (((Meal)this.getMeal()).definedMealBreak()) {
+        if (((Meal)getMeal()).definedMealBreak()) {
             attributes.addAttribute(AttributeType.MEAL);
         }
         return attributes;
@@ -100,34 +96,34 @@ public class WorkSchedule extends WorkSchedule_Base {
     
     // Checks if the Fixed Period is defined. There are schedules that don't have a fixed period
     public boolean definedFixedPeriod() {
-        return (this.getFixedPeriod() != null);
+        return (getFixedPeriod() != null);
     }
 
     // Checks if the Fixed Period is defined. Some schedules that don't have a meal period
     public boolean definedMeal() {
-        return (this.getMeal() != null);
+        return (getMeal() != null);
     }
     
     // returns true if the actual date is before the schedule's end date
     public boolean isCurrent() {
-        return this.getValidFromTo().contains(new DateTime());
+        return getValidFromTo().contains(new DateTime());
     }
 
     // Returns the duration of normal period times the number of days per week the Employee has that schedule
 	public Duration calculateWeekDuration() {
-	    return new Duration(((NormalWorkPeriod)this.getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration().getMillis() * this.getWorkWeek().workDaysPerWeek());
+	    return new Duration(((NormalWorkPeriod)getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration().getMillis() * getWorkWeek().workDaysPerWeek());
 	}
     
     // Returns true if the schedule is defined in the week day weekDay
     public boolean isDefinedInWeekDay(WeekDays weekDay) {
-        return this.getWorkWeek().worksAt(weekDay);
+        return getWorkWeek().worksAt(weekDay);
     }
    
  
     /* Adds a List of Regimes to the employee Schedule */
     public void addRegimesToWorkSchedule(List<AssiduousnessRegime> regimes) {
         for (AssiduousnessRegime regime: regimes) {
-            this.addRegimes(regime);
+            addRegimes(regime);
         }
     }
     
@@ -146,12 +142,12 @@ public class WorkSchedule extends WorkSchedule_Base {
     // Plots the schedule in the timeline
     public void plotInTimeline(Timeline timeline) {
         List<TimePoint> pointList = new ArrayList<TimePoint>();
-        pointList.addAll(((NormalWorkPeriod)this.getNormalWorkPeriod()).toTimePoints());
-        if (this.definedFixedPeriod()) {
-            pointList.addAll(((FixedPeriod)this.getFixedPeriod()).toTimePoints());
+        pointList.addAll(((NormalWorkPeriod)getNormalWorkPeriod()).toTimePoints());
+        if (definedFixedPeriod()) {
+            pointList.addAll(((FixedPeriod)getFixedPeriod()).toTimePoints());
         }
-        if (this.definedMeal()) {
-           pointList.addAll(((Meal)this.getMeal()).toTimePoints()); 
+        if (definedMeal()) {
+           pointList.addAll(((Meal)getMeal()).toTimePoints()); 
         }
         timeline.plotList(pointList);
     }
@@ -162,7 +158,7 @@ public class WorkSchedule extends WorkSchedule_Base {
     // TODO ver se o funcionario trabalhou dentro dos periodos
     public DailyBalance calculateDailyBalance(YearMonthDay day, List<ClockingInterval> dailyClockings) {
         Timeline timeline = new Timeline();
-        this.plotInTimeline(timeline);
+        plotInTimeline(timeline);
         timeline.plotList(ClockingInterval.toTimePoint(dailyClockings));
         timeline.print();
 
@@ -171,8 +167,8 @@ public class WorkSchedule extends WorkSchedule_Base {
         Duration lastWorkPeriod = Duration.ZERO;
         TimeInterval mealInterval = null;
         // se meal break estiver definido
-        if (this.definedMeal()) {
-            mealInterval = timeline.calculateMealBreakInterval(this.getMeal().getMealBreak()); // calcular o intervalo de refeicao dentro do periodo de refeicao definido
+        if (definedMeal()) {
+            mealInterval = timeline.calculateMealBreakInterval(getMeal().getMealBreak()); // calcular o intervalo de refeicao dentro do periodo de refeicao definido
             System.out.println("intervalo refeicao: " + mealInterval);
             if (mealInterval != null) {
                 System.out.println("nao e' nulll");
@@ -181,14 +177,14 @@ public class WorkSchedule extends WorkSchedule_Base {
                 // calcula morning period
                 firstWorkPeriod = timeline.calculateDurationAllIntervalsByAttributesToTime(mealInterval.getStartTime(), DomainConstants.WORKED_ATTRIBUTES);
                 System.out.println("trabalhou de manha:" + firstWorkPeriod.toPeriod().toString());
-                dailyBalance.setNormalWorkPeriod1Balance(this.checkNormalWorkPeriodAccordingToRules(firstWorkPeriod).minus(((NormalWorkPeriod)this.getNormalWorkPeriod()).
+                dailyBalance.setNormalWorkPeriod1Balance(checkNormalWorkPeriodAccordingToRules(firstWorkPeriod).minus(((NormalWorkPeriod)getNormalWorkPeriod()).
                         getNormalWorkPeriod1Duration()));
                 // NWP2
-                if (((NormalWorkPeriod)this.getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
+                if (((NormalWorkPeriod)getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
                     if (mealInterval != null) {
                         lastWorkPeriod = timeline.calculateDurationAllIntervalsByAttributesFromTime(mealInterval.getEndTime(), DomainConstants.WORKED_ATTRIBUTES);
                         System.out.println("tarde: " +lastWorkPeriod.toDuration().toPeriod().toString());
-                        dailyBalance.setNormalWorkPeriod2Balance(lastWorkPeriod.minus(((NormalWorkPeriod)this.getNormalWorkPeriod()).getNormalWorkPeriod2Duration()));
+                        dailyBalance.setNormalWorkPeriod2Balance(lastWorkPeriod.minus(((NormalWorkPeriod)getNormalWorkPeriod()).getNormalWorkPeriod2Duration()));
                     }
                 }            
             } else { // mealInterval e' null a pessoa nao foi almocar
@@ -199,20 +195,20 @@ public class WorkSchedule extends WorkSchedule_Base {
             // TODO acabar parte das jornadas continuase horarios sem intervalo de refeicao
             // TODO testar
             Duration worked = timeline.calculateDurationAllIntervalsByAttributes(DomainConstants.WORKED_ATTRIBUTES);
-            dailyBalance.setNormalWorkPeriod1Balance(worked.minus(((NormalWorkPeriod)this.getNormalWorkPeriod()).getNormalWorkPeriod1Duration()));
+            dailyBalance.setNormalWorkPeriod1Balance(worked.minus(((NormalWorkPeriod)getNormalWorkPeriod()).getNormalWorkPeriod1Duration()));
         }
 
         System.out.println("total worked1 ->" +dailyBalance.getNormalWorkPeriod1Balance().toPeriod().toString());
         System.out.println("total worked2 ->" +dailyBalance.getNormalWorkPeriod2Balance().toPeriod().toString());
-        System.out.println(dailyBalance.getNormalWorkPeriod1Balance().plus(dailyBalance.getNormalWorkPeriod2Balance()).minus(((NormalWorkPeriod)this.getNormalWorkPeriod()).
+        System.out.println(dailyBalance.getNormalWorkPeriod1Balance().plus(dailyBalance.getNormalWorkPeriod2Balance()).minus(((NormalWorkPeriod)getNormalWorkPeriod()).
                 getTotalNormalWorkPeriodDuration()).toPeriod().toString());
-        System.out.println("devia ter trabalhado ->" + ((NormalWorkPeriod)this.getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration().toPeriod().toString());
+        System.out.println("devia ter trabalhado ->" + ((NormalWorkPeriod)getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration().toPeriod().toString());
         // Fixed Periods if defined
         this.calculateFixedPeriodDuration(dailyBalance, timeline);
         
-        if (this.definedMeal()) {
+        if (definedMeal()) {
             System.out.println("actualizar o meal");
-                this.checkMealDurationAccordingToRules(dailyBalance);
+            checkMealDurationAccordingToRules(dailyBalance);
         }
 //        System.out.println("total worked ->" + dailyBalance.getNormalWorkPeriod1Balance().plus(dailyBalance.getNormalWorkPeriod2Balance()).minus(this.getNormalWorkPeriod().
 //                getTotalNormalWorkPeriodDuration()).toPeriod().toString());
@@ -220,30 +216,30 @@ public class WorkSchedule extends WorkSchedule_Base {
     }
         
     public void calculateFixedPeriodDuration(DailyBalance dailyBalance, Timeline timeline) {
-      if (this.definedFixedPeriod()) {
+      if (definedFixedPeriod()) {
             dailyBalance.setFixedPeriodAbsence(timeline.calculateFixedPeriod(AttributeType.FP1));
-            if (((FixedPeriod)this.getFixedPeriod()).definedFixedPeriod2()) {
+            if (((FixedPeriod)getFixedPeriod()).definedFixedPeriod2()) {
                 Duration fixedPeriod2Duration = timeline.calculateFixedPeriod(AttributeType.FP2);
                 dailyBalance.setFixedPeriodAbsence(dailyBalance.getFixedPeriodAbsence().plus(fixedPeriod2Duration));
             }
-            dailyBalance.setFixedPeriodAbsence(((FixedPeriod)this.getFixedPeriod()).getTotalFixedPeriodDuration().minus(dailyBalance.getFixedPeriodAbsence()));
+            dailyBalance.setFixedPeriodAbsence(((FixedPeriod)getFixedPeriod()).getTotalFixedPeriodDuration().minus(dailyBalance.getFixedPeriodAbsence()));
         }
     }
     
     public void checkMealDurationAccordingToRules(DailyBalance dailyBalance) {
         // According to Nota Informativa 55/03
         // if mealDuration is shorter than 15 minutes the whole day is subtracted from the normal work period
-        if (dailyBalance.getLunchBreak().isShorterThan(this.getMeal().getMinimumMealBreakInterval())) {
+        if (dailyBalance.getLunchBreak().isShorterThan(getMeal().getMinimumMealBreakInterval())) {
             // NormalWorkPeriodBalance will be - totalNormalWorkPeriodDuration
             
-            dailyBalance.setNormalWorkPeriod1Balance(Duration.ZERO.minus(((NormalWorkPeriod)this.getNormalWorkPeriod()).getNormalWorkPeriod1Duration()));
-            dailyBalance.setNormalWorkPeriod2Balance(Duration.ZERO.minus(((NormalWorkPeriod)this.getNormalWorkPeriod()).getNormalWorkPeriod2Duration()));
+            dailyBalance.setNormalWorkPeriod1Balance(Duration.ZERO.minus(((NormalWorkPeriod)getNormalWorkPeriod()).getNormalWorkPeriod1Duration()));
+            dailyBalance.setNormalWorkPeriod2Balance(Duration.ZERO.minus(((NormalWorkPeriod)getNormalWorkPeriod()).getNormalWorkPeriod2Duration()));
             if (definedFixedPeriod()) {
                 // TODO check this with assiduousness ppl
                 // FixedPeriod absence will be the whole fixed period duration
                 System.out.println("fixed period com tudo!");
 //                System.out.println(this.getFixedPeriod().getTotalFixedPeriodDuration().toPeriod().toString());
-                dailyBalance.setFixedPeriodAbsence(((FixedPeriod)this.getFixedPeriod()).getTotalFixedPeriodDuration());
+                dailyBalance.setFixedPeriodAbsence(((FixedPeriod)getFixedPeriod()).getTotalFixedPeriodDuration());
                 System.out.println(dailyBalance.getFixedPeriodAbsence().toPeriod().toString());
             }
         } else {

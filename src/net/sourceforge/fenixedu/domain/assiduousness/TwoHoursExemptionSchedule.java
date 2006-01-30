@@ -176,10 +176,6 @@ public class TwoHoursExemptionSchedule extends TwoHoursExemptionSchedule_Base {
         return ScheduleType.TWO_HOURS_EXEMPTION;
     }
 
-    public String getName() {
-        return "Isencao2Horas";
-    }
-
 }
 
 

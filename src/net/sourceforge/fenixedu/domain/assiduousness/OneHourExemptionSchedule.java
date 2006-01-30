@@ -75,7 +75,7 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
     public Attributes getAttributes() {
         EnumSet<AttributeType> attributeSet = EnumSet.of(AttributeType.NWP1, AttributeType.NWP2, AttributeType.FP1, AttributeType.FP2);
         Attributes attributes = new Attributes(attributeSet);
-        if (((Meal)this.getMeal()).definedMealBreak()) {
+        if (((Meal)getMeal()).definedMealBreak()) {
             attributes.addAttribute(AttributeType.MEAL);
         }
         return attributes;
@@ -216,10 +216,6 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
 
     public ScheduleType getType() {
         return ScheduleType.ONE_HOUR_EXEMPTION;
-    }
-
-    public String getName() {
-        return "Isencao1Hora";
     }
     
 }

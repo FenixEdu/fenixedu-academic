@@ -201,34 +201,34 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
 
     // TODO throws exceptions should be boolean?
     public boolean validateFlexibleSchedule() throws FenixDomainException {
-        if (((NormalWorkPeriod)this.getNormalWorkPeriod()).definedNormalWorkPeriod1() && ((NormalWorkPeriod)this.getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
+        if (((NormalWorkPeriod)getNormalWorkPeriod()).definedNormalWorkPeriod1() && ((NormalWorkPeriod)getNormalWorkPeriod()).definedNormalWorkPeriod2()) {
             // TODO change this. total regular schedule musn't be longer than flex day duration
-            if (((NormalWorkPeriod)this.getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration().isLongerThan(DomainConstants.FLEXIBLE_DAY_DURATION)) {
+            if (((NormalWorkPeriod)getNormalWorkPeriod()).getTotalNormalWorkPeriodDuration().isLongerThan(DomainConstants.FLEXIBLE_DAY_DURATION)) {
                 System.out.println("erro: hn e' maior que trabalho flexivel permitido");
                 throw new NormalWorkPeriodExceedsLegalDayDurationException();
             }
-            if (this.getWorkDay() != null) {
+            if (getWorkDay() != null) {
                 // if work day start is after hn1 error
-                if (this.getWorkDay().getStartTime().isAfter(this.getNormalWorkPeriod().getNormalWorkPeriod1().getStartTime())) {
+                if (getWorkDay().getStartTime().isAfter(getNormalWorkPeriod().getNormalWorkPeriod1().getStartTime())) {
                     System.out.println("erro: expediente comeca depois do hn1");
                     throw new NormalWorkPeriod1StartsBeforeWorkDayException();
                 }
                 // if work day end is before hn2 error!
-                if (this.getWorkDay().getEndTime().isBefore(this.getNormalWorkPeriod().getNormalWorkPeriod2().getEndTime())) {
+                if (getWorkDay().getEndTime().isBefore(getNormalWorkPeriod().getNormalWorkPeriod2().getEndTime())) {
                     throw new NormalWorkPeriod2EndsAfterWorkDayException();
                 }
             }
         }
-        if (((FixedPeriod)this.getFixedPeriod()).definedFixedPeriod1() && ((FixedPeriod)this.getFixedPeriod()).definedFixedPeriod2()) {
+        if (((FixedPeriod)getFixedPeriod()).definedFixedPeriod1() && ((FixedPeriod)getFixedPeriod()).definedFixedPeriod2()) {
             // verify if fplats are 4 hours
-            if (((FixedPeriod)this.getFixedPeriod()).getTotalFixedPeriodDuration().isLongerThan(DomainConstants.FLEXIBLE_PLATFORMS_DURATION)) {
+            if (((FixedPeriod)getFixedPeriod()).getTotalFixedPeriodDuration().isLongerThan(DomainConstants.FLEXIBLE_PLATFORMS_DURATION)) {
                 throw new FixedPeriodsExceedPlatformsDurationException();
             }
             // verify if fp dont overlap meal
             // verificar se o fp nao esta sobreposto ao intervalo de refeicao
-            if (((Meal)this.getMeal()).definedMealBreak()) {
-                if (this.getFixedPeriod().getFixedPeriod1().getEndTime().isAfter(this.getMeal().getMealBreak().getStartTime()) || 
-                        (this.getMeal().getMealBreak().getEndTime().isAfter(this.getFixedPeriod().getFixedPeriod2().getStartTime()))) {
+            if (((Meal)getMeal()).definedMealBreak()) {
+                if (getFixedPeriod().getFixedPeriod1().getEndTime().isAfter(getMeal().getMealBreak().getStartTime()) || 
+                        (getMeal().getMealBreak().getEndTime().isAfter(getFixedPeriod().getFixedPeriod2().getStartTime()))) {
                     System.out.println("erro: fim pf1 e' depois da meal break");
                     throw new MealBreakOverlapsFixedPeriod1Exception();
                 }
@@ -242,9 +242,9 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
         return ScheduleType.FLEXIBLE;
     }
     
-    public String getName() {
-        return "Flexivel";
-    }
+//    public String getName() {
+//        return "Flexivel";
+//    }
     
 }
 

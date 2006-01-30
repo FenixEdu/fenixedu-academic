@@ -21,16 +21,16 @@ public class WorkWeek implements Serializable {
     // set containing the week days
     private EnumSet<WeekDays> days;
 
-    public WorkWeek(EnumSet<WeekDays> days) {
-      this.days = days;
+    public WorkWeek(EnumSet<WeekDays> newDays) {
+    		days = newDays;
     }
 
-    public WorkWeek(WeekDays... days) {
+    public WorkWeek(WeekDays... newDays) {
         EnumSet<WeekDays> myDays = EnumSet.noneOf(WeekDays.class);
-        for (WeekDays day : days) {
+        for (WeekDays day : newDays) {
           myDays.add(day);
         }
-        this.days = myDays;
+        days = myDays;
       }
 
     public EnumSet<WeekDays> getDays() {
@@ -38,14 +38,14 @@ public class WorkWeek implements Serializable {
     }
     
     public boolean worksAt(WeekDays day) {
-        return this.getDays().contains(day);
+        return getDays().contains(day);
     }
 
     // counts how many days per week the employee works
     public int workDaysPerWeek() {
         int workDays = 0;
-        for (WeekDays day: this.getDays()) {
-            if (this.getDays().contains(day)) {
+        for (WeekDays day: getDays()) {
+            if (getDays().contains(day)) {
                 workDays++;
             }
         }
@@ -53,13 +53,13 @@ public class WorkWeek implements Serializable {
     }
     
     public boolean equals(WorkWeek workWeek) {
-        return workWeek.getDays().containsAll(this.getDays());
+        return workWeek.getDays().containsAll(getDays());
     }
 
     // This work week contains workWeek 
     public boolean contains(WorkWeek otherWorkWeek) {
         for (WeekDays otherWorkWeekDay : otherWorkWeek.getDays()) {
-            if (this.getDays().contains(otherWorkWeekDay))
+            if (getDays().contains(otherWorkWeekDay))
                 return true;
         }
         return false;
@@ -67,7 +67,7 @@ public class WorkWeek implements Serializable {
     
     // TRASH
     public void printf() {
-        for (WeekDays day: this.getDays()) {
+        for (WeekDays day: getDays()) {
             System.out.println(day.toString());
         }
     }

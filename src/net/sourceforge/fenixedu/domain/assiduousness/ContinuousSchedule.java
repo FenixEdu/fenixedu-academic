@@ -35,10 +35,9 @@ import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessRegime;
  */
 public class ContinuousSchedule extends ContinuousSchedule_Base {
      
-	public static ContinuousSchedule makeContinuousSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriod, List<AssiduousnessRegime> regimes, TimeInterval workDay, Interval validFromTo, 
-            WorkWeek workWeek, boolean exception, boolean template, String acronym) {
-        ContinuousSchedule newContinuousSchedule = new ContinuousSchedule();
-        
+	public static ContinuousSchedule makeContinuousSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriod, List<AssiduousnessRegime> regimes, 
+			TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) { 
+		ContinuousSchedule newContinuousSchedule = new ContinuousSchedule();
         newContinuousSchedule.setEmployee(employee);
         newContinuousSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newContinuousSchedule.setFixedPeriod(fixedPeriod);
@@ -187,7 +186,7 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
 	    return continuousSchedule;
 	}
 
-    public String getName() {
-        return "Jornada";
-    }
+//    public String getName() {
+//        return "Jornada";
+//    }
 }

@@ -19,8 +19,8 @@ public class ClockingInterval {
     
     public ClockingInterval(Clocking clockIn, Clocking clockOut) {
         super();
-        this.setClockIn(clockIn);
-        this.setClockOut(clockOut);
+        setClockIn(clockIn);
+        setClockOut(clockOut);
     }
 
     
@@ -29,8 +29,8 @@ public class ClockingInterval {
     }
 
 
-    public void setClockIn(Clocking clockIn) {
-        this.clockIn = clockIn;
+    public void setClockIn(Clocking newClockIn) {
+        clockIn = newClockIn;
     }
 
 
@@ -39,19 +39,19 @@ public class ClockingInterval {
     }
 
 
-    public void setClockOut(Clocking clockOut) {
-        this.clockOut = clockOut;
+    public void setClockOut(Clocking newClockOut) {
+        clockOut = newClockOut;
     }
     
     public Interval toInterval() {
-        return (new Interval(this.getClockIn().getDate(), this.getClockOut().getDate()));
+        return (new Interval(getClockIn().getDate(), getClockOut().getDate()));
     }
     
     // Converts one clocking interval to TimePoint
     public List<TimePoint> toTimePoint(AttributeType attribute) {
         List<TimePoint> timePointList = new ArrayList<TimePoint>();
-        timePointList.add(new TimePoint(this.getClockIn().getDate().toTimeOfDay(), attribute));
-        timePointList.add(new TimePoint(this.getClockOut().getDate().toTimeOfDay(), attribute));
+        timePointList.add(new TimePoint(getClockIn().getDate().toTimeOfDay(), attribute));
+        timePointList.add(new TimePoint(getClockOut().getDate().toTimeOfDay(), attribute));
         return timePointList;
     }
     
@@ -72,7 +72,7 @@ public class ClockingInterval {
     }    
     
     public String toString() {
-        return new String(this.getClockIn().toString() + " - " + this.getClockOut().toString());
+        return new String(getClockIn().toString() + " - " + getClockOut().toString());
     }
     
 }

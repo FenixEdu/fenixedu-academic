@@ -42,7 +42,7 @@ public class FixedPeriod extends FixedPeriod_Base {
   
     // TODO verificar ISTO!
     public Duration getFixedPeriod1Duration() {
-        if (this.definedFixedPeriod1()) {
+        if (definedFixedPeriod1()) {
             return new Duration(getFixedPeriod1().getDuration());
         } else {
             return Duration.ZERO;
@@ -50,7 +50,7 @@ public class FixedPeriod extends FixedPeriod_Base {
     }
     
     public Duration getFixedPeriod2Duration() {
-        if (this.definedFixedPeriod2()) {
+        if (definedFixedPeriod2()) {
             return new Duration(getFixedPeriod2().getDuration());
         } else {
             return Duration.ZERO;
@@ -59,7 +59,7 @@ public class FixedPeriod extends FixedPeriod_Base {
     
     public Duration getTotalFixedPeriodDuration() {
         if (getFixedPeriod2() != null) {
-            return (this.getFixedPeriod1Duration()).plus(this.getFixedPeriod2Duration());
+            return (getFixedPeriod1Duration()).plus(getFixedPeriod2Duration());
         } else {
             return getFixedPeriod1Duration();
         }
@@ -68,13 +68,13 @@ public class FixedPeriod extends FixedPeriod_Base {
     // Returns a list with the start and end points of both Fixed Periods if defined
     public List<TimePoint> toTimePoints() {
         List<TimePoint> pointList = new ArrayList();
-        if (this.definedFixedPeriod1()) {
-            pointList.add(this.getFixedPeriod1().startPointToTimePoint(AttributeType.FP1));
-            pointList.add(this.getFixedPeriod1().endPointToTimePoint(AttributeType.FP1));
+        if (definedFixedPeriod1()) {
+            pointList.add(getFixedPeriod1().startPointToTimePoint(AttributeType.FP1));
+            pointList.add(getFixedPeriod1().endPointToTimePoint(AttributeType.FP1));
         }
-        if (this.definedFixedPeriod2()) {
-            pointList.add(this.getFixedPeriod2().startPointToTimePoint(AttributeType.FP2));
-            pointList.add(this.getFixedPeriod2().endPointToTimePoint(AttributeType.FP2));
+        if (definedFixedPeriod2()) {
+            pointList.add(getFixedPeriod2().startPointToTimePoint(AttributeType.FP2));
+            pointList.add(getFixedPeriod2().endPointToTimePoint(AttributeType.FP2));
         }
         return pointList;
     }
