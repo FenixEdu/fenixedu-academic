@@ -40,6 +40,7 @@ public class StringRenderer extends OutputRenderer {
                 }
                 else {
                     HtmlLink link = new HtmlLink();
+                    link.setContextRelative(false);
                     
                     if (getLinkText() == null) {
                         link.setText(string);

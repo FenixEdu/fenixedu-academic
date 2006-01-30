@@ -20,6 +20,8 @@ public class HtmlLink extends HtmlComponent {
     private String anchor;
     private String contentType;
     private String charSet;
+    private boolean moduleRelative;
+    private boolean contextRelative;
     
     private HtmlComponent body;
     
@@ -29,6 +31,7 @@ public class HtmlLink extends HtmlComponent {
         super();
         
         parameters = new Hashtable<String, String>();
+        setModuleRelative(true);
     }
 
     public String getAnchor() {
@@ -95,6 +98,30 @@ public class HtmlLink extends HtmlComponent {
         this.text = text;
     }
 
+    public boolean isContextRelative() {
+        return this.contextRelative;
+    }
+
+    public void setContextRelative(boolean contextRelative) {
+        this.contextRelative = contextRelative;
+        
+        if (! contextRelative) {
+            setModuleRelative(false);
+        }
+    }
+
+    public boolean isModuleRelative() {
+        return this.moduleRelative;
+    }
+
+    public void setModuleRelative(boolean moduleRelative) {
+        this.moduleRelative = moduleRelative;
+        
+        if (moduleRelative) {
+            setContextRelative(moduleRelative);
+        }
+    }
+
     @Override
     public List<HtmlComponent> getChildren() {
         ArrayList<HtmlComponent> children = new ArrayList<HtmlComponent>(super.getChildren());
@@ -133,14 +160,15 @@ public class HtmlLink extends HtmlComponent {
         if (getModule() != null) {
             buffer.append(RenderUtils.getContextRelativePath(getModule()));
         }
+        else if (isModuleRelative()) {
+            buffer.append(RenderUtils.getModuleRelativePath(""));
+        }
+        else if (isContextRelative()) {
+            buffer.append(RenderUtils.getContextRelativePath(""));
+        }
         
         if (getUrl() != null) {
-            if (getModule() != null) {
-                buffer.append(getUrl());
-            }
-            else {
-                buffer.append(RenderUtils.getModuleRelativePath(getUrl()));
-            }
+            buffer.append(getUrl());
         }
         
         if (! getParameters().isEmpty()) {

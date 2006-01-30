@@ -69,6 +69,9 @@ public class HtmlActionLink extends HtmlSimpleValueComponent {
         link.setText(getText());
         link.setBody(getBody());
         link.setUrl("#");
+        link.setModuleRelative(false);
+        link.setContextRelative(false);
+        
         link.setOnClick(
                 "document.getElementById('" + hidden.getId() + "').value='" + getName() + "'; " + 
                 "document.getElementById('" + hidden.getId() + "').form.submit();");
