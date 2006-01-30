@@ -9,9 +9,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class Script {
-	
-	private static ScriptWatchDog watchDog = new ScriptWatchDog(Float.valueOf(PropertiesManager.getProperty("scriptTimeout")).longValue()); 
-	
+
 	public static void changeKerberosPass(String user, String pass) throws ExcepcaoPersistencia, KerberosException{
 		String script = PropertiesManager.getProperty("changePassScript");
 		StringBuilder cmd = new StringBuilder();
@@ -67,9 +65,10 @@ public class Script {
 	}
 	
 	private static ScriptResult runCmd(String cmd, String pass) {
-		Process process = null;
+		Process process = null;		
 		BufferedWriter outCommand = null;
 		BufferedReader bufferedReader = null;
+		ScriptWatchDog watchDog = new ScriptWatchDog(Float.valueOf(PropertiesManager.getProperty("scriptTimeout")).longValue());
 		
 		try {
 			process = Runtime.getRuntime().exec(cmd);
@@ -78,6 +77,7 @@ public class Script {
 			outCommand.write(pass);
 			outCommand.newLine();
 			outCommand.flush();
+
 			watchDog.start(process);
 			int exitCode = process.waitFor();
 			watchDog.stop();
