@@ -33,3 +33,10 @@ execute "Create Table Space" createTableSpace.sql
 execute "Create Table Space" createTableSpaceInformation.sql
 execute "Alter Table Space" alterTableSpace.sql
 execute "Alter Table Space Information" alterTableSpaceInformation.sql
+execute "update colunm functionType" updateFunctionTypes.sql
+
+echo Altering table Unit
+mysql -u$2 -f -p$password $1 < updateUnit.sql > res.sql
+mysql -u$2 -f -p$password $1 < res.sql
+echo done
+
