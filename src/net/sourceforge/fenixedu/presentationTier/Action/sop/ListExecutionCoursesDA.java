@@ -65,7 +65,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
         final ExecutionPeriod executionPeriod = retrieveDomainObject(form, request);
 
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment; filename=executionCourseGroupings.xls");
+        response.setHeader("Content-disposition", "attachment; filename=executionCourseGroupings_" + executionPeriod.getQualifiedName().replace(' ', '_') + "_.xls");
 
         final ServletOutputStream servletOutputStream = response.getOutputStream();
         exportToXls(servletOutputStream, executionPeriod);
@@ -80,7 +80,8 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String executionPeriodIDString = (String) dynaActionForm.get("executionPeriodID");
-        final Integer executionPeriodID = executionPeriodIDString != null ? Integer.valueOf(executionPeriodIDString) : null;
+        final Integer executionPeriodID = executionPeriodIDString != null && executionPeriodIDString.length() > 0
+                ? Integer.valueOf(executionPeriodIDString) : null;
 
         final Object args[] = { ExecutionPeriod.class, executionPeriodID };
         return (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
@@ -101,6 +102,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
         headers.add("Degrees");
         headers.add("Curricular Years");
         headers.add("Degree Types");
+        headers.add("Emails");
         return headers;
     }
 
@@ -111,12 +113,17 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
             row.setCell(executionCourse.getNome());
 
             final StringBuilder responsibleForStringBuilder = new StringBuilder();
+            final StringBuilder responsibleForEmailsStringBuilder = new StringBuilder();
+            boolean isFirstResp = true;
             for (final Professorship professorship : executionCourse.getProfessorships()) {
-                if (professorship != executionCourse.getProfessorships().get(0)) {
-                    responsibleForStringBuilder.append("; ");
-                }
-
                 if (professorship.getResponsibleFor().booleanValue()) {
+                    if (isFirstResp) {
+                        isFirstResp = false;
+                    } else {
+                        responsibleForStringBuilder.append("; ");
+                        responsibleForEmailsStringBuilder.append("; ");
+                    }
+
                     final Teacher teacher = professorship.getTeacher();
                     responsibleForStringBuilder.append(teacher.getTeacherNumber().toString());
 
@@ -124,6 +131,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 
                     final Person person = teacher.getPerson();
                     responsibleForStringBuilder.append(person.getNome());
+                    responsibleForEmailsStringBuilder.append(person.getEmail());
                 }
             }
             row.setCell(responsibleForStringBuilder.toString());
@@ -190,6 +198,8 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
                 degreeTypeStringBuilder.append(DegreeType.MASTER_DEGREE);
             }
             row.setCell(degreeTypeStringBuilder.toString());
+
+            row.setCell(responsibleForEmailsStringBuilder.toString());
         }
     }
 

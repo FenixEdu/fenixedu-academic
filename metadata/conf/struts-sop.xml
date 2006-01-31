@@ -1679,7 +1679,8 @@
 				path="/listExecutionCourseGroupings"
 				name="listExecutionCourseGroupingsForm"
 				input="/listExecutionCourseGroupings.do?method=prepare"
-				parameter="method">
+				parameter="method"
+				scope="request">
 			<forward name="show-choose-execution-period-page" path="/listExecutionCourseGroupings.jsp"/>
 		</action>
     </action-mappings>     

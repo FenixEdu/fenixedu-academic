@@ -7,6 +7,9 @@
 	<html:hidden property="method" value="selectExecutionPeriod"/>
 
 	<html:select property="executionPeriodID" onchange="this.form.submit();">
+		<logic:notPresent name="executionPeriod">
+			<html:option value=""></html:option>
+		</logic:notPresent>
 		<html:options collection="executionPeriods" labelProperty="qualifiedName" property="idInternal"/>
 	</html:select>
 </html:form>
