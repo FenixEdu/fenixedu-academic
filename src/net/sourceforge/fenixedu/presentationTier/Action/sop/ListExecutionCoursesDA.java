@@ -89,7 +89,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 
     private void exportToXls(final ServletOutputStream servletOutputStream, final ExecutionPeriod executionPeriod) throws IOException {
         final List<Object> headers = getHeaders();
-        final Spreadsheet spreadsheet = new Spreadsheet("Controlo de Sumários", headers);
+        final Spreadsheet spreadsheet = new Spreadsheet("Execution Course Groupings", headers);
         fillSpreadSheet(spreadsheet, executionPeriod);
         spreadsheet.exportToXLSSheet(servletOutputStream);
     }
