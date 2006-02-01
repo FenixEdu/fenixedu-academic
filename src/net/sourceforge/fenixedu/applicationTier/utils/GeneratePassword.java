@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
  */
 public class GeneratePassword  {
 	
-	private static IGeneratePassword instance = null; 
+	private static IGeneratePassword instance = null;
 	
 	public static synchronized IGeneratePassword getInstance() {
         if (instance == null) {
