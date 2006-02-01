@@ -45,6 +45,10 @@ public class PropertiesManager {
     	return Boolean.parseBoolean(properties.getProperty(key));
     }
 
+    public static Integer getIntegerProperty(final String key) {
+    	return Integer.valueOf(properties.getProperty(key));
+    }
+
     public static void setProperty(final String key, final String value) {
         properties.setProperty(key, value);
     }
