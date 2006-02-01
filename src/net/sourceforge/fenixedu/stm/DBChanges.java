@@ -241,15 +241,18 @@ class DBChanges {
         String[] pkColumns2 = cod.getFksToItemClass();
 
         String table = cod.getIndirectionTable();
-	
-	String sqlStmt = null;
-	if (tupleInfo.remove) {
-	    sqlStmt = pb.serviceSqlGenerator().getDeleteMNStatement(table, pkColumns1, pkColumns2);
-	} else {
-	    sqlStmt = pb.serviceSqlGenerator().getInsertMNStatement(table, pkColumns1, pkColumns2);
-	}
 
+        // always remove the tuple
+	String sqlStmt = pb.serviceSqlGenerator().getDeleteMNStatement(table, pkColumns1, pkColumns2);
         pb.serviceJdbcAccess().executeUpdateSQL(sqlStmt, cld1, pkValues1, pkValues2);
+
+        // if it was not to remove but to add, then add it
+        // this "delete-first, add-after" serves to ensure that we can add multiple times 
+        // the same tuple to a relation and still have the Set semantics for the relation.
+	if (! tupleInfo.remove) {
+	    sqlStmt = pb.serviceSqlGenerator().getInsertMNStatement(table, pkColumns1, pkColumns2);
+            pb.serviceJdbcAccess().executeUpdateSQL(sqlStmt, cld1, pkValues1, pkValues2);
+	}
     }
 
     static class RelationTupleInfo {
