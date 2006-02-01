@@ -39,7 +39,9 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 			    						|| returnCode
 			    								.equals(KerberosException.CHANGE_PASSWORD_NOT_ENOUGH_CHARACTER_CLASSES)
 			    						|| returnCode
-			    								.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)) {
+			    								.equals(KerberosException.CHANGE_PASSWORD_CANNOT_REUSE)
+			    						|| returnCode
+			    								.equals(KerberosException.CHECK_PASSWORD_LOW_QUALITY)) {
 			    					throw new InvalidPasswordServiceException(returnCode);
 			    				} else {
 			    					throw new InvalidPasswordServiceException(

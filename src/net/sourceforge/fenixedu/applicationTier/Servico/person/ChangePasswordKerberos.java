@@ -47,7 +47,9 @@ public class ChangePasswordKerberos extends Service {
 						|| returnCode
 								.equals(KerberosException.ADD_NOT_ENOUGH_CHARACTER_CLASSES)
 						|| returnCode
-								.equals(KerberosException.ADD_TOO_SHORT)) {
+								.equals(KerberosException.ADD_TOO_SHORT)
+						|| returnCode
+								.equals(KerberosException.CHECK_PASSWORD_LOW_QUALITY)) {
 					throw new InvalidPasswordServiceException(returnCode);
 				} else if(returnCode.equals(KerberosException.WRONG_PASSWORD)) {
 					throw new InvalidPasswordServiceException("error.person.invalidExistingPassword");
