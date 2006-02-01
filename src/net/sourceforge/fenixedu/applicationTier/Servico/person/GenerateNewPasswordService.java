@@ -16,7 +16,6 @@ public class GenerateNewPasswordService extends Service {
 
 		String password = GeneratePassword.getInstance().generatePassword(person);
 
-		person.setIsPassInKerberos(true);
 		person.setPassword(PasswordEncryptor.encryptPassword(password));
 
 		return password;
