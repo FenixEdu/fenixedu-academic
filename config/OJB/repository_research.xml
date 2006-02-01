@@ -1,0 +1,83 @@
+<!-- Definitions for net.sourceforge.fenixedu.domain.organizationalStructure.Unit -->
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.Researcher" 
+	table="RESEARCHER">
+	
+	<field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>	
+    <field-descriptor
+	   name="keyPerson"    
+	   column="KEY_PERSON"  
+	   jdbc-type="INTEGER"
+    />
+
+	<reference-descriptor auto-retrieve="false"
+    	name="person"
+        class-ref="net.sourceforge.fenixedu.domain.Person">
+	    <foreignkey field-ref="keyPerson"/>
+	</reference-descriptor>
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="projects"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.Project"
+			indirection-table="PROJECT_RESEARCHER"
+			>
+		<fk-pointing-to-this-class column="KEY_RESEARCHER"/>
+		<fk-pointing-to-element-class column="KEY_PROJECT"/>
+	</collection-descriptor>
+	
+</class-descriptor>
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.Project"
+	table="PROJECT">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="startDate"
+		column="START_DATE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>
+	
+	<field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>
+	 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="researchers"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.Researcher"
+			indirection-table="PROJECT_RESEARCHER"
+			>
+		<fk-pointing-to-this-class column="KEY_PROJECT"/>
+		<fk-pointing-to-element-class column="KEY_RESEARCHER"/>
+	</collection-descriptor>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="units"
+			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
+			indirection-table="PROJECT_UNIT"
+			>
+		<fk-pointing-to-this-class column="KEY_PROJECT"/>
+		<fk-pointing-to-element-class column="KEY_UNIT"/>
+	</collection-descriptor>
+	
+	
+</class-descriptor>
+
+
+  

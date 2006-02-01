@@ -116,6 +116,15 @@
         element-class-ref="net.sourceforge.fenixedu.domain.NonAffiliatedTeacher">
 		<inverse-foreignkey field-ref="keyUnit"/>
     </collection-descriptor>
+    
+    <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="projects"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.Project"
+			indirection-table="PROJECT_UNIT"
+			>
+		<fk-pointing-to-this-class column="KEY_UNIT"/>
+		<fk-pointing-to-element-class column="KEY_PROJECT"/>
+	</collection-descriptor>
 
 </class-descriptor>
 

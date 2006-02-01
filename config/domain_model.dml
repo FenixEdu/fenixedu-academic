@@ -2747,10 +2747,14 @@ class net.sourceforge.fenixedu.domain.assiduousness.Balance extends net.sourcefo
 }
 
 
-class net.sourceforge.fenixedu.domain.Researcher extends net.sourceforge.fenixedu.domain.DomainObject{
+class net.sourceforge.fenixedu.domain.research.Researcher extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer keyPerson;
 }
 
+class net.sourceforge.fenixedu.domain.research.Project extends net.sourceforge.fenixedu.domain.DomainObject{
+	YearMonthDay startDate;
+	YearMonthDay endDate;
+}
 
 /*
  * Relations definitions
@@ -5766,6 +5770,24 @@ relation DailyBalanceHasJustification {
 }
 
 relation PersonResearcher {
-    net.sourceforge.fenixedu.domain.Researcher playsRole researcher;    
+    net.sourceforge.fenixedu.domain.research.Researcher playsRole researcher;    
 	net.sourceforge.fenixedu.domain.Person playsRole person;
+}
+
+relation ProjectResearcher {
+	net.sourceforge.fenixedu.domain.research.Project playsRole projects {
+		multiplicity *;
+	}
+    net.sourceforge.fenixedu.domain.research.Researcher playsRole researchers {
+    	multiplicity *;
+    }
+}
+
+relation ProjectUnit {
+	net.sourceforge.fenixedu.domain.research.Project playsRole projects {
+		multiplicity *;
+	}
+    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
+    	multiplicity *;
+    }
 }

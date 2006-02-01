@@ -76,7 +76,7 @@
 <!ENTITY teacherLegalRegimen SYSTEM "repository_teacher_legal_regimen.xml">
 <!ENTITY curricularPeriod SYSTEM "repository_curricularPeriod.xml">
 <!ENTITY groups SYSTEM "repository_groups.xml">
-<!ENTITY researcher SYSTEM "repository_researcher.xml">
+<!ENTITY research SYSTEM "repository_research.xml">
 <!ENTITY space SYSTEM "repository_space.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
@@ -158,7 +158,7 @@
 	&teacherLegalRegimen;
 	&curricularPeriod;
     &groups;
-    &researcher;
+    &research;
     &space;
 	
 </descriptor-repository>

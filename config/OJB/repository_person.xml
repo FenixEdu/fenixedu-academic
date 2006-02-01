@@ -242,7 +242,7 @@
     />     
     <reference-descriptor auto-retrieve="false"
     	name="researcher"
-        class-ref="net.sourceforge.fenixedu.domain.Researcher">
+        class-ref="net.sourceforge.fenixedu.domain.research.Researcher">
 	    <foreignkey field-ref="keyResearcher"/>
 	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
