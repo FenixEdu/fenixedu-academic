@@ -44,6 +44,7 @@
 							<li><bean:message key="message.pass.size" /></li>
 							<li><bean:message key="message.pass.classes" /></li>
 							<li><bean:message key="message.pass.reuse" /></li>
+							<li><bean:message key="message.pass.weak" /></li>
 						</ul>
 					</div>	
 			</div>
