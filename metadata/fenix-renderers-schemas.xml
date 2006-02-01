@@ -171,6 +171,7 @@
   	<slot name="teacherNumber" />
   	<slot name="categoryName" />
   	<slot name="executionCourseName" />
+  	<slot name="siglas" />
   	<slot name="lessonHours" />
    	<slot name="summaryHours" />	
    	<slot name="shiftDifference" />	   	   	  	

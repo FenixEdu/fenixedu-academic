@@ -8,16 +8,17 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 public class SummariesControlElementDTO extends DataTranferObject {
 
-    String teacherName, executionCourseName, categoryName, executionPeriodName, departmentName;
+    String teacherName, executionCourseName, categoryName, executionPeriodName, departmentName, siglas;
 
     Double lessonHours, summaryHours, courseSummaryHours, shiftDifference, courseDifference;
     
     Integer teacherNumber;
-   
+       
     public SummariesControlElementDTO(String teacherName, String executionCourseName,
             Integer teacherNumber, String categoryName, Double lessonHours, Double summaryHours,
-            Double totalSummaryHours, Double shiftDifference, Double courseDifference) {
+            Double totalSummaryHours, Double shiftDifference, Double courseDifference, String siglas) {
        
+        this.siglas = siglas;
         this.shiftDifference = shiftDifference;
         this.courseDifference = courseDifference;
         this.executionCourseName = executionCourseName;
@@ -63,5 +64,9 @@ public class SummariesControlElementDTO extends DataTranferObject {
 
     public Double getCourseDifference() {
         return courseDifference;
+    }
+
+    public String getSiglas() {
+        return siglas;
     }
 }

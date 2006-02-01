@@ -21,7 +21,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.utils.summary.SummaryUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.SummariesControlElementDTO;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -180,11 +182,13 @@ public class SummariesControlAction extends DispatchAction {
                     Category category = teacher.getCategory();
                     String categoryName = (category != null) ? category.getCode() : "";
 
+                    String siglas = getSiglas(professorship);
+                    
                     SummariesControlElementDTO listElementDTO = new SummariesControlElementDTO(teacher
                             .getPerson().getNome(), professorship.getExecutionCourse().getNome(),
                             teacher.getTeacherNumber(), categoryName, lessonHours, summaryHours,
-                            courseSummaryHours, shiftDifference, courseDifference);
-
+                            courseSummaryHours, shiftDifference, courseDifference, siglas);
+                                                          
                     allListElements.add(listElementDTO);
                 }
             }
@@ -196,8 +200,30 @@ public class SummariesControlAction extends DispatchAction {
         return allListElements;
     }
 
+    private String getSiglas(Professorship professorship) {                
+        ExecutionCourse executionCourse = professorship.getExecutionCourse();
+        int numberOfCurricularCourse = executionCourse.getAssociatedCurricularCourses().size();
+        
+        List<String> siglas = new ArrayList<String>();                          
+        StringBuffer buffer = new StringBuffer();
+                       
+        for (CurricularCourse curricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+            String sigla = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();            
+            if(!siglas.contains(sigla)){     
+               if(numberOfCurricularCourse < executionCourse.getAssociatedCurricularCourses().size()){                
+                   buffer.append(",");
+               } 
+               buffer.append(sigla);
+               siglas.add(sigla);                                             
+            }
+            numberOfCurricularCourse--;
+        }
+        return buffer.toString();
+    }
+
     private DegreeTeachingService readDegreeTeachingService(TeacherService teacherService, Shift shift,
             Professorship professorship) {
+        
         DegreeTeachingService degreeTeachingService = null;
         if (teacherService != null) {
             degreeTeachingService = teacherService.getDegreeTeachingServiceByShiftAndProfessorship(
@@ -310,6 +336,7 @@ public class SummariesControlAction extends DispatchAction {
             row.setCell(summariesControlElementDTO.getTeacherNumber().toString());
             row.setCell(summariesControlElementDTO.getCategoryName());
             row.setCell(summariesControlElementDTO.getExecutionCourseName());
+            row.setCell(summariesControlElementDTO.getSiglas());
             row.setCell(summariesControlElementDTO.getLessonHours().toString());
             row.setCell(summariesControlElementDTO.getSummaryHours().toString());
             row.setCell(summariesControlElementDTO.getShiftDifference().toString());
@@ -324,6 +351,7 @@ public class SummariesControlAction extends DispatchAction {
         headers.add("Número");
         headers.add("Categoria");
         headers.add("Disciplina");
+        headers.add("Licenciatura(s)");
         headers.add("Horas Declaradas");
         headers.add("Sumários nos Turnos");
         headers.add("Percentagem nos Turnos");

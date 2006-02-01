@@ -54,8 +54,8 @@
 		<p><fr:edit name="listElements" schema="summaries.control.list">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="rowClasses" value="listClasses"/>
-					<fr:property name="prefixes" value=",,,,,,<strong>,,<strong>"/>
-					<fr:property name="suffixes" value=",,,,h,h,%</strong>,h,%</strong>"/>
+					<fr:property name="prefixes" value=",,,,,,,<strong>,,<strong>"/>
+					<fr:property name="suffixes" value=",,,,,h,h,%</strong>,h,%</strong>"/>
 				</fr:layout>
 		</fr:edit></p>		
 		
