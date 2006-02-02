@@ -221,7 +221,10 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 		public void addToCourseDegreesList(String degreeName){
 			executionCourseDegreeList.add(degreeName);
 		}
-
+		
+		public void addToCurricularYears(Set<String> curricularYearsList) {
+			executionCourseCurricularYearsList.addAll(curricularYearsList);
+		}
 
 		public Set<String> getExecutionCourseCurricularYearsList() {
 			return executionCourseCurricularYearsList;
@@ -320,6 +323,37 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 			}
 			return 0;
 		}
+		
+		public String getDegreeListString() {
+			
+			StringBuilder finalString = new StringBuilder();
+			String[] stringArrayDegrees = (String[]) executionCourseDegreeList.toArray(new String[] {});
+						
+			if(stringArrayDegrees.length > 0) {
+				finalString.append(stringArrayDegrees[0]);
+			
+				for(int i = 1;  i < stringArrayDegrees.length; i++) {
+					finalString.append(", ");
+					finalString.append(stringArrayDegrees[i]);
+				}
+			}			
+			return finalString.toString();
+		}
+		
+		public String getCurricularYearListString() {
+			StringBuilder finalString = new StringBuilder();
+			String[] stringArrayYears = (String[]) executionCourseCurricularYearsList.toArray(new String[] {});
+						
+			if(stringArrayYears.length > 0) {
+				finalString.append(stringArrayYears[0]);
+			
+				for(int i = 1;  i < stringArrayYears.length; i++) {
+					finalString.append(", ");
+					finalString.append(stringArrayYears[i]);
+				}
+			}			
+			return finalString.toString();
+		}
 	}
 	
 	
@@ -388,5 +422,12 @@ public class DistributionTeacherServicesByCourseDTO extends DataTranferObject {
 		return;
 
 	}
+
+	public void addCurricularYearsToExecutionCourse(Integer keyExecutionCourse, Set<String> curricularYearsList) {
+		
+		executionCourseMap.get(keyExecutionCourse).addToCurricularYears(curricularYearsList);
+	}
+	
+
 	
 }

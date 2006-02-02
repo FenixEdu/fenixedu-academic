@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.teacherService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.faces.component.UISelectItems;
@@ -9,11 +10,14 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByCourseDTO.ExecutionCourseDistributionServiceEntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 /**
  * 
@@ -22,149 +26,372 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
  */
 public class ViewTeacherService extends FenixBackingBean {
 
-    private List<TeacherDistributionServiceEntryDTO> teacherServiceDTO;
+	private List<TeacherDistributionServiceEntryDTO> teacherServiceDTO;
 
-    private List<ExecutionCourseDistributionServiceEntryDTO> executionCourseServiceDTO;
+	private List<ExecutionCourseDistributionServiceEntryDTO> executionCourseServiceDTO;
 
-    private Integer selectedExecutionYearID;
+	private Integer selectedExecutionYearID;
 
-    private String selectedExecutionYearName;
+	private String selectedExecutionYearName;
 
-    private UISelectItems executionYearItems;
+	private UISelectItems executionYearItems;
 
-    public UISelectItems getExecutionYearItems() throws FenixFilterException,
-            FenixServiceException {
-        if (this.executionYearItems == null) {
-            this.executionYearItems = new UISelectItems();
-            executionYearItems.setValue(this.getExecutionYears());
-        }
+	private Integer selectedExecutionPeriodID;
 
-        return executionYearItems;
-    }
+	private UISelectItems executionPeriodsItems;
 
-    public void setExecutionYearItems(UISelectItems selectItems) {
-        this.executionYearItems = selectItems;
-    }
+	private final int BOTH_SEMESTERS_ID = 0;
 
-    public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
-        String executionYearIDString = this.getRequestParameter("selectedExecutionYearID");
+	private final int FIRST_SEMESTER_ID = 1;
 
-        if (executionYearIDString != null) {
-            this.selectedExecutionYearID = Integer.valueOf(this
-                    .getRequestParameter("selectedExecutionYearID"));
-        } else {
-            if (this.selectedExecutionYearID == null) {
-                InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-                        getUserView(), "ReadCurrentExecutionYear", new Object[] {});
+	private final int SECOND_SEMESTER_ID = 2;
 
-                if (infoExecutionYear == null) {
-                    List<SelectItem> executionYearItems = (List<SelectItem>) this
-                            .getExecutionYearItems().getValue();
-                    this.selectedExecutionYearID = (Integer) executionYearItems.get(
-                            executionYearItems.size() - 1).getValue();
-                } else {
-                    this.selectedExecutionYearID = infoExecutionYear.getIdInternal();
-                }
-            }
+	private static final int NUMBER_OF_FIXED_COLUMNS = 4;
 
-        }
+	private static final int HOURS_PER_SHIFT_INFORMATION_COLUMNS = 4;
 
-        return this.selectedExecutionYearID;
-    }
+	private static final int STUDENT_ENROLMENT_INFORMATION_COLUMNS = 2;
 
-    public void setSelectedExecutionYearID(Integer selectedExecutionYearID) {
+	private static final int COURSE_INFORMATION_COLUMNS = 4;
 
-        this.selectedExecutionYearID = selectedExecutionYearID;
-    }
+	private static final int STUDENTS_PER_SHIFT_INFORMATION_COLUMNS = 4;
 
-    public String getSelectedExecutionYearName() throws FenixFilterException, FenixServiceException {
+	public Integer getColumnsCount() {
+		int totalColumns = NUMBER_OF_FIXED_COLUMNS;
 
-        return selectedExecutionYearName;
-    }
+		totalColumns += (this.getViewCourseInformation() == true) ? COURSE_INFORMATION_COLUMNS
+				: 0;
+		totalColumns += (this.getViewHoursPerShift() == true) ? HOURS_PER_SHIFT_INFORMATION_COLUMNS
+				: 0;
+		totalColumns += (this.getViewStudentsEnrolments() == true) ? STUDENT_ENROLMENT_INFORMATION_COLUMNS
+				: 0;
+		totalColumns += (this.getViewStudentsPerShift() == true) ? STUDENTS_PER_SHIFT_INFORMATION_COLUMNS
+				: 0;
 
-    public void setSelectedExecutionYearName(String selectedExecutionYearName) {
-        this.selectedExecutionYearName = selectedExecutionYearName;
-    }
+		return totalColumns;
 
-    public List getTeacherServiceDTO() throws FenixFilterException, FenixServiceException {
-        if (teacherServiceDTO == null) {
-            loadDistributionServiceData();
-        }
-        return teacherServiceDTO;
-    }
+	}
 
-    public void setTeacherServiceDTO(List<TeacherDistributionServiceEntryDTO> teacherServiceDTO) {
-        this.teacherServiceDTO = teacherServiceDTO;
-    }
+	public UISelectItems getExecutionYearItems() throws FenixFilterException,
+			FenixServiceException {
+		if (this.executionYearItems == null) {
+			this.executionYearItems = new UISelectItems();
+			executionYearItems.setValue(this.getExecutionYears());
+		}
 
-    public List<ExecutionCourseDistributionServiceEntryDTO> getExecutionCourseServiceDTO()
-            throws FenixFilterException, FenixServiceException {
-        if (executionCourseServiceDTO == null) {
-            loadDistributionServiceDataByCourse();
-        }
-        return executionCourseServiceDTO;
-    }
+		return executionYearItems;
+	}
 
-    public void setExecutionCourseServiceDTO(
-            List<ExecutionCourseDistributionServiceEntryDTO> executionCourseServiceDTO) {
-        this.executionCourseServiceDTO = executionCourseServiceDTO;
-    }
+	public UISelectItems getExecutionPeriodsItems()
+			throws FenixFilterException, FenixServiceException {
+		if (this.executionPeriodsItems == null) {
+			this.executionPeriodsItems = new UISelectItems();
+			this.executionPeriodsItems.setValue(this.getExecutionPeriods());
+		}
 
-    private List<SelectItem> getExecutionYears() throws FenixFilterException, FenixServiceException {
+		return executionPeriodsItems;
+	}
 
-        List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils.executeService(
-                getUserView(), "ReadNotClosedExecutionYears", null);
+	public void setExecutionYearItems(UISelectItems selectItems) {
+		this.executionYearItems = selectItems;
+	}
 
-        List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
-        for (InfoExecutionYear executionYear : executionYears) {
-            result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
-        }
+	public Integer getSelectedExecutionYearID() throws FenixFilterException,
+			FenixServiceException {
+		String executionYearIDString = this
+				.getRequestParameter("selectedExecutionYearID");
 
-        return result;
+		if (executionYearIDString != null) {
+			this.selectedExecutionYearID = Integer.valueOf(this
+					.getRequestParameter("selectedExecutionYearID"));
+		} else {
+			if (this.selectedExecutionYearID == null) {
+				InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils
+						.executeService(getUserView(),
+								"ReadCurrentExecutionYear", new Object[] {});
 
-    }
+				if (infoExecutionYear == null) {
+					List<SelectItem> executionYearItems = (List<SelectItem>) this
+							.getExecutionYearItems().getValue();
+					this.selectedExecutionYearID = (Integer) executionYearItems
+							.get(executionYearItems.size() - 1).getValue();
+				} else {
+					this.selectedExecutionYearID = infoExecutionYear
+							.getIdInternal();
+				}
+			}
 
-    public String getDepartmentName() {
-        return getUserView().getPerson().getTeacher().getLastWorkingDepartment().getRealName();
-    }
+		}
 
-    public String getTeacherService() throws FenixFilterException, FenixServiceException {
+		return this.selectedExecutionYearID;
+	}
 
-        InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils.executeService(
-                getUserView(), "ReadExecutionYearByID",
-                new Object[] { this.getSelectedExecutionYearID() });
+	public Integer getSelectedExecutionPeriodID() {
+		
+		String executionPeriodIDString = this.getRequestParameter("selectedExecutionPeriodID");
 
-        this.selectedExecutionYearName = infoExecutionYear.getYear();
+		if (executionPeriodIDString != null) {
+			selectedExecutionPeriodID = Integer.valueOf(this.getRequestParameter("selectedExecutionPeriodID"));
+		} else if (selectedExecutionPeriodID == null) {
+			selectedExecutionPeriodID = BOTH_SEMESTERS_ID;
+		}
 
-        loadDistributionServiceData();
-        return "listDistributionTeachersByTeacher";
-    }
+		return selectedExecutionPeriodID;
+	}
 
-    public String getTeacherServiceByCourse() throws FenixFilterException, FenixServiceException {
-        loadDistributionServiceDataByCourse();
-        return "listDistributionTeachersByCourse";
-    }
+	public void setSelectedExecutionYearID(Integer selectedExecutionYearID)
+			throws FenixFilterException, FenixServiceException {
 
-    private void loadDistributionServiceData() throws FenixFilterException, FenixServiceException {
+		this.selectedExecutionYearID = selectedExecutionYearID;
+	}
 
-        Object[] args = { getUserView().getPerson().getUsername(), this.getSelectedExecutionYearID() };
+	public String getSelectedExecutionYearName() throws FenixFilterException,
+			FenixServiceException {
 
-        this.teacherServiceDTO = (List<TeacherDistributionServiceEntryDTO>) ServiceUtils.executeService(
-                getUserView(), "ReadTeacherServiceDistributionByTeachers", args);
+		return selectedExecutionYearName;
+	}
 
-    }
+	public void setSelectedExecutionYearName(String selectedExecutionYearName) {
+		this.selectedExecutionYearName = selectedExecutionYearName;
+	}
 
-    private void loadDistributionServiceDataByCourse() throws FenixFilterException,
-            FenixServiceException {
+	public List getTeacherServiceDTO() throws FenixFilterException,
+			FenixServiceException {
+		if (teacherServiceDTO == null) {
+			loadDistributionServiceData();
+		}
+		return teacherServiceDTO;
+	}
 
-        Object[] args = { getUserView().getPerson().getUsername(), this.getSelectedExecutionYearID() };
+	public void setTeacherServiceDTO(
+			List<TeacherDistributionServiceEntryDTO> teacherServiceDTO) {
+		this.teacherServiceDTO = teacherServiceDTO;
+	}
 
-        this.executionCourseServiceDTO = (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceUtils
-                .executeService(getUserView(), "ReadTeacherServiceDistributionByCourse", args);
-    }
+	public List<ExecutionCourseDistributionServiceEntryDTO> getExecutionCourseServiceDTO()
+			throws FenixFilterException, FenixServiceException {
+		if (executionCourseServiceDTO == null) {
+			loadDistributionServiceDataByCourse();
+		}
+		return executionCourseServiceDTO;
+	}
 
-    public void onSelectedExecutionYearIDChanged(ValueChangeEvent valueChangeEvent) {
-        this.selectedExecutionYearID = (Integer) valueChangeEvent.getNewValue();
-    }
+	public void setExecutionCourseServiceDTO(
+			List<ExecutionCourseDistributionServiceEntryDTO> executionCourseServiceDTO) {
+		this.executionCourseServiceDTO = executionCourseServiceDTO;
+	}
+
+	private List<SelectItem> getExecutionYears() throws FenixFilterException,
+			FenixServiceException {
+
+		List<InfoExecutionYear> executionYears = (List<InfoExecutionYear>) ServiceUtils
+				.executeService(getUserView(), "ReadNotClosedExecutionYears",
+						null);
+
+		List<SelectItem> result = new ArrayList<SelectItem>(executionYears
+				.size());
+		for (InfoExecutionYear executionYear : executionYears) {
+			result.add(new SelectItem(executionYear.getIdInternal(),
+					executionYear.getYear()));
+		}
+
+		return result;
+
+	}
+
+	private List<SelectItem> getExecutionPeriods() throws FenixFilterException,
+			FenixServiceException {
+
+		List<SelectItem> result = new ArrayList<SelectItem>();
+		result.add(new SelectItem(BOTH_SEMESTERS_ID, "Ambos os Semestres"));
+		result.add(new SelectItem(FIRST_SEMESTER_ID, "1º Semestre"));
+		result.add(new SelectItem(SECOND_SEMESTER_ID, "2º Semestre"));
+
+		return result;
+
+	}
+
+	public String getDepartmentName() {
+		return getUserView().getPerson().getTeacher()
+				.getLastWorkingDepartment().getRealName();
+	}
+
+	public String getTeacherService() throws FenixFilterException,
+			FenixServiceException {
+
+		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils
+				.executeService(getUserView(), "ReadExecutionYearByID",
+						new Object[] { this.getSelectedExecutionYearID() });
+
+		this.selectedExecutionYearName = infoExecutionYear.getYear();
+
+		loadDistributionServiceData();
+		return "listDistributionTeachersByTeacher";
+	}
+
+	public String getTeacherServiceByCourse() throws FenixFilterException,
+			FenixServiceException {
+		loadDistributionServiceDataByCourse();
+		return "listDistributionTeachersByCourse";
+	}
+
+	private void loadDistributionServiceData() throws FenixFilterException,
+			FenixServiceException {
+
+		List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
+
+		Object[] args = { getUserView().getPerson().getUsername(),
+				ExecutionPeriodsIDs };
+
+		this.teacherServiceDTO = (List<TeacherDistributionServiceEntryDTO>) ServiceUtils
+				.executeService(getUserView(),
+						"ReadTeacherServiceDistributionByTeachers", args);
+
+	}
+
+	private void loadDistributionServiceDataByCourse()
+			throws FenixFilterException, FenixServiceException {
+
+		List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
+
+		Object[] args = { getUserView().getPerson().getUsername(),
+				ExecutionPeriodsIDs };
+
+		this.executionCourseServiceDTO = (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceUtils
+				.executeService(getUserView(),
+						"ReadTeacherServiceDistributionByCourse", args);
+	}
+
+	private List<Integer> buildExecutionPeriodsIDsList()
+			throws FenixFilterException, FenixServiceException {
+		InfoExecutionYear infoExecutionYear = (InfoExecutionYear) ServiceUtils
+				.executeService(getUserView(), "ReadExecutionYearByID",
+						new Object[] { this.getSelectedExecutionYearID() });
+
+		List<InfoExecutionPeriod> executionPeriods = (List<InfoExecutionPeriod>) ServiceUtils
+				.executeService(getUserView(),
+						"ReadExecutionPeriodsByExecutionYear",
+						new Object[] { infoExecutionYear });
+
+		Collections.sort(executionPeriods, new BeanComparator("beginDate"));
+
+		List<Integer> periodsIDsList = new ArrayList<Integer>();
+
+		for (InfoExecutionPeriod executionPeriod : executionPeriods) {
+			periodsIDsList.add(executionPeriod.getIdInternal());
+		}
+
+		List<Integer> returnList = new ArrayList<Integer>();
+		int periodID = getSelectedExecutionPeriodID();
+
+		if ((periodID != BOTH_SEMESTERS_ID) && (periodsIDsList.size() > 1)) {
+			if (periodID == FIRST_SEMESTER_ID) {
+				returnList.add(periodsIDsList.get(0));
+			} else {
+				returnList.add(periodsIDsList.get(periodsIDsList.size() - 1));
+			}
+		} else {
+			returnList = periodsIDsList;
+		}
+
+		return returnList;
+	}
+
+	public void onSelectedExecutionYearIDChanged(
+			ValueChangeEvent valueChangeEvent) {
+		this.selectedExecutionYearID = (Integer) valueChangeEvent.getNewValue();
+	}
+
+	public void onSelectedExecutionPeriodIDChanged(
+			ValueChangeEvent valueChangeEvent) {
+		this.selectedExecutionPeriodID = (Integer) valueChangeEvent
+				.getNewValue();
+	}
+
+	public void setExecutionPeriodsItems(UISelectItems executionPeriodsItems) {
+		this.executionPeriodsItems = executionPeriodsItems;
+	}
+
+	public void setSelectedExecutionPeriodID(Integer selectedExecutionPeriodID) {
+		this.selectedExecutionPeriodID = selectedExecutionPeriodID;
+	}
+
+	// Opcoes de vista
+
+	private Integer[] selectedViewOptions;
+
+	private UISelectItems viewOptionsItems;
+
+	private final int VIEW_STUDENTS_PER_SHIFT = 3;
+
+	private final int VIEW_HOURS_PER_SHIFT = 4;
+
+	private final int VIEW_COURSE_INFORMATION = 5;
+
+	private final int VIEW_STUDENTS_ENROLMENTS = 6;
+
+	public UISelectItems getViewOptionsItems() throws FenixFilterException,
+			FenixServiceException {
+		if (this.viewOptionsItems == null) {
+			this.viewOptionsItems = new UISelectItems();
+			viewOptionsItems.setValue(this.getViewOptions());
+		}
+
+		return viewOptionsItems;
+	}
+
+	private List<SelectItem> getViewOptions() throws FenixFilterException,
+			FenixServiceException {
+
+		List<SelectItem> result = new ArrayList<SelectItem>();
+		result.add(new SelectItem(VIEW_COURSE_INFORMATION, "Ver informações curriculares"));
+		result.add(new SelectItem(VIEW_STUDENTS_ENROLMENTS, "Ver inscrições de alunos"));
+		result.add(new SelectItem(VIEW_HOURS_PER_SHIFT, "Ver horas por turno"));
+		result.add(new SelectItem(VIEW_STUDENTS_PER_SHIFT, "Ver alunos por turno"));
+		
+		return result;
+	}
+
+	public Integer[] getSelectedViewOptions() {
+		if (selectedViewOptions == null) {
+			selectedViewOptions = new Integer[] {};
+		}
+		return selectedViewOptions;
+	}
+
+	public void setSelectedViewOptions(Integer[] selectedViewOptions) {
+		this.selectedViewOptions = selectedViewOptions;
+	}
+
+	public void setViewOptionsItems(UISelectItems viewOptionsItems) {
+		this.viewOptionsItems = viewOptionsItems;
+	}
+
+	private boolean isOptionSelected(int option) {
+		Integer[] selectedOptions = getSelectedViewOptions();
+		
+		for (int i = 0; i < selectedOptions.length; i++) {
+			if (selectedOptions[i] == option) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean getViewStudentsPerShift() {
+		return isOptionSelected(VIEW_STUDENTS_PER_SHIFT);
+	}
+
+	public boolean getViewHoursPerShift() {
+		return isOptionSelected(VIEW_HOURS_PER_SHIFT);
+	}
+
+	public boolean getViewCourseInformation() {
+		return isOptionSelected(VIEW_COURSE_INFORMATION);
+	}
+
+	public boolean getViewStudentsEnrolments() {
+		return isOptionSelected(VIEW_STUDENTS_ENROLMENTS);
+	}
 
 }

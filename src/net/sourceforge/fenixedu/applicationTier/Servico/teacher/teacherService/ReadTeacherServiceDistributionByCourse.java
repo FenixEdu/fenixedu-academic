@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.teacher.teacherService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,30 +33,25 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
  */
 public class ReadTeacherServiceDistributionByCourse extends Service {
 
-	public List run(String username, Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
+	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia {
+
+			
+		IPersistentTeacher persistenceTeacher = persistentSupport.getIPersistentTeacher();
+				
+		Teacher teacher = persistenceTeacher.readTeacherByUsername(username);
+
+		Department department = teacher.getLastWorkingDepartment();
+
+		List<CompetenceCourse> competenceCourseList = department.getCompetenceCourses();
+		
+		List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+		for(Integer executionPeriodID : executionPeriodsIDs){
+			executionPeriodList.add((ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID));
+		}
+
 
 		DistributionTeacherServicesByCourseDTO returnDTO = new DistributionTeacherServicesByCourseDTO();
-
-		List<CompetenceCourse> competenceCourseList;
-
-		List<ExecutionPeriod> executionPeriodList;
-
-		Teacher teacher;
-
-		Department department;
-
-		IPersistentTeacher persistenceTeacher = persistentSupport.getIPersistentTeacher();
-
-		IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
-
-		executionPeriodList = persistentExecutionPeriod.readByExecutionYear(executionYearID);
-
-		teacher = persistenceTeacher.readTeacherByUsername(username);
-
-		department = teacher.getLastWorkingDepartment();
-
-		competenceCourseList = department.getCompetenceCourses();
-
+		
 		Map<Integer, Boolean> executionCoursesMap = new HashMap<Integer, Boolean>();
 
 		for (CompetenceCourse cc : competenceCourseList) {
@@ -65,7 +61,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 
 					List<CurricularCourseScope> scopesList = curricularCourseEntry
 							.getActiveScopesInExecutionPeriod(executionPeriodEntry);
-					Set<String> curricularYearsList = new HashSet<String>();
+					Set<String> curricularYearsList = new LinkedHashSet<String>();
 					for (CurricularCourseScope scopeEntry : scopesList) {
 						curricularYearsList.add(curricularCourseEntry
 								.getCurricularYearByBranchAndSemester(scopeEntry.getBranch(),
@@ -78,8 +74,10 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 
 						if (executionCoursesMap.containsKey(executionCourseEntry.getIdInternal())) {
 							returnDTO.addDegreeNameToExecutionCourse(executionCourseEntry
-									.getIdInternal(), curricularCourseEntry.getDegreeCurricularPlan()
-									.getName());
+									.getIdInternal(), curricularCourseEntry.getDegreeCurricularPlan().getDegree()
+									.getSigla());
+							returnDTO.addCurricularYearsToExecutionCourse(executionCourseEntry.getIdInternal(),
+									curricularYearsList);
 							continue;
 						}
 

@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.CurricularSemester;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -33,22 +32,22 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 public class ReadTeacherServiceDistributionByTeachers extends Service {
 	
 
-	public List run(String username, Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
+	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		
-
-		final ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class, executionYearID);
-		final List<ExecutionPeriod> executionPeriodList = executionYear.getExecutionPeriods();
+		
+		final List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
+		for(Integer executionPeriodID : executionPeriodsIDs){
+			executionPeriodList.add((ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID));
+		}
 		
 		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentObject.readAll(ExecutionPeriod.class);
 		
 		final ExecutionPeriod startPeriod = findStartPeriod(allExecutionPeriods);
-
+		
+		ExecutionPeriod endPeriod = findEndPeriod(executionPeriodList, startPeriod); 
 		
 		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
-
-				
-		ExecutionPeriod endPeriod = findEndPeriod(executionPeriodList, startPeriod); 
 
 		Department department = persistentTeacher.readTeacherByUsername(username).getLastWorkingDepartment();
 		
@@ -62,11 +61,15 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				}
 				
 				Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getCreditsBetweenExecutionPeriods(startPeriod, endPeriod)); 
+				
+				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
+					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()));
+				} else {
+					returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
+							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()), 
+							teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
+				}
 					
-				returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
-						.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()), 
-						teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
-		
 				for (Professorship professorShip : teacher.getProfessorships()) {
 					ExecutionCourse executionCourse = professorShip.getExecutionCourse();
 		

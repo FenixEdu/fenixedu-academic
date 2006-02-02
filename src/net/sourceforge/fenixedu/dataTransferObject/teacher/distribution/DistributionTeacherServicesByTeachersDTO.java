@@ -227,6 +227,11 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			}
 			return 0;
 		}
+
+
+		public void setTeacherRequiredHours(Integer teacherRequiredHours) {
+			this.teacherRequiredHours = teacherRequiredHours;
+		}
 	}
 
 	
@@ -252,6 +257,18 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		
 		teachersMap.get(keyTeacher).addExecutionCourse(executionCourse);	
 			
+	}
+	
+	public void addHoursToTeacher(Integer keyTeacher, Integer hours){
+		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
+		
+		if(teacher != null){
+			teacher.setTeacherRequiredHours(teacher.getTeacherRequiredHours() + hours);
+		}
+	}
+	
+	public boolean isTeacherPresent(Integer keyTeacher){
+		return teachersMap.containsKey((keyTeacher));
 	}
 	
 	public Map<Integer, TeacherDistributionServiceEntryDTO> getTeachersMap() {
