@@ -138,7 +138,7 @@ public class Advise extends Advise_Base {
             if (executionPeriod.getEndDate().after(advise.getEndExecutionPeriod().getEndDate())) {
                 advise.setEndExecutionPeriod(executionPeriod);
             }
-            if (executionPeriod.getBeginDate().before(advise.getStartExecutionPeriod().getEndDate())) {
+            if (executionPeriod.getBeginDate().before(advise.getStartExecutionPeriod().getBeginDate())) {
                 advise.setStartExecutionPeriod(executionPeriod);
             }
         }
