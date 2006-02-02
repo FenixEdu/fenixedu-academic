@@ -35,11 +35,11 @@
 				<h1>Login</h1>
 
 					<p>
-						<strong style="background-color: #ffa;">Atenção: o prazo da sua password expirou.</strong> Por motivos de segurança o sistema de gestão de passwords exige a actualização da sua password. Agradecemos a sua compreensão.
+						<bean:message key="message.expired.password"/>
 					</p>
 					
 					<div style="margin: 0 4em; padding: 0.5em; background-color: #f5f5f5; border: 1px solid #eee;">		
-						<strong><bean:message key="message.requirements" />:</strong>
+						<strong><html:link href="https://ciist.ist.utl.pt/normas/autenticacao.php" target="_blank"><bean:message key="message.requirements"/>:</html:link></strong>
 						<ul>
 							<li><bean:message key="message.pass.size" /></li>
 							<li><bean:message key="message.pass.classes" /></li>

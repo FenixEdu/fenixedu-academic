@@ -59,7 +59,7 @@ padding: 0.5em;
 	</html:form>
 	</div>
 	<div class="pass_req">
-		<strong><bean:message key="message.requirements"/>:</strong>
+		<strong><html:link href="https://ciist.ist.utl.pt/normas/autenticacao.php" target="_blank"><bean:message key="message.requirements"/>:</html:link></strong>
 		<ul>
 			<li><bean:message key="message.pass.size"/></li>
 			<li><bean:message key="message.pass.classes"/></li>
