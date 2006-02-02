@@ -41,3 +41,5 @@ mysql -u$2 -f -p$password $1 < updateUnit.sql > res.sql
 mysql -u$2 -f -p$password $1 < res.sql
 echo done
 
+execute "Create CurricularRule Table" createCurricularRuleTable.sql
+execute "Alter CurricularRule Table" alterCurricularRuleTable.sql

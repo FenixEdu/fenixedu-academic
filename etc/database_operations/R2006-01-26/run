@@ -21,3 +21,4 @@ function execute() {
 
 execute "Adding CMS_MANAGER role" addCmsManager.sql
 execute "Creating more CMS tables" createCmsTables.sql
+execute "Added column BIBLIOGRAPHIC_REFERENCES to CompetenceCourseInformation" alterTableCompetenceCourseInformation.sql

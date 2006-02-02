@@ -28,14 +28,17 @@
 			</h:panelGroup>
 				
 			<h:outputText value="<b>#{bundleDEP['add.new.members']}</b><br/>" escape="false" />		
-			<h:outputText value="#{bundleDEP['number.of.persons']}: #{ManagementGroupsBackingBean.departmentEmployeesSize}<br/>" escape="false" />
-			<h:outputText value="<br/>" escape="false" />
+			<h:outputText value="<p>#{bundleDEP['number.of.persons']}: #{ManagementGroupsBackingBean.departmentEmployeesSize}</p>" escape="false" />
+			<h:outputText value="<p>" escape="false" />
+			<h:commandLink value="#{bundleDEP['link.group.addPersons']}" actionListener="#{ManagementGroupsBackingBean.addMembers}"/>
+			<h:outputText value="</p>" escape="false" />
 			
 			<h:selectManyCheckbox value="#{ManagementGroupsBackingBean.selectedPersonsIDsToAdd}" layout="pageDirection">
 				<f:selectItems value="#{ManagementGroupsBackingBean.departmentEmployeesSelectItems}"  />
 			</h:selectManyCheckbox>
-					
+			<h:outputText value="<p>" escape="false" />
 			<h:commandLink value="#{bundleDEP['link.group.addPersons']}" actionListener="#{ManagementGroupsBackingBean.addMembers}" />
+			<h:outputText value="</p>" escape="false" />
 		</h:form>
 	</h:panelGroup>
 

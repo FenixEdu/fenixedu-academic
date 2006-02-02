@@ -36,6 +36,14 @@
 				</html:select>
 			</td>
 		</tr>	
+		<tr>
+			<td>
+				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.generateFiles.paymentEndDate"/>
+			</td>
+			<td>
+				<html:text property="paymentEndDate" />
+			</td>
+		</tr>
 	</table>
 	<p />
 	<html:submit styleClass="inputbutton">

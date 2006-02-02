@@ -9,7 +9,6 @@ package net.sourceforge.fenixedu.accessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.cms.Content;
 
 /**
@@ -19,21 +18,6 @@ import net.sourceforge.fenixedu.domain.cms.Content;
  */
 public class AccessControl
 {
-
-	public static class IllegalDataAccessException extends RuntimeException
-	{
-		private static final long serialVersionUID = 2264135195805915798L;
-
-		public IllegalDataAccessException()
-		{
-			super();
-		}
-
-		public IllegalDataAccessException(String msg, Person person)
-		{
-			super(msg);
-		}
-	}
 
 	private static InheritableThreadLocal<IUserView> userView = new InheritableThreadLocal<IUserView>();
 
@@ -47,15 +31,15 @@ public class AccessControl
 		AccessControl.userView.set(userView);
 	}
 
-	public static void check(DomainObject c, Group group)
+	public static void check(DomainObject c, AccessControlPredicate<DomainObject> predicate)
 	{
 		Person requester = AccessControl.getUserView().getPerson();
-		boolean result = false;
+		boolean result = false;        
 		
         if (c instanceof Content) {
             result = ((Content)c).getOwners().contains(requester);
         }
-		result |= (group!=null && group.isMember(requester));
+		result |= (predicate !=null && predicate.evaluate(c));
 		
 		if (!result)
 		{

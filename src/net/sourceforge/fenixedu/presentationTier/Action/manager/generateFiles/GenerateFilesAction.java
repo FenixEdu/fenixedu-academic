@@ -4,8 +4,11 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.generateFiles;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,24 +36,29 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 /**
  * @author Tânia Pousão
- *  
+ * 
  */
 public class GenerateFilesAction extends FenixDispatchAction {
+
+    private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         return mapping.findForward("firstPage");
     }
 
     public ActionForward prepareChooseForGenerateFiles(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+            HttpServletRequest request, HttpServletResponse response) throws FenixActionException,
+            FenixFilterException {
         String file = request.getParameter("file");
         request.setAttribute("file", file);
 
-        //execution years
+        // execution years
         List executionYears = null;
         Object[] args = {};
         try {
@@ -112,10 +120,12 @@ public class GenerateFilesAction extends FenixDispatchAction {
             throw new FenixActionException();
         }
 
-        Object[] args = { infoExecutionYear.getIdInternal() };
+        Date paymentEndDate = dateFormat
+                .parse(((DynaActionForm) actionForm).getString("paymentEndDate"));
+        Object[] args = { infoExecutionYear.getIdInternal(), paymentEndDate };
         String serviceName = null;
 
-        //Create respective file
+        // Create respective file
         if (fileType.equals(new String("sibs"))) {
             serviceName = "GenerateOutgoingSibsPaymentFileByExecutionYearID";
 

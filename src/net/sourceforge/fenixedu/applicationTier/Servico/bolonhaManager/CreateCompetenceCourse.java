@@ -40,9 +40,6 @@ public class CreateCompetenceCourse extends Service {
             if (competenceCourse.getNameEn().equals(nameEn)) {
                 throw new FenixServiceException("error.existingCompetenceCourseWithSameNameEn");
             }
-            if (competenceCourse.getAcronym().equals(acronym)) {
-                throw new FenixServiceException("error.existingCompetenceCourseWithSameAcronym");
             }
         }
     }
-}

@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Contract;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
 
@@ -201,4 +203,45 @@ public class Unit extends Unit_Base {
 
         return result;
     }
+    
+    
+    public List<Teacher> getTeachers(Date begin, Date end) {
+        List<Teacher> teachers = new ArrayList<Teacher>();
+        List<Employee> employees = getWorkingEmployees(begin, end);
+        for (Employee employee : employees) {
+            Teacher teacher = employee.getPerson().getTeacher();
+            if (teacher != null && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
+                teachers.add(teacher);
+}
+        }
+        return teachers;
+    }
+    public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
+        for (Employee employee : getWorkingEmployees(begin, end)) {
+            Teacher teacher = employee.getPerson().getTeacher();
+            if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
+                    && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
+                return teacher;
+            }
+        }
+        return null;
+    }
+    
+    public List<Employee> getWorkingEmployees(Date begin, Date end) {        
+                
+        Set<Employee> employees = new HashSet<Employee>();
+
+        readAndSaveEmployees(this, employees, begin, end);
+        
+        return new ArrayList<Employee>(employees);
+    }
+
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end){
+        for (Contract contract : unit.getWorkingContracts(begin, end)) {
+            employees.add(contract.getEmployee());
+        }
+        for (Unit subUnit : unit.getSubUnits()) {               
+            readAndSaveEmployees(subUnit, employees, begin, end);               
+        }                
+    }    
 }

@@ -978,6 +978,13 @@
 				<var-value>NOTNULL</var-value>
 			</var>        			
 		</field>
+		<field property="totalPayment" depends="validwhen" page="2">
+	        <arg0 key="label.masterDegree.gratuity.paymentMode" />
+			<var>
+				<var-name>test</var-name>
+				<var-value>((*this* != null) or (partialPayment != null))</var-value>
+			</var>
+		</field>
     </form>	
     
     <form name="studentsGratuityListForm">

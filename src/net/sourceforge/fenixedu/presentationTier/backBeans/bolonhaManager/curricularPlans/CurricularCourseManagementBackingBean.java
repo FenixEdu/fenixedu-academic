@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
 
 public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaBundle = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
@@ -298,7 +297,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         try {
             checkCompetenceCourse();
             Object args[] = {getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourse()};
-            ServiceUtils.executeService(getUserView(), "EditCurricularCourse", args);
+            ServiceUtils.executeService(getUserView(), "EditCurricularCourseBolonhaManager", args);
             setContextID(0); // resetContextID
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
@@ -399,6 +398,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             Object args[] = { getCurricularCourse(), getContext(getContextIDToDelete()) };
             ServiceUtils.executeService(getUserView(), "DeleteContextFromCurricularCourse", args);
             setContextID(0); // resetContextID
+            addInfoMessage(bolonhaBundle.getString("successAction"));
         } catch (FenixServiceException e) {
             addErrorMessage(e.getMessage());
         } catch (DomainException e) {
@@ -431,10 +431,6 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         return result;
     }
 
-    private final ComparatorChain comparatorChain = new ComparatorChain(); {
-        comparatorChain.addComparator(new BeanComparator("curricularStage"), true);
-        comparatorChain.addComparator(new BeanComparator("name"));    
-    }
     private List<SelectItem> readCompetenceCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
@@ -446,11 +442,12 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                     competenceCourses.addAll(competenceCourseGroupUnit.getCompetenceCourses());                    
                     }
                 }
-            Collections.sort(competenceCourses, comparatorChain);
+            Collections.sort(competenceCourses, new BeanComparator("name"));
             for (final CompetenceCourse competenceCourse : competenceCourses) {
-                result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("
-                        + enumerationBundle.getString(competenceCourse.getCurricularStage().getName())
-                        + ")", "", competenceCourse.getCurricularStage().equals(CurricularStage.DRAFT)));
+                if (!competenceCourse.getCurricularStage().equals(CurricularStage.DRAFT)) {
+                    result.add(new SelectItem(competenceCourse.getIdInternal(), competenceCourse.getName() + " ("
+                            + enumerationBundle.getString(competenceCourse.getCurricularStage().getName()) + ")"));
+                }                
             }
         }
         return result;
@@ -483,8 +480,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readCurricularCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        for (final CurricularCourse curricularCourse : getDegreeCurricularPlan()
-                .getDcpCurricularCourses()) {
+        final List<CurricularCourse> curricularCourses = getDegreeCurricularPlan().getDcpCurricularCourses();
+        Collections.sort(curricularCourses, new BeanComparator("name"));
+        for (final CurricularCourse curricularCourse : curricularCourses) {
             result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));
         }
         return result;

@@ -28,6 +28,10 @@ public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixB
     private String curricularStage;
     private String gradeScale;
     
+    public String getAction() {
+        return getAndHoldStringParameter("action");
+    }
+    
     public Integer getDegreeId() {
         return (degreeId == null) ? (degreeId = getAndHoldIntegerParameter("degreeId")) : degreeId;
     }

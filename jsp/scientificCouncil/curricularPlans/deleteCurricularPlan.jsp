@@ -14,7 +14,7 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
 
-		<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
+		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 		
 		<h:outputText value="<br/><b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
 		<h:panelGrid styleClass="infoselected" columns="2" border="0">

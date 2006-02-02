@@ -6,7 +6,16 @@
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
-	
+<style>
+.temp1 {
+clear: both;
+}
+.temp1 li span {
+float: left; 
+width: 100px;
+padding-right: 10px;
+}
+</style>
 	<h:outputText value="<em>#{bolonhaBundle['competenceCourse']}</em>" escape="false" />
 	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name}</h2>" escape="false"/>
 
@@ -45,10 +54,7 @@
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p><strong>#{bolonhaBundle['state']}: </strong>" escape="false"/>
-	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</p>" escape="false"/>
-	<h:outputText value="</div>" escape="false"/>
-
-	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
+	<h:outputText value="<span class='highlight1'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
 	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>	
 	<h:outputText value="<li><strong>#{bolonhaBundle['name']} (pt): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
@@ -104,25 +110,77 @@
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p class='mbottom0'><em>#{bolonhaBundle['portuguese']}: </em></p>" escape="false"/>
-	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
+	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['objectives']}:</th>" escape="false"/>
-	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectives}</td></tr>" escape="false"/>
+	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectives}</td></tr>" escape="false" linebreak="true"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['program']}:</th>" escape="false"/>
-	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.program}</td></tr>" escape="false"/>
+	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.program}</td></tr>" escape="false" linebreak="true"/>
+	<h:outputText value="<tr><th>#{bolonhaBundle['evaluationMethod']}:</th>" escape="false"/>
+	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.evaluationMethod}</td></tr>" escape="false" linebreak="true"/>
 	<h:outputText value="</table>" escape="false"/>
-	<h:outputText value="</div>" escape="false"/>
 	
-	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p class='mbottom0'><em>#{bolonhaBundle['english']}: </em></p>" escape="false"/>
-	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
+	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['objectivesEn']}:</th>" escape="false"/>
-	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectivesEn}</td></tr>" escape="false"/>
+	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectivesEn}</td></tr>" escape="false" linebreak="true"/>
 	<h:outputText value="<tr><th>#{bolonhaBundle['programEn']}:</th>" escape="false"/>
-	<h:outputText value="<td>#{CompetenceCourseManagement.competenceCourse.programEn}</td></tr>" escape="false"/>
+	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.programEn}</td></tr>" escape="false" linebreak="true"/>
+	<h:outputText value="<tr><th>#{bolonhaBundle['evaluationMethodEn']}:</th>" escape="false"/>
+	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}</td></tr>" escape="false" linebreak="true"/>	
 	<h:outputText value="</table>" escape="false"/>
 	<h:outputText value="</div>" escape="false"/>
 
+	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
+	<h:outputText value="<h3 class='mbottom0'>#{bolonhaBundle['bibliographicReference']}</h3>" escape="false"/>	
+	<h:outputText value="<p><b>#{enumerationBundle['MAIN']}</b></p>" escape="false"/>
+	<h:panelGroup rendered="#{empty CompetenceCourseManagement.mainBibliographicReferences}">
+		<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em><br/>" escape="false"/>
+	</h:panelGroup>	
+	<fc:dataRepeater value="#{CompetenceCourseManagement.mainBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.mainBibliographicReferences}">
+		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
+			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
+			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
+			
+			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
+			
+			<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+			<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
+			
+			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
+			
+			<h:outputText value="</ul>" escape="false"/>
+		</h:panelGroup>
+	</fc:dataRepeater>
+	
+	<h:outputText value="<p><b>#{enumerationBundle['SECONDARY']}</b></p>" escape="false"/>
+	<h:panelGroup rendered="#{empty CompetenceCourseManagement.secondaryBibliographicReferences}">
+		<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em><br/>" escape="false"/>
+	</h:panelGroup>	
+	<fc:dataRepeater value="#{CompetenceCourseManagement.secondaryBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.secondaryBibliographicReferences}">
+		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
+			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
+			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
+				
+			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
+			
+			<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+			<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
+			
+			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
+			
+			<h:outputText value="</ul>" escape="false"/>
+		</h:panelGroup>
+	</fc:dataRepeater>
+	<h:outputText value="</div>" escape="false"/>
+
 	<h:form>
+		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.action}">
 			<h:commandButton immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{bolonhaBundle['back']}" />

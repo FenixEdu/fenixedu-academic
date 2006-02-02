@@ -17,7 +17,7 @@
 			value="#{bundle[evaluationManagementBackingBean.errorMessage]}<br/><br/>" escape="false"/>
 		<h:messages showSummary="true" errorClass="error" rendered="#{empty evaluationManagementBackingBean.errorMessage}"/>
 
- 		<h:outputText styleClass="infoMsg" rendered="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}"
+ 		<h:outputText styleClass="success0" rendered="#{!empty evaluationManagementBackingBean.evaluation.associatedRoomOccupation}"
 			value="#{bundle['message.evaluation.not.editable']}<br/><br/>" escape="false"/>
 
 		<h:panelGrid styleClass="infotable" columns="2" border="0">

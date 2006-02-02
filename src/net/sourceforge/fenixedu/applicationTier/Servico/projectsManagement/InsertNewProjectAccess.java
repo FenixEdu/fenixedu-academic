@@ -77,9 +77,10 @@ public class InsertNewProjectAccess extends Service {
         }
 
         for (int i = 0; i < projectCodes.length; i++) {
-            if (persistentSupport.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(projectCodes[i])) != 0)
-                throw new IllegalArgumentException();
+//            if (persistentSupport.getIPersistentProjectAccess().countByPersonAndProject(person, new Integer(projectCodes[i])) != 0)
+//                throw new IllegalArgumentException();
 
+        	
             ProjectAccess projectAccess = DomainFactory.makeProjectAccess();
             projectAccess.setPerson(person);
             projectAccess.setKeyProjectCoordinator(new Integer(userNumber));

@@ -36,5 +36,23 @@
 			</fileset>
 		</injectAccessControl>
 	</target>
-	
+
+	<target name="void-inject">
+		<injectAccessControl verbose="false" 
+				targetClassesDir="${build.home.webinf.classes}" 
+				codeProducerClassName="net.sourceforge.fenixedu.accessControl.FenixVoidAccessControlCallsGenerator"
+				accessControlAnnotation="net.sourceforge.fenixedu.accessControl.Checked">
+			<classpath>
+	      <pathelement path="${build.home.webinf.classes}"/>
+		      <fileset dir="lib">
+						<include name="**/*.jar"/>
+          </fileset>
+      </classpath>
+			
+			<fileset dir="${build.home.webinf.classes}">
+				<include name="**/domain/*.*"/>
+			</fileset>
+		</injectAccessControl>
+	</target>
+
 </project>

@@ -15,11 +15,12 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
+import net.sourceforge.fenixedu.domain.DomainReference;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -68,12 +69,12 @@ public class Authenticate extends Service implements Serializable {
 
     protected class UserView implements IUserView {
 
-    	final private DomainObjectReference<Person> personRef;
+    	final private DomainReference<Person> personRef;
 
         final private Collection roles;
 
         private UserView(final Person person, final Set allowedRoles) {
-            this.personRef = new DomainObjectReference<Person>((Person) person);
+            this.personRef = new DomainReference<Person>((Person) person);
 
             final Collection infoRoles = getInfoRoles(person.getUsername(), person.getPersonRoles(),
                     allowedRoles);
@@ -94,7 +95,7 @@ public class Authenticate extends Service implements Serializable {
         }
 
 		public Person getPerson() {
-			return personRef.get();
+			return personRef.getObject();
 		}
 
         public String getUtilizador() {

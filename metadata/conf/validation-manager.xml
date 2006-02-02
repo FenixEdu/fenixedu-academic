@@ -457,6 +457,13 @@
     	<field property="executionYear" depends="required" page="1">
 	        <arg0 key="label.masterDegree.gratuity.executionYear" />
 		</field> 
+		<field property="paymentEndDate" depends="required,date" page="1">
+	        <arg0 key="label.manager.generateFiles.paymentDate" />
+    	    <var>
+    	    	<var-name>datePattern</var-name>
+    	    	<var-value>dd/MM/yyyy</var-value>
+    	    </var>
+		</field>
 	</form>	
     
     <form name="findPersonForm">

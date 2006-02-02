@@ -19,16 +19,13 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlanWith
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 public class ReadStudentCurricularPlans extends Service {
 
     public List run(Integer studentNumber, DegreeType degreeType) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
 
-        List studentCurricularPlans = null;
-
-        studentCurricularPlans = persistentSupport.getIStudentCurricularPlanPersistente()
+        List studentCurricularPlans = persistentSupport.getIStudentCurricularPlanPersistente()
                 .readByStudentNumberAndDegreeType(studentNumber, degreeType);
 
         if ((studentCurricularPlans == null) || (studentCurricularPlans.size() == 0)) {

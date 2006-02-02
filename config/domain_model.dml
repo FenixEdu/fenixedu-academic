@@ -116,6 +116,9 @@ valueType org.joda.time.Period                                                  
 valueType org.joda.time.TimeOfDay                                                               as TimeOfDay;
 valueType org.joda.time.Partial                                                                 as Partial;
 valueType net.sourceforge.fenixedu.util.ContractType  		                                	as ContractType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    as BibliographicReferences;
+valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    as CurricularRuleType;
+valueType net.sourceforge.fenixedu.domain.util.LogicOperators    as LogicOperators;
 
 /*
 *
@@ -650,6 +653,22 @@ class net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule extends net.s
 	class net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup extends net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule {
 	}
 
+class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net.sourceforge.fenixedu.domain.DomainObject {
+    String ojbConcreteClass;
+    Integer keyDegreeModuleToApplyRule;
+    Integer keyBeginExecutionPeriod;
+    Integer keyEndExecutionPeriod;
+    Integer keyParentCompositeRule;
+    CurricularRuleType curricularRuleType;
+}
+    class net.sourceforge.fenixedu.domain.curricularRules.CompositeRule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {    
+        LogicOperators compositeRuleType;
+    }
+    class net.sourceforge.fenixedu.domain.curricularRules.Rule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {    
+    }
+        class net.sourceforge.fenixedu.domain.curricularRules.precedencies.RestrictionDoneDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+            Integer keyDoneDegreeModule;
+        }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
@@ -692,6 +711,7 @@ class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformatio
     String evaluationMethod;
     String evaluationMethodEn;
     Date endDate;
+    BibliographicReferences bibliographicReferences;
 }
 	
 class net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5369,7 +5389,9 @@ relation WebSiteSectionWebSite {
 }
 
 relation StudentPersonalDataAuthorizationStudent {
-    net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorization;
+    net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization playsRole studentPersonalDataAuthorizations {
+    	multiplicity *;
+    }
     net.sourceforge.fenixedu.domain.Student playsRole student;
 }
 
@@ -5790,4 +5812,39 @@ relation ProjectUnit {
     net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
     	multiplicity *;
     }
+}
+
+relation CurricularRuleDegreeModule {
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModuleToApplyRule;
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
+		multiplicity*;
+	}	
+}
+
+relation CurricularRuleBeginExecutionPeriod {
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole beginCurricularRules {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole begin;
+}
+
+relation CurricularRuleEndExecutionPeriod {
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole endCurricularRules {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole end;
+}
+
+relation CurricularRuleCompositeRule {
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.curricularRules.CompositeRule playsRole parentCompositeRule;
+}
+
+relation DegreeModuleRestrictionDoneDegreeModule {
+	net.sourceforge.fenixedu.domain.curricularRules.precedencies.RestrictionDoneDegreeModule playsRole restrictionDoneDegreeModules {
+		multiplicity*;
+	}
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole doneDegreeModule;
 }

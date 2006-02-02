@@ -1,0 +1,1 @@
+alter table DEGREE_CURRICULAR_PLAN drop column ECTS_CREDITS;

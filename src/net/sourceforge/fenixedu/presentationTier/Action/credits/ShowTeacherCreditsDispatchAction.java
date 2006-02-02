@@ -124,11 +124,9 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
         double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
         double serviceExemptionCredits = teacher.getServiceExemptionCredits(executionPeriod);
         int mandatoryLessonHours = 0;
-        Category category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
-                executionPeriod.getEndDate());
+        Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
         if(!monitorCategories.contains(category)){
-            mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
-                    executionPeriod.getEndDate());
+            mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
         }
         CreditLineDTO creditLineDTO = new CreditLineDTO(executionPeriod, teacherService,
                 managementCredits, serviceExemptionCredits, mandatoryLessonHours);

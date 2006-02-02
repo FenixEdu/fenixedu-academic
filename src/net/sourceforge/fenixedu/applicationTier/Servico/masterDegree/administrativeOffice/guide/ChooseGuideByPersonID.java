@@ -14,7 +14,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoGuideWithPersonAndExecutionDegreeAndContributor;
 import net.sourceforge.fenixedu.domain.Guide;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -26,19 +25,15 @@ public class ChooseGuideByPersonID extends Service {
 
 	public List run(Integer personID) throws Exception {
 
-		List guides = null;
-		Person person = null;
-
 		// Check if person exists
-
-		person = (Person) persistentObject.readByOID(Person.class, personID);
+		Person person = (Person) persistentObject.readByOID(Person.class, personID);
 
 		if (person == null) {
 			throw new NonExistingServiceException();
 		}
 
-		guides = persistentSupport.getIPersistentGuide().readByPerson(person.getNumeroDocumentoIdentificacao(),
-				person.getIdDocumentType());
+        List guides = persistentSupport.getIPersistentGuide().readByPerson(
+                person.getNumeroDocumentoIdentificacao(), person.getIdDocumentType());
 
 		BeanComparator numberComparator = new BeanComparator("number");
 		BeanComparator versionComparator = new BeanComparator("version");

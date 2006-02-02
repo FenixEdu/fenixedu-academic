@@ -56,7 +56,7 @@ public class EditStudentCurricularCoursePlan extends DispatchAction {
         }
 
         // put request
-        request.setAttribute(SessionConstants.BRANCH, branchList);
+        request.setAttribute(SessionConstants.BRANCH, (branchList == null) ? new ArrayList() : branchList);
         request.setAttribute("currentState", infoStudentCurricularPlan.getCurrentState());
 
         request.setAttribute("student", infoStudentCurricularPlan.getInfoStudent());

@@ -14,8 +14,8 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -389,7 +389,31 @@ public class CurricularCourse extends CurricularCourse_Base {
             result = this.getCompetenceCourse().getEctsCredits();
         }       
         return result;
-    }    
+    }
+    
+    public Double getContactLoad(Integer order) {
+        double result = 0.0;
+        if (this.getCompetenceCourse() != null) {
+            result = this.getCompetenceCourse().getContactLoad(order);
+        }
+        return result;
+    }
+
+    public Double getAutonomousWorkHours(Integer order) {
+        double result = 0.0;
+        if (this.getCompetenceCourse() != null) {
+            result = this.getCompetenceCourse().getAutonomousWorkHours(order);
+        }
+        return result;
+    }
+    
+    public Double getTotalLoad(Integer order) {
+        double result = 0.0;
+        if (this.getCompetenceCourse() != null) {
+            result = this.getCompetenceCourse().getTotalLoad(order);
+        }
+        return result;
+    }
     
     public CurricularSemester getCurricularSemesterWithLowerYearBySemester(Integer semester, Date date) {
     	CurricularSemester result = null;
@@ -486,6 +510,13 @@ public class CurricularCourse extends CurricularCourse_Base {
             return this.getCompetenceCourse().isBasic();
         }
         return super.getBasic();
+    }
+
+    public RegimeType getRegime() {
+        if (this.getCompetenceCourse() != null) {
+            return this.getCompetenceCourse().getRegime();
+        }
+        return null;
     }
     
 }

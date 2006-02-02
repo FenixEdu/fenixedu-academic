@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoWebSiteItem;
@@ -169,8 +170,13 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 			items.addAll(infoWebSiteSection.getInfoItemsList());
 
 			List monthList = new ArrayList();
-			HashMap monthsToCreateLinks = new HashMap();
-			HashMap monthsToCreateFiles = new HashMap();
+            Comparator<Integer> comparator = new Comparator<Integer>() {
+                public int compare(Integer o1, Integer o2) {
+                    return 0 - o1.compareTo(o2);
+                }
+            };
+			Map monthsToCreateLinks = new TreeMap(comparator);
+			Map monthsToCreateFiles = new TreeMap(comparator);
 			Calendar calendarCycle = Calendar.getInstance();
 			Calendar calendarLast = Calendar.getInstance();
 			if (lastInfoWebSiteItem != null) {
@@ -339,7 +345,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 	 * @param monthsToCreateLinks
 	 * @param monthsToCreateFiles
 	 */
-	private void copyNewHashmapForFiles(HashMap monthsToCreateLinks, HashMap monthsToCreateFiles) {
+	private void copyNewHashmapForFiles(Map monthsToCreateLinks, Map monthsToCreateFiles) {
 		List allMonthLinks = null;
 		Integer yearMap = null;
 		Iterator iterYearsMap = monthsToCreateLinks.entrySet().iterator();
@@ -365,7 +371,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 	 * @return
 	 */
 	private String buildLinksForArchive(InfoWebSiteSection infoWebSiteSection, Calendar currentMonth,
-			String currentMonthFileName, HashMap monthsToCreateLinks, Integer year, Integer monthLink,
+			String currentMonthFileName, Map monthsToCreateLinks, Integer year, Integer monthLink,
 			String itemsFile) {
 		List allMonthLinks = null;
 		Integer yearMap = null;
@@ -417,7 +423,7 @@ public class SendWebSiteSectionFileToServer extends ManageWebSiteItem {
 	 * @param monthsToCreateLinks
 	 * @param calendarCycle
 	 */
-	private void findMonthsForArchive(HashMap monthsToCreateLinks, Calendar calendarCycle) {
+	private void findMonthsForArchive(Map monthsToCreateLinks, Calendar calendarCycle) {
 		Integer monthToCreateLink = new Integer(calendarCycle.get(Calendar.MONTH));
 		Integer yearOfMonthToCreateLink = new Integer(calendarCycle.get(Calendar.YEAR));
 		if (monthsToCreateLinks.containsKey(yearOfMonthToCreateLink)) {

@@ -325,6 +325,7 @@
     		<form-property name="page" type="java.lang.Integer" initial="0"/> 
     		<form-property name="file" type="java.lang.String"/>
     		<form-property name="executionYear" type="java.lang.String"/>	
+     		<form-property name="paymentEndDate" type="java.lang.String"/>
     </form-bean>
 
 	    <form-bean name="cacheForm"
@@ -1406,6 +1407,9 @@
 				validate="false">
         <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
          	       key="error.cannot.merge.execution.course.with.itself"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$DuplicateShiftNameException"
+         	       key="error.duplicate.shift.names"
                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
 	</action>	

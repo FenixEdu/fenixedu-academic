@@ -46,9 +46,18 @@ public class CompetenceCourseLoad extends CompetenceCourseLoad_Base {
         super.deleteDomainObject();
     }
     
-    public double getTotalContactLessonHours() {
+    public double getTotalLessonHours() {
         return getTheoreticalHours().doubleValue() + getProblemsHours().doubleValue() + getLaboratorialHours().doubleValue() +
             getSeminaryHours().doubleValue() + getFieldWorkHours().doubleValue() + getTrainingPeriodHours().doubleValue() +
             getTutorialOrientationHours().doubleValue();
     }
+    
+    public double getContactLoad() {
+        return 14 * getTotalLessonHours();
+    }
+    
+    public double getTotalLoad() {
+        return getAutonomousWorkHours() + getContactLoad();
+    }
+    
 }

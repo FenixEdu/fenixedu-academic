@@ -21,7 +21,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.reimbursementGuide.ReimbursementGuide;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -70,8 +69,8 @@ public class ChooseGuide extends Service {
 
 		Guide guide = null;
 
-		guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber, guideYear,
-				guideVersion);
+        guide = persistentSupport.getIPersistentGuide().readByNumberAndYearAndVersion(guideNumber,
+                guideYear, guideVersion);
 
 		if (guide == null) {
 			throw new NonExistingServiceException();
@@ -164,19 +163,16 @@ public class ChooseGuide extends Service {
 	public List run(String identificationDocumentNumber, IDDocumentType identificationDocumentType)
 			throws Exception {
 
-		List guides = null;
-		Person person = null;
-
 		// Check if person exists
 
-		person = persistentSupport.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(identificationDocumentNumber,
-				identificationDocumentType);
+        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorNumDocIdETipoDocId(
+                identificationDocumentNumber, identificationDocumentType);
 
 		if (person == null) {
 			throw new NonExistingServiceException();
 		}
 
-		guides = persistentSupport.getIPersistentGuide().readByPerson(identificationDocumentNumber,
+        List guides = persistentSupport.getIPersistentGuide().readByPerson(identificationDocumentNumber,
 				identificationDocumentType);
 
 		if ((guides == null) || (guides.size() == 0)) {

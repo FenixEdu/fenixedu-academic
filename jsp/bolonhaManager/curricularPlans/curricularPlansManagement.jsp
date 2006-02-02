@@ -15,10 +15,10 @@
 
 	<h:panelGroup>
 		<h:outputText value="<br/>" escape="false" />
-		<h:messages errorClass="error" infoClass="infoMsg"/>
+		<h:messages errorClass="error0" infoClass="success0"/>
 	
 		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty ScientificCouncilDegreeManagement.bolonhaDegrees}">
-			<h:outputText value="<table width='80%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
+			<h:outputText value="<table width='90%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
 			<h:outputText value="<tr><th width='120px'>#{bolonhaBundle['degree']}:</th>" escape="false"/>
 	
 			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
@@ -45,6 +45,7 @@
 				<h:outputLink value="viewCurricularPlan.faces">
 					<h:outputText value="#{bolonhaBundle['view']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
+					<f:param name="action" value="view"/>
 				</h:outputLink>
 				<h:outputText value=" , " escape="false"/>
 				<h:outputLink value="buildCurricularPlan.faces">

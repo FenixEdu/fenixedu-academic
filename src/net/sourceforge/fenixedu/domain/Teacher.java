@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
 import net.sourceforge.fenixedu.domain.credits.util.InfoCreditsBuilder;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Group;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.domain.publication.Publication;
 import net.sourceforge.fenixedu.domain.publication.PublicationTeacher;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.ServiceExemptionType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherLegalRegimen;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -391,11 +393,28 @@ public class Teacher extends Teacher_Base {
 
         List<TeacherServiceExemption> serviceExemptions = new ArrayList<TeacherServiceExemption>();
         for (TeacherServiceExemption serviceExemption : this.getServiceExemptionSituations()) {
-            if (serviceExemption.belongsToPeriod(beginDate, endDate)) {
+            if (!isMedicalSituation(serviceExemption)
+                    && serviceExemption.belongsToPeriod(beginDate, endDate)) {
                 serviceExemptions.add(serviceExemption);
             }
         }
         return serviceExemptions;
+    }
+
+    /**
+     * @param serviceExemption
+     * @return
+     */
+    private boolean isMedicalSituation(TeacherServiceExemption serviceExemption) {
+        if (serviceExemption.getType().equals(ServiceExemptionType.MEDICAL_SITUATION)
+                || serviceExemption.getType().equals(
+                        ServiceExemptionType.MATERNAL_LICENSE_WITH_SALARY_80PERCENT)
+                || serviceExemption.getType().equals(ServiceExemptionType.MATERNAL_LICENSE)
+                || serviceExemption.getType().equals(ServiceExemptionType.DANGER_MATERNAL_LICENSE)
+                || serviceExemption.getType().equals(ServiceExemptionType.CHILDBIRTH_LICENSE)) {
+            return true;
+        }
+        return false;
     }
 
     public List<PersonFunction> getPersonFuntions(Date beginDate, Date endDate) {
@@ -415,17 +434,37 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    public int getServiceExemptionCredits(ExecutionPeriod executionPeriod) {
+    public int getHoursByCategory(ExecutionPeriod executionPeriod) {
 
-        Date begin = executionPeriod.getBeginDate();
-        Date end = executionPeriod.getEndDate();
-
-        List<TeacherServiceExemption> list = getServiceExemptionSituations(begin, end);
+        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
+        if (occupationPeriod == null) {
+            return 0;
+        }
+        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(occupationPeriod.getStart(),
+                occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return 0;
         } else {
-            return calculateServiceExemptionsCredits(list, begin, end);
+            Collections.sort(list, new BeanComparator("beginDate"));
+            final Integer hours = list.get(list.size() - 1).getLessonHours();
+            return (hours == null) ? 0 : hours.intValue();
+        }
+    }
+
+    public int getServiceExemptionCredits(ExecutionPeriod executionPeriod) {
+
+        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
+        if (occupationPeriod == null) {
+            return 0;
+        }
+        List<TeacherServiceExemption> list = getServiceExemptionSituations(occupationPeriod.getStart(),
+                occupationPeriod.getEnd());
+
+        if (list.isEmpty()) {
+            return 0;
+        } else {
+            return calculateServiceExemptionsCredits(list, executionPeriod);
         }
     }
 
@@ -457,9 +496,14 @@ public class Teacher extends Teacher_Base {
         return 0;
     }
 
-    public Category getCategoryByPeriod(Date begin, Date end) {
+    public Category getCategoryForCreditsByPeriod(ExecutionPeriod executionPeriod) {
 
-        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(begin, end);
+        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
+        if (occupationPeriod == null) {
+            return null;
+        }
+        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(occupationPeriod.getStart(),
+                occupationPeriod.getEnd());
 
         if (list.isEmpty()) {
             return null;
@@ -469,11 +513,80 @@ public class Teacher extends Teacher_Base {
         }
     }
 
-    private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list, Date begin,
-            Date end) {
+    /**
+     * @param executionPeriod
+     * @return
+     */
+    private OccupationPeriod getLessonsPeriod(ExecutionPeriod executionPeriod) {
+        for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear()
+                .getExecutionDegreesByType(DegreeType.DEGREE)) {
+            if (executionPeriod.getSemester() == 1) {
+                return executionDegree.getPeriodLessonsFirstSemester();
+            } else {
+                return executionDegree.getPeriodLessonsSecondSemester();
+            }
+        }
+        return null;
+    }
 
+    private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
+            ExecutionPeriod executionPeriod) {
+
+        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
+        if (occupationPeriod == null) {
+            return 0;
+        }
+        TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(list,
+                occupationPeriod);
+
+        if (teacherServiceExemption != null
+                && (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)
+                        || teacherServiceExemption.getType().equals(
+                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITHOUT_SALARY)
+                        || teacherServiceExemption.getType().equals(
+                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
+                        || teacherServiceExemption.getType().equals(
+                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_SABBATICAL) || teacherServiceExemption
+                        .getType().equals(
+                                ServiceExemptionType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_WITH_DEBITS))) {
+
+            Integer daysBetween = CalendarUtil.getNumberOfDaysBetweenDates(teacherServiceExemption
+                    .getStart(), teacherServiceExemption.getEnd());
+            if (occupationPeriod.containsDay(teacherServiceExemption.getStart())) {
+                if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
+                    return 6;
+                } else if (daysBetween > 90) { // to be considered long term grant owner
+                    return getHoursByCategory(executionPeriod);
+                }
+            } else {
+                occupationPeriod = getLessonsPeriod(executionPeriod.getPreviousExecutionPeriod());
+                if (occupationPeriod != null
+                        && occupationPeriod.containsDay(teacherServiceExemption.getStart())
+                        && daysBetween > 185 /* more than 6 months */) {
+                    if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
+                        return 6;
+                    } else {
+                        return getHoursByCategory(executionPeriod);
+                    }
+                } else if (executionPeriod.containsDay(teacherServiceExemption.getStart())) {
+                    if (teacherServiceExemption.getType().equals(ServiceExemptionType.SABBATICAL)) {
+                        return 6;
+                    } else {
+                        return getHoursByCategory(executionPeriod);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    private TeacherServiceExemption getTeacherServiceExemption(List<TeacherServiceExemption> list,
+            OccupationPeriod occupationPeriod) {
         Integer numberOfDaysInPeriod = null, maxDays = 0;
         TeacherServiceExemption teacherServiceExemption = null;
+
+        Date begin = occupationPeriod.getStart();
+        Date end = occupationPeriod.getEnd();
 
         for (TeacherServiceExemption serviceExemption : list) {
 
@@ -499,13 +612,7 @@ public class Teacher extends Teacher_Base {
                 }
             }
         }
-
-        if (teacherServiceExemption.getEnd() != null) {
-            return getHoursByCategory(teacherServiceExemption.getStart(), teacherServiceExemption
-                    .getEnd());
-        } else {
-            return getHoursByCategory(teacherServiceExemption.getStart(), end);
-        }
+        return teacherServiceExemption;
     }
 
     public List<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvisesByAdviseTypeAndExecutionYear(
@@ -570,12 +677,66 @@ public class Teacher extends Teacher_Base {
                     totalCredits += teacherService.getPastServiceCredits();
                     pastServiceAdded = true;
                 } else {
-                    totalCredits -= getHoursByCategory(startPeriod.getBeginDate(), startPeriod
-                            .getEndDate());
+                    totalCredits -= getMandatoryLessonHours(startPeriod);
                 }
             }
             startPeriod = startPeriod.getNextExecutionPeriod();
         }
         return totalCredits;
+    }
+
+    public int getMandatoryLessonHours(ExecutionPeriod executionPeriod) {
+        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
+        if (occupationPeriod == null) {
+            return 0;
+        }
+        List<TeacherLegalRegimen> list = getAllLegalRegimensBelongsToPeriod(occupationPeriod.getStart(),
+                occupationPeriod.getEnd());
+
+        if (list.isEmpty()) {
+            return 0;
+        } else {
+            List<TeacherServiceExemption> exemptions = getServiceExemptionSituations(occupationPeriod
+                    .getStart(), occupationPeriod.getEnd());
+            TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(exemptions,
+                    occupationPeriod);
+            if (isServiceExemptionToCountZero(teacherServiceExemption)) {
+                return 0;
+            }
+            Collections.sort(list, new BeanComparator("beginDate"));
+            final Integer hours = list.get(list.size() - 1).getLessonHours();
+            return (hours == null) ? 0 : hours.intValue();
+        }
+    }
+
+    /**
+     * @param teacherServiceExemption
+     * @return
+     */
+    private boolean isServiceExemptionToCountZero(TeacherServiceExemption teacherServiceExemption) {
+        if(teacherServiceExemption == null){
+            return false;
+        }
+        if (teacherServiceExemption.getType().equals(ServiceExemptionType.CONTRACT_SUSPEND)
+                || teacherServiceExemption.getType().equals(ServiceExemptionType.GOVERNMENT_MEMBER)
+                || teacherServiceExemption.getType().equals(
+                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_ACCOMPANIMENT)
+                || teacherServiceExemption.getType().equals(
+                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_FOR_INTERNATIONAL_EXERCISE)
+                || teacherServiceExemption.getType().equals(
+                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_LONG)
+                || teacherServiceExemption.getType().equals(
+                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_UNTIL_NINETY_DAYS)
+                || teacherServiceExemption.getType().equals(
+                        ServiceExemptionType.LICENSE_WITHOUT_SALARY_YEAR)
+                || teacherServiceExemption.getType().equals(ServiceExemptionType.MILITAR_SITUATION)
+                || teacherServiceExemption.getType().equals(ServiceExemptionType.REQUESTED_FOR)
+                || teacherServiceExemption.getType().equals(ServiceExemptionType.SERVICE_COMMISSION)
+                || teacherServiceExemption.getType().equals(
+                        ServiceExemptionType.SERVICE_COMMISSION_IST_OUT)
+                || teacherServiceExemption.getType().equals(ServiceExemptionType.SPECIAL_LICENSE)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -35,7 +35,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		
-		
+
 		final List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 		for(Integer executionPeriodID : executionPeriodsIDs){
 			executionPeriodList.add((ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID));
@@ -44,7 +44,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentObject.readAll(ExecutionPeriod.class);
 		
 		final ExecutionPeriod startPeriod = findStartPeriod(allExecutionPeriods);
-		
+
 		ExecutionPeriod endPeriod = findEndPeriod(executionPeriodList, startPeriod); 
 		
 		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
@@ -61,15 +61,15 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				}
 				
 				Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getCreditsBetweenExecutionPeriods(startPeriod, endPeriod)); 
-				
+					
 				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
 					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()));
 				} else {
-					returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
-							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()), 
-							teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
+				returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
+                        .getCategory().getCode(), teacher.getPerson().getNome(), teacher.getMandatoryLessonHours(executionPeriodEntry), 
+						teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
 				}
-					
+		
 				for (Professorship professorShip : teacher.getProfessorships()) {
 					ExecutionCourse executionCourse = professorShip.getExecutionCourse();
 		

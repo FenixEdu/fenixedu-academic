@@ -55,4 +55,16 @@
 		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
+    
+	<definition name="df.layout.notAuthorized" page="/fenixLayout_error.jsp" >
+		<put name="title" value="title.notAuthorized" />	
+		<put name="serviceName" value="title.notAuthorized" />
+		<put name="header" value="/commons/blank.jsp" />
+        <put name="navGeral" value="/commons/commonGeneralNavigationBar.jsp" />
+		<put name="body" value="/exception/notAuthorized.jsp"/>		 
+		<put name="footer" value="/copyright.jsp" />		 
+		<put name="navLocal" value="/commons/blank.jsp" />
+		<put name="body-context" value="/commons/blank.jsp"/>			 
+	</definition>
+		    
 </tiles-definitions>

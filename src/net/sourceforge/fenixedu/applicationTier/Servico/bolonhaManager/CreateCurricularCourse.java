@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
@@ -56,7 +55,7 @@ public class CreateCurricularCourse extends Service {
         ExecutionPeriod executionPeriod = executionYear
                 .getExecutionPeriodForSemester(Integer.valueOf(1));
 
-        DomainFactory.makeCurricularCourse(weight, prerequisites, prerequisitesEn,
-                CurricularStage.DRAFT, competenceCourse, courseGroup, curricularPeriod, executionPeriod);
+        courseGroup.createCurricularCourse(weight, prerequisites, prerequisitesEn,
+                CurricularStage.DRAFT, competenceCourse, curricularPeriod, executionPeriod);
     }
 }

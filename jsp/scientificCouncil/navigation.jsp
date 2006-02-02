@@ -15,10 +15,29 @@
 			</html:link>
 		</li>
 --%>
+		<li class="navheader">
+			<bean:message key="bolonha.process"/>
+		</li>
+		<li>
+			<html:link page="/competenceCourses/competenceCoursesManagement.faces">
+				<bean:message key="competenceCoursesManagement"/>
+			</html:link>
+		</li>
+<!--  
 		<li>
 			<html:link page="/curricularPlans/curricularPlansManagement.faces">
 				<bean:message key="curricularPlansManagement"/>
 			</html:link>
 		</li>
+-->
+		<br/>
+		<li class="navheader">
+			<bean:message key="reports"/>
+		</li>
+		<li>
+			<html:link page="/creditsReport.do?method=prepare">
+		  		<bean:message key="link.viewCreditsReport"/>
+		  	</html:link>
+		</li>		
 	</ul>
 </logic:present>

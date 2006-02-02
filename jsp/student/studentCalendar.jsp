@@ -57,7 +57,7 @@
 		<h:outputText value="<br/><br/>" escape="false"/>
 		
 		<h:panelGroup rendered="#{empty studentCalendar.calendarStartDate || empty studentCalendar.calendarEndDate}">
-			<h:outputText value="#{bundle['error.noAttendsForStudent']}" styleClass="infoMsg" />
+			<h:outputText value="#{bundle['error.noAttendsForStudent']}" styleClass="success0" />
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{!empty studentCalendar.calendarStartDate && !empty studentCalendar.calendarEndDate}">		

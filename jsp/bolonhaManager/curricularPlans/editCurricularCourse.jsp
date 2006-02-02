@@ -10,7 +10,7 @@
 	<h:outputText value="<em>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['editCurricularCourse']}</h2>" escape="false"/>		
-	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
+	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}" />
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
@@ -20,15 +20,15 @@
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['competenceCourse']}:</h4><br/>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['department']}:</label>" escape="false"/>
-		<h:selectOneMenu value="#{CurricularCourseManagement.departmentUnitID}" onchange="this.form.submit();"
+		<fc:selectOneMenu value="#{CurricularCourseManagement.departmentUnitID}" onchange="this.form.submit();"
 				valueChangeListener="#{CurricularCourseManagement.resetCompetenceCourse}">
 			<f:selectItems value="#{CurricularCourseManagement.departmentUnits}"/>
-		</h:selectOneMenu>
+		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>			
 		<h:outputText value="<p><label>#{bolonhaBundle['competenceCourse']}:</label>" escape="false"/>
-		<h:selectOneMenu value="#{CurricularCourseManagement.competenceCourseID}" onchange="this.form.submit();">
+		<fc:selectOneMenu value="#{CurricularCourseManagement.competenceCourseID}" onchange="this.form.submit();">
 			<f:selectItems value="#{CurricularCourseManagement.competenceCourses}"/>
-		</h:selectOneMenu>
+		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>		
 		<h:panelGroup rendered="#{(!empty CurricularCourseManagement.competenceCourseID) && (CurricularCourseManagement.competenceCourseID != 0) }">
 			<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
@@ -63,12 +63,7 @@
 		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['contexts']}:</h4>" escape="false"/>		
-		<h:outputLink value="editCurricularCourse.faces">
-			<h:outputText value="#{bolonhaBundle['newContext']}" />
-			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
-			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
-		</h:outputLink>
-		<br/><br/>
+		<br/>
 		<h:dataTable value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
 			<h:column>
 				<h:panelGroup rendered="#{context.idInternal != CurricularCourseManagement.contextID}">
@@ -100,21 +95,21 @@
 					<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 					
 					<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
-					<h:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
+					<fc:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
 						<f:selectItems value="#{CurricularCourseManagement.courseGroups}" />
-					</h:selectOneMenu>
+					</fc:selectOneMenu>
 					<h:outputText value="</p>" escape="false"/>
 				
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularYear']}:</label>" escape="false"/>
-					<h:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
+					<fc:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
 						<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
-					</h:selectOneMenu>
+					</fc:selectOneMenu>
 					<h:outputText value="</p>" escape="false"/>
 				
 					<h:outputText value="<p><label>#{bolonhaBundle['semester']}:</label>" escape="false"/>
-					<h:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
+					<fc:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
 						<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
-					</h:selectOneMenu>
+					</fc:selectOneMenu>
 					<h:outputText value="</p>" escape="false"/>
 					
 					<h:outputText value="<p class='mtop2'><label class='lempty'>.</label>" escape="false"/>
@@ -127,25 +122,31 @@
 			</h:column>
 		</h:dataTable>
 		<br/>
+		<h:outputLink value="editCurricularCourse.faces">
+			<h:outputText value="#{bolonhaBundle['newContext']}" />
+			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
+			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
+		</h:outputLink>
+		<br/>
 		<h:panelGroup rendered="#{empty CurricularCourseManagement.contextID}">
 				<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 				
 				<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
-				<h:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
+				<fc:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
 					<f:selectItems value="#{CurricularCourseManagement.courseGroups}" />
-				</h:selectOneMenu>
+				</fc:selectOneMenu>
 				<h:outputText value="</p>" escape="false"/>
 			
 				<h:outputText value="<p><label>#{bolonhaBundle['curricularYear']}:</label>" escape="false"/>
-				<h:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
+				<fc:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
 					<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
-				</h:selectOneMenu>
+				</fc:selectOneMenu>
 				<h:outputText value="</p>" escape="false"/>
 			
 				<h:outputText value="<p><label>#{bolonhaBundle['semester']}:</label>" escape="false"/>
-				<h:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
+				<fc:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
 					<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
-				</h:selectOneMenu>
+				</fc:selectOneMenu>
 				<h:outputText value="</p>" escape="false"/>
 				
 				<h:outputText value="<p class='mtop2'><label class='lempty'>.</label>" escape="false"/>

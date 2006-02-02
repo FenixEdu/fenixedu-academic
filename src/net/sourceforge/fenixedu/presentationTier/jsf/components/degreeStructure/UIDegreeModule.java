@@ -26,7 +26,7 @@ public class UIDegreeModule extends UIInput {
     protected FacesContext facesContext;
     protected ResponseWriter writer;
     
-    protected static final int BASE_DEPTH = UIDegreeCurricularPlan.BASE_DEPTH;
+    protected static final int BASE_DEPTH = UIDegreeCurricularPlan.ROOT_DEPTH + 1;
     
     public UIDegreeModule() {
         super();
@@ -77,8 +77,8 @@ public class UIDegreeModule extends UIInput {
         }
     }
 
-    protected String getBundleValue(FacesContext facesContext, String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, getLocale());
+    protected String getBundleValue(String bundleName, String bundleKey) {
+        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, facesContext.getViewRoot().getLocale());
         return bundle.getString(bundleKey);
     }
 
@@ -89,7 +89,7 @@ public class UIDegreeModule extends UIInput {
     protected void encodeLink(String href, String bundleKey) throws IOException {
         writer.startElement("a", this);
         writer.writeAttribute("href", href, null);
-        writer.write(this.getBundleValue(facesContext, "ServidorApresentacao/BolonhaManagerResources", bundleKey));
+        writer.write(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", bundleKey));
         writer.endElement("a");
     }
 

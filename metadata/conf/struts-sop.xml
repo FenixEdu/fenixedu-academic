@@ -1654,6 +1654,9 @@
 				   key="message.merge.execution.courses.sourceIsSameAsDestination"
                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"
                    />
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$DuplicateShiftNameException"
+         	       key="error.duplicate.shift.names"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
 		</action>	
 

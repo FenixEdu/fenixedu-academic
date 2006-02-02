@@ -2,6 +2,9 @@
 <!-- Definitions for net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule -->
 <!-- ************************************************************************************************************ -->
 <class-descriptor class="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule" table="DEGREE_MODULE">
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.CurricularCourse" />
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" />
+
 	<field-descriptor
 		name="idInternal"
 		column="ID_INTERNAL"
@@ -50,8 +53,11 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
 		<inverse-foreignkey field-ref="degreeModuleKey"/>
 	</collection-descriptor>
-	<extent-class class-ref="net.sourceforge.fenixedu.domain.CurricularCourse" />
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup" />
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="curricularRules"
+			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
+		<inverse-foreignkey field-ref="keyDegreeModuleToApplyRule"/>
+	</collection-descriptor>
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
@@ -106,6 +112,11 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
 		<inverse-foreignkey field-ref="degreeModuleKey"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="curricularRules"
+			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
+		<inverse-foreignkey field-ref="keyDegreeModuleToApplyRule"/>
+	</collection-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="courseGroupContexts"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
@@ -205,8 +216,6 @@
 		name="keyCompetenceCourse"
 		column="KEY_COMPETENCE_COURSE"
 		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
 	/>
 	<field-descriptor
 		name="name"
@@ -269,11 +278,17 @@
         column="END_DATE"
         jdbc-type="DATE"
 	/>
+	 <field-descriptor
+	 	name="bibliographicReferences"
+	 	column="BIBLIOGRAPHIC_REFERENCES"
+	 	jdbc-type="LONGVARCHAR"
+	 	conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion"
+	 />
 	<reference-descriptor auto-retrieve="false"
 			name="competenceCourse"
 			class-ref="net.sourceforge.fenixedu.domain.CompetenceCourse">
 		<foreignkey field-ref="keyCompetenceCourse"/>
-	</reference-descriptor>
+	</reference-descriptor>	
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="competenceCourseLoads"
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad">
@@ -296,8 +311,6 @@
 		name="keyCompetenceCourseInformation"
 		column="KEY_COMPETENCE_COURSE_INFORMATION"
 		jdbc-type="INTEGER"
-		primarykey="true"
-		autoincrement="true"
 	/>
 	<field-descriptor
 		name="theoreticalHours"

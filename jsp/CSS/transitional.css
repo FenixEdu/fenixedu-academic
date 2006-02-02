@@ -1,4 +1,4 @@
-/* transitional CSS - 09.01.2006 
+/* transitional.css - 09.01.2006 
    by João Alfaiate @ Fenix */
 
 
@@ -18,7 +18,7 @@ h3 { margin: 1.5em 0 0.5em 0; }
 a.action1 {
 padding-left: 10px;
 margin-right: 10px;
-background: url(../pics/bullet07.gif) left no-repeat;
+background: url(../images/transitional/bullet07.gif) left no-repeat;
 }
 
 
@@ -26,14 +26,14 @@ background: url(../pics/bullet07.gif) left no-repeat;
  ---- Info Blocks ------
 ----------------------- */
 
-.breadcumbs { color: #000; margin-top: 2em; margin-bottom: 3em;}
-.breadcumbs span { /*text-decoration: underline;*/ border-bottom: 1px dotted #000; }
-.breadcumbs span.actual { background-color: #fafac0; background-color: #ffa; }
+.breadcumbs { color: #000; margin-top: 2em; margin-bottom: 2em;}
+.breadcumbs span { border-bottom: 1px dotted #000;}
+.breadcumbs span.actual { background-color: #fafac0; background-color: #ffa;}
 
 .infoop2 { margin: 0.5em 0;}
 
-.first { margin: 0; }
-.simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4 { margin: 1.5em 0em; padding: 0.5em 1em; }
+.first { margin: 0;}
+.simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4 { margin: 1.5em 0em; padding: 0.5em 1em;}
 
 .simpleblock1  {
 border: 1px solid #cc8;
@@ -47,11 +47,11 @@ color: #fff;
 }
 .simpleblock3  {
 border-top: 2px solid #ddd;
-background: #fff url(../pics/grad64-f5-fff.gif) top repeat-x;
+background: #fff url(../images/transitional/grad64-f5-fff.gif) top repeat-x;
 }
 .simpleblock4  {
 border: 1px solid #ddd;
-background: #fafafa url(../pics/grad32-fa-eee.gif) bottom repeat-x;
+background: #fafafa url(../images/transitional/grad32-fa-eee.gif) bottom repeat-x;
 }
 
 
@@ -63,9 +63,9 @@ ul.list1, ul.list2, ul.list3 {
 list-style: none;
 }
 ul.list1 { }
-ul.list1 li { padding-left: 12px; background: url(../pics/bullet07.gif) left no-repeat; }
-ul.list2 { padding-left: 0; }
-ul.list2 li { padding: 0.25em 0; }
+ul.list1 li { padding-left: 12px; background: url(../images/transitional/bullet07.gif) left no-repeat;}
+ul.list2 { padding-left: 0;}
+ul.list2 li { padding: 0.25em 0;}
 ul.list3 { }
 ul.list3 li { }
 
@@ -93,10 +93,10 @@ text-align: center;
 .tstyle1c th { border: 1px solid #c8cacc; }
 .tstyle2 th { border: none; border-bottom: 1px solid #ccc; }
 
-.tstyle1a th { background: #f8f8f8 url(../pics/back_32gray.gif) left bottom repeat-x; }
-.tstyle1b th { background: #fafaf6 url(../pics/back_32yellow.gif) left bottom repeat-x; }
-.tstyle1c th { background: #f6f8fa url(../pics/back_32blue.gif) left bottom repeat-x; }
-.tstyle2 th { background: #f8f8f8 url(../pics/back_32gray.gif) left bottom repeat-x; }
+.tstyle1a th { background: #f8f8f8 url(../images/transitional/back_32gray.gif) left bottom repeat-x; }
+.tstyle1b th { background: #fafaf6 url(../images/transitional/back_32yellow.gif) left bottom repeat-x; }
+.tstyle1c th { background: #f6f8fa url(../images/transitional/back_32blue.gif) left bottom repeat-x; }
+.tstyle2 th { background: #f8f8f8 url(../images/transitional/back_32gray.gif) left bottom repeat-x; }
 
 .tstyle1a td, .tstyle1b td, .tstyle1c td, .tstyle2 td {
 background-color: #fff;
@@ -116,6 +116,8 @@ border-bottom: 1px solid #ccc;
 .tstyle1a .highlight1, .tstyle1b .highlight1, .tstyle1c .highlight1, .tstyle2 .highlight1 {
 background-color: #ffb;
 }
+
+.highlight2 { background-color: #f5f5f5; }
 
 .tstyle1a .aleft, .tstyle1b .aleft, .tstyle1c .aleft, .tstyle2 .aleft { text-align: left; }
 .tstyle1a .aright, .tstyle1b .aright, .tstyle1c .aright, .tstyle2 .aright { text-align: right; }
@@ -151,8 +153,8 @@ padding: 0.5em;
 .thleft th { text-align: left;}
 .sp td { padding: 0.3em 0.5em; }
 
-.highlight1 th { background: #ffc; }
-.highlight2 th { font-weight: bold; }
+.emphasis1 th { background: #ffc; }
+.emphasis2 th { font-weight: bold; }
 
 .showinfo2 {
 background-color: #f5f5f5;
@@ -226,17 +228,17 @@ padding: 0.2em 0.5em 0.2em 0em;
 .error0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #ffeadd; color: #c00; }
 .error1, .error2, .error3 { background-color: #fee; color: #c00; }
 .error1 { border: 2px solid #c00; }
-.error1 h4 { border-bottom: 1px dotted #d00; background: #fff url(../pics/error01.gif) 6px 50% no-repeat; color: #c00; }
-.error2 h4 { border-bottom: 1px dotted #d00; background: #fff url(../pics/error01.gif) 6px 50% no-repeat; color: #c00; }
-.error3 { padding: 0.2em 0.5em 0.2em 26px; background: #fee url(../pics/error01.gif) 6px 50% no-repeat; }
+.error1 h4 { border-bottom: 1px dotted #d00; background: #fff url(../images/transitional/error01.gif) 6px 50% no-repeat; color: #c00; }
+.error2 h4 { border-bottom: 1px dotted #d00; background: #fff url(../images/transitional/error01.gif) 6px 50% no-repeat; color: #c00; }
+.error3 { padding: 0.2em 0.5em 0.2em 26px; background: #fee url(../images/transitional/error01.gif) 6px 50% no-repeat; }
 
 .success0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #dfd; color: #070; }
 .success1, .success2, .success3 { background-color: #efe; color: #070; }
 .success1 { border: 2px solid #0a0; }
-.success1 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../pics/success01.gif) 6px 50% no-repeat; }
+.success1 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../images/transitional/success01.gif) 6px 50% no-repeat; }
 .success1 p { background-color: #efe; }
-.success2 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../pics/success01.gif) 6px 50% no-repeat; }
-.success3 { padding: 0.2em 0.5em 0.2em 23px; background: #efe url(../pics/success01.gif) 6px 50% no-repeat; }
+.success2 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../images/transitional/success01.gif) 6px 50% no-repeat; }
+.success3 { padding: 0.2em 0.5em 0.2em 23px; background: #efe url(../images/transitional/success01.gif) 6px 50% no-repeat; }
 
 
 /* ----------------------
@@ -281,6 +283,10 @@ margin-left: 10.5em;
  ---- Classes ----------
 ----------------------- */
 
+.smalltxt { font-size: 0.85em;}
+.prenomargin { margin: 0; padding: 0; font-family: Verdana, Arial, Helvetica, sans-serif;}
+
+.highlight1 { background-color: #ffb; }
 .aleft { text-align: left; }
 .aright { text-align: right; }
 .acenter { text-align: center; }
@@ -290,13 +296,16 @@ margin-left: 10.5em;
 .nobullet { list-style: none; }
 .noindent { margin-left: 0; padding-left: 0; }
 .attention { background-color: #ffa; }
-.attention2 { background-color: #ffa; color: #d60}
+.attention2 { background-color: #ffa; color: #d60;}
 
+.pbottom1 { padding-bottom: 1em;}
+.pbottom2 { padding-bottom: 2em;}
+.pbottom3 { padding-bottom: 3em;}
 .mtop0 { margin-top: 0;}
-.mtop05 { margin-top: 0.5em; }
-.mtop1 { margin-top: 1em; }
-.mtop2 { margin-top: 2em; }
-.mtop3 { margin-top: 3em; }
+.mtop05 { margin-top: 0.5e;}
+.mtop1 { margin-top: 1em;}
+.mtop2 { margin-top: 2em;}
+.mtop3 { margin-top: 3em;}
 .mbottom0 { margin-bottom: 0;}
 .mbottom1 { margin-bottom: 1em;}
 .mbottom2 { margin-bottom: 2em;}
@@ -305,8 +314,8 @@ margin-left: 10.5em;
 .mleft1 { margin-left: 1em; }
 .mvert0 { margin-top: 0; margin-bottom: 0; }
 .mvert1 { margin-top: 1em; margin-bottom: 1em; }
-.mvert2 { margin-top: 2em; margin-bottom: 2em;  }
-.mvert3 { margin-top: 3em; margin-bottom: 3em;  }
+.mvert2 { margin-top: 2em; margin-bottom: 2em; }
+.mvert3 { margin-top: 3em; margin-bottom: 3em; }
 .indent0 { margin-left: 0; }
 .indent1 { margin-left: 1em; }
 .indent2 { margin-left: 2em; }
@@ -314,6 +323,9 @@ margin-left: 10.5em;
 .indent4 { margin-left: 4em; }
 .indent5 { margin-left: 5em; }
 .indent6 { margin-left: 6em; }
+.indent9 { margin-left: 9em; }
+.indent12 { margin-left: 12em; }
+.indent15 { margin-left: 15em; }
 .valigntop { vertical-align: top; }
 
 ul.indent0 { margin-left: 0; padding-left: 0; }

@@ -24,7 +24,7 @@
 			</h:panelGroup>
 		</h:panelGrid>
 
-		<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
+		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{scouncilBundle['curricularPlan.data']}:</h4>" escape="false"/>
@@ -45,8 +45,13 @@
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
+		<br/>
+		<h:outputLink value="editCurricularPlanMembersGroup.faces">
+			<h:outputText value="#{scouncilBundle['accessGroupManagement']}" />
+			<f:param name="dcpId" value="#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.idInternal}"/>
+		</h:outputLink>
 
-		<br/><hr/>
+		<br/><br/><hr/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['edit']}"
 			action="#{ScientificCouncilCurricularPlanManagement.editCurricularPlan}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"

@@ -1430,6 +1430,13 @@
 	<!-- BEGIN: Scientific Council Navigation Rules -->
 	<!-- Degree -->
 	<navigation-rule>
+		<from-view-id>/scientificCouncil/competenceCourses/showCompetenceCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/scientificCouncil/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
 		<from-view-id>/scientificCouncil/curricularPlans/createDegree.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
@@ -1462,6 +1469,17 @@
 		<navigation-case>
 			<from-outcome>curricularPlansManagement</from-outcome>
 			<to-view-id>/scientificCouncil/curricularPlans/curricularPlansManagement.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/scientificCouncil/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/scientificCouncil/curricularPlans/buildCurricularPlan.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	<navigation-rule>
@@ -1563,6 +1581,17 @@
 			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/competenceCourses/setCompetenceCourseBibliographicReference.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>competenceCoursesManagement</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/competenceCoursesManagement.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editCompetenceCourseMainPage</from-outcome>
+			<to-view-id>/bolonhaManager/competenceCourses/editCompetenceCourseMainPage.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!-- Degree -->
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/viewDegree.jsp</from-view-id>
@@ -1631,6 +1660,10 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/viewCurricularCourse.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>viewCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/viewCurricularPlan.jsp</to-view-id>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>buildCurricularPlan</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
@@ -1754,6 +1787,14 @@
 		</component-type>
 		<component-class>
 			net.sourceforge.fenixedu.presentationTier.jsf.components.UIAutoComplete
+		</component-class>
+	</component>
+	<component>
+		<component-type>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText
+		</component-type>
+		<component-class>
+			net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputText
 		</component-class>
 	</component>
 	

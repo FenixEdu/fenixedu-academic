@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
 
@@ -66,7 +67,8 @@ public class UICurricularCourse extends UIDegreeModule {
         
         writer.startElement("td", this);
         writer.startElement("a", this);
-        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + "&action=return", null);
+        String action = "&action=" + ((this.toEdit) ? "build" : (String) this.facesContext.getExternalContext().getRequestParameterMap().get("action")); 
+        writer.writeAttribute("href", "viewCurricularCourse.faces?curricularCourseID=" + this.degreeModule.getIdInternal() + action, null);
         if (!facesContext.getViewRoot().getLocale().equals(Locale.ENGLISH)) {
             writer.append(this.degreeModule.getName());    
         } else {
@@ -76,21 +78,52 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.endElement("td");
         
         writer.startElement("td", this);
+        writer.writeAttribute("class", "smalltxt", null);
         writer.writeAttribute("align", "center", null);
         if (!byYears) {
-            writer.writeAttribute("width", "100px", null);
+            writer.writeAttribute("style", "width: 10em;", null);
             writer.append(CurricularPeriodLabelFormatter.getFullLabel((CurricularPeriod)previousContext.getCurricularPeriod(), getLocale()));
         } else {
-            //writer.writeAttribute("width", "300px", null);
             writer.append(previousContext.getCourseGroup().getName());
         }
         writer.endElement("td");
+
+        writer.startElement("td", this);
+        writer.writeAttribute("class", "highlight2 smalltxt", null);
+        writer.writeAttribute("align", "center", null);
+        writer.writeAttribute("style", "width: 1em;", null);
+        writer.append(this.getBundleValue("ServidorApresentacao/EnumerationResources", ((CurricularCourse)this.degreeModule).getRegime().toString() + ".ACRONYM"));
+        writer.endElement("td");
+
+        writer.startElement("td", this);
+        writer.writeAttribute("class", "smalltxt", null);
+        writer.writeAttribute("align", "center", null);
+        writer.writeAttribute("style", "width: 13em;", null);
+        writer.startElement("span", this);
+        writer.writeAttribute("style", "color: #888", null);
+        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
+        writer.endElement("span");
+        writer.append(((CurricularCourse)this.degreeModule).getContactLoad(previousContext.getCurricularPeriod().getOrder()).toString()).append(" ");
+
+        writer.startElement("span", this);
+        writer.writeAttribute("style", "color: #888", null);
+        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "autonomousWorkAcronym")).append("-");
+        writer.endElement("span");
+        writer.append(((CurricularCourse)this.degreeModule).getAutonomousWorkHours(previousContext.getCurricularPeriod().getOrder()).toString()).append(" ");
         
+        writer.startElement("span", this);
+        writer.writeAttribute("style", "color: #888", null);
+        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "totalLoadAcronym")).append("-");
+        writer.endElement("span");
+        writer.append(((CurricularCourse)this.degreeModule).getTotalLoad(previousContext.getCurricularPeriod().getOrder()).toString());
+        writer.endElement("td");
+
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
+        writer.writeAttribute("style", "width: 7em;", null);
         writer.append(((CurricularCourse)this.degreeModule).getEctsCredits().toString());
         writer.endElement("td");
-        
+
         if (this.toEdit) {
             encodeCurricularCourseOptions();    
         }
@@ -100,6 +133,8 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private void encodeCurricularCourseOptions() throws IOException {
         writer.startElement("td", this);
+        writer.writeAttribute("align", "right", null);
+        writer.writeAttribute("style", "width: 7em;", null);        
         encodeLink("editCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "edit");
         writer.append(" , ");

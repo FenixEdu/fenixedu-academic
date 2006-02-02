@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidateWithInfoPerson;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 /**
  * @author Nuno Nunes (nmsn@rnl.ist.utl.pt) Joana Mota (jccm@rnl.ist.utl.pt)
@@ -25,11 +24,8 @@ public class ReadCandidateForRegistration extends Service {
 	public List run(Integer executionDegreeCode) throws FenixServiceException,
 			ExcepcaoPersistencia {
 
-		List result = null;
-
 		// Get the Actual Execution Year
-
-		result = persistentSupport.getIPersistentCandidateSituation()
+		List result = persistentSupport.getIPersistentCandidateSituation()
 				.readCandidateListforRegistration(executionDegreeCode);
 
 		if (result == null) {

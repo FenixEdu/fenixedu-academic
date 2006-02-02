@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.domain.curricularPeriod;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -13,7 +16,7 @@ import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
  * 
  * 
  */
-public class CurricularPeriod extends CurricularPeriod_Base {
+public class CurricularPeriod extends CurricularPeriod_Base implements Comparable<CurricularPeriod>{
 
     static {
         CurricularPeriodParentChilds.addListener(new CurricularPeriodParentChildsListener());
@@ -31,6 +34,13 @@ public class CurricularPeriod extends CurricularPeriod_Base {
         setOrder(order);
         setParent(parent);
 
+    }
+
+    public List<CurricularPeriod> getSortedChilds(){
+        List<CurricularPeriod> sortedChilds = new ArrayList<CurricularPeriod>();
+        sortedChilds.addAll(getChilds());        
+        Collections.sort(sortedChilds);        
+        return sortedChilds;        
     }
 
     public CurricularPeriod getChildByOrder(Integer order) {
@@ -145,6 +155,9 @@ public class CurricularPeriod extends CurricularPeriod_Base {
         return CurricularPeriodLabelFormatter.getFullLabel(this);
     }
 
+    public int compareTo(CurricularPeriod o) {
+        return this.getOrder().compareTo(o.getOrder());
+    }
 
     private static class CurricularPeriodParentChildsListener extends dml.runtime.RelationAdapter<CurricularPeriod,CurricularPeriod> {
         @Override

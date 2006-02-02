@@ -157,6 +157,7 @@ public class ProjectAccessOJB extends PersistentObjectOJB implements IPersistent
         criteria.addLessOrEqualThan("end", Calendar.getInstance().getTime());
         List<ProjectAccess> allPersonProjects = queryList(ProjectAccess.class, criteria);
         for (ProjectAccess projectAccess : allPersonProjects) {
+        	projectAccess.removePerson();
             delete(projectAccess);
         }
     }

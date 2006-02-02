@@ -68,7 +68,7 @@
 		<action path="/showErrorPageRegistered" forward="/exception/errorRegistered.jsp"/>
         <action path="/naoAutorizado" forward="/error.jsp"/>
         <action path="/naoExecutado" forward="/error.jsp"/>
-		<action path="/notAuthorized" forward="/exception/notAuthorized.jsp"/>
+		<action path="/notAuthorized" forward="df.layout.notAuthorized"/>
         <action path="/autenticacao" forward="/autenticacao.jsp" />
         <action path="/naoExistente" forward="/error.jsp" />
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>

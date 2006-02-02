@@ -6,9 +6,11 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -44,6 +46,10 @@ public class MergeExecutionCourses extends Service {
         private static final long serialVersionUID = 3761968254943244338L;
     }
 
+    public class DuplicateShiftNameException extends FenixServiceException {
+        private static final long serialVersionUID = 3761968254943244338L;
+    }
+
     public void run(Integer executionCourseDestinationId, Integer executionCourseSourceId)
             throws FenixServiceException, ExcepcaoPersistencia {
 
@@ -67,6 +73,10 @@ public class MergeExecutionCourses extends Service {
             throw new InvalidArgumentsServiceException();
         }
 
+        if (haveShiftsWithSameName(executionCourseFrom, executionCourseTo)) {
+            throw new DuplicateShiftNameException();
+        }
+
         copyProfessorships(persistentSupport, executionCourseFrom, executionCourseTo);
         copyAttends(executionCourseFrom, executionCourseTo);
         copyBibliographicReference(persistentSupport, executionCourseFrom, executionCourseTo);
@@ -85,6 +95,19 @@ public class MergeExecutionCourses extends Service {
         executionCourseTo.getAssociatedCurricularCourses().addAll(executionCourseFrom.getAssociatedCurricularCourses());
 
         executionCourseFrom.delete();
+    }
+
+    private boolean haveShiftsWithSameName(final ExecutionCourse executionCourseFrom, final ExecutionCourse executionCourseTo) {
+        final Set<String> shiftNames = new HashSet<String>();
+        for (final Shift shift : executionCourseFrom.getAssociatedShifts()) {
+            shiftNames.add(shift.getNome());
+        }
+        for (final Shift shift : executionCourseTo.getAssociatedShifts()) {
+            if (shiftNames.contains(shift.getNome())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isMergeAllowed(final ISuportePersistente persistentSupport,

@@ -222,6 +222,7 @@ public class ProjectAccessVO extends VersionedObjectsBase implements IPersistent
         for (ProjectAccess projectAccess : projectAccessList) {
             if (projectAccess.getKeyPerson().equals(person.getIdInternal())
                     && Calendar.getInstance().getTime().after(projectAccess.getEndDate().getTime())) {
+            	projectAccess.removePerson();
                 delete(projectAccess);
             }
         }

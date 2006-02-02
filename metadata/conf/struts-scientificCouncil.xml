@@ -27,7 +27,14 @@
          <form-property name="generalObjectivesEn" type="java.lang.String" />  
          
       </form-bean>
-		
+		      
+      <form-bean name="creditsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+      	<form-property name="fromExecutionPeriodID" type="java.lang.String" />
+      	<form-property name="untilExecutionPeriodID" type="java.lang.String" />      	
+      	<form-property name="unitID" type="java.lang.Integer" />
+      	<form-property name="departmentID" type="java.lang.Integer" />      	
+      	<form-property name="method" type="java.lang.String" />      	
+      </form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -102,6 +109,20 @@
     		<forward name="firstPage" path="curricularCourseManagement.do"/>
     		
     		</action>
+    		
+		<action path="/creditsReport"
+     		name="creditsForm"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction" 
+    		parameter="method"
+    		scope="request"    		
+    		>
+    		<exception type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction$InvalidPeriodException"
+				key="error.credits.chooseExecutionPeriods" 
+                path="/creditsReport.do?method=prepare"
+            />  
+    		<forward name="prepare" path="select-report-parameters"/>
+    		<forward name="showCreditsReport" path="show-credits-report"/>
+    	</action>    		
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->

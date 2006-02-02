@@ -55,11 +55,9 @@ public class ReadAllTeacherCredits extends Service {
             double managementCredits = teacher.getManagementFunctionsCredits(tempExecutionPeriod);
             double serviceExemptionsCredits = teacher.getServiceExemptionCredits(tempExecutionPeriod);
             int mandatoryLessonHours = 0;
-            Category category = teacher.getCategoryByPeriod(tempExecutionPeriod.getBeginDate(),
-                    tempExecutionPeriod.getEndDate());
+            Category category = teacher.getCategoryForCreditsByPeriod(tempExecutionPeriod);
             if(!monitorCategories.contains(category)){
-                mandatoryLessonHours = teacher.getHoursByCategory(tempExecutionPeriod.getBeginDate(),
-                        tempExecutionPeriod.getEndDate());
+                mandatoryLessonHours = teacher.getMandatoryLessonHours(tempExecutionPeriod);
             }                      
             TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(tempExecutionPeriod);
             CreditLineDTO creditLineDTO = new CreditLineDTO(tempExecutionPeriod, teacherService,

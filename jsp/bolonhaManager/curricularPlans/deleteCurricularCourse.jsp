@@ -12,7 +12,7 @@
 	<h:outputFormat value="<h2>#{bolonhaBundle['delete.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['curricularCourse']}"/>
 	</h:outputFormat>
-	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
+	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>
@@ -35,7 +35,7 @@
 		</fc:dataRepeater>
 		<h:outputText value="</fieldset><br/>" escape="false"/>
 		
-		<h:outputText styleClass="infomsg" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/><br/>" escape="false"/>
+		<h:outputText styleClass="success0" value="#{bolonhaBundle['deleteLastCurricularCourseContext']}<br/><br/>" escape="false"/>
 		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/><hr>" escape="false"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			 action="buildCurricularPlan" actionListener="#{CurricularCourseManagement.forceDeleteContext}"/>

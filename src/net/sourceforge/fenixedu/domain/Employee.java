@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
@@ -64,6 +65,16 @@ public class Employee extends Employee_Base {
         return contractToReturn;
     }
 
+    public List<Contract> getContractsByPeriod(Date begin, Date end){
+        List<Contract> contracts = new ArrayList<Contract>();
+        for (Contract contract : getContracts()) {
+            if(contract.belongsToPeriod(begin,end)){
+                contracts.add(contract);
+            }
+        }
+        return contracts;
+    }
+    
     private Department getEmployeeDepartmentUnit(Unit unit, boolean onlyActiveEmployees) {
         List<Unit> parentUnits = unit.getParentUnits();
         if (unitDepartment(unit, onlyActiveEmployees)) {

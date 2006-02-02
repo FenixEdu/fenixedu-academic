@@ -15,7 +15,7 @@
 
 		<h:outputText styleClass="error0" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}"
 			value="#{ScientificCouncilDegreeManagement.errorMessage}<br/>" escape="false"/>
-		<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>			
+		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>			
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{scouncilBundle['degree.data']}:</h4><br/>" escape="false"/>

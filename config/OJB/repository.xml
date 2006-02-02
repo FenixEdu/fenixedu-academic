@@ -78,6 +78,7 @@
 <!ENTITY groups SYSTEM "repository_groups.xml">
 <!ENTITY research SYSTEM "repository_research.xml">
 <!ENTITY space SYSTEM "repository_space.xml">
+<!ENTITY curricularRules SYSTEM "repository_curricular_rules.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -160,5 +161,6 @@
     &groups;
     &research;
     &space;
+    &curricularRules;
 	
 </descriptor-repository>

@@ -19,9 +19,12 @@ public class FenixAccessControlCallsGenerator implements AccessControlCodeGenera
 	public String getCode(String groupAccessorMethodName)
 	{
 		StringBuilder buffer = new StringBuilder();
-		buffer.append("accessControl.AccessControl").append(".").append("check").append("(").append("this,");
-		buffer.append("this.").append(groupAccessorMethodName).append("());");			
-		buffer.append("{System.out.println(\"I've been injected. That's great.\");}");
+        
+        buffer.append("{net.sourceforge.fenixedu.accessControl.AccessControl").append(".").append("check").append("(").append("this, ");
+        buffer.append("net.sourceforge.fenixedu.predicates.").append(groupAccessorMethodName).append(");}");         
+    
+		//buffer.append("{System.out.println(\"I've been injected. That's great.\");}");
+        
 		return buffer.toString();
 
 	}

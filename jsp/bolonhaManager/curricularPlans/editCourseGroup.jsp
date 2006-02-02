@@ -16,7 +16,7 @@
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['courseGroup']}"/>
 	</h:outputFormat>
-	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
+	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'/>"/>

@@ -3,43 +3,29 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.student;
 
-import java.util.Iterator;
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.Service;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.student.StudentPersonalDataAuthorization;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.student.IPersistentStudentPersonalDataAuthorization;
+import net.sourceforge.fenixedu.util.PeriodState;
 import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
-
 public class ReadActualPersonalDataAuthorizationAnswer extends Service {
 
     public StudentPersonalDataAuthorizationChoice run(Integer studentID) throws ExcepcaoPersistencia {
-        IPersistentExecutionYear persistentExecutionYear = persistentSupport.getIPersistentExecutionYear();
-        IPersistentStudentPersonalDataAuthorization persistentStudentPersonalDataAuthorization = persistentSupport
-                .getIPersistentStudentPersonalDataAuthorization();
+        final Student student = (Student) persistentObject.readByOID(Student.class, studentID);
 
-        Student student = (Student) persistentObject.readByOID(Student.class, studentID);
-        ExecutionYear executionYear = persistentExecutionYear.readCurrentExecutionYear();
-        List allStudentPersonalDataAuthorizationAnswers = (List) persistentStudentPersonalDataAuthorization
-                .readAll(StudentPersonalDataAuthorization.class);
-
-        if (allStudentPersonalDataAuthorizationAnswers != null) {
-            for (Iterator iter = allStudentPersonalDataAuthorizationAnswers.iterator(); iter.hasNext();) {
-                StudentPersonalDataAuthorization spda = (StudentPersonalDataAuthorization) iter.next();
-                if (spda.getStudent().equals(student) && spda.getExecutionYear().equals(executionYear)) {
-                    return spda.getAnswer();
-                }
+        for (final StudentPersonalDataAuthorization studentPersonalDataAuthorization :
+                student.getStudentPersonalDataAuthorizations()) {
+            if (studentPersonalDataAuthorization.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
+                return studentPersonalDataAuthorization.getAnswer();
             }
         }
+
         return null;
     }
 

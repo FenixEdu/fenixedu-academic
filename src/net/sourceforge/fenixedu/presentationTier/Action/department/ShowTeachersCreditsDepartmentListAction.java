@@ -63,11 +63,9 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
                 double managementCredits = teacher.getManagementFunctionsCredits(executionPeriod);
                 double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionPeriod);
                 int mandatoryLessonHours = 0;
-                Category category = teacher.getCategoryByPeriod(executionPeriod.getBeginDate(),
-                        executionPeriod.getEndDate());
+                Category category = teacher.getCategoryForCreditsByPeriod(executionPeriod);
                 if(!monitorCategories.contains(category)){
-                    mandatoryLessonHours = teacher.getHoursByCategory(executionPeriod.getBeginDate(),
-                            executionPeriod.getEndDate());
+                    mandatoryLessonHours = teacher.getMandatoryLessonHours(executionPeriod);
                 }
                 TeacherService teacherService = teacher
                         .getTeacherServiceByExecutionPeriod(executionPeriod);

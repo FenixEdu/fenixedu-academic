@@ -37,7 +37,7 @@ public class InjectAccessControl extends Task
 	private File targetClassesDir;
 
 	private Path injectionClassPath;
-
+    
 	private boolean verbose;
 
 	private FileSet fileset;
@@ -45,6 +45,7 @@ public class InjectAccessControl extends Task
 	private String codeProducerClassName;
 
 	private String accessControlAnnotation;
+    
 
 	protected Vector<FileSet> filesets = new Vector();
 
@@ -84,10 +85,11 @@ public class InjectAccessControl extends Task
 		return (AccessControlCodeGenerator) Class.forName(this.codeProducerClassName).newInstance();
 	}
 
-	private Class annotationClassByName() throws ClassNotFoundException
+	private Class annotationClassByName(String className) throws ClassNotFoundException
 	{
-		return Class.forName(this.accessControlAnnotation);
+		return Class.forName(className);
 	}
+    
 
 	private boolean isClassFile(String file)
 	{
@@ -129,7 +131,7 @@ public class InjectAccessControl extends Task
 				String nextClass = files[i].replaceAll(separator, ".").substring(0, files[i].lastIndexOf("."));
 				try
 				{
-					boolean changed = injector.perform(nextClass, targetClassesDir.getAbsolutePath(), this.producerClassByName(), this.annotationClassByName());
+					boolean changed = injector.perform(nextClass, targetClassesDir.getAbsolutePath(), this.producerClassByName(), this.annotationClassByName(this.accessControlAnnotation));
 					if (changed) changedFiles++;
 					processedFiles++;
 				}
@@ -370,5 +372,6 @@ public class InjectAccessControl extends Task
 	{
 		this.fileset = fileSet;
 	}
+
 
 }

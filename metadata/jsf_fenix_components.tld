@@ -1631,5 +1631,123 @@
 		</attribute>
 
   </tag>
+  
+  <tag>
+    <name>extendedOutputText</name>
+    <tag-class>net.sourceforge.fenixedu.presentationTier.jsf.components.UIExtendedOutputTextTag</tag-class>
+    <tei-class>com.sun.faces.taglib.FacesTagExtraInfo</tei-class>
+    <body-content>JSP</body-content>
+    <description>
+      If the "styleClass" or "style" attributes are
+      present, render a "span" element.  If the "styleClass" attribute
+      is present, render its value as the value of the "class"
+      attribute.  If the "style" attribute is present, pass it thru.  If
+      the "escape" attribute is not present, or it is present and its
+      value is "true" all angle brackets should be converted to the
+      ampersand xx semicolon syntax when rendering the value of the
+      "value" attribute as the value of the component.  If the "escape"
+      attribute is present and is "false" the value of the component
+      should be rendered as text without escaping.
+    </description>
+    <attribute>
+      <name>converter</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Converter instance registered with this component.
+      </description>
+    </attribute>
+    <attribute>
+      <name>id</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          The component identifier for this component.  This value must be
+          unique within the closest parent component that is a naming
+          container.
+      </description>
+    </attribute>
+    <attribute>
+      <name>rendered</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Flag indicating whether or not this component should be rendered
+          (during Render Response Phase), or processed on any subsequent
+          form submit.
+      </description>
+    </attribute>
+    <attribute>
+      <name>value</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          The current value of this component.
+      </description>
+    </attribute>
+    <attribute>
+      <name>escape</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+        Flag indicating that characters that are sensitive
+        in HTML and XML markup must be escaped.  This flag
+        is set to "true" by default.
+      </description>
+    </attribute>
+    <attribute>
+      <name>style</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          CSS style(s) to be applied when this component is rendered.
+      </description>
+    </attribute>
+    <attribute>
+      <name>styleClass</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Space-separated list of CSS style class(es) to be applied when
+          this element is rendered.  This value must be passed through
+          as the "class" attribute on generated markup.
+      </description>
+    </attribute>
+    <attribute>
+      <name>title</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+          Advisory title information about markup elements generated
+          for this component.
+      </description>
+    </attribute>
+    <attribute>
+      <name>binding</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+         The value binding expression linking this component to a property in a backing bean
+      </description>
+    </attribute>
+    <attribute>
+      <name>linebreak</name>
+      <required>false</required>
+      <rtexprvalue>false</rtexprvalue>
+      <description>
+      
+         The linebreak attribute, when true, replace all string line breaks for html line breaks.
+         Default value is false.
+      </description>
+    </attribute>
+  </tag>
     
 </taglib>

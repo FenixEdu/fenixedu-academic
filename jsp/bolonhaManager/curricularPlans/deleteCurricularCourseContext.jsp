@@ -12,7 +12,7 @@
 	<h:outputFormat value="<h2>#{bolonhaBundle['delete.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['context']}"/>
 	</h:outputFormat>
-	<h:messages infoClass="infoMsg" errorClass="error0" layout="table" globalOnly="true"/>
+	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>

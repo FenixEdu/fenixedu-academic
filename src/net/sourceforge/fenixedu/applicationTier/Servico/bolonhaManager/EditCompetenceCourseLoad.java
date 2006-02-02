@@ -16,27 +16,28 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCompetenceCourseLoad extends Service {
 
-    public void run(Integer competenceCourseID, RegimeType regimeType, List<CourseLoad> courseLoads)
-            throws ExcepcaoPersistencia, FenixServiceException {
-        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(CompetenceCourse.class, competenceCourseID);
+    public void run(Integer competenceCourseID, RegimeType regimeType, Integer numberOfPeriods,
+            List<CourseLoad> courseLoads) throws ExcepcaoPersistencia, FenixServiceException {
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(
+                CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
         competenceCourse.setRegime(regimeType);
-        final CurricularPeriodType curricularPeriodType = getCurricularPeriodType(regimeType);
+        final CurricularPeriodType curricularPeriodType = CurricularPeriodType.SEMESTER;
         for (final CourseLoad courseLoad : courseLoads) {
-            if (courseLoad.getAction().equals("create")) {
+            if (courseLoad.getAction().equals("create")
+                    && competenceCourse.getCompetenceCourseLoads().size() < numberOfPeriods) {
                 competenceCourse.addCompetenceCourseLoad(courseLoad.getTheoreticalHours(), courseLoad
                         .getProblemsHours(), courseLoad.getLaboratorialHours(), courseLoad
                         .getSeminaryHours(), courseLoad.getFieldWorkHours(), courseLoad
                         .getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(), courseLoad
                         .getAutonomousWorkHours(), courseLoad.getEctsCredits(), courseLoad.getOrder(),
                         curricularPeriodType);
-                
             } else {
                 final CompetenceCourseLoad competenceCourseLoad = (CompetenceCourseLoad) persistentObject
-                		.readByOID(CompetenceCourseLoad.class, courseLoad.getIdentification());
-                
+                        .readByOID(CompetenceCourseLoad.class, courseLoad.getIdentification());
+
                 if (competenceCourseLoad != null && courseLoad.getAction().equals("edit")) {
                     competenceCourseLoad.edit(courseLoad.getTheoreticalHours(), courseLoad
                             .getProblemsHours(), courseLoad.getLaboratorialHours(), courseLoad
@@ -44,20 +45,11 @@ public class EditCompetenceCourseLoad extends Service {
                             .getTrainingPeriodHours(), courseLoad.getTutorialOrientationHours(),
                             courseLoad.getAutonomousWorkHours(), courseLoad.getEctsCredits(), Integer
                                     .valueOf(courseLoad.getOrder()), curricularPeriodType);
-                    
+
                 } else if (competenceCourseLoad != null && courseLoad.getAction().equals("delete")) {
                     competenceCourseLoad.delete();
                 }
             }
         }
-    }
-
-    private CurricularPeriodType getCurricularPeriodType(final RegimeType regimeType) {
-        if (regimeType.getName().equals("SEMESTRIAL")) {
-            return CurricularPeriodType.SEMESTER;
-        } else if (regimeType.getName().equals("ANUAL")) {
-            return CurricularPeriodType.YEAR;
-        }
-        return null;
     }
 }

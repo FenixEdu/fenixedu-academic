@@ -21,7 +21,7 @@
 			value="#{bundle[coordinatorWrittenTestsManagementBackingBean.errorMessage]}<br/><br/>" escape="false"/>
 		<h:messages showSummary="true" errorClass="error" rendered="#{empty coordinatorWrittenTestsManagementBackingBean.errorMessage}"/>
 
- 		<h:outputText styleClass="infoMsg" rendered="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}"
+ 		<h:outputText styleClass="success0" rendered="#{!empty coordinatorWrittenTestsManagementBackingBean.evaluation.associatedRoomOccupation}"
 			value="#{bundle['message.evaluation.not.editable']}<br/><br/>" escape="false"/>
 
 		<h:panelGrid styleClass="infotable" columns="2" border="0">

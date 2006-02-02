@@ -79,9 +79,17 @@ public class CreateDomainFactoryClassSource extends AbstractDomainPostprocessor 
                 }
 
             } else {
-                argumentType = argumentType.substring(1); // remove "L"
+                
+                String arrayBrackets = "";
+                if(argumentType.startsWith("[")){
+                    argumentType = argumentType.substring(2); // remove "[L"
+                    arrayBrackets = "[]";
+                }else{
+                    argumentType = argumentType.substring(1); // remove "L"
+                }
+                                
                 argumentType = argumentType.replace('/', '.');
-                generatedMethod.append(" " + argumentType + " arg" + i);
+                generatedMethod.append(" " + argumentType + arrayBrackets + " arg" + i);
                 invokedArgsByConstructor.append(" arg" + i);
             }
 

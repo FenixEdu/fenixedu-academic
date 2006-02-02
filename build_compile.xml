@@ -581,7 +581,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<delete dir="${build.home.webinf.classes}/${renderers.package.dir}" />
 	</target>
 
-	<target name="compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate">
+	<target name="base-compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate">
 		<javac destdir="${build.home.webinf.classes}" extdirs="${lib}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
 			<src path="${src_gen}"/>
 			<src path="${src}"/>
@@ -603,7 +603,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			<arg value="-d"/>
 			<arg value="${dml.definition.file}"/>
 		</java>
+	</target>
+
+	<target name="compile" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate, base-compile">
 		<ant antfile="build_accessControl.xml"/>
+	</target>
+
+	<target name="compile-without-access-control" description="Compile application" depends="compile-domain,compile-renderers,i18nDefault, write-filter-hostnames-configuration-file, write-index-redirect-hostnames-configuration-file, generate, base-compile">
+		<ant antfile="build_accessControl.xml" target="void-inject"/>
 	</target>
 
 	<target name="deploy-linux"
@@ -646,8 +653,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		<antcall target="install-without-depends"/>
 	</target>
 
-	<target name="jar"
-    		depends="compile"
+	<target name="base-jar"
             description="Generates a java archive applications 'core' (services and domain).">
 		<mkdir dir="${deploy.home}"/>
 		<jar destfile="${deploy.home}/${app.name}.jar">
@@ -674,6 +680,14 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 			</fileset>
 		</jar>
 	</target>
+
+	<target name="jar"
+    		depends="compile, base-jar"
+            description="Generates a java archive applications 'core' (services and domain)."/>
+
+	<target name="jar-without-access-control"
+    		depends="compile-without-access-control, base-jar"
+            description="Generates a java archive applications 'core' (services and domain), without code injection for access control"/>
 
 	<target name="war"
 	    	depends="compile"

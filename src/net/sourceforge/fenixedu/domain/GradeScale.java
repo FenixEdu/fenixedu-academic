@@ -22,9 +22,9 @@ public enum GradeScale {
 		}
 		
 		protected boolean checkNotFinal(final String mark) {
-			if(mark.equals(NA)) {
-				return true;
-			}
+            if(mark.equals(NA) || mark.equals(RE)) {
+                return true;
+            }
 			try {
 				Double markValue = Double.valueOf(mark);
 				if((markValue >= 0) && (markValue <= 20)) {
@@ -56,9 +56,9 @@ public enum GradeScale {
 		}
 		
 		protected boolean checkNotFinal(final String mark) {
-			if(mark.equals(NA)) {
-				return true;
-			}
+            if(mark.equals(NA) || mark.equals(RE)) {
+                return true;
+            }
 			try {
 				Double markValue = Double.valueOf(mark);
 				if((markValue >= 0) && (markValue <= 20)) {
@@ -81,9 +81,9 @@ public enum GradeScale {
 		}
 		
 		protected boolean checkNotFinal(final String mark) {
-			if(mark.equals(NA) || mark.equals(AP)) {
-				return true;
-			}
+            if(mark.equals(NA) || mark.equals(RE) || mark.equals(AP)) {
+                return true;
+            }
 			return false;
 		}
 	};

@@ -11,18 +11,39 @@
 	
 	<h:outputText value="<i>#{ScientificCouncilCurricularPlanManagement.dcp.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]})</i>" escape="false"/>
-	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2><br/>" escape="false">
+	<h:outputFormat value="<h2>#{scouncilBundle['view.param']}</h2>" escape="false">
 		<f:param value="#{scouncilBundle['curricularPlan']}"/>
 	</h:outputFormat>
+ 
+	<h:outputText value="<br/><br/>#{scouncilBundle['view.structure.organized.by']}: " escape="false"/>
+	<h:outputLink value="viewCurricularPlan.faces">
+		<h:outputText value="#{scouncilBundle['groups']}" />
+		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+		<f:param name="organizeBy" value="groups"/>
+		<f:param name="action" value="view"/>		
+	</h:outputLink>
+	<h:outputText value=" , " escape="false"/>
+	<h:outputLink value="viewCurricularPlan.faces">
+		<h:outputText value="#{scouncilBundle['year']}/#{scouncilBundle['semester']}" />
+		<f:param name="dcpId" value="#{ScientificCouncilCurricularPlanManagement.dcpId}"/>
+		<f:param name="organizeBy" value="years"/>
+		<f:param name="action" value="view"/>
+	</h:outputLink>
 
-	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" />
+	<h:outputText value="<br/><br/>" escape="false"/>
+	<fc:degreeCurricularPlanRender dcp="#{ScientificCouncilCurricularPlanManagement.dcp}" onlyStructure="false" toEdit="false" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 
+	<h:outputText value="<br/><br/><hr/>" escape="false"/>
 	<h:form>
 		<h:outputText escape="false" value="<input id='dcpId' name='dcpId' type='hidden' value='#{ScientificCouncilCurricularPlanManagement.dcpId}'/>"/>
+		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CurricularCourseManagement.action}'/>"/>
 
-		<h:outputText value="<br/><br/><hr/>" escape="false"/>
-		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}"
-			action="curricularPlansManagement"/>
+		<h:panelGroup rendered="#{!empty ScientificCouncilCurricularPlanManagement.action && ScientificCouncilCurricularPlanManagement.action == 'view'}">
+			<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['return']}" action="curricularPlansManagement"/>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{!empty CurricularCourseManagement.action && CurricularCourseManagement.action == 'close'}">
+			<h:commandButton immediate="true" styleClass="inputbutton" onclick="window.close()" value="#{scouncilBundle['close']}" />
+		</h:panelGroup>
 	</h:form>
 	
 </ft:tilesView>

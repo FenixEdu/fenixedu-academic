@@ -9214,7 +9214,7 @@
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
+        	<chain name="BolonhaOrScientificCouncilAuthorization"></chain>
         </filterChains>     
     </service>
     <service>
@@ -9245,7 +9245,7 @@
         </filterChains>     
     </service>
     <service>
-    	<name>EditCurricularCourse</name>
+    	<name>EditCurricularCourseBolonhaManager</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularCourse</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
@@ -9576,4 +9576,13 @@
             <chain name="CmsManagerAuthorization"></chain>
         </filterChains>
     </service>
+	<service>
+   	 	<name>ReadTeachersCreditsResumeByPeriodAndUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>  
 </serviceDefinitions>    

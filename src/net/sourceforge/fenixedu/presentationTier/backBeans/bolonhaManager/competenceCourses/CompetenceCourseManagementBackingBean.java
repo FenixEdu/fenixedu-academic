@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.compe
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -17,9 +18,13 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -31,9 +36,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
     private final ResourceBundle domainResources = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
     
+    private Integer selectedDepartmentUnitID = null;
     private Integer competenceCourseID = null;
     private Unit competenceCourseGroupUnit = null;
-    private List<Unit> scientificAreaUnits = null;
     private CompetenceCourse competenceCourse = null;        
     // Competence-Course-Information
     private String name;
@@ -44,26 +49,70 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     // Competence-Course-Additional-Data
     private String objectives;
     private String program;
+    private String evaluationMethod;
     private String objectivesEn;
-    private String programEn;        
+    private String programEn;
+    private String evaluationMethodEn;
     private String stage;
+    // BibliographicReferences
+    private Integer bibliographicReferenceID;
+    private String year;
+    private String title;
+    private String author;
+    private String reference;
+    private String type;
+    private String url;
     
     public String getAction() {
         return getAndHoldStringParameter("action");
     }
     
-    public Department getPersonDepartment() {
-        final Employee employee = getUserView().getPerson().getEmployee();
-        return (employee != null && employee.getCurrentDepartmentWorkingPlace() != null) ? employee
-                .getCurrentDepartmentWorkingPlace() : null;
+    public Boolean getCanView() throws FenixFilterException, FenixServiceException {
+        return (this.getPersonDepartment() != null) ? this.getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView().getPerson()) : false;
     }
     
-    public List<Unit> getScientificAreaUnits() {
-        if (scientificAreaUnits == null) {
-            final Department department = getPersonDepartment();
-            scientificAreaUnits = (department != null) ? department.getUnit().getScientificAreaUnits() : null;
+    public Department getPersonDepartment() throws FenixFilterException, FenixServiceException {
+        final Employee employee = getUserView().getPerson().getEmployee();
+        return (employee != null) ? employee.getCurrentDepartmentWorkingPlace() : null;
+    }
+    
+    public Unit getSelectedDepartmentUnit() throws FenixFilterException, FenixServiceException {
+        if (this.getSelectedDepartmentUnitID() != null) {
+            return (Unit) this.readDomainObject(Unit.class, this.getSelectedDepartmentUnitID());
+        } else {
+            return null;
         }
-        return scientificAreaUnits;
+    }
+    
+    public List<Unit> getScientificAreaUnits() throws FenixFilterException, FenixServiceException {
+        Unit departmentUnit = null;
+        if (getSelectedDepartmentUnit() != null) {
+            departmentUnit = getSelectedDepartmentUnit();
+        } else if (getPersonDepartment() != null) {
+            departmentUnit = getPersonDepartment().getUnit();
+        } 
+        return (departmentUnit != null) ? departmentUnit.getScientificAreaUnits() : null;
+    }
+
+    public List<String> getGroupMembersLabels() throws FenixFilterException, FenixServiceException {
+        List<String> result = null;
+
+        if(getSelectedDepartmentUnit() == null){
+            return result;
+        }
+        
+        Group competenceCoursesManagementGroup = getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup();
+        if (competenceCoursesManagementGroup != null) {
+            result = new ArrayList<String>();
+            Iterator<Person> personIterator = competenceCoursesManagementGroup.getElementsIterator();
+
+            while (personIterator.hasNext()) {
+                Person person = personIterator.next();
+                result.add(person.getNome() + " (" + person.getUsername() + ")");
+            }
+        }
+
+        return result;
     }
     
     public Integer getCompetenceCourseGroupUnitID() {
@@ -155,24 +204,18 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public List<SelectItem> getPeriods() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>(2);
-        result.add(new SelectItem(Integer.valueOf(1), "1"));
-        if (getRegime().equals("ANUAL")) {
-            result.add(new SelectItem(Integer.valueOf(2), "2"));
-        }
+        result.add(new SelectItem(Integer.valueOf(2), bolonhaResources.getString("yes")));
+        result.add(new SelectItem(Integer.valueOf(1), bolonhaResources.getString("no")));
         return result;
     }
     
     public List<CourseLoad> getCourseLoads() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("courseLoads") == null) {
-            final List<CourseLoad> courseLoads;
             if (getAction().equals("create")) {
-                courseLoads = createNewCourseLoads();
+                getViewState().setAttribute("courseLoads", createNewCourseLoads());
             } else if (getAction().equals("edit") && getCompetenceCourse() != null) {
-                courseLoads = getExistingCourseLoads();
-            } else {
-                courseLoads = new ArrayList<CourseLoad>(0);
-            }            
-            getViewState().setAttribute("courseLoads", courseLoads);
+                getViewState().setAttribute("courseLoads", getExistingCourseLoads());
+            }
         }
         return (List<CourseLoad>) getViewState().getAttribute("courseLoads");
     }
@@ -190,6 +233,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         final List<CourseLoad> courseLoads = new ArrayList<CourseLoad>(getCompetenceCourse().getCompetenceCourseLoads().size());        
         for (final CompetenceCourseLoad competenceCourseLoad : getCompetenceCourse().getCompetenceCourseLoads()) {
             courseLoads.add(new CourseLoad("edit", competenceCourseLoad));
+        }
+        if (courseLoads.isEmpty()) {
+            courseLoads.add(new CourseLoad(1));
         }
         Collections.sort(courseLoads, new BeanComparator("order"));
         return courseLoads;
@@ -254,6 +300,21 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
     }
 
+    public Integer getSelectedDepartmentUnitID() throws FenixFilterException, FenixServiceException {
+        if (selectedDepartmentUnitID == null) {
+            if (getAndHoldIntegerParameter("selectedDepartmentUnitID") != null) {
+                selectedDepartmentUnitID = getAndHoldIntegerParameter("selectedDepartmentUnitID");
+            } else if (getPersonDepartment() != null) {
+                selectedDepartmentUnitID = getPersonDepartment().getUnit().getIdInternal();
+            }
+        }
+        return selectedDepartmentUnitID;
+    }
+    
+    public void setSelectedDepartmentUnitID(Integer selectedDepartmentUnitID) {
+        this.selectedDepartmentUnitID = selectedDepartmentUnitID;
+    }
+    
     public Integer getCompetenceCourseID() {
         return (competenceCourseID == null) ? (competenceCourseID = getAndHoldIntegerParameter("competenceCourseID")) : competenceCourseID;
     }
@@ -295,6 +356,17 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.program = program;
     }
     
+    public String getEvaluationMethod() throws FenixFilterException, FenixServiceException {
+        if (evaluationMethod == null && getCompetenceCourse() != null) {
+            evaluationMethod = getCompetenceCourse().getEvaluationMethod();
+        }
+        return evaluationMethod;
+    }
+
+    public void setEvaluationMethod(String evaluationMethod) {
+        this.evaluationMethod = evaluationMethod;
+    }
+
     public String getObjectivesEn() throws FenixFilterException, FenixServiceException {
         if (objectivesEn == null && getCompetenceCourse() != null) {
             objectivesEn = getCompetenceCourse().getObjectivesEn();
@@ -317,6 +389,17 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.programEn = programEn;
     }
     
+    public String getEvaluationMethodEn() throws FenixFilterException, FenixServiceException {
+        if (evaluationMethodEn == null && getCompetenceCourse() != null) {
+            evaluationMethodEn = getCompetenceCourse().getEvaluationMethodEn();
+        }
+        return evaluationMethodEn;
+    }
+
+    public void setEvaluationMethodEn(String evaluationMethodEn) {
+        this.evaluationMethodEn = evaluationMethodEn;
+    } 
+    
     public String getStage() throws FenixFilterException, FenixServiceException {
         if (stage == null && getCompetenceCourse() != null) {
             stage = getCompetenceCourse().getCurricularStage().name();
@@ -328,6 +411,80 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         this.stage = stage;
     }
     
+    public Integer getBibliographicReferenceID() {
+        return (bibliographicReferenceID == null) ? (bibliographicReferenceID = getAndHoldIntegerParameter("bibliographicReferenceID")) : bibliographicReferenceID ;
+    }
+
+    public void setBibliographicReferenceID(Integer bibliographicReferenceID) {
+        this.bibliographicReferenceID = bibliographicReferenceID;
+    }
+
+    public String getYear() throws FenixFilterException, FenixServiceException {
+        if (this.year == null && getCompetenceCourse() != null && getBibliographicReferenceID() != null) {
+            this.year = getCompetenceCourse().getBibliographicReference(getBibliographicReferenceID()).getYear();
+        }
+        return this.year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getTitle() throws FenixFilterException, FenixServiceException {
+        if (this.title == null && getCompetenceCourse() != null && getBibliographicReferenceID() != null) {
+            this.title = getCompetenceCourse().getBibliographicReference(getBibliographicReferenceID()).getTitle();
+        }
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() throws FenixFilterException, FenixServiceException {
+        if (this.author == null && getCompetenceCourse() != null && getBibliographicReferenceID() != null) {
+            this.author = getCompetenceCourse().getBibliographicReference(getBibliographicReferenceID()).getAuthors();
+        }
+        return this.author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getReference() throws FenixFilterException, FenixServiceException {
+        if (this.reference == null && getCompetenceCourse() != null && getBibliographicReferenceID() != null) {
+            this.reference = getCompetenceCourse().getBibliographicReference(getBibliographicReferenceID()).getReference();
+        }
+        return this.reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    public String getType() throws FenixFilterException, FenixServiceException {
+        if (this.type == null && getCompetenceCourse() != null && getBibliographicReferenceID() != null) {
+            this.type = getCompetenceCourse().getBibliographicReference(getBibliographicReferenceID()).getType().getName();
+        }
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUrl() throws FenixFilterException, FenixServiceException {
+        if (this.url == null && getCompetenceCourse() != null && getBibliographicReferenceID() != null) {
+            this.url = getCompetenceCourse().getBibliographicReference(getBibliographicReferenceID()).getUrl();
+        }
+        return this.url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
     public List<CompetenceCourseLoad> getSortedCompetenceCourseLoads() throws FenixFilterException, FenixServiceException {
         final List<CompetenceCourseLoad> result = new ArrayList<CompetenceCourseLoad>();
         if (getCompetenceCourse() != null) {
@@ -335,6 +492,35 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             Collections.sort(result, new BeanComparator("order"));
         }
         return result;
+    }
+    
+    public List<BibliographicReference> getMainBibliographicReferences() throws FenixFilterException, FenixServiceException {
+        final List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+        for (final BibliographicReference bibliographicReference : getBibliographicReferences()) {
+            if (bibliographicReference.getType().equals(BibliographicReferenceType.MAIN)) {
+                result.add(bibliographicReference);
+            }
+        }
+        return result;
+    }
+    
+    public List<BibliographicReference> getSecondaryBibliographicReferences() throws FenixFilterException, FenixServiceException {
+        final List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+        for (final BibliographicReference bibliographicReference : getBibliographicReferences()) {
+            if (bibliographicReference.getType().equals(BibliographicReferenceType.SECONDARY)) {
+                result.add(bibliographicReference);
+            }
+        }
+        return result;
+    }
+    
+    private List<BibliographicReference> getBibliographicReferences() throws FenixFilterException, FenixServiceException {
+        return (getCompetenceCourse().getBibliographicReferences() == null) ? null :
+            getCompetenceCourse().getBibliographicReferences().getBibliographicReferencesList();
+    }
+    
+    public int getBibliographicReferencesCount() throws FenixFilterException, FenixServiceException {
+        return (getBibliographicReferences() != null) ? getBibliographicReferences().size() : 0;
     }
     
     public String createCompetenceCourse() {
@@ -380,7 +566,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public String editCompetenceCourse() {
         try {
             final Object args[] = {getCompetenceCourseID(), getName(), getNameEn(), getAcronym(), getBasic(),
-                    CurricularStage.valueOf(getStage()) };
+                    CurricularStage.valueOf(getStage()), false };
             ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
             return "editCompetenceCourseMainPage";
         } catch (FenixFilterException e) {
@@ -418,13 +604,13 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
     
     private void setCompetenceCourseLoad() throws FenixFilterException, FenixServiceException {
-        Object args[] = { getCompetenceCourseID(), RegimeType.valueOf(getRegime()), getCourseLoads() };
+        Object args[] = { getCompetenceCourseID(), RegimeType.valueOf(getRegime()), getNumberOfPeriods(), getCourseLoads() };
         ServiceUtils.executeService(getUserView(), "EditCompetenceCourseLoad", args);
     }
 
     private void setCompetenceCourseAdditionalInformation() throws FenixFilterException, FenixServiceException {
         final Object args[] = { getCompetenceCourseID(), getObjectives(), getProgram(),
-                "", getObjectivesEn(), getProgramEn(), "" };
+                getEvaluationMethod(), getObjectivesEn(), getProgramEn(), getEvaluationMethodEn() };
         ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
     }
     
@@ -443,4 +629,101 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         }
         return "";
     }
+    
+    public String createBibliographicReference() {        
+        try {
+            final Object[] args = {getCompetenceCourseID(), getYear(), getTitle(), getAuthor(),
+                    getReference(), BibliographicReferenceType.valueOf(getType()), getUrl()};
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.creatingBibliographicReference"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
+        }
+        setBibliographicReferenceID(-1);
+        return "";
+    }
+    
+    public String editBibliographicReference() {        
+        try {
+            final Object[] args = {getCompetenceCourseID(), getBibliographicReferenceID(), getYear(), getTitle(),
+                    getAuthor(), getReference(), BibliographicReferenceType.valueOf(getType()), getUrl()};
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.editingBibliographicReference"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
+        }
+        setBibliographicReferenceID(-1);
+        return "";
+    }
+    
+    public Integer getBibliographicReferenceIDToDelete() {
+        return getAndHoldIntegerParameter("bibliographicReferenceIDToDelete");
+    }
+    
+    public String deleteBibliographicReference() {        
+        try {
+            final Object[] args = {getCompetenceCourseID(), getBibliographicReferenceIDToDelete() };
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);            
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.deletingBibliographicReference"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(e.getMessage());
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
+        }   
+        setBibliographicReferenceID(-1);
+        return "";
+    }
+    
+    public Integer getOldPosition() {
+        return getAndHoldIntegerParameter("oldPosition");
+    }
+    
+    public Integer getNewPosition() {
+        return getAndHoldIntegerParameter("newPosition");
+    }
+    
+    public String switchBibliographicReferencePosition() {        
+        try {
+            final Object[] args = {getCompetenceCourseID(), getOldPosition(), getNewPosition() };
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.switchBibliographicReferencePositions"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
+        }
+        setBibliographicReferenceID(-1);
+        return "";
+    }
+    
+    public String cancelBibliographicReference() {        
+        setBibliographicReferenceID(-1);
+        return "";
+    }
+
+    
+    public String changeCompetenceCourseState() {
+        try {
+            CurricularStage changed = (getCompetenceCourse().getCurricularStage().equals(CurricularStage.PUBLISHED) ? CurricularStage.APPROVED : CurricularStage.PUBLISHED);
+            
+            final Object args[] = { getCompetenceCourseID(), getName(), getNameEn(), getAcronym(), getBasic(), changed, true };
+            ServiceUtils.executeService(getUserView(), "EditCompetenceCourse", args);
+            return "";
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
+        }
+        return "";
+    }    
 }

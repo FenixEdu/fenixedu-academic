@@ -5,4 +5,12 @@
     <definition name="index" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/index.jsp"></put>
     </definition>
+    
+    <definition name="select-report-parameters" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/selectReportParameters.jsp"></put>
+    </definition>
+    
+    <definition name="show-credits-report" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/showTeachersCreditsReport.jsp"></put>
+    </definition>        
 </tiles-definitions>

@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.Date;
+
 import net.sourceforge.fenixedu.fileSuport.INode;
 
 /**
@@ -49,4 +51,7 @@ public class ExecutionPeriod extends ExecutionPeriod_Base implements INode, Comp
 		return new StringBuilder().append(this.getName()).append(" ").append(this.getExecutionYear().getYear()).toString();
 	}
 
+    public boolean containsDay(Date day) {
+        return !(this.getBeginDate().after(day) || this.getEndDate().before(day));
+    }
 }

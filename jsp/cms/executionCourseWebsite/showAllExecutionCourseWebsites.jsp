@@ -5,6 +5,21 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ page import="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite"%>
 
+
+<span class="success0">
+	<html:messages id="infoMsg" message="true" bundle="CMS_RESOURCES"/>
+	<logic:present name="infoMsg">
+		 <bean:write name="infoMsg" filter="true" />
+	</logic:present>		 
+</span>
+
+<span class="error">
+	<html:messages id="errorMsg" message="false"  bundle="CMS_RESOURCES"/>
+	<logic:present name="errorMsg">
+		<bean:write name="errorMsg" filter="true"/>
+	</logic:present>
+</span>
+
 <logic:present name="websites">
 	<bean:define id="websites" name="websites"/>
 	<bean:size id="numberOfWebsites" name="websites"/>

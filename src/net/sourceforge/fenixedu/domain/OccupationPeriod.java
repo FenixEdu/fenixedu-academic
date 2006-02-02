@@ -79,6 +79,10 @@ public class OccupationPeriod extends OccupationPeriod_Base {
         return !(this.getStartDate().after(day) || this.getEndDate().before(day));
     }
 
+    public boolean containsDay(Date day) {
+        return !(this.getStart().after(day) || this.getEnd().before(day));
+    }
+    
     public void deleteIfEmpty() {
         if (empty()) {
             delete();

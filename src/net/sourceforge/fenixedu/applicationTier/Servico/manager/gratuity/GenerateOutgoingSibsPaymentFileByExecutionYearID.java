@@ -4,14 +4,17 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import javax.mail.Message;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,8 +25,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
+import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.InsuranceValue;
-import net.sourceforge.fenixedu.domain.PaymentPhase;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -33,10 +36,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.transactions.IPersistentInsuranceTransaction;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
-
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.comparators.ComparatorChain;
-
 import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 /**
@@ -57,34 +56,41 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 	 * @throws FenixServiceException
 	 * @throws ExcepcaoPersistencia 
 	 */
-	public void run(Integer executionYearID) throws FenixServiceException, ExcepcaoPersistencia {
+    // TODO: needs full rewrite and simplification...
+    public void run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException,
+            ExcepcaoPersistencia {
 
 		StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
 		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
 				ExecutionYear.class, executionYearID);
 
-		IPersistentGratuitySituation gratuitySituationDAO = persistentSupport.getIPersistentGratuitySituation();
+        IPersistentGratuitySituation gratuitySituationDAO = persistentSupport
+                .getIPersistentGratuitySituation();
 
 		IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
 				.getIPersistentInsuranceTransaction();
 
-		InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue().readByExecutionYear(
-				executionYear.getIdInternal());
+        InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue()
+                .readByExecutionYear(executionYear.getIdInternal());
 
 		if (insuranceValue == null) {
 			throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
 		}
 
+        Date insurancePaymentStartDate = Calendar.getInstance().getTime();
+        Date insurancePaymentEndDate = paymentEndDate;
+
 		String shortYear = executionYear.getYear().split("/")[0].trim().substring(2);
 
-		// read master degree and persistentSupportecialization execution degrees
-		List executionDegreeList = persistentSupport.getIPersistentExecutionDegree().readByExecutionYearAndDegreeType(
-				executionYear.getYear(), DegreeType.MASTER_DEGREE);
+        // read master degree and persistentSupportecialization execution
+        // degrees
+        List executionDegreeList = persistentSupport.getIPersistentExecutionDegree()
+                .readByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
 
 		int totalLines = 0;
 
-		HashMap studentsWithInsuranceChecked = new HashMap();
+        Set<Integer> studentsWithInsuranceChecked = new HashSet<Integer>();
 
 		// add file header
 		addHeader(outgoingSibsPaymentFile);
@@ -103,54 +109,57 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
 				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
-				Student student = studentCurricularPlan.getStudent();
-
-				if (studentsWithInsuranceChecked.containsKey(student.getIdInternal())) {
+                if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+                    if (!executionDegree.isFirstYear()) {
 					continue;
 				}
+                }
 
-				studentsWithInsuranceChecked.put(student.getIdInternal(), null);
+                Student student = studentCurricularPlan.getStudent();
+
+                if (studentsWithInsuranceChecked.contains(student.getIdInternal()) == false) {
+
+                    studentsWithInsuranceChecked.add(student.getIdInternal());
 
 				List insuranceTransactionList = insuranceTransactionDAO
-						.readAllNonReimbursedByExecutionYearAndStudent(executionYear.getIdInternal(),
-								student.getIdInternal());
+                            .readAllNonReimbursedByExecutionYearAndStudent(
+                                    executionYear.getIdInternal(), student.getIdInternal());
 
 				if (insuranceTransactionList.size() == 0) {
-
-					// the student hasn't payed the insurance for this year
+                        // the student hasn't payed the insurance for this
+                        // year
 					// yet
 					addLine(outgoingSibsPaymentFile,
 							SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
-							SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear, student
-									.getNumber(), SibsPaymentCodeFactory
+                                SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
+                                student.getNumber(), SibsPaymentCodeFactory
 									.getCode(SibsPaymentType.INSURANCE)
-									+ "", null, insuranceValue.getEndDate(), insuranceValue
-									.getAnnualValue(), insuranceValue.getAnnualValue());
+                                        + "", insurancePaymentStartDate, insurancePaymentEndDate,
+                                insuranceValue.getAnnualValue(), insuranceValue.getAnnualValue());
 
 					totalLines++;
 				}
 
 			}
 
-			List gratuitySituationList = gratuitySituationDAO
-					.readGratuitySituationsByDegreeCurricularPlan(degreeCurricularPlan.getIdInternal());
+                // Add gratuity lines
+                GratuitySituation gratuitySituation = gratuitySituationDAO
+                        .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+                                studentCurricularPlan.getIdInternal(), executionDegree
+                                        .getGratuityValues().getIdInternal());
 
-			for (Iterator iterator = gratuitySituationList.iterator(); iterator.hasNext();) {
-
-				GratuitySituation gratuitySituation = (GratuitySituation) iterator.next();
-
-				// if
-				// (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
-				// Specialization.INTEGRADO_TYPE)) {
-				// //nothing to be done
-				// continue;
-				// }
-
-				totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation, shortYear);
-
+                if (gratuitySituation != null) {
+                    totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation,
+                            shortYear, paymentEndDate);
+                } else {
+                    System.out.println("Student " + student.getNumber()
+                            + " does not have a gratuity situation for year "
+                            + executionDegree.getExecutionYear().getYear() + " Degree "
+                            + executionDegree.getDegreeCurricularPlan().getName());
 			}
 
 		}
+        }
 
 		// add file footer
 		addFooter(outgoingSibsPaymentFile, totalLines);
@@ -231,7 +240,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 	 * @throws InsufficientSibsPaymentPhaseCodesServiceException
 	 */
 	private int addGratuityLines(StringBuilder outgoingSibsPaymentFile,
-			GratuitySituation gratuitySituation, String shortYear)
+            GratuitySituation gratuitySituation, String shortYear, Date totalPaymentEndDate)
 			throws InsufficientSibsPaymentPhaseCodesServiceException {
 
 		int totalLinesAdded = 0;
@@ -242,17 +251,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 			return totalLinesAdded;
 		}
 
-		Double scholarShipPartValue = null;
-		if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
-				Specialization.SPECIALIZATION)) {
-
-			scholarShipPartValue = gratuitySituation.getRemainingValue();
-
-		} else {
-			scholarShipPartValue = new Double(gratuitySituation.getRemainingValue().doubleValue()
-					- (gratuitySituation.getGratuityValues().getFinalProofValue() == null ? 0
-							: gratuitySituation.getGratuityValues().getFinalProofValue().doubleValue()));
-		}
+        Double scholarShipPartValue = getScholarShipPartValue(gratuitySituation);
 
 		if (scholarShipPartValue.doubleValue() <= 0) {
 			// nothing to be done;
@@ -263,79 +262,117 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
 		// add total payment line
 		String sibsPaymentCode = determineTotalPaymentCode(studentCurricularPlan);
-		Date startDate = gratuitySituation.getGratuityValues().getStartPayment();
-		Date endDate = gratuitySituation.getGratuityValues().getEndPayment();
-
-		if (endDate.before(Calendar.getInstance().getTime()) == true) {
-			// end date already passed
-			return totalLinesAdded;
-		}
 
 		addLine(outgoingSibsPaymentFile, SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
 				SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear, studentCurricularPlan
-						.getStudent().getNumber(), sibsPaymentCode, startDate, endDate,
-				scholarShipPartValue, scholarShipPartValue);
+                        .getStudent().getNumber(), sibsPaymentCode, Calendar.getInstance().getTime(),
+                totalPaymentEndDate, scholarShipPartValue, scholarShipPartValue);
 
 		totalLinesAdded++;
 
-		// add phase payment lines
-		List paymentPhaseList = gratuitySituation.getGratuityValues().getPaymentPhaseList();
+        //        
+        // Date totalPaymentStartDate =
+        // gratuitySituation.getGratuityValues().getStartPayment();
+        // Date totalPaymentEndDate =
+        // gratuitySituation.getGratuityValues().getEndPayment();
+        //
+        // if (totalPaymentEndDate != null) {
+        // if (totalPaymentEndDate.after(Calendar.getInstance().getTime()) ==
+        // true) {
+        //                
+        // addLine(outgoingSibsPaymentFile,
+        // SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
+        // SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
+        // studentCurricularPlan.getStudent().getNumber(), sibsPaymentCode,
+        // totalPaymentStartDate, totalPaymentEndDate, scholarShipPartValue,
+        // scholarShipPartValue);
+        //
+        // totalLinesAdded++;
+        // }
+        // }
+        //
+        // // add phase payment lines
+        // List paymentPhaseList =
+        // gratuitySituation.getGratuityValues().getPaymentPhaseList();
+        //
+        // double totalValueInPhases = 0;
+        // for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
+        // PaymentPhase paymentPhase = (PaymentPhase) iter.next();
+        // totalValueInPhases += paymentPhase.getValue().doubleValue();
+        // }
+        //
+        // if ((scholarShipPartValue.doubleValue() - totalValueInPhases) > 0) {
+        // // there are no sufficient phases to pay the remaining value
+        // // so send the total value only
+        // return totalLinesAdded;
+        // }
+        //
+        // BeanComparator paymentPhaseDateComparator = new
+        // BeanComparator("endDate");
+        // ComparatorChain chainComparator = new ComparatorChain();
+        // chainComparator.addComparator(paymentPhaseDateComparator, true);
+        // paymentPhaseList = new ArrayList(paymentPhaseList);
+        // Collections.sort(paymentPhaseList, chainComparator);
+        //
+        // int paymentPhaseNumber = 1;
+        // double totalValueToDivideInPhases =
+        // scholarShipPartValue.doubleValue();
+        //
+        // for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
+        // PaymentPhase paymentPhase = (PaymentPhase) iter.next();
+        //
+        // if
+        // (paymentPhase.getEndDate().before(Calendar.getInstance().getTime()))
+        // {
+        // // end date for that phase already passed
+        // continue;
+        // }
+        //
+        // if ((paymentPhaseNumber == 1)
+        // && (paymentPhase.getValue().doubleValue() >=
+        // totalValueToDivideInPhases)) {
+        // // phases are not required, because the total value is less then
+        // // the first phase
+        // return totalLinesAdded;
+        // }
+        //
+        // totalValueToDivideInPhases -= paymentPhase.getValue().doubleValue();
+        //
+        // sibsPaymentCode = determinePaymentPhaseCode(paymentPhaseNumber,
+        // studentCurricularPlan,
+        // gratuitySituation);
+        //
+        // addLine(outgoingSibsPaymentFile,
+        // SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
+        // SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
+        // studentCurricularPlan.getStudent().getNumber(), sibsPaymentCode,
+        // paymentPhase
+        // .getStartDate(), paymentPhase.getEndDate(), paymentPhase.getValue(),
+        // paymentPhase.getValue());
+        //
+        // totalLinesAdded++;
+        //
+        // paymentPhaseNumber++;
+        //
+        // }
 
-		double totalValueInPhases = 0;
-		for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-			PaymentPhase paymentPhase = (PaymentPhase) iter.next();
-			totalValueInPhases += paymentPhase.getValue().doubleValue();
-		}
-
-		if ((scholarShipPartValue.doubleValue() - totalValueInPhases) > 0) {
-			// there are no sufficient phases to pay the remaining value
-			// so send the total value only
 			return totalLinesAdded;
-		}
 
-		BeanComparator paymentPhaseDateComparator = new BeanComparator("endDate");
-		ComparatorChain chainComparator = new ComparatorChain();
-		chainComparator.addComparator(paymentPhaseDateComparator, true);
-		paymentPhaseList = new ArrayList(paymentPhaseList);
-		Collections.sort(paymentPhaseList, chainComparator);
-
-		int paymentPhaseNumber = 1;
-		double totalValueToDivideInPhases = scholarShipPartValue.doubleValue();
-
-		for (Iterator iter = paymentPhaseList.iterator(); iter.hasNext();) {
-			PaymentPhase paymentPhase = (PaymentPhase) iter.next();
-
-			if (paymentPhase.getEndDate().before(Calendar.getInstance().getTime())) {
-				// end date for that phase already passed
-				continue;
 			}
 
-			if ((paymentPhaseNumber == 1)
-					&& (paymentPhase.getValue().doubleValue() >= totalValueToDivideInPhases)) {
-				// phases are not required, because the total value is less then
-				// the first phase
-				return totalLinesAdded;
-			}
+    private Double getScholarShipPartValue(GratuitySituation gratuitySituation) {
+        Double scholarShipPartValue = null;
+        if (gratuitySituation.getStudentCurricularPlan().getSpecialization().equals(
+                Specialization.SPECIALIZATION)) {
 
-			totalValueToDivideInPhases -= paymentPhase.getValue().doubleValue();
+            scholarShipPartValue = gratuitySituation.getRemainingValue();
 
-			sibsPaymentCode = determinePaymentPhaseCode(paymentPhaseNumber, studentCurricularPlan,
-					gratuitySituation);
-
-			addLine(outgoingSibsPaymentFile, SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
-					SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
-					studentCurricularPlan.getStudent().getNumber(), sibsPaymentCode, paymentPhase
-							.getStartDate(), paymentPhase.getEndDate(), paymentPhase.getValue(),
-					paymentPhase.getValue());
-
-			totalLinesAdded++;
-
-			paymentPhaseNumber++;
-
+        } else {
+            scholarShipPartValue = new Double(gratuitySituation.getRemainingValue().doubleValue()
+                    - (gratuitySituation.getGratuityValues().getFinalProofValue() == null ? 0
+                            : gratuitySituation.getGratuityValues().getFinalProofValue().doubleValue()));
 		}
-
-		return totalLinesAdded;
-
+        return scholarShipPartValue;
 	}
 
 	/**

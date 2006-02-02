@@ -102,6 +102,8 @@ public class Enrolment extends Enrolment_Base {
     public void delete() {
     	createEnrolmentLog(EnrolmentAction.UNENROL);
     	
+        final Student student = getStudentCurricularPlan().getStudent();
+
         removeExecutionPeriod();
         removeStudentCurricularPlan();
         removeCurricularCourse();
@@ -112,7 +114,14 @@ public class Enrolment extends Enrolment_Base {
 
             attendsIter.remove();
             attends.removeEnrolment();
+
+            if (!attends.hasAnyAssociatedMarks() && !attends.hasAnyStudentGroups()) {
+                for (Shift shift : attends.getDisciplinaExecucao().getAssociatedShifts()) {
+                    shift.removeStudents(student);
+                }
+
             attends.delete();
+        }
         }
 
         Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsIterator();

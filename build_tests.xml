@@ -53,7 +53,7 @@
 
 	<!-- TODO: give class as an argument -->
     <target name="run-curricular-period-test"
-    		description="Run single test"
+    		description="Run CurricularPeriod Test"
     		depends="compile-tests">
 		<junit haltonfailure="false" printsummary="yes" dir="${build.home.webinf.classes}">
             <formatter type="plain" usefile="false"/>

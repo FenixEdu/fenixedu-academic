@@ -507,6 +507,12 @@
 			element-class-ref="net.sourceforge.fenixedu.domain.degreeStructure.Context">
 		<inverse-foreignkey field-ref="degreeModuleKey"/>
 	</collection-descriptor>
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="curricularRules"
+			element-class-ref="net.sourceforge.fenixedu.domain.curricularRules.CurricularRule">
+		<inverse-foreignkey field-ref="keyDegreeModuleToApplyRule"/>
+	</collection-descriptor>
+	
 </class-descriptor>
 
 <!-- ************************************************************************************************************ -->
