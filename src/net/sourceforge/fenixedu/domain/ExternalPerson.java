@@ -35,6 +35,13 @@ public class ExternalPerson extends ExternalPerson_Base {
             throw new DomainException("error.exception.externalPerson.existingExternalPerson");
         }
     }
+    
+    public void delete(){
+        removeInstitution();
+        removeInstitutionUnit();
+        removePerson();
+        deleteDomainObject();
+    }
 
     /***************************************************************************
      * PRIVATE METHODS *

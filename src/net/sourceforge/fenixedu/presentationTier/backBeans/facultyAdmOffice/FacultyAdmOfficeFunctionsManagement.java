@@ -4,9 +4,11 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.facultyAdmOffice;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
-
+import org.apache.commons.beanutils.BeanComparator;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -57,7 +59,11 @@ public class FacultyAdmOfficeFunctionsManagement extends ManagerFunctionsManagem
                     .append("\" ").append("style='display:none'>\r\n");
         }
 
-        for (Unit subUnit : parentUnit.getSubUnits()) {
+        List<Unit> subUnits = new ArrayList<Unit>();
+        subUnits.addAll(parentUnit.getSubUnits());
+        Collections.sort(subUnits, new BeanComparator("name"));
+        
+        for (Unit subUnit : subUnits) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, buffer);
             }

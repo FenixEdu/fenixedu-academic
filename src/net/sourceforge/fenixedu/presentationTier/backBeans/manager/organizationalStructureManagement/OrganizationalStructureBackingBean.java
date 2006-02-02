@@ -238,9 +238,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
         if (!subUnits.isEmpty()) {
             buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("style='display:none'>\r\n");
-        }
-
+                    .append("style='display:none'>\r\n");                       
+        }        
+        
         Collections.sort(subUnits, new BeanComparator("name"));
         
         for (Unit subUnit : subUnits) {

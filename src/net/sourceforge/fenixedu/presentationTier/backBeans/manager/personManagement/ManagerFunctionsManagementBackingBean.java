@@ -7,6 +7,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.manager.personManage
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -77,6 +78,8 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         StringBuilder buffer = new StringBuilder();
         List<Unit> allUnits = readAllDomainObjects(Unit.class);
 
+        Collections.sort(allUnits, new BeanComparator("name"));
+        
         Date currentDate = Calendar.getInstance().getTime();
         for (Unit unit : allUnits) {
             if (unit.getParentUnits().isEmpty() && unit.isActive(currentDate)) {
@@ -110,13 +113,17 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 "/manager/functionsManagement/chooseFunction.faces?personID=").append(
                 personID).append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(
                 parentUnit.getName()).append("</a>").append("</li>");
-
+        
         if (parentUnit.hasAnySubUnits()) {
             buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
-                    .append("\" ").append("style='display:none'>\r\n");
+                    .append("\" ").append("style='display:none'>\r\n");                                    
         }
 
-        for (Unit subUnit : parentUnit.getSubUnits()) {
+        List<Unit> subUnits = new ArrayList<Unit>();
+        subUnits.addAll(parentUnit.getSubUnits());
+        Collections.sort(subUnits, new BeanComparator("name"));
+        
+        for (Unit subUnit : subUnits) {
             if (subUnit.isActive(Calendar.getInstance().getTime())) {
                 getUnitsList(subUnit, buffer);
             }

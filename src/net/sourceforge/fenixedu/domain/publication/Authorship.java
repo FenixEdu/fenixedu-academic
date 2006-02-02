@@ -28,6 +28,6 @@ public class Authorship extends Authorship_Base {
     public void delete() {
     	removeAuthor();
         removePublication();
-        super.deleteDomainObject();
+        deleteDomainObject();
     }
 }
