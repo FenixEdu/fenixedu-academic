@@ -13,4 +13,7 @@
     <definition name="show-create-sub-space-form" extends="spaceManager.masterPage">
         <put name="body" value="/spaceManager/createSubSpace.jsp"></put>
     </definition>
+    <definition name="show-edit-space-form" extends="spaceManager.masterPage">
+        <put name="body" value="/spaceManager/editSpace.jsp"></put>
+    </definition>
 </tiles-definitions>

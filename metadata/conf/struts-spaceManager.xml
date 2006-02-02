@@ -7,11 +7,17 @@
     
     <!-- ========== Form Bean Definitions ================================== -->
     <form-beans type="org.apache.struts.action.ActionFormBean">		
-		<form-bean name="createSpaceForm" 
+		<form-bean name="createSpaceForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
 			<form-property name="suroundingSpaceID" type="java.lang.String"/>
 			<form-property name="classname" type="java.lang.String"/>
+			<form-property name="spaceName" type="java.lang.String"/>
+		</form-bean>
+		<form-bean name="editSpaceForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="spaceID" type="java.lang.String"/>
 			<form-property name="spaceName" type="java.lang.String"/>
 		</form-bean>
     </form-beans>
@@ -47,6 +53,7 @@
             <forward name="ShowCreateSpaceForm" path="show-create-space-form"/>
             <forward name="ManageSpace" path="show-manage-space-form"/>
             <forward name="ShowCreateSubSpaceForm" path="show-create-sub-space-form"/>
+            <forward name="EditSpace" path="show-edit-space-form"/>
         </action>
 
         <action path="/createSpace" type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
@@ -58,6 +65,15 @@
 			<forward name="ShowCreateSpaceForm" path="show-create-space-form"/>
             <forward name="ShowSpaces" path="/manageSpaces.do?method=viewSpaces&amp;page=0"/>
             <forward name="ShowCreateSubSpaceForm" path="show-create-sub-space-form"/>
+        </action>
+
+        <action path="/editSpace" type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
+        		input="/manageSpaces.do?method=showCreateSpaceForm&amp;page=0"
+        		name="editSpaceForm"
+        		parameter="method"
+        		scope="request"
+        		>
+            <forward name="ShowSpaces" path="/manageSpaces.do?method=viewSpaces&amp;page=0"/>
         </action>
     </action-mappings>
     
