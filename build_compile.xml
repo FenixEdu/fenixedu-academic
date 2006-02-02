@@ -311,6 +311,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		    			   property="roleback.filename"/>
 				<replacefilter token="@default.persistenceSupport@"
 		    			   property="default.persistenceSupport"/>
+				<replacefilter token="@password.generator@"
+		    			   property="password.generator"/>				
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"
