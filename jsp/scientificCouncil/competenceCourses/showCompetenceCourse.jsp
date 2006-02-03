@@ -5,7 +5,6 @@
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
-	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
 	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
 <style>
 .temp1 {
@@ -16,7 +15,7 @@ float: left;
 width: 100px;
 padding-right: 10px;
 }
-</style>		
+</style>
 	<h:outputText value="<em>#{scouncilBundle['competenceCourse']}</em>" escape="false" />
 	<h:outputText value="<h2>#{CompetenceCourseManagement.competenceCourse.name}</h2>" escape="false"/>
 
@@ -31,7 +30,7 @@ padding-right: 10px;
 		
 	<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scouncilBundle['activeCurricularPlans']}: </strong></p>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
-		<h:outputText value="(#{scouncilBundle['noCurricularCourses']})"/>
+		<h:outputText value="<i>#{scouncilBundle['noCurricularCourses']}</i>" escape="false"/>
 	</h:panelGroup>
 	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.competenceCourse.associatedCurricularCourses}">
 		<h:outputText value="<ul class='mtop0 mbottom3'>" escape="false"/>
@@ -54,9 +53,8 @@ padding-right: 10px;
 	</h:panelGroup>	
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
-	<h:outputText value="<p><strong><u>#{scouncilBundle['state']}: </strong>" escape="false"/>
-	<h:outputText value="#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</u></p>" escape="false"/>
-	<h:outputText value="<br/>" escape="false"/>
+	<h:outputText value="<p><strong>#{scouncilBundle['state']}: </strong>" escape="false"/>
+	<h:outputText value="<span class='highlight1'>#{enumerationBundle[CompetenceCourseManagement.competenceCourse.curricularStage.name]}</span></p>" escape="false"/>
 	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>	
 	<h:outputText value="<li><strong>#{scouncilBundle['name']} (pt): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
@@ -101,7 +99,7 @@ padding-right: 10px;
 		<h:outputText value="#{competenceCourseLoad.tutorialOrientationHours} h/#{scouncilBundle['lowerCase.week']}</li>" escape="false"/>
 
 		<h:outputText value="<li>#{scouncilBundle['autonomousWork']}: " escape="false"/>
-		<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/<b>#{scouncilBundle['lowerCase.semester']}</b></li>" escape="false"/>
+		<h:outputText value="#{competenceCourseLoad.autonomousWorkHours} h/<b>#{scouncilBundle['lowerCase.semester']}</li>" escape="false"/>
 
 		<h:outputText value="<li><strong>#{scouncilBundle['ectsCredits']}: "escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></li>" escape="false"/>
@@ -111,48 +109,64 @@ padding-right: 10px;
 	<h:outputText value="</ul></div>" escape="false"/>
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
-	<h:outputText value="<p class='mbottom0'><em>#{bolonhaBundle['portuguese']}: </em></p>" escape="false"/>
+	<h:outputText value="<p class='mbottom0'><em>#{scouncilBundle['portuguese']}: </em></p>" escape="false"/>
 	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
-	<h:outputText value="<tr><th>#{bolonhaBundle['objectives']}:</th>" escape="false"/>
-	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectives}</td></tr>" escape="false" linebreak="true"/>
-	<h:outputText value="<tr><th>#{bolonhaBundle['program']}:</th>" escape="false"/>
-	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.program}</td></tr>" escape="false" linebreak="true"/>
-	<h:outputText value="<tr><th>#{bolonhaBundle['evaluationMethod']}:</th>" escape="false"/>
-	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.evaluationMethod}</td></tr>" escape="false" linebreak="true"/>
+	<h:outputText value="<tr><th>#{scouncilBundle['objectives']}:</th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectives}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.objectives}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	<h:outputText value="<tr><th>#{scouncilBundle['program']}:</th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.program}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.program}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	<h:outputText value="<tr><th>#{scouncilBundle['evaluationMethod']}:</th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethod}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethod}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	<h:outputText value="</table>" escape="false"/>
+	
+	<h:outputText value="<p class='mbottom0'><em>#{scouncilBundle['english']}:</em></p>" escape="false"/>
+	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
+	<h:outputText value="<tr><th>#{scouncilBundle['objectivesEn']}:</th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.objectivesEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	<h:outputText value="<tr><th>#{scouncilBundle['programEn']}:</th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.programEn}" linebreak="true"/>
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.programEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
+	<h:outputText value="<tr><th>#{scouncilBundle['evaluationMethodEn']}:</th>" escape="false"/>
+	<h:outputText value="<td>" escape="false"/>
+	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}" linebreak="true"/>	
+	<h:outputText value="<i>#{scouncilBundle['empty.field']}</i>" escape="false" rendered="#{empty CompetenceCourseManagement.competenceCourse.evaluationMethodEn}"/>
+	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
 	<h:outputText value="</div>" escape="false"/>
-	
+
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
-	<h:outputText value="<p class='mbottom0'><em>#{bolonhaBundle['english']}:</em></p>" escape="false"/>
-	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
-	<h:outputText value="<tr><th>#{bolonhaBundle['objectivesEn']}:</th>" escape="false"/>
-	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.objectivesEn}</td></tr>" escape="false" linebreak="true"/>
-	<h:outputText value="<tr><th>#{bolonhaBundle['programEn']}:</th>" escape="false"/>
-	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.programEn}</td></tr>" escape="false" linebreak="true"/>
-	<h:outputText value="<tr><th>#{bolonhaBundle['evaluationMethodEn']}:</th>" escape="false"/>
-	<fc:extendedOutputText value="<td>#{CompetenceCourseManagement.competenceCourse.evaluationMethodEn}</td></tr>" escape="false" linebreak="true"/>	
-	<h:outputText value="</table>" escape="false"/>
-	<h:outputText value="</div>" escape="false"/>
-	
-	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
-	<h:outputText value="<h3 class='mbottom0'>#{bolonhaBundle['bibliographicReference']}</h3>" escape="false"/>	
+	<h:outputText value="<h3 class='mbottom0'>#{scouncilBundle['bibliographicReference']}</h3>" escape="false"/>	
 	<h:outputText value="<p><b>#{enumerationBundle['MAIN']}</b></p>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.mainBibliographicReferences}">
-		<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em><br/>" escape="false"/>
+		<h:outputText value="<i>#{scouncilBundle['noBibliographicReferences']}</i><br/>" escape="false"/>
 	</h:panelGroup>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.mainBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.mainBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
 			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
-			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['title']}:</span>" escape="false"/>
 			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['year']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['reference']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 			
 			<h:outputText value="</ul>" escape="false"/>
@@ -161,32 +175,33 @@ padding-right: 10px;
 	
 	<h:outputText value="<p><b>#{enumerationBundle['SECONDARY']}</b></p>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.secondaryBibliographicReferences}">
-		<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em><br/>" escape="false"/>
+		<h:outputText value="<i>#{scouncilBundle['noBibliographicReferences']}</i><br/>" escape="false"/>
 	</h:panelGroup>	
 	<fc:dataRepeater value="#{CompetenceCourseManagement.secondaryBibliographicReferences}" var="bibliographicReference" rendered="#{!empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
 			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
-			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['title']}:</span>" escape="false"/>
 			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
 				
-			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['year']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['year']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.year}</li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
+			<h:outputText value="<li><span>#{scouncilBundle['reference']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 			
 			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
 	</fc:dataRepeater>
 	<h:outputText value="</div>" escape="false"/>
-	
+
 	<h:form>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:outputText escape="false" value="<input id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
+		<hr/>
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.action}">
 			<h:commandButton immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
 		</h:panelGroup>
