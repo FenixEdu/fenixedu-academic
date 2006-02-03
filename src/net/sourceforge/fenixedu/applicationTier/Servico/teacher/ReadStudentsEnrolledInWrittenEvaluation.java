@@ -17,12 +17,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoWrittenTest;
 import net.sourceforge.fenixedu.dataTransferObject.SiteView;
 import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView;
 import net.sourceforge.fenixedu.domain.Exam;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenEvaluationEnrolment;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 public class ReadStudentsEnrolledInWrittenEvaluation extends Service {
 
@@ -34,8 +34,8 @@ public class ReadStudentsEnrolledInWrittenEvaluation extends Service {
             throw new FenixServiceException("error.noWrittenEvaluation");
         }
 
-        final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        final Site site = persistentSite.readByExecutionCourse(executionCourseID);
+    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseID);
+        final Site site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("error.noSite");
         }

@@ -10,11 +10,11 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.sms.SmsNotSen
 import net.sourceforge.fenixedu.applicationTier.utils.SmsUtil;
 import net.sourceforge.fenixedu.applicationTier.utils.exceptions.FenixUtilException;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 /**
  * @author Fernanda Quitério
@@ -25,8 +25,8 @@ public class PublishMarks extends Service {
             Boolean sendSMS, String announcementTitle) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
         // Site
-        IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
-        Site site = siteDAO.readByExecutionCourse(executionCourseCode);
+    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
+        final Site site = executionCourse.getSite();
         // find what type of evaluation we are dealing with
         Evaluation evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class,
                 evaluationCode);

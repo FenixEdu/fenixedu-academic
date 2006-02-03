@@ -19,7 +19,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.ICursoPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateEnrolment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateSituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCompetenceCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentContributor;
@@ -83,7 +82,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentScientificArea;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSecretaryEnrolmentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSection;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentShiftProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentKind;
@@ -511,14 +509,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	}
 
 	/**
-	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSite()
-	 */
-	public IPersistentSite getIPersistentSite()
-	{
-		return new SiteOJB();
-	}
-
-	/**
 	 * @see ServidorPersistente.ISuportePersistente#getIPersistentSection()
 	 */
 	public IPersistentSection getIPersistentSection()
@@ -673,11 +663,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentQualification getIPersistentQualification()
 	{
 		return new QualificationOJB();
-	}
-
-	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment()
-	{
-		return new CandidateEnrolmentOJB();
 	}
 
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence()

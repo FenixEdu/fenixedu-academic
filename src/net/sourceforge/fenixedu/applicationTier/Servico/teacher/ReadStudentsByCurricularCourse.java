@@ -17,10 +17,10 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -36,12 +36,12 @@ public class ReadStudentsByCurricularCourse extends Service {
 
     public Object run(Integer executionCourseCode, Integer courseCode) throws ExcepcaoInexistente,
             FenixServiceException, ExcepcaoPersistencia {
-        final IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
 
         List infoStudentList = null;
         CurricularCourse curricularCourse = null;
 
-        final Site site = persistentSite.readByExecutionCourse(executionCourseCode);
+    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
+        final Site site = executionCourse.getSite();
 
         if (courseCode == null) {
             infoStudentList = getAllAttendingStudents(site);

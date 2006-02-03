@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.Evaluation;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Mark;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Student;
@@ -31,7 +32,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 
 /**
@@ -49,12 +49,12 @@ public class InsertEvaluationMarks extends Service {
         List attendList = null;
         HashMap newHashMarks = new HashMap();
 
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
         IFrequentaPersistente persistentAttend = persistentSupport.getIFrequentaPersistente();
         IPersistentMark persistentMark = persistentSupport.getIPersistentMark();
 
         //Site
-        site = persistentSite.readByExecutionCourse(executionCourseCode);
+    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, executionCourseCode);
+        site = executionCourse.getSite();
 
         //Evaluation
         evaluation = (Evaluation) persistentObject.readByOID(Evaluation.class, evaluationCode);

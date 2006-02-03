@@ -43,9 +43,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.util.AttendacyStateSelectionType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -83,15 +81,12 @@ public class ReadStudentsWithAttendsByExecutionCourse extends Service {
 
     public Object run(Integer executionCourseCode, List curricularPlansIds, List enrollmentTypeFilters,
             List shiftIds) throws FenixServiceException, ExcepcaoPersistencia {
-        Site site = null;
-
         final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
                 .readByOID(ExecutionCourse.class, executionCourseCode);
         InfoExecutionCourse infoExecutionCourse = InfoExecutionCourseWithExecutionPeriod
                 .newInfoFromDomain(executionCourse);
 
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        site = persistentSite.readByExecutionCourse(executionCourseCode);
+        final Site site = executionCourse.getSite();
 
         List attends = executionCourse.getAttends();
 

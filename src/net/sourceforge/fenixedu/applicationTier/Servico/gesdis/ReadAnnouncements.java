@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.Announcement;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -21,8 +22,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadAnnouncements extends Service {
 
     public List run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
-        final Site site = persistentSupport.getIPersistentSite().readByExecutionCourse(
-                infoSite.getInfoExecutionCourse().getIdInternal());
+    	final ExecutionCourse executionCourse = (ExecutionCourse)
+    			persistentObject.readByOID(ExecutionCourse.class, infoSite.getInfoExecutionCourse().getIdInternal());
+        final Site site = executionCourse.getSite();
         final List<Announcement> announcementsList = site.getAssociatedAnnouncements();
 
         final List<InfoAnnouncement> infoAnnouncementsList = new ArrayList<InfoAnnouncement>();

@@ -30,9 +30,7 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.space.OldRoom;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISalaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -56,8 +54,7 @@ public class PrepareInsertSummary extends Service {
             throw new FenixServiceException("no.executionCourse");
         }
 
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
+        Site site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("no.site");
         }

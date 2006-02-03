@@ -30,8 +30,7 @@ public class ReadCandidateEnrolmentsByCandidateID extends Service {
             throw new NonExistingServiceException();
         }
 
-        List candidateEnrolments = persistentSupport.getIPersistentCandidateEnrolment().readByMDCandidate(
-                masterDegreeCandidate.getIdInternal());
+        List candidateEnrolments = masterDegreeCandidate.getCandidateEnrolments();
 
         if (candidateEnrolments == null) {
             throw new NonExistingServiceException();

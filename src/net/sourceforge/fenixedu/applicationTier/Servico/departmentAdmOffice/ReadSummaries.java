@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -79,8 +78,7 @@ public class ReadSummaries extends Service {
         // execution courses's lesson types for display to filter summary
         List lessonTypes = findLessonTypesExecutionCourse(executionCourse);
         
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
+        Site site = executionCourse.getSite();
         
         if (site == null) {
             throw new FenixServiceException("no.site");

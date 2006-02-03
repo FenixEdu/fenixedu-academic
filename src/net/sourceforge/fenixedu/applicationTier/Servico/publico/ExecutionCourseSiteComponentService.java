@@ -12,9 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingAs
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseSiteView;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 /**
  * @author Jo�o Mota
@@ -27,13 +27,13 @@ public class ExecutionCourseSiteComponentService extends Service {
             Integer infoSiteCode, Integer infoExecutionCourseCode, Integer sectionIndex,
             Integer curricularCourseId) throws FenixServiceException,
             NonExistingAssociatedCurricularCoursesServiceException, ExcepcaoPersistencia {
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-
         final Site site;
         if (infoSiteCode != null)
             site = (Site) persistentObject.readByOID(Site.class, infoSiteCode);
-        else
-            site = persistentSite.readByExecutionCourse(infoExecutionCourseCode);
+        else {
+        	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoExecutionCourseCode);
+            site = executionCourse.getSite();
+        }
 
         if (site == null) {
             throw new NonExistingServiceException();

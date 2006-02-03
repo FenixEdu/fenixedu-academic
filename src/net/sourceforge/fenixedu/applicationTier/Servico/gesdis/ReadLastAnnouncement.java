@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoAnnouncement;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
 import net.sourceforge.fenixedu.domain.Announcement;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -14,8 +15,9 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadLastAnnouncement extends Service {
 
     public InfoAnnouncement run(InfoSite infoSite) throws FenixServiceException, ExcepcaoPersistencia {
-        Site site = persistentSupport.getIPersistentSite().readByExecutionCourse(
-                infoSite.getInfoExecutionCourse().getIdInternal());
+    	ExecutionCourse executionCourse = (ExecutionCourse)
+    			persistentObject.readByOID(ExecutionCourse.class, infoSite.getInfoExecutionCourse().getIdInternal());
+        Site site = executionCourse.getSite();
         Announcement announcement = site.getLastAnnouncement();
 
         InfoAnnouncement infoAnnouncement = null;

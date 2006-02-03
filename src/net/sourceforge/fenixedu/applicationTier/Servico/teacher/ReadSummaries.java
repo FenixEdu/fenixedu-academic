@@ -33,7 +33,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentSummary;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.ITurnoPersistente;
@@ -57,8 +56,7 @@ public class ReadSummaries extends Service {
             throw new FenixServiceException("no.executionCourse");
         }
 
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        Site site = persistentSite.readByExecutionCourse(executionCourseId);
+        final Site site = executionCourse.getSite();
         if (site == null) {
             throw new FenixServiceException("no.site");
         }

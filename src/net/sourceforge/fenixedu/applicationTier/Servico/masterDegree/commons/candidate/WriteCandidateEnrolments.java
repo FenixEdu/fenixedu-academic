@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentCandidateEnrolment;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -28,9 +27,6 @@ public class WriteCandidateEnrolments extends Service {
 
     public void run(Set<Integer> selectedCurricularCoursesIDs, Integer candidateID, Double credits,
             String givenCreditsRemarks) throws FenixServiceException, ExcepcaoPersistencia {
-
-        IPersistentCandidateEnrolment persistentCandidateEnrolment = persistentSupport
-                .getIPersistentCandidateEnrolment();
 
         MasterDegreeCandidate masterDegreeCandidate = (MasterDegreeCandidate) persistentObject.readByOID(MasterDegreeCandidate.class,
                         candidateID);
@@ -71,7 +67,7 @@ public class WriteCandidateEnrolments extends Service {
 
         writeFilteredEnrollments(masterDegreeCandidate, curricularCoursesToEnroll);
 
-        deleteRemainingEnrollments(persistentCandidateEnrolment, candidateEnrollmentsToDelete);
+        deleteRemainingEnrollments(candidateEnrollmentsToDelete);
 
     }
 
@@ -80,8 +76,7 @@ public class WriteCandidateEnrolments extends Service {
      * @param candidateEnrollmentsToDelete
      * @throws ExcepcaoPersistencia
      */
-    private void deleteRemainingEnrollments(IPersistentCandidateEnrolment persistentCandidateEnrolment,
-            Collection<CandidateEnrolment> candidateEnrollmentsToDelete) throws ExcepcaoPersistencia {
+    private void deleteRemainingEnrollments(Collection<CandidateEnrolment> candidateEnrollmentsToDelete) throws ExcepcaoPersistencia {
         Iterator iterCandidateEnrollmentsToDelete = candidateEnrollmentsToDelete.iterator();
         while (iterCandidateEnrollmentsToDelete.hasNext()) {
             CandidateEnrolment candidateEnrolmentToDelete = (CandidateEnrolment) iterCandidateEnrollmentsToDelete
@@ -92,8 +87,7 @@ public class WriteCandidateEnrolments extends Service {
                     candidateEnrolmentToDelete);
             candidateEnrolmentToDelete.setCurricularCourse(null);
             candidateEnrolmentToDelete.setMasterDegreeCandidate(null);
-            persistentCandidateEnrolment.deleteByOID(CandidateEnrolment.class,
-                    candidateEnrolmentToDelete.getIdInternal());
+            persistentObject.deleteByOID(CandidateEnrolment.class, candidateEnrolmentToDelete.getIdInternal());
         }
     }
 

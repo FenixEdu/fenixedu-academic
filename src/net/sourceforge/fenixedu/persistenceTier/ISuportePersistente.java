@@ -158,8 +158,6 @@ public interface ISuportePersistente
 
 	public IPersistentExecutionYear getIPersistentExecutionYear();
 
-	public IPersistentSite getIPersistentSite();
-
 	public IPersistentSection getIPersistentSection();
 
 	public IPersistentItem getIPersistentItem();
@@ -211,8 +209,6 @@ public interface ISuportePersistente
 	public IPersistentSummary getIPersistentSummary();
 
 	public IPersistentQualification getIPersistentQualification();
-
-	public IPersistentCandidateEnrolment getIPersistentCandidateEnrolment();
 
 	public IPersistentCurricularCourseEquivalence getIPersistentCurricularCourseEquivalence();
 

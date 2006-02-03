@@ -59,7 +59,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentCurriculum;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEnrollment;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentEvaluationMethod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentProfessorship;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.gesdis.IPersistentCourseReport;
 
@@ -152,8 +151,7 @@ public class ReadCourseInformation extends Service {
                 .getExecutionPeriod(), curricularCourses);
         infoSiteCourseInformation.setInfoSiteEvaluationInformations(infoSiteEvaluationInformations);
 
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        Site site = persistentSite.readByExecutionCourse(executionCourse.getIdInternal());
+        Site site = executionCourse.getSite();
 
         siteView.setComponent(infoSiteCourseInformation);
         ISiteComponent commonComponent = new InfoSiteCommon();

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IFrequentaPersistente;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
@@ -47,8 +46,7 @@ public class ReadStudentsAndMarksByEvaluation extends Service {
                 ExecutionCourse.class, executionCourseCode);
 
         //Site
-        IPersistentSite siteDAO = persistentSupport.getIPersistentSite();
-        final Site site = siteDAO.readByExecutionCourse(executionCourseCode);
+        final Site site = executionCourse.getSite();
 
         //Evaluation
 

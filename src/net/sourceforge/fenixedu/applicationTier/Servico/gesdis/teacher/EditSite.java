@@ -6,9 +6,9 @@ package net.sourceforge.fenixedu.applicationTier.Servico.gesdis.teacher;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSite;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentSite;
 
 /**
  * @author PTRLV
@@ -17,11 +17,10 @@ public class EditSite extends Service {
 
     public Boolean run(InfoSite infoSiteOld, InfoSite infoSiteNew) throws FenixServiceException,
             ExcepcaoPersistencia {
-        IPersistentSite persistentSite = persistentSupport.getIPersistentSite();
-        Site siteOld = persistentSite.readByExecutionCourse(infoSiteOld.getInfoExecutionCourse()
-                .getIdInternal());
+    	final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(ExecutionCourse.class, infoSiteOld.getInfoExecutionCourse().getIdInternal());
+        final Site site = executionCourse.getSite();
 
-        siteOld.edit(infoSiteNew.getInitialStatement(), infoSiteNew.getIntroduction(), infoSiteNew
+        site.edit(infoSiteNew.getInitialStatement(), infoSiteNew.getIntroduction(), infoSiteNew
                 .getMail(), infoSiteNew.getAlternativeSite());
 
         return true;
