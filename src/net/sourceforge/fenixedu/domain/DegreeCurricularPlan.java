@@ -434,4 +434,13 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
 
+    public Branch getBranchByName(final String branchName) {
+        for (final Branch branch : getAreas()) {
+            if (branchName.equals(branch.getName())) {
+                return branch;
+            }
+        }
+        return null;
+    }
+
 }

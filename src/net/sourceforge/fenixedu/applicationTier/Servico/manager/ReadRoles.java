@@ -24,7 +24,7 @@ public class ReadRoles extends Service {
 	public List run() throws FenixServiceException, ExcepcaoPersistencia {
 		List result = null;
 
-		result = (List) CollectionUtils.collect(persistentSupport.getIPersistentRole().readAll(), new Transformer() {
+		result = (List) CollectionUtils.collect(persistentObject.readAll(Role.class), new Transformer() {
 			public Object transform(Object arg0) {
 				return InfoRole.newInfoFromDomain((Role) arg0);
 			}

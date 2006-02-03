@@ -79,7 +79,7 @@ public class SchoolRegistration extends Service {
         person.edit(infoPerson,country);
         person.setPassword(PasswordEncryptor.encryptPassword(infoPerson.getPassword()));
 
-        final Role studentRole = findRole(pRole.readAll(), RoleType.STUDENT);
+        final Role studentRole = findRole((List<Role>) persistentObject.readAll(Role.class), RoleType.STUDENT);
         final Role firstTimeStudentRole = findRole(person.getPersonRoles(), RoleType.FIRST_TIME_STUDENT);
 
         person.addPersonRoles(studentRole);
