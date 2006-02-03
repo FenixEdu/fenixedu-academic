@@ -46,73 +46,73 @@ import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
  */
 public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
-	public GenerateOutgoingSibsPaymentFileByExecutionYearID() {
+    public GenerateOutgoingSibsPaymentFileByExecutionYearID() {
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param executionYear
-	 * @throws FenixServiceException
-	 * @throws ExcepcaoPersistencia 
-	 */
+    /**
+     * 
+     * @param executionYear
+     * @throws FenixServiceException
+     * @throws ExcepcaoPersistencia
+     */
     // TODO: needs full rewrite and simplification...
     public void run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException,
             ExcepcaoPersistencia {
 
-		StringBuilder outgoingSibsPaymentFile = new StringBuilder();
+        StringBuilder outgoingSibsPaymentFile = new StringBuilder();
 
-		ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(
-				ExecutionYear.class, executionYearID);
+        ExecutionYear executionYear = (ExecutionYear) persistentObject.readByOID(ExecutionYear.class,
+                executionYearID);
 
         IPersistentGratuitySituation gratuitySituationDAO = persistentSupport
                 .getIPersistentGratuitySituation();
 
-		IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
-				.getIPersistentInsuranceTransaction();
+        IPersistentInsuranceTransaction insuranceTransactionDAO = persistentSupport
+                .getIPersistentInsuranceTransaction();
 
         InsuranceValue insuranceValue = persistentSupport.getIPersistentInsuranceValue()
                 .readByExecutionYear(executionYear.getIdInternal());
 
-		if (insuranceValue == null) {
-			throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
-		}
+        if (insuranceValue == null) {
+            throw new InsuranceNotDefinedServiceException("error.insurance.notDefinedForThisYear");
+        }
 
         Date insurancePaymentStartDate = Calendar.getInstance().getTime();
         Date insurancePaymentEndDate = paymentEndDate;
 
-		String shortYear = executionYear.getYear().split("/")[0].trim().substring(2);
+        String shortYear = executionYear.getYear().split("/")[0].trim().substring(2);
 
         // read master degree and persistentSupportecialization execution
         // degrees
         List executionDegreeList = persistentSupport.getIPersistentExecutionDegree()
                 .readByExecutionYearAndDegreeType(executionYear.getYear(), DegreeType.MASTER_DEGREE);
 
-		int totalLines = 0;
+        int totalLines = 0;
 
         Set<Integer> studentsWithInsuranceChecked = new HashSet<Integer>();
 
-		// add file header
-		addHeader(outgoingSibsPaymentFile);
+        // add file header
+        addHeader(outgoingSibsPaymentFile);
 
-		// add lines gratuity
-		for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
+        // add lines gratuity
+        for (Iterator iter = executionDegreeList.iterator(); iter.hasNext();) {
 
-			ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
+            ExecutionDegree executionDegree = (ExecutionDegree) iter.next();
 
-			DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+            DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
-			List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
+            List studentCurricularPlanList = degreeCurricularPlan.getStudentCurricularPlans();
 
-			// add insurance lines
-			for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
+            // add insurance lines
+            for (Iterator iterator = studentCurricularPlanList.iterator(); iterator.hasNext();) {
 
-				StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
+                StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) iterator.next();
 
                 if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
                     if (!executionDegree.isFirstYear()) {
-					continue;
-				}
+                        continue;
+                    }
                 }
 
                 Student student = studentCurricularPlan.getStudent();
@@ -121,154 +121,159 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
 
                     studentsWithInsuranceChecked.add(student.getIdInternal());
 
-				List insuranceTransactionList = insuranceTransactionDAO
+                    List insuranceTransactionList = insuranceTransactionDAO
                             .readAllNonReimbursedByExecutionYearAndStudent(
                                     executionYear.getIdInternal(), student.getIdInternal());
 
-				if (insuranceTransactionList.size() == 0) {
+                    if (insuranceTransactionList.size() == 0) {
                         // the student hasn't payed the insurance for this
                         // year
-					// yet
-					addLine(outgoingSibsPaymentFile,
-							SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
+                        // yet
+                        addLine(outgoingSibsPaymentFile,
+                                SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
                                 SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear,
                                 student.getNumber(), SibsPaymentCodeFactory
-									.getCode(SibsPaymentType.INSURANCE)
+                                        .getCode(SibsPaymentType.INSURANCE)
                                         + "", insurancePaymentStartDate, insurancePaymentEndDate,
                                 insuranceValue.getAnnualValue(), insuranceValue.getAnnualValue());
 
-					totalLines++;
-				}
+                        totalLines++;
+                    }
 
-			}
+                }
 
-                // Add gratuity lines
-                GratuitySituation gratuitySituation = gratuitySituationDAO
-                        .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
-                                studentCurricularPlan.getIdInternal(), executionDegree
-                                        .getGratuityValues().getIdInternal());
+                GratuityValues gratuityValues = executionDegree.getGratuityValues();
 
-                if (gratuitySituation != null) {
-                    totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation,
-                            shortYear, paymentEndDate);
-                } else {
-                    System.out.println("Student " + student.getNumber()
-                            + " does not have a gratuity situation for year "
-                            + executionDegree.getExecutionYear().getYear() + " Degree "
-                            + executionDegree.getDegreeCurricularPlan().getName());
-			}
+                if (gratuityValues != null) {
 
-		}
+                    // Add gratuity lines
+                    GratuitySituation gratuitySituation = gratuitySituationDAO
+                            .readGratuitySituatuionByStudentCurricularPlanAndGratuityValues(
+                                    studentCurricularPlan.getIdInternal(), executionDegree
+                                            .getGratuityValues().getIdInternal());
+
+                    if (gratuitySituation != null) {
+                        totalLines += addGratuityLines(outgoingSibsPaymentFile, gratuitySituation,
+                                shortYear, paymentEndDate);
+                    } else {
+                        System.out.println("Student " + student.getNumber()
+                                + " does not have a gratuity situation for year "
+                                + executionDegree.getExecutionYear().getYear() + " Degree "
+                                + executionDegree.getDegreeCurricularPlan().getName());
+                    }
+                }
+
+            }
         }
 
-		// add file footer
-		addFooter(outgoingSibsPaymentFile, totalLines);
+        // add file footer
+        addFooter(outgoingSibsPaymentFile, totalLines);
 
-		writeOutgoingSibsPaymentFile(executionYear, outgoingSibsPaymentFile);
-	}
+        writeOutgoingSibsPaymentFile(executionYear, outgoingSibsPaymentFile);
+    }
 
-	/**
-	 * @param outgoingSibsPaymentFile
-	 * @throws FileNotCreatedServiceException
-	 */
-	private void writeOutgoingSibsPaymentFile(ExecutionYear executionYear,
-			StringBuilder outgoingSibsPaymentFile) throws FileNotCreatedServiceException {
-		String year = executionYear.getYear().replace('/', '-');
-		try {
-			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System
-					.getProperty("java.io.tmpdir")
-					+ File.separator + "SIBSPropinas" + year + ".txt", false));
-			bufferedWriter.write(outgoingSibsPaymentFile.toString());
-			bufferedWriter.close();
-		} catch (IOException e) {
-			throw new FileNotCreatedServiceException("error.creating.sibs.outgoing.file", e);
-		}
+    /**
+     * @param outgoingSibsPaymentFile
+     * @throws FileNotCreatedServiceException
+     */
+    private void writeOutgoingSibsPaymentFile(ExecutionYear executionYear,
+            StringBuilder outgoingSibsPaymentFile) throws FileNotCreatedServiceException {
+        String year = executionYear.getYear().replace('/', '-');
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System
+                    .getProperty("java.io.tmpdir")
+                    + File.separator + "SIBSPropinas" + year + ".txt", false));
+            bufferedWriter.write(outgoingSibsPaymentFile.toString());
+            bufferedWriter.close();
+        } catch (IOException e) {
+            throw new FileNotCreatedServiceException("error.creating.sibs.outgoing.file", e);
+        }
 
-	}
+    }
 
-	/**
-	 * @param outgoingSibsPaymentFile
-	 */
-	private void addHeader(StringBuilder outgoingSibsPaymentFile) {
+    /**
+     * @param outgoingSibsPaymentFile
+     */
+    private void addHeader(StringBuilder outgoingSibsPaymentFile) {
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.HEADER_REGISTER_TYPE);
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.FILE_TYPE);
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.ID_SOURCE_INSTITUTION);
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.ID_DESTINATION_INSTITUTION);
-		outgoingSibsPaymentFile.append(simpleDateFormat.format(Calendar.getInstance().getTime()));
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.OMISSION_SEQUENCE_NUMBER);
-		// last file's date that it was sended
-		// it is necessary fill later
-		outgoingSibsPaymentFile.append("00000000");// The responsible person
-		// will add the last send
-		// data
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.OMISSION_SEQUENCE_NUMBER);
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.ENTITY);
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.CURRENCY_CODE);
-		outgoingSibsPaymentFile.append(addCharToStringUntilMax(
-				SibsOutgoingPaymentFileConstants.SPACE_CHAR, "",
-				SibsOutgoingPaymentFileConstants.WHITE_SPACES_IN_HEADER));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.HEADER_REGISTER_TYPE);
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.FILE_TYPE);
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.ID_SOURCE_INSTITUTION);
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.ID_DESTINATION_INSTITUTION);
+        outgoingSibsPaymentFile.append(simpleDateFormat.format(Calendar.getInstance().getTime()));
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.OMISSION_SEQUENCE_NUMBER);
+        // last file's date that it was sended
+        // it is necessary fill later
+        outgoingSibsPaymentFile.append("00000000");// The responsible person
+        // will add the last send
+        // data
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.OMISSION_SEQUENCE_NUMBER);
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.ENTITY);
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.CURRENCY_CODE);
+        outgoingSibsPaymentFile.append(addCharToStringUntilMax(
+                SibsOutgoingPaymentFileConstants.SPACE_CHAR, "",
+                SibsOutgoingPaymentFileConstants.WHITE_SPACES_IN_HEADER));
 
-		outgoingSibsPaymentFile.append("\n");
-	}
+        outgoingSibsPaymentFile.append("\n");
+    }
 
-	/**
-	 * 
-	 * @param totalLines
-	 */
-	private void addFooter(StringBuilder outgoingSibsPaymentFile, int totalLines) {
+    /**
+     * 
+     * @param totalLines
+     */
+    private void addFooter(StringBuilder outgoingSibsPaymentFile, int totalLines) {
 
-		outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.FOOTER_REGISTER_TYPE);
-		outgoingSibsPaymentFile.append(addCharToStringUntilMax(
-				SibsOutgoingPaymentFileConstants.ZERO_CHAR, "" + totalLines,
-				SibsOutgoingPaymentFileConstants.NUMBER_OF_LINES_DESCRIPTOR_LENGTH));
+        outgoingSibsPaymentFile.append(SibsOutgoingPaymentFileConstants.FOOTER_REGISTER_TYPE);
+        outgoingSibsPaymentFile.append(addCharToStringUntilMax(
+                SibsOutgoingPaymentFileConstants.ZERO_CHAR, "" + totalLines,
+                SibsOutgoingPaymentFileConstants.NUMBER_OF_LINES_DESCRIPTOR_LENGTH));
 
-		outgoingSibsPaymentFile.append(addCharToStringUntilMax(
-				SibsOutgoingPaymentFileConstants.SPACE_CHAR, "",
-				SibsOutgoingPaymentFileConstants.WHITE_SPACES_IN_FOOTER));
+        outgoingSibsPaymentFile.append(addCharToStringUntilMax(
+                SibsOutgoingPaymentFileConstants.SPACE_CHAR, "",
+                SibsOutgoingPaymentFileConstants.WHITE_SPACES_IN_FOOTER));
 
-		outgoingSibsPaymentFile.append("\n");
+        outgoingSibsPaymentFile.append("\n");
 
-	}
+    }
 
-	/**
-	 * 
-	 * @param outgoingSibsPaymentFile
-	 * @param gratuitySituation
-	 * @param shortYear
-	 * @throws InsufficientSibsPaymentPhaseCodesServiceException
-	 */
-	private int addGratuityLines(StringBuilder outgoingSibsPaymentFile,
+    /**
+     * 
+     * @param outgoingSibsPaymentFile
+     * @param gratuitySituation
+     * @param shortYear
+     * @throws InsufficientSibsPaymentPhaseCodesServiceException
+     */
+    private int addGratuityLines(StringBuilder outgoingSibsPaymentFile,
             GratuitySituation gratuitySituation, String shortYear, Date totalPaymentEndDate)
-			throws InsufficientSibsPaymentPhaseCodesServiceException {
+            throws InsufficientSibsPaymentPhaseCodesServiceException {
 
-		int totalLinesAdded = 0;
+        int totalLinesAdded = 0;
 
-		if ((gratuitySituation.getRemainingValue() == null)
-				|| (gratuitySituation.getRemainingValue().doubleValue() <= 0)) {
-			// nothing to be done
-			return totalLinesAdded;
-		}
+        if ((gratuitySituation.getRemainingValue() == null)
+                || (gratuitySituation.getRemainingValue().doubleValue() <= 0)) {
+            // nothing to be done
+            return totalLinesAdded;
+        }
 
         Double scholarShipPartValue = getScholarShipPartValue(gratuitySituation);
 
-		if (scholarShipPartValue.doubleValue() <= 0) {
-			// nothing to be done;
-			return totalLinesAdded;
-		}
+        if (scholarShipPartValue.doubleValue() <= 0) {
+            // nothing to be done;
+            return totalLinesAdded;
+        }
 
-		StudentCurricularPlan studentCurricularPlan = gratuitySituation.getStudentCurricularPlan();
+        StudentCurricularPlan studentCurricularPlan = gratuitySituation.getStudentCurricularPlan();
 
-		// add total payment line
-		String sibsPaymentCode = determineTotalPaymentCode(studentCurricularPlan);
+        // add total payment line
+        String sibsPaymentCode = determineTotalPaymentCode(studentCurricularPlan);
 
-		addLine(outgoingSibsPaymentFile, SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
-				SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear, studentCurricularPlan
+        addLine(outgoingSibsPaymentFile, SibsOutgoingPaymentFileConstants.LINE_REGISTER_TYPE,
+                SibsOutgoingPaymentFileConstants.LINE_PROCESSING_CODE, shortYear, studentCurricularPlan
                         .getStudent().getNumber(), sibsPaymentCode, Calendar.getInstance().getTime(),
                 totalPaymentEndDate, scholarShipPartValue, scholarShipPartValue);
 
-		totalLinesAdded++;
+        totalLinesAdded++;
 
         //        
         // Date totalPaymentStartDate =
@@ -356,9 +361,9 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         //
         // }
 
-			return totalLinesAdded;
+        return totalLinesAdded;
 
-			}
+    }
 
     private Double getScholarShipPartValue(GratuitySituation gratuitySituation) {
         Double scholarShipPartValue = null;
@@ -371,195 +376,195 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
             scholarShipPartValue = new Double(gratuitySituation.getRemainingValue().doubleValue()
                     - (gratuitySituation.getGratuityValues().getFinalProofValue() == null ? 0
                             : gratuitySituation.getGratuityValues().getFinalProofValue().doubleValue()));
-		}
+        }
         return scholarShipPartValue;
-	}
+    }
 
-	/**
-	 * 
-	 * @param outgoingSibsPaymentFile
-	 * @param registerType
-	 * @param processingCode
-	 * @param executionYear
-	 * @param studentNumber
-	 * @param sibsPaymentType
-	 * @param startDate
-	 * @param endDate
-	 * @param minValue
-	 * @param maxValue
-	 */
+    /**
+     * 
+     * @param outgoingSibsPaymentFile
+     * @param registerType
+     * @param processingCode
+     * @param executionYear
+     * @param studentNumber
+     * @param sibsPaymentType
+     * @param startDate
+     * @param endDate
+     * @param minValue
+     * @param maxValue
+     */
 
-	public void addLine(StringBuilder outgoingSibsPaymentFile, String registerType,
-			String processingCode, String shortYear, Integer studentNumber, String sibsPaymentCode,
-			Date startDate, Date endDate, Double minValue, Double maxValue) {
+    public void addLine(StringBuilder outgoingSibsPaymentFile, String registerType,
+            String processingCode, String shortYear, Integer studentNumber, String sibsPaymentCode,
+            Date startDate, Date endDate, Double minValue, Double maxValue) {
 
-		if (startDate == null) {
-			startDate = Calendar.getInstance().getTime();
-		}
-		if (endDate == null) {
-			endDate = Calendar.getInstance().getTime();
-		}
+        if (startDate == null) {
+            startDate = Calendar.getInstance().getTime();
+        }
+        if (endDate == null) {
+            endDate = Calendar.getInstance().getTime();
+        }
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
-		outgoingSibsPaymentFile.append(registerType);
-		outgoingSibsPaymentFile.append(processingCode);
+        outgoingSibsPaymentFile.append(registerType);
+        outgoingSibsPaymentFile.append(processingCode);
 
-		// build reference
-		outgoingSibsPaymentFile.append(shortYear);
-		outgoingSibsPaymentFile.append(addCharToStringUntilMax(
-				SibsOutgoingPaymentFileConstants.ZERO_CHAR, studentNumber.toString(),
-				SibsOutgoingPaymentFileConstants.MAX_STUDENT_NUMBER_LENGTH));
-		outgoingSibsPaymentFile.append(sibsPaymentCode);
+        // build reference
+        outgoingSibsPaymentFile.append(shortYear);
+        outgoingSibsPaymentFile.append(addCharToStringUntilMax(
+                SibsOutgoingPaymentFileConstants.ZERO_CHAR, studentNumber.toString(),
+                SibsOutgoingPaymentFileConstants.MAX_STUDENT_NUMBER_LENGTH));
+        outgoingSibsPaymentFile.append(sibsPaymentCode);
 
-		// add end payment date
-		outgoingSibsPaymentFile.append(simpleDateFormat.format(endDate));
+        // add end payment date
+        outgoingSibsPaymentFile.append(simpleDateFormat.format(endDate));
 
-		// add max payment value accepted
-		String paymentValue = buildPaymentValue(maxValue.doubleValue(),
-				SibsOutgoingPaymentFileConstants.INTEGER_PART_LENGTH,
-				SibsOutgoingPaymentFileConstants.DECIMAL_PART_LENGTH);
-		outgoingSibsPaymentFile.append(paymentValue);
+        // add max payment value accepted
+        String paymentValue = buildPaymentValue(maxValue.doubleValue(),
+                SibsOutgoingPaymentFileConstants.INTEGER_PART_LENGTH,
+                SibsOutgoingPaymentFileConstants.DECIMAL_PART_LENGTH);
+        outgoingSibsPaymentFile.append(paymentValue);
 
-		// add start payment date
-		outgoingSibsPaymentFile.append(simpleDateFormat.format(startDate));
+        // add start payment date
+        outgoingSibsPaymentFile.append(simpleDateFormat.format(startDate));
 
-		// add min payment value accepted
-		outgoingSibsPaymentFile.append(paymentValue);
+        // add min payment value accepted
+        outgoingSibsPaymentFile.append(paymentValue);
 
-		outgoingSibsPaymentFile.append(addCharToStringUntilMax(
-				SibsOutgoingPaymentFileConstants.SPACE_CHAR, "",
-				SibsOutgoingPaymentFileConstants.WHITE_SPACES_IN_LINE));
+        outgoingSibsPaymentFile.append(addCharToStringUntilMax(
+                SibsOutgoingPaymentFileConstants.SPACE_CHAR, "",
+                SibsOutgoingPaymentFileConstants.WHITE_SPACES_IN_LINE));
 
-		outgoingSibsPaymentFile.append("\n");
+        outgoingSibsPaymentFile.append("\n");
 
-	}
+    }
 
-	/**
-	 * add a char to the string until reach the max lenth
-	 * 
-	 * @param maximum
-	 *            digits for the number
-	 * @param number
-	 * @return string
-	 */
-	private String addCharToStringUntilMax(char c, String string, int maxlength) {
-		StringBuilder stringComplete = new StringBuilder();
+    /**
+     * add a char to the string until reach the max lenth
+     * 
+     * @param maximum
+     *            digits for the number
+     * @param number
+     * @return string
+     */
+    private String addCharToStringUntilMax(char c, String string, int maxlength) {
+        StringBuilder stringComplete = new StringBuilder();
 
-		int stringLength = 0;
-		if (string != null) {
-			stringLength = string.length();
-		}
+        int stringLength = 0;
+        if (string != null) {
+            stringLength = string.length();
+        }
 
-		for (int i = 0; i < maxlength - stringLength; i++) {
-			stringComplete.append(c);
-		}
-		stringComplete.append(string);
+        for (int i = 0; i < maxlength - stringLength; i++) {
+            stringComplete.append(c);
+        }
+        stringComplete.append(string);
 
-		return stringComplete.toString();
-	}
+        return stringComplete.toString();
+    }
 
-	/**
-	 * Build the value that it has 8 digits in int part, and it has 2 digits in
-	 * decimal part
-	 * 
-	 * @return
-	 */
-	private String buildPaymentValue(double value, int intDigits, int decDigits) {
-		StringBuilder stringBuffer = new StringBuilder();
+    /**
+     * Build the value that it has 8 digits in int part, and it has 2 digits in
+     * decimal part
+     * 
+     * @return
+     */
+    private String buildPaymentValue(double value, int intDigits, int decDigits) {
+        StringBuilder stringBuffer = new StringBuilder();
 
-		String valueString = String.valueOf(value);
-		String intPart = valueString.substring(0, valueString.indexOf('.'));
-		String decPart = valueString.substring(valueString.indexOf('.') + 1);
+        String valueString = String.valueOf(value);
+        String intPart = valueString.substring(0, valueString.indexOf('.'));
+        String decPart = valueString.substring(valueString.indexOf('.') + 1);
 
-		for (int i = 0; i < intDigits - intPart.length(); i++) {
-			stringBuffer.append(SibsOutgoingPaymentFileConstants.ZERO_CHAR);
-		}
-		stringBuffer.append(intPart);
+        for (int i = 0; i < intDigits - intPart.length(); i++) {
+            stringBuffer.append(SibsOutgoingPaymentFileConstants.ZERO_CHAR);
+        }
+        stringBuffer.append(intPart);
 
-		if (decPart.length() > decDigits) {
-			decPart = decPart.substring(0, decDigits);
-		}
-		stringBuffer.append(decPart);
-		for (int i = 0; i < decDigits - decPart.length(); i++) {
-			stringBuffer.append(SibsOutgoingPaymentFileConstants.ZERO_CHAR);
-		}
+        if (decPart.length() > decDigits) {
+            decPart = decPart.substring(0, decDigits);
+        }
+        stringBuffer.append(decPart);
+        for (int i = 0; i < decDigits - decPart.length(); i++) {
+            stringBuffer.append(SibsOutgoingPaymentFileConstants.ZERO_CHAR);
+        }
 
-		return stringBuffer.toString();
-	}
+        return stringBuffer.toString();
+    }
 
-	private String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
+    private String determineTotalPaymentCode(StudentCurricularPlan studentCurricularPlan) {
 
-		int sibsPaymentCode = 0;
-		Specialization specialization = studentCurricularPlan.getSpecialization();
+        int sibsPaymentCode = 0;
+        Specialization specialization = studentCurricularPlan.getSpecialization();
 
-		if (specialization.equals(Specialization.MASTER_DEGREE)) {
+        if (specialization.equals(Specialization.MASTER_DEGREE)) {
 
-			sibsPaymentCode = SibsPaymentCodeFactory
-					.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL);
+            sibsPaymentCode = SibsPaymentCodeFactory
+                    .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL);
 
-		} else {
+        } else {
 
-			sibsPaymentCode = SibsPaymentCodeFactory
-					.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL);
-		}
+            sibsPaymentCode = SibsPaymentCodeFactory
+                    .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL);
+        }
 
-		// IMPORTANT NOTE: In future integrated master degree codes should be
-		// inserted here
+        // IMPORTANT NOTE: In future integrated master degree codes should be
+        // inserted here
 
-		return sibsPaymentCode + "";
-	}
+        return sibsPaymentCode + "";
+    }
 
-	/**
-	 * @param paymentPhaseNumber
-	 * @param studentCurricularPlan
-	 * @return
-	 */
-	private String determinePaymentPhaseCode(int paymentPhaseNumber,
-			StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
-			throws InsufficientSibsPaymentPhaseCodesServiceException {
+    /**
+     * @param paymentPhaseNumber
+     * @param studentCurricularPlan
+     * @return
+     */
+    private String determinePaymentPhaseCode(int paymentPhaseNumber,
+            StudentCurricularPlan studentCurricularPlan, GratuitySituation gratuitySituation)
+            throws InsufficientSibsPaymentPhaseCodesServiceException {
 
-		int sibsPaymentCode = 0;
+        int sibsPaymentCode = 0;
 
-		if (paymentPhaseNumber == 1) {
-			if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+        if (paymentPhaseNumber == 1) {
+            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
 
-				sibsPaymentCode = SibsPaymentCodeFactory
-						.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
+                sibsPaymentCode = SibsPaymentCodeFactory
+                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE);
 
-			} else {
+            } else {
 
-				sibsPaymentCode = SibsPaymentCodeFactory
-						.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
-			}
-			// IMPORTANT NOTE: In future integrated master degree codes should
-			// be inserted here
+                sibsPaymentCode = SibsPaymentCodeFactory
+                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE);
+            }
+            // IMPORTANT NOTE: In future integrated master degree codes should
+            // be inserted here
 
-		} else if (paymentPhaseNumber == 2) {
+        } else if (paymentPhaseNumber == 2) {
 
-			if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
+            if (studentCurricularPlan.getSpecialization().equals(Specialization.SPECIALIZATION)) {
 
-				sibsPaymentCode = SibsPaymentCodeFactory
-						.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
+                sibsPaymentCode = SibsPaymentCodeFactory
+                        .getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE);
 
-			} else {
+            } else {
 
-				sibsPaymentCode = SibsPaymentCodeFactory
-						.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
-			}
+                sibsPaymentCode = SibsPaymentCodeFactory
+                        .getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE);
+            }
 
-			// IMPORTANT NOTE: In future integrated master degree codes should
-			// be inserted here
+            // IMPORTANT NOTE: In future integrated master degree codes should
+            // be inserted here
 
-		} else {
-			throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
-					.getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
-					+ " - "
-					+ gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
-							.getYear());
-		}
+        } else {
+            throw new InsufficientSibsPaymentPhaseCodesServiceException(gratuitySituation
+                    .getGratuityValues().getExecutionDegree().getDegreeCurricularPlan().getName()
+                    + " - "
+                    + gratuitySituation.getGratuityValues().getExecutionDegree().getExecutionYear()
+                            .getYear());
+        }
 
-		return sibsPaymentCode + "";
+        return sibsPaymentCode + "";
 
-	}
+    }
 }
