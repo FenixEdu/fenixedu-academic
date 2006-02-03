@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
@@ -86,8 +85,7 @@ public class PersonLoader extends BaseLoader {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentSupport.iniciarTransaccao();
 
-        final IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
-        final Role personRole = persistentRole.readByRoleType(RoleType.PERSON);
+        final Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
         final List<Person> peopleWithPersonRole = personRole.getAssociatedPersons();
 
 		final HSSFSheet sheet = workbook.getSheet(sheetname);

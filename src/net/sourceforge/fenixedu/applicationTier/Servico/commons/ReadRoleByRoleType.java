@@ -12,6 +12,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadRoleByRoleType extends Service {
 
     public Role run(RoleType roleType) throws ExcepcaoPersistencia{
-        return persistentSupport.getIPersistentRole().readByRoleType(roleType);              
+        return Role.getRoleByRoleType(roleType);              
     }
 }

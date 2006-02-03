@@ -25,14 +25,14 @@
 				codeProducerClassName="net.sourceforge.fenixedu.accessControl.FenixAccessControlCallsGenerator"
 				accessControlAnnotation="net.sourceforge.fenixedu.accessControl.Checked">
 			<classpath>
-	      <pathelement path="${build.home.webinf.classes}"/>
-		      <fileset dir="lib">
-						<include name="**/*.jar"/>
-          </fileset>
-      </classpath>
-			
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="lib">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
 			<fileset dir="${build.home.webinf.classes}">
 				<include name="**/domain/*.*"/>
+				<exclude name="**/domain/RootDomainObject*"/>
 			</fileset>
 		</injectAccessControl>
 	</target>
@@ -51,6 +51,7 @@
 			
 			<fileset dir="${build.home.webinf.classes}">
 				<include name="**/domain/*.*"/>
+				<exclude name="**/domain/RootDomainObject*"/>
 			</fileset>
 		</injectAccessControl>
 	</target>

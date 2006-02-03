@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCoordinator;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 public class AddCoordinator extends Service {
@@ -47,8 +46,7 @@ public class AddCoordinator extends Service {
                     .readExecutionDegreesByTeacher(teacher.getIdInternal());
             if (executionDegreesTeacherList == null || executionDegreesTeacherList.size() <= 0) {
                 // Role Coordinator
-                IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
-                Role role = persistentRole.readByRoleType(RoleType.COORDINATOR);
+                Role role = Role.getRoleByRoleType(RoleType.COORDINATOR);
 
                 Person person = teacher.getPerson();
 

@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.StudentKind;
@@ -193,7 +194,7 @@ public class RegisterCandidate extends Service {
                 EntryPhase.FIRST_PHASE_OBJ, DegreeType.MASTER_DEGREE);
         student.setInterruptedStudies(false);
 
-        person.addPersonRoles(persistentSupport.getIPersistentRole().readByRoleType(RoleType.STUDENT));
+        person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
         return student;
     }
 

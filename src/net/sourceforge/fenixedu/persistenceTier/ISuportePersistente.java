@@ -190,8 +190,6 @@ public interface ISuportePersistente
 
 	public IPersistentCurricularCourseScope getIPersistentCurricularCourseScope();
 
-	public IPersistentRole getIPersistentRole();
-
 	public IPersistentPersonRole getIPersistentPersonRole();
 
 	public IPersistentRestriction getIPersistentRestriction();

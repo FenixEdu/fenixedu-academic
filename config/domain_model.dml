@@ -129,6 +129,10 @@ valueType net.sourceforge.fenixedu.domain.util.LogicOperators    as LogicOperato
 class net.sourceforge.fenixedu.domain.DomainObject {
 	Integer ackOptLock;
 	Integer idInternal;
+	Integer keyRootDomainObject;
+}
+
+class net.sourceforge.fenixedu.domain.RootDomainObject extends net.sourceforge.fenixedu.domain.DomainObject {
 }
 
 class net.sourceforge.fenixedu.domain.teacher.Advise extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5906,3 +5910,14 @@ relation EventEventName{
 
 
 
+/*
+ * Relations definitions of relations to RootDomainObject
+ * 
+ */
+
+relation RootDomainObjectRole {
+    net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+    net.sourceforge.fenixedu.domain.Role playsRole roles {
+    	multiplicity *;
+    }
+}

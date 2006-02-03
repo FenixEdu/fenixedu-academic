@@ -39,7 +39,7 @@ public class InsertNewProjectAccess extends Service {
             isCostCenter = Boolean.TRUE;
         }
         if (!hasProjectsManagerRole(person, roleType)) {
-            person.getPersonRoles().add(persistentSupport.getIPersistentRole().readByRoleType(roleType));
+            person.getPersonRoles().add(Role.getRoleByRoleType(roleType));
         }
         List projectCodes = persistentSupport.getIPersistentProjectAccess().readProjectCodesByPersonUsernameAndCoordinator(username, coordinatorCode, true);
         List projectList = po.getIPersistentProject().readByCoordinatorAndNotProjectsCodes(coordinatorCode, projectCodes);
@@ -73,7 +73,7 @@ public class InsertNewProjectAccess extends Service {
         }
 
         if (!hasProjectsManagerRole(person, roleType)) {
-            person.getPersonRoles().add(persistentSupport.getIPersistentRole().readByRoleType(roleType));
+            person.getPersonRoles().add(Role.getRoleByRoleType(roleType));
         }
 
         for (int i = 0; i < projectCodes.length; i++) {

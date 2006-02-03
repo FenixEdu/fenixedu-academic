@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -43,8 +42,7 @@ public class TeacherLoader extends PersonLoader {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentSupport.iniciarTransaccao();
 
-        final IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
-        final Role teacherRole = persistentRole.readByRoleType(RoleType.TEACHER);
+        final Role teacherRole = Role.getRoleByRoleType(RoleType.TEACHER);
 
 		final HSSFSheet sheet = workbook.getSheet(sheetname);
 		for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {

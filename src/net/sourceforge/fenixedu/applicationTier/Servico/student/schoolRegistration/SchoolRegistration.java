@@ -26,7 +26,6 @@ import net.sourceforge.fenixedu.domain.student.ResidenceCandidacies;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCountry;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionYear;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 
 /**
@@ -64,7 +63,6 @@ public class SchoolRegistration extends Service {
             throws ExcepcaoPersistencia {
 
         final IPersistentCountry persistentCountry = persistentSupport.getIPersistentCountry();
-        final IPersistentRole pRole = persistentSupport.getIPersistentRole();
 
         Country country = null;
 

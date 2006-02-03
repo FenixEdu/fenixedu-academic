@@ -30,7 +30,7 @@ public class CreateDegreeCurricularPlan extends Service {
         }
 
         // this is needed in the domain to give this role to the creator
-        final Role bolonhaRole = persistentSupport.getIPersistentRole().readByRoleType(RoleType.BOLONHA_MANAGER);
+        final Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER);
         degree.createDegreeCurricularPlan(name, gradeScale, creator, bolonhaRole);
     }
 

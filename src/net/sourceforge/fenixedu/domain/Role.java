@@ -12,6 +12,15 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
  */
 public class Role extends Role_Base implements Comparable {
 
+    public static Role getRoleByRoleType(final RoleType roleType) {
+        for (final Role role : RootDomainObject.instance.getRoles()) {
+            if (role.getRoleType() == roleType) {
+                return role;
+            }
+        }
+        return null;
+    }
+
     public Role() {
         super();
     }

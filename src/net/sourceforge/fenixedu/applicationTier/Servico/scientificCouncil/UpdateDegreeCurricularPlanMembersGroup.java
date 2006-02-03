@@ -22,7 +22,7 @@ public class UpdateDegreeCurricularPlanMembersGroup extends Service {
         List<Person> toRemove = materializePersons(persistentSupport, remove);
         List<Person> finalList = new ArrayList<Person>();
         
-        Role bolonhaRole = persistentSupport.getIPersistentRole().readByRoleType(RoleType.BOLONHA_MANAGER); 
+        Role bolonhaRole = Role.getRoleByRoleType(RoleType.BOLONHA_MANAGER); 
         
         Group group = degreeCurricularPlan.getCurricularPlanMembersGroup();
         if (group == null) {

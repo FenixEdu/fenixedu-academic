@@ -82,7 +82,7 @@ public class CreateMasterDegreeCandidate extends Service {
 
         List<Person> persons = (List<Person>) persistentSupport.getIPessoaPersistente().readAll(Person.class);
 
-        Role personRole = persistentSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
+        Role personRole = Role.getRoleByRoleType(RoleType.PERSON);
 
         if (person == null) {
             // Create the new Person
@@ -117,7 +117,7 @@ public class CreateMasterDegreeCandidate extends Service {
         }
 
         if (!person.hasRole(RoleType.MASTER_DEGREE_CANDIDATE)) {
-            person.addPersonRoles(persistentSupport.getIPersistentRole().readByRoleType(
+            person.addPersonRoles(Role.getRoleByRoleType(
                     RoleType.MASTER_DEGREE_CANDIDATE));
         }
         masterDegreeCandidate.setPerson(person);

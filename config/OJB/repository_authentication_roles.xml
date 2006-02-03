@@ -10,37 +10,36 @@
         jdbc-type="INTEGER"
         primarykey="true"
         autoincrement="true"
-        id="1"
     />
-
+    <field-descriptor
+        name="keyRootDomainObject"
+        column="KEY_ROOT_DOMAIN_OBJECT"
+        jdbc-type="INTEGER"
+    />
     <field-descriptor
         name="roleType"
         column="ROLE_TYPE"
         nullable = "false"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaRoleType2SqlRoleTypeFieldConversion"
         jdbc-type="VARCHAR"
-        id="2"
     />
     <field-descriptor 
         name="portalSubApplication"
         column="PORTAL_SUB_APPLICATION"
 		nullable="true"
         jdbc-type="VARCHAR"
-        id="3"
     />
     <field-descriptor 
         name="page"
         column="PAGE"
 		nullable="true"
         jdbc-type="VARCHAR"
-        id="3"
     />
     <field-descriptor 
         name="pageNameProperty"
         column="PAGE_NAME_PROPERTY"
 		nullable="true"
         jdbc-type="VARCHAR"
-        id="4"
     />
       <field-descriptor
       	name="ackOptLock"
@@ -48,6 +47,12 @@
       	jdbc-type="INTEGER"
       	locking="false"
       />
+     <reference-descriptor auto-retrieve="false"
+         	name="rootDomainObject" class-ref="net.sourceforge.fenixedu.domain.RootDomainObject"
+			>
+		<foreignkey field-ref="keyRootDomainObject"/>
+	</reference-descriptor>
+
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 		name="associatedPersons"
 		element-class-ref="net.sourceforge.fenixedu.domain.Person"

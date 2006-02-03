@@ -53,7 +53,7 @@ public class SearchPerson extends Service {
                     : null;
 
             if (roleType != null && roleType.length() > 0) {
-                role = (Role) persistentSupport.getIPersistentRole().readByRoleType(RoleType.valueOf(roleType));
+                role = (Role) Role.getRoleByRoleType(RoleType.valueOf(roleType));
             }
 
             if (degreeId != null) {
@@ -129,7 +129,7 @@ public class SearchPerson extends Service {
 
         Role roleBd = searchParameters.getRole();
         if (roleBd == null) {
-            roleBd = persistentSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
+            roleBd = Role.getRoleByRoleType(RoleType.PERSON);
         }
 
         if ((roleBd.getRoleType() == RoleType.TEACHER) && (searchParameters.getDepartment() != null)) {

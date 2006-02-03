@@ -9,10 +9,10 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainFactory;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.grant.IPersistentGrantOwner;
 
 public class EditGrantOwner extends Service {
@@ -94,11 +94,10 @@ public class EditGrantOwner extends Service {
 
 			grantOwner = DomainFactory.makeGrantOwner();
 
-			IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
 			if (!person.hasRole(RoleType.PERSON)) {
-				person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.PERSON));
+				person.getPersonRoles().add(Role.getRoleByRoleType(RoleType.PERSON));
 			}
-			person.getPersonRoles().add(persistentRole.readByRoleType(RoleType.GRANT_OWNER));
+			person.getPersonRoles().add(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
 		}
 		grantOwner = prepareGrantOwner(grantOwner, person, infoGrantOwner, pGrantOwner);
 

@@ -43,7 +43,7 @@ public class CreateAdvisory extends Service {
         advisory.setMessage(infoAdvisory.getMessage());
         advisory.setSender(infoAdvisory.getSender());
      
-        Role role = persistentSupport.getIPersistentRole().readByRoleType(RoleType.PERSON);
+        Role role = Role.getRoleByRoleType(RoleType.PERSON);
         List<Person> people = role.getAssociatedPersons();
               
         for (Person person : people) {

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentRole;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
@@ -46,8 +45,7 @@ public class StudentLoader extends PersonLoader {
         final ISuportePersistente persistentSupport = PersistenceSupportFactory.getDefaultPersistenceSupport();
         persistentSupport.iniciarTransaccao();
 
-        final IPersistentRole persistentRole = persistentSupport.getIPersistentRole();
-        final Role studentRole = persistentRole.readByRoleType(RoleType.STUDENT);
+        final Role studentRole = Role.getRoleByRoleType(RoleType.STUDENT);
 
 		final HSSFSheet sheet = workbook.getSheet(sheetname);
 		for (int i = sheet.getFirstRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
