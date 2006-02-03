@@ -29,6 +29,18 @@ width: auto;
 		<h:outputText value="</p>" escape="false"/>
 	</h:panelGroup>
 	
+	<h:outputText value="<ul class='nobullet padding1 indent0 mbottom0'>" escape="false"/>	
+	<h:outputText value="<li><strong>#{bolonhaBundle['name']} (pt): </strong>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
+	<h:outputText value="<li><strong>#{bolonhaBundle['nameEn']} (en): </strong>" escape="false"/>
+	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
+	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
+		<h:outputText value="<li><strong>#{bolonhaBundle['area']}: </strong>" escape="false"/>
+		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}</li>" escape="false"/>
+	</fc:dataRepeater>
+	<h:outputText value="</ul>" escape="false"/>	
+	
+	
 	<h:messages infoClass="success0" errorClass="error0" layout="table"/>
 	
 	<h:outputText value="<div class='simpleblock4'>" escape="false"/>
