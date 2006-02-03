@@ -50,9 +50,7 @@
 <logic:notPresent name='<%= InquiriesUtil.STUDENT_ATTENDS %>'>
 	<logic:present name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>'>
 		<bean:define id="messageKey" name='<%= InquiriesUtil.INQUIRY_MESSAGE_KEY %>' />
-		<h2>
-			<bean:message key='<%= "" + messageKey %>' bundle="INQUIRIES_RESOURCES"/>
-		</h2>
+		<p><strong class="attention"><bean:message key='<%= "" + messageKey %>' bundle="INQUIRIES_RESOURCES"/></strong></p>
 	</logic:present>
 </logic:notPresent>
 
