@@ -110,7 +110,7 @@ padding-right: 10px;
 
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
 	<h:outputText value="<p class='mbottom0'><em>#{scouncilBundle['portuguese']}: </em></p>" escape="false"/>
-	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
+	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['objectives']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
 	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectives}" linebreak="true"/>
@@ -128,8 +128,8 @@ padding-right: 10px;
 	<h:outputText value="</td></tr>" escape="false"/>
 	<h:outputText value="</table>" escape="false"/>
 	
-	<h:outputText value="<p class='mbottom0'><em>#{scouncilBundle['english']}:</em></p>" escape="false"/>
-	<h:outputText value="<table class='showinfo1 highlight2'>" escape="false"/>
+	<h:outputText value="<p class='mbottom0'><em>#{scouncilBundle['english']}: </em></p>" escape="false"/>
+	<h:outputText value="<table class='showinfo1 emphasis2'>" escape="false"/>
 	<h:outputText value="<tr><th>#{scouncilBundle['objectivesEn']}:</th>" escape="false"/>
 	<h:outputText value="<td>" escape="false"/>
 	<fc:extendedOutputText value="#{CompetenceCourseManagement.competenceCourse.objectivesEn}" linebreak="true"/>
