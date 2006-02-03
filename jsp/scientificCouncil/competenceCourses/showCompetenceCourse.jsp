@@ -135,8 +135,8 @@ padding-right: 10px;
 	<h:outputText value="</div>" escape="false"/>
 	
 	<h:outputText value="<div class='simpleblock3 mtop2'>" escape="false"/>
-	<h:outputText value="<p class='mbottom0'><em>#{bolonhaBundle['bibliographicReference']}:</em></p>" escape="false"/>	
-	<h:outputText value="<h3>#{enumerationBundle['MAIN']}</h3>" escape="false"/>
+	<h:outputText value="<h3 class='mbottom0'>#{bolonhaBundle['bibliographicReference']}</h3>" escape="false"/>	
+	<h:outputText value="<p><b>#{enumerationBundle['MAIN']}</b></p>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.mainBibliographicReferences}">
 		<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em><br/>" escape="false"/>
 	</h:panelGroup>	
@@ -144,7 +144,7 @@ padding-right: 10px;
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
 			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
 			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
-			<h:outputText value="#{bibliographicReference.title}</li>" escape="false"/>
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
 			
 			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
@@ -155,14 +155,11 @@ padding-right: 10px;
 			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['url']}:</span>" escape="false"/>
-			<h:outputLink value="#{bibliographicReference.url}" target="_blank">
-				<h:outputText value="#{bibliographicReference.url}"/>
-			</h:outputLink>
-			<h:outputText value="</li></ul>" escape="false"/>
+			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
-	</fc:dataRepeater>	
-	<h:outputText value="<h3>#{enumerationBundle['SECONDARY']}</h3>" escape="false"/>
+	</fc:dataRepeater>
+	
+	<h:outputText value="<p><b>#{enumerationBundle['SECONDARY']}</b></p>" escape="false"/>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.secondaryBibliographicReferences}">
 		<h:outputText value="<em>#{bolonhaBundle['noBibliographicReferences']}</em><br/>" escape="false"/>
 	</h:panelGroup>	
@@ -170,8 +167,8 @@ padding-right: 10px;
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
 			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
 			<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
-			<h:outputText value="#{bibliographicReference.title}</li>" escape="false"/>
-			
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
+				
 			<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
 			
@@ -181,15 +178,11 @@ padding-right: 10px;
 			<h:outputText value="<li><span>#{bolonhaBundle['reference']}:</span>" escape="false"/>
 			<h:outputText value="#{bibliographicReference.reference}</li>" escape="false"/>
 			
-			<h:outputText value="<li><span>#{bolonhaBundle['url']}:</span>" escape="false"/>
-			<h:outputLink value="#{bibliographicReference.url}" target="_blank">
-				<h:outputText value="#{bibliographicReference.url}"/>
-			</h:outputLink>
-			<h:outputText value="</li></ul>" escape="false"/>
+			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
 	</fc:dataRepeater>
-	<h:outputText value="</div>" escape="false" />
-
+	<h:outputText value="</div>" escape="false"/>
+	
 	<h:form>
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
