@@ -15,6 +15,18 @@
 		<f:param value="#{bolonhaBundle['curricularPlan']}"/>
 	</h:outputFormat>
 
+	<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+		<h:outputText value="<br/><b>#{bolonhaBundle['groupMembers']}</b> (#{bolonhaBundle['groupMembersExplanation']}):<br/>" escape="false" />
+		<h:dataTable value="#{CurricularPlansMembersManagementBackingBean.groupMembersLabels}" var="memberLabel">
+			<h:column>
+				<h:outputText value="#{memberLabel}" escape="false"/>
+			</h:column>
+		</h:dataTable>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{empty CurricularPlansMembersManagementBackingBean.groupMembersLabels}">
+		<h:outputText value="<br/><i>#{bolonhaBundle['label.empty.curricularPlanGroup.members']}</i><br/>" escape="false" />
+	</h:panelGroup>
+
 	<h:outputText value="<br/><br/>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
 	<h:outputLink value="viewCurricularPlan.faces">
 		<h:outputText value="#{bolonhaBundle['groups']}" />
