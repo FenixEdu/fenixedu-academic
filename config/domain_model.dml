@@ -2776,6 +2776,22 @@ class net.sourceforge.fenixedu.domain.research.Project extends net.sourceforge.f
 	YearMonthDay endDate;
 }
 
+class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourceforge.fenixedu.domain.DomainObject{
+	String eventLocation;
+	YearMonthDay startDate;
+	YearMonthDay endDate;
+	Boolean feeOrFree;
+}
+
+class net.sourceforge.fenixedu.domain.research.event.EventName extends net.sourceforge.fenixedu.domain.DomainObject{
+	String name;
+	String translation;
+}
+
+class net.sourceforge.fenixedu.domain.research.event.EventType extends net.sourceforge.fenixedu.domain.DomainObject{
+}
+
+
 /*
  * Relations definitions
  * 
@@ -5848,3 +5864,45 @@ relation DegreeModuleRestrictionDoneDegreeModule {
 	}
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole doneDegreeModule;
 }
+
+relation ProjectEvent {
+	net.sourceforge.fenixedu.domain.research.Project playsRole projects {
+		multiplicity *;
+	}
+    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
+    	multiplicity *;
+    }
+}
+
+relation UnitEvent {
+    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
+    	multiplicity *;
+    }
+}
+
+relation ResearcherEvent {
+    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.research.Researcher playsRole researchers {
+    	multiplicity *;
+    }
+}
+
+relation EventEventType{
+    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
+    	multiplicity *;
+    }
+    net.sourceforge.fenixedu.domain.research.event.EventType playsRole type;
+}
+
+relation EventEventName{
+    net.sourceforge.fenixedu.domain.research.event.Event playsRole event;
+    net.sourceforge.fenixedu.domain.research.event.EventName playsRole name;
+}
+
+
+

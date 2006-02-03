@@ -76,8 +76,73 @@
 		<fk-pointing-to-element-class column="KEY_UNIT"/>
 	</collection-descriptor>
 	
-	
 </class-descriptor>
 
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.event.Event" 
+	table="RESEARCH_EVENT">
+	
+	<field-descriptor
+         name="idInternal"
+         column="ID_INTERNAL"
+         jdbc-type="INTEGER"
+         primarykey="true"
+         autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="startDate"
+		column="START_DATE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>
+	
+	<field-descriptor
+		name="endDate"
+		column="END_DATE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+	/>
+	
+	<field-descriptor
+		name="location"
+		column="LOCATION"
+		jdbc-type="VARCHAR"
+	/>
+
+	<field-descriptor
+		name="feeOrFree"
+		column="FEE_OR_FREE"
+		jdbc-type="INTEGER"
+	/>
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="projects"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.Project"
+			indirection-table="PROJECT_EVENT"
+			>
+		<fk-pointing-to-this-class column="KEY_EVENT"/>
+		<fk-pointing-to-element-class column="KEY_PROJECT"/>
+	</collection-descriptor>
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="units"
+			element-class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"
+			indirection-table="UNIT_EVENT"
+			>
+		<fk-pointing-to-this-class column="KEY_EVENT"/>
+		<fk-pointing-to-element-class column="KEY_UNIT"/>
+	</collection-descriptor>
+
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="researchers"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.Researcher"
+			indirection-table="RESEARCHER_EVENT"
+			>
+		<fk-pointing-to-this-class column="KEY_EVENT"/>
+		<fk-pointing-to-element-class column="KEY_RESEARCHER"/>
+	</collection-descriptor>
+	
+</class-descriptor>
 
   
