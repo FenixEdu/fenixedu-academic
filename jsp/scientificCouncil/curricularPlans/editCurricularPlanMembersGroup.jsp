@@ -36,7 +36,8 @@
 		</h:panelGrid>
 
 		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.departmentEmployees}">
-			<h:outputText value="#{scouncilBundle['departmentMembersList']}:" />
+			<h:outputText value="#{scouncilBundle['departmentMembersList']}:" escape="false"/>
+			<h:commandLink value="<br/><br/>#{scouncilBundle['addPersons']}<br/><br/>" actionListener="#{CurricularPlansMembersManagementBackingBean.addMembers}" />
 			<h:selectManyCheckbox value="#{CurricularPlansMembersManagementBackingBean.selectedPersonsIDsToAdd}" layout="pageDirection">
 				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.departmentEmployees}"  />
 			</h:selectManyCheckbox>
