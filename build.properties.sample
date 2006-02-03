@@ -355,7 +355,7 @@ cms.mailer.password=xptze
 #----------------------------------------------
 authenticationService=net.sourceforge.fenixedu.applicationTier.Servico.Authenticate
 changePassService=net.sourceforge.fenixedu.applicationTier.Servico.person.ChangePassword
-password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordKerberos
+password.generator=net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase
 #
 #
 #------------------------------------------------------------------------------
