@@ -20,6 +20,18 @@
 			</fc:selectOneMenu>
 		</h:panelGrid>
 
+		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
+			<h:outputText value="<br/><b>#{scouncilBundle['groupMembers']}</b> #{scouncilBundle['label.group.members.explanation']}:<br/>" escape="false" />
+			<h:dataTable value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
+				<h:column>
+					<h:outputText value="#{memberLabel}" escape="false"/>
+				</h:column>
+			</h:dataTable>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels}">
+			<h:outputText value="<br/><i>#{scouncilBundle['label.empty.group.members']}</i><br/>" escape="false" />
+		</h:panelGroup>
+
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
 			<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
 				<h:column>
@@ -63,15 +75,6 @@
 						</h:dataTable>
 						<h:outputText value="</ul>" escape="false"/>
 					</h:panelGroup>
-				</h:column>
-			</h:dataTable>
-		</h:panelGroup>
-		
-		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><b>#{scouncilBundle['groupMembers']}</b> #{scouncilBundle['label.group.members.explanation']}:<br/>" escape="false" />
-			<h:dataTable value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
-				<h:column>
-					<h:outputText value="#{memberLabel}" escape="false"/>
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
