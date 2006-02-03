@@ -10,10 +10,10 @@
 
 	<h:outputText value="<em>#{CompetenceCourseManagement.personDepartment.realName}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['set.param']}</h2>" rendered="#{CompetenceCourseManagement.action == 'create'}" escape="false">
-	 	<f:param value=" #{bolonhaBundle['setCompetenceCourseAdditionalInformation']}"/>
+	 	<f:param value=" #{bolonhaBundle['additionalInformation']}"/>
 	</h:outputFormat>
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']}</h2>" rendered="#{CompetenceCourseManagement.action == 'edit'}" escape="false">
-		<f:param value=" #{bolonhaBundle['setCompetenceCourseAdditionalInformation']}"/>
+		<f:param value=" #{bolonhaBundle['additionalInformation']}"/>
 	</h:outputFormat>
 
 	<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
@@ -34,13 +34,6 @@
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}</li>" escape="false"/>
 	<h:outputText value="<li><strong>#{bolonhaBundle['nameEn']} (en): </strong>" escape="false"/>
 	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.nameEn}</li>" escape="false" />
-	<h:outputText value="<li><strong>#{bolonhaBundle['acronym']}: </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.competenceCourse.acronym}</li>" escape="false"/>	
-	<h:outputText value="<li><strong>#{bolonhaBundle['type']}: </strong>" escape="false"/>
-	<h:outputText value="#{bolonhaBundle['basic']}</li>" rendered="#{CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
-	<h:outputText value="#{bolonhaBundle['nonBasic']}</li>" rendered="#{!CompetenceCourseManagement.competenceCourse.basic}" escape="false"/>
-	<h:outputText value="<li><strong>#{bolonhaBundle['department']}: </strong>" escape="false"/>
-	<h:outputText value="#{CompetenceCourseManagement.personDepartment.realName}</li>" escape="false"/>
 	<fc:dataRepeater value="#{CompetenceCourseManagement.competenceCourse.unit.parentUnits}" var="scientificAreaUnit">
 		<h:outputText value="<li><strong>#{bolonhaBundle['area']}: </strong>" escape="false"/>
 		<h:outputText value="#{scientificAreaUnit.name} > #{CompetenceCourseManagement.competenceCourse.unit.name}</li>" escape="false"/>
