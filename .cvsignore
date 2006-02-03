@@ -68,3 +68,8 @@ build.properties.tests
 plogs
 zbuild
 build.properties.isa
+check-build-properties.sh
+.fenix-scripts
+build-clean.sh
+jcoverage.ser
+run-db-operations.sh

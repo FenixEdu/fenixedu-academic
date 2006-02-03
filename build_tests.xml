@@ -11,6 +11,7 @@
 
     <property name="docs" location="docs" />
     <property name="report.tests" location="${docs}/tests" />
+    <property name="report.coverage" location="${report.tests}/coverage" />
 
     <property name="lib" location="lib" />
 
@@ -39,8 +40,8 @@
             <formatter type="plain" usefile="false"/>
             <batchtest fork="yes">
                 <fileset dir="${src_tests}">
-				   	<include name="**/*Test.java"/>
-				</fileset>
+			<include name="**/*Website*Test.java"/>
+		</fileset>
             </batchtest>
             <classpath>
                 <pathelement path="${build.home.webinf.classes}"/>
@@ -103,4 +104,35 @@
     	</delete>
     </target>
 
+
+<taskdef name="instrument" classname="com.jcoverage.ant.InstrumentTask">
+	<classpath>
+            <fileset dir="${lib}">
+                <include name="jcoverage.jar"/>
+            </fileset>
+        </classpath>
+</taskdef>
+
+<target name="instrument">
+	<mkdir dir="${build.home.webinf.classes}"/>
+	<instrument todir="${build.home.webinf.classes}/instrumented">
+		<classpath>
+                <pathelement path="${build.home.webinf.classes}"/>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+
+		<fileset dir="${build.home.webinf.classes}">
+			<include name="**/domain/**/*.class"/>
+		</fileset>
+	</instrument>
+</target>
+
+<target name="report-coverage">
+	<report format="html" srcdir="${src.dir}" destdir="${report.coverage}"/>
+</target>
+
+
 </project>
+
