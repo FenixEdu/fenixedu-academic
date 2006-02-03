@@ -1,14 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.degree.BolonhaDegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -42,6 +45,28 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
         }
         
         return result;
+    }
+    
+    public List<Degree> getFilteredBolonhaDegrees() throws FenixFilterException, FenixServiceException {
+        Object[] args = { Degree.class };
+        List<Degree> allDegrees = (List<Degree>) ServiceUtils.executeService(null, "ReadAllDomainObjects", args);
+        
+        Set<Degree> result = new HashSet<Degree>();
+        for (Degree degree : allDegrees) {
+            if (degree.getBolonhaDegreeType() != null) {
+                for (DegreeCurricularPlan degreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+                    if (degreeCurricularPlan.getCurricularPlanMembersGroup().isMember(this.getUserView().getPerson())) {
+                        result.add(degree);    
+                    }
+                }
+            }
+        }
+        
+        return new ArrayList<Degree>(result);
+    } 
+    
+    public Boolean getCanBuild() {
+        return Boolean.TRUE;
     }
     
     public Integer getDegreeId() {

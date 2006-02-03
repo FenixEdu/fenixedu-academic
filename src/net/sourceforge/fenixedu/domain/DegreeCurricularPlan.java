@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
+import net.sourceforge.fenixedu.predicates.DegreeCurricularPlanPredicates;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.MarkType;
 
@@ -433,7 +435,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
-
+    
     public Branch getBranchByName(final String branchName) {
         for (final Branch branch : getAreas()) {
             if (branchName.equals(branch.getName())) {
@@ -442,5 +444,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return null;
     }
+    
 
+    public Boolean getUserCanBuild() {
+        Person person = AccessControl.getUserView().getPerson();
+        return this.getCurricularPlanMembersGroup().isMember(person);
+    }
+    
 }

@@ -17,7 +17,7 @@
 		<h:outputText value="<br/>" escape="false" />
 		<h:messages errorClass="error0" infoClass="success0"/>
 	
-		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree" rendered="#{!empty ScientificCouncilDegreeManagement.bolonhaDegrees}">
+		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.filteredBolonhaDegrees}" var="degree" rendered="#{!empty ScientificCouncilDegreeManagement.bolonhaDegrees}">
 			<h:outputText value="<table width='90%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
 			<h:outputText value="<tr><th width='120px'>#{bolonhaBundle['degree']}:</th>" escape="false"/>
 	
@@ -47,8 +47,8 @@
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 					<f:param name="action" value="view"/>
 				</h:outputLink>
-				<h:outputText value=" , " escape="false"/>
-				<h:outputLink value="buildCurricularPlan.faces">
+				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
+				<h:outputLink value="buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
 					<h:outputText value="#{bolonhaBundle['buildCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 				</h:outputLink>
