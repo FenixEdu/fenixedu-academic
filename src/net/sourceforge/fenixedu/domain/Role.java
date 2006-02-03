@@ -4,7 +4,6 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import net.sourceforge.fenixedu.dataTransferObject.InfoRole;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
@@ -25,8 +24,7 @@ public class Role extends Role_Base implements Comparable {
         super();
     }
 
-    public Role(final RoleType roleType, final String portalSubApplication, final String page,
-            final String pageNameProperty) {
+    public Role(final RoleType roleType, final String portalSubApplication, final String page, final String pageNameProperty) {
         super();
         setRoleType(roleType);
         setPortalSubApplication(portalSubApplication);
@@ -35,11 +33,11 @@ public class Role extends Role_Base implements Comparable {
     }
 
     public int compareTo(Object o) {
-        if (o != null && o instanceof InfoRole) {
-            final InfoRole infoRole = (InfoRole) o;
-            return getRoleType().compareTo(infoRole.getRoleType());
-        }
-        return -1;
+    	return (o instanceof Role) ? compareTo((Role) o) : -1;
+    }
+
+    public int compareTo(Role role) {
+        return (role != null) ? getRoleType().compareTo(role.getRoleType()) : -1;
     }
 
 }
