@@ -19,27 +19,5 @@ function execute() {
 	echo
 }
 
-execute "Added column CLASS_NAME to ReimbursementTransaction" alterTableReimbursementTransaction.sql
-execute "Remove some inactive columns from Employee Table" alterEmployeeTable.sql
-execute "Dropped column ECTS_CREDITS from DegreeCurricularPlan" dropEctsCreditsFromDegreeCurricularPlan.sql
-execute "Add new ENROLMENT_LOG columns" alterEnrolmentLog.sql
-execute "Add SpaceManager role to Table Role" addSpaceManagerRole.sql
-execute "Add CONTRACT_TYPE column to contract table" alterContractTable.sql
-execute "Add KEY_UNIT column to ExternalPerson table" alterExternalPersonTable.sql
-execute "Add KEY_UNIT column to NonAffiliatedTeacher table" alterNonAffiliatedTeacherTable.sql
-execute "Add KEY_RESEARCHER column to Person table" alterPersonTable.sql
-execute "Create RESEARCHER Table" createResearcherTable.sql
-execute "Create Table Space" createTableSpace.sql
-execute "Create Table Space" createTableSpaceInformation.sql
-execute "Alter Table Space" alterTableSpace.sql
-execute "Alter Table Space Information" alterTableSpaceInformation.sql
-execute "update colunm functionType" updateFunctionTypes.sql
-execute "Create Table Project" createTableProject.sql
-
-echo Altering table Unit
-mysql -u$2 -f -p$password $1 < updateUnit.sql > res.sql
-mysql -u$2 -f -p$password $1 < res.sql
-echo done
-
-execute "Create CurricularRule Table" createCurricularRuleTable.sql
-execute "Alter CurricularRule Table" alterCurricularRuleTable.sql
+execute "Creating RootDomainObject and Setting up relations" createRootDomainObjectAndRelations.sql
+execute "Creating ResearchEvents table" createResearchEventTable.sql
