@@ -9584,5 +9584,23 @@
         <filterChains>
         	<chain name="ScientificCouncilAuthorization"></chain>
         </filterChains>     
-    </service>  
-</serviceDefinitions>    
+    </service>
+    <service>
+    	<name>ChangeEnrolmentPeriodValues</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ChangeEnrolmentPeriodValues</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+    <service>
+    	<name>CreateEnrolmentPeriods</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateEnrolmentPeriods</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+            <chain name="ManagerAuthorization"/>
+        </filterChains>
+    </service>
+</serviceDefinitions>

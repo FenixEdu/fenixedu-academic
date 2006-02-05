@@ -11,9 +11,10 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoEnrolmentPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -27,7 +28,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        final IUserView userView = SessionUtils.getUserView(request);
+    	final IUserView userView = getUserView(request);
         final DynaActionForm actionForm = (DynaActionForm) form;
 
         setInfoExecutionPeriods(request, userView);
@@ -38,6 +39,45 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
         }
 
         return mapping.findForward("showEnrolementPeriods");
+    }
+
+    public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final IUserView userView = getUserView(request);
+        final DynaActionForm actionForm = (DynaActionForm) form;
+
+        final String enrolmentPeriodIDString = (String) actionForm.get("enrolmentPeriodID");
+        final String startDateString = (String) actionForm.get("startDate");
+        final String endDateString = (String) actionForm.get("endDate");
+
+        final Object[] args = { Integer.valueOf(enrolmentPeriodIDString),
+        		DateFormatUtil.parse("yyyy/MM/dd", startDateString),
+        		DateFormatUtil.parse("yyyy/MM/dd", endDateString)};
+        ServiceManagerServiceFactory.executeService(userView, "ChangeEnrolmentPeriodValues", args);
+
+        return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        final IUserView userView = getUserView(request);
+        final DynaActionForm actionForm = (DynaActionForm) form;
+
+        final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
+        final String degreeTypeString = (String) actionForm.get("degreeType");
+        final String enrolmentPeriodClassString = (String) actionForm.get("enrolmentPeriodClass");
+        final String startDateString = (String) actionForm.get("startDate");
+        final String endDateString = (String) actionForm.get("endDate");
+
+        final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
+
+        final Object[] args = { Integer.valueOf(executionPeriodIDString),
+        		degreeType, enrolmentPeriodClassString,
+        		DateFormatUtil.parse("yyyy/MM/dd", startDateString),
+        		DateFormatUtil.parse("yyyy/MM/dd", endDateString)};
+        ServiceManagerServiceFactory.executeService(userView, "CreateEnrolmentPeriods", args);
+
+        return prepare(mapping, form, request, response);
     }
 
     private void setInfoEnrolmentPeriods(final HttpServletRequest request, final IUserView userView, 
