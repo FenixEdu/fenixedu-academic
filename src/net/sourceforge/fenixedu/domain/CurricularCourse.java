@@ -144,6 +144,23 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return activeScopesInExecutionPeriod;
     }
+    
+    public List<CurricularCourseScope> getActiveScopesIntersectedByExecutionPeriod(
+            final ExecutionPeriod executionPeriod) {
+        List<CurricularCourseScope> activeScopesInExecutionPeriod = new ArrayList<CurricularCourseScope>();
+        for (final CurricularCourseScope scope : getScopes()) {
+        	if (scope.getBeginDate().getTime().getTime() < executionPeriod.getBeginDate().getTime()){
+        		if((scope.getEnd() == null) || (scope.getEnd().getTime() >= executionPeriod.getBeginDate().getTime())){
+        			activeScopesInExecutionPeriod.add(scope);
+        		}
+        	} else {
+        		if(scope.getBeginDate().getTime().getTime() <= executionPeriod.getEndDate().getTime()){
+        			activeScopesInExecutionPeriod.add(scope);
+        		}
+        	}
+        }
+        return activeScopesInExecutionPeriod;
+    }
 
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
@@ -389,7 +406,7 @@ public class CurricularCourse extends CurricularCourse_Base {
             result = this.getCompetenceCourse().getEctsCredits();
         }       
         return result;
-    }
+    }    
     
     public Double getContactLoad(Integer order) {
         double result = 0.0;
@@ -511,12 +528,11 @@ public class CurricularCourse extends CurricularCourse_Base {
         }
         return super.getBasic();
     }
-
+    
     public RegimeType getRegime() {
         if (this.getCompetenceCourse() != null) {
             return this.getCompetenceCourse().getRegime();
-        }
+		}
         return null;
     }
-    
 }
