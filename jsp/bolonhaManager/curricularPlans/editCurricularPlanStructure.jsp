@@ -13,6 +13,8 @@
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['edit.curricularPlan.structure']}</h2>" escape="false"/>
 
+	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
+
 	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="true" toEdit="true" />
 
 	<h:outputText value="<br/><br/><hr/>" escape="false"/>
