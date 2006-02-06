@@ -117,9 +117,7 @@ public class CreateGuide extends Service {
         // Write the New Guide Situation
         guideSituation = DomainFactory.makeGuideSituation(situationOfGuide, remarks, calendar.getTime(), guide,
                 new State(State.ACTIVE));
-
-        guide.addGuideSituations(guideSituation);
-
+        
         InfoGuide result = InfoGuideWithPersonAndExecutionDegreeAndContributor.newInfoFromDomain(guide);
         result.setInfoGuideEntries(infoGuide.getInfoGuideEntries());
         result.setInfoGuideSituation(infoGuideSituation);
