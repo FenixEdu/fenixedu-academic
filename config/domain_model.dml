@@ -116,6 +116,7 @@ valueType org.joda.time.Period                                                  
 valueType org.joda.time.TimeOfDay                                                               as TimeOfDay;
 valueType org.joda.time.Partial                                                                 as Partial;
 valueType net.sourceforge.fenixedu.util.ContractType  		                                	as ContractType;
+valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as ProjectType;
 valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    as BibliographicReferences;
 valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    as CurricularRuleType;
 valueType net.sourceforge.fenixedu.domain.util.LogicOperators    as LogicOperators;
@@ -2776,9 +2777,29 @@ class net.sourceforge.fenixedu.domain.research.Researcher extends net.sourceforg
 	Integer keyPerson;
 }
 
-class net.sourceforge.fenixedu.domain.research.Project extends net.sourceforge.fenixedu.domain.DomainObject{
+class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer keyProjectTitle;
+	Integer keyProjectAbstract;
 	YearMonthDay startDate;
 	YearMonthDay endDate;
+	ProjectType projectType;
+}
+
+class net.sourceforge.fenixedu.domain.research.project.ProjectTitle extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer keyProject;
+	String title;
+	String translation;
+}
+
+class net.sourceforge.fenixedu.domain.research.project.ProjectAbstract extends net.sourceforge.fenixedu.domain.DomainObject{
+	Integer keyProject;
+	String projectAbstract;
+	String translation;
+}
+
+class net.sourceforge.fenixedu.domain.research.project.ProjectKeyword extends net.sourceforge.fenixedu.domain.DomainObject{
+	String keyword;
+	String translation;
 }
 
 class net.sourceforge.fenixedu.domain.research.event.Event extends net.sourceforge.fenixedu.domain.DomainObject{
@@ -2795,7 +2816,6 @@ class net.sourceforge.fenixedu.domain.research.event.EventName extends net.sourc
 
 class net.sourceforge.fenixedu.domain.research.event.EventType extends net.sourceforge.fenixedu.domain.DomainObject{
 }
-
 
 /*
  * Relations definitions
@@ -5818,7 +5838,7 @@ relation PersonResearcher {
 }
 
 relation ProjectResearcher {
-	net.sourceforge.fenixedu.domain.research.Project playsRole projects {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
 		multiplicity *;
 	}
     net.sourceforge.fenixedu.domain.research.Researcher playsRole researchers {
@@ -5827,13 +5847,33 @@ relation ProjectResearcher {
 }
 
 relation ProjectUnit {
-	net.sourceforge.fenixedu.domain.research.Project playsRole projects {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
 		multiplicity *;
 	}
     net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
     	multiplicity *;
     }
 }
+
+relation ProjectProjectTitle {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
+	net.sourceforge.fenixedu.domain.research.project.ProjectTitle playsRole title;
+}
+
+relation ProjectProjectAbstract {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole project;
+	net.sourceforge.fenixedu.domain.research.project.ProjectAbstract playsRole projectAbstract;
+}
+
+relation ProjectProjectKeyword {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
+		multiplicity *;
+	}
+	net.sourceforge.fenixedu.domain.research.project.ProjectKeyword playsRole keywords {
+		multiplicity *;
+	}
+}
+
 
 relation CurricularRuleDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModuleToApplyRule;
@@ -5871,7 +5911,7 @@ relation DegreeModuleRestrictionDoneDegreeModule {
 }
 
 relation ProjectEvent {
-	net.sourceforge.fenixedu.domain.research.Project playsRole projects {
+	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
 		multiplicity *;
 	}
     net.sourceforge.fenixedu.domain.research.event.Event playsRole events {

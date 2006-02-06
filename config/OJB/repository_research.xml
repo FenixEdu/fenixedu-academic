@@ -24,7 +24,7 @@
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="projects"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.Project"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
 			indirection-table="PROJECT_RESEARCHER"
 			>
 		<fk-pointing-to-this-class column="KEY_RESEARCHER"/>
@@ -33,7 +33,7 @@
 	
 </class-descriptor>
 
-<class-descriptor class="net.sourceforge.fenixedu.domain.research.Project"
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.Project"
 	table="PROJECT">
 	
 	<field-descriptor
@@ -44,6 +44,18 @@
 		autoincrement="true"
 	/>
 	
+	<field-descriptor
+		name="keyProjectTitle"
+		column="KEY_PROJECT_TITLE"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+		name="keyProjectAbstract"
+		column="KEY_PROJECT_ABSTRACT"
+		jdbc-type="INTEGER"
+	/>
+
 	<field-descriptor
 		name="startDate"
 		column="START_DATE"
@@ -57,6 +69,36 @@
 		jdbc-type="VARCHAR"
 		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
 	/>
+	
+	<field-descriptor
+	   name="projectType"    
+	   column="PROJECT_TYPE"  
+	   jdbc-type="VARCHAR"
+	   conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.ProjectType2SqlProjectTypeConversion"
+    /> 
+	
+	<reference-descriptor auto-retrieve="false"
+			name="title"
+			class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectTitle"
+			>
+		<foreignkey field-ref="keyProjectTitle"/>
+	</reference-descriptor>
+	
+	<reference-descriptor auto-retrieve="false"
+			name="abstract"
+			class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectAbstract"
+			>
+		<foreignkey field-ref="keyProjectAbstract"/>
+	</reference-descriptor>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="keywords"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.project.ProjectKeyword"
+			indirection-table="PROJECT_PROJECT_KEYWORD"
+			>
+		<fk-pointing-to-this-class column="KEY_PROJECT"/>
+		<fk-pointing-to-element-class column="KEY_PROJECT_KEYWORD"/>
+	</collection-descriptor>
 	 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="researchers"
@@ -118,7 +160,7 @@
 
 	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="projects"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.Project"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
 			indirection-table="PROJECT_EVENT"
 			>
 		<fk-pointing-to-this-class column="KEY_EVENT"/>
@@ -145,4 +187,115 @@
 	
 </class-descriptor>
 
-  
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectTitle"
+	table="PROJECT_TITLE">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="keyProject"
+		column="KEY_PROJECT"
+		jdbc-type="INTEGER"
+	/>
+	
+	<field-descriptor
+		name="title"
+		column="TITLE"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<field-descriptor
+		name="translation"
+		column="TRANSLATION"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<reference-descriptor auto-retrieve="false"
+			name="project"
+			class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
+			>
+		<foreignkey field-ref="keyProject"/>
+	</reference-descriptor>
+	
+</class-descriptor>
+
+
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectAbstract"
+	table="PROJECT_ABSTRACT">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="keyProject"
+		column="KEY_PROJECT"
+		jdbc-type="INTEGER"
+	/>
+
+	<field-descriptor
+		name="projectAbstract"
+		column="ABSTRACT"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<field-descriptor
+		name="translation"
+		column="TRANSLATION"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<reference-descriptor auto-retrieve="false"
+			name="project"
+			class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
+			>
+		<foreignkey field-ref="keyProject"/>
+	</reference-descriptor>
+	
+</class-descriptor>  
+
+<class-descriptor class="net.sourceforge.fenixedu.domain.research.project.ProjectKeyword"
+	table="PROJECT_KEYWORD">
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	
+	<field-descriptor
+		name="keyword"
+		column="KEYWORD"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<field-descriptor
+		name="translation"
+		column="TRANSLATION"
+		jdbc-type="VARCHAR"
+	/>
+	
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="projects"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
+			indirection-table="PROJECT_PROJECT_KEYWORD"
+			>
+		<fk-pointing-to-this-class column="KEY_PROJECT_KEYWORD"/>
+		<fk-pointing-to-element-class column="KEY_PROJECT"/>
+	</collection-descriptor>
+	
+</class-descriptor> 

@@ -119,7 +119,7 @@
     
     <collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
 			name="projects"
-			element-class-ref="net.sourceforge.fenixedu.domain.research.Project"
+			element-class-ref="net.sourceforge.fenixedu.domain.research.project.Project"
 			indirection-table="PROJECT_UNIT"
 			>
 		<fk-pointing-to-this-class column="KEY_UNIT"/>
