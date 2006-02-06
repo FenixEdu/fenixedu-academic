@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.persistenceTier.Conversores;
 
 import java.util.Iterator;
-import java.util.StringTokenizer;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
@@ -15,15 +14,14 @@ import org.apache.ojb.broker.accesslayer.conversions.FieldConversion;
 public class JavaBibliographicReferences2SqlBibliographicReferencesFieldConversion implements FieldConversion {
 
     public Object javaToSql(Object source) {
-        if (source instanceof BibliographicReferences) {
-            return write((BibliographicReferences) source);
-        }
-        return source;
+        return source instanceof BibliographicReferences ?
+            write((BibliographicReferences) source) : source;
     }
     
     public Object sqlToJava(Object source) {
         if (source instanceof String) {
-            return read((String) source);
+            final String string = (String) source;
+            return string.length() > 0 ? read((String) source) : new BibliographicReferences();
         }
         return new BibliographicReferences();
     }
@@ -53,20 +51,35 @@ public class JavaBibliographicReferences2SqlBibliographicReferencesFieldConversi
         stringBuilder.append(reference.getType()).append(ELEMENT_SEPARATOR);
         stringBuilder.append(reference.getOrder());
     }
-    
+
     private BibliographicReferences read(String source) {
         final BibliographicReferences bibliographicReferences = new BibliographicReferences();
-        final StringTokenizer line = new StringTokenizer(source, NEW_LINE);
-        while (line.hasMoreTokens()) {
-            final StringTokenizer element = new StringTokenizer(line.nextToken(), ELEMENT_SEPARATOR);
-            if (element.countTokens() != MAX_NUMBER_OF_ELEMENTS) {
-                return null; // invalid data (must correct first)
-            }
-            bibliographicReferences.createBibliographicReference(element.nextToken(), element
-                    .nextToken(), element.nextToken(), element.nextToken(), element.nextToken(),
-                    BibliographicReferenceType.valueOf(element.nextToken()), Integer.valueOf(element
-                            .nextToken()));
-        }
+        fillBibliographicReferences(bibliographicReferences, source);
         return bibliographicReferences;
     }
+
+    private void fillBibliographicReferences(final BibliographicReferences bibliographicReferences, final String source) {
+        final int indexOfSep1 = source.indexOf(ELEMENT_SEPARATOR);
+        final int indexOfSep2 = source.indexOf(ELEMENT_SEPARATOR, indexOfSep1 + ELEMENT_SEPARATOR.length());
+        final int indexOfSep3 = source.indexOf(ELEMENT_SEPARATOR, indexOfSep2 + ELEMENT_SEPARATOR.length());
+        final int indexOfSep4 = source.indexOf(ELEMENT_SEPARATOR, indexOfSep3 + ELEMENT_SEPARATOR.length());
+        final int indexOfSep5 = source.indexOf(ELEMENT_SEPARATOR, indexOfSep4 + ELEMENT_SEPARATOR.length());
+        final int indexOfSep6 = source.indexOf(ELEMENT_SEPARATOR, indexOfSep5 + ELEMENT_SEPARATOR.length());
+        final int temp = source.indexOf(NEW_LINE, indexOfSep6 + ELEMENT_SEPARATOR.length());
+        final int indexOfSep7 = temp < 0 ? source.length() : temp;
+
+        bibliographicReferences.createBibliographicReference(
+                source.substring(0, indexOfSep1),
+                source.substring(indexOfSep1 + ELEMENT_SEPARATOR.length(), indexOfSep2),
+                source.substring(indexOfSep2 + ELEMENT_SEPARATOR.length(), indexOfSep3),
+                source.substring(indexOfSep3 + ELEMENT_SEPARATOR.length(), indexOfSep4),
+                source.substring(indexOfSep4 + ELEMENT_SEPARATOR.length(), indexOfSep5),
+                BibliographicReferenceType.valueOf(source.substring(indexOfSep5 + ELEMENT_SEPARATOR.length(), indexOfSep6)),
+                Integer.valueOf(source.substring(indexOfSep6 + ELEMENT_SEPARATOR.length(), indexOfSep7)));
+
+        if (indexOfSep7 + NEW_LINE.length() < source.length()) {
+            fillBibliographicReferences(bibliographicReferences, source.substring(indexOfSep7 + NEW_LINE.length()));
+        }
+    }
+
 }

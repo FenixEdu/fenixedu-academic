@@ -496,6 +496,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public List<BibliographicReference> getMainBibliographicReferences() throws FenixFilterException, FenixServiceException {
         final List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+        if (this.getBibliographicReferences() == null) {
+            return result;
+        }
         for (final BibliographicReference bibliographicReference : getBibliographicReferences()) {
             if (bibliographicReference.getType().equals(BibliographicReferenceType.MAIN)) {
                 result.add(bibliographicReference);
@@ -506,6 +509,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     
     public List<BibliographicReference> getSecondaryBibliographicReferences() throws FenixFilterException, FenixServiceException {
         final List<BibliographicReference> result = new ArrayList<BibliographicReference>();
+        if (this.getBibliographicReferences() == null) {
+            return result;
+        }
         for (final BibliographicReference bibliographicReference : getBibliographicReferences()) {
             if (bibliographicReference.getType().equals(BibliographicReferenceType.SECONDARY)) {
                 result.add(bibliographicReference);
