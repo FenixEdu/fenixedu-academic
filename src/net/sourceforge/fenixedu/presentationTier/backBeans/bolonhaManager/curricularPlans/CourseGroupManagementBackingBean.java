@@ -10,14 +10,17 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class CourseGroupManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
     private final ResourceBundle domainResources = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
-
+    private final Integer NO_SELECTION = 0;    
+    
     private String name = null;
+    private Integer courseGroupID;
 
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
@@ -28,11 +31,19 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     }
 
     public Integer getCourseGroupID() {
-        return getAndHoldIntegerParameter("courseGroupID");
+        return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
     }
 
+    public void setCourseGroupID(Integer courseGroupID) {
+        this.courseGroupID = courseGroupID;
+    }
+    
     public String getName() throws FenixFilterException, FenixServiceException {
-        return (name == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getName() : name;
+        return (name == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getName() : name;    
+    }
+
+    public String getParentName() throws FenixFilterException, FenixServiceException {
+        return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
     }
 
     public void setName(String name) {
@@ -45,7 +56,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     }
 
     public CourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
-        return (CourseGroup) readDomainObject(CourseGroup.class, getCourseGroupID());
+        return (CourseGroup) readDomainObject(CourseGroup.class, courseGroupID);
     }
 
     public String createCourseGroup() throws FenixFilterException {
@@ -89,4 +100,36 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         }
         return "";
     }
+    
+    public String addContext() {
+        try {
+            checkCourseGroup();
+            Object args[] = { getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()) };
+            ServiceUtils.executeService(getUserView(), "AddContextToDegreeModule", args);
+        } catch (FenixActionException e) {
+            this.addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            return "editCurricularPlanStructure";
+        } catch (FenixFilterException e) {
+            this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+            return "editCurricularPlanStructure";
+        } catch (FenixServiceException e) {
+            this.addErrorMessage(bolonhaResources.getString(e.getMessage()));
+            return "editCurricularPlanStructure";
+        } catch (DomainException e) {
+            this.addErrorMessage(domainResources.getString(e.getMessage()));
+            return "editCurricularPlanStructure";
+        } catch (Exception e) {
+            this.addErrorMessage(bolonhaResources.getString("general.error"));
+            return "editCurricularPlanStructure";
+        }        
+        addInfoMessage(bolonhaResources.getString("courseGroupAssociated"));
+        return "editCurricularPlanStructure";
+    }
+    
+    private void checkCourseGroup() throws FenixFilterException, FenixServiceException, FenixActionException {
+        if (getCourseGroupID() == null || getCourseGroupID().equals(this.NO_SELECTION)) {
+            throw new FenixActionException("error.mustChooseACourseGroup");
+        }
+    }
+
 }

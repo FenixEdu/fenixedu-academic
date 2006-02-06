@@ -347,7 +347,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             checkCurricularSemesterAndYear();
             Object args[] = { getCurricularCourse(), getCourseGroup(), getCurricularYearID(),
                     getCurricularSemesterID() };
-            ServiceUtils.executeService(getUserView(), "AddContextToCurricularCourse", args);
+            ServiceUtils.executeService(getUserView(), "AddContextToDegreeModule", args);
         } catch (FenixActionException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";

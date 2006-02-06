@@ -9254,8 +9254,8 @@
         </filterChains>     
     </service>
     <service>
-    	<name>AddContextToCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToCurricularCourse</implementationClass>
+    	<name>AddContextToDegreeModule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.AddContextToDegreeModule</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

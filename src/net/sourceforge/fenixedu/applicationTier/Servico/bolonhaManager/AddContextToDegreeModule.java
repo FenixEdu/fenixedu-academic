@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class AddContextToCurricularCourse extends Service {
+public class AddContextToDegreeModule extends Service {
 
     public void run(CurricularCourse curricularCourse, CourseGroup courseGroup, Integer year,
             Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
@@ -39,4 +39,20 @@ public class AddContextToCurricularCourse extends Service {
 
         curricularCourse.addContext(courseGroup, curricularPeriod, beginExecutionPeriod, null);
     }
+    
+    public void run(CourseGroup courseGroup, CourseGroup parentCourseGroup) throws ExcepcaoPersistencia, FenixServiceException {
+        if (courseGroup == null || parentCourseGroup == null) {
+            throw new FenixServiceException("error.noCourseGroup");
+        }
+        
+        // TODO: this should be modified to receive ExecutionYear, but for now
+        // we just read the '2006/2007'
+        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
+                .readExecutionYearByName("2006/2007");
+        final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
+                .valueOf(1));
+
+        courseGroup.addContext(parentCourseGroup, null, beginExecutionPeriod, null);
+    }
+    
 }
