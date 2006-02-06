@@ -11,7 +11,7 @@
 	<h:outputText value="<i>#{bolonhaBundle['bolonhaManager']}</i>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['curricularPlans']}</h2>" escape="false"/>
 
-	<h:outputText value="<i>#{bolonhaBundle['no.degree']}</i>" escape="false" rendered="#{empty ScientificCouncilDegreeManagement.bolonhaDegrees}"/>	
+	<h:outputText value="<i>#{bolonhaBundle['no.degree.access']}</i>" escape="false" rendered="#{empty ScientificCouncilDegreeManagement.filteredBolonhaDegrees}"/>
 
 	<h:panelGroup>
 		<h:outputText value="<br/>" escape="false" />
@@ -49,7 +49,7 @@
 				</h:outputLink>
 				<h:outputText value=" , " escape="false" rendered="#{degreeCurricularPlan.userCanBuild}"/>
 				<h:outputLink value="buildCurricularPlan.faces" rendered="#{degreeCurricularPlan.userCanBuild}">
-					<h:outputText value="#{bolonhaBundle['buildCurricularPlan']}" />
+					<h:outputText value="#{bolonhaBundle['manageCurricularPlan']}" />
 					<f:param name="degreeCurricularPlanID" value="#{degreeCurricularPlan.idInternal}"/>
 				</h:outputLink>
 				<h:outputText value="</td></tr>" escape="false"/>
