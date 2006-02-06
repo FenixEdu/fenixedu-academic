@@ -32,12 +32,17 @@
 -->
 		<br/>
 		<li class="navheader">
-			<bean:message key="reports"/>
+			<bean:message key="label.credits.navigation.header"/>
 		</li>
 		<li>
 			<html:link page="/creditsReport.do?method=prepare">
-		  		<bean:message key="link.viewCreditsReport"/>
+		  		<bean:message key="link.credits.viewReport"/>
 		  	</html:link>
 		</li>		
+		<li>
+			<html:link page="/masterDegreeCreditsManagement.do?method=prepare">
+		  		<bean:message key="link.credits.masterDegree"/>
+		  	</html:link>
+		</li>
 	</ul>
 </logic:present>

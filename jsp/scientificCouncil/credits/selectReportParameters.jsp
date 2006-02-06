@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 
-<h3><bean:message key="message.top"/></h3>
+<h3><bean:message key="message.credits.top"/></h3>
 
 <span class="error"><html:errors/></span>
 <html:form action="/creditsReport">
@@ -13,7 +13,7 @@
 	<bean:message key="label.credits.choose.Period"/>:<br/><br/>
 	
 	<bean:message key="label.credits.from"/>: <html:select property="fromExecutionPeriodID" size="1">
-		<html:options collection="executionPeriods" property="value" labelProperty="label"/>
+	<html:options collection="executionPeriods" property="value" labelProperty="label"/>
 	</html:select>
 	
 	&nbsp&nbsp <bean:message key="label.credits.until"/>: <html:select property="untilExecutionPeriodID" size="1">
@@ -31,7 +31,7 @@
 	<br/><br/>
 	
 	<logic:present name="units">
-		Escolha a Secção/Área Científica:<br/>
+		<bean:message key="label.credits.choose.unit"/>:<br/>
 		<html:select property="unitID" size="1">
 			<html:option value="0" key="label.allUnits"/>
 			<html:options collection="units" property="idInternal" labelProperty="name"/>
