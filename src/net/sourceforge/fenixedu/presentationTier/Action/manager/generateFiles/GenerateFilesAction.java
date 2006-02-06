@@ -4,6 +4,10 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager.generateFiles;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +15,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -132,10 +137,11 @@ public class GenerateFilesAction extends FenixDispatchAction {
         } else if (fileType.equals(new String("letters"))) {
             serviceName = "GeneratePaymentLettersFileByExecutionYearID";
         }
-
+        
+        byte[] generatedFile = null;
         try {
-            ServiceManagerServiceFactory.executeService(userView, serviceName, args);
-
+            generatedFile = (byte[]) ServiceManagerServiceFactory.executeService(userView, serviceName, args);
+                                     
         } catch (InsufficientSibsPaymentPhaseCodesServiceException exception) {
             errors.add("noList", new ActionError("error.generateFiles.invalidBind", exception
                     .getMessage()));
@@ -155,7 +161,15 @@ public class GenerateFilesAction extends FenixDispatchAction {
             saveErrors(request, errors);
             return mapping.getInputForward();
         }
+        
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-disposition", "attachment; filename="  +  fileType + infoExecutionYear.getYear().replace("/", "-") + ".txt");
+        ServletOutputStream writer = response.getOutputStream();
+       
+        writer.write(generatedFile);
+        writer.flush();
+        response.flushBuffer();
 
-        return mapping.findForward("confirmation");
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager.gratuity;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
      * @throws ExcepcaoPersistencia
      */
     // TODO: needs full rewrite and simplification...
-    public void run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException,
+    public byte[] run(Integer executionYearID, Date paymentEndDate) throws FenixServiceException,
             ExcepcaoPersistencia {
 
         StringBuilder outgoingSibsPaymentFile = new StringBuilder();
@@ -169,16 +170,19 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
         // add file footer
         addFooter(outgoingSibsPaymentFile, totalLines);
 
-        writeOutgoingSibsPaymentFile(executionYear, outgoingSibsPaymentFile);
+        byte[] fileContent = writeOutgoingSibsPaymentFile(executionYear, outgoingSibsPaymentFile);
+        
+        return fileContent;
     }
 
     /**
      * @param outgoingSibsPaymentFile
      * @throws FileNotCreatedServiceException
      */
-    private void writeOutgoingSibsPaymentFile(ExecutionYear executionYear,
+    private byte[] writeOutgoingSibsPaymentFile(ExecutionYear executionYear,
             StringBuilder outgoingSibsPaymentFile) throws FileNotCreatedServiceException {
-        String year = executionYear.getYear().replace('/', '-');
+        ByteArrayOutputStream file = new ByteArrayOutputStream();
+        /*String year = executionYear.getYear().replace('/', '-');
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System
                     .getProperty("java.io.tmpdir")
@@ -187,7 +191,15 @@ public class GenerateOutgoingSibsPaymentFileByExecutionYearID extends Service {
             bufferedWriter.close();
         } catch (IOException e) {
             throw new FileNotCreatedServiceException("error.creating.sibs.outgoing.file", e);
+        }*/
+        
+        try {
+            file.write(outgoingSibsPaymentFile.toString().getBytes());
+        } catch (IOException e) {
+            throw new FileNotCreatedServiceException("error.creating.sibs.outgoing.file", e);
         }
+        
+        return file.toByteArray();
 
     }
 
