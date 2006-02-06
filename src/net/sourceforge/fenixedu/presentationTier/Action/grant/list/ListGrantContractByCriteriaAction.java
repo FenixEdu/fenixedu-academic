@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.list.InfoSpanByCriteria
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+import net.sourceforge.fenixedu.util.DateFormatUtil;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -44,7 +45,7 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
 
     public ActionForward prepareListGrantContractByCriteria(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+    	IUserView userView = SessionUtils.getUserView(request);
         InfoSpanByCriteriaListGrantContract infoSpanByCriteriaListGrantOwner = null;
         if (verifyParameterInRequest(request, "argsInRequest")) {
             infoSpanByCriteriaListGrantOwner = populateInfoFromRequest(request);
@@ -58,14 +59,63 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
                         .getNumberOfSpans().intValue()) {
             return setError(request, mapping, "errors.grant.list.invalidSpan", "select-criteria", null);
         }
-
-        if (infoSpanByCriteriaListGrantOwner.getBeginContract() != null
-                && infoSpanByCriteriaListGrantOwner.getEndContract() != null
-                && infoSpanByCriteriaListGrantOwner.getBeginContract().after(
-                        infoSpanByCriteriaListGrantOwner.getEndContract())) {
-            return setError(request, mapping, "errors.grant.list.beginDateBeforeEnd", "select-criteria",
-                    null);
+        
+        if (infoSpanByCriteriaListGrantOwner.getValidToTheDate() == null || infoSpanByCriteriaListGrantOwner.getValidToTheDate().equals("")){
+	       
+        	if (infoSpanByCriteriaListGrantOwner.getBeginContract() != null && !infoSpanByCriteriaListGrantOwner.getBeginContract().equals("") ){
+	       
+	                if (infoSpanByCriteriaListGrantOwner.getEndContract() == null ){
+			    		request.setAttribute("grantTypeList", createGrantTypeList(userView));
+			    		return setError(request, mapping, "errors.grant.list.beginDateNotNullAndEndNull", "select-criteria",
+			               null);
+	    			 }else if (infoSpanByCriteriaListGrantOwner.getEndContract().equals("")){
+	    				 request.setAttribute("grantTypeList", createGrantTypeList(userView));
+	 		    		 return setError(request, mapping, "errors.grant.list.beginDateNotNullAndEndNull", "select-criteria",
+	 		               null);
+	    			 }
+	    	}
+	        if (infoSpanByCriteriaListGrantOwner.getBeginContract() == null || infoSpanByCriteriaListGrantOwner.getBeginContract().equals("") ){
+	            
+	            if (infoSpanByCriteriaListGrantOwner.getEndContract() != null && !infoSpanByCriteriaListGrantOwner.getEndContract().equals("")){
+		    		request.setAttribute("grantTypeList", createGrantTypeList(userView));
+		    		return setError(request, mapping, "errors.grant.list.beginDateNullAndEndNotNull", "select-criteria",
+		               null);
+	            }
+				
+	        }
+	        if (infoSpanByCriteriaListGrantOwner.getBeginContract() != null
+	                && infoSpanByCriteriaListGrantOwner.getEndContract() != null
+	                && infoSpanByCriteriaListGrantOwner.getBeginContract().after(
+	                        infoSpanByCriteriaListGrantOwner.getEndContract())) {
+	            return setError(request, mapping, "errors.grant.list.beginDateBeforeEnd", "select-criteria",
+	                    null);
+	        }
         }
+        
+        if(infoSpanByCriteriaListGrantOwner.getValidToTheDate() != null && !infoSpanByCriteriaListGrantOwner.getValidToTheDate().equals("")){
+        	
+        	if(infoSpanByCriteriaListGrantOwner.getBeginContract() != null 
+        			&& !infoSpanByCriteriaListGrantOwner.getBeginContract().equals("")){
+        		request.setAttribute("grantTypeList", createGrantTypeList(userView));
+	    		return setError(request, mapping, "errors.grant.list.beginDateNotPossible", "select-criteria",
+	               null);
+        	}
+        	if(infoSpanByCriteriaListGrantOwner.getEndContract() != null 
+        			&& !infoSpanByCriteriaListGrantOwner.getEndContract().equals("")){
+        		request.setAttribute("grantTypeList", createGrantTypeList(userView));
+	    		return setError(request, mapping, "errors.grant.list.beginDateNotPossible", "select-criteria",
+	               null);
+        	}
+        	
+        }
+         
+//        if (infoSpanByCriteriaListGrantOwner.getBeginContract() != null
+//                && infoSpanByCriteriaListGrantOwner.getEndContract() != null
+//                && infoSpanByCriteriaListGrantOwner.getBeginContract().after(
+//                        infoSpanByCriteriaListGrantOwner.getEndContract())) {
+//            return setError(request, mapping, "errors.grant.list.beginDateBeforeEnd", "select-criteria",
+//                    null);
+//        }
         return listGrantContract(mapping, request, form, response, infoSpanByCriteriaListGrantOwner);
     }
 
@@ -168,6 +218,8 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             form.set("beginContract", sdf.format(infoSpanByCriteriaListGrantOwner.getBeginContract()));
         if (infoSpanByCriteriaListGrantOwner.getEndContract() != null)
             form.set("endContract", sdf.format(infoSpanByCriteriaListGrantOwner.getEndContract()));
+        if (infoSpanByCriteriaListGrantOwner.getValidToTheDate() != null)
+            form.set("validToTheDate", sdf.format(infoSpanByCriteriaListGrantOwner.getValidToTheDate()));
         if (infoSpanByCriteriaListGrantOwner.getGrantTypeId() != null)
             form.set("grantTypeId", infoSpanByCriteriaListGrantOwner.getGrantTypeId());
         else
@@ -193,7 +245,8 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
             infoSpanByCriteriaListGrantOwner.setJustDesactiveContract(new Boolean(true));
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+       
         if (verifyStringParameterInForm(form, "beginContract")) {
             infoSpanByCriteriaListGrantOwner.setBeginContract(sdf.parse((String) form
                     .get("beginContract")));
@@ -201,7 +254,9 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         if (verifyStringParameterInForm(form, "endContract")) {
             infoSpanByCriteriaListGrantOwner.setEndContract(sdf.parse((String) form.get("endContract")));
         }
- 
+        if (verifyStringParameterInForm(form, "validToTheDate")) {
+            infoSpanByCriteriaListGrantOwner.setValidToTheDate(sdf.parse((String)form.get("validToTheDate")));
+        }
         Integer grantTypeId = (Integer) form.get("grantTypeId");
         if (!grantTypeId.equals(new Integer(0))) {
             infoSpanByCriteriaListGrantOwner.setGrantTypeId(grantTypeId);
@@ -236,6 +291,10 @@ public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
         if (verifyParameterInRequest(request, "endContract")) {
             infoSpanByCriteriaListGrantOwner.setEndContract(sdf.parse(request
                     .getParameter("endContract")));
+        }
+        if (verifyParameterInRequest(request, "validToTheDate")) {
+            infoSpanByCriteriaListGrantOwner.setValidToTheDate(sdf.parse(request
+                    .getParameter("validToTheDate")));
         }
 
         Integer grantType = new Integer(request.getParameter("grantTypeId"));
