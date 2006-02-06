@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.distribution;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,23 +23,23 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
 		private Integer hoursSpentByTeacher;
 		
-		private Set<String> courseDegreesList;
+		private Map<Integer, String> courseDegreesList;
 		
 		private String executionPeriodName;
 		
-		private Set<String> executionYearsSet;
+		private Map<Integer, Set<String>> executionYearsSet;
 		
 
 		public ExecutionCourseTeacherServiceDTO(Integer idInternal,
-				String name, Integer hours, Set<String> executionCourseDegreesNameSet, Set<String> executionYearsSet, String periodName) {
+				String name, Integer hours, Map<Integer, String> executionCourseDegreesNameMap, Map<Integer, Set<String>> executionYearsMap, String periodName) {
 			super();
 
 			this.executionCourseIdInternal = idInternal;
 			this.hoursSpentByTeacher = hours;
 			this.executionCourseName = name;
-			this.executionYearsSet = executionYearsSet;
+			this.executionYearsSet = executionYearsMap;
 			this.executionPeriodName = periodName;
-			this.courseDegreesList = executionCourseDegreesNameSet;
+			this.courseDegreesList = executionCourseDegreesNameMap;
 		}
 
 		public Integer getExecutionCourseIdInternal() {
@@ -53,56 +54,84 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			return hoursSpentByTeacher;
 		}
 
-		public Set<String> getCourseDegreesList() {
+		public Map<Integer, String> getCourseDegreesList() {
 			return courseDegreesList;
 		}
 		
-		public void addToCourseDegreesList(String degreeName){
-			courseDegreesList.add(degreeName);
-		}
-
 		public String getExecutionPeriodName() {
 			return executionPeriodName;
 		}
-
-		public Set getExecutionYearsSet() {
-			return executionYearsSet;
-		}
-
-				
+			
 		public String getDescription(){
 			StringBuilder finalString = new StringBuilder(getExecutionCourseName());
-			String[] stringArrayDegrees = (String[]) courseDegreesList.toArray(new String[] {});
+				
+			finalString.append("(");
+			
+			Set<Integer> degreeIdSet = courseDegreesList.keySet();
+			
+			Iterator<Integer> iteratorDegreeIdSet = degreeIdSet.iterator();
+					
+			
+			if(iteratorDegreeIdSet.hasNext()) {
+				Integer firstDegreeIdInternal = iteratorDegreeIdSet.next();
 						
-			if(stringArrayDegrees.length > 0) {
+				finalString.append(courseDegreesList.get(firstDegreeIdInternal));
 				finalString.append(" (");
-				finalString.append(stringArrayDegrees[0]);
-			
-				for(int i = 1;  i < stringArrayDegrees.length; i++) {
-					finalString.append(", ");
-					finalString.append(stringArrayDegrees[i]);
-				}
-				finalString.append(") ");
-			}
-		
-			
-			String[] stringArrayYears = (String[]) executionYearsSet.toArray(new String[]{});
-			
-			if(stringArrayYears.length > 0) {	
-				finalString.append("(");
-				finalString.append(stringArrayYears[0]);
+						
+				Set<String> firstCurricularYearsSet = executionYearsSet.get(firstDegreeIdInternal);
 				
-				for(int i = 1;  i < stringArrayYears.length; i++) {
-					finalString.append("º,");
-					finalString.append(stringArrayYears[i]);
+				Iterator<String> iteratorFirstCurricularYearsSet = firstCurricularYearsSet.iterator();
+				
+				if(iteratorFirstCurricularYearsSet.hasNext()) {
+					finalString.append(iteratorFirstCurricularYearsSet.next());
+					
+					while(iteratorFirstCurricularYearsSet.hasNext()) {
+						finalString.append(", ");
+						finalString.append(iteratorFirstCurricularYearsSet.next());
+					}
+					
+					finalString.append("ºano");
 				}
 				
-				finalString.append("ºano/");
-				finalString.append(executionPeriodName);
 				finalString.append(")");
+				
+				
+				while(iteratorDegreeIdSet.hasNext()) {
+					finalString.append(", ");
+					
+					Integer degreeIdInternal = iteratorDegreeIdSet.next();
+					
+					finalString.append(courseDegreesList.get(degreeIdInternal));
+					finalString.append(" (");
+	
+					Set<String> curricularYearsSet = executionYearsSet.get(degreeIdInternal);
+					
+					Iterator<String> iteratorCurricularYearsSet = curricularYearsSet.iterator();
+					
+					if(iteratorCurricularYearsSet.hasNext()) {
+						finalString.append(iteratorCurricularYearsSet.next());
+						
+						while(iteratorCurricularYearsSet.hasNext()) {
+							finalString.append(", ");
+							finalString.append(iteratorCurricularYearsSet.next());
+						}
+						
+						finalString.append("ºano");
+					}
+					finalString.append(")");
+					
 				}
+				
+				finalString.append(")");
+			}
+			
+			finalString.append("/");
+			finalString.append("(");
+			finalString.append(executionPeriodName);
+			finalString.append(")");
 			finalString.append(" - ");
 			finalString.append(hoursSpentByTeacher);
+			
 		
 		
 			return finalString.toString();
@@ -110,6 +139,24 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		
 	}
 
+	
+	public class TeacherManagementFunctionDTO {
+		private String functionName;
+		private Double credits;
+		
+		TeacherManagementFunctionDTO(String functionName, Double credits) {
+			this.functionName = functionName;
+			this.credits = credits;
+		}
+
+		public Double getCredits() {
+			return credits;
+		}
+
+		public String getFunctionName() {
+			return functionName;
+		}
+	}
 	
 	public class TeacherDistributionServiceEntryDTO implements Comparable {
 		private Integer teacherIdInternal;
@@ -128,6 +175,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 				
 
 		List<ExecutionCourseTeacherServiceDTO> executionCourseTeacherServiceList;
+		
+		List<TeacherManagementFunctionDTO> managementFunctionList;
 
 		
 		public TeacherDistributionServiceEntryDTO(Integer internal, Integer teacherNumber, String category,  String name, Integer hours, Double credits, Double accumulatedCredits) {
@@ -140,6 +189,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			teacherAccumulatedCredits = accumulatedCredits;
 			
 			executionCourseTeacherServiceList = new ArrayList<ExecutionCourseTeacherServiceDTO>();
+			
+			managementFunctionList = new ArrayList<TeacherManagementFunctionDTO>();
 		}
 
 
@@ -232,6 +283,20 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		public void setTeacherRequiredHours(Integer teacherRequiredHours) {
 			this.teacherRequiredHours = teacherRequiredHours;
 		}
+
+
+		public List<TeacherManagementFunctionDTO> getManagementFunctionList() {
+			return managementFunctionList;
+		}
+		
+		public void addToManagementFunction(String function, Double credits) {
+			managementFunctionList.add(new TeacherManagementFunctionDTO(function, credits));
+		}
+
+
+		public void setTeacherSpentCredits(Double teacherSpentCredits) {
+			this.teacherSpentCredits = teacherSpentCredits;
+		}
 	}
 
 	
@@ -252,7 +317,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	}
 
 	public void addExecutionCourseToTeacher(Integer keyTeacher, Integer executionCourseIdInternal, String executionCourseName,
-			Integer hours, Set<String> executionCourseDegreesNameSet, Set<String> curricularYearsSet, String periodName) {
+			Integer hours, Map<Integer, String> executionCourseDegreesNameSet, Map<Integer, Set<String>> curricularYearsSet, String periodName) {
 		ExecutionCourseTeacherServiceDTO executionCourse = new ExecutionCourseTeacherServiceDTO(executionCourseIdInternal, executionCourseName, hours, executionCourseDegreesNameSet, curricularYearsSet, periodName);
 		
 		teachersMap.get(keyTeacher).addExecutionCourse(executionCourse);	
@@ -267,11 +332,27 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		}
 	}
 	
+	public void addCreditsToTeacher(Integer keyTeacher, Double credits){
+		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
+		
+		if(teacher != null){
+			teacher.setTeacherSpentCredits(teacher.getTeacherSpentCredits() + credits);
+		}
+	}
+	
 	public boolean isTeacherPresent(Integer keyTeacher){
 		return teachersMap.containsKey((keyTeacher));
 	}
 	
 	public Map<Integer, TeacherDistributionServiceEntryDTO> getTeachersMap() {
 		return teachersMap;
+	}
+	
+	public void addManagementFunctionToTeacher(Integer keyTeacher, String managementFunction, Double credits) {
+		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
+		
+		if(teacher != null) {
+			teacher.addToManagementFunction(managementFunction, credits);
+		}
 	}
 }

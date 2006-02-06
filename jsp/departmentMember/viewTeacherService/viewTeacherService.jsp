@@ -135,8 +135,11 @@ text-align: right;
 					<c:forEach items="${teacher.executionCourseTeacherServiceList}" var="coursesList">
 						<c:out value="<li><a href='viewTeacherServiceByCourse.faces?selectedExecutionYearID=${viewTeacherService.selectedExecutionYearID}#${coursesList.executionCourseIdInternal}'>" escapeXml="false"/>
 						<c:out value="${coursesList.description} " escapeXml="false" />	
-					 	<h:outputText  value="#{bundle['label.teacherService.hours']}" escape="false" />
+					 	<h:outputText value="#{bundle['label.teacherService.hours']}" escape="false" />
 					 	<c:out value="</a></li>" escapeXml="false"/>
+					</c:forEach>
+					<c:forEach items="${teacher.managementFunctionList}" var="managementFunction">
+						<c:out value="<li>${managementFunction.functionName} - ${managementFunction.credits}</li>" escapeXml="false" />
 					</c:forEach>
 				<c:out value="</ul>" escapeXml="false" />
 			<c:out value="</td>" escapeXml="false" />

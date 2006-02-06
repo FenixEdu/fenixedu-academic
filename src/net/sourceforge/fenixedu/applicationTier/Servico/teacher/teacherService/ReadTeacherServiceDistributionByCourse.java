@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +23,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 
 /**
@@ -59,15 +57,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 
 				for (ExecutionPeriod executionPeriodEntry : executionPeriodList) {
 
-					List<CurricularCourseScope> scopesList = curricularCourseEntry
-							.getActiveScopesInExecutionPeriod(executionPeriodEntry);
-					Set<String> curricularYearsList = new LinkedHashSet<String>();
-					for (CurricularCourseScope scopeEntry : scopesList) {
-						curricularYearsList.add(curricularCourseEntry
-								.getCurricularYearByBranchAndSemester(scopeEntry.getBranch(),
-										scopeEntry.getCurricularSemester().getSemester()).getYear()
-								.toString());
-					}
+					Set<String> curricularYearsSet = buildCurricularYearsSet(curricularCourseEntry, executionPeriodEntry);
 
 					for (ExecutionCourse executionCourseEntry : (List<ExecutionCourse>) curricularCourseEntry
 							.getExecutionCoursesByExecutionPeriod(executionPeriodEntry)) {
@@ -77,10 +67,10 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 									.getIdInternal(), curricularCourseEntry.getDegreeCurricularPlan().getDegree()
 									.getSigla());
 							returnDTO.addCurricularYearsToExecutionCourse(executionCourseEntry.getIdInternal(),
-									curricularYearsList);
+									curricularYearsSet);
 							continue;
 						}
-
+						
 						int executionCourseFirstTimeEnrollementStudentNumber = executionCourseEntry
 								.getFirstTimeEnrolmentStudentNumber();
 						int executionCourseSecondTimeEnrollementStudentNumber = executionCourseEntry
@@ -96,7 +86,7 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 										campus,
 										curricularCourseEntry.getDegreeCurricularPlan().getDegree()
 												.getSigla(),
-										curricularYearsList,
+										curricularYearsSet,
 										executionCourseEntry.getExecutionPeriod().getSemester(),
 										executionCourseFirstTimeEnrollementStudentNumber,
 										executionCourseSecondTimeEnrollementStudentNumber,
@@ -130,6 +120,25 @@ public class ReadTeacherServiceDistributionByCourse extends Service {
 		Collections.sort(returnArraylist);
 
 		return returnArraylist;
+	}
+	
+	private Set<String> buildCurricularYearsSet(CurricularCourse curricularCourseEntry, ExecutionPeriod executionPeriodEntry) {
+		
+		List<CurricularCourseScope> scopesList = curricularCourseEntry
+				.getActiveScopesInExecutionPeriod(executionPeriodEntry);
+		
+		if(scopesList.isEmpty()){
+			scopesList = curricularCourseEntry.getActiveScopesIntersectedByExecutionPeriod(executionPeriodEntry);
+		}
+		
+		Set<String> curricularYearsSet = new LinkedHashSet<String>();
+		for (CurricularCourseScope scopeEntry : scopesList) {
+			curricularYearsSet.add(curricularCourseEntry
+					.getCurricularYearByBranchAndSemester(scopeEntry.getBranch(),
+							scopeEntry.getCurricularSemester().getSemester()).getYear()
+					.toString());
+		}
+		return curricularYearsSet;
 	}
 
 	private void fillExecutionCourseDTOWithTeachers(DistributionTeacherServicesByCourseDTO dto,

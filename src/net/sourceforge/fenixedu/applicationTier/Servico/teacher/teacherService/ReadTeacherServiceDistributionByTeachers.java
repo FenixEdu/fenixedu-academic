@@ -4,8 +4,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -21,6 +23,8 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentTeacher;
 import net.sourceforge.fenixedu.util.DateFormatUtil;
@@ -35,7 +39,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		
-
+		
 		final List<ExecutionPeriod> executionPeriodList = new ArrayList<ExecutionPeriod>();
 		for(Integer executionPeriodID : executionPeriodsIDs){
 			executionPeriodList.add((ExecutionPeriod) persistentObject.readByOID(ExecutionPeriod.class, executionPeriodID));
@@ -44,7 +48,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		final List<ExecutionPeriod> allExecutionPeriods = (List<ExecutionPeriod>) persistentObject.readAll(ExecutionPeriod.class);
 		
 		final ExecutionPeriod startPeriod = findStartPeriod(allExecutionPeriods);
-
+		
 		ExecutionPeriod endPeriod = findEndPeriod(executionPeriodList, startPeriod); 
 		
 		DistributionTeacherServicesByTeachersDTO returnDTO = new DistributionTeacherServicesByTeachersDTO();
@@ -61,15 +65,17 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 				}
 				
 				Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getCreditsBetweenExecutionPeriods(startPeriod, endPeriod)); 
-					
+				
 				if(returnDTO.isTeacherPresent(teacher.getIdInternal())){
 					returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()));
+					returnDTO.addCreditsToTeacher(teacher.getIdInternal(), teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry));
+					
 				} else {
-				returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
-                        .getCategory().getCode(), teacher.getPerson().getNome(), teacher.getMandatoryLessonHours(executionPeriodEntry), 
-						teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
+					returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher
+							.getCategory().getCode(), teacher.getPerson().getNome(), teacher.getHoursByCategory(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate()), 
+							teacher.getServiceExemptionCredits(executionPeriodEntry) + teacher.getManagementFunctionsCredits(executionPeriodEntry), accumulatedCredits);
 				}
-		
+					
 				for (Professorship professorShip : teacher.getProfessorships()) {
 					ExecutionCourse executionCourse = professorShip.getExecutionCourse();
 		
@@ -77,17 +83,29 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 						continue;
 					}
 		
-					Set<String> curricularYears = new LinkedHashSet<String>();
-					Set<String> degreeNames = new LinkedHashSet<String>();
+					
+					Map<Integer, String> degreeNameMap = new LinkedHashMap<Integer, String>();
+					Map<Integer, Set<String>> degreeCurricularYearsMap = new LinkedHashMap<Integer, Set<String>>();
 					for (CurricularCourse curricularCourse : executionCourse
 							.getAssociatedCurricularCourses()) {
-						degreeNames.add(curricularCourse.getDegreeCurricularPlan().getDegree().getSigla());
-		
+						String degreeName = curricularCourse.getDegreeCurricularPlan().getDegree().getSigla();
+						Integer degreeIdInternal = curricularCourse.getDegreeCurricularPlan().getDegree().getIdInternal();
+						if(!degreeNameMap.containsKey(degreeIdInternal)) {
+							degreeNameMap.put(degreeIdInternal, degreeName);
+							degreeCurricularYearsMap.put(degreeIdInternal, new LinkedHashSet<String>());
+						}		
+						
+						Set<String> curricularYears = new LinkedHashSet<String>();
+						
 						for (CurricularCourseScope curricularCourseScope : curricularCourse.getScopes()) {
-							CurricularSemester curricularSemester = curricularCourseScope
-									.getCurricularSemester();
-							curricularYears.add(curricularSemester.getCurricularYear().getYear().toString());
+							
+							if(curricularCourseScope.isActive(executionPeriodEntry.getEndDate())) {
+								CurricularSemester curricularSemester = curricularCourseScope
+										.getCurricularSemester();
+								curricularYears.add(curricularSemester.getCurricularYear().getYear().toString());
+							}
 						}
+						degreeCurricularYearsMap.get(degreeIdInternal).addAll(curricularYears);
 					}
 		
 					Double hoursSpentByTeacher = StrictMath.ceil(teacher
@@ -95,9 +113,31 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 		
 					returnDTO.addExecutionCourseToTeacher(teacher.getIdInternal(), executionCourse
 							.getIdInternal(), executionCourse.getNome(), hoursSpentByTeacher.intValue(),
-							degreeNames, curricularYears, executionCourse.getExecutionPeriod().getName());
+							degreeNameMap, degreeCurricularYearsMap, executionCourse.getExecutionPeriod().getName());
 		
 				}
+				
+				List<PersonFunction> teacherManagementFunctions = teacher.getManagementFunctions(executionPeriodEntry);
+				
+				
+				for(PersonFunction personFunction: teacherManagementFunctions) {
+					returnDTO.addManagementFunctionToTeacher(teacher.getIdInternal(), personFunction.getFunction().getName(), personFunction.getCredits());
+				}
+				
+				List<TeacherServiceExemption> teacherServiceExemptions = teacher.getServiceExemptionSituations(executionPeriodEntry.getBeginDate(), executionPeriodEntry.getEndDate());
+				
+				for(TeacherServiceExemption exemption: teacherServiceExemptions) {
+					Date endDate = null;
+					if(exemption.getEnd() == null) {
+						endDate = executionPeriodEntry.getEndDate();
+					} else {
+						endDate = exemption.getEnd();
+					}
+	
+					
+					returnDTO.addManagementFunctionToTeacher(teacher.getIdInternal(), exemption.getType().getName(), (double) teacher.getHoursByCategory(exemption.getStart(), endDate));
+				}
+				
 			}
 		
 		}
