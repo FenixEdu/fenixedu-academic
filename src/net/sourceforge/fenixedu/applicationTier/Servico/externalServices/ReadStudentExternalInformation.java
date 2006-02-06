@@ -89,8 +89,18 @@ public class ReadStudentExternalInformation extends Service
 					atLeastOnOpenScope |= scope.isActive().booleanValue();
 				}
 
+				for (StudentCurricularPlan plan : student.getStudentCurricularPlans())
+				{
+					System.out.println("ESTA APROVADO A "
+							+ course.getCode()
+							+ " em "
+							+ plan.getDegreeCurricularPlan().getName()
+							+ "?------->"
+							+ student.getActiveStudentCurricularPlan().isCurricularCourseApproved(course));
+					availableToEnroll &= !student.getActiveStudentCurricularPlan().isCurricularCourseApproved(course);
+				}
+
 				availableToEnroll &= atLeastOnOpenScope;
-				availableToEnroll &= !student.getActiveStudentCurricularPlan().isCurricularCourseApproved(course);
 				return availableToEnroll;
 			}
 		}
@@ -131,7 +141,27 @@ public class ReadStudentExternalInformation extends Service
 				Enrolment enrollment = (Enrolment) iterEnrolments.next();
 				if (enrollment.getEnrollmentState().equals(EnrollmentState.APROVED))
 				{
+					CurricularCourse curricularCourse = enrollment.get$curricularCourse();
+					if (curricularCourse.getEctsCredits().doubleValue() == 0)
+					{
+						Collection<DegreeCurricularPlan> degrees = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeCurricularPlans();
+						for (DegreeCurricularPlan degree : degrees)
+						{
+							CurricularCourse curricularCourseWithSameCode = degree.getCurricularCourseByCode(curricularCourse.getCode());
+							if (curricularCourseWithSameCode != null
+									&& curricularCourseWithSameCode.getEctsCredits() != null
+									&& !(curricularCourseWithSameCode.getEctsCredits().doubleValue() == 0))
+							{
+								curricularCourse = curricularCourseWithSameCode;
+								break;
+							}
+						}
+					}
 					InfoExternalEnrollmentInfo info = InfoExternalEnrollmentInfo.newFromEnrollment(enrollment);
+					if (!curricularCourse.equals(enrollment.getCurricularCourse()))
+					{
+						info.setCourse(InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse));
+					}
 
 					GetEnrolmentGrade getEnrollmentGrade = new GetEnrolmentGrade();
 					InfoEnrolmentEvaluation infoEnrollmentEvaluation = getEnrollmentGrade.run(enrollment);
@@ -161,6 +191,21 @@ public class ReadStudentExternalInformation extends Service
 		for (Iterator iter = courses.iterator(); iter.hasNext();)
 		{
 			CurricularCourse curricularCourse = (CurricularCourse) iter.next();
+			if (curricularCourse.getEctsCredits().doubleValue() == 0)
+			{
+				Collection<DegreeCurricularPlan> degrees = curricularCourse.getDegreeCurricularPlan().getDegree().getDegreeCurricularPlans();
+				for (DegreeCurricularPlan degree : degrees)
+				{
+					CurricularCourse curricularCourseWithSameCode = degree.getCurricularCourseByCode(curricularCourse.getCode());
+					if (curricularCourseWithSameCode != null
+							&& curricularCourseWithSameCode.getEctsCredits() != null
+							&& !(curricularCourseWithSameCode.getEctsCredits().doubleValue() == 0))
+					{
+						curricularCourse = curricularCourseWithSameCode;
+						break;
+					}
+				}
+			}
 			info.addCourse(InfoExternalCurricularCourseInfo.newFromDomain(curricularCourse));
 		}
 
