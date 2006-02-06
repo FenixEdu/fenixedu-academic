@@ -613,7 +613,7 @@ public class Teacher extends Teacher_Base {
             }
         }
         return teacherServiceExemption;
-    }
+	}
 
     public List<net.sourceforge.fenixedu.domain.teacher.Advise> getAdvisesByAdviseTypeAndExecutionYear(
             net.sourceforge.fenixedu.domain.teacher.AdviseType adviseType, ExecutionYear executionYear) {
@@ -684,8 +684,8 @@ public class Teacher extends Teacher_Base {
         }
         return totalCredits;
     }
-
-    public int getMandatoryLessonHours(ExecutionPeriod executionPeriod) {
+    
+        public int getMandatoryLessonHours(ExecutionPeriod executionPeriod) {
         OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
         if (occupationPeriod == null) {
             return 0;
@@ -739,4 +739,19 @@ public class Teacher extends Teacher_Base {
         }
         return false;
     }
+    
+    public List<PersonFunction> getManagementFunctions(ExecutionPeriod executionPeriod) {
+        Date begin = executionPeriod.getBeginDate();
+        Date end = executionPeriod.getEndDate();
+
+        List<PersonFunction> list = new ArrayList<PersonFunction>();
+        for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
+            if (personFunction.belongsToPeriod(begin, end)) {
+                list.add(personFunction);
+            }
+        }
+        
+        return list;   	
+    }
+
 }
