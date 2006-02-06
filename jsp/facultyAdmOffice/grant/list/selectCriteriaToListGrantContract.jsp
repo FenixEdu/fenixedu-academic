@@ -36,9 +36,11 @@
 	<html:hidden property="spanNumber" value="1"/>
 	<html:hidden property="orderBy" value="orderByNumber"/>
 	
-	<table>
-		<tr>
-			<td colspan="2">
+
+
+	<h3>Filtrar</h3>
+
+			
 				<table>
 					<tr>
 						<td>
@@ -65,52 +67,34 @@
 			            </td>
 					</tr>
 				</table>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.list.byCriteria.grant.owner.dateBegin"/>:&nbsp;
-			</td>
-			<td colspan="2">
-				<html:text property="beginContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.list.byCriteria.grant.owner.dateEnd"/>:&nbsp;
-			</td>
-			<td colspan="2">
-				<html:text property="endContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="left">
-				<bean:message key="label.list.byCriteria.grant.owner.grantType"/>:&nbsp;
-			</td>
-			<td>
-				<html:select property="grantTypeId">
-					<html:options collection="grantTypeList" property="idInternal" labelProperty="sigla"/>
-				</html:select>
-			</td>
-		</tr>
 		
-	</table>
+				<table>
+					<tr>
+						<td align="left">
+							<bean:message key="label.list.byCriteria.grant.owner.grantType"/>:&nbsp;
+						</td>
+						<td>
+						<html:select property="grantTypeId">
+							<html:options collection="grantTypeList" property="idInternal" labelProperty="sigla"/>
+						</html:select>
+						</td>
+					</tr>
+				</table>
+	
+<div class="lfloat mtop2">
+	<p><b>Deve optar por:</b></p>
+	<p>a) Filtrar as listas por "Data Início/Fim"</p>
+	<p><label><bean:message key="label.list.byCriteria.grant.owner.dateBegin"/>:</label><html:text property="beginContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
+	<p><label><bean:message key="label.list.byCriteria.grant.owner.dateEnd"/>:</label><html:text property="endContract" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
+	<p class="mtop1">b) ou por "Activas à data"</p>
+	<p><label><bean:message key="label.list.byCriteria.grant.owner.validToDate"/>:</label><html:text property="validToTheDate" size="10"/>&nbsp;<bean:message key="label.dateformat"/></p>
+</div>
 
-	<br/>
+<p>
+		<%-- Search button --%>
+		<html:submit styleClass="inputbutton">
+			<bean:message key="button.search"/>
+		</html:submit>
+</p>
 
-	<table>
-		<tr>
-			<td>
-				<%-- Search button --%>
-				<html:submit styleClass="inputbutton">
-					<bean:message key="button.search"/>
-				</html:submit>
 </html:form>
-			</td>
-		</tr>
-	</table>
