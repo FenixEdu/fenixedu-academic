@@ -30,7 +30,8 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
 	private Space getSpaceAndSetSelectedSpace(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 		final IUserView userView = getUserView(request);
-        final String spaceIDString = request.getParameter("spaceID");
+        final String spaceIDString = (request.getParameterMap().containsKey("spaceID") ?
+        		request.getParameter("spaceID") : (String) request.getAttribute("spaceID"));
         final Integer spaceID = spaceIDString != null ? Integer.valueOf(spaceIDString) : null;
         final Object[] args = { Space.class, spaceID };
         final Space space = (Space) ServiceUtils.executeService(userView, "ReadDomainObject", args);
@@ -82,13 +83,19 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String suroundingSpaceIDString = (String) dynaActionForm.get("suroundingSpaceID");
-        final Integer suroundingSpaceID = Integer.valueOf(suroundingSpaceIDString);
+        final Integer suroundingSpaceID = (suroundingSpaceIDString != null && suroundingSpaceIDString.length() > 0) ?
+        	Integer.valueOf(suroundingSpaceIDString) : null;
         final String spaceName = (String) dynaActionForm.get("spaceName");
 
         final Object[] args = { suroundingSpaceID, spaceName };
         ServiceUtils.executeService(userView, "CreateBuilding", args);
 
-        return mapping.findForward("ShowSpaces");
+        if (suroundingSpaceIDString == null || suroundingSpaceIDString.length() == 0) {
+        	return mapping.findForward("ShowSpaces");
+        } else {
+        	request.setAttribute("spaceID", suroundingSpaceIDString);
+        	return manageSpace(mapping, form, request, response);
+        }
     }
 
     public ActionForward deleteSpace(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -116,7 +123,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         final Object[] args = { spaceID, spaceName };
         ServiceUtils.executeService(userView, "EditCampus", args);
 
-        return mapping.findForward("ShowSpaces");
+        return manageSpace(mapping, form, request, response);
     }
 
     public ActionForward editBuilding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -132,7 +139,7 @@ public class ManageSpacesDA extends FenixDispatchAction {
         final Object[] args = { spaceID, spaceName };
         ServiceUtils.executeService(userView, "EditBuilding", args);
 
-        return mapping.findForward("ShowSpaces");
+        return manageSpace(mapping, form, request, response);
     }
 
 }

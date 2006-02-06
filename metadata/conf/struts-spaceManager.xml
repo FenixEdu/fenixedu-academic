@@ -65,15 +65,16 @@
 			<forward name="ShowCreateSpaceForm" path="show-create-space-form"/>
             <forward name="ShowSpaces" path="/manageSpaces.do?method=viewSpaces&amp;page=0"/>
             <forward name="ShowCreateSubSpaceForm" path="show-create-sub-space-form"/>
+            <forward name="ManageSpace" path="show-manage-space-form"/>
         </action>
 
         <action path="/editSpace" type="net.sourceforge.fenixedu.presentationTier.Action.spaceManager.ManageSpacesDA"
-        		input="/manageSpaces.do?method=showCreateSpaceForm&amp;page=0"
+        		input="/manageSpaces.do?method=prepareEditSpace&amp;page=0"
         		name="editSpaceForm"
         		parameter="method"
         		scope="request"
         		>
-            <forward name="ShowSpaces" path="/manageSpaces.do?method=viewSpaces&amp;page=0"/>
+       		<forward name="ManageSpace" path="show-manage-space-form"/>
         </action>
     </action-mappings>
     

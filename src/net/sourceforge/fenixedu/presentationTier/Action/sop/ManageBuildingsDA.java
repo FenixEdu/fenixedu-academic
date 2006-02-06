@@ -64,7 +64,7 @@ public class ManageBuildingsDA extends FenixDispatchAction {
         final String campusID = (String) dynaActionForm.get("campusID");
 
         final Object args[] = { Integer.valueOf(buildingID), Integer.valueOf(campusID) };
-        ServiceUtils.executeService(userView, "EditBuilding", args);
+        ServiceUtils.executeService(userView, "EditOldBuilding", args);
 
         return prepare(mapping, form, request, response);
     }

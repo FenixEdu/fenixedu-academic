@@ -8324,8 +8324,8 @@
 		</filterChains>
 	</service>
 	<service>
-		<name>EditBuilding</name>
-		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditBuilding</implementationClass>
+		<name>EditOldBuilding</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.sop.EditOldBuilding</implementationClass>
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains>
@@ -9541,7 +9541,7 @@
         <isTransactional>true</isTransactional>  
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
-        </filterChains>     
+        </filterChains>
     </service>
 	<service>
    	 	<name>CreateCampus</name>
@@ -9554,6 +9554,22 @@
 	<service>
    	 	<name>CreateBuilding</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.CreateBuilding</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+	<service>
+   	 	<name>EditBuilding</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.EditBuilding</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+        </filterChains>
+    </service>
+	<service>
+   	 	<name>EditCampus</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.space.EditCampus</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>
         <filterChains>

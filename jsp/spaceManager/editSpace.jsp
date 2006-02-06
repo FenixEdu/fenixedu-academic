@@ -16,12 +16,14 @@
 	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 		<html:hidden property="method" value="editCampus"/>
 
-		<html:text property="spaceName"/>
+		<bean:define id="name" type="java.lang.String" name="selectedSpace" property="spaceInformation.name"/>
+		<html:text property="spaceName" value="<%= name %>"/>
 	</logic:equal>
 	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 		<html:hidden property="method" value="editBuilding"/>
 
-		<html:text property="spaceName"/>
+		<bean:define id="name" type="java.lang.String" name="selectedSpace" property="spaceInformation.name"/>
+		<html:text property="spaceName" value="<%= name %>"/>
 	</logic:equal>
 	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
 		<html:hidden property="method" value="editFloor"/>
