@@ -9,14 +9,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesCoursesRes;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.inquiries.OldInquiriesTeachersRes;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 
 public class Degree extends Degree_Base {
 
     protected Degree() {
         super();
-    };
+    }
 
     public Degree(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale,
             String concreteClassForDegreeCurricularPlans) {
@@ -33,10 +32,10 @@ public class Degree extends Degree_Base {
     }
 
     public Degree(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
-            Double ectsCredits, GradeScale gradeScale) {
+            Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) {
         this();
         commonFieldsChange(name, nameEn, gradeScale);
-        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits);
+        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits, prevailingScientificArea);
     }
 
     private void commonFieldsChange(String name, String nameEn, GradeScale gradeScale) {
@@ -46,8 +45,8 @@ public class Degree extends Degree_Base {
             throw new DomainException("degree.name.en.not.null");
         } 
 
-        this.setNome(name);
-        this.setNameEn(nameEn);
+        this.setNome(name.trim());
+        this.setNameEn(nameEn.trim());
         this.setGradeScale(gradeScale);
     }
     
@@ -58,11 +57,11 @@ public class Degree extends Degree_Base {
             throw new DomainException("degree.degree.type.not.null");
         } 
 
-        this.setSigla(code);
+        this.setSigla(code.trim());
         this.setTipoCurso(degreeType);
     }
     
-    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType, Double ectsCredits) {
+    private void newStructureFieldsChange(String acronym, BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, String prevailingScientificArea) {
         if (acronym == null) {
             throw new DomainException("degree.acronym.not.null");
         } else if(bolonhaDegreeType == null) {
@@ -71,9 +70,10 @@ public class Degree extends Degree_Base {
             throw new DomainException("degree.ectsCredits.not.null");
         }
 
-        this.setAcronym(acronym);
+        this.setAcronym(acronym.trim());
         this.setBolonhaDegreeType(bolonhaDegreeType);
         this.setEctsCredits(ectsCredits);
+        this.setPrevailingScientificArea(prevailingScientificArea.trim());
     }
 
     public void edit(String name, String nameEn, String code, DegreeType degreeType, GradeScale gradeScale) {
@@ -85,10 +85,10 @@ public class Degree extends Degree_Base {
     }
 
     public void edit(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
-            Double ectsCredits, GradeScale gradeScale) {
+            Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) {
         checkIfCanEdit(bolonhaDegreeType);
         commonFieldsChange(name, nameEn, gradeScale);
-        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits);
+        newStructureFieldsChange(acronym, bolonhaDegreeType, ectsCredits, prevailingScientificArea);
     }
     
     private void checkIfCanEdit(final BolonhaDegreeType bolonhaDegreeType) {

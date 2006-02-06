@@ -533,6 +533,7 @@ class net.sourceforge.fenixedu.domain.Degree extends net.sourceforge.fenixedu.do
     Integer keyUnit;
     GradeScale gradeScale;
     Double ectsCredits;
+    String prevailingScientificArea;
 }
 
 

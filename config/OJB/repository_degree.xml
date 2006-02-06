@@ -62,6 +62,11 @@
 		column="ECTS_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
+	<field-descriptor
+		name="prevailingScientificArea"
+		column="PREVAILING_SCIENTIFIC_AREA"
+		jdbc-type="VARCHAR"
+	/>
 	<reference-descriptor auto-retrieve="false"
          name="unit"
          class-ref="net.sourceforge.fenixedu.domain.organizationalStructure.Unit">

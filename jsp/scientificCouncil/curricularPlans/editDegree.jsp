@@ -59,6 +59,13 @@
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 
+		<h:outputText value="<p><label>#{scouncilBundle['prevailingScientificArea']}:</label>" escape="false"/>
+		<h:panelGroup>
+			<h:inputText id="prevailingScientificArea" value="#{ScientificCouncilDegreeManagement.prevailingScientificArea}" maxlength="100" size="60"/>
+			<h:message for="prevailingScientificArea" errorClass="error0" rendered="#{empty ScientificCouncilDegreeManagement.errorMessage}"/>
+		</h:panelGroup>
+		<h:outputText value="</p>" escape="false"/>
+
 		<h:outputText value="<p><label class='lempty'>.</label>#{scouncilBundle['mandatory.fields']}" escape="false"/>
 
 		<h:outputText value="</fieldset></div>" escape="false"/>

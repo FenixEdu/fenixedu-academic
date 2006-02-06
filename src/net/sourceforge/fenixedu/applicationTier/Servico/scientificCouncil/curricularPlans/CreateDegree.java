@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateDegree extends Service {
 
     public void run(String name, String nameEn, String acronym, BolonhaDegreeType bolonhaDegreeType,
-            Double ectsCredits, GradeScale gradeScale) throws ExcepcaoPersistencia, FenixServiceException {
+            Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) throws ExcepcaoPersistencia, FenixServiceException {
 
         if (name == null || nameEn == null || acronym == null || bolonhaDegreeType == null
                 || ectsCredits == null) {
@@ -34,7 +34,7 @@ public class CreateDegree extends Service {
             }
         }
 
-        DomainFactory.makeDegree(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale);
+        DomainFactory.makeDegree(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale, prevailingScientificArea);
     }
 
 }

@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class EditDegree extends Service {
 
     public void run(Integer idInternal, String name, String nameEn, String acronym,
-            BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, GradeScale gradeScale) throws FenixServiceException, 
+            BolonhaDegreeType bolonhaDegreeType, Double ectsCredits, GradeScale gradeScale, String prevailingScientificArea) throws FenixServiceException, 
             ExcepcaoPersistencia {
         if (idInternal == null || name == null || nameEn == null || acronym == null
                 || bolonhaDegreeType == null || ectsCredits == null) {
@@ -48,7 +48,7 @@ public class EditDegree extends Service {
             }
         }
 
-        degreeToEdit.edit(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale);
+        degreeToEdit.edit(name, nameEn, acronym, bolonhaDegreeType, ectsCredits, gradeScale, prevailingScientificArea);
     }
 
 }

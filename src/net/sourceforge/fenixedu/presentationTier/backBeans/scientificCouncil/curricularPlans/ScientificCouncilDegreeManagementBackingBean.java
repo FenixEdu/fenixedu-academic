@@ -32,6 +32,7 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     private String bolonhaDegreeType;
     private String gradeScale;
     private Double ectsCredits;
+    private String prevailingScientificArea;
 
     public List<Degree> getBolonhaDegrees() throws FenixFilterException, FenixServiceException {
         Object[] args = { Degree.class };
@@ -134,6 +135,14 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
     public void setEctsCredits(Double ectsCredits) {
         this.ectsCredits = ectsCredits;
     }
+    
+    public String getPrevailingScientificArea() throws FenixFilterException, FenixServiceException {
+        return (prevailingScientificArea == null && getDegree() != null) ? (prevailingScientificArea = getDegree().getPrevailingScientificArea()) : prevailingScientificArea;
+    }
+
+    public void setPrevailingScientificArea(String prevailingScientificArea) {
+        this.prevailingScientificArea = prevailingScientificArea;
+    }
 
     public List<SelectItem> getBolonhaDegreeTypes() {
         List<SelectItem> result = new ArrayList<SelectItem>();
@@ -169,7 +178,7 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
             return "";
         }
         
-        Object[] args = { this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(this.bolonhaDegreeType), this.getEctsCredits(), null }; //GradeScale.valueOf(this.gradeScale) };
+        Object[] args = { this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(this.bolonhaDegreeType), this.getEctsCredits(), null, this.prevailingScientificArea };
         return changeDegree("CreateDegree", args, "degree.created", "error.creatingDegree");
     }
     
@@ -186,7 +195,7 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
             return "";
         }
         
-        Object[] args = { this.getDegreeId(), this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(getBolonhaDegreeType()), this.getEctsCredits(), null }; //GradeScale.valueOf(this.gradeScale) };
+        Object[] args = { this.getDegreeId(), this.name, this.nameEn, this.acronym, BolonhaDegreeType.valueOf(getBolonhaDegreeType()), this.getEctsCredits(), null, this.prevailingScientificArea };
         return changeDegree("EditDegree", args, "degree.edited", "error.editingDegree");
     }
     
