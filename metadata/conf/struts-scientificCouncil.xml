@@ -28,13 +28,30 @@
          
       </form-bean>
 		      
-      <form-bean name="creditsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+      <form-bean name="creditsReportForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
       	<form-property name="fromExecutionPeriodID" type="java.lang.String" />
       	<form-property name="untilExecutionPeriodID" type="java.lang.String" />      	
       	<form-property name="unitID" type="java.lang.Integer" />
       	<form-property name="departmentID" type="java.lang.Integer" />      	
       	<form-property name="method" type="java.lang.String" />      	
       </form-bean>
+      
+      <form-bean name="masterDegreeCreditsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+      	<form-property name="executionYearID" type="java.lang.Integer"/>
+      	<form-property name="executionDegreeID" type="java.lang.Integer"/>
+      	<form-property name="curricularCourseID" type="java.lang.Integer"/>
+      	<form-property name="masterDegreeCurricularPlanID" type="java.lang.Integer"/>
+      	<form-property name="hoursMap" type="java.util.HashMap"/>      	
+      	<form-property name="creditsMap" type="java.util.HashMap"/>   
+      	
+      	<!-- for the edition of professorships -->
+      	<form-property name="professorShipTeachersIds" type="java.lang.Integer[]" />
+        <form-property name="nonAffiliatedTeachersIds" type="java.lang.Integer[]" />                
+        <form-property name="responsibleTeachersIds" type="java.lang.Integer[]" />
+		<form-property name="number" type="java.lang.String" />
+		<form-property name="page" type="java.lang.Integer" initial="0"/> 	    	
+      </form-bean> 
+    
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -111,7 +128,7 @@
     		</action>
     		
 		<action path="/creditsReport"
-     		name="creditsForm"
+     		name="creditsReportForm"
     		type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction" 
     		parameter="method"
     		scope="request"    		
@@ -122,7 +139,65 @@
             />  
     		<forward name="prepare" path="select-report-parameters"/>
     		<forward name="showCreditsReport" path="show-credits-report"/>
-    	</action>    		
+    	</action>  
+    	<action path="/masterDegreeCreditsManagement"
+     		name="masterDegreeCreditsForm"
+    		type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction" 
+    		parameter="method"
+    		scope="request"    		
+    		>
+    		<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" 
+                key="" 
+                handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>  
+    		<exception type="java.lang.NumberFormatException"
+				key="error.credits.invalidNumber" 
+                path="/masterDegreeCreditsManagement.do?method=prepareEdit"
+            />   		
+    		<forward name="chooseMasterDegreeExecution" path="select-masterDegree-parameters"/>
+    		<forward name="showCreditsReport" path="show-credits-report"/>
+    		<forward name="editMasterDegreeCredits" path="edit-masterDegree-credits"/>
+    		<forward name="successfulEdit" path="/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits"/>
+    	</action>  
+    	
+		<!--Action for reading teachers of an execution course  -->
+		<action
+		    path="/readTeacherInCharge"
+		    name="masterDegreeCreditsForm"
+		    input="/readCurricularCourse.do"
+			scope="request"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.ReadTeacherInChargeAction">         
+	       <forward name="readExecutionCourseTeachers" path="df.page.read-execution-course-teachers"/>      	      
+		</action>
+		
+		<!--Actions for inserting teachers at an execution course  -->
+		<action
+		    path="/insertProfessorShipByNumber"
+		    name="masterDegreeCreditsForm"
+		    input="/insertProfessorShipByNumber.do?method=prepareInsert&amp;page=0"
+			scope="request"
+			parameter="method"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertProfessorShipByNumberDA"
+	        validate="true">
+	        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
+	         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>   
+	       <forward name="insertProfessorShip" path="df.page.insert-professorShip-by-number"/>
+	       <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>      	      
+		</action>
+		
+		<!-- Action for saving modifications at teachers body --> 
+	    <action 
+	      	path="/saveTeachersBody"
+	      	name="masterDegreeCreditsForm"
+	      	input="/readTeacherInCharge.do"
+	      	scope="request"
+	      	type="net.sourceforge.fenixedu.presentationTier.Action.manager.SaveTeachersBodyAction">
+	      	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException"
+	         	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+	       <forward name="readCurricularCourse" path="/masterDegreeCreditsManagement.do?method=prepareEdit"/>      	      
+	    </action>
+	    	    
 	</action-mappings>
 
 	<!-- ========== Controller Configuration ================================ -->
