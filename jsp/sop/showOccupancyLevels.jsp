@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/fenixLayout_2col_photo.jsp" flush="true">
+<tiles:insert page="/layout/fenixLayout_2col_photo.jsp" flush="true">
   <tiles:put name="title" value="SOP" />
   <tiles:put name="serviceName" value="SOP - Serviço de Organização Pedagógica" />
   <tiles:put name="navGeral" value="/sop/commonNavGeralSopExecutionCourse.jsp" />

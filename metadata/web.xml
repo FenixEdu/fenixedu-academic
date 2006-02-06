@@ -240,7 +240,7 @@
         </init-param>
         <init-param>
             <param-name>application</param-name>
-            <param-value>ServidorApresentacao.ApplicationResources</param-value>
+            <param-value>resources.ApplicationResources</param-value>
         </init-param>
         <init-param>
             <param-name>config/sop</param-name>

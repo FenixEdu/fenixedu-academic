@@ -826,9 +826,9 @@
     <!-- ========== Controller Configuration ================================ -->
     <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
     <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="ServidorApresentacao.DepartmentAdmOfficeResources" null="false"/>
-    <message-resources parameter="ServidorApresentacao.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>    
-	<message-resources parameter="ServidorApresentacao.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
+    <message-resources parameter="resources.DepartmentAdmOfficeResources" null="false"/>
+    <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>    
+	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %> 
 
 <%--
-<tiles:insert page="/istLayout.jsp" flush="true">
+<tiles:insert page="/layout/istLayout.jsp" flush="true">
      <put name="title" value="Instituto Superior Técnico" /> 
 	 <put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
      <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -13,7 +13,7 @@
 
 
 
-<tiles:insert page="/publicGesDisLayout_2col.jsp" flush="true">
+<tiles:insert page="/layout/publicGesDisLayout_2col.jsp" flush="true">
   <tiles:put name="title" value=".Instituto Superior T&eacute;cnico" />
   <tiles:put name="serviceName" value="Instituto Superior T&eacute;cnico" />
   <tiles:put name="navGeral" value="/commons/blank.jsp" />

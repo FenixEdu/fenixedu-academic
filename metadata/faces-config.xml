@@ -8,7 +8,7 @@
 		<locale-config>
 			<default-locale>pt</default-locale>
 		</locale-config>
-		<message-bundle>ServidorApresentacao.ApplicationResources</message-bundle>
+		<message-bundle>resources.ApplicationResources</message-bundle>
 	</application>
 	
  	<!-- <lifecycle>

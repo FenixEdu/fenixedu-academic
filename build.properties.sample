@@ -8,6 +8,7 @@
 #   application: application to install. Valid options are: extranet, intranet
 #   index.html.link: initial page to be displayed from applications root
 #   login.page: absolute path to the login page
+#   institution.project: directory containing institution specific implementation (including style layouts)
 #
 htttp.host=localhost
 http.port=8080
@@ -21,6 +22,8 @@ index.html.link.salad21=loginPage.jsp
 index.html.link.salad21.ist.utl.pt=loginPage.jsp
 login.page=https://fenix.ist.utl.pt/privado
 institution.url=http://www.ist.utl.pt
+
+institution.project=/home/marvin/workspace/fenix-ist
 #
 #
 #------------------------------------------------------------------------------

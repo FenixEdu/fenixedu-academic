@@ -20,7 +20,7 @@
 	
 	<definition name="definition.publico.executionCourseSitePage1" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
-		page="/istLayout.jsp" >
+		page="/layout/istLayout.jsp" >
 			<put name="title" value=".Instituto Superior Técnico" />	
             <put name="serviceName" value="Instituto Superior Técnico" /> 
             <put name="executionCourseName" value="/publico/executionCourseName.jsp"  />
@@ -50,7 +50,7 @@
 	</definition>	
 	
 	<definition name="definition.public.mainPageIST" 
-		page="/istLayout.jsp" >
+		page="/layout/istLayout.jsp" >
             <put name="title" value="Instituto Superior Técnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />

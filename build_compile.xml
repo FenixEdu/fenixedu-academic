@@ -10,6 +10,7 @@
 	<property name="src" location="src"/>
 	<property name="src_gen" location="src_gen"/>
 	<property name="config" location="config"/>
+	<property name="institution.config" location="${institution.project}/config"/>
 	<property name="config.web" location="metadata"/>
 
 	<!-- Directories for compiled code -->
@@ -31,6 +32,7 @@
 
 	<!-- Directory with web-content -->
 	<property name="web-content" location="jsp"/>
+	<property name="institution.web-content" location="${institution.project}/jsp"/>
 
 	<!-- DML definition file -->
 	<property name="dml.definition.file" value="${config}/domain_model.dml"/>
@@ -61,32 +63,32 @@
 		<sequential>
 			<delete file="${build.home.webinf.libs}/dml.jar"/>
 
-			<parallel>
-				<copy todir="${build.home}">
-					<fileset dir="${web-content}" >
-						<include name="**/*.*"/>
-						<exclude name="WEB-INF//*.*"/>
-					</fileset>
-				</copy>
+			<copy todir="${build.home}">
+				<fileset dir="${web-content}" >
+					<include name="**/*.*"/>
+					<exclude name="WEB-INF//*.*"/>
+				</fileset>
+			</copy>
 
-				<copy todir="${build.home.webinf.classes}">
-					<fileset dir="${config}"/>
-				</copy>
+			<copy todir="${build.home.webinf.classes}">
+				<fileset dir="${config}"/>
+			</copy>
 
-				<copy todir="${build.home.webinf}" file="${config}/domain_model.dml"/>
+			<copy todir="${build.home.webinf}" file="${config}/domain_model.dml"/>
 
-				<copy todir="${build.home.webinf}">
-					<fileset dir="${config.web}" >
-						<include name="**/*.*"/>
-					</fileset>
-				</copy>
+			<copy todir="${build.home.webinf}">
+				<fileset dir="${config.web}" >
+					<include name="**/*.*"/>
+				</fileset>
+			</copy>
 
-				<copy todir="${build.home.webinf.libs}">
-					<fileset dir="${lib}" >
-						<include name="*.jar"/>
-					</fileset>
-				</copy>
-			</parallel>
+			<copy todir="${build.home.webinf.libs}">
+				<fileset dir="${lib}" >
+					<include name="*.jar"/>
+				</fileset>
+			</copy>
+
+			<antcall target="prepare-institution"/>
 
 			<!-- Replace tokens in configuration files with local config -->
 			<antcall target="replace-property-values"/>
@@ -96,6 +98,19 @@
 script.isAlive.check.db=${script.isAlive.check.db}
 script.isAlive.check.slide=${script.isAlive.check.slide}
 		</echo>
+	</target>
+
+	<target name="prepare-institution" if="institution.project">
+		<copy todir="${build.home}">
+			<fileset dir="${institution.web-content}" >
+				<include name="**/*.*"/>
+				<exclude name="WEB-INF//*.*"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${build.home.webinf.classes}">
+			<fileset dir="${institution.config}"/>
+		</copy>
 	</target>
 
 	<target name="replace-property-values">
@@ -345,7 +360,7 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 							   property="db.projectManagement.alias"/>
 			</replace>
 
-			<replace dir="${build.home.webinf.classes}/ServidorApresentacao"
+			<replace dir="${build.home.webinf.classes}/resources"
 					 propertyFile="build.properties">
 				<include name="ApplicationResources*.properties"/>
 				<include name="ApplicationResourcesSOP*.properties"/>
@@ -520,8 +535,8 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 
 	<target name="i18nDefault"
     		depends="prepare">
-		<copy todir="${build.home.webinf.classes}/ServidorApresentacao">
-			<fileset dir="${build.home.webinf.classes}/ServidorApresentacao" >
+		<copy todir="${build.home.webinf.classes}/resources">
+			<fileset dir="${build.home.webinf.classes}/resources" >
 				<include name="*_pt.properties"/>
 			</fileset>
 			<globmapper from="*_pt.properties" to="*.properties"/>

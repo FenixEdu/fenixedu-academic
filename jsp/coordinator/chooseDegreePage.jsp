@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/fenixLayout_1col.jsp" flush="true">
+<tiles:insert page="/layout/fenixLayout_1col.jsp" flush="true">
   <tiles:put name="title" value="Portal de Coordenador"/>
   <tiles:put name="serviceName" value="Portal de Coordenador"/>
   <tiles:put name="navGeral" value="/coordinator/commonNavGeralCoordinator.jsp"/>

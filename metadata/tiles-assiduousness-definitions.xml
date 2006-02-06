@@ -2,7 +2,7 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="definition.assiduousness.masterPage" page="/fenixLayout_2col.jsp">
+	<definition name="definition.assiduousness.masterPage" page="/layout/fenixLayout_2col.jsp">
 	  <put name="title" value="Portal Assiduidade" />
 	  <put name="serviceName" value="Portal do Assiduidade" />	
 	  <put name="navGeral" value="" />	

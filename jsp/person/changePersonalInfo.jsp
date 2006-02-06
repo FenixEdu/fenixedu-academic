@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/fenixLayout_2col.jsp" flush="true">
+<tiles:insert page="/layout/fenixLayout_2col.jsp" flush="true">
   <tiles:put name="title" value="&Aacute;rea de Pessoa" />
   <tiles:put name="serviceName" value="&Aacute;rea de Pessoa" />
   <tiles:put name="navLocal" value="/person/mainMenu.jsp" />

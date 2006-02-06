@@ -2,14 +2,14 @@
 	"http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
 <!-- Tiles definitions -->
 <tiles-definitions>
-	<definition name="df.layout.simple" page="/fenixLayout.jsp" >
+	<definition name="df.layout.simple" page="/layout/fenixLayout.jsp" >
 		 <put name="title" value="/commons/blank.jsp" />	
 		 <put name="menu" value="/commons/blank.jsp"/>		 
 		 <put name="body" value="/commons/blank.jsp"/>
 		 <put name="header" value="/commons/blank.jsp"/>		 
 		 <put name="footer" value="/copyright.jsp" />
 	</definition>
-	<definition name="df.layout.one-column" page="/fenixLayout_1col.jsp" >
+	<definition name="df.layout.one-column" page="/layout/fenixLayout_1col.jsp" >
 		 <put name="title" value="/commons/blank.jsp" />	
 		 <put name="serviceName" value="/commons/blank.jsp" />
 		 <put name="header" value="/commons/blank.jsp" />
@@ -17,7 +17,7 @@
 		 <put name="body" value="/commons/blank.jsp"/>		 
 		 <put name="footer" value="/copyright.jsp" />
 	</definition>
-	<definition name="df.layout.two-column" page="/fenixLayout_2col.jsp" >
+	<definition name="df.layout.two-column" page="/layout/fenixLayout_2col.jsp" >
 		<put name="title" value="/commons/blank.jsp" type="string"/>
 		<put name="serviceName" value="/commons/blank.jsp" type="string"/>
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
@@ -27,7 +27,7 @@
 		<put name="body-inline" value="" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
-	<definition name="df.layout.two-column.extra-menu" page="/fenixLayout_2col_extraMenu.jsp" >
+	<definition name="df.layout.two-column.extra-menu" page="/layout/fenixLayout_2col_extraMenu.jsp" >
 		<put name="title" value="/commons/blank.jsp" />
 		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
@@ -37,7 +37,7 @@
 		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/copyright.jsp" />	
     </definition>    
-	<definition name="df.layout.two-column-photo" page="/fenixLayout_2col_photo.jsp" >
+	<definition name="df.layout.two-column-photo" page="/layout/fenixLayout_2col_photo.jsp" >
 		<put name="title" value="/commons/blank.jsp" />
 		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
@@ -46,7 +46,7 @@
 		<put name="body" value="/commons/blank.jsp" />
 		<put name="footer" value="/copyright.jsp" />
   	</definition>
-	<definition name="df.layout.two-column.posGrad" page="/fenixLayout_posGrad.jsp" >
+	<definition name="df.layout.two-column.posGrad" page="/layout/fenixLayout_posGrad.jsp" >
 		<put name="title" value="/commons/blank.jsp" />
 		<put name="serviceName" value="/commons/blank.jsp" />
 		<put name="navGeral" value="/generalNavigationBar.jsp" />
@@ -56,7 +56,7 @@
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
     
-	<definition name="df.layout.notAuthorized" page="/fenixLayout_error.jsp" >
+	<definition name="df.layout.notAuthorized" page="/layout/fenixLayout_error.jsp" >
 		<put name="title" value="title.notAuthorized" />	
 		<put name="serviceName" value="title.notAuthorized" />
 		<put name="header" value="/commons/blank.jsp" />
