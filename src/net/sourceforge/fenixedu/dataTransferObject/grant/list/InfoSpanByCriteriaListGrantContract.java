@@ -20,6 +20,8 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
     private Date endContract;
 
     private Integer grantTypeId;
+    
+    private Date validToTheDate;
 
     /**
      * @return Returns the beginContract.
@@ -95,4 +97,12 @@ public class InfoSpanByCriteriaListGrantContract extends InfoSpanListGrantOwner 
     public void setGrantTypeId(Integer grantTypeId) {
         this.grantTypeId = grantTypeId;
     }
+
+	public Date getValidToTheDate() {
+		return validToTheDate;
+	}
+
+	public void setValidToTheDate(Date validToTheDate) {
+		this.validToTheDate = validToTheDate;
+	}
 }
