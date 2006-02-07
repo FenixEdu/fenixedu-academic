@@ -38,22 +38,22 @@ padding-right: 10px;
 			<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['title']}:</label>" escape="false"/>
-			<h:inputText id="title" size="50" maxlength="70" required="true" value="#{CompetenceCourseManagement.title}"/>
+			<h:inputText id="title" size="50" required="true" value="#{CompetenceCourseManagement.title}"/>
 			<h:message for="title" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['author']}:</label>" escape="false"/>
-			<h:inputText id="author" size="50" maxlength="70" required="true" value="#{CompetenceCourseManagement.author}"/>
+			<h:inputText id="author" size="50" required="true" value="#{CompetenceCourseManagement.author}"/>
 			<h:message for="author" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['year']}:</label>" escape="false"/>
-			<h:inputText id="year" size="3" maxlength="4" required="true" value="#{CompetenceCourseManagement.year}"/>
+			<h:inputText id="year" size="3" required="true" value="#{CompetenceCourseManagement.year}"/>
 			<h:message for="year" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['reference']}:</label>" escape="false"/>
-			<h:inputText id="reference" size="50" maxlength="70" required="true" value="#{CompetenceCourseManagement.reference}"/>
+			<h:inputText id="reference" size="50" required="true" value="#{CompetenceCourseManagement.reference}"/>
 			<h:message for="reference" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
