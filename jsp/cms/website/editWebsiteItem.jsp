@@ -41,6 +41,6 @@
         }
     %>
 
-    <fr:edit name="item" layout="tabular" schema="cms.website.basic"
+    <fr:edit name="item" layout="tabular" schema="cms.content.basic.input"
              action="<%= "/websiteManagement.do?method=edit&oid=" + oid + "&path=" + path %>"/>
 </logic:present>

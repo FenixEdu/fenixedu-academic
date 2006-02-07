@@ -34,7 +34,7 @@
     }
 %>
 
-<fr:create type="net.sourceforge.fenixedu.domain.cms.website.WebsiteSection" schema="cms.content.basic"
+<fr:create type="net.sourceforge.fenixedu.domain.cms.website.WebsiteSection" schema="cms.content.basic.input"
            action="<%= "/websiteManagement.do?method=edit&oid=" + oid + "&path=" + path %>">
     <fr:hidden slot="parents" multiple="true" name="parent"/>
     <fr:hidden slot="cms" name="parent" property="cms"/>

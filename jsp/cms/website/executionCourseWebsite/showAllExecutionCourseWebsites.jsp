@@ -13,7 +13,7 @@
 	<bean:message  bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.count.label" arg0="<%=numberOfWebsites.toString()%>"/>	
 
 	<logic:greaterThan name="numberOfWebsites" value="0">	
-	<table width="100%" class="style1">
+	<table width="100%">
 		<tr>
 			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.type.label" bundle="CMS_RESOURCES"/></td>
             <td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.title.label" bundle="CMS_RESOURCES"/></td>

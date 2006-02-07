@@ -25,7 +25,7 @@
 
     <bean:define id="oid" name="website" property="idInternal"/>
 
-    <fr:edit name="website" layout="tabular" schema="cms.website.basic"/>
+    <fr:edit name="website" layout="tabular" schema="cms.content.basic.input"/>
 
     <br/>
 

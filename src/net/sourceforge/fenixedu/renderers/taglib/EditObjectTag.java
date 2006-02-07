@@ -218,6 +218,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
         if (isPostBack()) {
             viewState = getViewState();
+            updateHiddenSlots(viewState.getMetaObject());
         }
         else {
             viewState = new ViewState(getId());
@@ -243,6 +244,16 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         return viewState;
+    }
+
+    private void updateHiddenSlots(MetaObject metaObject) {
+        for (HiddenSlot hiddenSlot : this.hiddenSlots.values()) {
+            for (MetaSlot slot : metaObject.getHiddenSlots()) {
+                if (slot.getName().equals(hiddenSlot.getName())) {
+                    hiddenSlot.setKey(slot.getKey());
+                }
+            }
+        }
     }
 
     private MetaObject createMetaObject(Object targetObject, Schema schema) {

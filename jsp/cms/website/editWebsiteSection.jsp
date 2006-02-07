@@ -48,7 +48,7 @@
     <bean:define id="oid" name="section" property="idInternal"/>
     <bean:define id="path" name="path" type="java.lang.String"/>
 
-    <fr:edit name="section" layout="tabular" schema="cms.website.basic"
+    <fr:edit name="section" layout="tabular" schema="cms.content.basic.input"
              action="<%= "/websiteManagement.do?method=edit&oid=" + oid + "&path=" + path %>"/>
 
     <br/>
