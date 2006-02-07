@@ -22,8 +22,9 @@ public class UICourseGroup extends UIDegreeModule {
         super();
     }
     
-    public UICourseGroup(DegreeModule courseGroup, Boolean onlyStructure, Boolean toEdit, int depth, String tabs) {
+    public UICourseGroup(DegreeModule courseGroup, Boolean onlyStructure, Boolean toEdit, int depth, String tabs, Boolean showRules) {
         super(courseGroup, onlyStructure, toEdit, depth, tabs);
+        this.showRules = showRules;
     }
 
     public String getFamily() {
@@ -224,11 +225,16 @@ public class UICourseGroup extends UIDegreeModule {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
-        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "create.curricular.course");
-        writer.append(" , ");
-        encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "associate.curricular.course");
+        if (!this.showRules) {
+            encodeLink("createCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "create.curricular.course");
+            writer.append(" , ");
+            encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+                    .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "associate.curricular.course");
+        } else {
+            encodeLink("../curricularRules/createCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
+                    .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal(), "setCurricularRule");
+        }
         writer.endElement("td");
     }
     
@@ -244,7 +250,7 @@ public class UICourseGroup extends UIDegreeModule {
             sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
             sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
             sumCredits += degreeModule.getEctsCredits();
-            new UICurricularCourse(context.getDegreeModule(), this.toEdit, this.depth, this.tabs + "\t", context).encodeBegin(facesContext);
+            new UICurricularCourse(context.getDegreeModule(), this.toEdit, this.depth, this.tabs + "\t", context, this.showRules).encodeBegin(facesContext);
         }
         
         List<Double> result = new ArrayList<Double>(4);
@@ -315,7 +321,7 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeChildCourseGroups() throws IOException {
         for (Context context : ((CourseGroup)this.degreeModule).getContextsWithCourseGroups()) {
-            new UICourseGroup(context.getDegreeModule(), this.onlyStructure, this.toEdit, this.depth + 1, this.tabs + "\t").encodeBegin(facesContext);
+            new UICourseGroup(context.getDegreeModule(), this.onlyStructure, this.toEdit, this.depth + 1, this.tabs + "\t", this.showRules).encodeBegin(facesContext);
         }
     }
 

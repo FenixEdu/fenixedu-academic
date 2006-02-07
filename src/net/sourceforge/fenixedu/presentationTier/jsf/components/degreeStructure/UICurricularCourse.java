@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
@@ -20,17 +19,17 @@ public class UICurricularCourse extends UIDegreeModule {
 
     private Context previousContext;
     private boolean byYears;
-    private Boolean showRules = Boolean.FALSE;
     
     public UICurricularCourse() {
         super();
         this.byYears = false;
     }
 
-    public UICurricularCourse(DegreeModule curricularCourse, Boolean toEdit, int depth, String tabs, Context previousContext) {
+    public UICurricularCourse(DegreeModule curricularCourse, Boolean toEdit, int depth, String tabs, Context previousContext, Boolean showRules) {
         super(curricularCourse, toEdit, depth, tabs);
         this.previousContext = previousContext;
         this.byYears = false;
+        this.showRules = showRules;
     }
 
     public UICurricularCourse(CurricularCourse curricularCourse, Boolean toEdit, Context previousContext, Boolean showRules) {

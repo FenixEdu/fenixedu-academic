@@ -20,12 +20,13 @@ public class UIDegreeModule extends UIInput {
     protected DegreeModule degreeModule;
     protected Boolean onlyStructure;
     protected Boolean toEdit;
+    protected Boolean showRules = Boolean.FALSE;
     protected int depth;
     protected String tabs;
 
     protected FacesContext facesContext;
     protected ResponseWriter writer;
-    
+
     protected static final int BASE_DEPTH = UIDegreeCurricularPlan.ROOT_DEPTH + 1;
     
     public UIDegreeModule() {
@@ -58,9 +59,9 @@ public class UIDegreeModule extends UIInput {
         setFromAttributes();
         
         if (this.degreeModule instanceof CurricularCourse) {
-            new UICurricularCourse(this.degreeModule, this.toEdit, this.depth, this.tabs, null).encodeBegin(facesContext);
+            new UICurricularCourse(this.degreeModule, this.toEdit, this.depth, this.tabs, null, this.showRules).encodeBegin(facesContext);
         } else if (this.degreeModule instanceof CourseGroup) {
-            new UICourseGroup(this.degreeModule, this.onlyStructure, this.toEdit, this.depth, this.tabs).encodeBegin(facesContext);
+            new UICourseGroup(this.degreeModule, this.onlyStructure, this.toEdit, this.depth, this.tabs, this.showRules).encodeBegin(facesContext);
         }
     }
     
