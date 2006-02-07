@@ -37,36 +37,35 @@ public class Unit extends Unit_Base {
         return allTopUnits;
     }
 
-    public Unit getDepartmentUnit(){
+    public Unit getDepartmentUnit() {
         List<Unit> parentUnits = this.getParentUnits();
-        if(unitDepartment(this)) {
+        if (unitDepartment(this)) {
             return this;
-        }else if (!parentUnits.isEmpty()) {
+        } else if (!parentUnits.isEmpty()) {
             for (Unit parentUnit : parentUnits) {
                 if (unitDepartment(parentUnit)) {
                     return parentUnit;
                 } else if (parentUnit.hasAnyParentUnits()) {
-                    Unit departmentUnit = parentUnit.getDepartmentUnit(); 
+                    Unit departmentUnit = parentUnit.getDepartmentUnit();
                     if (departmentUnit == null) {
-                        continue;                    
+                        continue;
                     } else {
                         return departmentUnit;
                     }
                 }
-            }    
+            }
         }
-        return null;        
+        return null;
     }
-    
-    private boolean unitDepartment(Unit unit){
-        if (unit.getType() != null
-                && unit.getType().equals(UnitType.DEPARTMENT)
-                && unit.getDepartment() != null){
+
+    private boolean unitDepartment(Unit unit) {
+        if (unit.getType() != null && unit.getType().equals(UnitType.DEPARTMENT)
+                && unit.getDepartment() != null) {
             return true;
         }
         return false;
-    }  
-    
+    }
+
     public List<Unit> getInactiveSubUnits(Date currentDate) {
         List<Unit> allInactiveSubUnits = new ArrayList<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
@@ -86,26 +85,26 @@ public class Unit extends Unit_Base {
         }
         return allActiveSubUnits;
     }
-    
+
     public List<Unit> getAllInactiveSubUnits(Date currentDate) {
-        
-        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();        
+
+        Set<Unit> allInactiveSubUnits = new HashSet<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
             readAndSaveInactiveSubUnits(subUnit, allInactiveSubUnits, currentDate);
-        }        
-        
+        }
+
         return new ArrayList<Unit>(allInactiveSubUnits);
     }
 
-    private void readAndSaveInactiveSubUnits(Unit unit, Set<Unit> allInactiveSubUnits, Date currentDate){
+    private void readAndSaveInactiveSubUnits(Unit unit, Set<Unit> allInactiveSubUnits, Date currentDate) {
         if (!unit.isActive(currentDate)) {
             allInactiveSubUnits.add(unit);
         }
         for (Unit subUnit : unit.getSubUnits()) {
             readAndSaveInactiveSubUnits(subUnit, allInactiveSubUnits, currentDate);
-        }  
+        }
     }
-        
+
     public List<Unit> getAllActiveSubUnits(Date currentDate) {
         Set<Unit> allActiveSubUnits = new HashSet<Unit>();
         for (Unit subUnit : this.getSubUnits()) {
@@ -113,14 +112,14 @@ public class Unit extends Unit_Base {
         }
         return new ArrayList<Unit>(allActiveSubUnits);
     }
-  
+
     private void readAndSaveActiveSubUnits(Unit unit, Set<Unit> allActiveSubUnits, Date currentDate) {
         if (unit.isActive(currentDate)) {
             allActiveSubUnits.add(unit);
         }
         for (Unit subUnit : unit.getSubUnits()) {
             readAndSaveActiveSubUnits(subUnit, allActiveSubUnits, currentDate);
-        } 
+        }
     }
 
     public void edit(String unitName, Integer unitCostCenter, Date beginDate, Date endDate,
@@ -151,12 +150,14 @@ public class Unit extends Unit_Base {
     public void delete() {
         if (!hasAnySubUnits() && (!hasAnyParentUnits() || this.getParentUnits().size() == 1)
                 && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
-                && !hasAnySalaryContracts() && !hasAnyCompetenceCourses()) {
+                && !hasAnySalaryContracts() && !hasAnyCompetenceCourses() && !hasAnyExternalPersons()
+                && !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyEvents()) {
 
             if (hasAnyParentUnits()) {
                 this.removeParentUnits(this.getParentUnits().get(0));
             }
             removeDepartment();
+            removeDegree();            
             deleteDomainObject();
         } else {
             throw new DomainException("error.delete.unit");
@@ -203,8 +204,7 @@ public class Unit extends Unit_Base {
 
         return result;
     }
-    
-    
+
     public List<Teacher> getTeachers(Date begin, Date end) {
         List<Teacher> teachers = new ArrayList<Teacher>();
         List<Employee> employees = getWorkingEmployees(begin, end);
@@ -212,10 +212,11 @@ public class Unit extends Unit_Base {
             Teacher teacher = employee.getPerson().getTeacher();
             if (teacher != null && !teacher.getAllLegalRegimensBelongsToPeriod(begin, end).isEmpty()) {
                 teachers.add(teacher);
-}
+            }
         }
         return teachers;
     }
+
     public Teacher getTeacherByPeriod(Integer teacherNumber, Date begin, Date end) {
         for (Employee employee : getWorkingEmployees(begin, end)) {
             Teacher teacher = employee.getPerson().getTeacher();
@@ -226,22 +227,22 @@ public class Unit extends Unit_Base {
         }
         return null;
     }
-    
-    public List<Employee> getWorkingEmployees(Date begin, Date end) {        
-                
+
+    public List<Employee> getWorkingEmployees(Date begin, Date end) {
+
         Set<Employee> employees = new HashSet<Employee>();
 
         readAndSaveEmployees(this, employees, begin, end);
-        
+
         return new ArrayList<Employee>(employees);
     }
 
-    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end){
+    private void readAndSaveEmployees(Unit unit, Set<Employee> employees, Date begin, Date end) {
         for (Contract contract : unit.getWorkingContracts(begin, end)) {
             employees.add(contract.getEmployee());
         }
-        for (Unit subUnit : unit.getSubUnits()) {               
-            readAndSaveEmployees(subUnit, employees, begin, end);               
-        }                
-    }    
+        for (Unit subUnit : unit.getSubUnits()) {
+            readAndSaveEmployees(subUnit, employees, begin, end);
+        }
+    }
 }

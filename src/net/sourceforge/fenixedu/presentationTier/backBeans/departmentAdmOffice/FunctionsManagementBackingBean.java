@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -524,7 +525,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException {
+    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
         buffer.append("<ul class='padding nobullet'>");
         if (this.getEmployeeDepartmentUnit() != null
@@ -539,15 +540,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
 
-        buffer.append("<li>");
+        openLITag(buffer);
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<img ").append("src='").append(getContextPath()).append(
-                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
-                    .append("aa").append(parentUnit.getIdInternal()).append(
-                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-                            "'));return false;").append("\"> ");
+            putImage(parentUnit, buffer);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -556,8 +552,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
                 parentUnit.getName()).append("</a>").append("</li>");
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
-                    .append("\" ").append("style='display:none'>\r\n");
+            openULTag(parentUnit, buffer);
         }
 
         for (Unit subUnit : parentUnit.getSubUnits()) {
@@ -567,7 +562,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
         }
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("</ul>");
+           closeULTag(buffer);
         }
     }
 
@@ -1086,5 +1081,27 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public void setPersonType(String personType) {
         this.personType = personType;
+    }
+    
+    protected void openULTag(Unit parentUnit, StringBuilder buffer) {
+        buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
+                .append("style='display:none'>\r\n");
+    }
+
+    protected void putImage(Unit parentUnit, StringBuilder buffer) {
+        buffer.append("<img ").append("src='").append(getContextPath()).append(
+                "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
+                .append("indexed='true' onClick=\"").append("check(document.getElementById('")
+                .append("aa").append(parentUnit.getIdInternal()).append(
+                        "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+                        "'));return false;").append("\"> ");
+    }
+    
+    protected void closeULTag(StringBuilder buffer) {
+        buffer.append("</ul>");
+    }
+
+    protected void openLITag(StringBuilder buffer) {
+        buffer.append("<li>");
     }
 }

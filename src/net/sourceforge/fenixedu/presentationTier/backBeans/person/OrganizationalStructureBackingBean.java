@@ -18,25 +18,19 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.Closure;
-import org.apache.commons.lang.WordUtils;
 
 
 public class OrganizationalStructureBackingBean extends FenixBackingBean {
@@ -287,19 +281,12 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     	return buffer.toString();
     }
     
-    public String getInstituitionName()throws ExcepcaoPersistencia, FenixServiceException {
-         
-    	 IPersistentInstitution persistentInstitution = PersistenceSupportFactory
-    	 				.getDefaultPersistenceSupport().getIPersistentInstitution();
-    	 List<Institution> institutions = persistentInstitution.readAll();
-    	 for (Institution institution : institutions){
-    		 if (institution.getName().equals("INSTITUTO SUPERIOR TÉCNICO")){
-    			 WordUtils instituitionName = null;
-    			 String name = (String) instituitionName.capitalizeFully(institution.getName().toLowerCase());
-    			 return name;
-    		 }
-    	 }
-    	 return null;
+    public String getInstituitionName() throws ExcepcaoPersistencia, FenixServiceException {        
+        Unit institution = UnitUtils.readUnitWithoutParentstByName(UnitUtils.IST_UNIT_NAME);
+        if (institution != null) {                        
+            return institution.getName();
+        }        
+        return null;
     }
     
     public String getFunctions() throws FenixFilterException, FenixServiceException {

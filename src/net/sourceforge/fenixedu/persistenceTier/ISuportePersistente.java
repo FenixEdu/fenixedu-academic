@@ -336,8 +336,6 @@ public interface ISuportePersistente
 	 */
 	public IPersistentCampus getIPersistentCampus();
 
-	public IPersistentInstitution getIPersistentInstitution();
-
 	// Nuno Correia & Ricardo Rodrigues
 	public IPersistentCurricularCourseGroup getIPersistentCurricularCourseGroup();
 

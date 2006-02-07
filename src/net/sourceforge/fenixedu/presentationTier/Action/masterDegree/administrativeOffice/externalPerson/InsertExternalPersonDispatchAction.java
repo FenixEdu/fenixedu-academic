@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -79,11 +79,11 @@ public class InsertExternalPersonDispatchAction extends DispatchAction {
                 Collections.sort(institutions, new BeanComparator("name"));
                 List institutionsValueBeanList = new ArrayList();
                 Iterator it = institutions.iterator();
-                InfoInstitution infoInstitutions = null;
+                Unit infoInstitutions = null;
 
                 institutionsValueBeanList.add(new LabelValueBean("", ""));
                 while (it.hasNext()) {
-                    infoInstitutions = (InfoInstitution) it.next();
+                    infoInstitutions = (Unit) it.next();
                     institutionsValueBeanList.add(new LabelValueBean(infoInstitutions.getName(),
                             infoInstitutions.getIdInternal().toString()));
                 }

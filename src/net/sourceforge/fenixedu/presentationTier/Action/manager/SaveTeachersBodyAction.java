@@ -42,9 +42,11 @@ public class SaveTeachersBodyAction extends FenixAction {
         Integer[] responsibleTeachersIds = (Integer[]) actionForm.get("responsibleTeachersIds");
         Integer[] professorShipTeachersIds = (Integer[]) actionForm.get("professorShipTeachersIds");
         Integer[] nonAffiliatedTeachersIds = (Integer[]) actionForm.get("nonAffiliatedTeachersIds");
+        
         List respTeachersIds = Arrays.asList(responsibleTeachersIds);
         List profTeachersIds = Arrays.asList(professorShipTeachersIds);
         List nonAffilTeachersIds = Arrays.asList(nonAffiliatedTeachersIds);
+       
         // TODO: Collections.sort(profTeachersIds, new BeanComparator("name"));
         Object args[] = { respTeachersIds, profTeachersIds, executionCourseId };
         Boolean result;

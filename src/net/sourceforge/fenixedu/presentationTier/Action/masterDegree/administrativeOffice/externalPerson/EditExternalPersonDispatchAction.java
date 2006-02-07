@@ -13,8 +13,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServi
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
-import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -105,10 +105,10 @@ public class EditExternalPersonDispatchAction extends DispatchAction {
             if (institutions.isEmpty() == false) {
                 List institutionsValueBeanList = new ArrayList();
                 Iterator it = institutions.iterator();
-                InfoInstitution infoInstitution = null;
+                Unit infoInstitution = null;
 
                 while (it.hasNext()) {
-                    infoInstitution = (InfoInstitution) it.next();
+                    infoInstitution = (Unit) it.next();
                     institutionsValueBeanList.add(new LabelValueBean(infoInstitution.getName(),
                             infoInstitution.getIdInternal().toString()));
                 }

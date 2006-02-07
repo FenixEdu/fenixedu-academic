@@ -879,7 +879,7 @@ public class InfoPerson extends InfoObject {
                 infoExternalPerson.setIdInternal(person.getExternalPerson().getIdInternal());
                 infoExternalPerson.setInfoPerson(this);
                 infoExternalPerson.setInfoInstitution(InfoInstitution.newInfoFromDomain(person
-                        .getExternalPerson().getInstitution()));
+                        .getExternalPerson().getInstitutionUnit()));
                 setInfoExternalPerson(infoExternalPerson);
             }
             if (person.getTeacher() != null) {

@@ -69,7 +69,7 @@ public class InfoExternalPerson extends InfoObject {
         super.copyFromDomain(externalPerson);
         
         setInfoPerson(InfoPerson.newInfoFromDomain(externalPerson.getPerson()));
-        setInfoInstitution(InfoInstitution.newInfoFromDomain(externalPerson.getInstitution()));
+        setInfoInstitution(InfoInstitution.newInfoFromDomain(externalPerson.getInstitutionUnit()));
         
     }
 }

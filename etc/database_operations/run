@@ -25,3 +25,5 @@ execute "Adding Prevailing Scientific Area to Degree" addPrevailingScientificAre
 execute "Creating Project table and setting up relations" createTableProject.sql
 execute "Creating WebsiteSection and WebsiteItem tables" addMoreCmsTables.sql
 execute "Adding and Modifying Columns in CurricularRule Table" alterCurricularRuleTable.sql
+execute "Alter NON_AFFILIATED_TEACHER Table" alterNonAffiliatedTeacherTable.sql
+execute "Alter EXTERNAL_PERSON Table" alterExternalPersonTable.sql

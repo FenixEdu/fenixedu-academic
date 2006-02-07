@@ -1,9 +1,14 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.commons.institution;
 
+import java.util.Calendar;
+
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Institution;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 /**
@@ -12,20 +17,31 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class InsertInstitution extends Service {
 
-    public Institution run(String institutionName) throws ExcepcaoPersistencia,
-            ExistingServiceException {
-        final Institution storedInstitution = persistentSupport.getIPersistentInstitution().readByName(
-                institutionName);
+    public Unit run(String institutionName) throws ExcepcaoPersistencia,
+            FenixServiceException {
 
-        if (storedInstitution != null) {
+        Unit institution = UnitUtils.readExternalInstitutionUnitByName(institutionName);
+        
+        if (institution != null) {
             throw new ExistingServiceException(
                     "error.exception.commons.institution.institutionAlreadyExists");
         }
 
-        Institution institution = DomainFactory.makeInstitution();
-        institution.setName(institutionName);
-
-        return institution;
+        Unit externalIntitutionsUnit = UnitUtils.readUnitWithoutParentstByName(UnitUtils.EXTERNAL_INSTITUTION_UNIT_NAME);            
+        if(externalIntitutionsUnit == null){
+            throw new FenixServiceException("error.exception.commons.institution.rootInstitutionNotFound");
+        }
+        
+        Unit newInstitution = makeNewUnit(institutionName, externalIntitutionsUnit);
+        return newInstitution;
     }
 
+    private Unit makeNewUnit(String unitName, Unit externalIntitutionsUnit) {
+        Unit institutionUnit = DomainFactory.makeUnit();
+        institutionUnit.setName(unitName);
+        institutionUnit.setBeginDate(Calendar.getInstance().getTime());
+        institutionUnit.setType(UnitType.EXTERNAL_INSTITUTION);  
+        institutionUnit.addParentUnits(externalIntitutionsUnit);
+        return institutionUnit;
+    }
 }

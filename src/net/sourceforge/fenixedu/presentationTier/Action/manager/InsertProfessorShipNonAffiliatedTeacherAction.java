@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
+import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
@@ -105,7 +106,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         }
 
         request.setAttribute("institutions", institutions);
-        return mapping.findForward("insertProfessorShip");
+        return mapping.findForward("insertProfessorShip");        
     }
 
     public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -135,14 +136,22 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         return mapping.findForward("insertProfessorShip");
     }
 
-    public ActionForward insertProfessorship(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-            HttpServletResponse response) throws FenixFilterException, FenixServiceException,
-            FenixActionException {
+    public ActionForward insertProfessorship(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException, FenixActionException {
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer executionCourseID = new Integer(request.getParameter("executionCourseId"));
-        Integer nonAffiliatedTeacherID = new Integer(request.getParameter("nonAffiliatedTeacherID"));               
+        Integer nonAffiliatedTeacherID = new Integer(request.getParameter("nonAffiliatedTeacherID"));
 
+        insertProfessorshipOperation(mapping, userView, executionCourseID, nonAffiliatedTeacherID);
+
+        return mapping.findForward("readTeacherInCharge");
+    }
+
+    private void insertProfessorshipOperation(ActionMapping mapping, IUserView userView,
+            Integer executionCourseID, Integer nonAffiliatedTeacherID) throws FenixFilterException,
+            NonExistingActionException, FenixActionException {
         Object args[] = { nonAffiliatedTeacherID, executionCourseID };
 
         try {
@@ -154,8 +163,5 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
         } catch (FenixServiceException e) {
             throw new FenixActionException(e.getMessage());
         }
-        
-        return mapping.findForward("readTeacherInCharge");
     }
-
 }

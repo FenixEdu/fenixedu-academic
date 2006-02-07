@@ -116,10 +116,10 @@ valueType org.joda.time.Period                                                  
 valueType org.joda.time.TimeOfDay                                                               as TimeOfDay;
 valueType org.joda.time.Partial                                                                 as Partial;
 valueType net.sourceforge.fenixedu.util.ContractType  		                                	as ContractType;
+valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    			as BibliographicReferences;
+valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    				as CurricularRuleType;
+valueType net.sourceforge.fenixedu.domain.util.LogicOperators   								as LogicOperators;
 valueType net.sourceforge.fenixedu.domain.research.project.ProjectType							as ProjectType;
-valueType net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences    as BibliographicReferences;
-valueType net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType    as CurricularRuleType;
-valueType net.sourceforge.fenixedu.domain.util.LogicOperators    as LogicOperators;
 
 /*
 *
@@ -677,7 +677,7 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
             Integer keyPrecendenceDegreeModule;
             CurricularPeriodType curricularPeriodType;
             Integer curricularPeriodOrder;
-        }
+        }     
         class net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
             Integer keyPrecendenceDegreeModule;
             CurricularPeriodType curricularPeriodType;
@@ -1410,12 +1410,6 @@ class net.sourceforge.fenixedu.domain.inquiries.InquiriesTeacher extends net.sou
     Double teacherReasoningStimulation;
     Double globalAppreciation;
 }
-
-
-class net.sourceforge.fenixedu.domain.Institution extends net.sourceforge.fenixedu.domain.DomainObject {
-    String name;
-}
-
 
 class net.sourceforge.fenixedu.domain.InsuranceValue extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;
@@ -3754,13 +3748,6 @@ relation ExternalPersonPerson {
 	net.sourceforge.fenixedu.domain.Person playsRole person;
 }
 
-relation ExternalPersonInstitution {
-	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
-		multiplicity *;
-	}
-	net.sourceforge.fenixedu.domain.Institution playsRole institution;
-}
-
 relation ExternalPersonUnit {
 	net.sourceforge.fenixedu.domain.ExternalPerson playsRole externalPersons {
 		multiplicity *;
@@ -4233,14 +4220,6 @@ relation InquiriesTeacherDomainTeacher {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.Teacher playsRole teacher;
-}
-
-
-relation InstitutionNonAffiliatedTeacher {
-    net.sourceforge.fenixedu.domain.Institution playsRole institution;
-    net.sourceforge.fenixedu.domain.NonAffiliatedTeacher playsRole associatedNonAffiliatedTeachers {
-        multiplicity *;
-    }
 }
 
 relation UnitNonAffiliatedTeacher {

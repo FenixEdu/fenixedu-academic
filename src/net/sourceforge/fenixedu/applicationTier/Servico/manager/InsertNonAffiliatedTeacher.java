@@ -7,8 +7,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingServiceException;
 import net.sourceforge.fenixedu.domain.DomainFactory;
-import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.teacher.professorship.IPersistentNonAffiliatedTeacher;
 
@@ -25,7 +25,7 @@ public class InsertNonAffiliatedTeacher extends Service {
         IPersistentNonAffiliatedTeacher persistentNonAffiliatedTeacher = persistentSupport
                 .getIPersistentNonAffiliatedTeacher();
 
-        Institution institution = (Institution) persistentObject.readByOID(Institution.class,
+        Unit institution = (Unit) persistentObject.readByOID(Unit.class,
                 institutionID);
 
         if (institution == null) {
@@ -41,7 +41,7 @@ public class InsertNonAffiliatedTeacher extends Service {
 
         nonAffiliatedTeacher = DomainFactory.makeNonAffiliatedTeacher();
         nonAffiliatedTeacher.setName(nonAffiliatedTeacherName);
-        nonAffiliatedTeacher.setInstitution(institution);
+        nonAffiliatedTeacher.setInstitutionUnit(institution);
         
         return nonAffiliatedTeacher;
     }

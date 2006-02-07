@@ -6,8 +6,8 @@ import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.domain.ExternalPerson;
-import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditExternalPerson extends Service {
@@ -25,8 +25,8 @@ public class EditExternalPerson extends Service {
         List<ExternalPerson> allExternalPersons = (List<ExternalPerson>) persistentSupport
                 .getIPersistentExternalPerson().readAll(ExternalPerson.class);
 
-        Institution storedInstitution = (Institution) persistentObject.readByOID(
-                Institution.class, institutionID);
+        Unit storedInstitution = (Unit) persistentObject.readByOID(
+                Unit.class, institutionID);
 
         storedExternalPerson.edit(name, address, phone, mobile, homepage, email, storedInstitution,
                 allExternalPersons);

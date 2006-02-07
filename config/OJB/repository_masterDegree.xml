@@ -984,12 +984,6 @@
            column="KEY_PERSON"  
            jdbc-type="INTEGER"
         />     
-
-        <field-descriptor 
-           name="keyInstitution"    
-           column="KEY_INSTITUTION"  
-           jdbc-type="INTEGER"
-        />
         
         <field-descriptor 
            name="keyUnit"    
@@ -1009,13 +1003,7 @@
 	        class-ref="net.sourceforge.fenixedu.domain.Person"
       	>
     	    <foreignkey field-ref="keyPerson"/>
-		</reference-descriptor>
-		
-		<reference-descriptor auto-retrieve="false"
-        	name="institution"
-	        class-ref="net.sourceforge.fenixedu.domain.Institution">
-    	    <foreignkey field-ref="keyInstitution"/>
-		</reference-descriptor>			  
+		</reference-descriptor>		
 	  
 	 	<reference-descriptor auto-retrieve="false"
         	name="institutionUnit"

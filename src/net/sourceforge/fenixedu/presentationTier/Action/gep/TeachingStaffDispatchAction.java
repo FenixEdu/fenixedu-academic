@@ -17,8 +17,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotExistingSe
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.Institution;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
@@ -149,7 +149,7 @@ public class TeachingStaffDispatchAction extends FenixDispatchAction {
             // create institution
             Object[] args = { nonAffiliatedTeacherInstitutionName };
             try {
-                Institution institution = (Institution) ServiceUtils.executeService(userView,
+                Unit institution = (Unit) ServiceUtils.executeService(userView,
                         "InsertInstitution", args);
                 nonAffiliatedTeacherInstitutionID = institution.getIdInternal();
             } catch (ExistingServiceException e) {

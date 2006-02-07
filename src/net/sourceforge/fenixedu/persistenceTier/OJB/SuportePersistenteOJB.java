@@ -59,7 +59,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuitySituation;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGratuityValues;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuide;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentGuideEntry;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentInstitution;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentInsuranceValue;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentItem;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentMark;
@@ -1385,11 +1384,6 @@ public class SuportePersistenteOJB implements ISuportePersistente, ITransactionB
 	public IPersistentProjectAccess getIPersistentProjectAccess()
 	{
 		return new ProjectAccessOJB();
-	}
-
-	public IPersistentInstitution getIPersistentInstitution()
-	{
-		return new InstitutionOJB();
 	}
 
 	public IPersistentNonAffiliatedTeacher getIPersistentNonAffiliatedTeacher()

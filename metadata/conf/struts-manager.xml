@@ -1106,7 +1106,7 @@
          	       key="resources.Action.exceptions.NonExistingActionException"
                    handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>   
        <forward name="insertProfessorShip" path="df.page.insert-professorShip-nonAffiliated-teacher"/>  
-       <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>        	      
+       <forward name="readTeacherInCharge" path="/readTeacherInCharge.do?page=0"/>        	      
 	</action>
 	
 	<!-- Action for saving modifications at teachers body --> 

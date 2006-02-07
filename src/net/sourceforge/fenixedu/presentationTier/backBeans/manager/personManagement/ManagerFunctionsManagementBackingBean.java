@@ -20,6 +20,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.departmentAdmOffice.FunctionsManagementBackingBean;
 
@@ -73,16 +75,16 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         return "";
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException {
+    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         
         StringBuilder buffer = new StringBuilder();
-        List<Unit> allUnits = readAllDomainObjects(Unit.class);
+        List<Unit> allUnits = UnitUtils.readAllUnitsWithoutParents();
 
         Collections.sort(allUnits, new BeanComparator("name"));
         
         Date currentDate = Calendar.getInstance().getTime();
         for (Unit unit : allUnits) {
-            if (unit.getParentUnits().isEmpty() && unit.isActive(currentDate)) {
+            if (unit.getName().equals(UnitUtils.IST_UNIT_NAME) && unit.isActive(currentDate)) {
                 getUnitTree(buffer, unit);
             }
         }
@@ -91,22 +93,17 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
     }
 
     public void getUnitTree(StringBuilder buffer, Unit parentUnit) {
-        buffer.append("<ul class='padding nobullet'>");
+        buffer.append("<ul class='padding1 nobullet'>");
         getUnitsList(parentUnit, buffer);
         buffer.append("</ul>");
     }
 
     private void getUnitsList(Unit parentUnit, StringBuilder buffer) {
         
-        buffer.append("<li>");
-
+        openLITag(buffer);
+        
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<img ").append("src='").append(getContextPath()).append(
-                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
-                    .append("aa").append(parentUnit.getIdInternal()).append(
-                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-                            "'));return false;").append("\"> ");
+            putImage(parentUnit, buffer);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -115,8 +112,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
                 parentUnit.getName()).append("</a>").append("</li>");
         
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal())
-                    .append("\" ").append("style='display:none'>\r\n");                                    
+           openULTag(parentUnit, buffer);                                 
         }
 
         List<Unit> subUnits = new ArrayList<Unit>();
@@ -130,7 +126,7 @@ public class ManagerFunctionsManagementBackingBean extends FunctionsManagementBa
         }
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("</ul>");
+           closeULTag(buffer);
         }
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.externalPerson.InsertExternalPersons;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExternalPerson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class InsertInexistentAuthors extends Service {
 
-    public List<Person> run(final List<InfoAuthor> infoAuthorsList) throws ExcepcaoPersistencia, ExistingServiceException {
+    public List<Person> run(final List<InfoAuthor> infoAuthorsList) throws ExcepcaoPersistencia, FenixServiceException {
         
         final List<Person> authorsList = new ArrayList<Person>(infoAuthorsList.size());
         

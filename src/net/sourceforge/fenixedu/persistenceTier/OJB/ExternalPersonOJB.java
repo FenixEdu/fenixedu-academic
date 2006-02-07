@@ -57,7 +57,7 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
 
         criteria.addEqualTo("person.nome", name);
         criteria.addEqualTo("person.address", address);
-        criteria.addEqualTo("institution.idInternal", institutionID);
+        criteria.addEqualTo("institutionUnit.idInternal", institutionID);
         externalPerson = (ExternalPerson) queryObject(ExternalPerson.class, criteria);
 
         return externalPerson;
@@ -68,7 +68,7 @@ public class ExternalPersonOJB extends PersistentObjectOJB implements IPersisten
         List externalPersons = new ArrayList();
 
         if (institutionID != null)
-            criteria.addEqualTo("institution.idInternal", institutionID);
+            criteria.addEqualTo("institutionUnit.idInternal", institutionID);
 
         externalPersons = queryList(ExternalPerson.class, criteria);
 

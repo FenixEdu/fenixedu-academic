@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -20,10 +21,14 @@ public class UpdateNonAffiliatedTeachersProfessorship extends Service {
             throw new NonExistingServiceException("message.nonExistingCurricularCourse", null);
         }
 
-        for (final Integer nonAffiliatedTeachersId : nonAffiliatedTeachersIds) {
-            final NonAffiliatedTeacher nonAffiliatedTeacher = (NonAffiliatedTeacher) persistentObject
-            		.readByOID(NonAffiliatedTeacher.class,
-                            nonAffiliatedTeachersId);
+        List<NonAffiliatedTeacher> nonAffiliatedTeachersToRemove = new ArrayList<NonAffiliatedTeacher>();
+        for (NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
+            if(!nonAffiliatedTeachersIds.contains(nonAffiliatedTeacher.getIdInternal())){
+                nonAffiliatedTeachersToRemove.add(nonAffiliatedTeacher);
+            }
+        }
+                        
+        for (NonAffiliatedTeacher nonAffiliatedTeacher : nonAffiliatedTeachersToRemove) {           
             executionCourse.removeNonAffiliatedTeachers(nonAffiliatedTeacher);
         }
     }

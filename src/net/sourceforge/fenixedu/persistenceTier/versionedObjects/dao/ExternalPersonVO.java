@@ -43,7 +43,7 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         for (final ExternalPerson externalPerson : allExternalPersons) {
             if (externalPerson.getPerson().getNome().equals(name)
                     && externalPerson.getPerson().getMorada().equals(address)
-                    && externalPerson.getInstitution().getIdInternal().equals(institutionID)){
+                    && externalPerson.getInstitutionUnit().getIdInternal().equals(institutionID)){
                 return externalPerson;
             }
         }
@@ -57,7 +57,7 @@ public class ExternalPersonVO extends VersionedObjectsBase implements IPersisten
         final List<ExternalPerson> allExternalPersons = (List<ExternalPerson>)readAll(ExternalPerson.class);
         
         for (final ExternalPerson externalPerson : allExternalPersons) {
-            if (externalPerson.getInstitution().getIdInternal().equals(institutionID)) {
+            if (externalPerson.getInstitutionUnit().getIdInternal().equals(institutionID)) {
                 matchedExternalPersons.add(externalPerson);
             }
         }

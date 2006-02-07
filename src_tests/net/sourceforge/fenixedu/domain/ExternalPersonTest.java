@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
@@ -29,15 +30,15 @@ public class ExternalPersonTest extends DomainTestBase {
 	String newHomepage = "newhomepage";
 	String newEmail = "newemail";
 	
-	Institution institution1;
-	Institution institution2;
+	Unit institution1;
+	Unit institution2;
 	List<ExternalPerson> allExternalPersons;
 
     protected void setUp() throws Exception {
         super.setUp();
-        institution1 = new Institution();
+        institution1 = new Unit();
         institution1.setName(institutionName1);
-        institution2 = new Institution();
+        institution2 = new Unit();
         institution2.setName(institutionName2);
         
         allExternalPersons = new ArrayList<ExternalPerson>();
@@ -50,7 +51,7 @@ public class ExternalPersonTest extends DomainTestBase {
         person.setEnderecoWeb(newHomepage);
         person.setEmail(newEmail);
         externalPerson.setPerson(person);
-        externalPerson.setInstitution(institution2);
+        externalPerson.setInstitutionUnit(institution2);
         allExternalPersons.add(externalPerson);
         
     }
@@ -61,7 +62,7 @@ public class ExternalPersonTest extends DomainTestBase {
     	
     	//The Person content is not tested here because a whole test in PersonTest is dedicated to this purpouse
     	assertNotNull(externalPerson.getPerson());
-    	assertNotNull(externalPerson.getInstitution());
+    	assertNotNull(externalPerson.getInstitutionUnit());
     }
     
  
@@ -70,7 +71,7 @@ public class ExternalPersonTest extends DomainTestBase {
 
     	externalPerson.edit("novoNome", "novoAddress", "novoPhone", "novoMobile", "novoHomepage", "novoEmail", institution2, allExternalPersons);
     	
-    	assertEquals(externalPerson.getInstitution(), institution2);
+    	assertEquals(externalPerson.getInstitutionUnit(), institution2);
     	        
     }
 

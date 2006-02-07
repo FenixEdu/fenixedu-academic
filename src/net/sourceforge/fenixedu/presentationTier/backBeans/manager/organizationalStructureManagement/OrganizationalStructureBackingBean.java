@@ -28,6 +28,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -115,25 +117,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
             }
         }
         return allInherentFunctions;
-    }
-
-    public List<Unit> getAllUnitsWithoutParent() throws FenixFilterException, FenixServiceException {
-        List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
-        for (Unit unit : readAllUnits()) {
-            if (unit.getParentUnits().isEmpty()) {
-                allUnitsWithoutParent.add(unit);
-            }
-        }
-        return allUnitsWithoutParent;
-    }
+    }    
 
     private List<Unit> readAllUnits() throws FenixServiceException, FenixFilterException {
         return readAllDomainObjects(Unit.class);
     }
 
-    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException {
+    public String getAllUnitsToChooseParentUnit() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
-        List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
+        List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         for (Unit unit : allUnitsWithoutParent) {
             if (!unit.equals(this.getUnit())
@@ -147,23 +139,18 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void getUnitTreeToChooseParentUnit(StringBuilder buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
-        buffer.append("<ul class='padding nobullet'>");
+        buffer.append("<ul class='padding1 nobullet'>");
         getUnitsListToChooseParentUnit(parentUnit, buffer);
-        buffer.append("</ul>");
+        closeULTag(buffer);
     }
 
     private void getUnitsListToChooseParentUnit(Unit parentUnit, StringBuilder buffer)
             throws FenixFilterException, FenixServiceException {
 
-        buffer.append("<li>");
+        openLITag(buffer);
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<img ").append("src='").append(getContextPath()).append(
-                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
-                    .append("aa").append(parentUnit.getIdInternal()).append(
-                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-                            "'));return false;").append("\"> ");
+            putImage(parentUnit, buffer);
         }
         
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -173,8 +160,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 .append("</li>");
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("style='display:none'>\r\n");
+            openULTag(parentUnit, buffer);
         }
         
         for (Unit subUnit : parentUnit.getSubUnits()) {
@@ -186,14 +172,13 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("</ul>");
+            closeULTag(buffer);
         }
     }
 
-    public String getUnits() throws FenixFilterException, FenixServiceException {
-
+    public String getUnits() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
-        List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
+        List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
         Date currentDate = Calendar.getInstance().getTime();
 
@@ -212,7 +197,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void getUnitTree(StringBuilder buffer, Unit parentUnit, List<Unit> subUnits,
             Date currentDate, boolean active) {
-        buffer.append("<ul class='padding nobullet'>");
+        buffer.append("<ul class='padding1 nobullet'>");
         getUnitsList(parentUnit, subUnits, buffer, currentDate, active);
         buffer.append("</ul>");
     }
@@ -220,15 +205,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getUnitsList(Unit parentUnit, List<Unit> subUnits, StringBuilder buffer,
             Date currentDate, boolean active) {
 
-        buffer.append("<li>");
+        openLITag(buffer);
 
         if (!subUnits.isEmpty()) {
-            buffer.append("<img ").append("src='").append(getContextPath()).append(
-                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
-                    .append("aa").append(parentUnit.getIdInternal()).append(
-                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-                            "'));return false;").append("\"> ");
+            putImage(parentUnit, buffer);
         }
 
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -237,8 +217,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 .append("</a>").append("</li>");
 
         if (!subUnits.isEmpty()) {
-            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("style='display:none'>\r\n");                       
+            openULTag(parentUnit, buffer);                       
         }        
         
         Collections.sort(subUnits, new BeanComparator("name"));
@@ -254,15 +233,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
         
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("</ul>");
+           closeULTag(buffer);
         }
     }
 
-    public String getUnitsToChoosePrincipalFunction() throws FenixFilterException, FenixServiceException {
+    public String getUnitsToChoosePrincipalFunction() throws FenixFilterException, FenixServiceException, ExcepcaoPersistencia {
         StringBuilder buffer = new StringBuilder();
-
-        List<Unit> allUnitsWithoutParent = getAllUnitsWithoutParent();
+        List<Unit> allUnitsWithoutParent = UnitUtils.readAllUnitsWithoutParents();
         Collections.sort(allUnitsWithoutParent, new BeanComparator("name"));
+        
         for (Unit unit : allUnitsWithoutParent) {
             if (!unit.equals(this.getUnit())) {
                 getUnitTreeToChoosePrincipalFunction(buffer, unit);
@@ -274,7 +253,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public void getUnitTreeToChoosePrincipalFunction(StringBuilder buffer, Unit parentUnit)
             throws FenixFilterException, FenixServiceException {
-        buffer.append("<ul class='padding nobullet'>");
+        buffer.append("<ul class='padding1 nobullet'>");
         getUnitsListToChoosePrincipalFunction(parentUnit, buffer);
         buffer.append("</ul>");
     }
@@ -282,15 +261,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getUnitsListToChoosePrincipalFunction(Unit parentUnit, StringBuilder buffer)
             throws FenixFilterException, FenixServiceException {
 
-        buffer.append("<li>");
+        openLITag(buffer);
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<img ").append("src='").append(getContextPath()).append(
-                    "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("indexed='true' onClick=\"").append("check(document.getElementById('")
-                    .append("aa").append(parentUnit.getIdInternal()).append(
-                            "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-                            "'));return false;").append("\"> ");
+            putImage(parentUnit, buffer);
         }
         
         buffer.append("<a href=\"").append(getContextPath()).append(
@@ -301,8 +275,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
                 "</a>").append("</li>");
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
-                    .append("style='display:none'>\r\n");
+            openULTag(parentUnit, buffer);
         }
         
         for (Unit subUnit : parentUnit.getSubUnits()) {
@@ -310,7 +283,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         if (parentUnit.hasAnySubUnits()) {
-            buffer.append("</ul>");
+            closeULTag(buffer);
         }
     }
 
@@ -732,6 +705,28 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         return new PrepareDatesResult(test, beginDate_, endDate_);
     }
 
+    private void openULTag(Unit parentUnit, StringBuilder buffer) {
+        buffer.append("<ul class='mvert0' id=\"").append("aa").append(parentUnit.getIdInternal()).append("\" ")
+                .append("style='display:none'>\r\n");
+    }
+
+    private void putImage(Unit parentUnit, StringBuilder buffer) {
+        buffer.append("<img ").append("src='").append(getContextPath()).append(
+                "/images/toggle_plus10.gif' id=\"").append(parentUnit.getIdInternal()).append("\" ")
+                .append("indexed='true' onClick=\"").append("check(document.getElementById('")
+                .append("aa").append(parentUnit.getIdInternal()).append(
+                        "'),document.getElementById('").append(parentUnit.getIdInternal()).append(
+                        "'));return false;").append("\"> ");
+    }
+    
+    private void closeULTag(StringBuilder buffer) {
+        buffer.append("</ul>");
+    }
+
+    private void openLITag(StringBuilder buffer) {
+        buffer.append("<li>");
+    }
+    
     public String getUnitCostCenter() throws FenixFilterException, FenixServiceException {
         if (this.unitCostCenter == null && this.getChooseUnit() != null
                 && this.getChooseUnit().getCostCenterCode() != null) {

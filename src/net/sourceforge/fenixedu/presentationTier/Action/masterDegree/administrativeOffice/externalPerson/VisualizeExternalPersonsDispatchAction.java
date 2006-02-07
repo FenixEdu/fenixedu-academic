@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.dataTransferObject.InfoInstitution;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.SessionConstants;
@@ -52,10 +52,10 @@ public class VisualizeExternalPersonsDispatchAction extends FenixDispatchAction 
                     Collections.sort(infoInstitutions, new BeanComparator("name"));
                     List infoInstitutionsValueBeanList = new ArrayList();
                     Iterator it = infoInstitutions.iterator();
-                    InfoInstitution infoInstitution = null;
+                    Unit infoInstitution = null;
 
                     while (it.hasNext()) {
-                        infoInstitution = (InfoInstitution) it.next();
+                        infoInstitution = (Unit) it.next();
                         infoInstitutionsValueBeanList
                                 .add(new LabelValueBean(infoInstitution.getName(), infoInstitution
                                         .getIdInternal().toString()));

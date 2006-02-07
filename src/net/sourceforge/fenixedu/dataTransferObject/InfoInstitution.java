@@ -4,7 +4,7 @@
  */
 package net.sourceforge.fenixedu.dataTransferObject;
 
-import net.sourceforge.fenixedu.domain.Institution;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -41,7 +41,7 @@ public class InfoInstitution extends InfoObject {
      * @param institution
      * @return
      */
-    public static InfoInstitution newInfoFromDomain(Institution institution) {
+    public static InfoInstitution newInfoFromDomain(Unit institution) {
         InfoInstitution infoInstitution = null;
         if (institution != null) {
             infoInstitution = new InfoInstitution();
@@ -51,11 +51,10 @@ public class InfoInstitution extends InfoObject {
         return infoInstitution;
     }
 
-    public void copyFromDomain(Institution institution) {
+    public void copyFromDomain(Unit institution) {
         super.copyFromDomain(institution);
         if (institution != null) {
             setName(institution.getName());
         }
     }
-
 }

@@ -27,9 +27,9 @@ public class InfoNonAffiliatedTeacher extends InfoObject {
     public void copyFromDomain(NonAffiliatedTeacher nonAffiliatedTeacher) {
         super.copyFromDomain(nonAffiliatedTeacher);
         if (nonAffiliatedTeacher != null) {
-            if (nonAffiliatedTeacher.getInstitution() != null) {
+            if (nonAffiliatedTeacher.getInstitutionUnit() != null) {
                 InfoInstitution infoInstitution = new InfoInstitution();
-                infoInstitution.copyFromDomain(nonAffiliatedTeacher.getInstitution());
+                infoInstitution.copyFromDomain(nonAffiliatedTeacher.getInstitutionUnit());
                 setInfoInstitution(infoInstitution);
             }
             setName(nonAffiliatedTeacher.getName());

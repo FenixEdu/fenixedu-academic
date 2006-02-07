@@ -46,7 +46,7 @@ public class InsertInstitutionDispatchAction extends DispatchAction {
             throw new ExistingActionException(e.getMessage(), mapping.findForward("error"));
         } catch (FenixServiceException e) {
             throw new FenixActionException(e.getMessage(), mapping.findForward("error"));
-        }
+        } 
 
         return mapping.findForward("success");
     }

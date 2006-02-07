@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.departmentMember.tea
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -239,9 +240,10 @@ public class ViewTeacherService extends FenixBackingBean {
 			FenixServiceException {
 
 		List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
-
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
+        
 		Object[] args = { getUserView().getPerson().getUsername(),
-				ExecutionPeriodsIDs };
+				ExecutionPeriodsIDs, bundle};
 
 		this.teacherServiceDTO = (List<TeacherDistributionServiceEntryDTO>) ServiceUtils
 				.executeService(getUserView(),
