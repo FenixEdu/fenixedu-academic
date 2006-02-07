@@ -11,6 +11,10 @@
 	<h:outputText value="&nbsp;-&nbsp;" escape="false" />
 	<h:outputText value="#{teacherExpectationManagement.selectedExecutionYearName}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	
+	<h:outputText value="<div class='simpleblock1'>" escape="false" />
+ 	   <h:outputText value="<h4 class='first'>#{bundle['label.personalExpectationsManagement.message.generalInformationTitle']}</h4>" escape="false"/>
+ 	   <h:outputText value="#{bundle['label.personalExpectationsManagement.message.generalInformationDescription']}" escape="false"/>
+	<h:outputText value="</div>" escape="false"/>
 	
 	<h:form onsubmit="updateRTEs();">
 		<h:inputHidden binding="#{teacherExpectationManagement.selectedExecutionYearIdHidden}"  />
