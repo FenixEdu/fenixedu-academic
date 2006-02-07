@@ -111,7 +111,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return (getViewState().getAttribute("minimumValue") != null) ? (String) getViewState().getAttribute("minimumValue") : "0";
     }
 
-    public void setMinimumInt(String minimumValue) {
+    public void setMinimumValue(String minimumValue) {
         getViewState().setAttribute("minimumValue", minimumValue);
     }
     
@@ -201,7 +201,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             parametersDTO.setMaximumDouble(Double.valueOf(getMaximumValue()));
             final Object[] args = {getDegreeModuleID(), CurricularRuleType.valueOf(getSelectedCurricularRuleType()), parametersDTO };
             ServiceUtils.executeService(getUserView(), "CreateCurricularRule", args);
-            //return "curricularRulesManagement";
+            return "setCurricularRules";
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (FenixFilterException e) {
