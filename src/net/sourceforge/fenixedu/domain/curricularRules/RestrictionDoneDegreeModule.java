@@ -79,6 +79,12 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
             result.append(" no contexto ");
             result.append(getContextCourseGroup().getName());
         }
+        if (!getCurricularPeriodOrder().equals(0)) {
+            result.append(" e no ");
+            result.append(getCurricularPeriodOrder());
+            result.append(" ");
+            result.append(getCurricularPeriodType().name());
+        }
         return result.toString();
     }
 
