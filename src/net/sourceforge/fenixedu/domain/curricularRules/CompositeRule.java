@@ -95,4 +95,11 @@ public class CompositeRule extends CompositeRule_Base {
         }        
         return result;
     }
+    
+    @Override
+    public void delete() {
+        removeDegreeModuleToApplyRule();
+        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
+        super.deleteDomainObject();
+    }
 }

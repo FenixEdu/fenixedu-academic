@@ -4,9 +4,9 @@
 package net.sourceforge.fenixedu.domain.curricularRules;
 
 import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -16,27 +16,27 @@ public class RestrictionDoneDegreeModule extends RestrictionDoneDegreeModule_Bas
     /**
      * This constructor should be used in context of Composite Rule 
      */    
-    protected RestrictionDoneDegreeModule(DegreeModule doneDegreeModule) {        
+    protected RestrictionDoneDegreeModule(DegreeModule doneDegreeModule) {
         super();        
         if (doneDegreeModule == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }        
         setDoneDegreeModule(doneDegreeModule);
+        setCurricularRuleType(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE);
     }
 
-    public RestrictionDoneDegreeModule(DegreeModule degreeModuleToApplyRule, DegreeModule doneDegreeModule,
+    public RestrictionDoneDegreeModule(CurricularCourse degreeModuleToApplyRule, DegreeModule doneDegreeModule,
             CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO, 
-            ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleType ruleType) {
+            ExecutionPeriod begin, ExecutionPeriod end) {
         
         this(doneDegreeModule);
         
-        if (degreeModuleToApplyRule == null || begin == null || ruleType == null) {
+        if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setBegin(begin);
         setEnd(end);
-        setCurricularRuleType(ruleType);
         setContextCourseGroup(contextCourseGroup);
         setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
         setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());

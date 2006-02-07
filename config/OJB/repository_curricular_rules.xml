@@ -168,6 +168,8 @@
 
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule" />
 	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit" />
+	<extent-class class-ref="net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit" />
 	
 	<field-descriptor
 		name="idInternal"
@@ -479,12 +481,97 @@
 	/>
 	<field-descriptor
 		name="minimum"
-		column="MINIMUM"
+		column="MINIMUM_LIMIT"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="maximum"
+		column="MAXIMUM_LIMIT"
+		jdbc-type="INTEGER"
+	/>
+	<reference-descriptor auto-retrieve="false"
+			name="degreeModuleToApplyRule"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule">
+		<foreignkey field-ref="keyDegreeModuleToApplyRule"/>
+	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="begin"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+		<foreignkey field-ref="keyBeginExecutionPeriod"/>
+	</reference-descriptor>	
+	<reference-descriptor auto-retrieve="false"
+			name="end"
+			class-ref="net.sourceforge.fenixedu.domain.ExecutionPeriod">
+		<foreignkey field-ref="keyEndExecutionPeriod"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="parentCompositeRule"
+			class-ref="net.sourceforge.fenixedu.domain.curricularRules.CompositeRule">
+		<foreignkey field-ref="keyParentCompositeRule"/>
+	</reference-descriptor>
+	<reference-descriptor auto-retrieve="false"
+			name="contextCourseGroup"
+			class-ref="net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup">
+		<foreignkey field-ref="keyContextCourseGroup"/>
+	</reference-descriptor>	
+</class-descriptor>
+
+<!-- ************************************************************************************************************ -->
+<!-- Definitions for net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit -->
+<!-- ************************************************************************************************************ -->
+<class-descriptor class="net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit" table="CURRICULAR_RULE">	
+	
+	<field-descriptor
+		name="idInternal"
+		column="ID_INTERNAL"
+		jdbc-type="INTEGER"
+		primarykey="true"
+		autoincrement="true"
+	/>
+	<field-descriptor
+         name="ojbConcreteClass"
+         column="CLASS_NAME"
+         jdbc-type="VARCHAR"
+    />    
+    <field-descriptor
+		name="keyDegreeModuleToApplyRule"
+		column="KEY_DEGREE_MODULE_TO_APPLY_RULE"
+		jdbc-type="INTEGER"
+	/>	
+	<field-descriptor
+		name="keyBeginExecutionPeriod"
+		column="KEY_BEGIN_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyEndExecutionPeriod"
+		column="KEY_END_EXECUTION_PERIOD"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="keyParentCompositeRule"
+		column="KEY_PARENT_COMPOSITE_RULE"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="curricularRuleType"
+		column="CURRICULAR_RULE_TYPE"
+		jdbc-type="VARCHAR"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaCurricularRuleType2SqlCurricularRuleTypeFieldConversion"
+	/>
+	<field-descriptor
+		name="keyContextCourseGroup"
+		column="KEY_CONTEXT_COURSE_GROUP"
+		jdbc-type="INTEGER"
+	/>
+	<field-descriptor
+		name="minimum"
+		column="MINIMUM_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
 	<field-descriptor
 		name="maximum"
-		column="MAXIMUM"
+		column="MAXIMUM_CREDITS"
 		jdbc-type="DOUBLE"
 	/>
 	<reference-descriptor auto-retrieve="false"

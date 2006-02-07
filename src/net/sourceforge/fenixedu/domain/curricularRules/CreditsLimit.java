@@ -3,46 +3,45 @@
  */
 package net.sourceforge.fenixedu.domain.curricularRules;
 
-import net.sourceforge.fenixedu.dataTransferObject.CurricularPeriodInfoDTO;
-import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
-public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModule_Base {
-
+public class CreditsLimit extends CreditsLimit_Base {
+    
     /**
      * This constructor should be used in context of Composite Rule 
-     */    
-    protected RestrictionEnroledDegreeModule(DegreeModule enroledDegreeModule) {        
-        super();        
-        if (enroledDegreeModule == null) {
+     */ 
+    protected CreditsLimit(Double minimum, Double maximum) {
+        super();
+        if (minimum == null || maximum == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
-        }        
-        setEnroledDegreeModule(enroledDegreeModule);
-        setCurricularRuleType(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE);
+        }
+        if (minimum.doubleValue() > maximum.doubleValue()) {
+            throw new DomainException("error.minimum.greater.than.maximum");
+        }
+        setMinimum(minimum);
+        setMaximum(maximum);
+        setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
     }
+    
+    public CreditsLimit(CourseGroup degreeModuleToApplyRule, CourseGroup contextCourseGroup,
+            ExecutionPeriod begin, ExecutionPeriod end, Double minimum, Double maximum) {
 
-    public RestrictionEnroledDegreeModule(CurricularCourse degreeModuleToApplyRule, DegreeModule enroledDegreeModule,
-            CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO, 
-            ExecutionPeriod begin, ExecutionPeriod end) {
-        
-        this(enroledDegreeModule);
-        
+        this(minimum, maximum);
+
         if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
+
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
+        setContextCourseGroup(contextCourseGroup);
         setBegin(begin);
         setEnd(end);
-        setContextCourseGroup(contextCourseGroup);
-        setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
-        setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
     }
-
+    
     @Override
     public ExecutionPeriod getBegin() {
         return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super.getBegin();
@@ -72,23 +71,18 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
     public String getLabel() {
         // TODO Auto-generated method stub
         final StringBuilder result = new StringBuilder();
-        if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperators.NOT)) {
-            result.append("Precedência do módulo não inscrito ");
+        if (belongsToCompositeRule()) {            
+            result.append("Deverá fazer entre ????");
         } else {
-            result.append("Precedência do módulo inscrito ");
+            result.append("Deverá fazer entre ");
         }        
-        result.append(getEnroledDegreeModule().getName());
-        result.append(" sobre ");
-        result.append(getDegreeModuleToApplyRule().getName());
+        result.append(getMinimum());
+        result.append(" e ");
+        result.append(getMaximum());
+        result.append(" créditos");
         if (getContextCourseGroup() != null) {
-            result.append(" apenas no contexto ");
+            result.append(" apenas contexto ");
             result.append(getContextCourseGroup().getName());
-        }
-        if (!getCurricularPeriodOrder().equals(0)) {
-            result.append(" e no ");
-            result.append(getCurricularPeriodOrder());
-            result.append(" ");
-            result.append(getCurricularPeriodType().name());
         }
         return result.toString();
     }
@@ -98,5 +92,4 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         // TODO Auto-generated method stub
         return false;
     }
-
 }

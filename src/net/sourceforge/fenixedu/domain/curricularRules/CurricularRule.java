@@ -14,4 +14,9 @@ public abstract class CurricularRule extends CurricularRule_Base {
     
     public abstract String getLabel();
     public abstract boolean evaluate(Class<? extends DomainObject> object);
+    
+    public void delete() {
+        removeDegreeModuleToApplyRule();
+        super.deleteDomainObject();
+    }
 }

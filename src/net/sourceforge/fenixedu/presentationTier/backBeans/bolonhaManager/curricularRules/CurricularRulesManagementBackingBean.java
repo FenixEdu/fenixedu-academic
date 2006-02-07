@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-
-import org.apache.commons.beanutils.BeanComparator;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -22,11 +22,14 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
+
+import org.apache.commons.beanutils.BeanComparator;
 
 public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
@@ -65,16 +68,27 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("selectedCurricularRuleType", ruleType);
     }
     
-    private List<SelectItem> getRuleTypes() {
+    //TODO: check this method
+    private List<SelectItem> getRuleTypes() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(NO_SELECTION, enumerationResources.getString("dropDown.Default")));
         for (final CurricularRuleType curricularRuleType : CurricularRuleType.values()) {
-            result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+            if (getDegreeModule() instanceof CourseGroup) {
+                if (curricularRuleType != CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE 
+                        && curricularRuleType != CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE) {
+                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+                }
+            } else if (getDegreeModule() instanceof CurricularCourse){
+                if (curricularRuleType != CurricularRuleType.CREDITS_LIMIT 
+                        && curricularRuleType != CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT) {
+                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+                }
+            }
         }
         return result;
     }
 
-    public UISelectItems getCurricularRuleTypeItems() {
+    public UISelectItems getCurricularRuleTypeItems() throws FenixFilterException, FenixServiceException {
         if (curricularRuleTypeItems == null) {
             curricularRuleTypeItems = new UISelectItems();
             curricularRuleTypeItems.setValue(getRuleTypes());
@@ -106,21 +120,37 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public void setSelectedContextCourseGroupID(Integer selectedContextCourseGroupID) {
         getViewState().setAttribute("selectedContextCourseGroupID", selectedContextCourseGroupID);
     }
-   
-    public String getMinimumValue() {
-        return (getViewState().getAttribute("minimumValue") != null) ? (String) getViewState().getAttribute("minimumValue") : "0";
+    
+    public Integer getMinimumLimit() {
+        return (getViewState().getAttribute("minimumLimit") != null) ? (Integer) getViewState().getAttribute("minimumLimit") : 0;
     }
 
-    public void setMinimumValue(String minimumValue) {
-        getViewState().setAttribute("minimumValue", minimumValue);
+    public void setMinimumLimit(Integer minimumLimit) {
+        getViewState().setAttribute("minimumLimit", minimumLimit);
     }
     
-    public String getMaximumValue() {
-        return (getViewState().getAttribute("maximumValue") != null) ? (String) getViewState().getAttribute("maximumValue") : "0";
+    public Integer getMaximumLimit() {
+        return (getViewState().getAttribute("maximumLimit") != null) ? (Integer) getViewState().getAttribute("maximumLimit") : 0;
     }
 
-    public void setMaximumValue(String maximumValue) {
-        getViewState().setAttribute("maximumValue", maximumValue);
+    public void setMaximumLimit(Integer maximumLimit) {
+        getViewState().setAttribute("maximumLimit", maximumLimit);
+    }
+   
+    public Double getMinimumCredits() {
+        return (getViewState().getAttribute("minimumCredits") != null) ? (Double) getViewState().getAttribute("minimumCredits") : 0;
+    }
+
+    public void setMinimumCredits(Double minimumCredits) {
+        getViewState().setAttribute("minimumCredits", minimumCredits);
+    }
+    
+    public Double getMaximumCredits() {
+        return (getViewState().getAttribute("maximumCredits") != null) ? (Double) getViewState().getAttribute("maximumCredits") : 0;
+    }
+
+    public void setMaximumCredits(Double maximumCredits) {
+        getViewState().setAttribute("maximumCredits", maximumCredits);
     }
     
     public String getSelectedSemester() {
@@ -155,36 +185,65 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         this.courseGroupItems = courseGroupItems;
     }
     
-    private List<SelectItem> readDegreeModules(String selectedCurricularRuleType) throws FenixFilterException, FenixServiceException {
+    // TODO: check this method
+    private Object readCourseGroups(String selectedCurricularRuleType) throws FenixFilterException,
+            FenixServiceException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        final SortedSet<CourseGroup> courseGroups = new TreeSet<CourseGroup>(new BeanComparator("name"));
+        result.add(new SelectItem(Integer.valueOf(0), bolonhaResources.getString("any.context")));
+        if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION)) {
+            for (final Context context : getDegreeModule().getDegreeModuleContexts()) {
+                if (!context.getDegreeModule().isRoot()) {
+                    courseGroups.add(context.getCourseGroup());
+                }
+            }
+            for (final CourseGroup courseGroup : courseGroups) {
+                result.add(new SelectItem(courseGroup.getIdInternal(), courseGroup.getName()));
+            }
+        }
+        return result;
+    }
+
+    // TODO: check this method
+    private List<SelectItem> readDegreeModules(String selectedCurricularRuleType)
+            throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(Integer.valueOf(0), bolonhaResources.getString("choose")));
         if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION)) {
-            getCurricularCourses(result);
-            getCourseGroups(result);
+            if (selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE.name()) ||
+                    selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE.name())) {
+                getCurricularCourses(result);
+            }
+            else if (selectedCurricularRuleType.equals(CurricularRuleType.CREDITS_LIMIT.name()) ||
+                    selectedCurricularRuleType.equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT.name())) {
+                getCourseGroups(result);
+            }
         }
-        Collections.sort(result, new BeanComparator("label"));
         return result;
     }
- 
-    private Object readCourseGroups(String selectedCurricularRuleType) throws FenixFilterException, FenixServiceException {
-        final List<SelectItem> result = new ArrayList<SelectItem>();
-        result.add(new SelectItem(Integer.valueOf(0), bolonhaResources.getString("any.context")));
-        if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION)) {
-            getCourseGroups(result);
-        }
-        Collections.sort(result, new BeanComparator("label"));
-        return result;
-    }
-    
-    private void getCourseGroups(final List<SelectItem> result) throws FenixFilterException, FenixServiceException {
-        for (final CourseGroup courseGroup : getDegreeCurricularPlan().getDcpCourseGroups()) {
-            result.add(new SelectItem(courseGroup.getIdInternal(), courseGroup.getName() + " (" + bolonhaResources.getString("courseGroup") + ")"));
+
+    // TODO: check this method
+    private void getCourseGroups(final List<SelectItem> result) throws FenixFilterException,
+            FenixServiceException {
+        final List<CourseGroup> courseGroups = getDegreeCurricularPlan().getDcpCourseGroups();
+        Collections.sort(result, new BeanComparator("name"));
+        for (final CourseGroup courseGroup : courseGroups) {
+            if (courseGroup != getDegreeModule()) {
+                result.add(new SelectItem(courseGroup.getIdInternal(), courseGroup.getName()));
+            }
         }
     }
 
-    private void getCurricularCourses(final List<SelectItem> result) throws FenixFilterException, FenixServiceException {
-        for (final CurricularCourse curricularCourse : getDegreeCurricularPlan().getDcpCurricularCourses()) {
-            result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName() + " (" + bolonhaResources.getString("curricularCourse") + ")"));
+    // TODO: check this method
+    private void getCurricularCourses(final List<SelectItem> result) throws FenixFilterException,
+            FenixServiceException {
+        final List<CurricularCourse> curricularCourses = getDegreeCurricularPlan()
+                .getDcpCurricularCourses();
+        Collections.sort(result, new BeanComparator("name"));
+        for (final CurricularCourse curricularCourse : curricularCourses) {
+            if (curricularCourse != getDegreeModule()) {
+                result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));
+            }
         }
     }
     
@@ -195,10 +254,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             parametersDTO.setPrecedenceDegreeModuleID(getSelectedPrecendenceDegreeModuleID());
             parametersDTO.setContextCourseGroupID((getSelectedContextCourseGroupID() != null && getSelectedContextCourseGroupID().equals(0)) ? null : getSelectedContextCourseGroupID() );
             parametersDTO.setCurricularPeriodInfoDTO(new CurricularPeriodInfoDTO(Integer.valueOf(getSelectedSemester()), CurricularPeriodType.SEMESTER));            
-            parametersDTO.setMinimumInt(Integer.valueOf(getMinimumValue()));
-            parametersDTO.setMaximumInt(Integer.valueOf(getMaximumValue()));
-            parametersDTO.setMinimumDouble(Double.valueOf(getMinimumValue()));
-            parametersDTO.setMaximumDouble(Double.valueOf(getMaximumValue()));
+            parametersDTO.setMinimumCredits(getMinimumCredits());
+            parametersDTO.setMaximumCredits(getMaximumCredits());
+            parametersDTO.setMinimumLimit(getMinimumLimit());
+            parametersDTO.setMaximumLimit(getMaximumLimit());
             final Object[] args = {getDegreeModuleID(), CurricularRuleType.valueOf(getSelectedCurricularRuleType()), parametersDTO };
             ServiceUtils.executeService(getUserView(), "CreateCurricularRule", args);
             return "setCurricularRules";
@@ -218,5 +277,23 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         if (getSelectedCurricularRuleType() == null || getSelectedCurricularRuleType().equals(NO_SELECTION)) {
             throw new FenixActionException("must.select.curricular.rule.type");
         }        
+    }
+    
+    public Integer getCurricularRuleID() {
+        return getAndHoldIntegerParameter("curricularRuleID");
+    }
+    
+    public String deleteCurricularRule() {
+        try {
+            final Object[] args = { getCurricularRuleID() };
+            ServiceUtils.executeService(getUserView(), "DeleteCurricularRule", args);
+        } catch (FenixFilterException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FenixServiceException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "";
     }
 }

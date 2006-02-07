@@ -10,11 +10,11 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     
     private Integer precedenceDegreeModuleID;
     private Integer contextCourseGroupID;
-    private CurricularPeriodInfoDTO curricularPeriodInfoDTO;
-    private Integer minimumInt;
-    private Integer maximumInt;
-    private Double minimumDouble;
-    private Double maximumDouble;
+    private CurricularPeriodInfoDTO curricularPeriodInfoDTO;    
+    private Double minimumCredits;
+    private Double maximumCredits;
+    private Integer minimumLimit;
+    private Integer maximumLimit;
     
     public CurricularRuleParametersDTO() {
 
@@ -32,29 +32,17 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     public void setCurricularPeriodInfoDTO(CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
         this.curricularPeriodInfoDTO = curricularPeriodInfoDTO;
     }
-    public Double getMaximumDouble() {
-        return maximumDouble;
+    public Double getMaximumCredits() {
+        return maximumCredits;
     }
-    public void setMaximumDouble(Double maxDouble) {
-        this.maximumDouble = maxDouble;
+    public void setMaximumCredits(Double maxDouble) {
+        this.maximumCredits = maxDouble;
     }
-    public Integer getMaximumInt() {
-        return maximumInt;
+    public Double getMinimumCredits() {
+        return minimumCredits;
     }
-    public void setMaximumInt(Integer maxInt) {
-        this.maximumInt = maxInt;
-    }
-    public Double getMinimumDouble() {
-        return minimumDouble;
-    }
-    public void setMinimumDouble(Double minDouble) {
-        this.minimumDouble = minDouble;
-    }
-    public Integer getMinimumInt() {
-        return minimumInt;
-    }
-    public void setMinimumInt(Integer minInt) {
-        this.minimumInt = minInt;
+    public void setMinimumCredits(Double minDouble) {
+        this.minimumCredits = minDouble;
     }
     public Integer getPrecedenceDegreeModuleID() {
         return precedenceDegreeModuleID;
@@ -62,5 +50,20 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     public void setPrecedenceDegreeModuleID(Integer precedenceDegreeModule) {
         this.precedenceDegreeModuleID = precedenceDegreeModule;
     }
-    
+
+    public Integer getMinimumLimit() {
+        return minimumLimit;
+    }
+
+    public void setMinimumLimit(Integer minimumLimit) {
+        this.minimumLimit = minimumLimit;
+    }
+
+    public Integer getMaximumLimit() {
+        return maximumLimit;
+    }
+
+    public void setMaximumLimit(Integer maximumLimit) {
+        this.maximumLimit = maximumLimit;
+    }    
 }

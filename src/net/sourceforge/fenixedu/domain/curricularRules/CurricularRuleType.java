@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.domain.curricularRules;
 
 public enum CurricularRuleType {
     
-    CREDIT_LIMIT,
+    CREDITS_LIMIT,
     DEGREE_MODULES_SELECTION_LIMIT,
     PRECEDENCY_APPROVED_DEGREE_MODULE,
     PRECEDENCY_ENROLED_DEGREE_MODULE;

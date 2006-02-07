@@ -24,23 +24,22 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         }
         setMinimum(minimum);
         setMaximum(maximum);
+        setCurricularRuleType(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT);
     }
     
-    public DegreeModulesSelectionLimit(DegreeModule degreeModuleToApplyRule,
-            CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end,
-            CurricularRuleType curricularRuleType, Integer minimum, Integer maximum) {
-        
+    public DegreeModulesSelectionLimit(CourseGroup degreeModuleToApplyRule,
+            CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end, Integer minimum,
+            Integer maximum) {
+
         this(minimum, maximum);
-        
-        if (degreeModuleToApplyRule == null || begin == null || curricularRuleType == null) {
+
+        if (degreeModuleToApplyRule == null || begin == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
-        
         setDegreeModuleToApplyRule(degreeModuleToApplyRule);
         setContextCourseGroup(contextCourseGroup);
         setBegin(begin);
         setEnd(end);
-        setCurricularRuleType(curricularRuleType);
     }
     
     @Override

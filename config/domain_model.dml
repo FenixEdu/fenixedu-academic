@@ -686,6 +686,10 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
         class net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
             Integer minimum;
             Integer maximum;
+        }        
+        class net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+            Double minimum;
+            Double maximum;
         }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
