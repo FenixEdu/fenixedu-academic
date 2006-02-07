@@ -670,10 +670,18 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
     class net.sourceforge.fenixedu.domain.curricularRules.CompositeRule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {    
         LogicOperators compositeRuleType;
     }
-    class net.sourceforge.fenixedu.domain.curricularRules.Rule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {    
+    class net.sourceforge.fenixedu.domain.curricularRules.Rule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {
+        Integer keyContextCourseGroup;
     }
-        class net.sourceforge.fenixedu.domain.curricularRules.precedencies.RestrictionDoneDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
-            Integer keyDoneDegreeModule;
+        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+            Integer keyPrecendenceDegreeModule;
+            CurricularPeriodType curricularPeriodType;
+            Integer curricularPeriodOrder;
+        }
+        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+            Integer keyPrecendenceDegreeModule;
+            CurricularPeriodType curricularPeriodType;
+            Integer curricularPeriodOrder;
         }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5872,7 +5880,6 @@ relation ProjectProjectKeyword {
 	}
 }
 
-
 relation CurricularRuleDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole degreeModuleToApplyRule;
 	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole curricularRules {
@@ -5881,16 +5888,12 @@ relation CurricularRuleDegreeModule {
 }
 
 relation CurricularRuleBeginExecutionPeriod {
-	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole beginCurricularRules {
-		multiplicity*;
-	}
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole;
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole begin;
 }
 
 relation CurricularRuleEndExecutionPeriod {
-	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole endCurricularRules {
-		multiplicity*;
-	}
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole;
 	net.sourceforge.fenixedu.domain.ExecutionPeriod playsRole end;
 }
 
@@ -5902,10 +5905,18 @@ relation CurricularRuleCompositeRule {
 }
 
 relation DegreeModuleRestrictionDoneDegreeModule {
-	net.sourceforge.fenixedu.domain.curricularRules.precedencies.RestrictionDoneDegreeModule playsRole restrictionDoneDegreeModules {
-		multiplicity*;
-	}
+	net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule playsRole;
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole doneDegreeModule;
+}
+
+relation DegreeModuleRestrictionEnroledDegreeModule {
+	net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule playsRole;
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole enroledDegreeModule;
+}
+
+relation CourseGroupRule {
+	net.sourceforge.fenixedu.domain.curricularRules.Rule playsRole;
+	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole contextCourseGroup;
 }
 
 relation ProjectEvent {

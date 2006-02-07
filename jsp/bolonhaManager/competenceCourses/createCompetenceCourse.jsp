@@ -37,7 +37,7 @@
 	</h:outputFormat>	
 	<h:form>
 		<fc:viewState binding="#{CompetenceCourseManagement.viewState}"/>
-		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'/>"/>				
+		<h:outputText escape="false" value="<input id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='create'/>"/>
 
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	

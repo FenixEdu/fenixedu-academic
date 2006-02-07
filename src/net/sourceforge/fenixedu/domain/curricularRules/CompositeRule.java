@@ -21,13 +21,14 @@ public class CompositeRule extends CompositeRule_Base {
         if (degreeModuleToApplyRule == null || begin == null || ruleType == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
+        
         if (compositeRuleType.equals(LogicOperators.NOT) && curricularRules.length > 1) {
             throw new DomainException("incorrect.NOT.composite.rule.use");
         }
-        if ((compositeRuleType.equals(LogicOperators.AND) || compositeRuleType.equals(LogicOperators.OR)) && curricularRules.length < 2) {
+        else if ((compositeRuleType.equals(LogicOperators.AND) || compositeRuleType.equals(LogicOperators.OR)) && curricularRules.length < 2) {
             throw new DomainException("incorrect.composite.rule.use");
         }
-        if (!compositeRuleType.equals(LogicOperators.AND) && !compositeRuleType.equals(LogicOperators.OR)) {
+        else if (!compositeRuleType.equals(LogicOperators.AND) && !compositeRuleType.equals(LogicOperators.OR) && !compositeRuleType.equals(LogicOperators.NOT)) {
             throw new DomainException("unsupported.composite.rule");
         }
         initCompositeRule(degreeModuleToApplyRule, begin, end, ruleType, compositeRuleType, curricularRules);  
@@ -45,7 +46,6 @@ public class CompositeRule extends CompositeRule_Base {
 
         for (final CurricularRule curricularRule : curricularRules) {
             curricularRule.setParentCompositeRule(this);
-            addCurricularRules(curricularRule);
         }
     }
 
@@ -53,7 +53,6 @@ public class CompositeRule extends CompositeRule_Base {
     public String getLabel() {
         final StringBuilder stringBuilder = new StringBuilder();        
         if (getCompositeRuleType().equals(LogicOperators.NOT)) {
-            stringBuilder.append("NOT");
             stringBuilder.append(getCurricularRules().get(0).getLabel());
         } else {
             String operator = "";

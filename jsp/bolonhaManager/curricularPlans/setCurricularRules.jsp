@@ -27,7 +27,15 @@
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="years"/>		
 		</h:outputLink>
-	</h:panelGroup>		
+	</h:panelGroup>
+	
+	<h:outputText value="<br/><br/><br/> --- TEMP ----" escape="false"/>
+	<h:outputLink value="../curricularRules/createCurricularRule.faces">
+			<h:outputText value="Definir Regra" />
+			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
+			<f:param name="degreeModuleID" value="15797" />
+	</h:outputLink>	
+	<h:outputText value="--- TEMP ---<br/><br/>" escape="false"/>
 
 	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 	<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>

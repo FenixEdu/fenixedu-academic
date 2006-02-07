@@ -312,6 +312,15 @@
 	</managed-bean>
 	<!-- END: Bolonha Management Beans -->
 	
+	<!-- BEGIN: CurricularRules Management Beans -->
+	<managed-bean>
+		<description>CurricularRulesManagementBackingBean</description>
+		<managed-bean-name>CurricularRulesManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularRules.CurricularRulesManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>	
+	<!-- END: CurricularRules Management Beans -->
+	
 	<!-- BEGIN: OrganizationalStructure Managed Beans -->
 	<managed-bean>
 		<managed-bean-name>organizationalStructure</managed-bean-name>
@@ -1616,14 +1625,7 @@
 			<from-outcome>buildCurricularPlan</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
 		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</from-view-id>
-		<navigation-case>
-			<from-outcome>buildCurricularPlan</from-outcome>
-			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
-		</navigation-case>
-	</navigation-rule>
+	</navigation-rule>	
 	<!-- CurricularCourse -->
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/createCurricularCourse.jsp</from-view-id>		
@@ -1717,6 +1719,23 @@
 		</navigation-case>
 	</navigation-rule>
 	<!-- END: Bolonha Navigation Rules -->
+	
+	<!-- BEGIN: CurricularRules Navigation Rules -->
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>buildCurricularPlan</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/buildCurricularPlan.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularRules/createCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/bolonhaManager/curricularRules/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- END: CurricularRules Navigation Rules -->
 
 	<!-- Custom Components -->
 	<component>

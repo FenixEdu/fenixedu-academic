@@ -436,6 +436,23 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
     }
     
+    public List<CourseGroup> getDcpCourseGroups() {
+        final Set<CourseGroup> result = new HashSet<CourseGroup>();
+        if (this.getDegreeModule() instanceof CourseGroup) {
+            collectChildCourseGroups(result, (CourseGroup) this.getDegreeModule());
+        }
+        return new ArrayList(result);
+    }
+
+    private void collectChildCourseGroups(final Set<CourseGroup> result, CourseGroup courseGroup) {
+        for (final Context context : courseGroup.getCourseGroupContexts()) {
+            if (context.getDegreeModule() instanceof CourseGroup) {
+                result.add((CourseGroup) context.getDegreeModule());
+                collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule());
+            }
+        }
+    }
+    
     public Branch getBranchByName(final String branchName) {
         for (final Branch branch : getAreas()) {
             if (branchName.equals(branch.getName())) {
