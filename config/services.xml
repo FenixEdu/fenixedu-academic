@@ -9637,4 +9637,22 @@
             <chain name="ManagerAuthorization"/>
         </filterChains>
     </service>
-</serviceDefinitions>
+	<service>
+   	 	<name>ReadTeachersCreditsResumeByPeriodAndUnit</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>   
+	<service>
+   	 	<name>EditTeacherMasterDegreeCredits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.EditTeacherMasterDegreeCredits</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ScientificCouncilAuthorization"></chain>
+        </filterChains>     
+    </service>        
+</serviceDefinitions>    

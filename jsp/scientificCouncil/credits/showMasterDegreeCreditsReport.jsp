@@ -10,8 +10,14 @@
 <h3><bean:message key="message.credits.masterDegree.title"/></h3>
 
 <bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
-<h4><bean:message key="message.credits.masterDegree.curricularPlan"/>:  <bean:write name="executionDegree" property="degreeCurricularPlan.name"/><br/>
-<bean:message key="message.credits.masterDegree.executionYear"/>: <bean:write name="executionDegree" property="executionYear.year"/></h4>
+
+<div class="simpleblock1">
+<p><strong><bean:message key="message.credits.masterDegree.curricularPlan"/>:</strong>  <bean:write name="executionDegree" property="degreeCurricularPlan.name"/></p>
+<p><strong><bean:message key="message.credits.masterDegree.executionYear"/>:</strong> <bean:write name="executionDegree" property="executionYear.year"/></p>
+</div>
+
+<p><em><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></em></p>
+
 
 <logic:notPresent name="masterDegreeCoursesDTOs">
 	<span class="error"><bean:message key="message.credits.nonExisting.executionCourses"/></span>
@@ -29,10 +35,11 @@
 			<th><bean:message key="label.credits.masterDegree.teacher"/></th>		
 			<th><bean:message key="label.credits.masterDegree.hours"/></th>	
 			<th><bean:message key="label.credits.header"/></th>	
+			<th></th>			
 		</tr>
 		
 		<logic:iterate id="masterDegreeCoursesDTO" name="masterDegreeCoursesDTOs" type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.MasterDegreeCreditsManagementDispatchAction.MasterDegreeCreditsDTO">
-		<tr>
+		<tr style="border-top: 2px solid #aaa;">
 			<% int numberLines = 1; %>
 			<td rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
 				<bean:write name="masterDegreeCoursesDTO" property="curricularCourse.name"/>
@@ -93,10 +100,23 @@
 						</logic:empty>
 						<logic:equal name="isLastCellDone" value="false">
 							<td rowspan="<%= masterDegreeCoursesDTO.getTotalRowSpan() %>">
-								<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>"
-									paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
-									<bean:message key="link.credits.masterDegree.assign"/>
-								</html:link>
+								<logic:equal name="masterDegreeCoursesDTO" property="allowToChange" value="true">
+									<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>"
+										paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
+										<bean:message key="link.credits.masterDegree.assign"/>
+									</html:link>
+								</logic:equal>
+								<logic:notEqual name="masterDegreeCoursesDTO" property="allowToChange" value="true">
+									<bean:size id="dcpNamesSize" name="masterDegreeCoursesDTO" property="dcpNames"/>
+									<span class="required">*</span>
+									<logic:iterate id="dcpName" name="masterDegreeCoursesDTO" property="dcpNames" indexId="index">
+										<bean:write name="dcpName"/>
+										<logic:notEqual name="index" value="<%= new Integer(dcpNamesSize.intValue() - 1).toString() %>">
+										,
+										</logic:notEqual>
+										<br/>
+									</logic:iterate>
+								</logic:notEqual>
 							</td>
 							<% request.setAttribute("isLastCellDone","true");%>
 						</logic:equal>
@@ -113,14 +133,28 @@
 						<td></td>
 						<td></td>
 						<td>
-							<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>"
-								paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
-								<bean:message key="link.credits.masterDegree.assign"/>
-							</html:link>
+							<logic:equal name="masterDegreeCoursesDTO" property="allowToChange" value="true">
+								<html:link page="<%= "/masterDegreeCreditsManagement.do?method=prepareEdit&amp;executionDegreeID=" + executionDegree.getIdInternal().toString() %>"
+									paramId="curricularCourseID" paramName="masterDegreeCoursesDTO" paramProperty="curricularCourse.idInternal">
+									<bean:message key="link.credits.masterDegree.assign"/>
+								</html:link>
+							</logic:equal>
+							<logic:notEqual name="masterDegreeCoursesDTO" property="allowToChange" value="true">
+								<bean:size id="dcpNamesSize" name="masterDegreeCoursesDTO" property="dcpNames"/>
+								<span class="required">*</span>
+								<logic:iterate id="dcpName" name="masterDegreeCoursesDTO" property="dcpNames" indexId="index">
+									<bean:write name="dcpName"/>
+									<logic:notEqual name="index" value="<%= new Integer(dcpNamesSize.intValue() - 1).toString() %>">
+									,
+									</logic:notEqual>
+									<br/>
+								</logic:iterate>
+							</logic:notEqual>							
 						</td>				
 					<tr/>		
 				</logic:empty>
 			</logic:iterate>
 		</logic:iterate>		
 	</table>
+	<p><em><span class="required">*</span> <bean:message key="message.credits.curricularDegree"/></em></p>
 </logic:present>

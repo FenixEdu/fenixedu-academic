@@ -13,10 +13,13 @@
 <h4><bean:message key="message.credits.masterDegree.curricularPlan"/>:  <bean:write name="executionDegree" property="degreeCurricularPlan.name"/><br/>
 <bean:message key="message.credits.masterDegree.executionYear"/>: <bean:write name="executionDegree" property="executionYear.year"/></h4>
 
+<span class="error"><html:errors/></span>
+
 <html:form action="/masterDegreeCreditsManagement">
 
 <html:hidden property="method" value="edit"/>
 <html:hidden property="executionDegreeID"/>
+<html:hidden property="curricularCourseID"/>
 
 <table class="tstyle1c">
 	<tr>
@@ -30,6 +33,7 @@
 		<th><bean:message key="label.credits.masterDegree.teacher"/></th>		
 		<th><bean:message key="label.credits.masterDegree.hours"/></th>	
 		<th><bean:message key="label.credits.header"/></th>	
+		<th></th>			
 	</tr>
 		
 	<bean:define id="creditsMap" name="masterDegreeCreditsForm" property="creditsMap" type="java.util.HashMap"/>

@@ -23,8 +23,7 @@ public class TeacherService extends TeacherService_Base {
     static {
         TeacherServiceTeacherServiceItem.addListener(new TeacherServiceTeacherServiceItemListener());
     }
-
-
+    
     public TeacherService(Teacher teacher, ExecutionPeriod executionPeriod) {
         super();
         if (teacher == null || executionPeriod == null) {
@@ -44,6 +43,28 @@ public class TeacherService extends TeacherService_Base {
         }
     }
 
+
+    public DegreeTeachingService getDegreeTeachingServiceByShiftAndProfessorship(final Shift shift,
+            final Professorship professorship) {
+        return (DegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
+                new Predicate() {
+                    public boolean evaluate(Object arg0) {
+                        DegreeTeachingService degreeTeachingService = (DegreeTeachingService) arg0;
+                        return (degreeTeachingService.getShift() == shift)
+                                && (degreeTeachingService.getProfessorship() == professorship);
+                    }
+                });
+    }
+    
+    public TeacherMasterDegreeService getMasterDegreeServiceByProfessorship(Professorship professorship){        
+        for (TeacherMasterDegreeService masterDegreeService : getMasterDegreeServices()) {
+            if(masterDegreeService.getProfessorship() == professorship){
+                return masterDegreeService;
+            }
+        }
+        return null;
+    }
+    
     public Double getCredits() {
         double credits = getMasterDegreeServiceCredits();
         credits += getTeachingDegreeCredits();
@@ -154,18 +175,6 @@ public class TeacherService extends TeacherService_Base {
         }
     }
 
-    public DegreeTeachingService getDegreeTeachingServiceByShiftAndProfessorship(final Shift shift,
-            final Professorship professorship) {
-        return (DegreeTeachingService) CollectionUtils.find(getDegreeTeachingServices(),
-                new Predicate() {
-                    public boolean evaluate(Object arg0) {
-                        DegreeTeachingService degreeTeachingService = (DegreeTeachingService) arg0;
-                        return (degreeTeachingService.getShift() == shift)
-                                && (degreeTeachingService.getProfessorship() == professorship);
-                    }
-                });
-    }
-
     public List<DegreeTeachingService> getDegreeTeachingServices() {
         return (List<DegreeTeachingService>) CollectionUtils.select(getServiceItems(), new Predicate() {
             public boolean evaluate(Object arg0) {
@@ -233,13 +242,4 @@ public class TeacherService extends TeacherService_Base {
         return new Double(rounded / 100.0);
     }
 
-
-    private static class TeacherServiceTeacherServiceItemListener extends dml.runtime.RelationAdapter<TeacherService,TeacherServiceItem> {
-        @Override
-        public void afterRemove(TeacherService teacherService, TeacherServiceItem serviceItem) {
-            if ((teacherService != null) && teacherService.getServiceItems().isEmpty()) {
-                teacherService.delete();
-            }
-        }
-    }
 }

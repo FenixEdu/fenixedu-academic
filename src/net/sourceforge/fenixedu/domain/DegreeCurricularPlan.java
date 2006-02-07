@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
-import net.sourceforge.fenixedu.predicates.DegreeCurricularPlanPredicates;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
 import net.sourceforge.fenixedu.util.MarkType;
 
@@ -99,14 +98,15 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         this.setAnotation(annotation);
     }
 
-    public DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator, CurricularPeriod curricularPeriod) {
+    public DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator,
+            CurricularPeriod curricularPeriod) {
         this(degree);
         commonFieldsChange(name, gradeScale);
         newStructureFieldsChange(CurricularStage.DRAFT);
 
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
         this.setDegreeModule(dcpRoot);
-        
+
         if (curricularPeriod == null) {
             throw new DomainException("degreeCurricularPlan.curricularPeriod.not.null");
         }
@@ -138,7 +138,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public void edit(String name, CurricularStage curricularStage, GradeScale gradeScale) {
         commonFieldsChange(name, gradeScale);
         newStructureFieldsChange(curricularStage);
-        
+
         // assert unique pair name/degree
         for (final DegreeCurricularPlan dcp : this.getDegree().getDegreeCurricularPlans()) {
             if (dcp != this && dcp.getName().equalsIgnoreCase(name)) {
@@ -219,14 +219,29 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     public ExecutionDegree getExecutionDegreeByYear(ExecutionYear executionYear) {
-    	for (ExecutionDegree executionDegree : getExecutionDegrees()) {
-			if(executionDegree.getExecutionYear().equals(executionYear)) {
-				return executionDegree;
-			}
-		}
-    	return null;
+        for (ExecutionDegree executionDegree : getExecutionDegrees()) {
+            if (executionDegree.getExecutionYear().equals(executionYear)) {
+                return executionDegree;
+            }
+        }
+        return null;
     }
-    
+
+    public List<CurricularCourse> getCurricularCoursesWithExecutionIn(ExecutionYear executionYear) {
+        List<CurricularCourse> curricularCourses = new ArrayList<CurricularCourse>();
+        for (CurricularCourse curricularCourse : getCurricularCourses()) {
+            for (ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+                List<ExecutionCourse> executionCourses = curricularCourse
+                        .getExecutionCoursesByExecutionPeriod(executionPeriod);
+                if(!executionCourses.isEmpty()){
+                    curricularCourses.add(curricularCourse);
+                    break;
+                }
+            }
+        }
+        return curricularCourses;
+    }
+
     // -------------------------------------------------------------
     // BEGIN: Only for enrollment purposes
     // -------------------------------------------------------------

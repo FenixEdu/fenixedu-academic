@@ -13,4 +13,22 @@
     <definition name="show-credits-report" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/credits/showTeachersCreditsReport.jsp"></put>
     </definition>        
+    
+    <definition name="select-masterDegree-parameters" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/chooseMasterDegreeExecution.jsp"></put>
+    </definition>    
+    
+    <definition name="show-credits-report" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/showMasterDegreeCreditsReport.jsp"></put>
+    </definition>    
+	<definition name="edit-masterDegree-credits" extends="scientificCouncil.masterPage">
+        <put name="body" value="/scientificCouncil/credits/editMasterDegreeCredits.jsp"></put>
+    </definition>
+    
+    <definition name="df.page.read-execution-course-teachers" extends="scientificCouncil.masterPage" >
+		<put name="body" value="/scientificCouncil/credits/readTeachers_bd.jsp" />
+	</definition>
+	<definition name="df.page.insert-professorShip-by-number" extends="scientificCouncil.masterPage" >
+		<put name="body" value="/manager/insertTeacherByNumber_bd.jsp" />
+	</definition>
 </tiles-definitions>
