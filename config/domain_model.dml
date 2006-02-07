@@ -666,12 +666,12 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
     Integer keyEndExecutionPeriod;
     Integer keyParentCompositeRule;
     CurricularRuleType curricularRuleType;
+    Integer keyContextCourseGroup;
 }
     class net.sourceforge.fenixedu.domain.curricularRules.CompositeRule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {    
         LogicOperators compositeRuleType;
     }
     class net.sourceforge.fenixedu.domain.curricularRules.Rule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {
-        Integer keyContextCourseGroup;
     }
         class net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
             Integer keyPrecendenceDegreeModule;
@@ -682,6 +682,10 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
             Integer keyPrecendenceDegreeModule;
             CurricularPeriodType curricularPeriodType;
             Integer curricularPeriodOrder;
+        }
+        class net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+            Integer minimum;
+            Integer maximum;
         }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -5914,8 +5918,8 @@ relation DegreeModuleRestrictionEnroledDegreeModule {
 	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole enroledDegreeModule;
 }
 
-relation CourseGroupRule {
-	net.sourceforge.fenixedu.domain.curricularRules.Rule playsRole;
+relation CourseGroupCurricularRule {
+	net.sourceforge.fenixedu.domain.curricularRules.CurricularRule playsRole;
 	net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup playsRole contextCourseGroup;
 }
 

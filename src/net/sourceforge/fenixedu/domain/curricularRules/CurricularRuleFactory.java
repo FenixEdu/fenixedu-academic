@@ -25,18 +25,33 @@ public class CurricularRuleFactory {
         case CREDIT_LIMIT:
             
             break;
+            
         case DEGREE_MODULES_SELECTION_LIMIT:
-
-            break;
+            return createDegreeModulesSelectionLimit(degreeModuleToApplyRule, curricularRuleType, begin, end, parametersDTO, persistentObject);
         
         default:
             break;
-        }
-        
+        }        
         return null;
     }
 
-    private static CurricularRule createRestrictionEnroledDegreeModule(DegreeModule degreeModuleToApplyRule, CurricularRuleType curricularRuleType, ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject) throws ExcepcaoPersistencia {
+    private static CurricularRule createDegreeModulesSelectionLimit(
+            DegreeModule degreeModuleToApplyRule, CurricularRuleType curricularRuleType,
+            ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO,
+            IPersistentObject persistentObject) throws ExcepcaoPersistencia {
+        
+        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
+                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+        
+        return new DegreeModulesSelectionLimit(degreeModuleToApplyRule, contextCourseGroup, begin, end,
+                curricularRuleType, parametersDTO.getMinimumInt(), parametersDTO.getMaximumInt());
+    }
+
+    private static CurricularRule createRestrictionEnroledDegreeModule(
+            DegreeModule degreeModuleToApplyRule, CurricularRuleType curricularRuleType,
+            ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleParametersDTO parametersDTO,
+            IPersistentObject persistentObject) throws ExcepcaoPersistencia {
+        
         final DegreeModule enroledDegreeModule = (DegreeModule) persistentObject.readByOID(
                 DegreeModule.class, parametersDTO.getPrecedenceDegreeModuleID());
         final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(

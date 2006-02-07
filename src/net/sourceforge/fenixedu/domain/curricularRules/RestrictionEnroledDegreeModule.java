@@ -61,11 +61,15 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
     public DegreeModule getDegreeModuleToApplyRule() {        
         return (getParentCompositeRule() != null) ? getParentCompositeRule().getDegreeModuleToApplyRule() : super.getDegreeModuleToApplyRule();
     }
+    
+    @Override
+    public CourseGroup getContextCourseGroup() {        
+        return (getParentCompositeRule() != null) ? getParentCompositeRule().getContextCourseGroup() : super.getContextCourseGroup();
+    }
 
     @Override
     public String getLabel() {
         // TODO Auto-generated method stub
-        //return "curricularRule.restrictionEnroledDegreeModule";
         final StringBuilder result = new StringBuilder();
         if (belongsToCompositeRule() && getParentCompositeRule().getCompositeRuleType().equals(LogicOperators.NOT)) {
             result.append("Precedência do módulo não inscrito ");
@@ -76,7 +80,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         result.append(" sobre ");
         result.append(getDegreeModuleToApplyRule().getName());
         if (getContextCourseGroup() != null) {
-            result.append(" no contexto ");
+            result.append(" apenas no contexto ");
             result.append(getContextCourseGroup().getName());
         }
         if (!getCurricularPeriodOrder().equals(0)) {
