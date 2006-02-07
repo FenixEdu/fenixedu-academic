@@ -26,7 +26,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author João Mota
  * 
- * 29/Ago/2003 fenix-head ServidorApresentacao.Action.student
+ * 29/Ago/2003 fenix-head presentationTier.Action.student
  *  
  */
 public class ViewStudentTimeTable extends FenixAction {

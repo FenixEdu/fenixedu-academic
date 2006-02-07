@@ -1,7 +1,7 @@
 /**
  * 
  * Project sop 
- * Package ServidorApresentacao.Action.publico 
+ * Package presentationTier.Action.publico 
  * Created on 24/Fev/2003
  */
 package net.sourceforge.fenixedu.presentationTier.Action.publico;

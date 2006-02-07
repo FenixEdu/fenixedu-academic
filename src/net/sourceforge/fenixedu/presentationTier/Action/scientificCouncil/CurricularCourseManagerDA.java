@@ -36,7 +36,7 @@ import org.apache.struts.action.DynaActionForm;
 /**
  * @author João Mota
  * 
- * 23/Jul/2003 fenix-head ServidorApresentacao.Action.scientificCouncil
+ * 23/Jul/2003 fenix-head presentationTier.Action.scientificCouncil
  *  
  */
 public class CurricularCourseManagerDA extends FenixDispatchAction {

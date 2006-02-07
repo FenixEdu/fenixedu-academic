@@ -24,7 +24,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author João Mota
  * 
- * 23/Jul/2003 fenix-head ServidorApresentacao.Action.scientificCouncil
+ * 23/Jul/2003 fenix-head presentationTier.Action.scientificCouncil
  * 
  */
 public class FileRetrievingAction extends FenixAction {

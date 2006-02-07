@@ -27,7 +27,7 @@ public class OutOfCurricularEnrolmentPeriodActionException extends OutOfPeriodAc
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.exceptions.OutOfPeriodActionException#getDefaultMessageKey()
+     * @see presentationTier.Action.exceptions.OutOfPeriodActionException#getDefaultMessageKey()
      */
     protected String getDefaultMessageKey() {
         return this.DEFAULT_MESSAGE_KEY;

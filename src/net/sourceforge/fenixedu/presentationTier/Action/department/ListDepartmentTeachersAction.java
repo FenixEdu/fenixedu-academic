@@ -23,7 +23,7 @@ public class ListDepartmentTeachersAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
+     * @see presentationTier.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
      *      javax.servlet.http.HttpServletRequest,
      *      org.apache.struts.action.ActionForm)
      */

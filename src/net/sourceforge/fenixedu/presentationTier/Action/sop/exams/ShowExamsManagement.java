@@ -1,7 +1,7 @@
 /**
  * Project sop 
  * 
- * Package ServidorApresentacao.Action.sop
+ * Package presentationTier.Action.sop
  * 
  * Created on 10/Out/2003
  *

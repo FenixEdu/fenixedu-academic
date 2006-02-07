@@ -33,7 +33,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateFormFromInfoObject(org.apache.struts.action.ActionMapping,
+     * @see presentationTier.Action.framework.CRUDActionByOID#populateFormFromInfoObject(org.apache.struts.action.ActionMapping,
      \*      net.sourceforge.fenixedu.dataTransferObject.InfoObject, org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */
@@ -58,7 +58,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
+     * @see presentationTier.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
      *      ServidorApresentacao.mapping.framework.CRUDMapping)
      */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) {
@@ -95,7 +95,7 @@ public class CRUDServiceExemptionAction extends CRUDActionByOID {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.CRUDActionByOID#prepareFormConstants(org.apache.struts.action.ActionMapping,
+     * @see presentationTier.Action.framework.CRUDActionByOID#prepareFormConstants(org.apache.struts.action.ActionMapping,
      *      org.apache.struts.action.ActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */

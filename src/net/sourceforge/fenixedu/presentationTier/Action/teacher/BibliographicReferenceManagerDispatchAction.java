@@ -241,7 +241,7 @@ public class BibliographicReferenceManagerDispatchAction extends FenixDispatchAc
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.FenixLookupDispatchAction#getKeyMethodMap()
+     * @see presentationTier.Action.FenixLookupDispatchAction#getKeyMethodMap()
      */
     /*
      * protected Map getKeyMethodMap() { Map map = new HashMap();

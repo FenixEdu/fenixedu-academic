@@ -30,7 +30,7 @@ public abstract class OutOfPeriodActionException extends FenixActionException {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.exceptions.FenixActionException#getError()
+     * @see presentationTier.Action.exceptions.FenixActionException#getError()
      */
     public ActionError getError() {
         ActionError actionError = null;

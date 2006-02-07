@@ -48,7 +48,7 @@ public class SearchCoursesInformationAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.SearchAction#doAfterSearch(ServidorApresentacao.mapping.framework.SearchActionMapping,
+     * @see presentationTier.Action.framework.SearchAction#doAfterSearch(ServidorApresentacao.mapping.framework.SearchActionMapping,
      *      javax.servlet.http.HttpServletRequest, java.util.Collection)
      */
     protected void doAfterSearch(SearchActionMapping mapping, HttpServletRequest request,
@@ -533,7 +533,7 @@ public class SearchCoursesInformationAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
+     * @see presentationTier.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
      *      javax.servlet.http.HttpServletRequest,
      *      org.apache.struts.action.ActionForm)
      */
@@ -560,7 +560,7 @@ public class SearchCoursesInformationAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.SearchAction#getSearchServiceArgs(javax.servlet.http.HttpServletRequest,
+     * @see presentationTier.Action.framework.SearchAction#getSearchServiceArgs(javax.servlet.http.HttpServletRequest,
      *      org.apache.struts.action.ActionForm)
      */
     protected Object[] getSearchServiceArgs(HttpServletRequest request, ActionForm form)
@@ -587,7 +587,7 @@ public class SearchCoursesInformationAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
+     * @see presentationTier.Action.framework.SearchAction#prepareFormConstants(org.apache.struts.action.ActionMapping,
      *      javax.servlet.http.HttpServletRequest,
      *      org.apache.struts.action.ActionForm)
      */

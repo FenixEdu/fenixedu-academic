@@ -23,7 +23,7 @@ public class ReadTeacherProfessorshipsByExecutionPeriodAction extends AbstractRe
     /*
      * (non-Javadoc)
      * 
-     * @see ServidorApresentacao.Action.department.AbstractReadProfessorshipsAction#getDetailedProfessorships(ServidorAplicacao.IUserView,
+     * @see presentationTier.Action.department.AbstractReadProfessorshipsAction#getDetailedProfessorships(ServidorAplicacao.IUserView,
      *      java.lang.Integer, org.apache.struts.action.DynaActionForm,
      *      javax.servlet.http.HttpServletRequest)
      */

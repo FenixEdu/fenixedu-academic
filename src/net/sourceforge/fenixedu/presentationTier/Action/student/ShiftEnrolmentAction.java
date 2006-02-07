@@ -1,7 +1,7 @@
 /**
  * Project Sop 
  * 
- * Package ServidorApresentacao.Action.student
+ * Package presentationTier.Action.student
  * 
  * Created on 20/Dez/2003
  *

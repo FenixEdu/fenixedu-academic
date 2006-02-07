@@ -1,6 +1,6 @@
 /**
  * 
- * Package ServidorApresentacao.Action.teacher
+ * Package presentationTier.Action.teacher
  * 
  * Created on 17/set/2004
  *

@@ -179,7 +179,7 @@
 			type="net.sourceforge.fenixedu.presentationTier.Action.manager.InsertProfessorShipByNumberDA"
 	        validate="true">
 	        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-	         	       key="ServidorApresentacao.Action.exceptions.NonExistingActionException"
+	         	       key="presentationTier.Action.exceptions.NonExistingActionException"
 	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>   
 	       <forward name="insertProfessorShip" path="df.page.insert-professorShip-by-number"/>
 	       <forward name="readTeacherInCharge" path="/readTeacherInCharge.do"/>      	      
@@ -193,7 +193,7 @@
 	      	scope="request"
 	      	type="net.sourceforge.fenixedu.presentationTier.Action.manager.SaveTeachersBodyAction">
 	      	<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidArgumentsActionException"
-	         	       key="ServidorApresentacao.Action.exceptions.InvalidArgumentsActionException"
+	         	       key="presentationTier.Action.exceptions.InvalidArgumentsActionException"
 	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
 	       <forward name="readCurricularCourse" path="/masterDegreeCreditsManagement.do?method=prepareEdit"/>      	      
 	    </action>
