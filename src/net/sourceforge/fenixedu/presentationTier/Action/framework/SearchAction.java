@@ -45,7 +45,7 @@ import org.apache.struts.util.LabelValueBean;
  * 
  *  
  *   
- *    	  &lt;action path=&quot;....&quot;  type=&quot;....&quot;  name=&quot;...&quot; input=&quot;...&quot; scope=&quot;request&quot; className=&quot;ServidorApresentacao.mapping.framework.SearchActionMapping&quot;&gt; 
+ *    	  &lt;action path=&quot;....&quot;  type=&quot;....&quot;  name=&quot;...&quot; input=&quot;...&quot; scope=&quot;request&quot; className=&quot;presentationTier.mapping.framework.SearchActionMapping&quot;&gt; 
  *    								&lt;set-property property=&quot;serviceName&quot; value=&quot;...&quot;/&gt;
  *    								&lt;set-property property=&quot;objectAttribute&quot; value=&quot;...&quot;/&gt;
  *    								&lt;set-property property=&quot;listAttribute&quot; value=&quot;...&quot;/&gt;

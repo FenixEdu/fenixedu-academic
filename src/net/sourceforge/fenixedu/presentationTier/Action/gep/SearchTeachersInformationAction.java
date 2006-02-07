@@ -35,7 +35,7 @@ public class SearchTeachersInformationAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see presentationTier.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
+     * @see presentationTier.Action.framework.SearchAction#materializeSearchCriteria(presentationTier.mapping.framework.SearchActionMapping,
      *      javax.servlet.http.HttpServletRequest,
      *      org.apache.struts.action.ActionForm)
      */

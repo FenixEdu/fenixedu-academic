@@ -58,7 +58,7 @@ public class CRUDManagementPositionAction extends CRUDActionByOID {
      * (non-Javadoc)
      * 
      * @see presentationTier.Action.framework.CRUDActionByOID#populateInfoObjectFromForm(org.apache.struts.action.ActionForm,
-     *      ServidorApresentacao.mapping.framework.CRUDMapping)
+     *      presentationTier.mapping.framework.CRUDMapping)
      */
     protected InfoObject populateInfoObjectFromForm(ActionForm form, CRUDMapping mapping) {
         DynaActionForm managementPositionForm = (DynaActionForm) form;

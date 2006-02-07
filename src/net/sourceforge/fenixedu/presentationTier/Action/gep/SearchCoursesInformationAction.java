@@ -48,7 +48,7 @@ public class SearchCoursesInformationAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see presentationTier.Action.framework.SearchAction#doAfterSearch(ServidorApresentacao.mapping.framework.SearchActionMapping,
+     * @see presentationTier.Action.framework.SearchAction#doAfterSearch(presentationTier.mapping.framework.SearchActionMapping,
      *      javax.servlet.http.HttpServletRequest, java.util.Collection)
      */
     protected void doAfterSearch(SearchActionMapping mapping, HttpServletRequest request,
@@ -533,7 +533,7 @@ public class SearchCoursesInformationAction extends SearchAction {
     /*
      * (non-Javadoc)
      * 
-     * @see presentationTier.Action.framework.SearchAction#materializeSearchCriteria(ServidorApresentacao.mapping.framework.SearchActionMapping,
+     * @see presentationTier.Action.framework.SearchAction#materializeSearchCriteria(presentationTier.mapping.framework.SearchActionMapping,
      *      javax.servlet.http.HttpServletRequest,
      *      org.apache.struts.action.ActionForm)
      */
