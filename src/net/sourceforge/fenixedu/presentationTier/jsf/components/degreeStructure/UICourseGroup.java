@@ -92,8 +92,8 @@ public class UICourseGroup extends UIDegreeModule {
         writer.writeAttribute("style", "padding-left: 0pt;", null);
         writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
 
-        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString(), RegimeType.SEMESTRIAL.toString() + ".ACRONYM", null);
-        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString(), RegimeType.ANUAL.toString() + ".ACRONYM", null);
+        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
+        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
         writer.startElement("br", this);
         writer.endElement("br");

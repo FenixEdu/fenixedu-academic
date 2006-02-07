@@ -124,8 +124,8 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("style", "padding-left: 0pt;", null);
         writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
 
-        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString(), RegimeType.SEMESTRIAL.toString() + ".ACRONYM", null);
-        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString(), RegimeType.ANUAL.toString() + ".ACRONYM", null);
+        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
+        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
         writer.startElement("br", this);
         writer.endElement("br");
@@ -184,13 +184,13 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "bgcolor2", null);
         
         writer.startElement("th", this);
-        writer.writeAttribute("colspan", (this.toEdit && !this.showRules) ? 3 : 5, null);
+        writer.writeAttribute("colspan", (this.toEdit) ? 3 : 5, null);
         writer.startElement("strong", this);
         writer.append(curricularPeriod.getFullLabel());
         writer.endElement("strong");
         writer.endElement("th");
 
-        if (this.toEdit && !this.showRules) {
+        if (this.toEdit) {
             encodeCourseGroupOptions(curricularPeriod);    
         }
 
@@ -201,15 +201,17 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
-        encodeLink("createCurricularCourse.faces?degreeCurricularPlanID="
-                + this.facesContext.getExternalContext().getRequestParameterMap().get(
-                        "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
-                + "&curricularSemesterID=" + curricularPeriod.getOrder(), "create.curricular.course");
-        writer.append(" , ");
-        encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" 
-                + this.facesContext.getExternalContext().getRequestParameterMap().get(
-                        "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
-                + "&curricularSemesterID=" + curricularPeriod.getOrder(), "associate.curricular.course");
+        if (!this.showRules) {
+            encodeLink("createCurricularCourse.faces?degreeCurricularPlanID="
+                    + this.facesContext.getExternalContext().getRequestParameterMap().get(
+                            "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
+                    + "&curricularSemesterID=" + curricularPeriod.getOrder(), "create.curricular.course");
+            writer.append(" , ");
+            encodeLink("associateCurricularCourse.faces?degreeCurricularPlanID=" 
+                    + this.facesContext.getExternalContext().getRequestParameterMap().get(
+                            "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
+                    + "&curricularSemesterID=" + curricularPeriod.getOrder(), "associate.curricular.course");
+        }
         writer.endElement("td");
     }
     
