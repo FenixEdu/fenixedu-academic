@@ -42,7 +42,7 @@ import org.apache.struts.util.MessageResources;
 
 public class CoordinatorEvaluationsBackingBean extends FenixBackingBean {
 
-	private static final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/PublicDegreeInformation");
+	private static final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
 	private static final Locale locale = new Locale("pt", "PT");
 
 	// These are context variables

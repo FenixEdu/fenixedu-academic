@@ -79,9 +79,6 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
 	public StringBuilder render(Locale locale, PageContext pageContext) {
 		StringBuilder strBuffer = new StringBuilder("");
 		
-		// Generate maps for the specified years.
-//        ResourceBundle bundle = ResourceBundle
-//            .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
 		int numberOfCurricularYearsToDisplay = this.examsMap.getCurricularYears().size();
 		for (int i = 0; i < numberOfCurricularYearsToDisplay; i++) {
 			Integer year1 = (Integer) this.examsMap.getCurricularYears().get(i);

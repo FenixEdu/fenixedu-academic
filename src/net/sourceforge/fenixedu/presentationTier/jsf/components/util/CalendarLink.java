@@ -86,7 +86,7 @@ public class CalendarLink {
     	linkParameters.put(key, value);
     }
 
-	private static final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/PublicDegreeInformation");
+	private static final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
 
     private String constructCalendarPresentation(final ExecutionCourse executionCourse, final WrittenEvaluation writtenEvaluation, final Locale locale) {
         final StringBuilder stringBuilder = new StringBuilder();

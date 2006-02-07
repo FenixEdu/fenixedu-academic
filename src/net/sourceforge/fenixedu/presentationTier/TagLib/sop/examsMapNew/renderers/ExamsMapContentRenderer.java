@@ -242,12 +242,6 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.TagLib.sop.examsMap.renderers.ExamsMapSlotContentRenderer#renderDayContents(ServidorApresentacao.TagLib.sop.examsMap.ExamsMapSlot,
-     *      java.lang.String)
-     */
     public StringBuilder renderDayContents(ExamsMapSlot examsMapSlot, ExamsMap examsMap, String typeUser,PageContext pageContext) {
         StringBuilder strBuffer = new StringBuilder();
 

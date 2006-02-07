@@ -52,7 +52,7 @@ public class ExamsMapRenderer implements IExamsMapRenderer {
     public StringBuilder render(Locale locale) {
         StringBuilder strBuffer = new StringBuilder("");
         ResourceBundle bundle = ResourceBundle
-                .getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+                .getBundle("resources.PublicDegreeInformation",locale);
         // Generate maps for the specified years.
         int numberOfCurricularYearsToDisplay = this.examsMap.getCurricularYears().size();
         for (int i = 0; i < numberOfCurricularYearsToDisplay; i++) {

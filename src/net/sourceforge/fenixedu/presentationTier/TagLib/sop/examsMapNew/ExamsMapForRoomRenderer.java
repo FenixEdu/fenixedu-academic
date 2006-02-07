@@ -43,7 +43,7 @@ public class ExamsMapForRoomRenderer implements IExamsMapRenderer {
 
     public StringBuilder render(Locale locale, PageContext pageContext) {
         StringBuilder strBuffer = new StringBuilder("");
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.PublicDegreeInformation",locale);
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.PublicDegreeInformation",locale);
         strBuffer.append("<table class='examMapContainer' cellspacing='0' cellpadding='3' width='95%'>");
         strBuffer.append("<tr>");
         strBuffer.append("<td>");

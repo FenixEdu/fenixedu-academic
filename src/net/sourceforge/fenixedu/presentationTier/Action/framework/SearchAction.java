@@ -98,8 +98,6 @@ import org.apache.struts.util.LabelValueBean;
  * </li>
  * </pre>
  * 
- * @see ServidorApresentacao.framework.actions.mappings.SearchActionMapping
- * @author jpvl
  */
 public class SearchAction extends DispatchAction {
 
@@ -130,7 +128,6 @@ public class SearchAction extends DispatchAction {
      * 
      * @param mapping
      *            should be an instance of
-     * @see ServidorApresentacao.framework.actions.mappings.SearchActionMapping
      * @param form
      * @param request
      * @param response

@@ -1,24 +1,11 @@
-/*
- * Created on 27/Fev/2003
- *
- * 
- */
 package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.colorPickers;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.ColorPicker;
 
-/**
- * @author jpvl
- */
 public class ClassTimeTableColorPicker extends ColorPicker {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.TagLib.sop.v3.ColorPicker#getColorKeyFromInfoLesson(net.sourceforge.fenixedu.dataTransferObject.InfoLesson)
-     */
     protected String getColorKeyFromInfoLesson(InfoShowOccupation infoShowOccupation) {
         StringBuilder strBuffer = new StringBuilder();
 
@@ -33,10 +20,4 @@ public class ClassTimeTableColorPicker extends ColorPicker {
         return strBuffer.toString();
     }
 
-    /*
-     * protected String getColorKeyFromInfoLesson(InfoLesson infoLesson) {
-     * StringBuilder strBuffer = new StringBuilder(); strBuffer.append(
-     * infoLesson.getInfoShift().getInfoDisciplinaExecucao().getSigla()); return
-     * strBuffer.toString(); }
-     */
 }

@@ -15,9 +15,6 @@ import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContent
  */
 public class SopRoomTimeTableLessonContentRenderer implements LessonSlotContentRenderer {
 
-    /**
-     * @see ServidorApresentacao.TagLib.sop.v3.LessonSlotContentRenderer#render(ServidorApresentacao.TagLib.sop.v3.LessonSlot)
-     */
     public StringBuilder render(LessonSlot lessonSlot) {
         StringBuilder strBuffer = new StringBuilder();
         //InfoLesson lesson =

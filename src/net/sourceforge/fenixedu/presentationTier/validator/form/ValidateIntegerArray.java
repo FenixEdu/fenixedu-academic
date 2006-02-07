@@ -10,12 +10,6 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.validator.Resources;
 
-/**
- * @author João Mota
- * 
- * 30/Jun/2003 fenix-branch ServidorApresentacao.validator.form
- *  
- */
 public class ValidateIntegerArray {
 
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionMessages errors,

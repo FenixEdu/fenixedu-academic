@@ -41,7 +41,7 @@ import org.apache.struts.util.MessageResources;
 
 public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
-    private static final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/PublicDegreeInformation");
+    private static final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
 
     private static final DateFormat yearFormat = new SimpleDateFormat("yyyy");
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");

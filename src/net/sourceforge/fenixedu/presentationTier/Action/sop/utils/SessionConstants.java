@@ -1,18 +1,5 @@
-/**
- * Project Sop 
- * 
- * Package ServidorApresentacao.Constants
- * 
- * Created on 3/Dez/2002
- *
- */
 package net.sourceforge.fenixedu.presentationTier.Action.sop.utils;
 
-/**
- * @author jpvl
- * 
- *  
- */
 public abstract class SessionConstants {
 
     // Constants for Student Shift Enrolment

@@ -9,12 +9,6 @@ import org.apache.struts.action.ActionError;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.DynaActionForm;
 
-/**
- * @author João Mota
- * 
- * 30/Jun/2003 fenix-branch ServidorApresentacao.validator.form
- *  
- */
 public class ValidateMultiBox {
 
     public static boolean validate(Object bean, ValidatorAction va, Field field, ActionErrors errors,

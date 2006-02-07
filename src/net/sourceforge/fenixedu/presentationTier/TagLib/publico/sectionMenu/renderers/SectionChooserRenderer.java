@@ -22,10 +22,6 @@ public class SectionChooserRenderer implements ISectionMenuSlotContentRenderer {
     public SectionChooserRenderer() {
     }
 
-    /**
-     * @see ServidorApresentacao.TagLib.publico.sectionMenu.renderers.ISectionMenuSlotContentRenderer#renderSectionLabel(int,
-     *      java.lang.String)
-     */
     public StringBuilder renderSectionLabel(int i, String path, boolean hasChilds) {
         StringBuilder strBuffer = new StringBuilder();
         strBuffer.append(renderDepthContent(getInfoSection(), i, path, hasChilds));

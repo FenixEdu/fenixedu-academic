@@ -296,7 +296,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
 
     protected String getBundleValue(String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao/" + bundleName, facesContext.getViewRoot().getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/" + bundleName, facesContext.getViewRoot().getLocale());
         return bundle.getString(bundleKey);
     }
 

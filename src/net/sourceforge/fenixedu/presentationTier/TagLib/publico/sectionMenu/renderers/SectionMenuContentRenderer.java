@@ -25,11 +25,6 @@ public class SectionMenuContentRenderer extends TagSupport implements ISectionMe
         setInfoSection(infoSection);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see ServidorApresentacao.TagLib.publico.sectionMenu.renderers.SectionMenuSlotContentRenderer#renderSectionLabel(ServidorApresentacao.TagLib.publico.sectionMenu.SectionMenuSlot)
-     */
     public StringBuilder renderSectionLabel(int i, String path, boolean hasChilds) {
         StringBuilder strBuffer = new StringBuilder();
         strBuffer.append(renderDepthContent(getInfoSection(), i, path, hasChilds));
