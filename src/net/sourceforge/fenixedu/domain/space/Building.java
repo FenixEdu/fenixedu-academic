@@ -23,4 +23,8 @@ public class Building extends Building_Base {
         return (BuildingInformation) super.getSpaceInformation(when);
     }
 
+    public void edit(final String name) {
+    	new BuildingInformation(this, name);
+    }
+
 }

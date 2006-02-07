@@ -17,6 +17,7 @@
 		<form-bean name="editSpaceForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
 				dynamic="true">
+			<form-property name="asNewVersion" type="java.lang.Boolean"/>
 			<form-property name="spaceID" type="java.lang.String"/>
 			<form-property name="spaceName" type="java.lang.String"/>
 		</form-bean>

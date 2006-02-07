@@ -53,9 +53,23 @@
 			</td>
 		</tr>
 	</table>
+	<br/>
+	<br/>
+
+	<table>
+		<tr>
+			<logic:iterate id="spaceInformation" name="selectedSpace" property="orderedSpaceInformations">
+				<td>
+					[<bean:write name="spaceInformation" property="validFrom"/>, <bean:write name="spaceInformation" property="validUntil"/>[
+				</td>
+			</logic:iterate>
+		</tr>
+	</table>
+
 </logic:present>
 <br/>
 <br/>
+
 
 <html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceID" paramName="selectedSpace" paramProperty="idInternal">
 	<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>

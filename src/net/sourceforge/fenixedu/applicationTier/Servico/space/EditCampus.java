@@ -6,9 +6,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCampus extends Service {
 
-    public void run(final Integer campusID, final String name) throws ExcepcaoPersistencia {
+    public void run(final Integer campusID, final Boolean asNewVersion, final String name) throws ExcepcaoPersistencia {
         final Campus campus = (Campus) persistentObject.readByOID(Campus.class, campusID);
-        campus.getSpaceInformation().setName(name);
+        System.out.println("asNewVersion: " + asNewVersion);
+        if (asNewVersion.booleanValue()) {
+        	campus.edit(name);
+        } else {
+        	campus.getSpaceInformation().edit(name);
+        }
     }
 
 }

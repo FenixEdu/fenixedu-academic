@@ -32,4 +32,8 @@ public class CampusInformation extends CampusInformation_Base {
         super.setSpace(campus);
     }
 
+    public void edit(final String name) {
+    	setName(name);
+    }
+
 }

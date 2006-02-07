@@ -12,6 +12,7 @@
 	<html:hidden property="page" value="1"/>
 	<bean:define id="spaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
 	<html:hidden property="spaceID" value="<%= spaceID.toString() %>"/>
+	<html:hidden property="asNewVersion"/>
 
 	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 		<html:hidden property="method" value="editCampus"/>
@@ -33,7 +34,11 @@
 	</logic:equal>
 	<br/>
 
-	<html:submit styleClass="inputbutton">
+	<html:submit onclick="this.form.asNewVersion.value='false';this.form.submit();">
 		<bean:message bundle="SPACE_RESOURCES" key="label.button.submit.changes"/>
+	</html:submit>
+
+	<html:submit onclick="this.form.asNewVersion.value='true';this.form.submit();">
+		<bean:message bundle="SPACE_RESOURCES" key="label.button.submit.changes.new.version"/>
 	</html:submit>
 </html:form>

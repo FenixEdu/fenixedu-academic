@@ -23,4 +23,8 @@ public class Campus extends Campus_Base {
         return (CampusInformation) super.getSpaceInformation(when);
     }
 
+    public void edit(final String name) {
+    	new CampusInformation(this, name);
+    }
+
 }

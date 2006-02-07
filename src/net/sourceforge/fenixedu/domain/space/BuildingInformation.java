@@ -32,4 +32,8 @@ public class BuildingInformation extends BuildingInformation_Base {
         super.setSpace(building);
     }
 
+    public void edit(final String name) {
+    	setName(name);
+    }
+
 }

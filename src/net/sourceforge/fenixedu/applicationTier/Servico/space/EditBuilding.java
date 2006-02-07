@@ -6,9 +6,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditBuilding extends Service {
 
-    public void run(final Integer buildingID, final String name) throws ExcepcaoPersistencia {
+    public void run(final Integer buildingID, final Boolean asNewVersion, final String name) throws ExcepcaoPersistencia {
         final Building building = (Building) persistentObject.readByOID(Building.class, buildingID);
-        building.getSpaceInformation().setName(name);
+        System.out.println("asNewVersion: " + asNewVersion);
+        if (asNewVersion.booleanValue()) {
+        	building.edit(name);
+        } else {
+        	building.getSpaceInformation().edit(name);
+        }
     }
 
 }

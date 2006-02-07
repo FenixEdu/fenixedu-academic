@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.space;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.joda.time.YearMonthDay;
 
@@ -43,6 +45,16 @@ public abstract class Space extends Space_Base {
         }
 
         return selectedSpaceInformation;
+    }
+
+    public Set<SpaceInformation> getOrderedSpaceInformations() {
+    	final TreeSet<SpaceInformation> spaceInformations = new TreeSet<SpaceInformation>(getSpaceInformations());
+    	YearMonthDay previousValidUntil = null;
+    	for (final SpaceInformation spaceInformation : spaceInformations) {
+    		spaceInformation.setValidFrom(previousValidUntil);
+    		previousValidUntil = spaceInformation.getValidUntil();
+    	}
+    	return spaceInformations;
     }
 
     public void delete() {

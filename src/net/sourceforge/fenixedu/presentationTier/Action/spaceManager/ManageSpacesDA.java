@@ -116,11 +116,12 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String spaceIDString = (String) dynaActionForm.get("spaceID");
+        final Boolean asNewVersion = (Boolean) dynaActionForm.get("asNewVersion");
         final Integer spaceID = spaceIDString != null && spaceIDString.length() > 0 ?
                 Integer.valueOf(spaceIDString) : null;
         final String spaceName = (String) dynaActionForm.get("spaceName");
 
-        final Object[] args = { spaceID, spaceName };
+        final Object[] args = { spaceID, asNewVersion, spaceName };
         ServiceUtils.executeService(userView, "EditCampus", args);
 
         return manageSpace(mapping, form, request, response);
@@ -132,11 +133,12 @@ public class ManageSpacesDA extends FenixDispatchAction {
 
         final DynaActionForm dynaActionForm = (DynaActionForm) form;
         final String spaceIDString = (String) dynaActionForm.get("spaceID");
+        final Boolean asNewVersion = (Boolean) dynaActionForm.get("asNewVersion");
         final Integer spaceID = spaceIDString != null && spaceIDString.length() > 0 ?
                 Integer.valueOf(spaceIDString) : null;
         final String spaceName = (String) dynaActionForm.get("spaceName");
 
-        final Object[] args = { spaceID, spaceName };
+        final Object[] args = { spaceID, asNewVersion, spaceName };
         ServiceUtils.executeService(userView, "EditBuilding", args);
 
         return manageSpace(mapping, form, request, response);
