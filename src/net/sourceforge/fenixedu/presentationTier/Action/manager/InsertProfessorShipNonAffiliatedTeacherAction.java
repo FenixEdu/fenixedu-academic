@@ -141,8 +141,7 @@ public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatch
 
         IUserView userView = SessionUtils.getUserView(request);
         Integer executionCourseID = new Integer(request.getParameter("executionCourseId"));
-        Integer nonAffiliatedTeacherID = new Integer(request.getParameter("nonAffiliatedTeacherID"));
-        System.out.println("vamos la verrrrrrr: " + nonAffiliatedTeacherID);        
+        Integer nonAffiliatedTeacherID = new Integer(request.getParameter("nonAffiliatedTeacherID"));               
 
         Object args[] = { nonAffiliatedTeacherID, executionCourseID };
 
