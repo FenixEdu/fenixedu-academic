@@ -102,27 +102,31 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         DynaActionForm dynaForm = (DynaActionForm) form;
         Integer executionDegreeID = (Integer) dynaForm.get("executionDegreeID");
 
-        Object[] args = { ExecutionDegree.class, executionDegreeID };
-        ExecutionDegree executionDegree = (ExecutionDegree) ServiceUtils.executeService(userView,
-                "ReadDomainObject", args);
-        request.setAttribute("executionDegree", executionDegree);
+        if (executionDegreeID != null) {
+            Object[] args = { ExecutionDegree.class, executionDegreeID };
+            ExecutionDegree executionDegree = (ExecutionDegree) ServiceUtils.executeService(userView,
+                    "ReadDomainObject", args);
+            request.setAttribute("executionDegree", executionDegree);
 
-        List<CurricularCourse> curricularCourses = executionDegree.getDegreeCurricularPlan()
-                .getCurricularCoursesWithExecutionIn(executionDegree.getExecutionYear());
+            List<CurricularCourse> curricularCourses = executionDegree.getDegreeCurricularPlan()
+                    .getCurricularCoursesWithExecutionIn(executionDegree.getExecutionYear());
 
-        List<MasterDegreeCreditsDTO> masterDegreeCoursesDTOs = new ArrayList<MasterDegreeCreditsDTO>();
-        for (CurricularCourse curricularCourse : curricularCourses) {
-            MasterDegreeCreditsDTO masterDegreeCreditsDTO = new MasterDegreeCreditsDTO(curricularCourse,
-                    executionDegree.getExecutionYear());
-            masterDegreeCoursesDTOs.add(masterDegreeCreditsDTO);
+            List<MasterDegreeCreditsDTO> masterDegreeCoursesDTOs = new ArrayList<MasterDegreeCreditsDTO>();
+            for (CurricularCourse curricularCourse : curricularCourses) {
+                MasterDegreeCreditsDTO masterDegreeCreditsDTO = new MasterDegreeCreditsDTO(
+                        curricularCourse, executionDegree.getExecutionYear());
+                masterDegreeCoursesDTOs.add(masterDegreeCreditsDTO);
+            }
+            if (!masterDegreeCoursesDTOs.isEmpty()) {
+                Iterator orderedCoursesIter = new OrderedIterator(masterDegreeCoursesDTOs.iterator(),
+                        new BeanComparator("curricularCourse.name"));
+                request.setAttribute("masterDegreeCoursesDTOs", orderedCoursesIter);
+            }
+
+            return mapping.findForward("showCreditsReport");
+        } else {
+            return prepare(mapping,form,request,response);
         }
-        if (!masterDegreeCoursesDTOs.isEmpty()) {
-            Iterator orderedCoursesIter = new OrderedIterator(masterDegreeCoursesDTOs.iterator(),
-                    new BeanComparator("curricularCourse.name"));
-            request.setAttribute("masterDegreeCoursesDTOs", orderedCoursesIter);
-        }
-
-        return mapping.findForward("showCreditsReport");
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -189,11 +193,11 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         StringBuilder semesters = new StringBuilder();
 
         Set<String> dcpNames = new HashSet<String>();
-        
+
         int totalRowSpan = 0;
 
         int numberEnrolments = 0;
-        
+
         boolean allowToChange = true;
 
         Map<String, Integer> professorshipsRowSpanMap = new HashMap<String, Integer>();
@@ -202,7 +206,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
 
         public MasterDegreeCreditsDTO(CurricularCourse curricularCourse, ExecutionYear executionYear) {
             setCurricularCourse(curricularCourse);
-            if(curricularCourse.getType().equals(CurricularCourseType.ML_TYPE_COURSE)){
+            if (curricularCourse.getType().equals(CurricularCourseType.ML_TYPE_COURSE)) {
                 setAllowToChange(false);
             }
             List<CurricularCourseScope> ccsList = curricularCourse.getScopes();
@@ -235,11 +239,12 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
                         .getExecutionCoursesByExecutionPeriod(executionPeriod);
                 if (!executionCourses.isEmpty()) {
                     ExecutionCourse executionCourse = executionCourses.iterator().next();
-                    if(!executionCourse.isMasterDegreeOnly()){
+                    if (!executionCourse.isMasterDegreeOnly()) {
                         setAllowToChange(false);
                     }
-                    if(!isAllowToChange()){
-                        for (CurricularCourse tempCurricularCourse : executionCourse.getAssociatedCurricularCourses()) {
+                    if (!isAllowToChange()) {
+                        for (CurricularCourse tempCurricularCourse : executionCourse
+                                .getAssociatedCurricularCourses()) {
                             dcpNames.add(tempCurricularCourse.getDegreeCurricularPlan().getName());
                         }
                     }
@@ -257,11 +262,11 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
             }
         }
 
-        public String getDegreeNames(){
-            
+        public String getDegreeNames() {
+
             return null;
         }
-        
+
         public CurricularCourse getCurricularCourse() {
             return curricularCourse;
         }
@@ -307,7 +312,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
         }
 
         public List<String> getDcpNames() {
-            List<String> orderedDCPNames = new ArrayList(dcpNames); 
+            List<String> orderedDCPNames = new ArrayList(dcpNames);
             Collections.sort(orderedDCPNames);
             return orderedDCPNames;
         }
