@@ -47,8 +47,18 @@ public class UnitUtils {
         
         return externalUnit;
     }
+        
+    public static Unit readUnitWithoutParentstByName(String name) throws ExcepcaoPersistencia{        
+        List<Unit> allUnitsWithoutParent = readAllUnitsWithoutParents();
+        for (Unit unit : allUnitsWithoutParent) {
+            if(unit.getName().equals(name)){
+                return unit;
+            }
+        }
+        return null;
+    }           
     
-    public static List<Unit> readAllUnitsWithoutParent() throws ExcepcaoPersistencia {
+    public static List<Unit> readAllUnitsWithoutParents() throws ExcepcaoPersistencia {
         List<Unit> allUnits = readAllUnits();        
         List<Unit> allUnitsWithoutParent = new ArrayList<Unit>();
         
