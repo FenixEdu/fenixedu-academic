@@ -46,18 +46,18 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['objectives']}: </label>" escape="false"/>
 		<h:panelGrid columns="2">
 			<h:inputTextarea id="objectives" value="#{CompetenceCourseManagement.objectives}" cols="60" rows="10">
-				<f:validateLength maximum="600" />
+				<f:validateLength maximum="900" />
 			</h:inputTextarea>
-			<h:outputText value="(#{bolonhaBundle['max']} 600 #{bolonhaBundle['characters']})" />
+			<h:outputText value="(#{bolonhaBundle['max']} 900 #{bolonhaBundle['characters']})" />
 			<h:message for="objectives" styleClass="error0"/>
 		</h:panelGrid>
 		<h:outputText value="</p>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['program']}: </label>" escape="false"/>
 		<h:panelGrid columns="2">
 			<h:inputTextarea id="program" value="#{CompetenceCourseManagement.program}" cols="60" rows="10">
-				<f:validateLength maximum="1200" />
+				<f:validateLength maximum="1800" />
 			</h:inputTextarea>
-			<h:outputText value="(#{bolonhaBundle['max']} 1200 #{bolonhaBundle['characters']})" />
+			<h:outputText value="(#{bolonhaBundle['max']} 1800 #{bolonhaBundle['characters']})" />
 			<h:message for="program" styleClass="error0"/>
 		</h:panelGrid>
 		<h:outputText value="</p>" escape="false"/>
