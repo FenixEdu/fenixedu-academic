@@ -65,13 +65,12 @@
 		</fc:selectOneMenu>
 		<h:outputText value="<br/>" escape="false"/>
 
-<%-- 
 		<h:outputText value="#{bolonhaBundle['minimum']}:" escape="false"/>
-		<h:inputText id="minimum" size="4" maxlength="4" value="#{CurricularRulesManagement.minimumValue}"/>
+		<h:inputText id="minimum" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumValue}"/>
 
 		<h:outputText value="#{bolonhaBundle['maximum']}:" escape="false"/>
-		<h:inputText id="maximum" size="4" maxlength="4" value="#{CurricularRulesManagement.maximumValue}"/>
---%>
+		<h:inputText id="maximum" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumValue}"/>
+
 		<h:outputText value="<br/>" escape="false"/>
 		<h:commandButton value="#{bolonhaBundle['submit']}" styleClass="inputbutton" action="#{CurricularRulesManagement.createCurricularRule}"/>
 		<h:commandButton immediate="true" value="#{bolonhaBundle['back']}" styleClass="inputbutton" action="setCurricularRules"/>
