@@ -11,8 +11,8 @@ vertical-align: top;
 }
 </style>
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnum"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 
 	<h:outputFormat value="<h2>#{bundle['list.students']}</h2/><hr>" escape="false"/>
 

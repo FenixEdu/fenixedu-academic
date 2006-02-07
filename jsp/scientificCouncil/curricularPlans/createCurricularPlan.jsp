@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
+	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	
 	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
 	<h:outputFormat value="<h2>#{scouncilBundle['create.param']}</h2>" escape="false">

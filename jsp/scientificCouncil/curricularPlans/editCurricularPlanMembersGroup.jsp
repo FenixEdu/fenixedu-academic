@@ -5,8 +5,8 @@
 
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumBundle"/>
+	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="enumBundle"/>
 		
 	<h:outputText value="<i>#{CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.name} (#{enumBundle[CurricularPlansMembersManagementBackingBean.degreeCurricularPlan.curricularStage]})</i><br/>" escape="false" />
 	<h:outputText value="<h2>#{scouncilBundle['accessGroupManagement']}</h2><br/>" escape="false" />

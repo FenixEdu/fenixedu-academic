@@ -72,7 +72,7 @@ padding-bottom: 0em;
 margin-bottom: 0.25em;
 }
 </style>
-	<f:loadBundle basename="ServidorApresentacao/StudentResources" var="bundle"/>	
+	<f:loadBundle basename="resources/StudentResources" var="bundle"/>	
 	
 	<h:outputText value="<h2>#{bundle['link.exams.enrolment']}</h2>" escape="false"
 	  rendered="#{manageEvaluationsForStudent.evaluationTypeString == 'net.sourceforge.fenixedu.domain.Exam'}"/>

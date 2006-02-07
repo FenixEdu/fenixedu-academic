@@ -22,8 +22,8 @@ function check(e,v)
 }
 </script>
 
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
-	<f:loadBundle basename="ServidorApresentacao/DegreeAdministrativeOfficeResources" var="bundleDegreeAdministrativeOffice"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundleDegreeAdministrativeOffice"/>
 	<h:form>
 		<h:outputText value="<em>#{bundle['label.orgUnit']}</em>" escape="false"/>	
 		<h:outputText value="<h2>#{organizationalStructure.instituitionName}</h2>" escape="false"/>

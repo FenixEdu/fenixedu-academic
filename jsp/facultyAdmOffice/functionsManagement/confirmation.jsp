@@ -6,7 +6,7 @@
 
 <ft:tilesView definition="facultyAdmOffice.masterPage" attributeName="body-inline">
 
-	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>
 

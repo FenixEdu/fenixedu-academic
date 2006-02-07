@@ -38,7 +38,7 @@
 </style>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResourcesSOP" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundle"/>
 	<h:outputFormat value="<h2>#{bundle['link.writtenEvaluation.by.room']}</h2>" escape="false"/>
 
 	<h:panelGroup rendered="#{writtenEvaluationsByRoom.roomsToDisplayMap == null}">

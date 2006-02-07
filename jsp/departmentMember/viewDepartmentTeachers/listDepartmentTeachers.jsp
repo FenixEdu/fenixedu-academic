@@ -5,9 +5,9 @@
 
 <ft:tilesView definition="departmentMember.masterPage"
 	attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources"
+	<f:loadBundle basename="resources/DepartmentMemberResources"
 		var="bundle" />
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources"
+	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
 		
 	<f:verbatim>

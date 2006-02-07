@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.degreeAdministrativeOffice.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/DegreeAdministrativeOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
 
 	<h:form>
 

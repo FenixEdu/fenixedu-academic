@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
+	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<h:outputText value="<em>#{CurricularCourseManagement.degreeCurricularPlan.name}" escape="false"/>
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>	

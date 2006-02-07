@@ -10,7 +10,7 @@ vertical-align: top;
 }
 </style>
 <ft:tilesView definition="df.coordinator.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	
 		<h:form>
 			<h:inputHidden binding="#{coordinatorProjectsManagementBackingBean.degreeCurricularPlanIdHidden}"/>

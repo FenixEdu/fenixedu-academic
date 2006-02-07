@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResourcesSOP" var="bundleSOP"/>
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputText value="EUREKA" escape="false"/>
 

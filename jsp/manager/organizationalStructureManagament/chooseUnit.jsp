@@ -23,7 +23,7 @@
 	}
 	</script>
 
-	<f:loadBundle basename="ServidorApresentacao/ManagerResources" var="bundle"/>
+	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 	<h:form>	
 
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>

@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
+	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	
 	<h:outputText value="<h2>#{bundle['label.teacherExpectationDefinitionPeriodManagement.title']}</h2>" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	

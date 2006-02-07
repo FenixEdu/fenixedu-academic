@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>	
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
+	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>	
+	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 
 	<h:outputText value="<i>#{ScientificCouncilDegreeManagement.degree.nome}" escape="false"/>
 	<h:outputText value=" (#{ScientificCouncilDegreeManagement.degree.acronym})</i>" escape="false"/>

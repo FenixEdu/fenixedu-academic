@@ -7,7 +7,7 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.manage.publishMarks']}</h2>" escape="false">
 		<f:param value="#{evaluationManagementBackingBean.executionCourse.nome}" />

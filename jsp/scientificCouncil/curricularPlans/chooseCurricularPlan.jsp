@@ -5,7 +5,7 @@
 
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
+	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	
 	<h:form>
 		

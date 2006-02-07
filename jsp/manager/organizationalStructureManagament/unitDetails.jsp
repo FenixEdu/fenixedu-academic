@@ -6,8 +6,8 @@
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
 	
-	<f:loadBundle basename="ServidorApresentacao/ManagerResources" var="bundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnum"/>
+	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 		
 	<h:form>	
 		<h:inputHidden binding="#{organizationalStructureBackingBean.unitIDHidden}"/>

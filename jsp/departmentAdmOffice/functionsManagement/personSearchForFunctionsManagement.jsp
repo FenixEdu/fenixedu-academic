@@ -6,7 +6,7 @@
 
 <ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
 	
-	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 				
 	<h:outputText value="<H2>#{bundle['label.search.person']}</H2><br/>" escape="false" />	
 	<h:form>						

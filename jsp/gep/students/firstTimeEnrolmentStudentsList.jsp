@@ -12,8 +12,8 @@
 
 <ft:tilesView definition="definition.gep.two-column" attributeName="body-inline">
 
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
-	<f:loadBundle basename="ServidorApresentacao/GEPResources" var="bundleGEP"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
+	<f:loadBundle basename="resources/GEPResources" var="bundleGEP"/>
 	
 	<h:form>
 		<h:outputText value="#{bundleGEP['label.gep.chooseExecutionYear']}: " />

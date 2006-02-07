@@ -39,8 +39,8 @@
 </style>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline" >
-	<f:loadBundle basename="ServidorApresentacao/DegreeAdministrativeOfficeResources" var="bundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
+	<f:loadBundle basename="resources/DegreeAdministrativeOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 
 	<h:dataTable value="#{displayCurricularPlan.scopes}" var="degreeCurricularPlans" styleClass="fullWidthClass">
 		<h:column>

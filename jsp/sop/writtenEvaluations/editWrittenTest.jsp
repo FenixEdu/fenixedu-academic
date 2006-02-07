@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResourcesSOP" var="bundleSOP"/>
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundle['title.evaluation.edit.writtenEvaluation']}</h2><br/>" rendered="#{SOPEvaluationManagementBackingBean.evaluationTypeClassname == 'net.sourceforge.fenixedu.domain.WrittenTest'}" escape="false">
 		<f:param value="#{bundle['label.written.test']}" />

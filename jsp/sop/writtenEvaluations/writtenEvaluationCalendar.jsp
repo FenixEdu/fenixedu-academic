@@ -80,8 +80,8 @@ table.executionCoursesWithoutWrittenEvaluations td {
 
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResourcesSOP" var="bundleSOP"/>
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 
 	<h:outputFormat value="<h2>#{bundleSOP['link.writtenEvaluation.map']}</h2>" escape="false"/>
 

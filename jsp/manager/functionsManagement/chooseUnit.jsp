@@ -22,7 +22,7 @@ function check(e,v)
 
 <ft:tilesView definition="df.page.functionsManagement" attributeName="body-inline">
 
-	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>
 	

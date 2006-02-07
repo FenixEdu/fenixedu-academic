@@ -64,7 +64,7 @@ table.executionCoursesWithoutWrittenEvaluations td {
 	text-align: left;
 }
 </style>
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>	
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>	
 	<h:form>
 		<h:inputHidden binding="#{coordinatorProjectsInformationBackingBean.degreeCurricularPlanIdHidden}"/>		
 		<h:outputText value="<h2>#{bundle['label.coordinator.manageProjects']}</h2>" escape="false" />

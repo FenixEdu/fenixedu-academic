@@ -25,8 +25,8 @@
 </style>
 
 <ft:tilesView definition="definition.public.mainPageIST" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/PublicDegreeInformation" var="bundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnum"/>
+	<f:loadBundle basename="resources/PublicDegreeInformation" var="bundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnum"/>
 
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeID' name='degreeID' type='hidden' value='#{publicEvaluations.degreeID}'/>"/>

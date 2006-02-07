@@ -14,8 +14,8 @@
 
 
 <ft:tilesView definition="departmentMember.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources" var="bundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
+	<f:loadBundle basename="resources/DepartmentMemberResources" var="bundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 	
 	<h:outputText value="#{bundle['label.personalExpectationsManagement.title']}" escape="false" style="font: bold 12px Verdana, Arial, Helvetica, sans-serif;" />
 	<h:outputText value="&nbsp;-&nbsp;" escape="false" />

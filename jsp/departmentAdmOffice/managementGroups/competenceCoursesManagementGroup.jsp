@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="departmentAdmOffice.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundleDEP" />
+	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundleDEP" />
 
 	<h:panelGroup rendered="#{empty ManagementGroupsBackingBean.department}">
 		<h:outputText value="<h2>#{bundleDEP['competenceCourseManagementGroups']}</h2>" escape="false" />

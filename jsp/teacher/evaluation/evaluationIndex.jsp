@@ -4,6 +4,6 @@
 
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:outputText value="<h2>#{bundle['link.evaluation']}</h2>" escape="false" />
 </ft:tilesView>

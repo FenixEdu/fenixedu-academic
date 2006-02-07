@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ScientificCouncilResources" var="scouncilBundle"/>
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="enumerationBundle"/>
+	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
+	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
 	<h:outputText value="<i>#{scouncilBundle['scientificCouncil']}</i>" escape="false"/>
 	<h:outputText value="<h2>#{scouncilBundle['curricularPlansManagement']}</h2>" escape="false"/>

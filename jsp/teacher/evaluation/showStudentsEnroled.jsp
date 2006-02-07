@@ -15,7 +15,7 @@
 </style>
 
 <ft:tilesView definition="df.teacher.evaluation-management" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
+	<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
 	<h:form>
 	
 		<h:inputHidden binding="#{evaluationManagementBackingBean.executionCourseIdHidden}" />

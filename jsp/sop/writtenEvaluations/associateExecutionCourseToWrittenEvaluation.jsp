@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.sop.examsPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ApplicationResourcesSOP" var="bundleSOP"/>
+	<f:loadBundle basename="resources/ApplicationResourcesSOP" var="bundleSOP"/>
 
 	<h:outputText value="<h2>#{bundleSOP['property.exam.associate']}</h2><br/>" escape="false" />
 	

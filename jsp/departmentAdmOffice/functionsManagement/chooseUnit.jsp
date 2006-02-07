@@ -22,7 +22,7 @@
 	}
 	</script>
 
-	<f:loadBundle basename="ServidorApresentacao/DepartmentAdmOfficeResources" var="bundle"/>
+	<f:loadBundle basename="resources/DepartmentAdmOfficeResources" var="bundle"/>
 	
 	<h:form>
 	

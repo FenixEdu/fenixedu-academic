@@ -10,7 +10,7 @@
 -->
 </style>
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/BolonhaManagerResources" var="bolonhaBundle"/>
+	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	<h:form>
 		<h2><h:outputText value="#{bolonhaBundle['delete']} #{bolonhaBundle['competenceCourse']}"/></h2>
 		<h3><h:outputText value="#{CompetenceCourseManagement.competenceCourse.name}" style="font-weight: bold"/></h3>		

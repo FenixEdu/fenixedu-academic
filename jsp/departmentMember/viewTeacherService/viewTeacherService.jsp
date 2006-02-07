@@ -70,9 +70,9 @@ text-align: right;
 
 
 	
-	<f:loadBundle basename="ServidorApresentacao/DepartmentMemberResources"
+	<f:loadBundle basename="resources/DepartmentMemberResources"
 		var="bundle" />
-	<f:loadBundle basename="ServidorApresentacao/EnumerationResources"
+	<f:loadBundle basename="resources/EnumerationResources"
 		var="bundleEnumeration" />
 		
 	<h:outputText value="<i>#{bundle['label.teacherService.title']}</i><p /><p />" escape="false"/>

@@ -14,7 +14,7 @@ vertical-align: top;
 </style>
 
 <ft:tilesView definition="definition.manager.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/ManagerResources" var="bundle"/>
+	<f:loadBundle basename="resources/ManagerResources" var="bundle"/>
 
 	<h:form>	
 		<h:outputText value="<h2>#{bundle['title.send.mails']}</h2><br/>" escape="false"/>

@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
 <ft:tilesView definition="definition.student.masterPage" attributeName="body-inline">
-	<f:loadBundle basename="ServidorApresentacao/StudentResources" var="bundle"/>
+	<f:loadBundle basename="resources/StudentResources" var="bundle"/>
 
 <style>@import url(<%= request.getContextPath() %>/CSS/dotist_calendars.css);</style>
 

@@ -13,8 +13,8 @@
 </style>
 
 <ft:tilesView definition="definition.coordinator.two-column" attributeName="body-inline">
-<f:loadBundle basename="ServidorApresentacao/ApplicationResources" var="bundle"/>
-<f:loadBundle basename="ServidorApresentacao/EnumerationResources" var="bundleEnumeration"/>
+<f:loadBundle basename="resources/ApplicationResources" var="bundle"/>
+<f:loadBundle basename="resources/EnumerationResources" var="bundleEnumeration"/>
 
 	<h:dataTable value="#{listStudentThesis.masterDegreeThesisDataVersions}" var="masterDegreeThesisDataVersion" cellpadding="0">
 		<h:column>
