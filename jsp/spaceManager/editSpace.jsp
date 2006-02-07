@@ -10,26 +10,26 @@
 
 <html:form action="/editSpace">
 	<html:hidden property="page" value="1"/>
-	<bean:define id="spaceID" type="java.lang.Integer" name="selectedSpace" property="idInternal"/>
-	<html:hidden property="spaceID" value="<%= spaceID.toString() %>"/>
+	<bean:define id="spaceInformationID" type="java.lang.Integer" name="selectedSpaceInformation" property="idInternal"/>
+	<html:hidden property="spaceInformationID" value="<%= spaceInformationID.toString() %>"/>
 	<html:hidden property="asNewVersion"/>
 
-	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
+	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 		<html:hidden property="method" value="editCampus"/>
 
-		<bean:define id="name" type="java.lang.String" name="selectedSpace" property="spaceInformation.name"/>
+		<bean:define id="name" type="java.lang.String" name="selectedSpaceInformation" property="name"/>
 		<html:text property="spaceName" value="<%= name %>"/>
 	</logic:equal>
-	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 		<html:hidden property="method" value="editBuilding"/>
 
-		<bean:define id="name" type="java.lang.String" name="selectedSpace" property="spaceInformation.name"/>
+		<bean:define id="name" type="java.lang.String" name="selectedSpaceInformation" property="name"/>
 		<html:text property="spaceName" value="<%= name %>"/>
 	</logic:equal>
-	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
 		<html:hidden property="method" value="editFloor"/>
 	</logic:equal>
-	<logic:equal name="selectedSpace" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<html:hidden property="method" value="editRoom"/>
 	</logic:equal>
 	<br/>

@@ -46,7 +46,7 @@
 						</logic:equal>
 					</td>
 					<td class="listClasses">
-						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceID" paramName="space" paramProperty="idInternal">
+						<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
 							<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Campus">
 								<bean:write name="space" property="spaceInformation.name"/>
 							</logic:equal>
