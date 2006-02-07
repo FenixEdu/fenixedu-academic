@@ -316,7 +316,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getValidUnitType() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         SelectItem selectItem = null;
         for (UnitType type : UnitType.values()) {
@@ -346,7 +346,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         Collections.sort(list, new BeanComparator("label"));
-        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
         addDefaultSelectedItem(list, bundle);
         return list;
     }
@@ -381,7 +381,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
         }
 
         Collections.sort(list, new BeanComparator("label"));
-        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
         addDefaultSelectedItem(list, bundle);
         return list;
     }
@@ -421,7 +421,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     public List<SelectItem> getValidFunctionType() {
         List<SelectItem> list = new ArrayList<SelectItem>();
 
-        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         SelectItem selectItem = null;
         for (FunctionType type : FunctionType.values()) {

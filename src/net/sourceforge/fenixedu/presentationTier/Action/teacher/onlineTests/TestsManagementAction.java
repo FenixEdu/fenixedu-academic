@@ -1523,13 +1523,13 @@ public class TestsManagementAction extends FenixDispatchAction {
     }
 
     private String createDefaultDistributedTestInfo(InfoTest infoTest) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         return MessageFormat.format(bundle.getString("message.distributeTest.evaluation"), new Object[] { infoTest.getTitle(),
                 infoTest.getNumberOfQuestions() });
     }
 
     private String createDefaultDistributedInquiryInfo() {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         return bundle.getString("message.distributeTest.inquiry");
     }
 }

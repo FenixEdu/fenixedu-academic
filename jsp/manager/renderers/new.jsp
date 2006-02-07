@@ -201,7 +201,7 @@
     }
 
     protected ResourceBundle getEnumerationBundle() {
-        return ResourceBundle.getBundle(&quot;ServidorApresentacao.EnumerationResources&quot;);
+        return ResourceBundle.getBundle(&quot;resources.EnumerationResources&quot;);
     }
 
     @Override

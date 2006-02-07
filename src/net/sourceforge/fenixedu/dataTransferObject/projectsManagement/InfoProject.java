@@ -160,7 +160,7 @@ public class InfoProject extends DataTranferObject {
     }
 
     public HSSFSheet getProjectInformationToExcel(HSSFSheet sheet, ExcelStyle excelStyle) {
-        final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ProjectsManagementResources");
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ProjectsManagementResources");
         HSSFRow row = sheet.createRow((short) 2);
         HSSFCell cell = row.createCell((short) 0);
         cell.setCellValue(bundle.getString("label.acronym") + ":");

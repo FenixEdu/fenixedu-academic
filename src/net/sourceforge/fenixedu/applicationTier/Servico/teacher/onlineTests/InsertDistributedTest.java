@@ -132,7 +132,7 @@ public class InsertDistributedTest extends Service {
     }
 
     private Advisory getAdvisory(DistributedTest distributedTest, String sender) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());
         advisory.setExpires(distributedTest.getEndDate().getTime());

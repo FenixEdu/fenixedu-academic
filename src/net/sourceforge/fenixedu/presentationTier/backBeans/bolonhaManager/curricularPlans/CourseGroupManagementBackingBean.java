@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class CourseGroupManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bolonhaResources = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
-    private final ResourceBundle domainResources = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
+    private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
+    private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
     private final Integer NO_SELECTION = 0;    
     
     private String name = null;

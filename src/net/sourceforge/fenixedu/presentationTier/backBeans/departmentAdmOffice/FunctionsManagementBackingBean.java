@@ -438,7 +438,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getPersonTypes() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        ResourceBundle bundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
+        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
 
         SelectItem selectItem1 = new SelectItem();
         selectItem1.setLabel(bundle.getString(RoleType.EMPLOYEE.getName()).trim());

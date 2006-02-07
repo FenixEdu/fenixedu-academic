@@ -78,7 +78,7 @@ public class UIDegreeModule extends UIInput {
     }
 
     protected String getBundleValue(String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, facesContext.getViewRoot().getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao/" + bundleName, facesContext.getViewRoot().getLocale());
         return bundle.getString(bundleKey);
     }
 
@@ -89,7 +89,7 @@ public class UIDegreeModule extends UIInput {
     protected void encodeLink(String href, String bundleKey) throws IOException {
         writer.startElement("a", this);
         writer.writeAttribute("href", href, null);
-        writer.write(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", bundleKey));
+        writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));
         writer.endElement("a");
     }
 

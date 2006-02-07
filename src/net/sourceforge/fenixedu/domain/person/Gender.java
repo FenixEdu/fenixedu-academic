@@ -23,7 +23,7 @@ public enum Gender {
 			 return labelValueBeans;
 		 }
 
-		 final ResourceBundle resourceBundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources", locale);
+		 final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", locale);
 		 labelValueBeans = new LabelValueBean[] {
 				 new LabelValueBean(resourceBundle.getString(Gender.MALE.toString()), Gender.MALE.toString()),
 				 new LabelValueBean(resourceBundle.getString(Gender.FEMALE.toString()), Gender.FEMALE.toString())

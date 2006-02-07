@@ -61,7 +61,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     private ResourceBundle bundle;
 
-    private static final String BUNDLE_NAME = "ServidorApresentacao/DepartmentMemberResources";
+    private static final String BUNDLE_NAME = "resources/DepartmentMemberResources";
 
     private static final String ALL_EXECUTION_YEARS_KEY = "label.common.allExecutionYears";
 

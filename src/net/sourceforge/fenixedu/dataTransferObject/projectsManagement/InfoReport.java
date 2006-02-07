@@ -63,6 +63,6 @@ public class InfoReport extends DataTranferObject {
     }
 
     protected String getString(String label) {
-        return (ResourceBundle.getBundle("ServidorApresentacao.ProjectsManagementResources")).getString(label);
+        return (ResourceBundle.getBundle("resources.ProjectsManagementResources")).getString(label);
     }
 }

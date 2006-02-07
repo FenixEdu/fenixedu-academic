@@ -124,7 +124,7 @@ public class ChangeStudentTestQuestionMark extends Service {
             studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
             studentTestLog.setStudent(studentTestQuestion.getStudent());
             studentTestLog.setDate(Calendar.getInstance().getTime());
-            ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+            ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
             studentTestLog.setEvent(MessageFormat.format(bundle.getString("message.changeStudentMarkLogMessage"), new Object[] { newMark }));
             infoSiteDistributedTestAdvisory.setInfoStudentList(group);
             infoSiteDistributedTestAdvisoryList.add(infoSiteDistributedTestAdvisory);

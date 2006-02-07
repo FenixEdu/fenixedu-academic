@@ -24,7 +24,7 @@ public class PaymentPhase extends PaymentPhase_Base {
 
     public String getDescriptionFromMessageResourses() {
         MessageResources messages = MessageResources
-            .getMessageResources("ServidorApresentacao.ApplicationResources");
+            .getMessageResources("resources.ApplicationResources");
 
         String newDescription = null;
         newDescription = messages.getMessage(super.getDescription());

@@ -75,7 +75,7 @@ public class EditMasterDegreeCandidate extends Service {
 
     private void sendEmailToCandidate(MasterDegreeCandidate masterDegreeCandidate,
             CandidateSituation candidateSituation) {
-        ResourceBundle rb = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        ResourceBundle rb = ResourceBundle.getBundle("resources.ApplicationResources");
         List<String> toList = new ArrayList<String>();
         List CCList, BCCList;
         CCList = new ArrayList();

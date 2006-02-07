@@ -10,6 +10,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
     private String onlyStructure;
     private String toEdit;
     private String organizeBy;
+    private String showRules;
 
     public String getDcp() {
         return dcp;
@@ -42,6 +43,14 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
     public void setOrganizeBy(String structureBy) {
         this.organizeBy = structureBy;
     }
+
+    public String getShowRules() {
+        return showRules;
+    }
+
+    public void setShowRules(String showRules) {
+        this.showRules = showRules;
+    }
     
     public String getComponentType() {
         return UIDegreeCurricularPlan.COMPONENT_TYPE;
@@ -57,7 +66,8 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         JsfTagUtils.setString(component,"dcp",this.dcp);
         JsfTagUtils.setString(component,"onlyStructure",this.onlyStructure);
         JsfTagUtils.setString(component,"toEdit",this.toEdit);        
-        JsfTagUtils.setString(component,"organizeBy",this.organizeBy);        
+        JsfTagUtils.setString(component,"organizeBy",this.organizeBy);
+        JsfTagUtils.setString(component,"showRules",this.showRules);
     }
 
     public void release() {
@@ -65,6 +75,7 @@ public class DegreeCurricularPlanTag extends UIComponentTag {
         dcp = null;
         toEdit = null;
         organizeBy = null;
+        showRules = null;
     }
 
 }

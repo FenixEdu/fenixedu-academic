@@ -119,7 +119,7 @@ public class EditDistributedTest extends Service {
     }
 
     private Advisory createTestAdvisory(DistributedTest distributedTest) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
 
         Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());

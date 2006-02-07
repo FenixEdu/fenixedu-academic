@@ -15,23 +15,23 @@ import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 public class CurricularPeriodLabelFormatter {
 
     public static String getLabel(CurricularPeriod curricularPeriod) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao/EnumerationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
         return getLabel(curricularPeriod, bundle);
     }
 
     public static String getLabel(CurricularPeriod curricularPeriod, Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao/EnumerationResources",
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources",
                 locale);
         return getLabel(curricularPeriod, bundle);
     }
 
     public static String getFullLabel(CurricularPeriod curricularPeriod) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao/EnumerationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources");
         return getFullLabel(curricularPeriod, bundle);
     }
 
     public static String getFullLabel(CurricularPeriod curricularPeriod, Locale locale) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao/EnumerationResources",
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/EnumerationResources",
                 locale);
         return getFullLabel(curricularPeriod, bundle);
     }

@@ -31,7 +31,7 @@ public class InsertTestAsNewTest extends Service {
         }
 
         Test test = DomainFactory.makeTest();
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         test.setTitle(MessageFormat.format(bundle.getString("label.testTitle.duplicated"), new Object[] { oldTest.getTitle() }));
         test.setInformation(oldTest.getInformation());
         Date date = Calendar.getInstance().getTime();

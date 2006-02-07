@@ -544,7 +544,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         	ServiceUtils.executeService(getUserView(), "WriteMarks", args);
         } catch (InvalidMarksServiceException e) {
 			for(DomainException domainException: e.getExceptionList()) {
-				addErrorMessage(getFormatedMessage("ServidorApresentacao/ApplicationResources", domainException.getKey(), domainException.getArgs()));
+				addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException.getArgs()));
 			}
 			return "";
 		}
@@ -661,7 +661,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
         } catch (InvalidMarksServiceException e) {
 			for(DomainException domainException: e.getExceptionList()) {
-				addErrorMessage(getFormatedMessage("ServidorApresentacao/ApplicationResources", domainException.getKey(), domainException.getArgs()));
+				addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException.getArgs()));
 			}
 			return "";
         } catch (Exception e) {
@@ -950,7 +950,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	}
 
     public String publishMarks() throws FenixFilterException, FenixServiceException {
-    	final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/ApplicationResources");
+    	final MessageResources messages = MessageResources.getMessageResources("resources/ApplicationResources");
     	final String announcementTitle = (getPublishMarksMessage() != null && getPublishMarksMessage().length() > 0) ? 
         		messages.getMessage("message.publishment") : null;
 
@@ -1064,7 +1064,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     		setErrorMessage(e.getMessageKey());
     		return "enterSubmitMarksList";
     	} catch(OutOfPeriodException e) {
-    		setErrorMessage(getFormatedMessage("ServidorApresentacao/ApplicationResources", e.getMessageKey(), DateFormatUtil.format("dd/MM/yyyy", e.getStartDate()), DateFormatUtil.format("dd/MM/yyyy", e.getEndDate())));
+    		setErrorMessage(getFormatedMessage("resources/ApplicationResources", e.getMessageKey(), DateFormatUtil.format("dd/MM/yyyy", e.getStartDate()), DateFormatUtil.format("dd/MM/yyyy", e.getEndDate())));
     		return "";
     	}
     	return "enterSubmitMarksList";

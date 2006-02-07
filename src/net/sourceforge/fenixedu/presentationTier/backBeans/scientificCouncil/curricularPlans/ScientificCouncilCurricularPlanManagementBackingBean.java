@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 public class ScientificCouncilCurricularPlanManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle scouncilBundle = getResourceBundle("ServidorApresentacao/ScientificCouncilResources");
-    private final ResourceBundle enumerationBundle = getResourceBundle("ServidorApresentacao/EnumerationResources");
-    private final ResourceBundle domainExceptionBundle = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
+    private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
+    private final ResourceBundle enumerationBundle = getResourceBundle("resources/EnumerationResources");
+    private final ResourceBundle domainExceptionBundle = getResourceBundle("resources/DomainExceptionResources");
     private final String NO_SELECTION = "noSelection";
     
     private Integer degreeId;

@@ -43,7 +43,7 @@ import org.apache.struts.util.MessageResources;
 public class StudentCalendarBackingBean extends FenixBackingBean {
 
 	private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
-	private static final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/StudentResources");
+	private static final MessageResources messages = MessageResources.getMessageResources("resources/StudentResources");
 	private static final ComparatorChain executionPeriodComparator = new ComparatorChain();
 	static {
 		executionPeriodComparator.addComparator(new BeanComparator("executionYear.year"), true);

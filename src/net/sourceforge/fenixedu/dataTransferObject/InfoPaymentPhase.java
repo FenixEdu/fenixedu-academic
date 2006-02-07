@@ -51,22 +51,7 @@ public class InfoPaymentPhase extends InfoObject {
      * @return Returns the description.
      */
     public String getDescription() {
-
-        // MessageResources messageResources =
-        // MessageResources.getMessageResources("ServidorApresentacao.ApplicationResources");
-        // ResourceBundle bundle =
-        // ResourceBundle.getBundle(Globals.MESSAGES_KEY);
-        String newDescription = null;
-        // try {
-        // newDescription = bundle.getString(this.description);
-        // newDescription = messageResources.getMessage(this.description);
-        // }catch(NullPointerException npe) {
-        // if (newDescription == null)
-        // {
-        newDescription = this.description;
-        // }
-        // }
-        return newDescription;
+        return this.description;
     }
 
     /**

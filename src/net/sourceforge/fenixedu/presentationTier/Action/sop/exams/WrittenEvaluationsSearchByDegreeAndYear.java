@@ -48,8 +48,8 @@ public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatc
         final Object[] args = { ExecutionPeriod.class, infoExecutionPeriod.getIdInternal() };
         final ExecutionPeriod executionPeriod = (ExecutionPeriod) ServiceUtils.executeService(userView, "ReadDomainObject", args);
 
-        final MessageResources enumMessages = MessageResources.getMessageResources("ServidorApresentacao/EnumerationResources");
-        final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/PublicDegreeInformation");
+        final MessageResources enumMessages = MessageResources.getMessageResources("resources/EnumerationResources");
+        final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
 
         final List<LabelValueBean> executionDegreeLabelValueBeans = new ArrayList<LabelValueBean>();
         for (final ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {

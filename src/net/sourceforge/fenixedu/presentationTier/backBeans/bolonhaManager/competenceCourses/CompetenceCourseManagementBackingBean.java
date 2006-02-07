@@ -33,8 +33,8 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 import org.apache.commons.beanutils.BeanComparator;
 
 public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle bolonhaResources = getResourceBundle("ServidorApresentacao/BolonhaManagerResources");
-    private final ResourceBundle domainResources = getResourceBundle("ServidorApresentacao/DomainExceptionResources");
+    private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
+    private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
     
     private Integer selectedDepartmentUnitID = null;
     private Integer competenceCourseID = null;

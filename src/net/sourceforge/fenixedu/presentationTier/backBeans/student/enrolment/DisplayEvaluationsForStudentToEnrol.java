@@ -30,7 +30,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
 
-    private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/StudentResources");
+    private final ResourceBundle messages = getResourceBundle("resources/StudentResources");
     private static final ComparatorChain comparatorChain = new ComparatorChain();
     static {
         comparatorChain.addComparator(new ReverseComparator(new BeanComparator("isInEnrolmentPeriod")));

@@ -52,7 +52,7 @@ public class ReadStudentsByIdArray extends Service {
 
     private List<InfoStudent> returnStudentsFromShiftsArray(ISuportePersistente persistentSupport, String[] shifts) throws FenixServiceException,
             ExcepcaoPersistencia {
-        final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         List<InfoStudent> infoStudentList = new ArrayList<InfoStudent>();
         for (int i = 0; i < shifts.length; i++) {
             if (shifts[i].equals(bundle.getString("label.allShifts"))) {
@@ -72,7 +72,7 @@ public class ReadStudentsByIdArray extends Service {
 
     private List<InfoStudent> returnStudentsFromStudentsArray(ISuportePersistente persistentSupport, String[] students, Integer executionCourseId)
             throws FenixServiceException, ExcepcaoPersistencia {
-        final ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        final ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         List<InfoStudent> studentsList = new ArrayList<InfoStudent>();
 
         for (int i = 0; i < students.length; i++) {

@@ -1384,6 +1384,12 @@
 			<rtexprvalue>true</rtexprvalue>
 			<description>Groups or Years. Type: java.lang.String</description>
 		</attribute>
+		<attribute>
+			<name>showRules</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>Render rules and corresponding options. Type: java.lang.String</description>
+		</attribute>		
 	</tag>
   <tag>
 		<name>breadCrumbs</name>

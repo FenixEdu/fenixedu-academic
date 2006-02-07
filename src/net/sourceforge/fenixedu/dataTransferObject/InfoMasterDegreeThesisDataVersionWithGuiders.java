@@ -27,7 +27,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
         Properties properties = new Properties();
 
         InputStream inputStream = getClass().getResourceAsStream(
-                "/ServidorApresentacao/GlobalResources.properties");
+                "/resources/GlobalResources.properties");
         try {
             properties.load(inputStream);
         } catch (IOException e1) {

@@ -84,7 +84,7 @@ public class SendEmailReminderAction extends FenixDispatchAction {
 		InfoExecutionPeriod currentExecutionPeriod = (InfoExecutionPeriod) ServiceUtils.executeService(userView, "ReadCurrentExecutionPeriod", null);
 		List<InfoInquiriesEmailReminderReport> reportList = new ArrayList<InfoInquiriesEmailReminderReport>(degreeCurricularPlanIds.length);
 		
-		ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.InquiriesResources");
+		ResourceBundle bundle = ResourceBundle.getBundle("resources.InquiriesResources");
 		
 		for(int i = 0; i < degreeCurricularPlanIds.length; i++) {
 						

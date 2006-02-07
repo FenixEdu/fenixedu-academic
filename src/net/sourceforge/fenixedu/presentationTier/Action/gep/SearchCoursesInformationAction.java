@@ -270,7 +270,7 @@ public class SearchCoursesInformationAction extends SearchAction {
                     InfoDepartment infoDepartment = (InfoDepartment) ServiceUtils.executeService(userView, "ReadDepartmentByTeacher", args);
                     String department = null;
                     if (infoDepartment == null) {
-                        final MessageResources messages = MessageResources.getMessageResources("ServidorApresentacao/ApplicationResources");
+                        final MessageResources messages = MessageResources.getMessageResources("resources/ApplicationResources");
                         department = messages.getMessage("UNKNOWN");
                     } else {
                         department = infoDepartment.getName();

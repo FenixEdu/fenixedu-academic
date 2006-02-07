@@ -47,7 +47,7 @@ public enum EnrolmentEvaluationType {
              return labelValueBeans;
          }
 
-         final ResourceBundle resourceBundle = ResourceBundle.getBundle("ServidorApresentacao.EnumerationResources", locale);
+         final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.EnumerationResources", locale);
          labelValueBeans = new LabelValueBean[] {
                  new LabelValueBean(resourceBundle.getString(NORMAL.toString()), NORMAL.toString()),
                  new LabelValueBean(resourceBundle.getString(IMPROVEMENT.toString()), IMPROVEMENT.toString()),

@@ -62,7 +62,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    }
 		
 		this.bundle = ResourceBundle
-        .getBundle("ServidorApresentacao.EnumerationResources");
+        .getBundle("resources.EnumerationResources");
     }
 
     public List getExecutionYears() throws FenixFilterException, FenixServiceException {

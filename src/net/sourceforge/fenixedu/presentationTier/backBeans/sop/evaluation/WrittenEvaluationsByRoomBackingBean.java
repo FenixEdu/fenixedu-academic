@@ -40,7 +40,7 @@ import org.apache.struts.util.MessageResources;
 public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBackingBean {
 
     private static final MessageResources messages = MessageResources
-            .getMessageResources("ServidorApresentacao/ApplicationResourcesSOP");
+            .getMessageResources("resources/ApplicationResourcesSOP");
 
     private String name;
 

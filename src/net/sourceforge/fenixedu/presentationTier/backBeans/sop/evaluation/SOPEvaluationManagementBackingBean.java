@@ -52,9 +52,9 @@ import org.apache.struts.util.MessageResources;
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
     private static final MessageResources messages = MessageResources
-            .getMessageResources("ServidorApresentacao/ApplicationResourcesSOP");
+            .getMessageResources("resources/ApplicationResourcesSOP");
     private static final MessageResources enumerations = MessageResources
-            .getMessageResources("ServidorApresentacao/EnumerationResources");
+            .getMessageResources("resources/EnumerationResources");
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
 
     protected Integer executionPeriodID;
@@ -746,7 +746,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
     public List<SelectItem> getOrderByCriteriaItems() {
         MessageResources messageResources = MessageResources
-                .getMessageResources("ServidorApresentacao/ApplicationResourcesSOP");
+                .getMessageResources("resources/ApplicationResourcesSOP");
 
         List<SelectItem> orderByCriteriaItems = new ArrayList<SelectItem>(3);
         orderByCriteriaItems.add(new SelectItem(0, messageResources.getMessage("label.capacity")));

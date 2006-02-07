@@ -152,7 +152,7 @@ public class ChangeStudentTestQuestion extends Service {
                     studentTestLog.setDistributedTest(studentTestQuestion.getDistributedTest());
                     studentTestLog.setStudent(studentTestQuestion.getStudent());
                     studentTestLog.setDate(Calendar.getInstance().getTime());
-                    ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+                    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
                     studentTestLog.setEvent(MessageFormat.format(bundle.getString("message.changeStudentQuestionLogMessage"),
                             new Object[] { studentTestQuestion.getTestQuestionOrder() }));
                 }
@@ -263,7 +263,7 @@ public class ChangeStudentTestQuestion extends Service {
     }
 
     private Advisory getAdvisory(DistributedTest distributedTest, String path) {
-        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao.ApplicationResources");
+        ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources");
         // Create Advisory
         Advisory advisory = DomainFactory.makeAdvisory();
         advisory.setCreated(Calendar.getInstance().getTime());

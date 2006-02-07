@@ -32,7 +32,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
  * 
  */
 public class CurricularPlansMembersManagementBackingBean extends FenixBackingBean {
-    private final ResourceBundle scouncilBundle = getResourceBundle("ServidorApresentacao/ScientificCouncilResources");
+    private final ResourceBundle scouncilBundle = getResourceBundle("resources/ScientificCouncilResources");
     
     private Integer[] selectedPersonsIDsToAdd;
     private Integer[] selectedPersonsIDsToRemove;

@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 
 public class UIDegreeCurricularPlan extends UIInput {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UIDegreeCurricularPlan";
@@ -25,6 +26,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     protected static final int ROOT_DEPTH = -1;
 
     private Boolean toEdit;
+    private Boolean showRules;
 
     private FacesContext facesContext;
 
@@ -49,6 +51,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             final Boolean onlyStructure = this.getBooleanAttribute("onlyStructure");
             this.toEdit = this.getBooleanAttribute("toEdit");
             final String organizeBy = (String) this.getAttributes().get("organizeBy");
+            this.showRules = (this.getBooleanAttribute("showRules") != null) ? (Boolean) this.getBooleanAttribute("showRules") : Boolean.FALSE;
 
             if (organizeBy != null && organizeBy.equalsIgnoreCase("years")) {
                 encodeByYears(facesContext, dcp);
@@ -78,10 +81,14 @@ public class UIDegreeCurricularPlan extends UIInput {
             encodeEmptyCurricularPlanInfo();
         } else {
             CurricularPeriod degreeStructure = dcp.getDegreeStructure();
-            for (CurricularPeriod child : degreeStructure.getSortedChilds()) {
-                encodePeriodTable(child);
+            if (degreeStructure == null || !degreeStructure.hasAnyChilds()) {
+                encodeEmptyDegreeStructureInfo();
+            } else {
+                for (CurricularPeriod child : degreeStructure.getSortedChilds()) {
+                    encodePeriodTable(child);
+                }
+                encodeSubtitles();
             }
-            encodeSubtitles();
         }
     }
 
@@ -91,7 +98,20 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("td", this);
         writer.writeAttribute("align", "center", null);
         writer.startElement("i", this);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "empty.curricularPlan"));
+        writer.append(this.getBundleValue("BolonhaManagerResources", "empty.curricularPlan"));
+        writer.endElement("i");
+        writer.endElement("td");
+        writer.endElement("tr");
+        writer.endElement("table");
+    }
+
+    private void encodeEmptyDegreeStructureInfo() throws IOException {
+        writer.startElement("table", this);
+        writer.startElement("tr", this);
+        writer.startElement("td", this);
+        writer.writeAttribute("align", "center", null);
+        writer.startElement("i", this);
+        writer.append(this.getBundleValue("BolonhaManagerResources", "empty.degreeStructure"));
         writer.endElement("i");
         writer.endElement("td");
         writer.endElement("tr");
@@ -102,37 +122,41 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("ul", this);
         writer.writeAttribute("class", "nobullet", null);
         writer.writeAttribute("style", "padding-left: 0pt;", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "subtitle")).append(":\n");
+        writer.append(this.getBundleValue("BolonhaManagerResources", "subtitle")).append(":\n");
 
-        writer.startElement("li", this);
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "contactLessonHoursAcronym")).append(" - ");
-        writer.endElement("span");
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "contactLessonHours"));
-        writer.endElement("li");
+        encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString(), RegimeType.SEMESTRIAL.toString() + ".ACRONYM", null);
+        encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString(), RegimeType.ANUAL.toString() + ".ACRONYM", null);
+
+        writer.startElement("br", this);
+        writer.endElement("br");
         
-        writer.startElement("li", this);
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "autonomousWorkAcronym")).append(" - ");
-        writer.endElement("span");
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "autonomousWork"));
-        writer.endElement("li");
-        
-        writer.startElement("li", this);
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "totalLoadAcronym")).append(" - ");
-        writer.endElement("span");
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "totalLoad")).append(" (");
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "contactLessonHoursAcronym")).append(" + ");
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "autonomousWorkAcronym")).append(")");
-        writer.endElement("li");
+        encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
+        encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
+
+        StringBuilder explanation = new StringBuilder();
+        explanation.append(" (");
+        explanation.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym"));
+        explanation.append(" + ");
+        explanation.append(this.getBundleValue("BolonhaManagerResources", "autonomousWorkAcronym"));
+        explanation.append(")");
+        encodeSubtitleElement("BolonhaManagerResources", "totalLoadAcronym", "totalLoad", explanation);
         
         writer.endElement("ul");
     }
 
+    private void encodeSubtitleElement(String bundle, String acronym, String full, StringBuilder explanation) throws IOException {
+        writer.startElement("li", this);
+        writer.startElement("span", this);
+        writer.writeAttribute("style", "color: #888", null);
+        writer.append(this.getBundleValue("" + bundle, acronym)).append(" - ");
+        writer.endElement("span");
+        writer.append(this.getBundleValue("" + bundle, full));
+        if (explanation != null) {
+            writer.append(explanation);
+        }
+        writer.endElement("li");
+    }
+    
     private void encodePeriodTable(CurricularPeriod curricularPeriod) throws IOException {
         if (curricularPeriod.hasAnyChilds()) {
             for (CurricularPeriod child : curricularPeriod.getSortedChilds()) {
@@ -160,14 +184,14 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "bgcolor2", null);
         
         writer.startElement("th", this);
-        writer.writeAttribute("colspan", (this.toEdit) ? 3 : 5, null);
+        writer.writeAttribute("colspan", (this.toEdit && !this.showRules) ? 3 : 5, null);
         writer.startElement("strong", this);
         writer.append(curricularPeriod.getFullLabel());
         writer.endElement("strong");
         writer.endElement("th");
 
-        if (this.toEdit) {
-            encodeCourseGroupOptions(curricularPeriod);
+        if (this.toEdit && !this.showRules) {
+            encodeCourseGroupOptions(curricularPeriod);    
         }
 
         writer.endElement("tr");
@@ -201,7 +225,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
                 sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
                 sumCredits += degreeModule.getEctsCredits();
-                new UICurricularCourse((CurricularCourse) degreeModule, this.toEdit, context).encodeBegin(facesContext);
+                new UICurricularCourse((CurricularCourse) degreeModule, this.toEdit, context, this.showRules).encodeBegin(facesContext);
             }
         }
         
@@ -223,31 +247,18 @@ public class UIDegreeCurricularPlan extends UIInput {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "highlight2 smalltxt", null);
-        writer.writeAttribute("align", "center", null);
+        writer.writeAttribute("align", "aright", null);
         writer.writeAttribute("style", "width: 13em;", null);
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
-        writer.endElement("span");
-        writer.append(String.valueOf(sums.get(0))).append(" ");
-
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "autonomousWorkAcronym")).append("-");
-        writer.endElement("span");
-        writer.append(String.valueOf(sums.get(1))).append(" ");
-
-        writer.startElement("span", this);
-        writer.writeAttribute("style", "color: #888", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "totalLoadAcronym")).append("-");
-        writer.endElement("span");
-        writer.append(String.valueOf(sums.get(2))).append(" ");
+        
+        encodeSumsLoadFooterElement(sums, "contactLessonHoursAcronym", 0);
+        encodeSumsLoadFooterElement(sums, "autonomousWorkAcronym", 1);
+        encodeSumsLoadFooterElement(sums, "totalLoadAcronym", 2);
         writer.endElement("td");
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright highlight2", null);
         writer.writeAttribute("style", "width: 7em;", null);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", "credits")).append(" ");
+        writer.append(this.getBundleValue("BolonhaManagerResources", "credits")).append(" ");
         writer.append(String.valueOf(sums.get(3)));
         writer.endElement("td");
         
@@ -258,6 +269,14 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
 
         writer.endElement("tr");
+    }
+    
+    private void encodeSumsLoadFooterElement(List<Double> sums, String acronym, int order) throws IOException {
+        writer.startElement("span", this);
+        writer.writeAttribute("style", "color: #888", null);
+        writer.append(this.getBundleValue("BolonhaManagerResources", acronym)).append("-");
+        writer.endElement("span");
+        writer.append(String.valueOf(sums.get(order))).append(" ");
     }
 
     private void encodeEmptySemesterInfo() throws IOException {
@@ -270,23 +289,21 @@ public class UIDegreeCurricularPlan extends UIInput {
         }
         writer.writeAttribute("align", "center", null);
         writer.startElement("i", this);
-        writer.append(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources",
-                "no.associated.curricular.courses.to.year"));
+        writer.append(this.getBundleValue("BolonhaManagerResources", "no.associated.curricular.courses.to.year"));
         writer.endElement("i");
         writer.endElement("td");
         writer.endElement("tr");
     }
 
     protected String getBundleValue(String bundleName, String bundleKey) {
-        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, facesContext.getViewRoot()
-                .getLocale());
+        ResourceBundle bundle = ResourceBundle.getBundle("ServidorApresentacao/" + bundleName, facesContext.getViewRoot().getLocale());
         return bundle.getString(bundleKey);
     }
 
     protected void encodeLink(String href, String bundleKey) throws IOException {
         writer.startElement("a", this);
         writer.writeAttribute("href", href, null);
-        writer.write(this.getBundleValue("ServidorApresentacao/BolonhaManagerResources", bundleKey));
+        writer.write(this.getBundleValue("BolonhaManagerResources", bundleKey));
         writer.endElement("a");
     }
 

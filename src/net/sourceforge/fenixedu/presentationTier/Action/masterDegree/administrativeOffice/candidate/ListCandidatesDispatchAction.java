@@ -610,7 +610,7 @@ public class ListCandidatesDispatchAction extends DispatchAction {
         editCandidateForm.set("motherName", infoPerson.getNomeMae());
 
         if (infoPerson.getInfoPais() == null) {            
-            editCandidateForm.set("nationality", ResourceBundle.getBundle("ServidorApresentacao.GlobalResources").getString("default.nationality"));
+            editCandidateForm.set("nationality", ResourceBundle.getBundle("resources.GlobalResources").getString("default.nationality"));
         } else {
             editCandidateForm.set("nationality", infoPerson.getInfoPais().getNationality());
         }

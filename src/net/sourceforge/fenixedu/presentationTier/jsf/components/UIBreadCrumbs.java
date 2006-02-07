@@ -41,8 +41,8 @@ public class UIBreadCrumbs extends UIInput {
         final ResponseWriter responseWriter = context.getResponseWriter();
 
         final Locale locale = context.getViewRoot().getLocale();
-        final ResourceBundle globalResourceBundle = ResourceBundle.getBundle("ServidorApresentacao/GlobalResources", locale);
-        final ResourceBundle publicDegreeInformationResourceBundle = ResourceBundle.getBundle("ServidorApresentacao/PublicDegreeInformation", locale);
+        final ResourceBundle globalResourceBundle = ResourceBundle.getBundle("resources/GlobalResources", locale);
+        final ResourceBundle publicDegreeInformationResourceBundle = ResourceBundle.getBundle("resources/PublicDegreeInformation", locale);
 
         final String institutionUrl = globalResourceBundle.getObject("institution.url").toString();
         final String institutionNameAbbreviation = globalResourceBundle.getObject("institution.name.abbreviation").toString();

@@ -22,7 +22,7 @@ import org.apache.commons.beanutils.BeanComparator;
 public class CoordinatorProjectsInformationBackingBean extends
         CoordinatorEvaluationManagementBackingBean {
 
-    private final ResourceBundle messages = getResourceBundle("ServidorApresentacao/ApplicationResources");
+    private final ResourceBundle messages = getResourceBundle("resources/ApplicationResources");
     private List<ExecutionCourse> executionCoursesWithProjects;
     private List<ExecutionCourse> executionCoursesWithoutProjects;
     private Map<Integer, List<Project>> projects = new HashMap();
