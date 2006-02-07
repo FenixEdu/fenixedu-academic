@@ -72,12 +72,12 @@
 	<!-- =============================================== -->	
 	<!-- ================= by gedl 6-12-2005 =========== -->
 	<definition name="showAllExecutionCourseWebsites" extends="cms.masterPage" >
-		<put name="body" value="/cms/executionCourseWebsite/showAllExecutionCourseWebsites.jsp" />
+		<put name="body" value="/cms/website/executionCourseWebsite/showAllExecutionCourseWebsites.jsp" />
 	</definition>
 	<!-- =============================================== -->									    
 		<!-- ================= by gedl 16-12-2005 =========== -->
 	<definition name="viewExecutionCourseWebsite" extends="cms.masterPage" >
-		<put name="body" value="/cms/executionCourseWebsite/viewExecutionCourseWebsite.jsp" />
+		<put name="body" value="/cms/website/executionCourseWebsite/viewExecutionCourseWebsite.jsp" />
 	</definition>
 	<!-- =============================================== -->									    
 
@@ -99,5 +99,25 @@
 
     <definition name="createWebsiteType" extends="cms.masterPage" >
         <put name="body" value="/cms/websiteTypeManagement/createWebsiteType.jsp" />
+    </definition>
+    
+    <definition name="editWebsite" extends="cms.masterPage" >
+        <put name="body" value="/cms/website/editWebsite.jsp" />
+    </definition>
+    
+    <definition name="createWebsiteSection" extends="cms.masterPage" >
+        <put name="body" value="/cms/website/createWebsiteSection.jsp"/>
+    </definition>
+
+    <definition name="createWebsiteItem" extends="cms.masterPage" >
+        <put name="body" value="/cms/website/createWebsiteItem.jsp"/>
+    </definition>
+    
+    <definition name="editWebsiteSection" extends="cms.masterPage" >
+        <put name="body" value="/cms/website/editWebsiteSection.jsp"/>
+    </definition>
+
+    <definition name="editWebsiteItem" extends="cms.masterPage" >
+        <put name="body" value="/cms/website/editWebsiteItem.jsp"/>
     </definition>
 </tiles-definitions>

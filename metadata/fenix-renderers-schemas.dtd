@@ -50,6 +50,7 @@
 	schema IDREF #IMPLIED
 	key NMTOKEN #IMPLIED
 	validator NMTOKEN #IMPLIED
+	converter NMTOKEN #IMPLIED
 	default CDATA #IMPLIED
 >
 

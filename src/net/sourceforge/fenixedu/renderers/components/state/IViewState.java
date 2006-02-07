@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers.components.state;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,4 +89,7 @@ public interface IViewState extends Serializable {
     
     public void removeAttribute(String name);
 
+    public void addHiddenSlot(HiddenSlot slot);
+
+    public List<HiddenSlot> getHiddenSlots();
 }

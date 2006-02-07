@@ -94,6 +94,7 @@ public class ConfigurationReader {
                         String slotSchema    = slotElement.getAttributeValue("schema");
                         String validatorName = slotElement.getAttributeValue("validator");
                         String defaultValue  = slotElement.getAttributeValue("default");
+                        String converterName = slotElement.getAttributeValue("converter");
 
                         Properties properties = getPropertiesFromElement(slotElement);
                         
@@ -117,6 +118,15 @@ public class ConfigurationReader {
                             }
                         }
                         
+                        Class converter = null;
+                        if (converterName != null) {
+                            try {
+                                converter = getClassForType(converterName);
+                            } catch (ClassNotFoundException e) {
+                                logger.warn("specified converter '" + converterName + "' does not exist");
+                            }
+                        }
+                        
                         SchemaSlotDescription slotDescription = new SchemaSlotDescription(slotName);
 
                         slotDescription.setLayout(layout);
@@ -124,6 +134,7 @@ public class ConfigurationReader {
                         slotDescription.setProperties(properties);
                         slotDescription.setSchema(slotSchema);
                         slotDescription.setValidator(validator);
+                        slotDescription.setConverter(converter);
                         slotDescription.setValidatorProperties(validatorProperties);
                         slotDescription.setDefaultValue(defaultValue);
                         

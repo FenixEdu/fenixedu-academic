@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadDomainObject;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -42,6 +43,10 @@ public class UpdateObjects extends Service {
     private void setProperty(Object object, String slot, Object value) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Class type = PropertyUtils.getPropertyType(object, slot);
         
+        if (type == null) {
+            throw new RuntimeException("could not find type of property " + slot + " in object " + object);
+        }
+        
         if (type.isAssignableFrom(List.class)) {
             setRelation(object, slot, (List) value);
         }
@@ -54,7 +59,7 @@ public class UpdateObjects extends Service {
         List relationList = (List) PropertyUtils.getProperty(object, slot);
         
         // TODO: cfgi, I hope this is ok but must check
-        relationList.retainAll(list);
+        relationList.clear();
         relationList.addAll(list);
     }
 

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.components.state;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -170,5 +171,13 @@ public class ViewStateWrapper implements IViewState {
 
     public PresentationContext getContext() {
         return this.viewState.getContext();
+    }
+
+    public void addHiddenSlot(HiddenSlot slot) {
+        this.viewState.addHiddenSlot(slot);
+    }
+
+    public List<HiddenSlot> getHiddenSlots() {
+        return this.viewState.getHiddenSlots();
     }
 }

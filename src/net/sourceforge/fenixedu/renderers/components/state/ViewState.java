@@ -5,7 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -31,6 +33,10 @@ public class ViewState implements IViewState {
     private Class contextClass;
 
     private Map<String, Object> attributes;
+    
+    // Hidden slots, filled from context
+    
+    private List<HiddenSlot> hiddenSlots;
     
     // Destinations available 
     
@@ -71,9 +77,6 @@ public class ViewState implements IViewState {
         this.skipUpdate = false;
         this.updateComponentTree = true;
         this.postBack = false;
-
-        this.destinations = new Hashtable<String, ViewDestination>();
-        this.attributes = new Hashtable<String, Object>();
     }
 
     public String getId() {
@@ -120,10 +123,18 @@ public class ViewState implements IViewState {
     }
 
     public void addDestination(String name, ViewDestination destination) {
+        if (this.destinations == null) {
+            this.destinations = new Hashtable<String, ViewDestination>();
+        }
+        
         this.destinations.put(name, destination);
     }
 
     public ViewDestination getDestination(String name) {
+        if (this.destinations == null) {
+            this.destinations = new Hashtable<String, ViewDestination>();
+        }
+
         return this.destinations.get(name);
     }
 
@@ -208,14 +219,26 @@ public class ViewState implements IViewState {
     }
 
     public void setAttribute(String name, Object value) {
+        if (this.attributes == null) {
+            this.attributes = new Hashtable<String, Object>();
+        }
+        
         this.attributes.put(name, value);
     }
     
     public Object getAttribute(String name) {
+        if (this.attributes == null) {
+            this.attributes = new Hashtable<String, Object>();
+        }
+        
         return this.attributes.get(name);
     }
     
     public void removeAttribute(String name) {
+        if (this.attributes == null) {
+            this.attributes = new Hashtable<String, Object>();
+        }
+        
         this.attributes.remove(name);
     }
     
@@ -253,5 +276,21 @@ public class ViewState implements IViewState {
 
     public PresentationContext getContext() {
         return this.context;
+    }
+
+    public void addHiddenSlot(HiddenSlot slot) {
+        if (this.hiddenSlots == null) {
+            this.hiddenSlots = new ArrayList<HiddenSlot>();
+        }
+
+        this.hiddenSlots.add(slot);
+    }
+
+    public List<HiddenSlot> getHiddenSlots() {
+        if (this.hiddenSlots == null) {
+            this.hiddenSlots = new ArrayList<HiddenSlot>();
+        }
+        
+        return this.hiddenSlots;
     }
 }

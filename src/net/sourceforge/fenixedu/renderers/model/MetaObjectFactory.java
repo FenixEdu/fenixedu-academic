@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.renderers.model;
 
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 
 public abstract class MetaObjectFactory {
     public static MetaObjectFactory DEFAULT_FACTORY = new DefaultMetaObjectFactory();
@@ -24,6 +25,12 @@ public abstract class MetaObjectFactory {
         
         return currentFactory.createMetaObject(object, usedSchema);
     }
+    
+    public static MetaSlot createSlot(MetaObject metaObject, SchemaSlotDescription slotDescription) {
+        return currentFactory.createMetaSlot(metaObject, slotDescription);
+    }
 
     public abstract MetaObject createMetaObject(Object object, Schema schema);
+    
+    public abstract MetaSlot createMetaSlot(MetaObject metaObject, SchemaSlotDescription slotDescription);
 }

@@ -5,6 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <logic:present name="websiteType">
-    <fr:edit action="/websiteManagement.do?method=start"
+    <fr:edit action="/websiteTypeManagement.do?method=start"
              name="websiteType" layout="tabular" schema="websiteType.create"/>
 </logic:present>

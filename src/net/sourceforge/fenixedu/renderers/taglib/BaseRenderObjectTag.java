@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.renderers.taglib;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 import javax.servlet.jsp.JspException;
@@ -27,8 +26,6 @@ public abstract class BaseRenderObjectTag extends TagSupport {
 
     private Properties properties;
     
-    private Object targetObject;
-    
     public BaseRenderObjectTag() {
         super();
     }
@@ -43,7 +40,6 @@ public abstract class BaseRenderObjectTag extends TagSupport {
         this.layout = null;
         this.schema = null;
         this.properties = null;
-        this.targetObject = null;
     }
 
     public String getName() {
@@ -87,7 +83,7 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     }
 
     public void setTemplate(String template) {
-        // TODO: assign to a diferent field to respect the TagLib spec
+        // TODO: cfgi, assign to a different field to respect the TagLib spec
         this.layout = "template";
         addRenderProperty("template", template);
     }
@@ -123,25 +119,20 @@ public abstract class BaseRenderObjectTag extends TagSupport {
     protected int getScopeByName(String scope) throws JspException {
         return TagUtils.getInstance().getScope(scope);
     }
-        
+    
     protected Object getTargetObject() throws JspException {
-        Object object = getTargetObjectByName(); 
-        object = getTargetObjectByProperty(object);
-
-        return this.targetObject = object;
+        Object object = getTargetObjectByName();
+        
+        return getTargetObjectByProperty(object);
     }
 
     protected Object getTargetObjectByProperty(Object object) {
         if (object != null && getProperty() != null) {
             try {
                 return PropertyUtils.getProperty(object, getProperty());
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
+            } catch (Exception e) {
+                throw new RuntimeException("object " + object + " does not have property " + getProperty(), e);
+            } 
         }
         
         return object;

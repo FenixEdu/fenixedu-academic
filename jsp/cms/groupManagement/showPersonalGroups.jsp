@@ -14,7 +14,7 @@
     <bean:define id="groupsIterator" type="java.util.Iterator" scope="request" property="personalGroupsIterator" name="person"/>
     <bean:define id="numberOfGroups" type="java.lang.Integer" property="personalGroupsCount" name="person"/>    
     
-	<h2><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.title.label" /></h2>
+	<h3><bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.title.label" /></h3>
 	<bean:message  bundle="CMS_RESOURCES" key="cms.personalGroupsManagement.foundGroups.label" arg0="<%= numberOfGroups.toString() %>"/>
 
     <logic:greaterThan name="numberOfGroups" value="0">	

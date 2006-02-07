@@ -38,7 +38,7 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         
         List<SchemaSlotDescription> slotDescriptions = schema.getSlotDescriptions(); 
         for (SchemaSlotDescription description : slotDescriptions) {
-            SimpleMetaSlot metaSlot = (SimpleMetaSlot) createMetaSlot(metaObject, object, description);
+            SimpleMetaSlot metaSlot = (SimpleMetaSlot) createMetaSlot(metaObject, description);
             
             metaObject.addSlot(metaSlot);
         }
@@ -46,7 +46,8 @@ public class DefaultMetaObjectFactory extends MetaObjectFactory {
         return metaObject;
     }
 
-    protected MetaSlot createMetaSlot(MetaObject metaObject, Object object, SchemaSlotDescription slotDescription) {
+    @Override
+    public MetaSlot createMetaSlot(MetaObject metaObject, SchemaSlotDescription slotDescription) {
         SimpleMetaSlot metaSlot = new SimpleMetaSlot((SimpleMetaObject) metaObject, slotDescription.getSlotName());
         
         metaSlot.setLabelKey(slotDescription.getKey());

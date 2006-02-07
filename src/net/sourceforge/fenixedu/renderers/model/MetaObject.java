@@ -5,12 +5,33 @@ import java.util.List;
 import java.util.Properties;
 
 public interface MetaObject extends Serializable {
-    public void setUser(UserIdentity user);
+    //
+    // Meta factory responsability, not settable in a general way
+    //
+    
     public Object getObject();
     public Class getType();
-    public List<MetaSlot> getSlots();
     public String getSchema();
     public MetaObjectKey getKey();
+    public List<MetaSlot> getSlots();
+
+    //
+    // Interaction with framework
+    //
+    
+    public UserIdentity getUser();
+    public void setUser(UserIdentity user);
+    
+    public List<MetaSlot> getHiddenSlots();
+    public void addHiddenSlot(MetaSlot slot);
+    
     public Properties getProperties();
+    public void setProperties(Properties properties);
+    
+    //
+    // Transactional environment
+    // TODO: cfgi, how to allow two commits to be transactional
+    //
+    
     public void commit();
 }

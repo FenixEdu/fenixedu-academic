@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.renderers.taglib;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -13,6 +15,8 @@ import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlForm;
 import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
 import net.sourceforge.fenixedu.renderers.components.HtmlInlineContainer;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.renderers.components.state.HiddenSlot;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewDestination;
@@ -21,7 +25,10 @@ import net.sourceforge.fenixedu.renderers.contexts.InputContext;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
+import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 import net.sourceforge.fenixedu.renderers.schemas.Schema;
+import net.sourceforge.fenixedu.renderers.schemas.SchemaSlotDescription;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
 import org.apache.struts.Globals;
@@ -30,18 +37,21 @@ import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.taglib.TagUtils;
 
 public class EditObjectTag extends BaseRenderObjectTag {
-
+    
     private boolean nested;
     
     private String action;
     
     private Map<String, ViewDestination> destinations;
     
+    private Map<String,HiddenSlot> hiddenSlots;
+    
     public EditObjectTag() {
         super();
 
         this.nested = false;
         this.destinations = new Hashtable<String, ViewDestination>();
+        this.hiddenSlots = new Hashtable<String, HiddenSlot>();
     }
 
     public boolean isNested() {
@@ -67,6 +77,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
         this.nested = false;
         this.action = null;
         this.destinations = new Hashtable<String, ViewDestination>();
+        this.hiddenSlots = new Hashtable<String, HiddenSlot>();
     }
 
     protected boolean isPostBack() {
@@ -139,12 +150,29 @@ public class EditObjectTag extends BaseRenderObjectTag {
         IViewState viewState = inputContext.getViewState();
 
         HtmlComponent componentToDraw;
-        HtmlHiddenField htmlHiddenField = new HtmlHiddenField(LifeCycleConstants.VIEWSTATE_PARAM_NAME, ViewState.encodeToBase64(viewState));
+
+        List<HtmlHiddenField> hiddenFields = new ArrayList<HtmlHiddenField>();
+        for (HiddenSlot slot : this.hiddenSlots.values()) {
+            for (String value : slot.getValues()) {
+                HtmlHiddenField field = new HtmlHiddenField(slot.getName(), value);
+                field.setTargetSlot(slot.getKey());
+                
+                hiddenFields.add(field);
+            }
+
+            viewState.addHiddenSlot(slot);
+        }
+
+        HtmlHiddenField htmlViewStateField = new HtmlHiddenField(LifeCycleConstants.VIEWSTATE_PARAM_NAME, ViewState.encodeToBase64(viewState));
+        hiddenFields.add(htmlViewStateField);
         
         if (isNested()) {
             HtmlInlineContainer container = new HtmlInlineContainer();
             
-            container.addChild(htmlHiddenField);
+            for (HtmlHiddenField field : hiddenFields) {
+                container.addChild(field);    
+            }
+          
             container.addChild(component);
             
             componentToDraw = container;
@@ -158,7 +186,10 @@ public class EditObjectTag extends BaseRenderObjectTag {
             form.setEncoding(HtmlForm.URL_ENCODED);
 
             form.setBody(component);
-            form.addHiddenField(htmlHiddenField);
+
+            for (HtmlHiddenField field : hiddenFields) {
+                form.addHiddenField(field);    
+            }
             
             componentToDraw = form;
         }
@@ -196,7 +227,7 @@ public class EditObjectTag extends BaseRenderObjectTag {
             viewState.setRequest((HttpServletRequest) pageContext.getRequest());
             
             Schema schema = RenderKit.getInstance().findSchema(getSchema());
-            MetaObject metaObject = MetaObjectFactory.createObject(targetObject, schema);
+            MetaObject metaObject = createMetaObject(targetObject, schema);
             viewState.setMetaObject(metaObject);
             
             viewState.setInputDestination(getInputDestination());
@@ -212,6 +243,22 @@ public class EditObjectTag extends BaseRenderObjectTag {
         }
         
         return viewState;
+    }
+
+    private MetaObject createMetaObject(Object targetObject, Schema schema) {
+        MetaObject metaObject = MetaObjectFactory.createObject(targetObject, schema);
+        
+        for (HiddenSlot slot : this.hiddenSlots.values()) {
+            SchemaSlotDescription slotDescription = new SchemaSlotDescription(slot.getName());
+            
+            slotDescription.setConverter(slot.getConverter());
+            
+            MetaSlot metaSlot = MetaObjectFactory.createSlot(metaObject, slotDescription);
+            metaObject.addHiddenSlot(metaSlot);
+            slot.setKey(metaSlot.getKey());
+        }
+        
+        return metaObject;
     }
 
     protected ViewDestination getInputDestination() {
@@ -258,5 +305,21 @@ public class EditObjectTag extends BaseRenderObjectTag {
 
     public void addDestination(String name, String path, String module, boolean redirect) {
         this.destinations.put(name, new ViewDestination(path, module, redirect));
+    }
+
+    public void addHiddenSlot(String slot, boolean multiple, String value, Class<Converter> converter) {
+        HiddenSlot hiddenSlot = this.hiddenSlots.get(slot);
+        
+        if (hiddenSlot == null) {
+            hiddenSlot = new HiddenSlot(slot, value, converter);
+            
+            this.hiddenSlots.put(slot, hiddenSlot);
+        }
+        else {
+            hiddenSlot.addValue(value);
+        }
+        
+        hiddenSlot.setConverter(converter);
+        hiddenSlot.setMultiple(hiddenSlot.isMultiple() || multiple);
     }
 }

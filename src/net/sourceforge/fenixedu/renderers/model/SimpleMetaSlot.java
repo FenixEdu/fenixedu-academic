@@ -1,9 +1,11 @@
 package net.sourceforge.fenixedu.renderers.model;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.utils.RenderUtils;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
@@ -21,6 +23,7 @@ public class SimpleMetaSlot implements MetaSlot {
     private String defaultValue;
     private Properties properties;
     private Properties validatorProperties;
+    private Class<Converter> converter;
 
     public SimpleMetaSlot(MetaObject metaObject, String name) {
         super();
@@ -73,6 +76,18 @@ public class SimpleMetaSlot implements MetaSlot {
         return this.validatorProperties;
     }
 
+    public boolean hasConverter() {
+        return this.converter != null;
+    }
+
+    public Class<Converter> getConverter() {
+        return this.converter;
+    }
+
+    public void setConverter(Class<Converter> converter) {
+        this.converter = converter;
+    }
+    
     public void setObject(Object object) {
         // TODO: do something with exceptions
         try {
@@ -87,6 +102,11 @@ public class SimpleMetaSlot implements MetaSlot {
     }
 
     public void setUser(UserIdentity user) {
+        // no user needed
+    }
+
+    public UserIdentity getUser() {
+        return null;
     }
 
     public Object getObject() {
@@ -119,6 +139,13 @@ public class SimpleMetaSlot implements MetaSlot {
 
     public List<MetaSlot> getSlots() {
         return MetaObjectFactory.createObject(getObject(), RenderKit.getInstance().findSchema(getSchema())).getSlots();
+    }
+    
+    public List<MetaSlot> getHiddenSlots() {
+        return new ArrayList<MetaSlot>();
+    }
+
+    public void addHiddenSlot(MetaSlot slot) {
     }
 
     public void setProperties(Properties properties) {
@@ -154,5 +181,6 @@ public class SimpleMetaSlot implements MetaSlot {
     }
 
     public void commit() {
+        // nothing to be done
     }
 }

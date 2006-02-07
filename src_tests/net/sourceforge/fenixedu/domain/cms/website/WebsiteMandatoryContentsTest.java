@@ -64,7 +64,7 @@ public class WebsiteMandatoryContentsTest extends DomainTestBase
 
 	public void testSiteWithNoTypeHasOnlyItsComponents()
 	{
-		this.website.removeType();
+		this.website.removeWebsiteType();
 		Collection<Content> siteContents = this.website.getChildren();
 		assertTrue("#AT1 Site does not contain its own section,", siteContents.contains(this.section));
 		assertFalse("#AF1 Site contains mandatory type section and it should not,", siteContents.contains(this.section2));

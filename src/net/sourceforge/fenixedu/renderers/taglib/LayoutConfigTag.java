@@ -39,7 +39,7 @@ public class LayoutConfigTag extends TagSupport {
 		}
 		else {
 			return SKIP_BODY;
-		}       
+		}
 	}
 	
     public int doEndTag() throws JspException {

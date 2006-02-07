@@ -3,7 +3,7 @@
  */
 
 
-package net.sourceforge.fenixedu.presentationTier.Action.cms.executionCourseWebsite;
+package net.sourceforge.fenixedu.presentationTier.Action.cms.website.executionCourseWebsite;
 
 
 import java.util.Collection;
@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
+import net.sourceforge.fenixedu.domain.cms.website.WebsiteType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -243,9 +244,11 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		Object args[] =
 		{ executionDegreeID, executionPeriodID, curricularYear };
 		List infoExecutionCourses;
+        Collection websiteTypes;
 		try
 		{
 			infoExecutionCourses = (List) ServiceUtils.executeService(userView, "ReadExecutionCoursesByExecutionDegreeIdAndExecutionPeriodIdAndCurYear", args);
+            websiteTypes = (Collection) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[] { WebsiteType.class });
 		}
 		catch (FenixServiceException e)
 		{
@@ -253,9 +256,11 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		}
 
 		Collections.sort(infoExecutionCourses, new BeanComparator("nome"));
-
+       
 		request.setAttribute("courses", infoExecutionCourses);
 		request.setAttribute("viewAction", mapping.getPath());
+        request.setAttribute("websiteTypes", websiteTypes);
+        
 		return prepareChooseExecDegreeAndCurYear(mapping, form, request, response);
 	}
 
@@ -273,6 +278,8 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 			parameters.setName(websiteForm.getName());
 			parameters.setExecutionCourseID(websiteForm.getExecutionCourseID());
 			parameters.setPerson(userView.getPerson());
+            parameters.setWebsiteTypeID(websiteForm.getWebsiteTypeID());
+            
 			ServiceUtils.executeService(userView, "WriteExecutionCourseWebsite", new Object[]
 			{ parameters });
 

@@ -5388,7 +5388,7 @@ relation SeminaryCourseEquivalency {
 }
 
 relation WebSiteTypeWebsite {
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole type;
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole websiteType;
 	net.sourceforge.fenixedu.domain.cms.website.Website playsRole websites
 	{
 		multiplicity *;
@@ -5413,14 +5413,12 @@ relation WebSiteItemPerson {
     net.sourceforge.fenixedu.domain.Person playsRole editor;
 }
 
-
 relation WebSiteItemWebSiteSection {
     net.sourceforge.fenixedu.domain.WebSiteItem playsRole includedWebSiteItems {
         multiplicity *;
     }
     net.sourceforge.fenixedu.domain.WebSiteSection playsRole webSiteSection;
 }
-
 
 relation WebSiteSectionWebSite {
     net.sourceforge.fenixedu.domain.WebSiteSection playsRole associatedWebSiteSections {

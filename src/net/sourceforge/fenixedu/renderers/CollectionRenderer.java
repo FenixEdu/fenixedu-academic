@@ -316,7 +316,7 @@ public class CollectionRenderer extends OutputRenderer {
                 String realName;
                 String customValue;
                 
-                String[] parameterParts = name.split("=");
+                String[] parameterParts = name.split("=", -1);
                 if (parameterParts.length >= 1) {
                     String[] nameParts = parameterParts[0].split("/");
                     

@@ -5,5 +5,4 @@ public class WebsiteSection extends WebsiteSection_Base {
     public WebsiteSection() {
         super();
     }
-    
 }

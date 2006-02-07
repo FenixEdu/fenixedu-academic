@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.domain.cms;
 
 import java.util.Date;
 
+import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.domain.Person;
 
 public abstract class Content extends Content_Base implements Comparable<Content>
@@ -23,7 +24,9 @@ public abstract class Content extends Content_Base implements Comparable<Content
 	public Content()
 	{
 		super();
+        
 		this.setCreationDate(new Date(System.currentTimeMillis()));
+        setCreator(AccessControl.getUserView().getPerson());
 	}
 
 	public int compareTo(Content arg0)

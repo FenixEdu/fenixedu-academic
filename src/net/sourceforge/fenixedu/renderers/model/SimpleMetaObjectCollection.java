@@ -52,7 +52,7 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return new Properties();
     }
 
-    public void commit() {
+    public void setProperties(Properties properties) {
     }
 
     public void setSchema(String name) {
@@ -63,4 +63,17 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return this.schema;
     }
 
+    public UserIdentity getUser() {
+        return null;
+    }
+
+    public List<MetaSlot> getHiddenSlots() {
+        return new ArrayList<MetaSlot>();
+    }
+
+    public void addHiddenSlot(MetaSlot slot) {
+    }
+
+    public void commit() {
+    }
 }

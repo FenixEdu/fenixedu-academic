@@ -5,19 +5,18 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.cms.website.WebsiteType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.cms.website.WebsiteType;
-import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 public class WebsiteTypeManagement extends FenixDispatchAction {
 
@@ -48,8 +47,13 @@ public class WebsiteTypeManagement extends FenixDispatchAction {
             return start(mapping, actionForm, request, response);
         }
         
-        IUserView userView = SessionUtils.getUserView(request);
-        ServiceUtils.executeService(userView, "DeleteWebsiteType", new Object[] { oid });
+        try {
+            IUserView userView = SessionUtils.getUserView(request);
+            ServiceUtils.executeService(userView, "DeleteWebsiteType", new Object[] { oid });
+        }
+        catch (DomainException e) {
+            addError(request, e.getKey());
+        }
         
         return start(mapping, actionForm, request, response);
     }

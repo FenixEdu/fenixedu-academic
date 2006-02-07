@@ -23,3 +23,4 @@ execute "Creating RootDomainObject and Setting up relations" createRootDomainObj
 execute "Creating ResearchEvents table" createResearchEventTable.sql
 execute "Adding Prevailing Scientific Area to Degree" addPrevailingScientificAreaToDegree.sql
 execute "Creating Project table and setting up relations" createTableProject.sql
+execute "Creating WebsiteSection and WebsiteItem tables" addMoreCmsTables.sql

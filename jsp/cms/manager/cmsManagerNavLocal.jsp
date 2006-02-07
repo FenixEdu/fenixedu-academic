@@ -18,7 +18,7 @@
 	</html:link>	
 </strong></p>
 <p><strong>&raquo;
-    <html:link module="/cms" action="/websiteManagement?method=start" >
-        <bean:message bundle="CMS_RESOURCES" key="cms.websiteManagement.label" />
+    <html:link module="/cms" action="/websiteTypeManagement?method=start" >
+        <bean:message bundle="CMS_RESOURCES" key="cms.websiteTypeManagement.label" />
     </html:link>    
 </strong></p>

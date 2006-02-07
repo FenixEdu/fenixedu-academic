@@ -3,13 +3,19 @@ package net.sourceforge.fenixedu.renderers.components.state;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlFormComponent;
+import net.sourceforge.fenixedu.renderers.components.HtmlHiddenField;
+import net.sourceforge.fenixedu.renderers.components.HtmlMultipleHiddenField;
 import net.sourceforge.fenixedu.renderers.components.HtmlMultipleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.HtmlSimpleValueComponent;
 import net.sourceforge.fenixedu.renderers.components.controllers.Controllable;
@@ -22,9 +28,100 @@ import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 import org.apache.commons.collections.Predicate;
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForward;
 
 public class ComponentLifeCycle {
+    private static final Logger logger = Logger.getLogger(ComponentLifeCycle.class);
+    
+    //
+    // Utility classes
+    //
+    
+    private class ComponentCollector {
+    
+        private List<HtmlFormComponent> formComponents;
+    
+        private List<HtmlController> controllers;
+    
+        public ComponentCollector(IViewState viewState, HtmlComponent component) {
+            this.formComponents = new ArrayList<HtmlFormComponent>();
+            this.controllers = new ArrayList<HtmlController>();
+    
+            visit(component);
+            addHiddenComponents(viewState);
+
+        }
+
+        private void addHiddenComponents(IViewState viewState) {
+            // add hidden fields that were rendered by the framework
+            for (HiddenSlot hiddenSlot : viewState.getHiddenSlots()) {
+                HtmlFormComponent hiddenField;
+                
+                if (hiddenSlot.isMultiple()) {
+                    hiddenField = new HtmlMultipleHiddenField(hiddenSlot.getName());
+                }
+                else {
+                    hiddenField = new HtmlHiddenField(hiddenSlot.getName(), null);
+                }
+
+                hiddenField.setTargetSlot(hiddenSlot.getKey());
+                this.formComponents.add(hiddenField);
+            }
+        }
+    
+        public List<HtmlFormComponent> getFormComponents() {
+            return this.formComponents;
+        }
+    
+        public List<HtmlController> getControllers() {
+            return this.controllers;
+        }
+    
+        private void visit(HtmlComponent component) {
+            List<HtmlComponent> components = component.getChildren(new Predicate() {
+                public boolean evaluate(Object component) {
+                    if (component instanceof HtmlFormComponent) {
+                        HtmlFormComponent formComponent = (HtmlFormComponent) component;
+    
+                        if (formComponent.getName() != null) {
+                            return true;
+                        }
+                    }
+    
+                    return false;
+                }
+            });
+    
+            for (HtmlComponent comp : components) {
+                this.formComponents.add((HtmlFormComponent) comp);
+            }
+    
+            Predicate hasController = new Predicate() {
+                public boolean evaluate(Object component) {
+                    if (component instanceof Controllable) {
+                        Controllable controllabelComponent = (Controllable) component;
+    
+                        if (controllabelComponent.hasController()) {
+                            return true;
+                        }
+                    }
+    
+                    return false;
+                }
+            };
+    
+            if (hasController.evaluate(component)) {
+                this.controllers.add(((Controllable) component).getController());
+            }
+    
+            components = component.getChildren(hasController);
+            for (HtmlComponent comp : components) {
+                this.controllers.add(((Controllable) comp).getController());
+            }
+        }
+    }
+
     private static ComponentLifeCycle instance = new ComponentLifeCycle();
     
     public static ActionForward execute(HttpServletRequest request) throws Exception {
@@ -47,7 +144,7 @@ public class ComponentLifeCycle {
         while (viewState.getUpdateComponentTree()) {
             viewState.setUpdateComponentTree(false);
             
-            collector = new ComponentCollector(component);
+            collector = new ComponentCollector(viewState, component);           
             updateComponent(collector, editRequest);
             
             runControllers(collector, viewState);
@@ -172,39 +269,35 @@ public class ComponentLifeCycle {
     private boolean updateDomain(ComponentCollector collector, EditRequest editRequest) throws Exception {
         boolean hasConvertError = false;
 
-        List<MetaObject> objectsToCommit = new ArrayList<MetaObject>();
+        Set<MetaObject> objectsToCommit = new HashSet<MetaObject>();
 
-        List<HtmlFormComponent> formComponents = collector.getFormComponents();
+        List<HtmlFormComponent> formComponents = collector.getFormComponents();       
         for (HtmlFormComponent formComponent : formComponents) {
             MetaSlotKey targetSlot = formComponent.getTargetSlot();
             
-            if (targetSlot == null){
+            if (targetSlot == null) {
                 continue;
             }
             
             MetaSlot metaSlot = getMetaSlot(editRequest.getViewState().getMetaObject(), targetSlot);
 
             try {
-                Object finalValue = formComponent.getConvertedValue(metaSlot.getType());
+                Object finalValue = formComponent.getConvertedValue(metaSlot);
                 metaSlot.setObject(finalValue);
                 
                 objectsToCommit.add(metaSlot.getMetaObject());
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.warn("failed to do conversion for slot " + metaSlot.getName() + ": " + e);
 
-                addConvertError(editRequest);
+                addConvertError(editRequest, formComponent, metaSlot, e);
                 hasConvertError = true;
             }
         }
         
         if (!hasConvertError) {
-            List<MetaObject> commitedObjects = new ArrayList<MetaObject>();
-
+            // FIXME: cfgi, make this transactional for multiple object editing/creation
             for (MetaObject object : objectsToCommit) {
-                if (! commitedObjects.contains(object)) {
                     object.commit();
-                    commitedObjects.add(object);
-                }
             }
         }
         
@@ -213,7 +306,15 @@ public class ComponentLifeCycle {
     }
 
     private MetaSlot getMetaSlot(MetaObject metaObject, MetaSlotKey targetSlot) {
+        // search in normal slots
         for (MetaSlot slot : metaObject.getSlots()) {
+            if (slot.getKey().equals(targetSlot)) {
+                return slot;
+            }
+        }
+        
+        // search in hidden slots
+        for (MetaSlot slot : metaObject.getHiddenSlots()) {
             if (slot.getKey().equals(targetSlot)) {
                 return slot;
             }
@@ -222,8 +323,8 @@ public class ComponentLifeCycle {
         return null;
     }
 
-    private void addConvertError(EditRequest editRequest)
-            throws IOException, ClassNotFoundException {
+    private void addConvertError(EditRequest editRequest, HtmlFormComponent formComponent, MetaSlot metaSlot, Exception exception) {
+        // TODO: cfgi, really add errors to request
 //        String message = RenderUtils.getResourceString("convert.error");
 //
 //        ActionMessages messages = getErrors(editRequest);
@@ -244,75 +345,6 @@ public class ComponentLifeCycle {
         forward.setRedirect(destination.getRedirect());
 
         return forward;
-    }
-}
-
-//
-// Utility classes
-//
-
-class ComponentCollector {
-
-    private List<HtmlFormComponent> formComponents;
-
-    private List<HtmlController> controllers;
-
-    public ComponentCollector(HtmlComponent component) {
-        this.formComponents = new ArrayList<HtmlFormComponent>();
-        this.controllers = new ArrayList<HtmlController>();
-
-        visit(component);
-    }
-
-    public List<HtmlFormComponent> getFormComponents() {
-        return this.formComponents;
-    }
-
-    public List<HtmlController> getControllers() {
-        return this.controllers;
-    }
-
-    private void visit(HtmlComponent component) {
-        List<HtmlComponent> components = component.getChildren(new Predicate() {
-            public boolean evaluate(Object component) {
-                if (component instanceof HtmlFormComponent) {
-                    HtmlFormComponent formComponent = (HtmlFormComponent) component;
-
-                    if (formComponent.getName() != null) {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        });
-
-        for (HtmlComponent comp : components) {
-            this.formComponents.add((HtmlFormComponent) comp);
-        }
-
-        Predicate hasController = new Predicate() {
-            public boolean evaluate(Object component) {
-                if (component instanceof Controllable) {
-                    Controllable controllabelComponent = (Controllable) component;
-
-                    if (controllabelComponent.hasController()) {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        };
-
-        if (hasController.evaluate(component)) {
-            this.controllers.add(((Controllable) component).getController());
-        }
-
-        components = component.getChildren(hasController);
-        for (HtmlComponent comp : components) {
-            this.controllers.add(((Controllable) comp).getController());
-        }
     }
 }
 

@@ -96,7 +96,9 @@ import org.apache.struts.validator.DynaValidatorForm;
 
 /**
  * @author Fernanda Quit�rio
+ * @deprecated
  */
+@Deprecated
 public class TeacherAdministrationViewerDispatchAction extends FenixDispatchAction {
     public ActionForward instructions(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws FenixActionException,

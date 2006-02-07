@@ -6,4 +6,4 @@
 
 <fr:create type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType" layout="tabular"
            schema="websiteType.create"
-           action="/websiteManagement.do?method=start"/>
+           action="/websiteTypeManagement.do?method=start"/>

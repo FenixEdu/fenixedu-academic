@@ -14,7 +14,7 @@
 	    <form-bean name="userGroupForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 	    	<form-property name="method" type="java.lang.String"/>
 	    	<form-property name="name" type="java.lang.String"/>
-			<form-property name="userGroupType" type="java.lang.String" />    	
+        	<form-property name="userGroupType" type="java.lang.String" />    	
 	    	<form-property name="description" type="java.lang.String"/>
 	    	<form-property name="executionPeriodID" type="java.lang.Integer"/>
 	    	<form-property name="executionDegreeID" type="java.lang.Integer"/>
@@ -59,10 +59,10 @@
     <!--  ================================================ -->          
     
       <!--  ============= by gedl 15-11-2005  ================-->
-       <form-bean name="executionCourseWebsiteManagementForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.executionCourseWebsite.ExecutionCourseWebSiteManagementForm" dynamic="false"/>
+       <form-bean name="executionCourseWebsiteManagementForm" type="net.sourceforge.fenixedu.presentationTier.Action.cms.website.executionCourseWebsite.ExecutionCourseWebSiteManagementForm" dynamic="false"/>
     <!--  ================================================ -->      
     
-       <form-bean name="websiteManagementForm" type="org.apache.struts.action.DynaActionForm" dynamic="false"/>
+       <form-bean name="voidForm" type="org.apache.struts.action.DynaActionForm" dynamic="false"/>
     </form-beans>
 
 
@@ -226,7 +226,7 @@
 		
 		<!--  ============= by gedl 6-12-2005  ================-->		
 		<action path="/executionCourseWebsiteManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.cms.executionCourseWebsite.ExecutionCourseWebsiteManagement"
+			type="net.sourceforge.fenixedu.presentationTier.Action.cms.website.executionCourseWebsite.ExecutionCourseWebsiteManagement"
 			parameter="method"
 			scope="request"
 			name="executionCourseWebsiteManagementForm"
@@ -236,16 +236,29 @@
 		</action>						
 		<!--  =================================================-->	
 				
-        <action path="/websiteManagement"
+        <action path="/websiteTypeManagement"
             type="net.sourceforge.fenixedu.presentationTier.Action.cms.websiteTypeManagement.WebsiteTypeManagement"
             parameter="method"
-            name="websiteManagementForm"
+            name="voidForm"
             scope="request">
             <forward name="list" path="listWebsiteType"/>
             <forward name="edit" path="editWebsiteType"/>
             <forward name="details" path="viewWebsiteType"/>
             <forward name="create" path="createWebsiteType"/>
         </action>				
+
+        <action path="/websiteManagement"
+            type="net.sourceforge.fenixedu.presentationTier.Action.cms.website.WebsiteManagement"
+            parameter="method"
+            name="voidForm"
+            scope="request">
+            <forward name="viewWebsites" path="showAllExecutionCourseWebsites"/>
+            <forward name="edit" path="editWebsite"/>
+            <forward name="createSection" path="createWebsiteSection"/>
+            <forward name="createItem" path="createWebsiteItem"/>
+            <forward name="editItem" path="editWebsiteItem"/>
+            <forward name="editSection" path="editWebsiteSection"/>
+        </action>
 				
         <action path="/domain/view" type="net.sourceforge.fenixedu.presentationTier.renderers.actions.ViewObjectAction">
             <forward name="show" path="domain.view"/>

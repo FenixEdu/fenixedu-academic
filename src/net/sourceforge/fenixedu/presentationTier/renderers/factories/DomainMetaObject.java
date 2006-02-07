@@ -18,28 +18,33 @@ import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 
 public class DomainMetaObject implements MetaObject {
 
+    private String schema;
     private Class type;
     private int oid;
     private List<MetaSlot> slots;
-    private Properties properties;
 
+    private List<MetaSlot> hiddenSlots;
+    private Properties properties;
+    
     private transient DomainObject object;
     private transient UserIdentity userIdentity;
-    private String schema;
 
+    protected DomainMetaObject() {
+        this.slots = new ArrayList<MetaSlot>();
+        this.hiddenSlots = new ArrayList<MetaSlot>();
+
+        this.properties = new Properties();
+    }
+    
     public DomainMetaObject(DomainObject object) {
+        this();
+        
         this.type = object.getClass();
         this.oid = object.getIdInternal().intValue();
-        this.properties = new Properties();
-        this.slots = new ArrayList<MetaSlot>();
         this.object = object;
     }
     
-    public void setUser(UserIdentity user) {
-        this.userIdentity = user;
-    }
-
-    public DomainObject getObject() {
+    public Object getObject() {
         if (this.object == null) {
             this.object = getPersistentObject();
         }
@@ -47,7 +52,7 @@ public class DomainMetaObject implements MetaObject {
         return this.object;
     }
 
-    private DomainObject getPersistentObject() {
+    protected DomainObject getPersistentObject() {
         try {
             IUserView userView = getUserView();
 
@@ -61,10 +66,18 @@ public class DomainMetaObject implements MetaObject {
         return null;
     }
 
-    private IUserView getUserView() {
-        return ((FenixUserIdentity) this.userIdentity).getUserView();
+    public void setUser(UserIdentity user) {
+        this.userIdentity = user;
+    }
+    
+    public UserIdentity getUser() {
+        return this.userIdentity;
     }
 
+    protected IUserView getUserView() {
+        return ((FenixUserIdentity) getUser()).getUserView();
+    }
+    
     public int getOid() {
         return oid;
     }
@@ -73,14 +86,22 @@ public class DomainMetaObject implements MetaObject {
         return type;
     }
 
-    public void addSlot(MetaSlot metaSlot) {
-        this.slots.add(metaSlot);
-    }
-
     public List<MetaSlot> getSlots() {
         return slots;
     }
     
+    public void addSlot(MetaSlot metaSlot) {
+        this.slots.add(metaSlot);
+    }
+
+    public List<MetaSlot> getHiddenSlots() {
+        return this.hiddenSlots;
+    }
+
+    public void addHiddenSlot(MetaSlot slot) {
+        this.hiddenSlots.add(slot);
+    }
+
     public MetaObjectKey getKey() {
         return new DomainMetaObjectKey(getOid(), getType());
     }
@@ -88,11 +109,19 @@ public class DomainMetaObject implements MetaObject {
     public Properties getProperties() {
         return properties;
     }
+    
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
 
     public void commit() {
         List<ObjectChange> changes = new ArrayList<ObjectChange>();
         
-        for (MetaSlot slot : getSlots()) {
+        List<MetaSlot> allSlots = new ArrayList<MetaSlot>();
+        allSlots.addAll(getSlots());
+        allSlots.addAll(getHiddenSlots());
+        
+        for (MetaSlot slot : allSlots) {
             CachedMetaSlot cachedSlot = (CachedMetaSlot) slot;
             
             Object change = cachedSlot.getCachedObject();
@@ -105,12 +134,16 @@ public class DomainMetaObject implements MetaObject {
  
         // TODO: do something with the exception
         try {
-            ServiceUtils.executeService(getUserView(), "UpdateObjects", new Object[] { changes });
+            ServiceUtils.executeService(getUserView(), getServiceName(), new Object[] { changes });
         } catch (FenixFilterException e) {
             e.printStackTrace();
         } catch (FenixServiceException e) {
             e.printStackTrace();
         }
+    }
+
+    protected String getServiceName() {
+        return "UpdateObjects";
     }
 
     public void setSchema(String name) {

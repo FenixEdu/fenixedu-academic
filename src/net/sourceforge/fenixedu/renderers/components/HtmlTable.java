@@ -135,7 +135,10 @@ public class HtmlTable extends HtmlComponent {
         }
         
         if (this.header != null) {
-            tag.addChild(header.getOwnTag(context));
+            for (HtmlTableRow row : header.getRows()) {
+                tag.addChild(row.getOwnTag(context));
+            }
+            //tag.addChild(header.getOwnTag(context));
         }
         
         if (this.rows.size() >= 0) {

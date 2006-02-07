@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.renderers.schemas;
 
 import java.util.Properties;
 
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.validators.HtmlValidator;
 
 public class SchemaSlotDescription {
@@ -21,6 +22,8 @@ public class SchemaSlotDescription {
     private String defaultValue;
 
     private String schema;
+    
+    private Class<Converter> converter;
     
     public SchemaSlotDescription(String slotName) {
         this.slotName = slotName;
@@ -88,5 +91,13 @@ public class SchemaSlotDescription {
 
     public void setDefaultValue(String defaultValue) {
         this.defaultValue = defaultValue;
+    }
+
+    public Class<Converter> getConverter() {
+        return this.converter;
+    }
+
+    public void setConverter(Class<Converter> converter) {
+        this.converter = converter;
     }
 }

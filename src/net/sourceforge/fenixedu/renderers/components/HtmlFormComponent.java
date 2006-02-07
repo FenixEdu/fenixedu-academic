@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.components.converters.Convertible;
 import net.sourceforge.fenixedu.renderers.components.tags.HtmlTag;
+import net.sourceforge.fenixedu.renderers.model.MetaSlot;
 import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
 
 public abstract class HtmlFormComponent extends HtmlComponent implements Convertible, Controllable, SlotChanger {
@@ -58,7 +59,7 @@ public abstract class HtmlFormComponent extends HtmlComponent implements Convert
         this.converter = converter;
     }
     
-    public Object getConvertedValue(Class type) {
+    public Object getConvertedValue(MetaSlot slot) {
         return null;
     }
 

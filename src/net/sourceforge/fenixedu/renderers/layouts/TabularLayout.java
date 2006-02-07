@@ -21,16 +21,32 @@ public abstract class TabularLayout extends Layout {
 
     private HtmlTable table;
     
+    public String getCaption() {
+        return this.caption;
+    }
+
     public void setCaption(String caption) {
         this.caption = caption;
+    }
+
+    public String getColumnClasses() {
+        return this.columnClasses;
     }
 
     public void setColumnClasses(String columnClasses) {
         this.columnClasses = columnClasses;
     }
 
+    public String getHeaderClasses() {
+        return this.headerClasses;
+    }
+
     public void setHeaderClasses(String headerClasses) {
         this.headerClasses = headerClasses;
+    }
+
+    public String getRowClasses() {
+        return this.rowClasses;
     }
 
     public void setRowClasses(String rowClasses) {
@@ -112,18 +128,25 @@ public abstract class TabularLayout extends Layout {
         // header
         HtmlTableHeader header = table.getHeader();
         if (header != null) {
-            header.setClasses(this.headerClasses);
+            // Is not very specific
+            // header.setClasses(getHeaderClasses());
+
+            for (HtmlTableRow row : header.getRows()) {
+                for (HtmlTableCell cell : row.getCells()) {
+                    cell.setClasses(getHeaderClasses());
+                }
+            }
         }
 
         // decompose row and cell classes
         String[] rowClasses = null;
-        if (this.rowClasses != null) {
-            rowClasses = this.rowClasses.split(",", -1);
+        if (getRowClasses() != null) {
+            rowClasses = getRowClasses().split(",", -1);
         }
 
         String[] cellClasses = null;
-        if (this.columnClasses != null) {
-            cellClasses = this.columnClasses.split(",", -1);
+        if (getColumnClasses() != null) {
+            cellClasses = getColumnClasses().split(",", -1);
         }
 
         // check if additional styling is needed

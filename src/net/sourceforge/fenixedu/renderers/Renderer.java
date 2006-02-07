@@ -108,7 +108,6 @@ public abstract class Renderer {
         RenderKit kit = RenderKit.getInstance();
         return kit.render(newContext, value);
     }
-
     
     protected HtmlComponent renderValue(Object value, Schema schema, String layout) {
         return renderValue(value, schema, layout, new Properties());

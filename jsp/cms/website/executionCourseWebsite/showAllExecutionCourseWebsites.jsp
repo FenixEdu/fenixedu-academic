@@ -5,21 +5,6 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ page import="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite"%>
 
-
-<span class="success0">
-	<html:messages id="infoMsg" message="true" bundle="CMS_RESOURCES"/>
-	<logic:present name="infoMsg">
-		 <bean:write name="infoMsg" filter="true" />
-	</logic:present>		 
-</span>
-
-<span class="error">
-	<html:messages id="errorMsg" message="false"  bundle="CMS_RESOURCES"/>
-	<logic:present name="errorMsg">
-		<bean:write name="errorMsg" filter="true"/>
-	</logic:present>
-</span>
-
 <logic:present name="websites">
 	<bean:define id="websites" name="websites"/>
 	<bean:size id="numberOfWebsites" name="websites"/>
@@ -30,17 +15,23 @@
 	<logic:greaterThan name="numberOfWebsites" value="0">	
 	<table width="100%" class="style1">
 		<tr>
-			<td class="listClasses-header" width="15%">Título</td>
-			<td class="listClasses-header" width="15%">Nome Disciplina</td>
-			<td class="listClasses-header" width="15%">Período Execução</td>
-			<td class="listClasses-header" width="0%">Anos Curriculares</td>
-			<td class="listClasses-header" width="15%">Cursos</td>
-			<td class="listClasses-header" width="33%">Descrição</td>
-			<td class="listClasses-header" width="0%">&nbsp;</td>
-			<td class="listClasses-header" width="0%">&nbsp;</td>
+			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.type.label" bundle="CMS_RESOURCES"/></td>
+            <td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.title.label" bundle="CMS_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.executionCourse.label" bundle="CMS_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.executionPeriod.label" bundle="CMS_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.curricularYear.label" bundle="CMS_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.degree.label" bundle="CMS_RESOURCES"/></td>
+			<td class="listClasses-header"><bean:message key="cms.executionCourseWebsiteManagement.website.description.label" bundle="CMS_RESOURCES"/></td>
+            <td class="listClasses-header">&nbsp;</td>
+			<td class="listClasses-header">&nbsp;</td>
+			<td class="listClasses-header">&nbsp;</td>
 		</tr>
 		<logic:iterate id="website" name="websites" type="net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite">
 		<tr>
+        
+            <td class="listClasses">
+                <bean:write name="website" property="websiteType.name"/>
+            </td>
 			<td class="listClasses">
 				<bean:write name="website" property="name"/>
 			</td>
@@ -81,26 +72,37 @@
 			<td class="listClasses">
 				<bean:write name="website" property="description"/>
 			</td>		
+            <td class="listClasses">
+                <%
+                java.util.Map params = new java.util.HashMap();
+                params.put("method","view");
+                params.put("websiteId",website.getIdInternal());
+                request.setAttribute("params",params);
+                 %>
+                <html:link name="params" action="/executionCourseWebsiteManagement" module="/cms">
+                    <bean:message key="cms.executionCourseWebsiteManagement.viewWebsite.label" bundle="CMS_RESOURCES"/>
+                </html:link>
+            </td>
+            <td class="listClasses">
+                <%
+                params = new java.util.HashMap();
+                params.put("method", "edit");
+                params.put("oid", website.getIdInternal());
+                request.setAttribute("params",params);
+                 %>
+                <html:link name="params" action="/websiteManagement" module="/cms">
+                    <bean:message key="cms.executionCourseWebsiteManagement.editWebsite.label" bundle="CMS_RESOURCES"/>
+                </html:link>
+            </td>
 			<td class="listClasses">
 				<%
-				java.util.Map params = new java.util.HashMap();
+				params = new java.util.HashMap();
 				params.put("method","delete");
 				params.put("websiteId",website.getIdInternal());
 				request.setAttribute("params",params);
 				 %>
 				<html:link name="params" action="/executionCourseWebsiteManagement" module="/cms">
 					<bean:message key="cms.executionCourseWebsiteManagement.deleteWebsite.label" bundle="CMS_RESOURCES"/>
-				</html:link>
-			</td>
-			<td class="listClasses">
-				<%
-				params = new java.util.HashMap();
-				params.put("method","view");
-				params.put("websiteId",website.getIdInternal());
-				request.setAttribute("params",params);
-				 %>
-				<html:link name="params" action="/executionCourseWebsiteManagement" module="/cms">
-					<bean:message key="cms.executionCourseWebsiteManagement.viewWebsite.label" bundle="CMS_RESOURCES"/>
 				</html:link>
 			</td>
 		</tr>												
@@ -188,9 +190,19 @@
 						<bean:message bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.website.description.label"/>
 					</td>							
 					<td>
-						<html:text property="description"/>
+						<html:text property="description" size="60"/>
 					</td>
-				</tr>										
+				</tr>		
+                <tr>
+                    <td>
+                        <bean:message bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.website.type.label"/>
+                    </td>                           
+                    <td>
+                        <html:select property="websiteTypeID">
+						  <html:options collection="websiteTypes" property="idInternal" labelProperty="name"/>
+        					</html:select>
+                    </td>
+                </tr>       
 				<tr>
 					<td valign="top" width="10%">
 					<bean:message  bundle="CMS_RESOURCES" key="cms.executionCourseWebsiteManagement.courseSelection.label"/>
