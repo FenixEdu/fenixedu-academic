@@ -22,7 +22,7 @@
 	
 	<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.bolonhaDegrees}" var="degree">
 		<h:outputText value="<table width='90%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
-		<h:outputText value="<tr><th width='140px'>#{scouncilBundle['degree']}:</th>" escape="false"/>
+		<h:outputText value="<tr><th width='140px'><strong>#{scouncilBundle['degree']}:</strong></th>" escape="false"/>
 
 		<h:outputText value="<td>#{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
 		<h:outputText value="<td width='240px'>" escape="false"/>
@@ -48,7 +48,7 @@
 
 		<fc:dataRepeater value="#{degree.degreeCurricularPlans}" var="degreeCurricularPlan" rendered="#{!empty degree.degreeCurricularPlans}" rowIndexVar="index">
 			<h:outputText value="<tr>" escape="false"/>
-			<h:outputText rendered="#{index == 0}" value="<th>#{scouncilBundle['curricularPlans']}:</th>" escape="false"/>
+			<h:outputText rendered="#{index == 0}" value="<th><strong>#{scouncilBundle['curricularPlans']}:</strong></th>" escape="false"/>
 			<h:outputText rendered="#{index > 0}" value="<th></th>" escape="false"/>
 
 			<h:outputText value="<td><em class='attention2'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> " escape="false" />

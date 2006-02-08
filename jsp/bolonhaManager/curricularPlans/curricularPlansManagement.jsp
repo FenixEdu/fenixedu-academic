@@ -19,7 +19,7 @@
 	
 		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.filteredBolonhaDegrees}" var="degree" rendered="#{!empty ScientificCouncilDegreeManagement.bolonhaDegrees}">
 			<h:outputText value="<table width='90%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
-			<h:outputText value="<tr><th width='140px'>#{bolonhaBundle['degree']}:</th>" escape="false"/>
+			<h:outputText value="<tr><th width='140px'><strong>#{bolonhaBundle['degree']}:</strong></th>" escape="false"/>
 	
 			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
 			<h:outputText value="<td width='240px'>" escape="false"/>
@@ -35,7 +35,7 @@
 				<h:outputText value="<tr>" escape="false"/>
 
 				<h:outputText value="<tr>" escape="false"/>
-				<h:outputText rendered="#{index == 0}" value="<th>#{bolonhaBundle['curricularPlans']}:</th>" escape="false"/>
+				<h:outputText rendered="#{index == 0}" value="<th><strong>#{bolonhaBundle['curricularPlans']}:</strong></th>" escape="false"/>
 				<h:outputText rendered="#{index > 0}" value="<th></th>" escape="false"/>
 	
 				<h:outputText value="<td><em class='attention2'>#{enumerationBundle[degreeCurricularPlan.curricularStage.name]}</em> " escape="false" />
