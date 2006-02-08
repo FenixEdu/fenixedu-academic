@@ -240,10 +240,9 @@ public class ViewTeacherService extends FenixBackingBean {
 			FenixServiceException {
 
 		List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
-        ResourceBundle bundle = getResourceBundle("resources/EnumerationResources");
-        
+               
 		Object[] args = { getUserView().getPerson().getUsername(),
-				ExecutionPeriodsIDs, bundle};
+				ExecutionPeriodsIDs};
 
 		this.teacherServiceDTO = (List<TeacherDistributionServiceEntryDTO>) ServiceUtils
 				.executeService(getUserView(),

@@ -37,7 +37,7 @@ import net.sourceforge.fenixedu.util.DateFormatUtil;
 public class ReadTeacherServiceDistributionByTeachers extends Service {
 	
 
-	public List run(String username, List<Integer> executionPeriodsIDs, ResourceBundle bundle) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
+	public List run(String username, List<Integer> executionPeriodsIDs) throws FenixServiceException, ExcepcaoPersistencia, ParseException {		
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 		
 		
@@ -135,7 +135,7 @@ public class ReadTeacherServiceDistributionByTeachers extends Service {
 						endDate = exemption.getEnd();
 					}
 					
-					returnDTO.addManagementFunctionToTeacher(teacher.getIdInternal(), bundle.getString(exemption.getType().getName()), (double) teacher.getHoursByCategory(exemption.getStart(), endDate));
+					returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), exemption.getType().getName(), (double) teacher.getHoursByCategory(exemption.getStart(), endDate));
 				}
 				
 			}

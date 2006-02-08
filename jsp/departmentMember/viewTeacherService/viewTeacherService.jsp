@@ -141,6 +141,11 @@ text-align: right;
 					<c:forEach items="${teacher.managementFunctionList}" var="managementFunction">
 						<c:out value="<li>${managementFunction.functionName} - ${managementFunction.credits}</li>" escapeXml="false" />
 					</c:forEach>
+					<c:forEach items="${teacher.exemptionSituationList}" var="exemptionSituation">
+						<c:out value="<li>" escapeXml="false"/>
+						<c:out value="${bundleEnumeration[exemptionSituation.functionName]}" />
+						<c:out value=" - ${exemptionSituation.credits}</li>" escapeXml="false" />
+					</c:forEach>
 				<c:out value="</ul>" escapeXml="false" />
 			<c:out value="</td>" escapeXml="false" />
 			<c:out value="</tr>" escapeXml="false" />

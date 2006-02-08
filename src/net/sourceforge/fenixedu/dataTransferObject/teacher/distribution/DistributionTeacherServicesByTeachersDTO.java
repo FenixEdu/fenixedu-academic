@@ -140,11 +140,11 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	}
 
 	
-	public class TeacherManagementFunctionDTO {
+	public class TeacherCreditsInfoDTO {
 		private String functionName;
 		private Double credits;
 		
-		TeacherManagementFunctionDTO(String functionName, Double credits) {
+		TeacherCreditsInfoDTO(String functionName, Double credits) {
 			this.functionName = functionName;
 			this.credits = credits;
 		}
@@ -176,7 +176,9 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
 		List<ExecutionCourseTeacherServiceDTO> executionCourseTeacherServiceList;
 		
-		List<TeacherManagementFunctionDTO> managementFunctionList;
+		List<TeacherCreditsInfoDTO> managementFunctionList;
+		
+		List<TeacherCreditsInfoDTO> exemptionSituationList;
 
 		
 		public TeacherDistributionServiceEntryDTO(Integer internal, Integer teacherNumber, String category,  String name, Integer hours, Double credits, Double accumulatedCredits) {
@@ -190,7 +192,9 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			
 			executionCourseTeacherServiceList = new ArrayList<ExecutionCourseTeacherServiceDTO>();
 			
-			managementFunctionList = new ArrayList<TeacherManagementFunctionDTO>();
+			managementFunctionList = new ArrayList<TeacherCreditsInfoDTO>();
+			
+			exemptionSituationList = new ArrayList<TeacherCreditsInfoDTO>();
 		}
 
 
@@ -285,17 +289,25 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		}
 
 
-		public List<TeacherManagementFunctionDTO> getManagementFunctionList() {
+		public List<TeacherCreditsInfoDTO> getManagementFunctionList() {
 			return managementFunctionList;
 		}
 		
 		public void addToManagementFunction(String function, Double credits) {
-			managementFunctionList.add(new TeacherManagementFunctionDTO(function, credits));
+			managementFunctionList.add(new TeacherCreditsInfoDTO(function, credits));
 		}
-
+		
+		public void addToExemptionSituation(String exemptionType, Double credits) {
+			exemptionSituationList.add(new TeacherCreditsInfoDTO(exemptionType, credits));
+		}
 
 		public void setTeacherSpentCredits(Double teacherSpentCredits) {
 			this.teacherSpentCredits = teacherSpentCredits;
+		}
+
+
+		public List<TeacherCreditsInfoDTO> getExemptionSituationList() {
+			return exemptionSituationList;
 		}
 	}
 
@@ -353,6 +365,14 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 		
 		if(teacher != null) {
 			teacher.addToManagementFunction(managementFunction, credits);
+		}
+	}
+	
+	public void addExemptionSituationToTeacher(Integer keyTeacher, String exemptionType, Double credits) {
+		TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
+		
+		if(teacher != null) {
+			teacher.addToExemptionSituation(exemptionType, credits);
 		}
 	}
 }
