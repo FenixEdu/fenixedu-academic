@@ -32,6 +32,10 @@ public class UIExtendedOutputTextTag extends OutputTextTag {
     protected void setProperties(UIComponent component) {
         super.setProperties(component);
         JsfTagUtils.setBoolean(component, "linebreak", getLinebreak());
+        Boolean lineBreakBoolean = Boolean.valueOf(getLinebreak() != null ? getLinebreak() : "false");
+        if (lineBreakBoolean.booleanValue()) {
+            JsfTagUtils.setBoolean(component, "escape", "false");
+        }
     }
 
     @Override
