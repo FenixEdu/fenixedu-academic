@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.accessControl.AccessControl;
+import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.DegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.IDegreeCurricularPlanStrategyFactory;
 import net.sourceforge.fenixedu.applicationTier.strategy.degreeCurricularPlan.strategys.IDegreeCurricularPlanStrategy;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
@@ -23,6 +25,7 @@ import net.sourceforge.fenixedu.domain.degree.enrollment.rules.PreviousYearsCurr
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -46,8 +49,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (degree == null) {
             throw new DomainException("degreeCurricularPlan.degree.not.null");
         }
-        this.setDegree(degree);
-        this.setOjbConcreteClass(getClass().getName());
+        super.setDegree(degree);
+        super.setOjbConcreteClass(getClass().getName());
     }
 
     public DegreeCurricularPlan(Degree degree, String name, DegreeCurricularPlanState state,
@@ -56,11 +59,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             Integer numerusClausus, String annotation, GradeScale gradeScale) {
 
         this(degree);
-        commonFieldsChange(name, gradeScale);
+        super.setCurricularStage(CurricularStage.OLD);
+        
+        if (name == null) {
+            throw new DomainException("degreeCurricularPlan.name.not.null");
+        }
+
+        super.setName(name);
+        super.setGradeScale(gradeScale);
+        
         oldStructureFieldsChange(state, inicialDate, endDate, degreeDuration,
                 minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
-
-        this.setCurricularStage(CurricularStage.OLD);
+        
         this
                 .setConcreteClassForStudentCurricularPlans(degree
                         .getConcreteClassForDegreeCurricularPlans());
@@ -101,7 +111,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public DegreeCurricularPlan(Degree degree, String name, GradeScale gradeScale, Person creator,
             CurricularPeriod curricularPeriod) {
         this(degree);
-        commonFieldsChange(name, gradeScale);
+
+        if (name == null) {
+            throw new DomainException("degreeCurricularPlan.name.not.null");
+        }
+
+        super.setName(name);
+        super.setGradeScale(gradeScale);
+
         newStructureFieldsChange(CurricularStage.DRAFT);
 
         CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
@@ -437,7 +454,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         if (this.getDegreeModule() instanceof CourseGroup) {
             collectChildCurricularCourses(result, (CourseGroup) this.getDegreeModule());
         }
-        return new ArrayList(result);
+        return new ArrayList<CurricularCourse>(result);
     }
 
     private void collectChildCurricularCourses(final Set<CurricularCourse> result,
@@ -450,7 +467,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
-    
+
     public List<CourseGroup> getDcpCourseGroups() {
         final Set<CourseGroup> result = new HashSet<CourseGroup>();
         if (this.getDegreeModule() instanceof CourseGroup) {
@@ -467,7 +484,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
-    
+
     public Branch getBranchByName(final String branchName) {
         for (final Branch branch : getAreas()) {
             if (branchName.equals(branch.getName())) {
@@ -476,11 +493,64 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         }
         return null;
     }
-    
 
     public Boolean getUserCanBuild() {
         Person person = AccessControl.getUserView().getPerson();
         return this.getCurricularPlanMembersGroup().isMember(person);
     }
-    
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void removeDegree() {
+        super.removeDegree();
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setCurricularPlanMembersGroup(Group curricularPlanMembersGroup) {
+        super.setCurricularPlanMembersGroup(curricularPlanMembersGroup);
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setCurricularStage(CurricularStage curricularStage) {
+        super.setCurricularStage(curricularStage);
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setDegree(Degree degree) {
+        super.setDegree(degree);
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setDegreeModule(DegreeModule degreeModule) {
+        super.setDegreeModule(degreeModule);
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setDegreeStructure(CurricularPeriod degreeStructure) {
+        super.setDegreeStructure(degreeStructure);
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setGradeScale(GradeScale gradeScale) {
+        super.setGradeScale(gradeScale);
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setName(String name) {
+        super.setName(name);
+    }
+
+    @Override
+    @Checked("DegreeCurricularPlanPredicates.scientificCouncilWritePredicate")
+    public void setOjbConcreteClass(String ojbConcreteClass) {
+        super.setOjbConcreteClass(ojbConcreteClass);
+    }
+
 }

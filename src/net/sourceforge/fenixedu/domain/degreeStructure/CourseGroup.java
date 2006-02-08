@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -19,7 +20,7 @@ public class CourseGroup extends CourseGroup_Base {
 
     public CourseGroup(String name) {
         this();
-        setName(name);
+        super.setName(name);
     }
 
     public boolean isLeaf() {
@@ -34,6 +35,7 @@ public class CourseGroup extends CourseGroup_Base {
         return !hasAnyCourseGroupContexts();
     }
 
+    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void delete() {
         if (getCanBeDeleted()) {
             super.delete();
@@ -96,6 +98,7 @@ public class CourseGroup extends CourseGroup_Base {
         }
     }
 
+    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites,
             String prerequisitesEn, CurricularStage curricularStage, CompetenceCourse competenceCourse,
             CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
@@ -125,4 +128,12 @@ public class CourseGroup extends CourseGroup_Base {
                     "competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
         }
     }
+
+    @Override
+    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
+    public void setName(String name) {
+        super.setName(name);
+    }
+    
+    
 }
