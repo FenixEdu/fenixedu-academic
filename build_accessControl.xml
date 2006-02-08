@@ -31,7 +31,7 @@
 				</fileset>
 			</classpath>
 			<fileset dir="${build.home.webinf.classes}">
-				<include name="**/domain/*.*"/>
+				<include name="**/domain/**/*.*"/>
 				<exclude name="**/domain/RootDomainObject*"/>
 			</fileset>
 		</injectAccessControl>
