@@ -20,7 +20,7 @@ public class ContextPredicates {
 
         public boolean evaluate(Context context) {
 
-            DegreeCurricularPlan parentDegreeCurricularPlan = context.getDegreeModule()
+            DegreeCurricularPlan parentDegreeCurricularPlan = context.getCourseGroup()
                     .getParentDegreeCurricularPlan();
             if (parentDegreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
                 return true;

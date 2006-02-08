@@ -33,10 +33,10 @@ public class Context extends Context_Base {
 
     public void delete() {
         removeCurricularPeriod();
-        setDegreeModule(null);
-        setCourseGroup(null);
-        setBeginExecutionPeriod(null);
-        setEndExecutionPeriod(null);
+        removeDegreeModule();
+        removeCourseGroup();
+        removeBeginExecutionPeriod();
+        removeEndExecutionPeriod();
         super.deleteDomainObject();
     }
 
