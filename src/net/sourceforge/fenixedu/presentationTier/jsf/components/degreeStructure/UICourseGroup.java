@@ -237,7 +237,7 @@ public class UICourseGroup extends UIDegreeModule {
                 .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "edit");
         writer.append(" , ");
         encodeLink("deleteCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + "&contextID=" + this.previousContext, "delete");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + "&contextID=" + this.previousContext.getIdInternal(), "delete");
         writer.append(") ");
         writer.endElement("td");
     }
