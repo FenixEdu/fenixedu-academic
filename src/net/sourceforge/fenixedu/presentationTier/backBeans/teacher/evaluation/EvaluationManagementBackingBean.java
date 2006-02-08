@@ -703,7 +703,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
         }
 
         if (n == 0) {
-            throw new IOException("error.file.badFormat");        
+            throw new IOException("error.file.empty");        
         }
 
         return marks;
