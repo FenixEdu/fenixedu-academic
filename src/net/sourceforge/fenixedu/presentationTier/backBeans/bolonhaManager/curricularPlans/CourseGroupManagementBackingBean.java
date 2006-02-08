@@ -29,6 +29,10 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     public Integer getParentCourseGroupID() {
         return getAndHoldIntegerParameter("parentCourseGroupID");
     }
+    
+    public Integer getContextID() {
+        return getAndHoldIntegerParameter("contextID");
+    }
 
     public Integer getCourseGroupID() {
         return (this.courseGroupID != null) ? this.courseGroupID : getAndHoldIntegerParameter("courseGroupID");
@@ -89,7 +93,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
 
     public String deleteCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = { getCourseGroupID() };
+            final Object args[] = { getCourseGroupID(), getContextID() };
             ServiceUtils.executeService(getUserView(), "DeleteCourseGroup", args);
             addInfoMessage(bolonhaResources.getString("courseGroupDeleted"));
             return "editCurricularPlanStructure";

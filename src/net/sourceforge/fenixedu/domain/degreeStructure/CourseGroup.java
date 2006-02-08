@@ -35,7 +35,6 @@ public class CourseGroup extends CourseGroup_Base {
         return !hasAnyCourseGroupContexts();
     }
 
-    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void delete() {
         if (getCanBeDeleted()) {
             super.delete();
