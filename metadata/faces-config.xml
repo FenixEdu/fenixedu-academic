@@ -1735,6 +1735,20 @@
 			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularRules/editCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularRules/deleteCurricularRule.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>setCurricularRules</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/setCurricularRules.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<!-- END: CurricularRules Navigation Rules -->
 
 	<!-- Custom Components -->

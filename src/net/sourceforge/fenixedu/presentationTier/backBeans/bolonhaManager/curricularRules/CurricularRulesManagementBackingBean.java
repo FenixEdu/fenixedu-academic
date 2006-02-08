@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRule
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -39,6 +40,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     private DegreeModule degreeModule = null;
     private DegreeCurricularPlan degreeCurricularPlan = null;
+    private CurricularRule curricularRule = null;
     
     private UISelectItems curricularRuleTypeItems;
     private UISelectItems degreeModuleItems;
@@ -154,7 +156,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
     
     public String getSelectedSemester() {
-        return (String) getViewState().getAttribute("selectedSemester");
+        return (getViewState().getAttribute("selectedSemester") != null) ? (String) getViewState().getAttribute("selectedSemester") : "0";
     }
 
     public void setSelectedSemester(String selectedSemester) {
@@ -190,10 +192,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         final SortedSet<CourseGroup> courseGroups = new TreeSet<CourseGroup>(new BeanComparator("name"));
-        result.add(new SelectItem(Integer.valueOf(0), bolonhaResources.getString("any.context")));
+        result.add(new SelectItem(Integer.valueOf(0), bolonhaResources.getString("all")));
         if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION)) {
             for (final Context context : getDegreeModule().getDegreeModuleContexts()) {
-                if (!context.getDegreeModule().isRoot()) {
+                if (!context.getCourseGroup().isRoot()) {
                     courseGroups.add(context.getCourseGroup());
                 }
             }
@@ -283,16 +285,20 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return getAndHoldIntegerParameter("curricularRuleID");
     }
     
+    public CurricularRule getCurricularRule() throws FenixFilterException, FenixServiceException {
+        return (curricularRule == null) ? (curricularRule = (CurricularRule) readDomainObject(CurricularRule.class, getCurricularRuleID())) : curricularRule;
+    }
+    
     public String deleteCurricularRule() {
         try {
             final Object[] args = { getCurricularRuleID() };
             ServiceUtils.executeService(getUserView(), "DeleteCurricularRule", args);
+            addInfoMessage(bolonhaResources.getString("curricularRule.deleted"));
+            return "setCurricularRules";
         } catch (FenixFilterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
         return "";
     }

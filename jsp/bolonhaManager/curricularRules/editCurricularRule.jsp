@@ -9,7 +9,7 @@
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
 	
 	<h:outputText value="<i>#{bolonhaBundle['bolonhaManager']}</i>" escape="false"/>
-	<h:outputFormat value="<h2>#{bolonhaBundle['set.param']}</h2>" escape="false">
+	<h:outputFormat value="<h2>#{bolonhaBundle['edit.param']}</h2>" escape="false">
 		<f:param value="#{bolonhaBundle['curricularRule']}"/>
 	</h:outputFormat>
 	
@@ -18,7 +18,7 @@
 	<h:form>
 		<fc:viewState binding="#{CurricularRulesManagement.viewState}"/>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularRulesManagement.degreeCurricularPlanID}'/>"/>
-		<h:outputText escape="false" value="<input id='degreeModuleID' name='degreeModuleID' type='hidden' value='#{CurricularRulesManagement.degreeModuleID}'/>"/>
+		<h:outputText escape="false" value="<input id='curricularRuleID' name='curricularRuleID' type='hidden' value='#{CurricularRulesManagement.curricularRuleID}'/>"/>
 		
 		<h:outputText value="<strong>#{bolonhaBundle['degreeModule.to.apply.rule']}: </strong>" escape="false"/>
 		<h:outputText value="#{CurricularRulesManagement.degreeModule.name}<br/>" escape="false"/>
@@ -94,7 +94,7 @@
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 		
-		<h:outputText value="</fieldset></div>" escape="false"/>
+		<h:outputText value="</fieldset></div>" escape="false"/>	
 
 		<h:commandButton value="#{bolonhaBundle['submit']}" styleClass="inputbutton" action="#{CurricularRulesManagement.createCurricularRule}"/>
 		<h:commandButton immediate="true" value="#{bolonhaBundle['back']}" styleClass="inputbutton" action="setCurricularRules"/>
