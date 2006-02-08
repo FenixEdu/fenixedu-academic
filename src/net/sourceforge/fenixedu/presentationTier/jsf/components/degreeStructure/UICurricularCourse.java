@@ -79,7 +79,7 @@ public class UICurricularCourse extends UIDegreeModule {
         writer.writeAttribute("class", "smalltxt", null);
         writer.writeAttribute("align", "center", null);
         if (!byYears) {
-            writer.writeAttribute("style", "width: 10em;", null);
+            //writer.writeAttribute("style", "width: 10em;", null);
             writer.append(CurricularPeriodLabelFormatter.getFullLabel((CurricularPeriod)previousContext.getCurricularPeriod(), getLocale()));
         } else {
             writer.append(previousContext.getCourseGroup().getName());
@@ -94,8 +94,8 @@ public class UICurricularCourse extends UIDegreeModule {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "smalltxt", null);
-        writer.writeAttribute("align", "aright", null);
-        writer.writeAttribute("style", "width: 13em;", null);
+        writer.writeAttribute("class", "aright", null);
+        //writer.writeAttribute("style", "width: 13em;", null);
         writer.startElement("span", this);
         writer.writeAttribute("style", "color: #888", null);
         writer.append(this.getBundleValue("BolonhaManagerResources", "contactLessonHoursAcronym")).append("-");
@@ -117,7 +117,8 @@ public class UICurricularCourse extends UIDegreeModule {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright", null);
-        writer.writeAttribute("style", "width: 7em;", null);
+        //writer.writeAttribute("style", "width: 7em;", null);
+        writer.append(this.getBundleValue("BolonhaManagerResources", "credits")).append(" ");
         writer.append(((CurricularCourse)this.degreeModule).getEctsCredits().toString());
         writer.endElement("td");
 
@@ -135,7 +136,7 @@ public class UICurricularCourse extends UIDegreeModule {
     private void encodeCurricularCourseOptions() throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
-        writer.writeAttribute("style", "width: 7em;", null);
+        writer.writeAttribute("style", "width: 9em;", null);
         encodeLink("editCurricularCourse.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&contextID=" + this.previousContext.getIdInternal() + "&curricularCourseID=" + this.degreeModule.getIdInternal(), "edit");
         writer.append(" , ");
@@ -147,7 +148,7 @@ public class UICurricularCourse extends UIDegreeModule {
     private void encodeCurricularRulesOptions() throws IOException {
         writer.startElement("td", this);
         writer.writeAttribute("align", "right", null);
-        writer.writeAttribute("style", "width: 7em;", null);
+        writer.writeAttribute("style", "width: 9em;", null);
         encodeLink("../curricularRules/createCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal(), "setCurricularRule");
         writer.endElement("td");
