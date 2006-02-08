@@ -3,8 +3,6 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
-<style>@import url(<%= request.getContextPath() %>/CSS/dotist_degreeStructure.css);</style>
-
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
