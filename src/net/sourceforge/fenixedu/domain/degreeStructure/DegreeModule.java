@@ -10,6 +10,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public void delete() {
         removeNewDegreeCurricularPlan();    
         for (;!getDegreeModuleContexts().isEmpty(); getDegreeModuleContexts().get(0).delete());
+        for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
     }
     
     public Context addContext(CourseGroup courseGroup, CurricularPeriod curricularPeriod,
