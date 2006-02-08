@@ -317,7 +317,7 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 				 ExecutionYear iExecutionYear = null;  
 			     iExecutionYear = getExecutionYear(this.choosenExecutionYearID);
 				 if (function.belongsToPeriod(iExecutionYear.getBeginDate(),iExecutionYear.getEndDate())){
-					  buffer.append("\t<ul>\r\n");	
+					  buffer.append("\t<ul>\r\n"); 
 					  getFunctionsList(this.getUnit(), function, buffer,iExecutionYear);
 					  buffer.append("\t</ul>\r\n");	
 				 }
@@ -412,9 +412,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     private void getFunctionsList(Unit unit, Function function, StringBuffer buffer, ExecutionYear iExecutionYear)
     		throws FenixFilterException, FenixServiceException {
 	    	
-	    	
+	 
 	    	buffer.append("\t<li class='tree_label'><span>").append(function.getName()).append(": ").append("</span>\r\n");      
-		    	    if (function.getPersonFunctions().size() > 0){
+		    	    if (function.getPersonFunctionsCount() > 0){
 		    	        buffer.append("\t<ul class='unit1'>\r\n");
 				    	for(PersonFunction personFunction : getValidPersonFunction(iExecutionYear,function)){
 				    		
@@ -433,6 +433,29 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 				   
 				    	buffer.append("\t</ul>\r\n");
 				    	
+		    	    }else{
+		    	    	 if (function.getParentInherentFunction() != null){
+		    	    		 if(function.getParentInherentFunction().getPersonFunctionsCount() > 0){
+		    	    			 buffer.append("\t<ul class='unit1'>\r\n");
+			    	    		 for(PersonFunction personFunction : getValidPersonFunction(iExecutionYear,function.getParentInherentFunction())){
+							    		
+							    		if (personFunction.belongsToPeriod(iExecutionYear.getBeginDate(),iExecutionYear.getEndDate())){
+							    			if (personFunction.getEndDate() == null ){
+							    				buffer.append("\t\t<li class='eo_highlight'>");
+							    			}else{
+							    				buffer.append("\t\t<li>");
+							    			}
+								    	//	String userName = personFunction.getPerson().getUsername().substring(1);	    	
+								    		buffer.append(personFunction.getPerson().getNome());
+								    		buffer.append("</li>\r\n");	
+							    		}
+						    		}
+						    	
+						   
+						    	buffer.append("\t</ul>\r\n");
+			    	    	}
+		    	    		 
+		    	    	 }
 		    	    }
 	            
 		    buffer.append("\t</li>\r\n");  	    	
