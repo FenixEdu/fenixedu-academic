@@ -33,12 +33,6 @@
 
 		<html:text property="spaceName"/>
 	</logic:equal>
-	<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Floor">
-		<html:hidden property="method" value="createFloor"/>
-	</logic:equal>
-	<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
-		<html:hidden property="method" value="createRoom"/>
-	</logic:equal>
 	<br/>
 
 	<html:submit styleClass="inputbutton">

@@ -12,7 +12,7 @@ public class FloorInformationTest extends DomainTestBase {
 
     public void testFloorInformationConstructor() {
         try {
-            new FloorInformation((Floor) null);
+            new FloorInformation((Floor) null, null);
             fail("Expected a NullPointerException: floor information must be relative to a floor.");
         } catch (NullPointerException ex) {
             assertEquals("error.floor.cannot.be.null", ex.getMessage());
@@ -20,11 +20,11 @@ public class FloorInformationTest extends DomainTestBase {
 
         final Building building = new Building("building1");
 
-        final Floor floor = new Floor(building);
+        final Floor floor = new Floor(building, null);
         final FloorInformation floorInformation = (FloorInformation) floor.getSpaceInformation();
         assertSame(floor, floorInformation.getSpace());
 
-        final FloorInformation newFloorInformation = new FloorInformation(floor);
+        final FloorInformation newFloorInformation = new FloorInformation(floor, null);
         assertSame(floor, newFloorInformation.getSpace());
         assertSame(floor, floorInformation.getSpace());
         assertEquals(new YearMonthDay(), floorInformation.getValidUntil());
@@ -34,7 +34,7 @@ public class FloorInformationTest extends DomainTestBase {
     public void testSetSpace() {
         final Building building = new Building("building1");
 
-        final Floor floor = new Floor(building);
+        final Floor floor = new Floor(building, null);
         final FloorInformation floorInformation = floor.getSpaceInformation();
 
         try {
@@ -52,7 +52,7 @@ public class FloorInformationTest extends DomainTestBase {
         }
 
         try {
-            floorInformation.setSpace(new Floor(building));
+            floorInformation.setSpace(new Floor(building, null));
             fail("Expected a DomainException: cannot change the floor of a floor information.");
         } catch (DomainException ex) {
             assertEquals("error.cannot.change.floor", ex.getMessage());

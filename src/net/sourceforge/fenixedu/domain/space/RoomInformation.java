@@ -4,9 +4,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class RoomInformation extends RoomInformation_Base {
     
-    protected RoomInformation(final Room room) {
+    protected RoomInformation(final Room room, final String name) {
         super();
         setSpace(room);
+        setName(name);
     }
 
     @Override
@@ -21,6 +22,10 @@ public class RoomInformation extends RoomInformation_Base {
             throw new DomainException("error.cannot.change.room");
         }
         super.setSpace(room);
+    }
+
+    public void edit(final String name) {
+        setName(name);
     }
 
 }

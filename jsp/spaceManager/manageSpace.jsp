@@ -33,6 +33,12 @@
 				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 					<bean:message bundle="SPACE_RESOURCES" key="select.item.building"/>
 				</logic:equal>
+				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+					<bean:message bundle="SPACE_RESOURCES" key="select.item.floor"/>
+				</logic:equal>
+				<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+					<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
+				</logic:equal>
 			</td>
 			<td class="listClasses">
 				<html:link page="/manageSpaces.do?method=prepareEditSpace&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="idInternal">
@@ -40,6 +46,12 @@
 						<bean:write name="selectedSpaceInformation" property="name"/>
 					</logic:equal>
 					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+						<bean:write name="selectedSpaceInformation" property="name"/>
+					</logic:equal>
+					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+						<bean:write name="selectedSpaceInformation" property="level"/>
+					</logic:equal>
+					<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 						<bean:write name="selectedSpaceInformation" property="name"/>
 					</logic:equal>
 				</html:link>
@@ -76,7 +88,7 @@
 	<br/>
 	<br/>
 
-	<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
+	<html:link page="/manageSpaces.do?method=showCreateSubSpaceForm&page=0" paramId="spaceInformationID" paramName="selectedSpaceInformation" paramProperty="space.idInternal">
 		<bean:message bundle="SPACE_RESOURCES" key="link.create.subspace"/>
 	</html:link>
 
@@ -115,6 +127,12 @@
 					<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
 						<bean:message bundle="SPACE_RESOURCES" key="select.item.building"/>
 					</logic:equal>
+					<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+						<bean:message bundle="SPACE_RESOURCES" key="select.item.floor"/>
+					</logic:equal>
+					<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
+						<bean:message bundle="SPACE_RESOURCES" key="select.item.room"/>
+					</logic:equal>
 				</td>
 				<td class="listClasses">
 					<html:link page="/manageSpaces.do?method=manageSpace&page=0" paramId="spaceInformationID" paramName="space" paramProperty="spaceInformation.idInternal">
@@ -122,6 +140,12 @@
 							<bean:write name="space" property="spaceInformation.name"/>
 						</logic:equal>
 						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+							<bean:write name="space" property="spaceInformation.name"/>
+						</logic:equal>
+						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
+							<bean:write name="space" property="spaceInformation.level"/>
+						</logic:equal>
+						<logic:equal name="space" property="class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 							<bean:write name="space" property="spaceInformation.name"/>
 						</logic:equal>
 					</html:link>

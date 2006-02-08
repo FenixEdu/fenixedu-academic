@@ -12,7 +12,7 @@ public class RoomInformationTest extends DomainTestBase {
 
     public void testRoomInformationConstructor() {
         try {
-            new RoomInformation((Room) null);
+            new RoomInformation((Room) null, null);
             fail("Expected a NullPointerException: room information must be relative to a room.");
         } catch (NullPointerException ex) {
             assertEquals("error.room.cannot.be.null", ex.getMessage());
@@ -20,11 +20,11 @@ public class RoomInformationTest extends DomainTestBase {
 
         final Building building = new Building("building1");
 
-        final Room room = new Room(building);
+        final Room room = new Room(building, null);
         final RoomInformation roomInformation = (RoomInformation) room.getSpaceInformation();
         assertSame(room, roomInformation.getSpace());
 
-        final RoomInformation newRoomInformation = new RoomInformation(room);
+        final RoomInformation newRoomInformation = new RoomInformation(room, null);
         assertSame(room, newRoomInformation.getSpace());
         assertSame(room, roomInformation.getSpace());
         assertEquals(new YearMonthDay(), roomInformation.getValidUntil());
@@ -34,7 +34,7 @@ public class RoomInformationTest extends DomainTestBase {
     public void testSetSpace() {
         final Building building = new Building("building1");
 
-        final Room room = new Room(building);
+        final Room room = new Room(building, null);
         final RoomInformation roomInformation = room.getSpaceInformation();
 
         try {
@@ -52,7 +52,7 @@ public class RoomInformationTest extends DomainTestBase {
         }
 
         try {
-            roomInformation.setSpace(new Room(building));
+            roomInformation.setSpace(new Room(building, null));
             fail("Expected a DomainException: cannot change the room of a room information.");
         } catch (DomainException ex) {
             assertEquals("error.cannot.change.room", ex.getMessage());

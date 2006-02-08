@@ -2079,10 +2079,10 @@ class net.sourceforge.fenixedu.domain.space.SpaceInformation extends net.sourcef
 	}
 
 	class net.sourceforge.fenixedu.domain.space.Floor extends net.sourceforge.fenixedu.domain.space.Space {
-		Integer level;
 	}
 
 	class net.sourceforge.fenixedu.domain.space.FloorInformation extends net.sourceforge.fenixedu.domain.space.SpaceInformation {
+		Integer level;
 	}
 
 	class net.sourceforge.fenixedu.domain.space.Room extends net.sourceforge.fenixedu.domain.space.Space {

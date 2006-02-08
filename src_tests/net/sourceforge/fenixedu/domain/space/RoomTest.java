@@ -10,13 +10,13 @@ public class RoomTest extends DomainTestBase {
         final Building building = new Building("building1");
 
         try {
-            new Room((Space) null);
+            new Room((Space) null, null);
             fail("Room cannot be created without a surrounding space.");
         } catch (NullPointerException ex) {
             assertEquals("error.surrounding.space", ex.getMessage());
         }
 
-        final Room room = new Room(building);
+        final Room room = new Room(building, null);
         assertEquals(1, room.getSpaceInformationsCount());
         final SpaceInformation spaceInformation = room.getSpaceInformation();
         assertSame(RoomInformation.class, spaceInformation.getClass());
@@ -26,7 +26,7 @@ public class RoomTest extends DomainTestBase {
     public void testGetSpaceInformation() {
         final Building building = new Building("building1");
 
-        final Room room = new Room(building);
+        final Room room = new Room(building, null);
 
         assertSame(RoomInformation.class, room.getSpaceInformation().getClass());
         assertSame(RoomInformation.class, room.getSpaceInformation(new YearMonthDay()).getClass());

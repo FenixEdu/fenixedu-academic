@@ -13,7 +13,7 @@
 <html:form action="/createSpace">
 	<html:hidden property="page" value="0"/>
 	<html:hidden property="method" value="showCreateSubSpaceForm"/>
-	<html:hidden property="spaceID" value="<%= suroundingSpaceID.toString() %>"/>
+	<html:hidden property="spaceInformationID" value="<%= suroundingSpaceID.toString() %>"/>
 
 	<html:select property="classname" onchange="this.form.submit()">
 		<html:option value=""/>
@@ -40,9 +40,13 @@
 	</logic:equal>
 	<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Floor">
 		<html:hidden property="method" value="createFloor"/>
+
+		<html:text property="level"/>
 	</logic:equal>
 	<logic:equal name="createSpaceForm" property="classname" value="net.sourceforge.fenixedu.domain.space.Room">
 		<html:hidden property="method" value="createRoom"/>
+
+		<html:text property="spaceName"/>
 	</logic:equal>
 	<br/>
 

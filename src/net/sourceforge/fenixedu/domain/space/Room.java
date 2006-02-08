@@ -9,7 +9,7 @@ public class Room extends Room_Base {
         setOjbConcreteClass(this.getClass().getName());
     }
 
-    protected Room(final Space suroundingSpace) {
+    public Room(final Space suroundingSpace, final String name) {
         super();
 
         if (suroundingSpace == null) {
@@ -17,7 +17,7 @@ public class Room extends Room_Base {
         }
 
         setSuroundingSpace(suroundingSpace);
-        new RoomInformation(this);
+        new RoomInformation(this, name);
     }
 
     @Override
@@ -28,6 +28,10 @@ public class Room extends Room_Base {
     @Override
     public RoomInformation getSpaceInformation(final YearMonthDay when) {
         return (RoomInformation) super.getSpaceInformation(when);
+    }
+
+    public void edit(final String name) {
+        new RoomInformation(this, name);
     }
 
 }

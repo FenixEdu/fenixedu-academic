@@ -4,7 +4,7 @@ import org.joda.time.YearMonthDay;
 
 public class Floor extends Floor_Base {
 
-    protected Floor(final Space suroundingSpace) {
+    public Floor(final Space suroundingSpace, final Integer level) {
         super();
 
         if (suroundingSpace == null) {
@@ -12,7 +12,7 @@ public class Floor extends Floor_Base {
         }
 
         setSuroundingSpace(suroundingSpace);
-        new FloorInformation(this);
+        new FloorInformation(this, level);
     }
 
     @Override
@@ -23,6 +23,10 @@ public class Floor extends Floor_Base {
     @Override
     public FloorInformation getSpaceInformation(final YearMonthDay when) {
         return (FloorInformation) super.getSpaceInformation(when);
+    }
+
+    public void edit(final Integer level) {
+        new FloorInformation(this, level);
     }
 
 }

@@ -4,9 +4,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class FloorInformation extends FloorInformation_Base {
     
-    protected FloorInformation(final Floor floor) {
+    protected FloorInformation(final Floor floor, final Integer level) {
         super();
         setSpace(floor);
+        setLevel(level);
     }
 
     @Override
@@ -21,6 +22,10 @@ public class FloorInformation extends FloorInformation_Base {
             throw new DomainException("error.cannot.change.floor");
         }
         super.setSpace(floor);
+    }
+
+    public void edit(final Integer level) {
+        setLevel(level);
     }
 
 }

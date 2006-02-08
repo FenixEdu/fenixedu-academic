@@ -28,9 +28,15 @@
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Floor">
 		<html:hidden property="method" value="editFloor"/>
+
+		<bean:define id="level" type="java.lang.Integer" name="selectedSpaceInformation" property="level"/>
+		<html:text property="level" value="<%= level.toString() %>"/>
 	</logic:equal>
 	<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Room">
 		<html:hidden property="method" value="editRoom"/>
+
+		<bean:define id="name" type="java.lang.String" name="selectedSpaceInformation" property="name"/>
+		<html:text property="spaceName" value="<%= name %>"/>
 	</logic:equal>
 	<br/>
 

@@ -13,6 +13,7 @@
 			<form-property name="suroundingSpaceID" type="java.lang.String"/>
 			<form-property name="classname" type="java.lang.String"/>
 			<form-property name="spaceName" type="java.lang.String"/>
+			<form-property name="level" type="java.lang.String"/>
 		</form-bean>
 		<form-bean name="editSpaceForm"
 				type="org.apache.struts.validator.DynaValidatorForm"
@@ -20,6 +21,7 @@
 			<form-property name="asNewVersion" type="java.lang.Boolean"/>
 			<form-property name="spaceInformationID" type="java.lang.String"/>
 			<form-property name="spaceName" type="java.lang.String"/>
+			<form-property name="level" type="java.lang.String"/>
 		</form-bean>
     </form-beans>
 
