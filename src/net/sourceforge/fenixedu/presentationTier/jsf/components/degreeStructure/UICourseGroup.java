@@ -60,9 +60,12 @@ public class UICourseGroup extends UIDegreeModule {
                 if (this.toEdit) {
                     encodeLink("createCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                             .get("degreeCurricularPlanID") + "&parentCourseGroupID=" + this.degreeModule.getIdInternal(), "create.course.group");
-
+                    writer.startElement("br", this);
+                    writer.append("&nbsp;");
+                    writer.endElement("br");
+                    
                     writer.startElement("table", this);
-                    writer.writeAttribute("class", "showinfo1 sp thleft", null);
+                    writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
                 }
                 encodeChildCourseGroups();
                 
@@ -131,36 +134,52 @@ public class UICourseGroup extends UIDegreeModule {
     private void encodeSelf() throws IOException {
         Integer width = (this.onlyStructure) ? 50 : 70;
         
+        int courseGroupIdent = this.depth * 3;
+        
         if (!this.onlyStructure) {
             if (this.depth == BASE_DEPTH) {
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo1 sp thleft", null);
+                writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
                 writer.writeAttribute("style", "width: " + width + "em;", null);
             } else if (this.depth > BASE_DEPTH) {
                 writer.startElement("div", this);
-                writer.writeAttribute("class", "indent" + String.valueOf((this.depth * 3)), null);
+                writer.writeAttribute("class", "indent" + courseGroupIdent, null);
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo1 sp thleft", null);
+                writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
                 writer.writeAttribute("style", "width: " + String.valueOf(width - (this.depth * 3)) +"em;", null);
             }
         }
 
         encodeHeader();
-
+        
         if (!this.onlyStructure) {
             if (this.showRules && this.degreeModule.hasAnyCurricularRules()) {
                 encodeCurricularRules();    
             }
-            
+
             if (((CourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
+                writer.endElement("table");
+                if (this.depth > BASE_DEPTH) {
+                    writer.endElement("div");
+                }
+                
+                writer.startElement("div", this);
+                writer.writeAttribute("class", (this.depth == BASE_DEPTH) ? "indent3" : "indent" + (courseGroupIdent + 3), null);
+                writer.startElement("table", this);
+                writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
+                writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
+
                 List<Double> sums = encodeChildCurricularCourses();
                 //encodeSumsFooter(sums);
-            } else {
-                encodeEmptyCourseGroupInfo();   
-            }
-            writer.endElement("table");
-            if (this.depth > BASE_DEPTH) {
+                writer.endElement("table");
                 writer.endElement("div");
+            } else {
+                //encodeEmptyCourseGroupInfo();
+
+                writer.endElement("table");
+                if (this.depth > BASE_DEPTH) {
+                    writer.endElement("div");
+                }
             }
         }
     }
@@ -171,7 +190,6 @@ public class UICourseGroup extends UIDegreeModule {
             writer.writeAttribute("class", "bgcolor2", null);
             writer.startElement("th", this);
             writer.writeAttribute("colspan", (this.toEdit) ? 3 : 5, null);
-            writer.startElement("strong", this);
         } else {
             writer.startElement("td", this);
             if (this.depth == BASE_DEPTH) {
@@ -191,9 +209,6 @@ public class UICourseGroup extends UIDegreeModule {
             writer.endElement("strong");
             writer.endElement("th");
         } else {
-            if (this.depth == BASE_DEPTH) {
-                writer.endElement("strong");
-            }
             writer.endElement("td");
         }
         
