@@ -24,7 +24,7 @@
 		
 		<h:outputText value="<p><label>#{bolonhaBundle['courseGroupToAssociate']}:</label>" escape="false"/>
 		<h:selectOneMenu value="#{CourseGroupManagement.courseGroupID}">
-			<f:selectItems value="#{CurricularCourseManagement.courseGroups}" />
+			<f:selectItems value="#{CourseGroupManagement.courseGroups}" />
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 				

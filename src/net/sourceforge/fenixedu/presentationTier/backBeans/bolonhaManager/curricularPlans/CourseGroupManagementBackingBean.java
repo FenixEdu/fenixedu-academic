@@ -3,12 +3,18 @@
  */
 package net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
@@ -21,6 +27,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     
     private String name = null;
     private Integer courseGroupID;
+    public List<SelectItem> courseGroups = null;
 
     public Integer getDegreeCurricularPlanID() {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
@@ -61,6 +68,10 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
 
     public CourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
         return (CourseGroup) readDomainObject(CourseGroup.class, courseGroupID);
+    }
+    
+    public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
+        return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
     }
 
     public String createCourseGroup() throws FenixFilterException {
@@ -135,5 +146,28 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             throw new FenixActionException("error.mustChooseACourseGroup");
         }
     }
+    
+    private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
+        final List<SelectItem> result = new ArrayList<SelectItem>();
+        result.add(new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
+        final DegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
+        if (degreeModule instanceof CourseGroup) {
+            collectChildCourseGroups(result, (CourseGroup) degreeModule, "");
+        }
+        return result;
+    }
 
+    private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup,
+            final String previousCourseGroupName) throws FenixFilterException, FenixServiceException {
+        String currentCourseGroupName = "";
+        if (!courseGroup.isRoot() && getCourseGroup(getParentCourseGroupID()) != courseGroup) {
+            currentCourseGroupName = ((previousCourseGroupName.length() == 0) ? "" : (previousCourseGroupName + " > "))
+                    + courseGroup.getName();
+            result.add(new SelectItem(courseGroup.getIdInternal(), currentCourseGroupName));
+        }
+        for (final Context context : courseGroup.getContextsWithCourseGroups()) {
+            collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule(),
+                    currentCourseGroupName);
+        }
+    }
 }
