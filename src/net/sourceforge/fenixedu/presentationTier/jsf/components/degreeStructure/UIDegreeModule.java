@@ -115,8 +115,35 @@ public class UIDegreeModule extends UIInput {
         }
 
         if (!curricularRulesToEncode.isEmpty()) {
+            writer.startElement("tr", this);
+            writer.writeAttribute("class", "smalltxt", null);
+        
+            writer.startElement("td", this);
+            writer.writeAttribute("class", "p_mvert015", null);
+            writer.writeAttribute("colspan", (this.toEdit) ? 5 : 6, null);
+            writer.writeAttribute("rowspan", curricularRulesToEncode.size(), null);
             for (CurricularRule curricularRule : curricularRulesToEncode) {
                 encodeCurricularRule(curricularRule);    
+            }
+            writer.endElement("td");
+
+            writer.startElement("td", this);
+            writer.writeAttribute("class", "p_mvert015", null);
+            writer.writeAttribute("align", "right", null);
+            writer.writeAttribute("style", "width: 7em;", null);
+            writer.writeAttribute("rowspan", curricularRulesToEncode.size(), null);
+            if (this.toEdit) {
+                for (CurricularRule curricularRule : curricularRulesToEncode) {
+                    encodeCurricularRuleOptions(curricularRule);    
+                }
+            }
+            writer.endElement("td");
+            
+            writer.endElement("tr");
+            
+            for (int i = 0; i < curricularRulesToEncode.size(); i++) {
+                writer.startElement("tr", this);
+                writer.endElement("tr");
             }
         }
     }
@@ -152,31 +179,19 @@ public class UIDegreeModule extends UIInput {
     }
 
     private void encodeCurricularRule(CurricularRule curricularRule) throws IOException {
-        writer.startElement("tr", this);
-        writer.writeAttribute("class", "smalltxt", null);
-        
-        writer.startElement("td", this);
-        writer.writeAttribute("colspan", (this.toEdit) ? 5 : 6, null);
+        writer.startElement("p", this);
         writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule));
-        writer.endElement("td");
-        
-        if (this.toEdit) {
-            encodeCurricularRuleOptions(curricularRule);
-        }
-        
-        writer.endElement("tr");
+        writer.endElement("p");
     }
 
     private void encodeCurricularRuleOptions(CurricularRule curricularRule) throws IOException {
-        writer.startElement("td", this);
-        writer.writeAttribute("align", "right", null);
-        writer.writeAttribute("style", "width: 7em;", null);
+        writer.startElement("p", this);
         encodeLink("../curricularRules/editCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal(), "edit");
         writer.append(" , ");
         encodeLink("../curricularRules/deleteCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                 .get("degreeCurricularPlanID") + "&curricularRuleID=" + curricularRule.getIdInternal(), "delete");
-        writer.endElement("td");
+        writer.endElement("p");
     }
 
 }
