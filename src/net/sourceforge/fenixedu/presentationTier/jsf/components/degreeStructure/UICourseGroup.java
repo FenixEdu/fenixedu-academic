@@ -292,8 +292,8 @@ public class UICourseGroup extends UIDegreeModule {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "highlight2 smalltxt", null);
-        writer.writeAttribute("align", "aright", null);
-        writer.writeAttribute("style", "width: 13em;", null);
+        writer.writeAttribute("class", "aright", null);
+        //writer.writeAttribute("style", "width: 13em;", null);
         
         encodeSumsLoadFooterElement(sums, "contactLessonHoursAcronym", 0);
         encodeSumsLoadFooterElement(sums, "autonomousWorkAcronym", 1);
@@ -302,7 +302,7 @@ public class UICourseGroup extends UIDegreeModule {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright highlight2", null);
-        writer.writeAttribute("style", "width: 7em;", null);
+        //writer.writeAttribute("style", "width: 7em;", null);
         writer.append(this.getBundleValue("BolonhaManagerResources", "credits")).append(" ");
         writer.append(String.valueOf(sums.get(3)));
         writer.endElement("td");
