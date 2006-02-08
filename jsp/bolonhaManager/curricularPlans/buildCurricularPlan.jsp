@@ -40,6 +40,7 @@
 
 	<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 	<h:messages styleClass="error0" infoClass="success0" layout="table" globalOnly="true"/>
+	<h:outputText value="<br/>" escape="false"/>
 	<fc:degreeCurricularPlanRender dcp="#{CurricularCourseManagement.degreeCurricularPlan}" onlyStructure="false" toEdit="true" organizeBy="<%=request.getParameter("organizeBy")%>"/>
 
 	<h:form>
