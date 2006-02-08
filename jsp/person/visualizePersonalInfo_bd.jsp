@@ -35,6 +35,13 @@
             <td width="30%"><bean:message key="label.person.username" /></td>
             <td class="greytxt"><bean:write name="personalInfo" property="username"/></td> 
           </tr>
+          <!-- IST Username -->
+          <logic:notEmpty name="personalInfo" property="istUsername">
+	          <tr>
+	            <td width="30%"><bean:message key="label.person.istUsername" /></td>
+	            <td class="greytxt"><bean:write name="personalInfo" property="istUsername"/></td> 
+	          </tr>
+          </logic:notEmpty>
           <!-- Sexo -->
           <tr>
             <td width="30%"><bean:message key="label.person.sex" /></td>

@@ -86,6 +86,8 @@ public class InfoPerson extends InfoObject {
     private String profissao;
 
     private String username;
+    
+    private String istUsername;
 
     private String password;
 
@@ -124,7 +126,7 @@ public class InfoPerson extends InfoObject {
             String concelhoNaturalidade, String distritoNaturalidade, String morada, String localidade,
             String codigoPostal, String localidadeCodigoPostal, String freguesiaMorada,
             String concelhoMorada, String distritoMorada, String telefone, String telemovel,
-            String email, String enderecoWeb, String numContribuinte, String profissao, String username,
+            String email, String enderecoWeb, String numContribuinte, String profissao, String username, String istUsername,
             String password, InfoCountry infoPais, String codigoFiscal) {
 
         setNumeroDocumentoIdentificacao(numeroDocumentoIdentificacao);
@@ -155,6 +157,7 @@ public class InfoPerson extends InfoObject {
         setNumContribuinte(numContribuinte);
         setProfissao(profissao);
         setUsername(username);
+        setIstUsername(istUsername);
         setPassword(password);
         setInfoPais(infoPais);
         setCodigoFiscal(codigoFiscal);
@@ -873,6 +876,7 @@ public class InfoPerson extends InfoObject {
 
             setPassword(person.getPassword());
             setUsername(person.getUsername());
+            setIstUsername(person.getIstUsername());
 
             if (person.getExternalPerson() != null) {
                 InfoExternalPerson infoExternalPerson = new InfoExternalPerson();
@@ -1051,6 +1055,8 @@ public class InfoPerson extends InfoObject {
         person.setUsername(infoPerson.getUsername());
 
         person.setAvailablePhoto(infoPerson.getAvailablePhoto());
+        person.setIstUsername(infoPerson.getIstUsername());
+        
     }
 
     public InfoEmployee getInfoEmployee() {
@@ -1085,5 +1091,13 @@ public class InfoPerson extends InfoObject {
     public void setMainRoles(List mainRoles) {
         this.mainRoles = mainRoles;
     }
+
+	public String getIstUsername() {
+		return istUsername;
+	}
+
+	public void setIstUsername(String istUsername) {
+		this.istUsername = istUsername;
+	}
 
 }
