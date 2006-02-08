@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
-import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 
 public class EditarTurno extends Service {
 
@@ -68,8 +66,7 @@ public class EditarTurno extends Service {
 		if (shiftToEdit.getAssociatedLessons() != null) {
 			for (int i = 0; i < shiftToEdit.getAssociatedLessons().size(); i++) {
 				shiftToEdit.getAssociatedLessons().get(i).setTipo(infoShiftNew.getTipo());
-				shiftToEdit.getAssociatedLessons().get(i).setShift(shiftToEdit);
-
+				//shiftToEdit.getAssociatedLessons().get(i).setShift(shiftToEdit);
 			}
 		}
 
