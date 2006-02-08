@@ -9317,6 +9317,15 @@
         </filterChains>     
     </service>
     <service>
+    	<name>EditCurricularRule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCurricularRule</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="BolonhaManagerAuthorization"></chain>
+        </filterChains>     
+    </service>
+    <service>
     	<name>DeleteCurricularRule</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCurricularRule</implementationClass>
         <description></description>

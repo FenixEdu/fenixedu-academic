@@ -46,6 +46,13 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
         setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
     }
+    
+    public void edit(DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
+        setEnroledDegreeModule(enroledDegreeModule);
+        setContextCourseGroup(contextCourseGroup);
+        setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
+        setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
+    }
 
     @Override
     public ExecutionPeriod getBegin() {

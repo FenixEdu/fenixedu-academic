@@ -45,7 +45,13 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         setBegin(begin);
         setEnd(end);
     }
-
+    
+    public void edit(CourseGroup contextCourseGroup, Integer minimumLimit, Integer maximumLimit) {
+        setContextCourseGroup(contextCourseGroup);
+        setMinimum(minimumLimit);
+        setMaximum(maximumLimit);
+    }
+    
     @Override
     public ExecutionPeriod getBegin() {
         return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super
@@ -107,5 +113,4 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         // TODO Auto-generated method stub
         return false;
     }
-
 }

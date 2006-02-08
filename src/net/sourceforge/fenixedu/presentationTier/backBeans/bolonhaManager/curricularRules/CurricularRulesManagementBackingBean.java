@@ -21,8 +21,12 @@ import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRule
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
+import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
+import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -41,7 +45,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     // private final ResourceBundle domainResources =
     // getResourceBundle("resources/DomainExceptionResources");
     private final String NO_SELECTION = "no_selection";
-
+    
+    private Integer degreeModuleID = null;
     private DegreeModule degreeModule = null;
 
     private DegreeCurricularPlan degreeCurricularPlan = null;
@@ -58,8 +63,14 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         return getAndHoldIntegerParameter("degreeCurricularPlanID");
     }
 
-    public Integer getDegreeModuleID() {
-        return getAndHoldIntegerParameter("degreeModuleID");
+    public Integer getDegreeModuleID() throws FenixFilterException, FenixServiceException {
+        if (degreeModuleID == null) {
+            degreeModuleID = getAndHoldIntegerParameter("degreeModuleID"); 
+            if (degreeModuleID == null && getCurricularRule() != null) {
+                degreeModuleID = getCurricularRule().getDegreeModuleToApplyRule().getIdInternal();
+            }
+        }
+        return degreeModuleID;
     }
 
     public DegreeModule getDegreeModule() throws FenixFilterException, FenixServiceException {
@@ -74,7 +85,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                 : degreeCurricularPlan;
     }
 
-    public String getSelectedCurricularRuleType() {
+    public String getSelectedCurricularRuleType() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("selectedCurricularRuleType") == null && getCurricularRule() != null) {
+            setSelectedCurricularRuleType(getCurricularRule().getCurricularRuleType().getName());            
+        }
         return (String) getViewState().getAttribute("selectedCurricularRuleType");
     }
 
@@ -135,68 +149,120 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         getCourseGroupItems().setValue(readCourseGroups((String) event.getNewValue()));
     }
 
-    public Integer getSelectedPrecendenceDegreeModuleID() {
-        return (Integer) getViewState().getAttribute("selectedPrecendenceDegreeModuleID");
+    public Integer getSelectedPrecendenceDegreeModuleID() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("selectedPrecendenceDegreeModuleID") == null && getCurricularRule() != null) {
+            if (getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)) {
+                setSelectedPrecendenceDegreeModuleID(((RestrictionDoneDegreeModule) getCurricularRule()).getDoneDegreeModule().getIdInternal());                
+            } else if (getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
+                setSelectedPrecendenceDegreeModuleID(((RestrictionEnroledDegreeModule) getCurricularRule()).getEnroledDegreeModule().getIdInternal());
+            }
+        }
+        return (Integer) getViewState().getAttribute("selectedPrecendenceDegreeModuleID");        
     }
 
     public void setSelectedPrecendenceDegreeModuleID(Integer selectedPrecendenceDegreeModuleID) {
         getViewState().setAttribute("selectedPrecendenceDegreeModuleID",
                 selectedPrecendenceDegreeModuleID);
     }
-
-    public Integer getSelectedContextCourseGroupID() {
+   
+    public Integer getSelectedContextCourseGroupID() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("selectedContextCourseGroupID") == null && getCurricularRule() != null) {
+            if (getCurricularRule().getContextCourseGroup() != null) {
+                setSelectedContextCourseGroupID(getCurricularRule().getContextCourseGroup().getIdInternal());
+            }
+        }
         return (Integer) getViewState().getAttribute("selectedContextCourseGroupID");
     }
 
     public void setSelectedContextCourseGroupID(Integer selectedContextCourseGroupID) {
         getViewState().setAttribute("selectedContextCourseGroupID", selectedContextCourseGroupID);
     }
-
-    public Integer getMinimumLimit() {
-        return (getViewState().getAttribute("minimumLimit") != null) ? (Integer) getViewState()
-                .getAttribute("minimumLimit") : 0;
+    
+    public Integer getMinimumLimit() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("minimumLimit") == null) {
+            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
+                setMinimumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMinimum());               
+            } else {
+                setMinimumLimit(Integer.valueOf(0));
+            }
+        }
+        return (Integer) getViewState().getAttribute("minimumLimit");
     }
 
     public void setMinimumLimit(Integer minimumLimit) {
         getViewState().setAttribute("minimumLimit", minimumLimit);
     }
-
-    public Integer getMaximumLimit() {
-        return (getViewState().getAttribute("maximumLimit") != null) ? (Integer) getViewState()
-                .getAttribute("maximumLimit") : 0;
+    
+    public Integer getMaximumLimit() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("maximumLimit") == null) {
+            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
+                setMaximumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMaximum());               
+            } else {
+                setMaximumLimit(Integer.valueOf(0));
+            }
+        }
+        return (Integer) getViewState().getAttribute("maximumLimit");
     }
 
     public void setMaximumLimit(Integer maximumLimit) {
         getViewState().setAttribute("maximumLimit", maximumLimit);
     }
-
-    public Double getMinimumCredits() {
-        return (getViewState().getAttribute("minimumCredits") != null) ? (Double) getViewState()
-                .getAttribute("minimumCredits") : 0;
+   
+    public Double getMinimumCredits() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("minimumCredits") == null) {
+            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.CREDITS_LIMIT)) {
+                setMinimumCredits(((CreditsLimit) getCurricularRule()).getMinimum());               
+            } else {
+                setMinimumCredits(Double.valueOf(0));
+            }
+        }
+        return (Double) getViewState().getAttribute("minimumCredits");
     }
 
     public void setMinimumCredits(Double minimumCredits) {
         getViewState().setAttribute("minimumCredits", minimumCredits);
     }
-
-    public Double getMaximumCredits() {
-        return (getViewState().getAttribute("maximumCredits") != null) ? (Double) getViewState()
-                .getAttribute("maximumCredits") : 0;
+    
+    public Double getMaximumCredits() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("maximumCredits") == null) {
+            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.CREDITS_LIMIT)) {
+                setMaximumCredits(((CreditsLimit) getCurricularRule()).getMaximum());               
+            } else {
+                setMaximumCredits(Double.valueOf(0));
+            }
+        }
+        return (Double) getViewState().getAttribute("maximumCredits");
     }
 
     public void setMaximumCredits(Double maximumCredits) {
         getViewState().setAttribute("maximumCredits", maximumCredits);
     }
-
-    public String getSelectedSemester() {
-        return (getViewState().getAttribute("selectedSemester") != null) ? (String) getViewState()
-                .getAttribute("selectedSemester") : "0";
+    
+    public String getSelectedSemester() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("selectedSemester") == null) {
+            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)) {
+                setSelectedSemester(((RestrictionDoneDegreeModule) getCurricularRule()).getCurricularPeriodOrder().toString());
+            } else if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
+                    setSelectedSemester(((RestrictionEnroledDegreeModule) getCurricularRule()).getCurricularPeriodOrder().toString());
+            } else {
+                setSelectedSemester("0");
+            }
+        }
+        return (String) getViewState().getAttribute("selectedSemester");
     }
 
     public void setSelectedSemester(String selectedSemester) {
         getViewState().setAttribute("selectedSemester", selectedSemester);
     }
-
+    
+    public Integer getCurricularRuleID() {
+        return getAndHoldIntegerParameter("curricularRuleID");
+    }
+    
+    public CurricularRule getCurricularRule() throws FenixFilterException, FenixServiceException {
+        return (curricularRule == null) ? (curricularRule = (CurricularRule) readDomainObject(CurricularRule.class, getCurricularRuleID())) : curricularRule;
+    }
+    
     public UISelectItems getDegreeModuleItems() throws FenixFilterException, FenixServiceException {
         if (degreeModuleItems == null) {
             degreeModuleItems = new UISelectItems();
@@ -288,19 +354,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public String createCurricularRule() {
         try {
             checkSelectedAttributes();
-            final CurricularRuleParametersDTO parametersDTO = new CurricularRuleParametersDTO();
-            parametersDTO.setPrecedenceDegreeModuleID(getSelectedPrecendenceDegreeModuleID());
-            parametersDTO
-                    .setContextCourseGroupID((getSelectedContextCourseGroupID() != null && getSelectedContextCourseGroupID()
-                            .equals(0)) ? null : getSelectedContextCourseGroupID());
-            parametersDTO.setCurricularPeriodInfoDTO(new CurricularPeriodInfoDTO(Integer
-                    .valueOf(getSelectedSemester()), CurricularPeriodType.SEMESTER));
-            parametersDTO.setMinimumCredits(getMinimumCredits());
-            parametersDTO.setMaximumCredits(getMaximumCredits());
-            parametersDTO.setMinimumLimit(getMinimumLimit());
-            parametersDTO.setMaximumLimit(getMaximumLimit());
-            final Object[] args = { getDegreeModuleID(),
-                    CurricularRuleType.valueOf(getSelectedCurricularRuleType()), parametersDTO };
+            final Object[] args = { getDegreeModuleID(), CurricularRuleType.valueOf(getSelectedCurricularRuleType()), buildCurricularRuleParametersDTO() };
             ServiceUtils.executeService(getUserView(), "CreateCurricularRule", args);
             return "setCurricularRules";
         } catch (FenixActionException e) {
@@ -314,23 +368,20 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         }
         return "";
     }
-
-    private void checkSelectedAttributes() throws FenixActionException {
-        if (getSelectedCurricularRuleType() == null
-                || getSelectedCurricularRuleType().equals(NO_SELECTION)) {
-            throw new FenixActionException("must.select.curricular.rule.type");
+    
+    public String editCurricularRule() {
+        try {
+            final Object[] args = { getCurricularRuleID(), buildCurricularRuleParametersDTO()};
+            ServiceUtils.executeService(getUserView(), "EditCurricularRule", args);
+            return "setCurricularRules";
+        } catch (FenixFilterException e) {
+            addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
+        } catch (FenixServiceException e) {
+            addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
+        return "";
     }
-
-    public Integer getCurricularRuleID() {
-        return getAndHoldIntegerParameter("curricularRuleID");
-    }
-
-    public CurricularRule getCurricularRule() throws FenixFilterException, FenixServiceException {
-        return (curricularRule == null) ? (curricularRule = (CurricularRule) readDomainObject(
-                CurricularRule.class, getCurricularRuleID())) : curricularRule;
-    }
-
+    
     public String deleteCurricularRule() {
         try {
             final Object[] args = { getCurricularRuleID() };
@@ -343,5 +394,23 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         }
         return "";
+    }
+    
+    private void checkSelectedAttributes() throws FenixActionException, FenixFilterException, FenixServiceException {
+        if (getSelectedCurricularRuleType() == null || getSelectedCurricularRuleType().equals(NO_SELECTION)) {
+            throw new FenixActionException("must.select.curricular.rule.type");
+        }        
+    }
+    
+    private CurricularRuleParametersDTO buildCurricularRuleParametersDTO() throws FenixFilterException, FenixServiceException, NumberFormatException {
+        final CurricularRuleParametersDTO parametersDTO = new CurricularRuleParametersDTO();
+        parametersDTO.setPrecedenceDegreeModuleID(getSelectedPrecendenceDegreeModuleID());
+        parametersDTO.setContextCourseGroupID((getSelectedContextCourseGroupID() != null && getSelectedContextCourseGroupID().equals(0)) ? null : getSelectedContextCourseGroupID() );
+        parametersDTO.setCurricularPeriodInfoDTO(new CurricularPeriodInfoDTO(Integer.valueOf(getSelectedSemester()), CurricularPeriodType.SEMESTER));            
+        parametersDTO.setMinimumCredits(getMinimumCredits());
+        parametersDTO.setMaximumCredits(getMaximumCredits());
+        parametersDTO.setMinimumLimit(getMinimumLimit());
+        parametersDTO.setMaximumLimit(getMaximumLimit());
+        return parametersDTO;
     }
 }

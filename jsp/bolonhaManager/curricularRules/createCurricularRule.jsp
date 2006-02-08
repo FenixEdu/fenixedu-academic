@@ -59,7 +59,7 @@
 			
 			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 			<h:inputText id="minimumLimit" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumLimit}"/>
-	
+			<h:outputText value=" " escape="false"/>
 			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
 			<h:inputText id="maximumLimit" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumLimit}"/>
 			
@@ -71,7 +71,7 @@
 			
 			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 			<h:inputText id="minimumCredits" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
-	
+			<h:outputText value=" " escape="false"/>
 			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
 			<h:inputText id="maximumCredits" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumCredits}"/>
 	
@@ -96,7 +96,7 @@
 		
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
-		<h:commandButton value="#{bolonhaBundle['submit']}" styleClass="inputbutton" action="#{CurricularRulesManagement.createCurricularRule}"/>
+		<h:commandButton value="#{bolonhaBundle['create']}" styleClass="inputbutton" action="#{CurricularRulesManagement.createCurricularRule}"/>
 		<h:commandButton immediate="true" value="#{bolonhaBundle['back']}" styleClass="inputbutton" action="setCurricularRules"/>
 	</h:form>
 </ft:tilesView>

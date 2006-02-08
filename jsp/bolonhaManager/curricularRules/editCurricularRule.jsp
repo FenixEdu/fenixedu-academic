@@ -20,28 +20,16 @@
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularRulesManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularRuleID' name='curricularRuleID' type='hidden' value='#{CurricularRulesManagement.curricularRuleID}'/>"/>
 		
-		<h:outputText value="<strong>#{bolonhaBundle['degreeModule.to.apply.rule']}: </strong>" escape="false"/>
+		<h:outputText value="<strong>#{bolonhaBundle['degreeModule']}: </strong>" escape="false"/>
 		<h:outputText value="#{CurricularRulesManagement.degreeModule.name}<br/>" escape="false"/>
 		
-		<h:outputText value="<strong>#{bolonhaBundle['existent.curricularRules']}: </strong><br/>" escape="false"/>
-		<h:panelGroup rendered="#{empty CurricularRulesManagement.degreeModule.curricularRules}">
-			<h:outputText value="<em>#{bolonhaBundle['no.existent.curricularRules']}</em><br/><br/>" escape="false"/>
-		</h:panelGroup>
-		<h:panelGroup rendered="#{!empty CurricularRulesManagement.degreeModule.curricularRules}">
-			<h:outputText value="<ul>" escape="false"/>
-			<fc:dataRepeater value="#{CurricularRulesManagement.rulesLabels}" var="curricularRule">
-				<h:outputText value="<li>#{curricularRule}</li>" escape="false"/>
-			</fc:dataRepeater>
-			<h:outputText value="</ul>" escape="false"/>
-		</h:panelGroup>
-		
 		<h:outputText value="<div class='simpleblock4'> " escape="false"/>
-		<h:outputText value="<h4 class='first'>#{bolonhaBundle['new.rule']}:</h4>" escape="false"/>
+		<h:outputText value="<h4 class='first'>#{bolonhaBundle['edit']}:</h4>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 
 		<h:outputText value="<p><label>#{bolonhaBundle['type.of.rule']}:</label>" escape="false"/>
 		<fc:selectOneMenu value="#{CurricularRulesManagement.selectedCurricularRuleType}" onchange="this.form.submit();"
-				valueChangeListener="#{CurricularRulesManagement.onChangeCurricularRuleTypeDropDown}">
+				valueChangeListener="#{CurricularRulesManagement.onChangeCurricularRuleTypeDropDown}" disabled="true">
 			<f:selectItems binding="#{CurricularRulesManagement.curricularRuleTypeItems}"/>
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
@@ -59,7 +47,7 @@
 			
 			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 			<h:inputText id="minimumLimit" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumLimit}"/>
-	
+			<h:outputText value=" " escape="false"/>
 			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
 			<h:inputText id="maximumLimit" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumLimit}"/>
 			
@@ -71,7 +59,7 @@
 			
 			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 			<h:inputText id="minimumCredits" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
-	
+			<h:outputText value=" " escape="false"/>	
 			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
 			<h:inputText id="maximumCredits" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumCredits}"/>
 	
@@ -96,7 +84,7 @@
 		
 		<h:outputText value="</fieldset></div>" escape="false"/>	
 
-		<h:commandButton value="#{bolonhaBundle['submit']}" styleClass="inputbutton" action="#{CurricularRulesManagement.createCurricularRule}"/>
+		<h:commandButton value="#{bolonhaBundle['save']}" styleClass="inputbutton" action="#{CurricularRulesManagement.editCurricularRule}"/>
 		<h:commandButton immediate="true" value="#{bolonhaBundle['back']}" styleClass="inputbutton" action="setCurricularRules"/>
 	</h:form>
 </ft:tilesView>

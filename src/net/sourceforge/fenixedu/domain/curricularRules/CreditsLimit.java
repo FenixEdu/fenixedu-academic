@@ -45,7 +45,13 @@ public class CreditsLimit extends CreditsLimit_Base {
         setBegin(begin);
         setEnd(end);
     }
-
+    
+    public void edit(CourseGroup contextCourseGroup, Double minimumCredits, Double maximumCredits) {
+        setContextCourseGroup(contextCourseGroup);
+        setMinimum(minimumCredits);
+        setMaximum(maximumCredits);
+    }
+    
     @Override
     public ExecutionPeriod getBegin() {
         return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super

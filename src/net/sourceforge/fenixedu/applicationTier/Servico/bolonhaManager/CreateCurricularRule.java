@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CurricularRuleParametersDTO;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleFactory;
+import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleManager;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
@@ -26,6 +26,6 @@ public class CreateCurricularRule extends Service {
         ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName("2006/2007");
         ExecutionPeriod begin = executionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
         
-        CurricularRuleFactory.createCurricularRule(degreeModuleToApplyRule, begin, null, selectedCurricularRuleType, parametersDTO, persistentObject);
+        CurricularRuleManager.createCurricularRule(degreeModuleToApplyRule, begin, null, selectedCurricularRuleType, parametersDTO, persistentObject);
     }
 }
