@@ -19,10 +19,10 @@
 	
 		<fc:dataRepeater value="#{ScientificCouncilDegreeManagement.filteredBolonhaDegrees}" var="degree" rendered="#{!empty ScientificCouncilDegreeManagement.bolonhaDegrees}">
 			<h:outputText value="<table width='90%' class='showinfo1 bgcolor1 highlight2'>" escape="false"/>
-			<h:outputText value="<tr><th width='120px'>#{bolonhaBundle['degree']}:</th>" escape="false"/>
+			<h:outputText value="<tr><th width='140px'>#{bolonhaBundle['degree']}:</th>" escape="false"/>
 	
 			<h:outputText value="<td> #{enumerationBundle[degree.bolonhaDegreeType.name]} #{degree.nome} (#{degree.acronym})</td>" escape="false"/>
-			<h:outputText value="<td width='200px'>" escape="false"/>
+			<h:outputText value="<td width='240px'>" escape="false"/>
 			<h:outputLink value="viewDegree.faces">
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
 				<f:param name="degreeId" value="#{degree.idInternal}"/>
