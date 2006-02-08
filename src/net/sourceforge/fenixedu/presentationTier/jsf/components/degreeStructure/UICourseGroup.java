@@ -313,7 +313,7 @@ public class UICourseGroup extends UIDegreeModule {
         writer.startElement("tr", this);
         writer.startElement("td", this);
         if (this.toEdit) {
-            writer.writeAttribute("colspan", 5, null);    
+            writer.writeAttribute("colspan", 6, null);    
         } else {
             writer.writeAttribute("colspan", 3, null);
         }
