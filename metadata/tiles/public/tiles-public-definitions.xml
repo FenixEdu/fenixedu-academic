@@ -5,7 +5,7 @@
 <tiles-definitions>
 	<definition name="definition.publico.executionCourseSitePage" 
 		controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.PublicTilesComponentController" 
-		page="/publicGesDisLayout_2col.jsp" >
+		page="/layout/publicGesDisLayout_2col.jsp" >
 		<put name="title" value=".Instituto Superior Técnico" />	
 	  	<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
@@ -31,7 +31,7 @@
   		<put name="footer" value="/publico/degreeSite/footer.jsp" />
 	</definition>
 	<definition name="definition.public.mainPage" 
-		page="/publicGesDisLayout_2col.jsp" >
+		page="/layout/publicGesDisLayout_2col.jsp" >
   		<put name="title" value=".Instituto Superior Técnico" /> 
 		<put name="serviceName" value="Instituto Superior Técnico" />
 	    <put name="navGeral" value="/commons/blank.jsp" />
@@ -40,7 +40,7 @@
 	</definition>	
 	
 	<definition name="definition.public.mainPageWithPeriodSelection" 
-		page="/publicGesDisLayout_2col.jsp" >
+		page="/layout/publicGesDisLayout_2col.jsp" >
   	<put name="title" value=".Instituto Superior Técnico" /> 
 		<put name="serviceName" value="Instituto Superior Técnico" />
 	   <put name="navGeral" value="/commons/blank.jsp" />
@@ -60,7 +60,7 @@
 	</definition>	
 	
 	<definition name="definition.public.mainPageISTWithtOutLayout" 
-		page="/publicGesDisLayout_2col.jsp" >
+		page="/layout/publicGesDisLayout_2col.jsp" >
             <put name="title" value="Instituto Superior Técnico" /> 
 			<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
             <put name="profile_navigation" value="/publico/degreeSite/profileNavigation.jsp" />
