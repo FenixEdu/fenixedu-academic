@@ -3,6 +3,9 @@
  */
 package net.sourceforge.fenixedu.domain.curricularRules;
 
+import java.util.List;
+
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 
 public abstract class CurricularRule extends CurricularRule_Base {
@@ -12,7 +15,7 @@ public abstract class CurricularRule extends CurricularRule_Base {
         setOjbConcreteClass(getClass().getName());        
     }
     
-    public abstract String getLabel();
+    public abstract List<GenericPair<Object, Boolean>> getLabel();
     public abstract boolean evaluate(Class<? extends DomainObject> object);
     
     public void delete() {

@@ -3,6 +3,10 @@
  */
 package net.sourceforge.fenixedu.domain.curricularRules;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -10,10 +14,10 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CreditsLimit extends CreditsLimit_Base {
-    
+
     /**
-     * This constructor should be used in context of Composite Rule 
-     */ 
+     * This constructor should be used in context of Composite Rule
+     */
     protected CreditsLimit(Double minimum, Double maximum) {
         super();
         if (minimum == null || maximum == null) {
@@ -26,7 +30,7 @@ public class CreditsLimit extends CreditsLimit_Base {
         setMaximum(maximum);
         setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
     }
-    
+
     public CreditsLimit(CourseGroup degreeModuleToApplyRule, CourseGroup contextCourseGroup,
             ExecutionPeriod begin, ExecutionPeriod end, Double minimum, Double maximum) {
 
@@ -41,12 +45,13 @@ public class CreditsLimit extends CreditsLimit_Base {
         setBegin(begin);
         setEnd(end);
     }
-    
+
     @Override
     public ExecutionPeriod getBegin() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super.getBegin();
+        return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super
+                .getBegin();
     }
-    
+
     @Override
     public ExecutionPeriod getEnd() {
         return (getParentCompositeRule() != null) ? getParentCompositeRule().getEnd() : super.getEnd();
@@ -54,41 +59,47 @@ public class CreditsLimit extends CreditsLimit_Base {
 
     @Override
     public CurricularRuleType getCurricularRuleType() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getCurricularRuleType() : super.getCurricularRuleType();
+        return (getParentCompositeRule() != null) ? getParentCompositeRule().getCurricularRuleType()
+                : super.getCurricularRuleType();
     }
 
     @Override
-    public DegreeModule getDegreeModuleToApplyRule() {        
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getDegreeModuleToApplyRule() : super.getDegreeModuleToApplyRule();
-    }
-    
-    @Override
-    public CourseGroup getContextCourseGroup() {        
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getContextCourseGroup() : super.getContextCourseGroup();
+    public DegreeModule getDegreeModuleToApplyRule() {
+        return (getParentCompositeRule() != null) ? getParentCompositeRule()
+                .getDegreeModuleToApplyRule() : super.getDegreeModuleToApplyRule();
     }
 
     @Override
-    public String getLabel() {
-        // TODO Auto-generated method stub
-        final StringBuilder result = new StringBuilder();
-        if (belongsToCompositeRule()) {            
-            result.append("Deverá fazer entre ????");
-        } else {
-            result.append("Deverá fazer entre ");
-        }        
-        result.append(getMinimum());
-        result.append(" e ");
-        result.append(getMaximum());
-        result.append(" créditos");
+    public CourseGroup getContextCourseGroup() {
+        return (getParentCompositeRule() != null) ? getParentCompositeRule().getContextCourseGroup()
+                : super.getContextCourseGroup();
+    }
+
+    @Override
+    public List<GenericPair<Object, Boolean>> getLabel() {
+        List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
+
+        labelList.add(new GenericPair<Object, Boolean>("label.creditsForApprovation", true));
+        labelList.add(new GenericPair<Object, Boolean>(": ", false));
+        labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+        labelList.add(new GenericPair<Object, Boolean>(" ", false));
+        labelList.add(new GenericPair<Object, Boolean>("label.to", true));
+        labelList.add(new GenericPair<Object, Boolean>(" ", false));
+        labelList.add(new GenericPair<Object, Boolean>(getMaximum(), false));
+
         if (getContextCourseGroup() != null) {
-            result.append(" apenas contexto ");
-            result.append(getContextCourseGroup().getName());
+            labelList.add(new GenericPair<Object, Boolean>(", ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));            
+            labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getName(), false));
         }
-        return result.toString();
+
+        return labelList;
+
     }
 
     @Override
-    public boolean evaluate(Class< ? extends DomainObject> object) {
+    public boolean evaluate(Class<? extends DomainObject> object) {
         // TODO Auto-generated method stub
         return false;
     }

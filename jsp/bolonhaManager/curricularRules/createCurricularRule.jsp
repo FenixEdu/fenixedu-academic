@@ -29,8 +29,8 @@
 		</h:panelGroup>
 		<h:panelGroup rendered="#{!empty CurricularRulesManagement.degreeModule.curricularRules}">
 			<h:outputText value="<ul>" escape="false"/>
-			<fc:dataRepeater value="#{CurricularRulesManagement.degreeModule.curricularRules}" var="curricularRule">
-				<h:outputText value="<li>#{curricularRule.label}</li>" escape="false"/>
+			<fc:dataRepeater value="#{CurricularRulesManagement.rulesLabels}" var="curricularRule">
+				<h:outputText value="<li>#{curricularRule}</li>" escape="false"/>
 			</fc:dataRepeater>
 			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>

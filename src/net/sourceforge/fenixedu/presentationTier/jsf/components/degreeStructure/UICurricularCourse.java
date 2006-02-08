@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeM
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.util.CurricularPeriodLabelFormatter;
+import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 public class UICurricularCourse extends UIDegreeModule {
     public static final String COMPONENT_TYPE = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICurricularCourse";
@@ -201,7 +202,7 @@ public class UICurricularCourse extends UIDegreeModule {
     }
 
     private void encodeCurricularRule(CurricularRule curricularRule) throws IOException {
-        writer.append(curricularRule.getLabel());
+        writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule));
         writer.startElement("br", this);
         writer.endElement("br");
         

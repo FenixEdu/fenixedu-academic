@@ -23,7 +23,7 @@
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularRule']}:</h4>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		
-		<h:outputText value="<p>#{CurricularRulesManagement.curricularRule.label}</p>" escape="false"/>
+		<h:outputText value="<p>#{CurricularRulesManagement.ruleLabel}</p>" escape="false"/>
 		<h:outputText value="</fieldset></div>" escape="false"/>	
 		
 		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" escape="false" styleClass="error0"/>
