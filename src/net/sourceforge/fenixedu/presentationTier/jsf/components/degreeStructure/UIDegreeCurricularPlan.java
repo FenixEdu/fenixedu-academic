@@ -60,7 +60,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 dcpBuffer.append("[DCP ").append(dcp.getIdInternal()).append("] ").append(dcp.getName());
                 System.out.println(dcpBuffer);
 
-                new UICourseGroup(dcp.getDegreeModule(), onlyStructure, this.toEdit, ROOT_DEPTH, "", this.showRules).encodeBegin(facesContext);
+                new UICourseGroup(dcp.getDegreeModule(), null, this.toEdit, this.showRules, ROOT_DEPTH, "", onlyStructure).encodeBegin(facesContext);
             }
         }
     }
@@ -227,7 +227,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                 sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
                 sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
                 sumCredits += degreeModule.getEctsCredits();
-                new UICurricularCourse((CurricularCourse) degreeModule, this.toEdit, context, this.showRules).encodeBegin(facesContext);
+                new UICurricularCourse((CurricularCourse) degreeModule, context, this.toEdit, this.showRules).encodeBegin(facesContext);
             }
         }
         

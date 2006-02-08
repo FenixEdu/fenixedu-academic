@@ -18,13 +18,15 @@ public class UICourseGroup extends UIDegreeModule {
 
     public static final String COMPONENT_FAMILY = "net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure.UICourseGroup";
 
+    protected Boolean onlyStructure;
+    
     public UICourseGroup() {
         super();
     }
-    
-    public UICourseGroup(DegreeModule courseGroup, Boolean onlyStructure, Boolean toEdit, int depth, String tabs, Boolean showRules) {
-        super(courseGroup, onlyStructure, toEdit, depth, tabs);
-        this.showRules = showRules;
+
+    public UICourseGroup(DegreeModule courseGroup, Context previousContext, Boolean toEdit, Boolean showRules, int depth, String tabs, Boolean onlyStructure) {
+        super(courseGroup, previousContext, toEdit, showRules, depth, tabs);
+        this.onlyStructure = onlyStructure;
     }
 
     public String getFamily() {
@@ -146,6 +148,10 @@ public class UICourseGroup extends UIDegreeModule {
         encodeHeader();
 
         if (!this.onlyStructure) {
+            if (this.showRules && this.degreeModule.hasAnyCurricularRules()) {
+                encodeCurricularRules();    
+            }
+            
             if (((CourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
                 List<Double> sums = encodeChildCurricularCourses();
                 encodeSumsFooter(sums);
@@ -250,7 +256,7 @@ public class UICourseGroup extends UIDegreeModule {
             sumAutonomousWork += ((CurricularCourse)degreeModule).getAutonomousWorkHours(context.getCurricularPeriod().getOrder());
             sumTotalLoad += ((CurricularCourse)degreeModule).getTotalLoad(context.getCurricularPeriod().getOrder());
             sumCredits += degreeModule.getEctsCredits();
-            new UICurricularCourse(context.getDegreeModule(), this.toEdit, this.depth, this.tabs + "\t", context, this.showRules).encodeBegin(facesContext);
+            new UICurricularCourse(context.getDegreeModule(), context, this.toEdit, this.showRules, this.depth, this.tabs + "\t").encodeBegin(facesContext);
         }
         
         List<Double> result = new ArrayList<Double>(4);
@@ -321,7 +327,7 @@ public class UICourseGroup extends UIDegreeModule {
 
     private void encodeChildCourseGroups() throws IOException {
         for (Context context : ((CourseGroup)this.degreeModule).getContextsWithCourseGroups()) {
-            new UICourseGroup(context.getDegreeModule(), this.onlyStructure, this.toEdit, this.depth + 1, this.tabs + "\t", this.showRules).encodeBegin(facesContext);
+            new UICourseGroup(context.getDegreeModule(), context, this.toEdit, this.showRules, this.depth + 1, this.tabs + "\t", this.onlyStructure).encodeBegin(facesContext);
         }
     }
 
