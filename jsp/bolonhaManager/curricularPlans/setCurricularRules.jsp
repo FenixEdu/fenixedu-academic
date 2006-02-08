@@ -16,13 +16,13 @@
 
 	<h:panelGroup rendered="#{!empty CurricularCourseManagement.degreeCurricularPlan.degreeStructure.childs}">
 		<h:outputText value="<br/>#{bolonhaBundle['view.structure.organized.by']}: " escape="false"/>
-		<h:outputLink value="setCurricularRules.faces">
+		<h:outputLink value="../curricularPlans/setCurricularRules.faces">
 			<h:outputText value="#{bolonhaBundle['groups']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="groups"/>
 		</h:outputLink>
 		<h:outputText value=" , " escape="false"/>
-		<h:outputLink value="setCurricularRules.faces">
+		<h:outputLink value="../curricularPlans/setCurricularRules.faces">
 			<h:outputText value="#{bolonhaBundle['year']}/#{bolonhaBundle['semester']}" />
 			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}"/>
 			<f:param name="organizeBy" value="years"/>		
