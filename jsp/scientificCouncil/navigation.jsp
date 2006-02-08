@@ -23,13 +23,13 @@
 				<bean:message key="competenceCoursesManagement"/>
 			</html:link>
 		</li>
-<!--  
+
 		<li>
 			<html:link page="/curricularPlans/curricularPlansManagement.faces">
 				<bean:message key="curricularPlansManagement"/>
 			</html:link>
 		</li>
--->
+
 		<br/>
 		<li class="navheader">
 			<bean:message key="label.credits.navigation.header"/>
