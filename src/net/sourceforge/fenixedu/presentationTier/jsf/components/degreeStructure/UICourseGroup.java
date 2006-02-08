@@ -154,7 +154,7 @@ public class UICourseGroup extends UIDegreeModule {
             
             if (((CourseGroup)this.degreeModule).getContextsWithCurricularCourses().size() > 0) {
                 List<Double> sums = encodeChildCurricularCourses();
-                encodeSumsFooter(sums);
+                //encodeSumsFooter(sums);
             } else {
                 encodeEmptyCourseGroupInfo();   
             }
@@ -222,7 +222,7 @@ public class UICourseGroup extends UIDegreeModule {
                 .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "edit");
         writer.append(" , ");
         encodeLink("deleteCourseGroup.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
-                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal(), "delete");
+                .get("degreeCurricularPlanID") + "&courseGroupID=" + this.degreeModule.getIdInternal() + "&contextID=" + this.previousContext, "delete");
         writer.append(") ");
         writer.endElement("td");
     }
