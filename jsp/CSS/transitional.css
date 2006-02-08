@@ -151,8 +151,7 @@ padding: 0.5em;
 }
 
 .thleft th { text-align: left;}
-.sp td { padding: 0.3em 0.5em; }
-
+/*.sp td { padding: 0.3em 0.5em; }*/
 .emphasis1 th { background: #ffc; }
 .emphasis2 th { font-weight: bold; }
 
