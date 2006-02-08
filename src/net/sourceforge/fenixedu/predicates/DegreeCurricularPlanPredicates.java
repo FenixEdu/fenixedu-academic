@@ -50,15 +50,17 @@ public class DegreeCurricularPlanPredicates {
     public static final AccessControlPredicate<DegreeCurricularPlan> scientificCouncilWritePredicate = new AccessControlPredicate<DegreeCurricularPlan>() {
 
         public boolean evaluate(DegreeCurricularPlan dcp) {
+
+            Person person = AccessControl.getUserView().getPerson();
+            if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+                return true;
+            }
             
             if (dcp.getCurricularStage().equals(CurricularStage.OLD)) {
                 return true;
             }
             
-            Person person = AccessControl.getUserView().getPerson();
-            if (person.hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
-                return true;
-            }
+
 
             return false;
         }
