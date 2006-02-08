@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.jsf.components.degreeStructure;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.faces.context.FacesContext;
@@ -143,38 +145,59 @@ public class UICurricularCourse extends UIDegreeModule {
     }
 
     private void encodeCurricularRules() throws IOException {
-        writer.startElement("tr", this);
-        writer.writeAttribute("class", "smalltxt", null);
-        
-        writer.startElement("td", this);
-        writer.writeAttribute("colspan", (this.toEdit) ? 4 : 5, null);
+        List<CurricularRule> curricularRulesToEncode = new ArrayList<CurricularRule>();
 
         for (CurricularRule curricularRule : this.degreeModule.getCurricularRules()) {
-            if (curricularRule.getContextCourseGroup() == null 
-                    || curricularRule.getContextCourseGroup().equals(this.previousContext.getCourseGroup())) {
-                if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)) {
-                    RestrictionDoneDegreeModule concreteRule = (RestrictionDoneDegreeModule) curricularRule; 
-                    if ((concreteRule.getCurricularPeriodType() == null && concreteRule.getCurricularPeriodOrder() == null) 
-                            || (concreteRule.getCurricularPeriodType() != null 
-                                    && concreteRule.getCurricularPeriodOrder() != null 
-                                    && concreteRule.getCurricularPeriodType().equals(previousContext.getCurricularPeriod().getPeriodType()) 
-                                    && concreteRule.getCurricularPeriodOrder().equals(previousContext.getCurricularPeriod().getOrder()))) {
-                        encodeCurricularRule(curricularRule);
-                    }
-                } else if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
-                    RestrictionEnroledDegreeModule concreteRule = (RestrictionEnroledDegreeModule) curricularRule; 
-                    if ((concreteRule.getCurricularPeriodType() == null && concreteRule.getCurricularPeriodOrder() == null) 
-                            || (concreteRule.getCurricularPeriodType() != null 
-                                    && concreteRule.getCurricularPeriodOrder() != null 
-                                    && concreteRule.getCurricularPeriodType().equals(previousContext.getCurricularPeriod().getPeriodType()) 
-                                    && concreteRule.getCurricularPeriodOrder().equals(previousContext.getCurricularPeriod().getOrder()))) {
-                        encodeCurricularRule(curricularRule);
-                    }
-                } 
+            if (ruleAppliesToCurricularCourseContex(curricularRule) && ruleAppliesToCurricularCoursePeriod(curricularRule)) {
+                curricularRulesToEncode.add(curricularRule);
             }
         }
-        writer.endElement("td");
-        writer.endElement("tr");
+
+        if (!curricularRulesToEncode.isEmpty()) {
+            writer.startElement("tr", this);
+            writer.writeAttribute("border", "1", null);
+            writer.writeAttribute("class", "smalltxt", null);
+            
+            writer.startElement("td", this);
+            writer.writeAttribute("colspan", (this.toEdit) ? 5 : 6, null);
+            
+            for (CurricularRule curricularRule : curricularRulesToEncode) {
+                encodeCurricularRule(curricularRule);    
+            }
+            
+            writer.endElement("td");
+            writer.endElement("tr");
+        }
+    }
+
+    private boolean ruleAppliesToCurricularCourseContex(CurricularRule curricularRule) {
+        return (curricularRule.getContextCourseGroup() == null 
+                || curricularRule.getContextCourseGroup().equals(this.previousContext.getCourseGroup()));
+    }
+
+    private boolean ruleAppliesToCurricularCoursePeriod(CurricularRule curricularRule) {
+        if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)) {
+            RestrictionDoneDegreeModule concreteRule = (RestrictionDoneDegreeModule) curricularRule;
+            
+            if ((concreteRule.getCurricularPeriodType() == null && concreteRule.getCurricularPeriodOrder().equals(0)) 
+                    || (concreteRule.getCurricularPeriodType() != null 
+                            && concreteRule.getCurricularPeriodOrder() != null 
+                            && concreteRule.getCurricularPeriodType().equals(previousContext.getCurricularPeriod().getPeriodType()) 
+                            && concreteRule.getCurricularPeriodOrder().equals(previousContext.getCurricularPeriod().getOrder()))) {
+                return true;
+            }
+        } else if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
+            RestrictionEnroledDegreeModule concreteRule = (RestrictionEnroledDegreeModule) curricularRule; 
+            
+            if ((concreteRule.getCurricularPeriodType() == null && concreteRule.getCurricularPeriodOrder().equals(0)) 
+                    || (concreteRule.getCurricularPeriodType() != null 
+                            && concreteRule.getCurricularPeriodOrder() != null 
+                            && concreteRule.getCurricularPeriodType().equals(previousContext.getCurricularPeriod().getPeriodType()) 
+                            && concreteRule.getCurricularPeriodOrder().equals(previousContext.getCurricularPeriod().getOrder()))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void encodeCurricularRule(CurricularRule curricularRule) throws IOException {
