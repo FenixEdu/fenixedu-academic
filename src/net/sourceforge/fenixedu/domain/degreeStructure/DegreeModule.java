@@ -42,19 +42,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
     }
     
     public DegreeCurricularPlan getParentDegreeCurricularPlan() {
-        return searchParentDegreeCurricularPlan(getFirstParent());
-}
-
-    private DegreeCurricularPlan searchParentDegreeCurricularPlan(DegreeModule degreeModule) {        
-        if (degreeModule.isRoot()) {
-            return degreeModule.getNewDegreeCurricularPlan();
-        } else {
-            return degreeModule.getParentDegreeCurricularPlan();
+        if (isRoot()) {
+            return getNewDegreeCurricularPlan();
         }
-    }    
-    
-    private DegreeModule getFirstParent() {
-        return (hasAnyDegreeModuleContexts()) ? getDegreeModuleContexts().get(0).getCourseGroup() : null;
+        return getDegreeModuleContexts().get(0).getCourseGroup().getParentDegreeCurricularPlan();
     }
 
     public abstract Double getEctsCredits();
