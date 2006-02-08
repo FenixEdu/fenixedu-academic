@@ -121,6 +121,22 @@
 		</java>
     	<antcall target="clean-all"/>
     </target>
+	
+    <target name="update-RootDomainObject"
+    		description="Adds specific readByOID methods to RootDomainObject."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.RootDomainObjectGenerator" fork="true">
+			<arg value="${src_gen}"/>
+			<arg value="${dml.definition.file}"/>
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>			
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+    	<antcall target="clean-all"/>
+    </target>
 
     <target name="dmlGenerator"
     		description="Generate DML file from OJB Mapping.">
