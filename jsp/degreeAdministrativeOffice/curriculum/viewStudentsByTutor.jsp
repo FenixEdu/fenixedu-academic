@@ -22,10 +22,24 @@
 	<logic:notEmpty name="studentsOfTutor">
 		<bean:size id="studentsSize" name="studentsOfTutor" />	
 		<b><bean:message key="error.tutor.numberStudents" arg0="<%= studentsSize.toString() %>"/></b><br/><br/>
+
+		<bean:define id="mails" type="java.lang.String">
+			<logic:iterate id="infoTutor" name="studentsOfTutor">
+				<logic:present name="infoTutor" property="infoStudent.infoPerson.email">
+					<bean:write name="infoTutor" property="infoStudent.infoPerson.email"/>,
+				</logic:present>
+			</logic:iterate>
+		</bean:define>
+		<html:link href="<%= "mailto:"+ mails %>">Send mail to all</html:link>
+
+
+		<br/>
+
 		<table align="left">	
 			<tr>
 				<th class="listClasses-header"><bean:message key="label.number" /></th>
 				<th class="listClasses-header"><bean:message key="label.masterDegree.administrativeOffice.studentName" /></th>
+				<th class="listClasses-header"><bean:message key="label.email" /></th>
 			</tr>			
 			<logic:iterate id="infoTutor" name="studentsOfTutor">
 				<bean:define id="tutorId" name="infoTutor" property="idInternal" />
@@ -36,6 +50,15 @@
 						<html:link page="<%= "/viewCurriculum.do?method=getStudentCP&amp;studentNumber=" + studentNumber.toString() %>">
 							<bean:write name="infoTutor" property="infoStudent.infoPerson.nome"/>
 						</html:link>
+					</td>
+					<td>
+						<logic:present name="infoTutor" property="infoStudent.infoPerson.email">
+							<bean:define id="mail" name="infoTutor" property="infoStudent.infoPerson.email"/>
+							<html:link href="<%= "mailto:"+ mail %>"><bean:write name="infoTutor" property="infoStudent.infoPerson.email"/></html:link>
+						</logic:present>
+						<logic:notPresent name="infoTutor" property="infoStudent.infoPerson.email">
+							&nbsp;
+						</logic:notPresent>
 					</td>
 				</tr>
 			</logic:iterate>
