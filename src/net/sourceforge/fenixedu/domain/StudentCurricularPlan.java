@@ -724,7 +724,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     protected List getCommonBranchAndStudentBranchesCourses(ExecutionPeriod executionPeriod) {
 
-        HashSet curricularCourses = new HashSet();
+        Set curricularCourses = new HashSet();
         DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
         List commonAreas = degreeCurricularPlan.getCommonAreas();
         int commonAreasSize = commonAreas.size();
