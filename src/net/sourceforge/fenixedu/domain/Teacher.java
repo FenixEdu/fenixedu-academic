@@ -470,7 +470,7 @@ public class Teacher extends Teacher_Base {
         if (list.isEmpty()) {
             return 0;
         } else {
-            return calculateServiceExemptionsCredits(list, executionPeriod);
+            return calculateServiceExemptionsCredits(list, occupationPeriod, executionPeriod);
         }
     }
 
@@ -536,12 +536,8 @@ public class Teacher extends Teacher_Base {
     }
 
     private int calculateServiceExemptionsCredits(List<TeacherServiceExemption> list,
-            ExecutionPeriod executionPeriod) {
-
-        OccupationPeriod occupationPeriod = getLessonsPeriod(executionPeriod);
-        if (occupationPeriod == null) {
-            return 0;
-        }
+            OccupationPeriod occupationPeriod, ExecutionPeriod executionPeriod) {
+        
         TeacherServiceExemption teacherServiceExemption = getTeacherServiceExemption(list,
                 occupationPeriod);
 
