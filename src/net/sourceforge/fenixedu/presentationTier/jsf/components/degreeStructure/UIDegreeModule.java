@@ -11,11 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
-import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -104,14 +100,9 @@ public class UIDegreeModule extends UIInput {
         List<CurricularRule> curricularRulesToEncode = new ArrayList<CurricularRule>();
 
         for (CurricularRule curricularRule : this.degreeModule.getCurricularRules()) {
-            if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)
-                    || curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
-                if (ruleAppliesToCurricularCourseContex(curricularRule) && ruleAppliesToCurricularCoursePeriod(curricularRule)) {
+            if (curricularRule.appliesToContext(this.previousContext)) {
                     curricularRulesToEncode.add(curricularRule);
-                }
-            } else if (ruleAppliesToCurricularCourseContex(curricularRule) ) {
-                curricularRulesToEncode.add(curricularRule);
-            }
+            } 
         }
 
         if (!curricularRulesToEncode.isEmpty()) {
@@ -149,36 +140,6 @@ public class UIDegreeModule extends UIInput {
         }
     }
     
-    private boolean ruleAppliesToCurricularCourseContex(CurricularRule curricularRule) {
-        return (curricularRule.getContextCourseGroup() == null 
-                || curricularRule.getContextCourseGroup().equals(this.previousContext.getCourseGroup()));
-    }
-
-    private boolean ruleAppliesToCurricularCoursePeriod(CurricularRule curricularRule) {
-        if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)) {
-            RestrictionDoneDegreeModule concreteRule = (RestrictionDoneDegreeModule) curricularRule;
-            
-            if ((concreteRule.getCurricularPeriodType().equals(CurricularPeriodType.SEMESTER) && concreteRule.getCurricularPeriodOrder().equals(0)) 
-                    || (concreteRule.getCurricularPeriodType() != null 
-                            && concreteRule.getCurricularPeriodOrder() != null 
-                            && concreteRule.getCurricularPeriodType().equals(previousContext.getCurricularPeriod().getPeriodType()) 
-                            && concreteRule.getCurricularPeriodOrder().equals(previousContext.getCurricularPeriod().getOrder()))) {
-                return true;
-            }
-        } else if (curricularRule.getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
-            RestrictionEnroledDegreeModule concreteRule = (RestrictionEnroledDegreeModule) curricularRule; 
-            
-            if ((concreteRule.getCurricularPeriodType().equals(CurricularPeriodType.SEMESTER) && concreteRule.getCurricularPeriodOrder().equals(0)) 
-                    || (concreteRule.getCurricularPeriodType() != null 
-                            && concreteRule.getCurricularPeriodOrder() != null 
-                            && concreteRule.getCurricularPeriodType().equals(previousContext.getCurricularPeriod().getPeriodType()) 
-                            && concreteRule.getCurricularPeriodOrder().equals(previousContext.getCurricularPeriod().getOrder()))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void encodeCurricularRule(CurricularRule curricularRule) throws IOException {
         writer.startElement("p", this);
         writer.append(CurricularRuleLabelFormatter.getLabel(curricularRule));

@@ -1,6 +1,3 @@
-/*
- * Created on Feb 7, 2006
- */
 package net.sourceforge.fenixedu.domain.curricularRules;
 
 import java.util.ArrayList;
@@ -10,7 +7,6 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CreditsLimit extends CreditsLimit_Base {
@@ -53,35 +49,6 @@ public class CreditsLimit extends CreditsLimit_Base {
     }
     
     @Override
-    public ExecutionPeriod getBegin() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super
-                .getBegin();
-    }
-
-    @Override
-    public ExecutionPeriod getEnd() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getEnd() : super.getEnd();
-    }
-
-    @Override
-    public CurricularRuleType getCurricularRuleType() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getCurricularRuleType()
-                : super.getCurricularRuleType();
-    }
-
-    @Override
-    public DegreeModule getDegreeModuleToApplyRule() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule()
-                .getDegreeModuleToApplyRule() : super.getDegreeModuleToApplyRule();
-    }
-
-    @Override
-    public CourseGroup getContextCourseGroup() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getContextCourseGroup()
-                : super.getContextCourseGroup();
-    }
-
-    @Override
     public List<GenericPair<Object, Boolean>> getLabel() {
         List<GenericPair<Object, Boolean>> labelList = new ArrayList<GenericPair<Object, Boolean>>();
 
@@ -109,4 +76,5 @@ public class CreditsLimit extends CreditsLimit_Base {
         // TODO Auto-generated method stub
         return false;
     }
+
 }

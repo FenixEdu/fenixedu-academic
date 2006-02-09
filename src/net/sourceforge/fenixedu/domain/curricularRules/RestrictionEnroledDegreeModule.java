@@ -1,6 +1,3 @@
-/*
- * Created on Feb 7, 2006
- */
 package net.sourceforge.fenixedu.domain.curricularRules;
 
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         if (enroledDegreeModule == null) {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
-        setEnroledDegreeModule(enroledDegreeModule);
+        setPrecedenceDegreeModule(enroledDegreeModule);
         setCurricularRuleType(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE);
     }
 
@@ -48,39 +45,10 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
     }
     
     public void edit(DegreeModule enroledDegreeModule, CourseGroup contextCourseGroup, CurricularPeriodInfoDTO curricularPeriodInfoDTO) {
-        setEnroledDegreeModule(enroledDegreeModule);
+        setPrecedenceDegreeModule(enroledDegreeModule);
         setContextCourseGroup(contextCourseGroup);
         setCurricularPeriodType(curricularPeriodInfoDTO.getPeriodType());
         setCurricularPeriodOrder(curricularPeriodInfoDTO.getOrder());
-    }
-
-    @Override
-    public ExecutionPeriod getBegin() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getBegin() : super
-                .getBegin();
-    }
-
-    @Override
-    public ExecutionPeriod getEnd() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getEnd() : super.getEnd();
-    }
-
-    @Override
-    public CurricularRuleType getCurricularRuleType() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getCurricularRuleType()
-                : super.getCurricularRuleType();
-    }
-
-    @Override
-    public DegreeModule getDegreeModuleToApplyRule() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule()
-                .getDegreeModuleToApplyRule() : super.getDegreeModuleToApplyRule();
-    }
-
-    @Override
-    public CourseGroup getContextCourseGroup() {
-        return (getParentCompositeRule() != null) ? getParentCompositeRule().getContextCourseGroup()
-                : super.getContextCourseGroup();
     }
 
     @Override
@@ -95,7 +63,7 @@ public class RestrictionEnroledDegreeModule extends RestrictionEnroledDegreeModu
         }
 
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getEnroledDegreeModule().getName(), false));
+        labelList.add(new GenericPair<Object, Boolean>(getPrecedenceDegreeModule().getName(), false));
 
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));

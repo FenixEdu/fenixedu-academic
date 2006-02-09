@@ -1,12 +1,10 @@
-/*
- * Created on Jan 20, 2006
- */
 package net.sourceforge.fenixedu.domain.curricularRules;
 
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 
 public abstract class CurricularRule extends CurricularRule_Base {
  
@@ -14,12 +12,21 @@ public abstract class CurricularRule extends CurricularRule_Base {
         super();
         setOjbConcreteClass(getClass().getName());        
     }
-    
-    public abstract List<GenericPair<Object, Boolean>> getLabel();
-    public abstract boolean evaluate(Class<? extends DomainObject> object);
-    
+
     public void delete() {
         removeDegreeModuleToApplyRule();
         super.deleteDomainObject();
     }
+
+    public boolean appliesToContext(Context context) {
+        return this.appliesToCourseGroup(context);
+    }
+    
+    private boolean appliesToCourseGroup(Context context) {
+        return (this.getContextCourseGroup() == null || this.getContextCourseGroup().equals(context.getCourseGroup()));
+    }
+    
+    public abstract List<GenericPair<Object, Boolean>> getLabel();
+    public abstract boolean evaluate(Class<? extends DomainObject> object);
+
 }

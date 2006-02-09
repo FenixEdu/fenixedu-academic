@@ -674,16 +674,15 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
     }
     class net.sourceforge.fenixedu.domain.curricularRules.Rule extends net.sourceforge.fenixedu.domain.curricularRules.CurricularRule {
     }
-        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
-            Integer keyPrecendenceDegreeModule;
-            CurricularPeriodType curricularPeriodType;
-            Integer curricularPeriodOrder;
-        }     
-        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
-            Integer keyPrecendenceDegreeModule;
-            CurricularPeriodType curricularPeriodType;
-            Integer curricularPeriodOrder;
-        }
+	    class net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule extends net.sourceforge.fenixedu.domain.curricularRules.Rule {
+            Integer keyPrecedenceDegreeModule;
+			CurricularPeriodType curricularPeriodType;
+	        Integer curricularPeriodOrder;
+	    }
+	        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule {
+	        }     
+	        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule {
+	        }
         class net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
             Integer minimum;
             Integer maximum;
@@ -5892,14 +5891,9 @@ relation CurricularRuleCompositeRule {
 	net.sourceforge.fenixedu.domain.curricularRules.CompositeRule playsRole parentCompositeRule;
 }
 
-relation DegreeModuleRestrictionDoneDegreeModule {
-	net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule playsRole;
-	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole doneDegreeModule;
-}
-
-relation DegreeModuleRestrictionEnroledDegreeModule {
-	net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule playsRole;
-	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole enroledDegreeModule;
+relation DegreeModulePrecedenceRule {
+	net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule playsRole;
+	net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule playsRole precedenceDegreeModule;
 }
 
 relation CourseGroupCurricularRule {

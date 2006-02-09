@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CreditsLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
+import net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -151,18 +152,15 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
 
     public Integer getSelectedPrecendenceDegreeModuleID() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("selectedPrecendenceDegreeModuleID") == null && getCurricularRule() != null) {
-            if (getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)) {
-                setSelectedPrecendenceDegreeModuleID(((RestrictionDoneDegreeModule) getCurricularRule()).getDoneDegreeModule().getIdInternal());                
-            } else if (getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
-                setSelectedPrecendenceDegreeModuleID(((RestrictionEnroledDegreeModule) getCurricularRule()).getEnroledDegreeModule().getIdInternal());
-            }
+            if (getCurricularRule() instanceof PrecedenceRule) {
+                setSelectedPrecendenceDegreeModuleID(((PrecedenceRule) getCurricularRule()).getPrecedenceDegreeModule().getIdInternal());                
+            } 
         }
         return (Integer) getViewState().getAttribute("selectedPrecendenceDegreeModuleID");        
     }
 
     public void setSelectedPrecendenceDegreeModuleID(Integer selectedPrecendenceDegreeModuleID) {
-        getViewState().setAttribute("selectedPrecendenceDegreeModuleID",
-                selectedPrecendenceDegreeModuleID);
+        getViewState().setAttribute("selectedPrecendenceDegreeModuleID", selectedPrecendenceDegreeModuleID);
     }
    
     public Integer getSelectedContextCourseGroupID() throws FenixFilterException, FenixServiceException {

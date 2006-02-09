@@ -1,6 +1,3 @@
-/*
- * Created on Jan 20, 2006
- */
 package net.sourceforge.fenixedu.domain.curricularRules;
 
 import java.util.ArrayList;
@@ -10,6 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
@@ -37,11 +35,10 @@ public class CompositeRule extends CompositeRule_Base {
                 && !compositeRuleType.equals(LogicOperators.NOT)) {
             throw new DomainException("unsupported.composite.rule");
         }
-        initCompositeRule(degreeModuleToApplyRule, begin, end, ruleType, compositeRuleType,
-                curricularRules);
+        init(degreeModuleToApplyRule, begin, end, ruleType, compositeRuleType, curricularRules);
     }
 
-    private void initCompositeRule(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
+    private void init(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
             ExecutionPeriod end, CurricularRuleType ruleType, LogicOperators compositeRuleType,
             CurricularRule... curricularRules) {
 
@@ -55,6 +52,13 @@ public class CompositeRule extends CompositeRule_Base {
         for (final CurricularRule curricularRule : curricularRules) {
             curricularRule.setParentCompositeRule(this);
         }
+    }
+
+    @Override
+    public void delete() {
+        removeDegreeModuleToApplyRule();
+        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
+        super.deleteDomainObject();
     }
 
     @Override
@@ -111,10 +115,13 @@ public class CompositeRule extends CompositeRule_Base {
     }
 
     @Override
-    public void delete() {
-        removeDegreeModuleToApplyRule();
-        for (; !getCurricularRules().isEmpty(); getCurricularRules().get(0).delete())
-            ;
-        super.deleteDomainObject();
+    public boolean appliesToContext(Context context) {
+        for (CurricularRule curricularRule : this.getCurricularRules()) {
+            if (!curricularRule.appliesToContext(context)) {
+               return false; 
+            }
+        }
+        return true;
     }
+
 }
