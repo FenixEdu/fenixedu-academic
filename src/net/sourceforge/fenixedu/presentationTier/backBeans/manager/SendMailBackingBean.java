@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.util.EMail;
 
 public class SendMailBackingBean extends FenixBackingBean {
 
-    private static final int MAX_MAIL_RECIPIENTS = 200;
+    private static final int MAX_MAIL_RECIPIENTS = 50;
 
     private static final List<String> EMPTY_LIST = new ArrayList<String>();
 
