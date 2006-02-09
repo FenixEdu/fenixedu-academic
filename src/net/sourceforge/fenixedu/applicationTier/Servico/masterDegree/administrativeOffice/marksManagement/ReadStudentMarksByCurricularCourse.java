@@ -130,13 +130,13 @@ public class ReadStudentMarksByCurricularCourse extends Service {
 							enrolmentEvaluationState);
 			// enrolmentEvaluations = enrolment.getEvaluations();
 
-			List infoTeachers = new ArrayList();
 			if (enrolmentEvaluations != null && enrolmentEvaluations.size() > 0) {
 				Person person = ((EnrolmentEvaluation) enrolmentEvaluations.get(0))
 						.getPersonResponsibleForGrade();
-				Teacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
-				infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
-				infoTeachers.add(infoTeacher);
+                if(person != null){
+                    Teacher teacher = persistentTeacher.readTeacherByUsername(person.getUsername());
+                    infoTeacher = InfoTeacherWithPerson.newInfoFromDomain(teacher);
+                }				
 			}
 
 			List infoEnrolmentEvaluations = new ArrayList();
