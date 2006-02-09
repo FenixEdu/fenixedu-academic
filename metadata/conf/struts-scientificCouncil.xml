@@ -138,7 +138,7 @@
                 path="/creditsReport.do?method=prepare"
             />  
     		<forward name="prepare" path="select-report-parameters"/>
-    		<forward name="showCreditsReport" path="show-credits-report"/>
+    		<forward name="showCreditsReport" path="show-teacher-credits-report"/>
     	</action>  
     	<action path="/masterDegreeCreditsManagement"
      		name="masterDegreeCreditsForm"
@@ -154,7 +154,7 @@
                 key="" 
                 handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>      		  		
     		<forward name="chooseMasterDegreeExecution" path="select-masterDegree-parameters"/>
-    		<forward name="showCreditsReport" path="show-credits-report"/>
+    		<forward name="showCreditsReport" path="show-master-credits-report"/>
     		<forward name="editMasterDegreeCredits" path="edit-masterDegree-credits"/>
     		<forward name="successfulEdit" path="/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits"/>
     	</action>  

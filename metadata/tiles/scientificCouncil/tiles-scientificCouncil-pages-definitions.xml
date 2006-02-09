@@ -10,7 +10,7 @@
         <put name="body" value="/scientificCouncil/credits/selectReportParameters.jsp"></put>
     </definition>
     
-    <definition name="show-credits-report" extends="scientificCouncil.masterPage">
+    <definition name="show-teacher-credits-report" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/credits/showTeachersCreditsReport.jsp"></put>
     </definition>        
     
@@ -18,7 +18,7 @@
         <put name="body" value="/scientificCouncil/credits/chooseMasterDegreeExecution.jsp"></put>
     </definition>    
     
-    <definition name="show-credits-report" extends="scientificCouncil.masterPage">
+    <definition name="show-master-credits-report" extends="scientificCouncil.masterPage">
         <put name="body" value="/scientificCouncil/credits/showMasterDegreeCreditsReport.jsp"></put>
     </definition>    
 	<definition name="edit-masterDegree-credits" extends="scientificCouncil.masterPage">
