@@ -10,6 +10,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourseGroup;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.enrollment.CurricularCourse2Enroll;
 
@@ -23,54 +24,58 @@ import org.apache.commons.collections.Predicate;
 public class LEMOptionalPairGroupsEnrollmentRule implements IEnrollmentRule {
 
     private StudentCurricularPlan studentCurricularPlan;
+    private ExecutionPeriod executionPeriod;
 
-    public LEMOptionalPairGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan) {
+    public LEMOptionalPairGroupsEnrollmentRule(StudentCurricularPlan studentCurricularPlan, ExecutionPeriod executionPeriod) {
         this.studentCurricularPlan = studentCurricularPlan;
+        this.executionPeriod = executionPeriod;
     }
 
     public List apply(List curricularCoursesToBeEnrolledIn) {
-        List allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan()
-                .getAllOptionalCurricularCourseGroups();
-
-        List optionalPairCurricularCourseGroups = (List) CollectionUtils.select(
-                allOptionalCurricularCourseGroups, new Predicate() {
-                    public boolean evaluate(Object obj) {
-                        CurricularCourseGroup ccg = (CurricularCourseGroup) obj;
-                        return ccg.getName().endsWith("PD") || ccg.getName().endsWith("PR");
-                    }
-                });
-
-        CurricularCourseGroup optionalCurricularCourseGroup = null;        
-        boolean oneDone = false;
-
-        for (Iterator iter = optionalPairCurricularCourseGroups.iterator(); iter.hasNext();) {
-            CurricularCourseGroup ccg = (CurricularCourseGroup) iter.next();
-            for (Iterator iterCCG = ccg.getCurricularCourses().iterator(); iterCCG.hasNext();) {
-                CurricularCourse curricularCourse = (CurricularCourse) iterCCG.next();
-                if (studentCurricularPlan.isCurricularCourseEnrolled(curricularCourse)
-                        || studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
-                    if (optionalCurricularCourseGroup == null){
-                        optionalCurricularCourseGroup = ccg;
-                        oneDone = true;
-                        break;
-                    }
-                }
-            }
-            if (oneDone) {
-                optionalPairCurricularCourseGroups.remove(optionalCurricularCourseGroup);
-                break;
-            }
+        if(executionPeriod.getSemester().equals(1)) {
+	    	List allOptionalCurricularCourseGroups = studentCurricularPlan.getDegreeCurricularPlan()
+	                .getAllOptionalCurricularCourseGroups();
+	
+	        List optionalPairCurricularCourseGroups = (List) CollectionUtils.select(
+	                allOptionalCurricularCourseGroups, new Predicate() {
+	                    public boolean evaluate(Object obj) {
+	                        CurricularCourseGroup ccg = (CurricularCourseGroup) obj;
+	                        return ccg.getName().endsWith("PD") || ccg.getName().endsWith("PR");
+	                    }
+	                });
+	
+	        CurricularCourseGroup optionalCurricularCourseGroup = null;        
+	        boolean oneDone = false;
+	
+	        for (Iterator iter = optionalPairCurricularCourseGroups.iterator(); iter.hasNext();) {
+	            CurricularCourseGroup ccg = (CurricularCourseGroup) iter.next();
+	            for (Iterator iterCCG = ccg.getCurricularCourses().iterator(); iterCCG.hasNext();) {
+	                CurricularCourse curricularCourse = (CurricularCourse) iterCCG.next();
+	                if (studentCurricularPlan.isCurricularCourseEnrolled(curricularCourse)
+	                        || studentCurricularPlan.isCurricularCourseApproved(curricularCourse)) {
+	                    if (optionalCurricularCourseGroup == null){
+	                        optionalCurricularCourseGroup = ccg;
+	                        oneDone = true;
+	                        break;
+	                    }
+	                }
+	            }
+	            if (oneDone) {
+	                optionalPairCurricularCourseGroups.remove(optionalCurricularCourseGroup);
+	                break;
+	            }
+	        }
+	
+	        List curricularCoursesToEnrollToRemove = new ArrayList();
+	        for (int iter = 0; iter < optionalPairCurricularCourseGroups.size(); iter++) {
+	            CurricularCourseGroup ccg = (CurricularCourseGroup) optionalPairCurricularCourseGroups
+	                    .get(iter);
+	
+	            if (oneDone)
+	                curricularCoursesToEnrollToRemove.addAll(getCurricularCoursesToEnroll(ccg));
+	        }
+	        curricularCoursesToBeEnrolledIn.removeAll(curricularCoursesToEnrollToRemove);
         }
-
-        List curricularCoursesToEnrollToRemove = new ArrayList();
-        for (int iter = 0; iter < optionalPairCurricularCourseGroups.size(); iter++) {
-            CurricularCourseGroup ccg = (CurricularCourseGroup) optionalPairCurricularCourseGroups
-                    .get(iter);
-
-            if (oneDone)
-                curricularCoursesToEnrollToRemove.addAll(getCurricularCoursesToEnroll(ccg));
-        }
-        curricularCoursesToBeEnrolledIn.removeAll(curricularCoursesToEnrollToRemove);
         return curricularCoursesToBeEnrolledIn;
     }
 
