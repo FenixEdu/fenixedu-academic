@@ -119,6 +119,10 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
     
     private void encodeSubtitles() throws IOException {
+        writer.startElement("br", this);
+        writer.append("&nbsp;");
+        writer.endElement("br");
+
         writer.startElement("ul", this);
         writer.writeAttribute("class", "nobullet", null);
         writer.writeAttribute("style", "padding-left: 0pt;", null);
@@ -127,8 +131,9 @@ public class UIDegreeCurricularPlan extends UIInput {
         encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
         encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
-        writer.startElement("br", this);
-        writer.endElement("br");
+        writer.startElement("li", this);
+        writer.append("&nbsp;");
+        writer.endElement("li");
         
         encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
         encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
