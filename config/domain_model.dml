@@ -351,6 +351,7 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
     }
     
     class net.sourceforge.fenixedu.domain.cms.website.WebsiteItem extends net.sourceforge.fenixedu.domain.cms.Content {
+    		Boolean urgent;
     }    
     
 class net.sourceforge.fenixedu.domain.cms.infrastructure.MailQueue extends net.sourceforge.fenixedu.domain.DomainObject

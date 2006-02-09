@@ -21,7 +21,7 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         this.entries = new ArrayList<HtmlMenuEntry>();
     }
     
-    public int getSize() {
+    public Integer getSize() {
         return size;
     }
 
@@ -29,7 +29,7 @@ public class HtmlMenu extends HtmlSimpleValueComponent {
         this.size = size;
     }
 
-    public int getTabIndex() {
+    public Integer getTabIndex() {
         return tabIndex;
     }
 

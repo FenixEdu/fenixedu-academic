@@ -88,6 +88,7 @@
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.HtmlEditorRenderer"/>
     
     <renderer mode="input" type="java.lang.Number" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
     <renderer mode="input" type="int" class="net.sourceforge.fenixedu.renderers.NumberInputRenderer"/>
@@ -98,6 +99,8 @@
 	
     <renderer mode="input" type="java.lang.Boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
     <renderer mode="input" type="boolean" class="net.sourceforge.fenixedu.renderers.BooleanInputRenderer"/>
+    <renderer mode="input" type="java.lang.Boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
+    <renderer mode="input" type="boolean" layout="menu" class="net.sourceforge.fenixedu.renderers.BooleanMenuInputRenderer"/>
     
     <renderer mode="input" type="java.lang.Enum" class="net.sourceforge.fenixedu.renderers.EnumInputRenderer"/>
     <renderer mode="input" type="java.util.Date" class="net.sourceforge.fenixedu.renderers.DateInputRenderer"/>

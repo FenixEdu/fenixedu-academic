@@ -22,7 +22,7 @@ public class HtmlTag {
     private List<HtmlTag> children;
     
     private boolean visible;
-    
+
     private HtmlTag() {
         this.attributes = new Hashtable<String, String>();
         this.children = new ArrayList<HtmlTag>();
@@ -77,6 +77,10 @@ public class HtmlTag {
         if (value != null) {
             setAttribute(name, value.toString());
         }
+    }
+    
+    public void removeAttribute(String name) {
+        this.attributes.remove(name);
     }
     
     public boolean hasVisibleAttributes() {
@@ -163,5 +167,5 @@ public class HtmlTag {
             }
         }
         
-    }
+    }    
 }

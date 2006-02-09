@@ -377,6 +377,7 @@
     <field-descriptor name="idInternal" column="ID_INTERNAL" primarykey="true" autoincrement="true" jdbc-type="INTEGER"/>
     <field-descriptor name="creationDate" column="CREATION_DATE" jdbc-type="TIMESTAMP" conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.TimeStamp2DateFieldConversion"/>                     
     <field-descriptor name="name" column="NAME" jdbc-type="VARCHAR"/>   
+    <field-descriptor name="urgent" column="URGENT" jdbc-type="INTEGER" conversion="org.apache.ojb.broker.accesslayer.conversions.Boolean2IntFieldConversion"/>
     <field-descriptor name="description" column="description" jdbc-type="VARCHAR"/>           
     <field-descriptor name="keyCreator" column="KEY_CREATOR" jdbc-type="INTEGER"/>   
     <field-descriptor name="keyCms" column="KEY_CMS" jdbc-type="INTEGER"/>
