@@ -395,8 +395,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     
     public void forceDeleteContext(ActionEvent event) throws FenixFilterException {        
         try {
-            Object args[] = { getCurricularCourse(), getContext(getContextIDToDelete()) };
-            ServiceUtils.executeService(getUserView(), "DeleteContextFromCurricularCourse", args);
+            Object args[] = { getCurricularCourseID(), getContextIDToDelete() };
+            ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
             setContextID(0); // resetContextID
             addInfoMessage(bolonhaBundle.getString("successAction"));
         } catch (FenixServiceException e) {

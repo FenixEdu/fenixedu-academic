@@ -9272,8 +9272,8 @@
         </filterChains>     
     </service>
      <service>
-    	<name>DeleteContextFromCurricularCourse</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromCurricularCourse</implementationClass>
+    	<name>DeleteContextFromDegreeModule</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteContextFromDegreeModule</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>
@@ -9292,15 +9292,6 @@
     <service>
     	<name>EditCourseGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.EditCourseGroup</implementationClass>
-        <description></description>
-        <isTransactional>true</isTransactional>  
-        <filterChains>
-        	<chain name="BolonhaManagerAuthorization"></chain>
-        </filterChains>     
-    </service>
-    <service>
-    	<name>DeleteCourseGroup</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager.DeleteCourseGroup</implementationClass>
         <description></description>
         <isTransactional>true</isTransactional>  
         <filterChains>

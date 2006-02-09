@@ -6,21 +6,20 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
-public class DeleteCourseGroup extends Service {
+public class DeleteContextFromDegreeModule extends Service {
 
-    public void run(final Integer courseGroupID, final Integer contextID) throws ExcepcaoPersistencia, FenixServiceException {
-        final CourseGroup courseGroup = (CourseGroup) persistentObject
-                .readByOID(CourseGroup.class, courseGroupID);
-        if (courseGroup == null) {
-            throw new FenixServiceException("error.noCourseGroup");
+    public void run(final Integer degreeModuleID, final Integer contextID) throws ExcepcaoPersistencia, FenixServiceException {
+        final DegreeModule degreeModule = (DegreeModule) persistentObject.readByOID(DegreeModule.class, degreeModuleID);
+        if (degreeModule == null) {
+            throw new FenixServiceException("error.noDegreeModule");
         }
         final Context context = (Context) persistentObject.readByOID(Context.class, contextID);
         if (context == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
-        courseGroup.deleteContext(context);
+        degreeModule.deleteContext(context);
     }
 }

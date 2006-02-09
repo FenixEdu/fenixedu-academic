@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeM
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
@@ -40,11 +41,8 @@ import org.apache.commons.beanutils.BeanComparator;
 
 public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     private final ResourceBundle bolonhaResources = getResourceBundle("resources/BolonhaManagerResources");
-
     private final ResourceBundle enumerationResources = getResourceBundle("resources/EnumerationResources");
-
-    // private final ResourceBundle domainResources =
-    // getResourceBundle("resources/DomainExceptionResources");
+    private final ResourceBundle domainResources = getResourceBundle("resources/DomainExceptionResources");
     private final String NO_SELECTION = "no_selection";
     
     private Integer degreeModuleID = null;
@@ -363,6 +361,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (NumberFormatException e) {
             addErrorMessage(bolonhaResources.getString("invalid.minimum.maximum.values"));
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }
@@ -376,6 +376,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }
@@ -390,6 +392,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
             addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
+        } catch (DomainException e) {
+            addErrorMessage(domainResources.getString(e.getMessage()));
         }
         return "";
     }

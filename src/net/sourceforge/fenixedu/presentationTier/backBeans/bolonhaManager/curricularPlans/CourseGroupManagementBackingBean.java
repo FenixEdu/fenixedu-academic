@@ -105,7 +105,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     public String deleteCourseGroup() throws FenixFilterException {
         try {
             final Object args[] = { getCourseGroupID(), getContextID() };
-            ServiceUtils.executeService(getUserView(), "DeleteCourseGroup", args);
+            ServiceUtils.executeService(getUserView(), "DeleteContextFromDegreeModule", args);
             addInfoMessage(bolonhaResources.getString("courseGroupDeleted"));
             return "editCurricularPlanStructure";
         } catch (final FenixServiceException e) {
