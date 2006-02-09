@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMIgnorePrecedenceForBranchTAEnrollmentRule;
+import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMAUBranchPSIRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.LEMOptionalPairGroupsEnrollmentRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfAcumulatedEnrollmentsRule;
 import net.sourceforge.fenixedu.domain.degree.enrollment.rules.MaximumNumberOfCurricularCoursesEnrollmentRule;
@@ -29,8 +29,8 @@ public class DegreeCurricularPlanLEM extends DegreeCurricularPlanLEM_Base {
         result.add(new MaximumNumberOfCurricularCoursesEnrollmentRule(studentCurricularPlan,
                 executionPeriod));
         result.add(new PrecedencesEnrollmentRule(studentCurricularPlan, executionPeriod));
-        result.add(new LEMIgnorePrecedenceForBranchTAEnrollmentRule(studentCurricularPlan, executionPeriod));
-        result.add(new LEMOptionalPairGroupsEnrollmentRule(studentCurricularPlan));
+        result.add(new LEMAUBranchPSIRule(studentCurricularPlan, executionPeriod));
+        result.add(new LEMOptionalPairGroupsEnrollmentRule(studentCurricularPlan, executionPeriod));
         result.add(new PreviousYearsCurricularCourseEnrollmentRuleIgnoringLastYears(
                 studentCurricularPlan, executionPeriod, 4));        
         return result;
