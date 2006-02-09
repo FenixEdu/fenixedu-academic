@@ -10,13 +10,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCourseGroup extends Service {
 
-    public void run(final Integer courseGroupID, final String name) throws ExcepcaoPersistencia,
+    public void run(final Integer courseGroupID, final String name, final String nameEn) throws ExcepcaoPersistencia,
             FenixServiceException {
         final CourseGroup courseGroup = (CourseGroup) persistentObject
                 .readByOID(CourseGroup.class, courseGroupID);
         if (courseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
-        courseGroup.edit(name);
+        courseGroup.edit(name, nameEn);
     }
 }

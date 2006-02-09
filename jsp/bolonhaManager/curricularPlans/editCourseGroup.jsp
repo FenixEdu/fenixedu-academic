@@ -20,14 +20,20 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'/>"/>
-		
+
 		<h:panelGrid columnClasses="alignRight infocell, infocell," columns="2" border="0">
-			<h:outputText value="#{bolonhaBundle['name']}: "/>
+			<h:outputText value="<p><label><span class='required'>*</span> #{bolonhaBundle['name']} (pt):</label>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="name" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.name}"/>
 				<h:message for="name" styleClass="error0"/>
 			</h:panelGroup>
+			<h:outputText value="<p><label><span class='required'>*</span> #{bolonhaBundle['name']} (en):</label>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText id="nameEn" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.nameEn}"/>
+				<h:message for="nameEn" styleClass="error0"/>
+			</h:panelGroup>			
 		</h:panelGrid>
+		
 		<br/>
 		<hr>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['edit']}"

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCourseGroup extends Service {
 
-    public void run(final Integer parentCourseGroupID, final String name) throws ExcepcaoPersistencia,
+    public void run(final Integer parentCourseGroupID, final String name, final String nameEn) throws ExcepcaoPersistencia,
             FenixServiceException {
 
         final CourseGroup parentCourseGroup = (CourseGroup)
@@ -28,7 +28,7 @@ public class CreateCourseGroup extends Service {
         final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 
-        final CourseGroup courseGroup = DomainFactory.makeCourseGroup(name);
+        final CourseGroup courseGroup = DomainFactory.makeCourseGroup(name, nameEn);
         courseGroup.addContext(parentCourseGroup, null, beginExecutionPeriod, null);
     }
 }

@@ -18,17 +18,19 @@ public class CourseGroup extends CourseGroup_Base {
         setOjbConcreteClass(CourseGroup.class.getName());
     }
 
-    public CourseGroup(String name) {
+    public CourseGroup(String name, String nameEn) {
         this();
         super.setName(name);
+        super.setNameEn(nameEn);
     }
 
     public boolean isLeaf() {
         return false;
     }
 
-    public void edit(String name) {
+    public void edit(String name, String nameEn) {
         setName(name);
+        setNameEn(nameEn);
     }
 
     public Boolean getCanBeDeleted() {

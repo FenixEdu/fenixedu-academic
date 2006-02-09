@@ -26,6 +26,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     private final Integer NO_SELECTION = 0;    
     
     private String name = null;
+    private String nameEn = null;
     private Integer courseGroupID;
     public List<SelectItem> courseGroups = null;
 
@@ -36,7 +37,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     public Integer getParentCourseGroupID() {
         return getAndHoldIntegerParameter("parentCourseGroupID");
     }
-    
+
     public Integer getContextID() {
         return getAndHoldIntegerParameter("contextID");
     }
@@ -53,12 +54,20 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
         return (name == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getName() : name;    
     }
 
+    public String getNameEn() throws FenixFilterException, FenixServiceException {
+        return (nameEn == null && getCourseGroupID() != null) ? getCourseGroup(getCourseGroupID()).getNameEn() : nameEn;    
+    }
+    
     public String getParentName() throws FenixFilterException, FenixServiceException {
         return (getParentCourseGroupID() != null) ? getCourseGroup(getParentCourseGroupID()).getName() : null;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
     }
 
     public DegreeCurricularPlan getDegreeCurricularPlan() throws FenixFilterException,
@@ -69,14 +78,14 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
     public CourseGroup getCourseGroup(Integer courseGroupID) throws FenixFilterException, FenixServiceException {
         return (CourseGroup) readDomainObject(CourseGroup.class, courseGroupID);
     }
-    
+
     public List<SelectItem> getCourseGroups() throws FenixFilterException, FenixServiceException {
         return (courseGroups == null) ? (courseGroups = readCourseGroups()) : courseGroups;
     }
 
     public String createCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = { getParentCourseGroupID(), getName() };
+            final Object args[] = { getParentCourseGroupID(), getName(), getNameEn() };
             ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
             addInfoMessage(bolonhaResources.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";
@@ -90,7 +99,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
 
     public String editCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = { getCourseGroupID(), getName() };
+            final Object args[] = { getCourseGroupID(), getName(), getNameEn() };
             ServiceUtils.executeService(getUserView(), "EditCourseGroup", args);
             addInfoMessage(bolonhaResources.getString("courseGroupEdited"));
             return "editCurricularPlanStructure";
@@ -146,17 +155,16 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             throw new FenixActionException("error.mustChooseACourseGroup");
         }
     }
-    
+
     private List<SelectItem> readCourseGroups() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(this.NO_SELECTION, bolonhaResources.getString("choose")));
         final DegreeModule degreeModule = getDegreeCurricularPlan().getDegreeModule();
         if (degreeModule instanceof CourseGroup) {
             collectChildCourseGroups(result, (CourseGroup) degreeModule, "");
-        }
+}
         return result;
     }
-
     private void collectChildCourseGroups(final List<SelectItem> result, final CourseGroup courseGroup,
             final String previousCourseGroupName) throws FenixFilterException, FenixServiceException {
         String currentCourseGroupName = "";
