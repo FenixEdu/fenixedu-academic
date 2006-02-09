@@ -121,7 +121,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
         newStructureFieldsChange(CurricularStage.DRAFT);
 
-        CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME);
+        CourseGroup dcpRoot = new CourseGroup(name + this.DCP_ROOT_NAME, name + this.DCP_ROOT_NAME);
         this.setDegreeModule(dcpRoot);
 
         if (curricularPeriod == null) {
