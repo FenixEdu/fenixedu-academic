@@ -172,8 +172,8 @@ public class CurricularCoursesEnrollmentDispatchAction extends TransactionalDisp
             }
         });
 
-        if (amIItoEnroll)
-            warnings.add("warning.amIItoEnroll");
+        /*if (amIItoEnroll)
+            warnings.add("warning.amIItoEnroll");*/
 
         // check if students belongs to LERCI2003/2004
         if (infoStudentEnrolmentContext.getInfoStudentCurricularPlan().getInfoDegreeCurricularPlan()
