@@ -59,6 +59,18 @@ vertical-align: top;
 		<h:outputText value="Send to all master degree students." escape="false"/>
 
 		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:selectBooleanCheckbox value="#{SendMailBackingBean.degreeCoordinators}"/>
+		<h:outputText value="Send to all degree coordinators." escape="false"/>
+
+		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:selectBooleanCheckbox value="#{SendMailBackingBean.masterDegreeCoordinators}"/>
+		<h:outputText value="Send to all master degree coordinators." escape="false"/>
+
+		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:selectBooleanCheckbox value="#{SendMailBackingBean.executionCourseResponsibles}"/>
+		<h:outputText value="Send to all execution course responsibles." escape="false"/>
+
+		<h:outputText value="<br/><br/>" escape="false"/>
 		<h:commandButton action="#{SendMailBackingBean.send}"
 				styleClass="inputbutton" value="#{bundle['button.send']}"/>
 

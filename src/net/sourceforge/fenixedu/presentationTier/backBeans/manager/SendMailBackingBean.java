@@ -6,14 +6,24 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Student;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 import net.sourceforge.fenixedu.util.EMail;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 public class SendMailBackingBean extends FenixBackingBean {
 
@@ -32,6 +42,9 @@ public class SendMailBackingBean extends FenixBackingBean {
     private Boolean employees = null;
     private Boolean degreeStudents = null;
     private Boolean masterDegreeStudents = null;
+    private Boolean executionCourseResponsibles = null;
+    private Boolean masterDegreeCoordinators = null;
+    private Boolean degreeCoordinators = null;
 
     public void send() throws FenixFilterException, FenixServiceException {
         final List<String> toList = getToList();
@@ -129,7 +142,60 @@ public class SendMailBackingBean extends FenixBackingBean {
             }
         }
 
+        final Boolean executionCourseResponsibles = getExecutionCourseResponsibles();
+        if (executionCourseResponsibles.booleanValue()) {
+            final Object[] args = { ExecutionYear.class };
+            final List<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+            for (final ExecutionYear executionYear : executionYears) {
+                if (executionYear.getState().equals(PeriodState.CURRENT)) {
+                    for (final ExecutionPeriod executionPeriod : executionYear.getExecutionPeriods()) {
+                        for (final ExecutionCourse executionCourse : executionPeriod.getAssociatedExecutionCourses()) {
+                            for (final Professorship professorship : executionCourse.getProfessorships()) {
+                                if (professorship.getResponsibleFor().booleanValue()) {
+                                    final Teacher teacher = professorship.getTeacher();
+                                    final Person person = teacher.getPerson();
+                                    emails.add(person.getEmail());
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        final Boolean degreeCoordinators = getDegreeCoordinators();
+        if (degreeCoordinators.booleanValue()) {
+            addEmailsForDegreeType(emails, DegreeType.DEGREE);
+        }
+
+        final Boolean masterDegreeCoordinators = getMasterDegreeCoordinators();
+        if (masterDegreeCoordinators.booleanValue()) {
+            addEmailsForDegreeType(emails, DegreeType.MASTER_DEGREE);
+        }
+
         return emails;
+    }
+
+    private void addEmailsForDegreeType(final List<String> emails, final DegreeType degreeType) throws FenixServiceException, FenixFilterException {
+        final Object[] args = { ExecutionYear.class };
+        final List<ExecutionYear> executionYears = (List<ExecutionYear>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", args);
+        for (final ExecutionYear executionYear : executionYears) {
+            if (executionYear.getState().equals(PeriodState.CURRENT)) {
+                for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
+                    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+                    final Degree degree = degreeCurricularPlan.getDegree();
+                    if (degree.getTipoCurso() == degreeType) {
+                        for (final Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+                            final Teacher teacher = coordinator.getTeacher();
+                            final Person person = teacher.getPerson();
+                            emails.add(person.getEmail());
+                        }
+                    }
+                }
+                break;
+            }
+        }
     }
 
     public String mailServer() {
@@ -202,6 +268,30 @@ public class SendMailBackingBean extends FenixBackingBean {
 
     public void setMasterDegreeStudents(Boolean masterDegreeStudents) {
         this.masterDegreeStudents = masterDegreeStudents;
+    }
+
+    public Boolean getExecutionCourseResponsibles() {
+        return executionCourseResponsibles;
+    }
+
+    public void setExecutionCourseResponsibles(Boolean executionCourseResponsibles) {
+        this.executionCourseResponsibles = executionCourseResponsibles;
+    }
+
+    public Boolean getDegreeCoordinators() {
+        return degreeCoordinators;
+    }
+
+    public void setDegreeCoordinators(Boolean degreeCoordinators) {
+        this.degreeCoordinators = degreeCoordinators;
+    }
+
+    public Boolean getMasterDegreeCoordinators() {
+        return masterDegreeCoordinators;
+    }
+
+    public void setMasterDegreeCoordinators(Boolean masterDegreeCoordinators) {
+        this.masterDegreeCoordinators = masterDegreeCoordinators;
     }
 
 }
