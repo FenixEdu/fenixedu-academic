@@ -103,6 +103,7 @@
 						</tr>	
 						<tr>
 							<th align="left"><bean:message key="label.enrolment.curricularCourse"/></th>
+							<th align="left"><bean:message key="label.curricularPlan"/></th>
 							<th align="left"><bean:message key="label.enrolment.type"/></th>
 							<th align="left"><bean:message key="label.enrolment.state"/></th>
 							<th align="left"><bean:message key="label.enrolment.year"/></th>							
@@ -114,8 +115,11 @@
 									<bean:write name="infoEnrolment" property="infoCurricularCourse.name" />
 								</td>
 								<td>
+									<bean:write name="infoEnrolment" property="infoCurricularCourse.infoDegreeCurricularPlan.name" />
+								</td>									
+								<td>
 									<bean:message name="infoEnrolment" property="enrollmentTypeResourceKey" bundle="DEFAULT"/>
-								</td>
+								</td>							
 								<td>
 									<bean:define id="state" name="infoEnrolment" property="enrollmentState" />
 									<bean:message key="<%= pageContext.findAttribute("state").toString() %>"/>
