@@ -163,7 +163,8 @@ public class InputCheckBoxListRenderer extends InputRenderer {
             
             HtmlCheckBoxList listComponent = new HtmlCheckBoxList();
             
-            for (Object obj : getPossibleObjects()) {
+            Collection possibleObjects = getPossibleObjects();
+            for (Object obj : possibleObjects) {
                 Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
                 String layout = getEachLayout();
                 
@@ -182,7 +183,18 @@ public class InputCheckBoxListRenderer extends InputRenderer {
                     checkBox.setChecked(true);
                 }
             }
-     
+
+            for (Object obj : collection) {
+                if (! possibleObjects.contains(obj)) {
+                    Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
+                    
+                    MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
+                    MetaObjectKey key = metaObject.getKey();
+                
+                    listComponent.addHiddenOption(key.toString());
+                }
+            }
+            
             listComponent.setConverter(new DomainObjectKeyArrayConverter());
             listComponent.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
             return listComponent;

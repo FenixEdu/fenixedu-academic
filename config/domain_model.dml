@@ -301,8 +301,6 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 	Integer keyCms;
 	Date creationDate;
 	Integer keyCreator;
-	/*ulgy as hell*/
-	Integer keyWebsiteType;
 }
     class net.sourceforge.fenixedu.domain.cms.Bin extends net.sourceforge.fenixedu.domain.cms.Content {
        }
@@ -5390,7 +5388,7 @@ relation WebsiteTypeWebsite {
 }
 
 relation WebsiteTypeMandatoryContent {
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole functionalityLinks {
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole websiteTypes {
 		multiplicity *;
 	}
 	

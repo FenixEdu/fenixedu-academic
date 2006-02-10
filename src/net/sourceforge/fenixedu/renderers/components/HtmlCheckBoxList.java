@@ -13,12 +13,14 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
 
     private HtmlList list;
     private List<HtmlCheckBox> checkBoxes;
+    private List<HtmlHiddenField> hiddenFields;
 
     public HtmlCheckBoxList() {
         super();
         
         this.list = new HtmlList();
         this.checkBoxes = new ArrayList<HtmlCheckBox>();
+        this.hiddenFields = new ArrayList<HtmlHiddenField>();
     }
 
     public void addClass(String newClass) {
@@ -169,6 +171,10 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
         return this.checkBoxes;
     }
 
+    protected List<HtmlHiddenField> getHiddenFields() {
+        return this.hiddenFields;
+    }
+
     public HtmlList getList() {
         return this.list;
     }
@@ -197,6 +203,15 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
         return checkBox;
     }
     
+    public HtmlHiddenField addHiddenOption(String value) {
+        HtmlHiddenField hiddenField = new HtmlHiddenField();
+        
+        getHiddenFields().add(hiddenField);
+        
+        hiddenField.setValue(value);
+        return hiddenField;
+    }
+
     public HtmlCheckBox addOption(HtmlComponent component) {
         HtmlCheckBox checkBox = new HtmlCheckBox();
         getCheckBoxes().add(checkBox);
@@ -218,6 +233,14 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
             }
         }
 
+        for (HtmlHiddenField hiddenField : getHiddenFields()) {
+            hiddenField.setName(getName());
+            
+            if (getTargetSlot() != null) {
+                hiddenField.setTargetSlot(getTargetSlot());
+            }
+        }
+        
         for (int i = 0; i < this.list.getItems().size(); i++) {
             HtmlListItem item = this.list.getItems().get(i);
             HtmlInlineContainer container = new HtmlInlineContainer();
@@ -228,6 +251,18 @@ public class HtmlCheckBoxList extends HtmlMultipleValueComponent {
             item.setBody(container);
         }
         
-        return this.list.getOwnTag(context);
+        if (getHiddenFields().size() > 0) {
+            HtmlContainer container = new HtmlInlineContainer();
+            
+            container.addChild(list);
+            for (HtmlHiddenField hiddenField : getHiddenFields()) {
+                container.addChild(hiddenField);
+            }
+            
+            return container.getOwnTag(context);
+        }
+        else {
+            return this.list.getOwnTag(context);
+        }
     }
 }

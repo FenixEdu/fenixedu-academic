@@ -203,7 +203,7 @@
     <slot name="description" key="websiteType.description">
         <property name="size" value="50"/>
     </slot>
-    <slot name="mandatoryContents" key="websiteType.mandatoryContents" layout="option-select">
+    <slot name="mandatoryContents" key="websiteType.functionalityLinks" layout="option-select">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FunctionalLinksForWebsiteType"/>
         <property name="eachLayout" value="values-dash"/>
         <property name="eachSchema" value="functionalityLink.simple"/>

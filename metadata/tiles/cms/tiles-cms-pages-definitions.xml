@@ -101,6 +101,22 @@
         <put name="body" value="/cms/websiteTypeManagement/createWebsiteType.jsp" />
     </definition>
     
+    <definition name="createWebsiteTypeSection" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/createWebsiteSection.jsp" />
+    </definition>
+
+    <definition name="createWebsiteTypeItem" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/createWebsiteItem.jsp" />
+    </definition>
+
+    <definition name="editWebsiteTypeSection" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/editWebsiteSection.jsp" />
+    </definition>
+
+    <definition name="editWebsiteTypeItem" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/editWebsiteItem.jsp" />
+    </definition>
+
     <definition name="listFunctionalityLink" extends="cms.masterPage" >
         <put name="body" value="/cms/websiteTypeManagement/listFunctionalityLink.jsp" />
     </definition>

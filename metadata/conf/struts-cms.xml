@@ -245,6 +245,10 @@
             <forward name="edit" path="editWebsiteType"/>
             <forward name="details" path="viewWebsiteType"/>
             <forward name="create" path="createWebsiteType"/>
+            <forward name="createSection" path="createWebsiteTypeSection"/>
+            <forward name="createItem" path="createWebsiteTypeItem"/>
+            <forward name="editSection" path="editWebsiteTypeSection"/>
+            <forward name="editItem" path="editWebsiteTypeItem"/>
         </action>				
 
         <action path="/functionalityLinkManagement"
