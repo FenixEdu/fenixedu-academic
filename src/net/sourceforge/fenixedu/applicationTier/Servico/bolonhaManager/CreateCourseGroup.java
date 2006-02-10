@@ -5,7 +5,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.DomainFactory;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -13,11 +13,16 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCourseGroup extends Service {
 
-    public void run(final Integer parentCourseGroupID, final String name, final String nameEn) throws ExcepcaoPersistencia,
-            FenixServiceException {
+    public void run(final Integer degreeCurricularPlanID, final Integer parentCourseGroupID,
+            final String name, final String nameEn) throws ExcepcaoPersistencia, FenixServiceException {
 
-        final CourseGroup parentCourseGroup = (CourseGroup)
-        		persistentObject.readByOID(CourseGroup.class, parentCourseGroupID);
+        final DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject
+                .readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        if (degreeCurricularPlan == null) {
+            throw new FenixServiceException("error.noDegreeCurricularPlan");
+        }
+        final CourseGroup parentCourseGroup = (CourseGroup) persistentObject.readByOID(
+                CourseGroup.class, parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
@@ -28,7 +33,7 @@ public class CreateCourseGroup extends Service {
         final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 
-        final CourseGroup courseGroup = DomainFactory.makeCourseGroup(name, nameEn);
-        courseGroup.addContext(parentCourseGroup, null, beginExecutionPeriod, null);
+        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null,
+                beginExecutionPeriod, null);
     }
 }

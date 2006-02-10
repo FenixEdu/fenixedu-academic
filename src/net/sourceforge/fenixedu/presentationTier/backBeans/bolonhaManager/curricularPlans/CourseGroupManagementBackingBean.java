@@ -85,7 +85,7 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
 
     public String createCourseGroup() throws FenixFilterException {
         try {
-            final Object args[] = { getParentCourseGroupID(), getName(), getNameEn() };
+            final Object args[] = { getDegreeCurricularPlanID(), getParentCourseGroupID(), getName(), getNameEn() };
             ServiceUtils.executeService(getUserView(), "CreateCourseGroup", args);
             addInfoMessage(bolonhaResources.getString("courseGroupCreated"));
             return "editCurricularPlanStructure";

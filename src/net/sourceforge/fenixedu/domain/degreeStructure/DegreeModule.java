@@ -13,10 +13,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
     }
     
-    public Context addContext(CourseGroup courseGroup, CurricularPeriod curricularPeriod,
+    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-        checkContextsFor(courseGroup, curricularPeriod);
-        return new Context(courseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        checkContextsFor(parentCourseGroup, curricularPeriod);
+        return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
     
     public void editContext(Context context, CourseGroup courseGroup, CurricularPeriod curricularPeriod) {

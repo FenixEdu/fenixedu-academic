@@ -448,6 +448,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             }
         }
     }
+    
+    public CourseGroup createCourseGroup(CourseGroup parentCourseGroup, String name, String nameEn,
+            CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
+            ExecutionPeriod endExecutionPeriod) {
+        final CourseGroup courseGroup = new CourseGroup(name, nameEn);
+        new Context(parentCourseGroup, courseGroup, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
+        return courseGroup;
+    }
 
     public List<CurricularCourse> getDcpCurricularCourses() {
         final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
