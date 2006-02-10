@@ -119,7 +119,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public void edit(String name, String nameEn, String acronym, Boolean basic,
             CurricularStage curricularStage, boolean scientificCouncilEdit) {
         if (curricularStage.equals(CurricularStage.APPROVED)) {
-            setCreationDate(Calendar.getInstance().getTime());
+            super.setCreationDate(Calendar.getInstance().getTime());
         }
         setCurricularStage(curricularStage);
         getRecentCompetenceCourseInformation().edit(name.trim(), nameEn.trim(), acronym.trim(), basic);
