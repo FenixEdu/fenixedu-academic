@@ -614,6 +614,13 @@
         <description/>
         <isTransactional>true</isTransactional>
     </filter>             
+	<filter>
+        <name>PastEnrolmentsFilter</name>
+        <implementationClass> 
+            net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.PastEnrolmentsFilter</implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+    </filter>                 
     <filter>
         <name>EnrollmentLEECAuthorization</name>
         <implementationClass> 
