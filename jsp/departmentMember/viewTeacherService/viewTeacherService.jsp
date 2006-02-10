@@ -32,7 +32,7 @@ table.vtsbc td.courses {
 background-color: #ffe;
 width: 300px;
 padding: 0.25em 0.25em;
-text-align: left;
+text-align: center;
 }
 .center {
 text-align: center;
