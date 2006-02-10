@@ -23,7 +23,7 @@ public class EditCompetenceCourse extends Service {
     public void run(Integer competenceCourseID, String name, String nameEn, String acronym,
             Boolean basic, CurricularStage curricularStage, Boolean scientificCouncilEdit) throws ExcepcaoPersistencia, FenixServiceException {
         final CompetenceCourse competenceCourse = readCompetenceCourse(competenceCourseID);
-        checkIfCanEditCompetenceCourse(competenceCourse, name, nameEn, acronym);
+        checkIfCanEditCompetenceCourse(competenceCourse, name.trim(), nameEn.trim(), acronym.trim());
         competenceCourse.edit(name, nameEn, acronym, basic, curricularStage, scientificCouncilEdit);
     }
     
