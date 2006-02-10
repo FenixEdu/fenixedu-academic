@@ -38,6 +38,12 @@
 		</h:panelGroup>
 		
 
+		<br/>
+		<h:outputLink rendered="#{!empty CompetenceCourseManagement.departmentApprovedCompetenceCourses}" value="showAllCompetenceCourses.faces" target="_blank">
+			<h:outputText value="#{scouncilBundle['showAllCompetenceCourses']} (#{scouncilBundle['newPage']})"/>
+			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+		</h:outputLink>
+
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
 			<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
 				<h:column>

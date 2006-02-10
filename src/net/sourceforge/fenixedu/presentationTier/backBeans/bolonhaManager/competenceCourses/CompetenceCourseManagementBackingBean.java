@@ -94,6 +94,22 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
         return (departmentUnit != null) ? departmentUnit.getScientificAreaUnits() : null;
     }
 
+    public List<CompetenceCourse> getDepartmentApprovedCompetenceCourses() throws FenixFilterException, FenixServiceException {
+        List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
+        
+        for (Unit scientificAreaUnit : getSelectedDepartmentUnit().getScientificAreaUnits()) {
+            for (Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+                for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+                    if (competenceCourse.getCurricularStage().equals(CurricularStage.APPROVED)) {
+                        result.add(competenceCourse);                        
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+    
     public List<String> getGroupMembersLabels() throws FenixFilterException, FenixServiceException {
         List<String> result = null;
 
