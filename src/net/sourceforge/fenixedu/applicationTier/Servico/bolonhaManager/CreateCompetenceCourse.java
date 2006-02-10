@@ -23,7 +23,7 @@ public class CreateCompetenceCourse extends Service {
         if (unit == null) {
             throw new FenixServiceException("error.invalidUnit");
         }
-        checkIfCanCreateCompetenceCourse(name, nameEn, acronym);
+        checkIfCanCreateCompetenceCourse(name.trim(), nameEn.trim(), acronym.trim());
         final CompetenceCourse competenceCourse = DomainFactory.makeCompetenceCourse(name, nameEn,
                 acronym, basic, regimeType, CurricularStage.DRAFT, unit);
         return competenceCourse;
