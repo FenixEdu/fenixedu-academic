@@ -308,14 +308,11 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(Integer.valueOf(0), bolonhaResources.getString("choose")));
         if (selectedCurricularRuleType != null && !selectedCurricularRuleType.equals(NO_SELECTION)) {
-            if (selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE
-                    .name())
-                    || selectedCurricularRuleType
-                            .equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE.name())) {
+            if (selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE.name())
+                    || selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE.name())) {
                 getCurricularCourses(result);
             } else if (selectedCurricularRuleType.equals(CurricularRuleType.CREDITS_LIMIT.name())
-                    || selectedCurricularRuleType
-                            .equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT.name())) {
+                    || selectedCurricularRuleType.equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT.name())) {
                 getCourseGroups(result);
             }
         }
@@ -325,7 +322,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     // TODO: check this method
     private void getCourseGroups(final List<SelectItem> result) throws FenixFilterException,
             FenixServiceException {
-        final List<CourseGroup> courseGroups = getDegreeCurricularPlan().getDcpCourseGroups();
+        final List<CourseGroup> courseGroups = (List<CourseGroup>) getDegreeCurricularPlan()
+                .getDcpDegreeModules(CourseGroup.class);
         Collections.sort(result, new BeanComparator("name"));
         for (final CourseGroup courseGroup : courseGroups) {
             if (courseGroup != getDegreeModule()) {
@@ -337,8 +335,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     // TODO: check this method
     private void getCurricularCourses(final List<SelectItem> result) throws FenixFilterException,
             FenixServiceException {
-        final List<CurricularCourse> curricularCourses = getDegreeCurricularPlan()
-                .getDcpCurricularCourses();
+        final List<CurricularCourse> curricularCourses = (List<CurricularCourse>) getDegreeCurricularPlan()
+                .getDcpDegreeModules(CurricularCourse.class);
         Collections.sort(result, new BeanComparator("name"));
         for (final CurricularCourse curricularCourse : curricularCourses) {
             if (curricularCourse != getDegreeModule()) {

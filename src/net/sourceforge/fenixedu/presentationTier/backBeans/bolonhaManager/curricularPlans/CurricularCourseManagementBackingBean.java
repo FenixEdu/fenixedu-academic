@@ -480,7 +480,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private List<SelectItem> readCurricularCourses() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         result.add(new SelectItem(this.NO_SELECTION, bolonhaBundle.getString("choose")));
-        final List<CurricularCourse> curricularCourses = getDegreeCurricularPlan().getDcpCurricularCourses();
+        final List<CurricularCourse> curricularCourses = (List<CurricularCourse>) getDegreeCurricularPlan()
+                .getDcpDegreeModules(CurricularCourse.class);
         Collections.sort(curricularCourses, new BeanComparator("name"));
         for (final CurricularCourse curricularCourse : curricularCourses) {
             result.add(new SelectItem(curricularCourse.getIdInternal(), curricularCourse.getName()));

@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
@@ -456,39 +457,47 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         new Context(parentCourseGroup, courseGroup, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
         return courseGroup;
     }
+    
+    public CurricularCourse createCurricularCourse(Double weight, String prerequisites,
+            String prerequisitesEn, CurricularStage curricularStage, CompetenceCourse competenceCourse,
+            CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
 
-    public List<CurricularCourse> getDcpCurricularCourses() {
-        final Set<CurricularCourse> result = new HashSet<CurricularCourse>();
-        if (this.getDegreeModule() instanceof CourseGroup) {
-            collectChildCurricularCourses(result, (CourseGroup) this.getDegreeModule());
-        }
-        return new ArrayList<CurricularCourse>(result);
+        checkIfPresentInDegreeCurricularPlan(competenceCourse, parentCourseGroup.getParentDegreeCurricularPlan());
+        checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
+        return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse,
+                parentCourseGroup, curricularPeriod, beginExecutionPeriod);
     }
 
-    private void collectChildCurricularCourses(final Set<CurricularCourse> result,
-            CourseGroup courseGroup) {
-        for (final Context context : courseGroup.getCourseGroupContexts()) {
-            if (context.getDegreeModule() instanceof CurricularCourse) {
-                result.add((CurricularCourse) context.getDegreeModule());
-            } else if (context.getDegreeModule() instanceof CourseGroup) {
-                collectChildCurricularCourses(result, (CourseGroup) context.getDegreeModule());
+    private void checkIfPresentInDegreeCurricularPlan(final CompetenceCourse competenceCourse, final DegreeCurricularPlan degreeCurricularPlan) {
+        final List<CurricularCourse> curricularCoursesFromDegreeCurricularPlan = (List<CurricularCourse>) degreeCurricularPlan.getDcpDegreeModules(CurricularCourse.class);
+        for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
+            if (curricularCoursesFromDegreeCurricularPlan.contains(curricularCourse)) {
+                throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
             }
         }
     }
-
-    public List<CourseGroup> getDcpCourseGroups() {
-        final Set<CourseGroup> result = new HashSet<CourseGroup>();
-        if (this.getDegreeModule() instanceof CourseGroup) {
-            collectChildCourseGroups(result, (CourseGroup) this.getDegreeModule());
+    
+    private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse, final CurricularPeriod curricularPeriod) {
+        if (competenceCourse.getRegime().equals(RegimeType.ANUAL) && curricularPeriod.getChildByOrder(1) == null) {
+            throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
         }
-        return new ArrayList(result);
     }
-
-    private void collectChildCourseGroups(final Set<CourseGroup> result, CourseGroup courseGroup) {
+    
+    public List<? extends DegreeModule> getDcpDegreeModules(Class<? extends DegreeModule> clazz) {
+        final Set<DegreeModule> result = new HashSet<DegreeModule>();
+        if (this.getDegreeModule() instanceof CourseGroup) {
+            collectChildDegreeModules(clazz, result, (CourseGroup) this.getDegreeModule());
+        }
+        return new ArrayList<DegreeModule>(result);
+    }
+    
+    private void collectChildDegreeModules(Class<? extends DegreeModule> clazz, final Set<DegreeModule> result, CourseGroup courseGroup) {
         for (final Context context : courseGroup.getCourseGroupContexts()) {
+            if (context.getDegreeModule().getClass().equals(clazz)) {
+                result.add(context.getDegreeModule());
+            }
             if (context.getDegreeModule() instanceof CourseGroup) {
-                result.add((CourseGroup) context.getDegreeModule());
-                collectChildCourseGroups(result, (CourseGroup) context.getDegreeModule());
+                collectChildDegreeModules(clazz, result, (CourseGroup) context.getDegreeModule());
             }
         }
     }

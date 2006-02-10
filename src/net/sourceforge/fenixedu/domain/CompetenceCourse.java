@@ -9,12 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
-import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
-import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
@@ -173,12 +171,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     private CompetenceCourseInformation findRecentCompetenceCourseInformation() {
         for (final CompetenceCourseInformation competenceCourseInformation : getCompetenceCourseInformations()) {
-            if (competenceCourseInformation.getEndDate() == null) { // endDate
-                // not
-                // defined:
-                // most
-                // recent
-                // information
+            if (competenceCourseInformation.getEndDate() == null) {
+                // endDate not defined: most recent information
                 return competenceCourseInformation;
             }
         }
@@ -317,33 +311,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
         return this.getUnit().getDepartmentUnit();
     }
 
-    public CurricularCourse createCurricularCourse(Double weight, String prerequisites,
-            String prerequisitesEn, CurricularStage curricularStage, CourseGroup courseGroup,
-            CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
-
-        checkIfPresentInDegreeCurricularPlan(courseGroup.getParentDegreeCurricularPlan());
-        checkIfAnualBeginsInFirstPeriod(curricularPeriod);
-        return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, this,
-                courseGroup, curricularPeriod, beginExecutionPeriod);
-    }
-
-    private void checkIfPresentInDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan) {
-        final List<CurricularCourse> curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan.getDcpCurricularCourses();
-        for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
-            if (curricularCoursesFromDegreeCurricularPlan.contains(curricularCourse)) {
-                throw new DomainException("competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
-            }
-        }
-    }
-    
-    private void checkIfAnualBeginsInFirstPeriod(CurricularPeriod curricularPeriod) {
-        if (this.getRegime().equals(RegimeType.ANUAL) && curricularPeriod.getChildByOrder(1) == null) {
-            throw new DomainException("competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
-        }
-    }
-
-    
-    
     @Override
     @Checked("CompetenceCoursePredicates.writePredicate")
     public void addCompetenceCourseInformations(CompetenceCourseInformation competenceCourseInformations) {

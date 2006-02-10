@@ -9,6 +9,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.branch.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -43,7 +44,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     
     public CurricularCourse(Double weight, String prerequisites, String prerequisitesEn,
             CurricularStage curricularStage, CompetenceCourse competenceCourse,
-            CourseGroup courseGroup, CurricularPeriod curricularPeriod,
+            CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod) {
         
         this();       
@@ -52,7 +53,8 @@ public class CurricularCourse extends CurricularCourse_Base {
         setPrerequisitesEn(prerequisitesEn);
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
-        new Context(courseGroup, this, curricularPeriod, beginExecutionPeriod, null);
+        setType(CurricularCourseType.NORMAL_COURSE);
+        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, null);
     }
     
 	public GradeScale getGradeScaleChain() {

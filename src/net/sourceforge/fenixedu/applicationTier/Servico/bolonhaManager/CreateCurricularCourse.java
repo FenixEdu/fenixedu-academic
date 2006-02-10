@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class CreateCurricularCourse extends Service {
 
     public void run(Double weight, String prerequisites, String prerequisitesEn,
-            Integer competenceCourseID, Integer courseGroupID, Integer year, Integer semester,
+            Integer competenceCourseID, Integer parentCourseGroupID, Integer year, Integer semester,
             Integer degreeCurricularPlanID) throws ExcepcaoPersistencia, FenixServiceException {
 
         CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.
@@ -27,9 +27,9 @@ public class CreateCurricularCourse extends Service {
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
-        CourseGroup courseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, courseGroupID);
-        if (courseGroup == null) {
+        CourseGroup parentCourseGroup = (CourseGroup) persistentObject.readByOID(
+                CourseGroup.class, parentCourseGroupID);
+        if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
@@ -55,7 +55,7 @@ public class CreateCurricularCourse extends Service {
         ExecutionPeriod executionPeriod = executionYear
                 .getExecutionPeriodForSemester(Integer.valueOf(1));
 
-        courseGroup.createCurricularCourse(weight, prerequisites, prerequisitesEn,
-                CurricularStage.DRAFT, competenceCourse, curricularPeriod, executionPeriod);
+        degreeCurricularPlan.createCurricularCourse(weight, prerequisites, prerequisitesEn, CurricularStage.DRAFT,
+                competenceCourse, parentCourseGroup, curricularPeriod, executionPeriod);
     }
 }

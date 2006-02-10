@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
-import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
-import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -99,42 +96,9 @@ public class CourseGroup extends CourseGroup_Base {
         }
     }
 
-    @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
-    public CurricularCourse createCurricularCourse(Double weight, String prerequisites,
-            String prerequisitesEn, CurricularStage curricularStage, CompetenceCourse competenceCourse,
-            CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
-        checkIfPresentInDegreeCurricularPlan(this.getParentDegreeCurricularPlan(), competenceCourse);
-        checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
-        return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage,
-                competenceCourse, this, curricularPeriod, beginExecutionPeriod);
-    }
-
-    private void checkIfPresentInDegreeCurricularPlan(final DegreeCurricularPlan degreeCurricularPlan,
-            final CompetenceCourse competenceCourse) {
-        final List<CurricularCourse> curricularCoursesFromDegreeCurricularPlan = degreeCurricularPlan
-                .getDcpCurricularCourses();
-        for (CurricularCourse curricularCourse : competenceCourse.getAssociatedCurricularCourses()) {
-            if (curricularCoursesFromDegreeCurricularPlan.contains(curricularCourse)) {
-                throw new DomainException(
-                        "competenceCourse.already.has.a.curricular.course.in.degree.curricular.plan");
-            }
-        }
-    }
-
-    private void checkIfAnualBeginsInFirstPeriod(final CompetenceCourse competenceCourse,
-            CurricularPeriod curricularPeriod) {
-        if (competenceCourse.getRegime().equals(RegimeType.ANUAL)
-                && curricularPeriod.getChildByOrder(1) == null) {
-            throw new DomainException(
-                    "competenceCourse.anual.but.trying.to.associate.curricular.course.not.to.first.period");
-        }
-    }
-
     @Override
     @Checked("CourseGroupPredicates.curricularPlanMemberWritePredicate")
     public void setName(String name) {
         super.setName(name);
     }
-    
-    
 }

@@ -130,24 +130,22 @@ public class CourseGroupManagementBackingBean extends FenixBackingBean {
             checkCourseGroup();
             Object args[] = { getCourseGroup(getCourseGroupID()), getCourseGroup(getParentCourseGroupID()) };
             ServiceUtils.executeService(getUserView(), "AddContextToDegreeModule", args);
+            addInfoMessage(bolonhaResources.getString("courseGroupAssociated"));
+            return "editCurricularPlanStructure";
         } catch (FenixActionException e) {
             this.addErrorMessage(bolonhaResources.getString(e.getMessage()));
-            return "editCurricularPlanStructure";
         } catch (FenixFilterException e) {
             this.addErrorMessage(bolonhaResources.getString("error.notAuthorized"));
             return "editCurricularPlanStructure";
         } catch (FenixServiceException e) {
             this.addErrorMessage(bolonhaResources.getString(e.getMessage()));
-            return "editCurricularPlanStructure";
         } catch (DomainException e) {
             this.addErrorMessage(domainResources.getString(e.getMessage()));
-            return "editCurricularPlanStructure";
         } catch (Exception e) {
             this.addErrorMessage(bolonhaResources.getString("general.error"));
             return "editCurricularPlanStructure";
         }        
-        addInfoMessage(bolonhaResources.getString("courseGroupAssociated"));
-        return "editCurricularPlanStructure";
+        return "";
     }
     
     private void checkCourseGroup() throws FenixFilterException, FenixServiceException, FenixActionException {
