@@ -67,7 +67,7 @@ ul.list1 li { padding-left: 12px; background: url(../images/transitional/bullet0
 ul.list2 { padding-left: 0;}
 ul.list2 li { padding: 0.25em 0;}
 ul.list3 { }
-ul.list3 li { }
+ul.list3 li { padding-left: 12px; background: url(../images/transitional/bullet08.gif) left no-repeat; }
 
 
 /* ----------------------
@@ -239,13 +239,14 @@ padding: 0.2em 0.5em 0.2em 0em;
 .success2 h4 { border-bottom: 1px dotted #0a0; background: #fff url(../images/transitional/success01.gif) 6px 50% no-repeat; }
 .success3 { padding: 0.2em 0.5em 0.2em 23px; background: #efe url(../images/transitional/success01.gif) 6px 50% no-repeat; }
 
+.warning0 { margin: 1em 0; padding: 0.2em 0.5em 0.2em 0.5em; background-color: #fff8bb; color: #996600; }
 
 /* ----------------------
  ---- Forms ------------
 ----------------------- */
 
 form { margin: 0.5em 0; padding: 0.5em 0; }
-form p { clear: both; margin: 0.5em; }
+form p { clear: both; margin: 0.5em; margin-left: 0; }
 span.required { color: #d30; }
 
 fieldset {

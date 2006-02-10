@@ -158,7 +158,8 @@ padding-right: 10px;
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'MAIN'}">
 			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
 			<h:outputText value="<li><span>#{scouncilBundle['title']}:</span>" escape="false"/>
-			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
+			<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>			
 			
 			<h:outputText value="<li><span>#{scouncilBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
@@ -181,7 +182,8 @@ padding-right: 10px;
 		<h:panelGroup rendered="#{bibliographicReference.type.name == 'SECONDARY'}">
 			<h:outputText value="<ul class='nobullet temp1 mbottom2'>" escape="false"/>					
 			<h:outputText value="<li><span>#{scouncilBundle['title']}:</span>" escape="false"/>
-			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
+			<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
+			<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>			
 				
 			<h:outputText value="<li><span>#{scouncilBundle['author']}:</span>" escape="false"/>
 			<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
@@ -201,7 +203,7 @@ padding-right: 10px;
 		<h:outputText escape="false" value="<input id='competenceCourseID' name='competenceCourseID' type='hidden' value='#{CompetenceCourseManagement.competenceCourse.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input id='action' name='action' type='hidden' value='#{CompetenceCourseManagement.action}'/>"/>
 		<h:outputText escape="false" value="<input id='selectedDepartmentUnitID' name='selectedDepartmentUnitID' type='hidden' value='#{CompetenceCourseManagement.selectedDepartmentUnitID}'/>"/>
-		<hr/>
+		
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.action}">
 			<h:commandButton immediate="true" styleClass="inputbutton" action="competenceCoursesManagement" value="#{scouncilBundle['back']}" />
 		</h:panelGroup>
