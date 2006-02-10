@@ -188,9 +188,26 @@
     </slot>
   </schema>
   
+  <schema name="websiteType.list" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
+    <slot name="name" key="websiteType.name"/>
+    <slot name="description" key="websiteType.description"/>
+  </schema>
+  
   <schema name="person.admin.simple" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="username" layout="link"/>
     <slot name="nome"/>
+  </schema>
+  
+  <schema name="websiteType.edit" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
+    <slot name="name" key="websiteType.name"/>
+    <slot name="description" key="websiteType.description">
+        <property name="size" value="50"/>
+    </slot>
+    <slot name="mandatoryContents" key="websiteType.mandatoryContents" layout="option-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FunctionalLinksForWebsiteType"/>
+        <property name="eachLayout" value="values-dash"/>
+        <property name="eachSchema" value="functionalityLink.simple"/>
+    </slot>
   </schema>
   
   <schema name="websiteType.create" type="net.sourceforge.fenixedu.domain.cms.website.WebsiteType">
@@ -198,14 +215,9 @@
     <slot name="description" key="websiteType.description">
         <property name="size" value="50"/>
     </slot>
-    <slot name="mandatoryContents" key="websiteType.mandatoryContents" layout="option-select">
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.cms.website.JSPContent"/>
-        <property name="eachLayout" value="values-dash"/>
-        <property name="eachSchema" value="linkcontent.simple"/>
-    </slot>
   </schema>
   
-  <schema name="linkcontent.simple" type="net.sourceforge.fenixedu.domain.cms.website.JSPContent">
+  <schema name="functionalityLink.simple" type="net.sourceforge.fenixedu.domain.cms.FunctionalityLink">
     <slot name="name"/>
     <slot name="description"/>
   </schema>
@@ -219,10 +231,35 @@
     </slot>
     <slot name="mandatoryContents" key="websiteType.mandatoryContents">
         <property name="eachLayout" value="values-dash"/>
-        <property name="eachSchema" value="linkcontent.simple"/>
+        <property name="eachSchema" value="functionalityLink.simple"/>
     </slot>
   </schema>
   
+  <schema name="functionalityLink.details" type="net.sourceforge.fenixedu.domain.cms.FunctionalityLink">
+    <slot name="name"/>
+    <slot name="description"/>
+    <slot name="target"/>
+    <slot name="types">
+        <property name="eachLayout" value="values-dash"/>
+        <property name="eachSchema" value="websiteType.list"/>
+    </slot>
+  </schema>
+  
+  <schema name="functionalityLink.edit" type="net.sourceforge.fenixedu.domain.cms.FunctionalityLink">
+    <slot name="name"/>
+    <slot name="description">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="target">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="types" layout="option-select">
+        <property name="choiceType" value="net.sourceforge.fenixedu.domain.cms.website.WebsiteType"/>
+        <property name="eachLayout" value="values-dash"/>
+        <property name="eachSchema" value="websiteType.list"/>
+    </slot>
+  </schema>
+
   <schema name="cms.content.basic" type="net.sourceforge.fenixedu.domain.cms.Content">
     <slot name="name"/>
     <slot name="description"/>

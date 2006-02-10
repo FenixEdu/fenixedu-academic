@@ -9185,19 +9185,34 @@
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
-		<filterChains/>				
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>				
 	</service>
 	
 	<service>
-		<name>DeleteExecutionCourseWebsite</name>
+		<name>DeleteWebsite</name>
 		<implementationClass>
-			net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteExecutionCourseWebsite
+			net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteWebsite
 		</implementationClass>
 		<description/>
 		<isTransactional>true</isTransactional>
-		<filterChains/>				
+		<filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>
 	</service>
-	
+	<service>
+        <name>DeleteFunctionalityLink</name>
+        <implementationClass>
+            net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteFunctionalityLink
+        </implementationClass>
+        <description/>
+        <isTransactional>true</isTransactional>
+        <filterChains>
+			<chain name="ManagerAuthorization" />
+		</filterChains>	
+    </service>
+    
     <!-- ======================================  -->
     <service>
     	<name>CreateCompetenceCourse</name>

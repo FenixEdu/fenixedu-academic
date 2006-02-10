@@ -4,8 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h3><bean:message bundle="CMS_RESOURCES" key="cms.websiteTypeManagement.label" /></h3>
+<h3><bean:message bundle="CMS_RESOURCES" key="cms.functionalityLinkManagement.label" /></h3>
 
-<logic:present name="websiteType">
-    <fr:view name="websiteType" layout="tabular" schema="websiteType.details"/>
+<logic:present name="functionalityLink">
+    <fr:view name="functionalityLink" layout="tabular" schema="functionalityLink.details"/>
 </logic:present>

@@ -332,18 +332,17 @@ class net.sourceforge.fenixedu.domain.cms.Content extends net.sourceforge.fenixe
 
     }
                
-    class net.sourceforge.fenixedu.domain.cms.website.JSPContent extends net.sourceforge.fenixedu.domain.cms.Content
+    class net.sourceforge.fenixedu.domain.cms.FunctionalityLink extends net.sourceforge.fenixedu.domain.cms.Content
     {
-      String target;      
+      String target;
     }
     
     class net.sourceforge.fenixedu.domain.cms.website.Website extends net.sourceforge.fenixedu.domain.cms.Bin {
           Integer keyWebsiteType;
     }
-      class net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite extends net.sourceforge.fenixedu.domain.cms.website.Website {
+    class net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite extends net.sourceforge.fenixedu.domain.cms.website.Website {
       Integer keyExecutionCourse;
-      }
-    
+    }
     class net.sourceforge.fenixedu.domain.cms.website.WebsiteSection extends net.sourceforge.fenixedu.domain.cms.Bin {
     }
     
@@ -5382,7 +5381,7 @@ relation SeminaryCourseEquivalency {
     }
 }
 
-relation WebSiteTypeWebsite {
+relation WebsiteTypeWebsite {
 	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole websiteType;
 	net.sourceforge.fenixedu.domain.cms.website.Website playsRole websites
 	{
@@ -5390,8 +5389,8 @@ relation WebSiteTypeWebsite {
 	}
 }
 
-relation WebSiteTypeMandatoryContent {
-	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole {
+relation WebsiteTypeMandatoryContent {
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole functionalityLinks {
 		multiplicity *;
 	}
 	
@@ -5399,6 +5398,24 @@ relation WebSiteTypeMandatoryContent {
 	{
 		multiplicity *;
 	}
+}
+
+relation FunctionalityLinkAvailableToWebsiteType {
+	net.sourceforge.fenixedu.domain.cms.website.WebsiteType playsRole types {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.cms.FunctionalityLink playsRole functionalityLinks {
+		multiplicity *;
+	} 
+}
+
+relation WebsiteHasTarget {
+	net.sourceforge.fenixedu.domain.cms.website.Website playsRole {
+		multiplicity *;
+	}
+	
+	net.sourceforge.fenixedu.domain.DomainObject playsRole target;
 }
 
 relation WebSiteItemPerson {

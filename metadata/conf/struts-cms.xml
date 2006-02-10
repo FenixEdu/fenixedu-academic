@@ -247,6 +247,17 @@
             <forward name="create" path="createWebsiteType"/>
         </action>				
 
+        <action path="/functionalityLinkManagement"
+            type="net.sourceforge.fenixedu.presentationTier.Action.cms.websiteTypeManagement.FunctionalityLinkManagement"
+            parameter="method"
+            name="voidForm"
+            scope="request">
+            <forward name="list" path="listFunctionalityLink"/>
+            <forward name="edit" path="editFunctionalityLink"/>
+            <forward name="details" path="viewFunctionalityLink"/>
+            <forward name="create" path="createFunctionalityLinkWebsite"/>
+        </action>               
+
         <action path="/websiteManagement"
             type="net.sourceforge.fenixedu.presentationTier.Action.cms.website.WebsiteManagement"
             parameter="method"

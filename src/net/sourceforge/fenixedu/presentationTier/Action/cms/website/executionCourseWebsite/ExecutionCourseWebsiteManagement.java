@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
-import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
+import net.sourceforge.fenixedu.domain.cms.website.Website;
 import net.sourceforge.fenixedu.domain.cms.website.WebsiteType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -58,8 +58,8 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		try
 		{
 			IUserView userView = SessionUtils.getUserView(request);
-			Collection<ExecutionCourseWebsite> websites = (Collection<ExecutionCourseWebsite>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[]
-			{ ExecutionCourseWebsite.class });
+			Collection<Website> websites = (Collection<Website>) ServiceUtils.executeService(userView, "ReadAllDomainObjects", new Object[]
+			{ Website.class });
 			Collection<InfoExecutionPeriod> infoExecutionPeriods = (Collection<InfoExecutionPeriod>) ServiceUtils.executeService(userView, "ReadExecutionPeriods", null);
 			if (infoExecutionPeriods != null && !infoExecutionPeriods.isEmpty())
 			{
@@ -310,12 +310,12 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			Integer websiteId = new Integer(request.getParameter("websiteId"));
-			ExecutionCourseWebsite websiteToDelete = (ExecutionCourseWebsite) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]
-			{ ExecutionCourseWebsite.class, websiteId });
+			Website websiteToDelete = (Website) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]
+			{ Website.class, websiteId });
 			;
 			if (websiteToDelete != null)
 			{
-				ServiceUtils.executeService(userView, "DeleteExecutionCourseWebsite", new Object[]
+				ServiceUtils.executeService(userView, "DeleteWebsite", new Object[]
 				{ websiteToDelete });
 			}
 
@@ -341,8 +341,8 @@ public class ExecutionCourseWebsiteManagement extends FenixDispatchAction
 		{
 			IUserView userView = SessionUtils.getUserView(request);
 			Integer websiteId = new Integer(request.getParameter("websiteId"));
-			ExecutionCourseWebsite websiteToView = (ExecutionCourseWebsite) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]	
-			{ ExecutionCourseWebsite.class, websiteId });
+			Website websiteToView = (Website) ServiceUtils.executeService(userView, "ReadDomainObject", new Object[]	
+			{ Website.class, websiteId });
 			;
 			request.setAttribute("website",websiteToView);
 		}

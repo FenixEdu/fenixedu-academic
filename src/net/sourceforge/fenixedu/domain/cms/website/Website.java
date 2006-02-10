@@ -6,4 +6,9 @@ public class Website extends Website_Base {
         super();
     }
 
+    public void delete() {
+        removeTarget();
+        
+        super.delete();
+    }
 }

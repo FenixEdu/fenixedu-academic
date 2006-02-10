@@ -38,7 +38,7 @@
 <class-descriptor class="net.sourceforge.fenixedu.domain.cms.Content">
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.Bin" />
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.messaging.MailMessage" />
-    <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.JSPContent"/>
+    <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.FunctionalityLink"/>
     <extent-class class-ref="net.sourceforge.fenixedu.domain.cms.website.WebsiteItem"/>
     <field-descriptor
         name="idInternal"

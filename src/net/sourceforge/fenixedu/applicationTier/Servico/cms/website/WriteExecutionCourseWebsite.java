@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.cms.CmsService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.cms.website.ExecutionCourseWebsite;
+import net.sourceforge.fenixedu.domain.cms.website.Website;
 import net.sourceforge.fenixedu.domain.cms.website.WebsiteType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
@@ -78,25 +78,21 @@ public class WriteExecutionCourseWebsite extends CmsService {
 
     }
 
-    public ExecutionCourseWebsite run(WriteExecutionCourseWebsiteParameters parameters)
+    public Website run(WriteExecutionCourseWebsiteParameters parameters)
             throws ExcepcaoPersistencia, FenixServiceException {
-        ExecutionCourseWebsite website = new ExecutionCourseWebsite();
+        Website website = new Website();
         website.setName(parameters.getName());
         website.setDescription(parameters.getDescription());
 
         ExecutionCourse executionCourse = (ExecutionCourse) persistentObject.readByOID(
                 ExecutionCourse.class, parameters.getExecutionCourseID());
-        if (executionCourse.getExecutionCourseWebsite() != null) {
-            throw new ExecutionCourseAlreadyHasWebsiteException(
-                    "The selected execution course already have a website");
-        }
         
         WebsiteType websiteType = (WebsiteType) persistentObject.readByOID(WebsiteType.class, parameters.getWebsiteTypeID());
         if (websiteType == null) {
             throw new FenixServiceException("The website type could not be found");
         }
         
-        website.setExecutionCourse(executionCourse);
+        website.setTarget(executionCourse);
         website.setWebsiteType(websiteType);
         website.setCreator(parameters.getPerson());
         website.addOwners(parameters.getPerson());
@@ -106,7 +102,7 @@ public class WriteExecutionCourseWebsite extends CmsService {
         return website;
     }
 
-    private void updateRootObjectReferences(ExecutionCourseWebsite website) throws ExcepcaoPersistencia {
+    private void updateRootObjectReferences(Website website) throws ExcepcaoPersistencia {
         this.readFenixCMS().addContents(website);
         this.readFenixCMS().addUsers(website.getCreator());
     }

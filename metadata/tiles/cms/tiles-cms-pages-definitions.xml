@@ -101,6 +101,22 @@
         <put name="body" value="/cms/websiteTypeManagement/createWebsiteType.jsp" />
     </definition>
     
+    <definition name="listFunctionalityLink" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/listFunctionalityLink.jsp" />
+    </definition>
+    
+    <definition name="editFunctionalityLink" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/editFunctionalityLink.jsp" />
+    </definition>
+
+    <definition name="viewFunctionalityLink" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/viewFunctionalityLink.jsp" />
+    </definition>
+
+    <definition name="createFunctionalityLinkWebsite" extends="cms.masterPage" >
+        <put name="body" value="/cms/websiteTypeManagement/createFunctionalityLink.jsp" />
+    </definition>
+
     <definition name="editWebsite" extends="cms.masterPage" >
         <put name="body" value="/cms/website/editWebsite.jsp" />
     </definition>

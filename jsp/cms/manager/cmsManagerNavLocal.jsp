@@ -22,3 +22,8 @@
         <bean:message bundle="CMS_RESOURCES" key="cms.websiteTypeManagement.label" />
     </html:link>    
 </strong></p>
+<p><strong>&raquo;
+    <html:link module="/cms" action="/functionalityLinkManagement?method=start" >
+        <bean:message bundle="CMS_RESOURCES" key="cms.functionalityLinkManagement.label" />
+    </html:link>    
+</strong></p>

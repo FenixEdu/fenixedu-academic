@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.DomainTestBase;
 import net.sourceforge.fenixedu.domain.cms.Content;
+import net.sourceforge.fenixedu.domain.cms.FunctionalityLink;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/> <br/>
@@ -20,7 +21,7 @@ public class WebsiteMandatoryContentsTest extends DomainTestBase
 {
 	private WebsiteType type;
 
-	private JSPContent jspContent;
+	private FunctionalityLink functionalityLink;
 
 	private ExecutionCourseWebsite website;
 
@@ -32,22 +33,22 @@ public class WebsiteMandatoryContentsTest extends DomainTestBase
 	{
 		super.setUp();
 		this.instantiateInstanceMembers();
-		jspContent.setName("JspContent 1");
+		functionalityLink.setName("JspContent 1");
 		website.setName("Site da cadeira de PO");
 		section.setName("Secção 1");
 		section2.setName("Secção 2");
 		website.addChildren(section);
 		type.addMandatoryContents(section2);
 
-		WebsiteType.WebSiteTypeWebsite.add(type, website);
-		WebsiteType.WebSiteTypeMandatoryContent.add(type, jspContent);
+		WebsiteType.WebsiteTypeWebsite.add(type, website);
+		WebsiteType.WebsiteTypeMandatoryContent.add(type, functionalityLink);
 
 	}
 
 	private void instantiateInstanceMembers()
 	{
 		this.type = new WebsiteType();
-		this.jspContent = new JSPContent();
+		this.functionalityLink = new FunctionalityLink();
 		this.website = new ExecutionCourseWebsite();
 		this.section = new WebsiteSection();
 		this.section2 = new WebsiteSection();
@@ -59,7 +60,7 @@ public class WebsiteMandatoryContentsTest extends DomainTestBase
 		Collection<Content> siteContents = this.website.getChildren();
 		assertTrue("#AT1 Site does not contain its own section,", siteContents.contains(this.section));
 		assertTrue("#AT2 Site does not contain mandatory type section,", siteContents.contains(this.section2));
-		assertTrue("#AT3 Site does not contain mandatory jsp content,", siteContents.contains(this.jspContent));
+		assertTrue("#AT3 Site does not contain mandatory jsp content,", siteContents.contains(this.functionalityLink));
 	}
 
 	public void testSiteWithNoTypeHasOnlyItsComponents()
@@ -68,7 +69,7 @@ public class WebsiteMandatoryContentsTest extends DomainTestBase
 		Collection<Content> siteContents = this.website.getChildren();
 		assertTrue("#AT1 Site does not contain its own section,", siteContents.contains(this.section));
 		assertFalse("#AF1 Site contains mandatory type section and it should not,", siteContents.contains(this.section2));
-		assertFalse("#AF2 Site contains mandatory jsp content and it should not,", siteContents.contains(this.jspContent));
+		assertFalse("#AF2 Site contains mandatory jsp content and it should not,", siteContents.contains(this.functionalityLink));
 	}
 
 	public void testSiteContentsContentChangedByChangingItsTypeMandatoryContents()
@@ -76,13 +77,13 @@ public class WebsiteMandatoryContentsTest extends DomainTestBase
 		Collection<Content> siteContents = this.website.getChildren();
 		assertTrue("#AT1 Site does not contain its own section,", siteContents.contains(this.section));
 		assertTrue("#AT2 Site does not contain mandatory type section,", siteContents.contains(this.section2));
-		assertTrue("#AT3 Site does not contain mandatory jsp content,", siteContents.contains(this.jspContent));
+		assertTrue("#AT3 Site does not contain mandatory jsp content,", siteContents.contains(this.functionalityLink));
 
-		WebsiteType.WebSiteTypeMandatoryContent.remove(type, jspContent);
+		WebsiteType.WebsiteTypeMandatoryContent.remove(type, functionalityLink);
 		siteContents = this.website.getChildren();
 		assertTrue("#AT1 Site does not contain its own section,", siteContents.contains(this.section));
 		assertTrue("#AT2 Site does not contain mandatory type section,", siteContents.contains(this.section2));
-		assertFalse("#AF1 Site contains mandatory jsp content and it should not,", siteContents.contains(this.jspContent));
+		assertFalse("#AF1 Site contains mandatory jsp content and it should not,", siteContents.contains(this.functionalityLink));
 	}
 
 	public void testWebsiteContentsChangedByDirectlyEditItsCollectionInsteadOfViaAddAndRemoveMethods()
@@ -105,6 +106,6 @@ public class WebsiteMandatoryContentsTest extends DomainTestBase
 		Collection<Content> siteContents = this.website.getChildren();
 		assertFalse("#AF1 Site still have its old section,", siteContents.contains(this.section));
 		assertTrue("#AT1 Site does not contain mandatory type section,", siteContents.contains(this.section2));
-		assertTrue("#AT2 Site does not contain mandatory jsp content,", siteContents.contains(this.jspContent));
+		assertTrue("#AT2 Site does not contain mandatory jsp content,", siteContents.contains(this.functionalityLink));
 	}
 }
