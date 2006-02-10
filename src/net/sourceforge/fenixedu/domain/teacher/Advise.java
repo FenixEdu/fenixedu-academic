@@ -13,12 +13,12 @@ import org.apache.commons.collections.Predicate;
 public class Advise extends Advise_Base {
 
     static {
-        TeacherAdviseService.AdviseTeacherAdviseService.addListener(new AdviseTeacherAdviseServiceListener());
+        TeacherAdviseService.AdviseTeacherAdviseService
+                .addListener(new AdviseTeacherAdviseServiceListener());
     }
 
-
-    public Advise(Teacher teacher, Student student, AdviseType adviseType,
-            ExecutionPeriod startPeriod, ExecutionPeriod endPeriod) {
+    public Advise(Teacher teacher, Student student, AdviseType adviseType, ExecutionPeriod startPeriod,
+            ExecutionPeriod endPeriod) {
         super();
         if (teacher == null || student == null || adviseType == null || startPeriod == null
                 || endPeriod == null) {
@@ -31,7 +31,7 @@ public class Advise extends Advise_Base {
         setEndExecutionPeriod(endPeriod);
     }
 
-    public void delete(){
+    public void delete() {
         if (getTeacherAdviseServices() == null || getTeacherAdviseServices().isEmpty()) {
             setStudent(null);
             setTeacher(null);
@@ -42,7 +42,7 @@ public class Advise extends Advise_Base {
             throw new DomainException("error.delete.Advise.hasTeacherAdviseServices");
         }
     }
-    
+
     public TeacherAdviseService getTeacherAdviseServiceByExecutionPeriod(
             final ExecutionPeriod executionPeriod) {
         return (TeacherAdviseService) CollectionUtils.find(getTeacherAdviseServices(), new Predicate() {
@@ -130,26 +130,32 @@ public class Advise extends Advise_Base {
         }
     }
 
-    private static class AdviseTeacherAdviseServiceListener extends dml.runtime.RelationAdapter<TeacherAdviseService,Advise> {
+    private static class AdviseTeacherAdviseServiceListener extends
+            dml.runtime.RelationAdapter<TeacherAdviseService, Advise> {
         @Override
         public void afterAdd(TeacherAdviseService teacherAdviseServices, Advise advise) {
-            ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
-                .getExecutionPeriod();
-            if (executionPeriod.getEndDate().after(advise.getEndExecutionPeriod().getEndDate())) {
-                advise.setEndExecutionPeriod(executionPeriod);
-            }
-            if (executionPeriod.getBeginDate().before(advise.getStartExecutionPeriod().getBeginDate())) {
-                advise.setStartExecutionPeriod(executionPeriod);
+            if (advise != null) {
+                ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
+                        .getExecutionPeriod();
+                if (executionPeriod.getEndDate().after(advise.getEndExecutionPeriod().getEndDate())) {
+                    advise.setEndExecutionPeriod(executionPeriod);
+                }
+                if (executionPeriod.getBeginDate().before(
+                        advise.getStartExecutionPeriod().getBeginDate())) {
+                    advise.setStartExecutionPeriod(executionPeriod);
+                }
             }
         }
-        
+
         @Override
         public void afterRemove(TeacherAdviseService teacherAdviseServices, Advise advise) {
             if (advise != null) {
-                if (advise.getTeacherAdviseServices() == null || advise.getTeacherAdviseServices().isEmpty()) {
+                if (advise.getTeacherAdviseServices() == null
+                        || advise.getTeacherAdviseServices().isEmpty()) {
                     advise.delete();
                 } else if (teacherAdviseServices != null) {
-                    ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService().getExecutionPeriod();
+                    ExecutionPeriod executionPeriod = teacherAdviseServices.getTeacherService()
+                            .getExecutionPeriod();
                     if (executionPeriod == advise.getEndExecutionPeriod()) {
                         advise.updateEndExecutionPeriod();
                     } else if (executionPeriod == advise.getStartExecutionPeriod()) {
