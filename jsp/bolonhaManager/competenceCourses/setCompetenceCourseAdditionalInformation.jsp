@@ -23,7 +23,7 @@
 		</h:outputFormat>
 		<h:outputText value=" > "/>
 		<h:outputText value="<span><strong>#{bolonhaBundle['step']} 2:</strong> #{bolonhaBundle['setCompetenceCourseLoad']}</span>" escape="false"/>
-		<h:outputText value=" > <span  class='actual'><strong>#{bolonhaBundle['step']} 3:</strong> #{bolonhaBundle['setData']}</span>" escape="false"/>
+		<h:outputText value=" > <span  class='actual'><strong>#{bolonhaBundle['step']} 3:</strong> #{bolonhaBundle['setCompetenceCourseAdditionalInformation']}</span>" escape="false"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:panelGroup>
 	

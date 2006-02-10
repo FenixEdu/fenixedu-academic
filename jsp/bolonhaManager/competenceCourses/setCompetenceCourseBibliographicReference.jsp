@@ -39,27 +39,31 @@ padding-right: 10px;
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['title']}:</label>" escape="false"/>
 			<h:inputText id="title" size="50" required="true" value="#{CompetenceCourseManagement.title}"/>
+			<h:outputText value=" " escape="false"/>
 			<h:message for="title" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['author']}:</label>" escape="false"/>
 			<h:inputText id="author" size="50" required="true" value="#{CompetenceCourseManagement.author}"/>
+			<h:outputText value=" " escape="false"/>
 			<h:message for="author" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['year']}:</label>" escape="false"/>
 			<h:inputText id="year" size="3" required="true" value="#{CompetenceCourseManagement.year}"/>
+			<h:outputText value=" " escape="false"/>
 			<h:message for="year" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['reference']}:</label>" escape="false"/>
 			<h:inputText id="reference" size="50" required="true" value="#{CompetenceCourseManagement.reference}"/>
+			<h:outputText value=" " escape="false"/>
 			<h:message for="reference" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['url']}:</label>" escape="false"/>
 			<h:inputText id="url" size="50" maxlength="100" value="#{CompetenceCourseManagement.url}"/>			
-			<h:outputText value="<span class='small'>(#{bolonhaBundle['optional']})</span></p>" escape="false"/>
+			<h:outputText value=" <span class='small'>(#{bolonhaBundle['optional']})</span></p>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['type']}:</label>" escape="false"/>	
 			<h:selectOneMenu value="#{CompetenceCourseManagement.type}">
@@ -68,7 +72,7 @@ padding-right: 10px;
 			</h:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>
 			
-			<h:outputText value="<p><label class='lempty'>.</label>" escape="false" />
+			<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false" />
 			<h:panelGroup rendered="#{empty CompetenceCourseManagement.bibliographicReferenceID}">
 				<h:commandButton value="#{bolonhaBundle['create']}" styleClass="inputbutton"
 					action="#{CompetenceCourseManagement.createBibliographicReference}"/>					
@@ -92,7 +96,8 @@ padding-right: 10px;
 				<h:panelGroup rendered="#{bibliographicReference.order != CompetenceCourseManagement.bibliographicReferenceID}">
 					<h:outputText value="<ul class='nobullet temp1 mbottom05'>" escape="false"/>					
 					<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
-					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
+					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
+					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
 					
 					<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
 					<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>
@@ -150,7 +155,8 @@ padding-right: 10px;
 				<h:panelGroup rendered="#{bibliographicReference.order != CompetenceCourseManagement.bibliographicReferenceID}">
 					<h:outputText value="<ul class='nobullet temp1 mbottom05'>" escape="false"/>					
 					<h:outputText value="<li><span>#{bolonhaBundle['title']}:</span>" escape="false"/>
-					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" escape="false"/>
+					<h:outputText value="<a href='#{bibliographicReference.url}'>#{bibliographicReference.title}</a></li>" rendered="#{bibliographicReference.url != 'http://'}" escape="false"/>
+					<h:outputText value="#{bibliographicReference.title}</li>" rendered="#{bibliographicReference.url == 'http://'}" escape="false"/>
 					
 					<h:outputText value="<li><span>#{bolonhaBundle['author']}:</span>" escape="false"/>
 					<h:outputText value="<em>#{bibliographicReference.authors}</em></li>" escape="false"/>

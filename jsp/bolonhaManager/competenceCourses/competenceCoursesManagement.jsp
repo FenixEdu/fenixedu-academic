@@ -10,48 +10,61 @@
 	<h:outputText rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}" value="<em>#{bolonhaBundle['competenceCoursesManagement']}</em>" escape="false"/>
 	<h:outputText value="<h2>#{CompetenceCourseManagement.personDepartment.realName}</h2>" escape="false"/>
 
-	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.personDepartment}">
+<%--
+	<h:outputText rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}" value="<p class='mtop2 mbottom1'><a href='#members' title='#{bolonhaBundle['view.group.members.description']}'>#{bolonhaBundle['view.group.members']}</a></p>" escape="false"/>
+--%>
 
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><b>#{bolonhaBundle['groupMembers']}</b> #{bolonhaBundle['label.group.members.explanation']}:<br/>" escape="false" />
-			<h:dataTable value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
-				<h:column>
-					<h:outputText value="#{memberLabel}" escape="false"/>
-				</h:column>
-			</h:dataTable>
+			<h:outputText value="<br/><b id='members' class='highlight1'>#{bolonhaBundle['groupMembers']}</b> #{bolonhaBundle['label.group.members.explanation']}:<br/>" escape="false" />
+			<h:outputText value="<ul>" escape="false"/>
+			<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
+				<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
+			</fc:dataRepeater>
+			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels}">
 			<h:outputText value="<br/><i>#{bolonhaBundle['label.empty.group.members']}</i><br/>" escape="false" />
 		</h:panelGroup>
 
+
+	<h:panelGroup rendered="#{!empty CompetenceCourseManagement.personDepartment}">
 		<h:panelGroup rendered="#{CompetenceCourseManagement.canView}">
 			<h:form>
 				<h:messages infoClass="success0" errorClass="error0" layout="table"/>
 				<h:panelGroup rendered="#{empty CompetenceCourseManagement.scientificAreaUnits}">
-					<h:outputText style="font-style:italic" value="#{bolonhaBundle['noScientificAreaUnits']}<br/>" escape="false"/>
+					<h:outputText  value="#{bolonhaBundle['noScientificAreaUnits']}<br/>" escape="false"/>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
 					<fc:dataRepeater value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
-						<h:outputText value="<p class='mtop3 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
+						<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
 						<h:panelGroup rendered="#{empty scientificAreaUnit.competenceCourseGroupUnits}">
-							<h:outputText style="font-style:italic" value="#{bolonhaBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/>
+							<h:outputText value="#{bolonhaBundle['noCompetenceCourseGroupUnits']}><br/>" escape="false"/>
 						</h:panelGroup>
+						
+						
 						<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
-							<h:outputText value="<ul>" escape="false"/>
+							<h:outputText value="<ul class='list3'>" escape="false"/>
 							<fc:dataRepeater value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
-								<h:outputText value="<li class='tree_label'>#{competenceCourseGroupUnit.name} - " escape="false"/>
-								<h:outputLink value="createCompetenceCourse.faces">
-									<h:outputFormat value="#{bolonhaBundle['create.param']}<br/>" escape="false">
-										<f:param value=" #{bolonhaBundle['competenceCourse']}"/>
-									</h:outputFormat>								
-									<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
-								</h:outputLink>
-								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
-												styleClass="showinfo1 smallmargin mtop05" rowClasses="color2" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.75em;'>" escape="false"/>
+								<h:outputText value="<table style='width: 50em; background-color: #fff;'><tr>" escape="false"/>
+								<h:outputText value="<td>#{competenceCourseGroupUnit.name}</td> " escape="false"/>
+								<h:outputText value="<td class='aright'>" escape="false"/>
+									<h:outputLink value="createCompetenceCourse.faces">
+										<h:outputFormat value="#{bolonhaBundle['create.param']}" escape="false">
+											<f:param value=" #{bolonhaBundle['Course']}"/>
+										</h:outputFormat>								
+										<f:param name="competenceCourseGroupUnitID" value="#{competenceCourseGroupUnit.idInternal}"/>
+									</h:outputLink>
+								<h:outputText value="</td></tr></table>" escape="false"/>
+								
+								
+								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse" 
+												styleClass="showinfo1 smallmargin mtop05" style="width: 50em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 									<h:column>
 										<h:outputText value="#{competenceCourse.name}"/>
-										<h:outputText value="  (#{enumerationBundle[competenceCourse.curricularStage]})" style="font-style:italic"/>
+										<h:outputText value="  <em>(#{enumerationBundle[competenceCourse.curricularStage]})</em>" escape="false"/>
 									</h:column>
+									
 									<h:column>
 										<h:outputLink value="showCompetenceCourse.faces">
 											<h:outputText value="#{bolonhaBundle['show']}"/>
@@ -80,6 +93,7 @@
 												</h:panelGroup>
 									</h:column>
 								</h:dataTable>
+								
 								<h:outputText value="</li>" escape="false"/>
 							</fc:dataRepeater>
 							<h:outputText value="</ul>" escape="false"/>
@@ -90,11 +104,14 @@
 		</h:panelGroup>		
 	
 		<h:panelGroup rendered="#{!CompetenceCourseManagement.canView}">
-			<h:outputText style="font-style:italic" value="<br/>#{bolonhaBundle['notMemberInCompetenceCourseManagementGroup']}<br/>" escape="false"/>
+			<h:outputText  value="<br/>#{bolonhaBundle['notMemberInCompetenceCourseManagementGroup']}<br/>" escape="false"/>
 		</h:panelGroup>
 	
 	</h:panelGroup>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.personDepartment}">
-		<h:outputText style="font-style:italic" value="#{bolonhaBundle['no.current.department.working.place']}<br/>" escape="false"/>
+		<h:outputText  value="#{bolonhaBundle['no.current.department.working.place']}<br/>" escape="false"/>
 	</h:panelGroup>
+	
+
+		
 </ft:tilesView>

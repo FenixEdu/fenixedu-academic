@@ -6,13 +6,14 @@
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 	<f:loadBundle basename="resources/EnumerationResources" var="enumerationBundle"/>
-	<h:form>
+
 		<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
 		<h:outputText value="<h2>#{scouncilBundle['competenceCoursesManagement']}</h2>" escape="false"/>
 
+		<h:form>
+	
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
-		<h:outputText value="<br/>" escape="false"/>
 		<h:panelGrid columns="2" style="infocell" columnClasses="infocell">
 			<h:outputText value="#{scouncilBundle['department']}:" escape="false"/>
 			<fc:selectOneMenu value="#{CompetenceCourseManagement.selectedDepartmentUnitID}" onchange="submit()">
@@ -20,36 +21,45 @@
 			</fc:selectOneMenu>
 		</h:panelGrid>
 
+<%--
+		<h:outputText value="<p class='mtop2 mbottom2'><a href='#members' title='#{scouncilBundle['view.group.members.description']}'>#{scouncilBundle['view.group.members']}</a></p>" escape="false"/>
+--%>
+
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><b>#{scouncilBundle['groupMembers']}</b> #{scouncilBundle['label.group.members.explanation']}:<br/>" escape="false" />
-			<h:dataTable value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
-				<h:column>
-					<h:outputText value="#{memberLabel}" escape="false"/>
-				</h:column>
-			</h:dataTable>
+			<h:outputText value="<br/><b id='members' class='highlight1'>#{scouncilBundle['groupMembers']}</b> #{scouncilBundle['label.group.members.explanation']}:<br/>" escape="false" />
+			<h:outputText value="<ul>" escape="false"/>
+			<fc:dataRepeater value="#{CompetenceCourseManagement.groupMembersLabels}" var="memberLabel">
+				<h:outputText value="<li>#{memberLabel}</li>" escape="false"/>
+			</fc:dataRepeater>
+			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><i>#{scouncilBundle['label.empty.group.members']}</i><br/>" escape="false" />
+			<h:outputText value="<br/><i>#{bolonhaBundle['label.empty.group.members']}</i><br/>" escape="false" />
 		</h:panelGroup>
+		
 
 		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
 			<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
 				<h:column>
-					<h:outputText value="<p class='mtop3 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
+					<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
 					<h:panelGroup rendered="#{empty scientificAreaUnit.competenceCourseGroupUnits}">
 						<h:outputText style="font-style:italic" value="#{scouncilBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/>
 					</h:panelGroup>
+					
+					
 					<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
-						<h:outputText value="<ul>" escape="false"/>
+						<h:outputText value="<ul class='list3'>" escape="false"/>
 						<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
 								<h:column>
-									<h:outputText value="<li class='tree_label'>#{competenceCourseGroupUnit.name}" escape="false"/>
+									<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/>
 									<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
-											styleClass="showinfo1 smallmargin mtop05" rowClasses="color2" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+											styleClass="showinfo1 smallmargin mtop05" style="width: 50em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
+											
 											<h:column>
 												<h:outputText value="#{competenceCourse.name}"/>
-												<h:outputText value="  (#{enumerationBundle[competenceCourse.curricularStage]})" style="font-style:italic"/>
+												<h:outputText value=" <em>(#{enumerationBundle[competenceCourse.curricularStage]})</em>" escape="false"/>
 											</h:column>
+										
 											<h:column>
 												<h:outputLink value="showCompetenceCourse.faces">
 													<h:outputText value="#{scouncilBundle['show']}"/>
@@ -69,6 +79,7 @@
 													</fc:commandLink>
 												</h:panelGroup>												
 											</h:column>
+											
 									</h:dataTable>
 									<h:outputText value="</li>" escape="false"/>
 								</h:column>
@@ -78,5 +89,7 @@
 				</h:column>
 			</h:dataTable>
 		</h:panelGroup>
+		
+			
 	</h:form>
 </ft:tilesView>

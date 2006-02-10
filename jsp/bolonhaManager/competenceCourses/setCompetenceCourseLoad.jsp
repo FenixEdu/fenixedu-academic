@@ -140,7 +140,7 @@ width: auto;
 		<h:outputText value="</div>" escape="false"/>
 		
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'create'}">
-			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['create']}" action="#{CompetenceCourseManagement.createCompetenceCourseLoad}"/>
+			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['submit']}" action="#{CompetenceCourseManagement.createCompetenceCourseLoad}"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{CompetenceCourseManagement.action == 'edit'}">
 			<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['save']}" action="#{CompetenceCourseManagement.editCompetenceCourseLoad}"/>
