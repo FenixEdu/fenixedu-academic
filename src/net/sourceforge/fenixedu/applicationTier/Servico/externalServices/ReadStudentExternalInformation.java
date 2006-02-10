@@ -91,13 +91,7 @@ public class ReadStudentExternalInformation extends Service
 
 				for (StudentCurricularPlan plan : student.getStudentCurricularPlans())
 				{
-					System.out.println("ESTA APROVADO A "
-							+ course.getCode()
-							+ " em "
-							+ plan.getDegreeCurricularPlan().getName()
-							+ "?------->"
-							+ student.getActiveStudentCurricularPlan().isCurricularCourseApproved(course));
-					availableToEnroll &= !student.getActiveStudentCurricularPlan().isCurricularCourseApproved(course);
+					availableToEnroll &= plan.isCurricularCourseApproved(course);
 				}
 
 				availableToEnroll &= atLeastOnOpenScope;
