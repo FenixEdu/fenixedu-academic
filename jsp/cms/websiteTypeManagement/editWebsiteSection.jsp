@@ -23,8 +23,6 @@
     
         <logic:iterate id="parent" indexId="index" name="parents">
             »
-            <logic:greaterThan name="index" value="0">»</logic:greaterThan>
-            
             <bean:define id="parentId" name="parent" property="idInternal"/>
             <html:link page="<%= "/websiteTypeManagement.do?method=editChild&child=" + parentId + "&oid=" + websiteTypeId + "&path=" + pathParam %>">
                 <bean:write name="parent" property="name"/>
@@ -98,7 +96,7 @@
                     <fr:property name="order(edit)" value="0"/>
     
                     <fr:property name="link(delete)" value="/websiteTypeManagement.do?method=deleteChild"/>
-                    <fr:property name="param(delete)" value="<%= "idInternal/child,oid=" + websiteTypeId + ",parent=" + oid + ",path=" + path %>"/>
+                    <fr:property name="param(delete)" value="<%= "idInternal/target,oid=" + websiteTypeId + ",child=" + oid + ",path=" + path %>"/>
                     <fr:property name="key(delete)" value="cms.websiteTypeManagement.child.delete"/>
                     <fr:property name="bundle(delete)" value="CMS_RESOURCES"/>
                     <fr:property name="order(delete)" value="1"/>

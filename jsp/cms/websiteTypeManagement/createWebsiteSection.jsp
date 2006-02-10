@@ -11,7 +11,6 @@
 </html:link>
 
 <logic:present name="parents">
-»
     <%
         String pathParam = "";
     %>

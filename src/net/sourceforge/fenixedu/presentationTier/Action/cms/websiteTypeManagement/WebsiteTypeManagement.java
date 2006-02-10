@@ -132,8 +132,43 @@ public class WebsiteTypeManagement extends FenixDispatchAction {
     }
 
     public ActionForward deleteChild(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        addError(request, "cms.websiteTypeManagement.operation.notImplemented");
-        return edit(mapping, actionForm, request, response);
+        processPath(request);
+        
+        Content content = (Content) readObject(request, request.getParameter("target"), "cms.websiteTypeManagement.child.notFound", Content.class);
+        if (content == null) {
+            return start(mapping, actionForm, request, response);
+        }
+
+        Bin parent = (Bin) readObject(request, request.getParameter("child"), null, Bin.class);
+        if (parent != null) {
+            try {
+                IUserView userView = SessionUtils.getUserView(request);
+                ServiceUtils.executeService(userView, "RemoveBinChild", new Object[] { parent, content });
+            }
+            catch (DomainException e) {
+                addError(request, e.getKey());
+                return start(mapping, actionForm, request, response);
+            }
+            
+            return editChild(mapping, actionForm, request, response);
+        }
+        else {
+            WebsiteType websiteType = (WebsiteType) readObject(request, request.getParameter("oid"), "cms.websiteTypeManagement.websiteType.notFound", WebsiteType.class);
+            if (websiteType == null) {
+                return start(mapping, actionForm, request, response);
+            }
+            
+            try {
+                IUserView userView = SessionUtils.getUserView(request);
+                ServiceUtils.executeService(userView, "RemoveWebsiteTypeChild", new Object[] { websiteType, content });
+            }
+            catch (DomainException e) {
+                addError(request, e.getKey());
+                return start(mapping, actionForm, request, response);
+            }
+            
+            return edit(mapping, actionForm, request, response);
+        }
     }
     
     public ActionForward delete(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {

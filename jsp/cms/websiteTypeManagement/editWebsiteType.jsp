@@ -7,7 +7,7 @@
 <logic:present name="websiteType">
     <bean:write name="websiteType" property="name"/>
 
-    <h3><bean:message bundle="CMS_RESOURCES" key="cms.websiteTypeManagement.label" /></h3>
+    <h3><bean:message bundle="CMS_RESOURCES" key="cms.websiteTypeManagement.edit.label" /></h3>
 
     <bean:define id="oid" name="websiteType" property="idInternal"/>
 
@@ -37,7 +37,7 @@
                 <fr:property name="order(edit)" value="0"/>
     
                 <fr:property name="link(delete)" value="/websiteTypeManagement.do?method=deleteChild"/>
-                <fr:property name="param(delete)" value="<%= "idInternal/child,oid=" + oid %>"/>
+                <fr:property name="param(delete)" value="<%= "idInternal/target,oid=" + oid %>"/>
                 <fr:property name="key(delete)" value="cms.websiteTypeManagement.child.delete"/>
                 <fr:property name="bundle(delete)" value="CMS_RESOURCES"/>
                 <fr:property name="order(delete)" value="1"/>

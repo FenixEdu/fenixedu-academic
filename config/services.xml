@@ -9659,6 +9659,15 @@
         </filterChains>
     </service>
     <service>
+        <name>RemoveWebsiteTypeChild</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.website.RemoveWebsiteTypeChild</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+            <chain name="CmsManagerAuthorization"></chain>
+        </filterChains>
+    </service>
+    <service>
         <name>DeleteWebsiteType</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.cms.website.DeleteWebsiteType</implementationClass>
         <description></description>
