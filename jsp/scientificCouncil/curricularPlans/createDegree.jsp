@@ -18,7 +18,7 @@
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{scouncilBundle['degree.data']}:</h4><br/>" escape="false"/>
 
-		<h:outputText value="<br/><fieldset class='lfloat'>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 
 		<h:outputText value="<p><label><span class='required'>*</span> #{scouncilBundle['name']} (pt):</label>" escape="false"/>
 		<h:panelGroup>
@@ -64,15 +64,17 @@
 		</h:panelGroup>
 		<h:outputText value="</p>" escape="false"/>
 
-		<h:outputText value="<p><label class='lempty'>.</label>#{scouncilBundle['mandatory.fields']}" escape="false"/>
+		<h:outputText value="<p class='mtop2'><label class='lempty'>.</label><span class='smalltxt'>#{scouncilBundle['mandatory.fields']}</span>" escape="false"/>
 
 		<h:outputText value="</fieldset></div>" escape="false"/>
 
-		<br/><br/><hr/>
+
+		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['create']}"
 			action="#{ScientificCouncilDegreeManagement.createDegree}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 
 </ft:tilesView>

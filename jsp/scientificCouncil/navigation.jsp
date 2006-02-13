@@ -20,13 +20,13 @@
 		</li>
 		<li>
 			<html:link page="/competenceCourses/competenceCoursesManagement.faces">
-				<bean:message key="competenceCoursesManagement"/>
+				<bean:message key="navigation.competenceCoursesManagement"/>
 			</html:link>
 		</li>
 
 		<li>
 			<html:link page="/curricularPlans/curricularPlansManagement.faces">
-				<bean:message key="curricularPlansManagement"/>
+				<bean:message key="navigation.curricularPlansManagement"/>
 			</html:link>
 		</li>
 

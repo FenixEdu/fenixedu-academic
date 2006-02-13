@@ -32,7 +32,7 @@ background: url(../images/transitional/bullet07.gif) left no-repeat;
 
 .infoop2 { margin: 0.5em 0;}
 
-.first { margin: 0;}
+.first { margin-top: 0; margin-bottom: 1em;}
 .simpleblock1, .simpleblock2, .simpleblock3, .simpleblock4 { margin: 1.5em 0em; padding: 0.5em 1em;}
 
 .simpleblock1  {
@@ -127,7 +127,6 @@ background-color: #ffb;
  ---- Show Info --------
 ----------------------- */
 
-.bgcolor1 { background-color: #fbfbf2; }
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }
 
@@ -269,7 +268,7 @@ color: #d55;
 
 .lfloat label { float: left; text-align: right; width: 10em; }
 .lfloat2 label { float: left; text-align: right; width: 12em; }
-
+.lfloat3 label { float: left; text-align: right; width: 15em; }
 
 .lempty {
 color: #fff;

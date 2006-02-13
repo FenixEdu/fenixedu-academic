@@ -16,20 +16,21 @@
 
 		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 		
-		<h:outputText value="<br/><b>#{scouncilBundle['curricularPlan.data']}:</b><br/><br/>" escape="false"/>
-		<h:panelGrid styleClass="infoselected" columns="2" border="0">
- 			<h:outputText value="<b>#{scouncilBundle['curricularStage']}:</b> " escape="false"/>
-			<h:outputText value="#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]}"/>
+		<h:outputText value="<div class='simpleblock1'/>" escape="false"/>
+ 			<h:outputText value="<p><b>#{scouncilBundle['curricularStage']}:</b> " escape="false"/>
+			<h:outputText value="#{enumerationBundle[ScientificCouncilCurricularPlanManagement.dcp.curricularStage.name]}</p>" escape="false"/>
 
-			<h:outputText value="<b>#{scouncilBundle['name']}</b> " escape="false"/>
-			<h:outputText value="#{ScientificCouncilCurricularPlanManagement.name}"/>
-
-		</h:panelGrid>
-		<br/><br/><hr/>
+			<h:outputText value="<p><b>#{scouncilBundle['name']}:</b>" escape="false"/>
+			<h:outputText value="#{ScientificCouncilCurricularPlanManagement.name}</p>" escape="false"/>
+		<h:outputText value="</div>" escape="false"/>
+		
+		
+		<h:outputText value="<br/><p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
 			action="#{ScientificCouncilCurricularPlanManagement.deleteCurricularPlan}" onclick="return confirm('#{scouncilBundle['confirm.delete.curricularPlan']}')"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
 			action="curricularPlansManagement"/>
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 
 </ft:tilesView>

@@ -63,7 +63,7 @@ padding-right: 10px;
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['url']}:</label>" escape="false"/>
 			<h:inputText id="url" size="50" maxlength="100" value="#{CompetenceCourseManagement.url}"/>			
-			<h:outputText value=" <span class='small'>(#{bolonhaBundle['optional']})</span></p>" escape="false"/>
+			<h:outputText value=" <span>(#{bolonhaBundle['optional']})</span></p>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['type']}:</label>" escape="false"/>	
 			<h:selectOneMenu value="#{CompetenceCourseManagement.type}">
