@@ -2787,8 +2787,8 @@ class net.sourceforge.fenixedu.domain.research.Researcher extends net.sourceforg
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer keyProjectTitle;
 	Integer keyProjectAbstract;
-	YearMonthDay startDate;
-	YearMonthDay endDate;
+	Partial startDate;
+	Partial endDate;
 	ProjectType projectType;
 }
 

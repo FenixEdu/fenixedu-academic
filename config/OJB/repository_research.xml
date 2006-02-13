@@ -60,14 +60,14 @@
 		name="startDate"
 		column="START_DATE"
 		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonth2SqlStringFieldConversion"
 	/>
 	
 	<field-descriptor
 		name="endDate"
 		column="END_DATE"
 		jdbc-type="VARCHAR"
-		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonthDay2SqlStringFieldConversion"
+		conversion="net.sourceforge.fenixedu.persistenceTier.Conversores.JavaYearMonth2SqlStringFieldConversion"
 	/>
 	
 	<field-descriptor
