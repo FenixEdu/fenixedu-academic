@@ -19,15 +19,14 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
 public class Person extends Person_Base {
 
-
     static {
         Role.PersonRole.addListener(new PersonRoleListener());
     }
-
 
     /***************************************************************************
      * BUSINESS SERVICES *
@@ -487,8 +486,8 @@ public class Person extends Person_Base {
     }
 
     public void indicatePrivledges(final List<Role> roles) {
-    	getPersonRoles().retainAll(roles);
-    	getPersonRoles().addAll(roles);
+        getPersonRoles().retainAll(roles);
+        getPersonRoles().addAll(roles);
     }
 
     public List<PersonFunction> getActiveFunctions() {
@@ -568,9 +567,9 @@ public class Person extends Person_Base {
                 getPersonalPhoto().delete();
             }
             // JCACHOPO: Can this for loop be replaced with the clear below?
-            //             for (Role role : getPersonRoles()) {
-            //                 PersonRole.forceRemove(this, role);
-            //             }
+            // for (Role role : getPersonRoles()) {
+            // PersonRole.forceRemove(this, role);
+            // }
             getPersonRoles().clear();
 
             getManageableDepartmentCredits().clear();
@@ -654,42 +653,49 @@ public class Person extends Person_Base {
         return true;
     }
 
+    public static Person readPersonByUsername(final String username) throws ExcepcaoPersistencia {
+        for (final Person person : RootDomainObject.instance.getPersons()) {
+            if (person.getUsername().equalsIgnoreCase(username)) {
+                return person;
+            }
+        }
+        return null;
+    }
 
-    private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role,Person> {
+    private static class PersonRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
         /**
-         * This method is called transparently to the programmer when he adds a role
-         * a person. This method's responsabilities are: to verify if the person
-         * allready has the role being added; to verify if the person meets the
-         * prerequisites to add this new role; to update the username; to actually
-         * add the role.
+         * This method is called transparently to the programmer when he adds a
+         * role a person. This method's responsabilities are: to verify if the
+         * person allready has the role being added; to verify if the person
+         * meets the prerequisites to add this new role; to update the username;
+         * to actually add the role.
          */
         @Override
         public void beforeAdd(Role role, Person person) {
             // verify if the person already has the role being inserted
             if (!person.hasRole(role.getRoleType())) {
-                
-                // verify role dependencies and throw a DomainException in case they
+
+                // verify role dependencies and throw a DomainException in case
+                // they
                 // aren't met.
                 if (!verifiesDependencies(person, role)) {
                     throw new DomainException("error.person.addingInvalidRole", role.getRoleType()
-                                              .toString());
+                            .toString());
                 }
             }
         }
-
 
         @Override
         public void afterAdd(Role role, Person person) {
             person.updateUsername();
             person.updateIstUsername();
         }
-        
 
         /**
-         * This method is called transparently to the programmer when he removes a
-         * role from a person This method's responsabilities are: to actually remove
-         * the role; to remove all dependencies existant from the recently removed
-         * role; to update the username.
+         * This method is called transparently to the programmer when he removes
+         * a role from a person This method's responsabilities are: to actually
+         * remove the role; to remove all dependencies existant from the
+         * recently removed role; to update the username.
          * 
          */
         @Override
@@ -702,14 +708,13 @@ public class Person extends Person_Base {
             }
         }
 
-    
         @Override
         public void afterRemove(Role removedRole, Person person) {
             // Update person's username according to the removal of the role
             person.updateUsername();
             person.updateIstUsername();
         }
-        
+
         private static Boolean verifiesDependencies(Person person, Role role) {
             switch (role.getRoleType()) {
             case COORDINATOR:
@@ -733,7 +738,7 @@ public class Person extends Person_Base {
                 return person.hasRole(RoleType.PERSON);
             }
         }
-        
+
         private static void removeDependencies(Person person, Role removedRole) {
             switch (removedRole.getRoleType()) {
             case PERSON:
@@ -748,14 +753,14 @@ public class Person extends Person_Base {
                 removeRoleIfPresent(person, RoleType.WEBSITE_MANAGER);
                 removeRoleIfPresent(person, RoleType.FIRST_TIME_STUDENT);
                 break;
-                
+
             case TEACHER:
                 removeRoleIfPresent(person, RoleType.COORDINATOR);
                 removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
                 removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
-                //removeRoleIfPresent(person, RoleType.EMPLOYEE);
+                // removeRoleIfPresent(person, RoleType.EMPLOYEE);
                 break;
-                
+
             case EMPLOYEE:
                 removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE);
                 removeRoleIfPresent(person, RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER);
@@ -766,13 +771,13 @@ public class Person extends Person_Base {
                 removeRoleIfPresent(person, RoleType.CREDITS_MANAGER);
                 removeRoleIfPresent(person, RoleType.DEPARTMENT_MEMBER);
                 break;
-                
+
             case STUDENT:
                 removeRoleIfPresent(person, RoleType.DELEGATE);
                 break;
             }
         }
-        
+
         private static void removeRoleIfPresent(Person person, RoleType roleType) {
             Role tmpRole = null;
             tmpRole = person.getPersonRole(roleType);
