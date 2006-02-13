@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCou
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.InfoShiftEnrollment;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
@@ -263,48 +264,24 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
     /**
      * @param infoExecutionDegreeList
      * @return
+     * @throws FenixServiceException 
      */
     private InfoExecutionDegree selectExecutionDegree(ISuportePersistente persistentSupport,
             List infoExecutionDegreeList, Integer executionDegreeIdChosen, Student student)
-            throws ExcepcaoPersistencia {
-        ExecutionDegree executionDegree = null;
+            throws ExcepcaoPersistencia, FenixServiceException {
 
-        // read the execution degree chosen
-        if (executionDegreeIdChosen != null) {
-            executionDegree = (ExecutionDegree) persistentObject.readByOID(
-                    ExecutionDegree.class, executionDegreeIdChosen);
-            if (executionDegree != null) {
+        final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
+        if (studentCurricularPlan == null) {
+            throw new FenixServiceException("errors.impossible.operation");
+        }
+        final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
+        for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegrees()) {
+            final ExecutionYear executionYear = executionDegree.getExecutionYear();
+            if (executionYear.getState().equals(PeriodState.CURRENT)) {
                 return InfoExecutionDegree.newInfoFromDomain(executionDegree);
             }
         }
-
-        IPersistentStudentCurricularPlan persistentCurricularPlan = persistentSupport
-                .getIStudentCurricularPlanPersistente();
-        StudentCurricularPlan studentCurricularPlan = persistentCurricularPlan
-                .readActiveByStudentNumberAndDegreeType(student.getNumber(), DegreeType.DEGREE);
-        if (studentCurricularPlan == null || studentCurricularPlan.getDegreeCurricularPlan() == null
-                || studentCurricularPlan.getDegreeCurricularPlan().getDegree() == null
-                || studentCurricularPlan.getDegreeCurricularPlan().getDegree().getNome() == null) {
-
-            return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
-        }
-
-        final Integer degreeCode = studentCurricularPlan.getDegreeCurricularPlan().getDegree()
-                .getIdInternal();
-        List infoExecutionDegreeListWithDegreeCode = (List) CollectionUtils.select(
-                infoExecutionDegreeList, new Predicate() {
-
-                    public boolean evaluate(Object input) {
-                        InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) input;
-                        return infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
-                                .getIdInternal().equals(degreeCode);
-                    }
-                });
-        if (!infoExecutionDegreeListWithDegreeCode.isEmpty()) {
-            return (InfoExecutionDegree) infoExecutionDegreeListWithDegreeCode.get(0);
-        }
-        return (InfoExecutionDegree) infoExecutionDegreeList.get(0);
-
+        throw new FenixServiceException("errors.impossible.operation");
     }
 
     /**
