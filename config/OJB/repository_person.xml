@@ -11,7 +11,12 @@
         primarykey="true"
         autoincrement="true"
     />
-      <field-descriptor
+    <field-descriptor
+        name="keyRootDomainObject"
+        column="KEY_ROOT_DOMAIN_OBJECT"
+        jdbc-type="INTEGER"
+    />    
+    <field-descriptor
       	name="ackOptLock"
       	column="ACK_OPT_LOCK"
       	jdbc-type="INTEGER"
@@ -240,6 +245,12 @@
         column="KEY_RESEARCHER"
         jdbc-type="INTEGER"
     />     
+
+    <reference-descriptor auto-retrieve="false"
+         	name="rootDomainObject" class-ref="net.sourceforge.fenixedu.domain.RootDomainObject"
+			>
+		<foreignkey field-ref="keyRootDomainObject"/>
+	</reference-descriptor>    
     <reference-descriptor auto-retrieve="false"
     	name="researcher"
         class-ref="net.sourceforge.fenixedu.domain.research.Researcher">

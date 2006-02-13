@@ -1,0 +1,1 @@
+alter table PERSON add column KEY_ROOT_DOMAIN_OBJECT int(11) not null default 1;
