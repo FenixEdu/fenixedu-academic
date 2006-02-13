@@ -99,35 +99,4 @@ public abstract class Transaction extends jvstm.Transaction {
 	return cache;
     }
 
-
-    // This is just for debug... It should be removed later
-    static {
-	Thread monitorThread = new Thread() {
-		int previousSize = 0;
-
-		public void run() {
-		    while (true) {
-			synchronized (ACTIVE_TXS) {
-			    while (ACTIVE_TXS.getQueueSize() == previousSize) {
-				try {
-				    ACTIVE_TXS.wait();
-				} catch (InterruptedException ie) {
-				    return;
-				}
-			    }
-
-			    previousSize = ACTIVE_TXS.getQueueSize();
-			    //System.out.println("Monitoring queue.  Size = " + previousSize);
-			    if (previousSize > 30) {
-				TopLevelTransaction oldestTx = (TopLevelTransaction)ACTIVE_TXS.getOldestTx();
-				System.out.println("WARNING: more than " + previousSize + " Txs in queue to be finished... : " + oldestTx.getNumber());
-				oldestTx.logServiceInfo();
-			    }
-			}
-		    }
-		}
-	    };
-	monitorThread.setDaemon(true);
-	monitorThread.start();
-    }
 }
