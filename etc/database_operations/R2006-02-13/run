@@ -20,3 +20,4 @@ function execute() {
 }
 
 execute "Updating CurricularCourseType for new curricular courses" updateCurricularCourseType.sql
+execute "Adding RootDomainObject to Person Relation" createRootDomainObjectToPersonRelation.sql
