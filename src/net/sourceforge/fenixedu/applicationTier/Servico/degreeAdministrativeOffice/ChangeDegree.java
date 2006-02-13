@@ -30,7 +30,7 @@ public class ChangeDegree extends Service {
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
         final IPersistentStudentCurricularPlan persistentStudentCurricularPlan = persistentSupport.getIStudentCurricularPlanPersistente();
 
-        final Person personEmployee = persistentPerson.lerPessoaPorUsername(employeeUsername);
+        final Person personEmployee = Person.readPersonByUsername(employeeUsername);
         final Employee employee = personEmployee.getEmployee();
 
         final StudentCurricularPlan currentActiveStudentCurricularPlan = persistentStudentCurricularPlan

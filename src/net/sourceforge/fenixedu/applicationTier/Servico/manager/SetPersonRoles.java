@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class SetPersonRoles extends Service {
 
     public Boolean run(final String username, final List<Integer> roleOIDs) throws ExcepcaoPersistencia {
-        final Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+        final Person person = Person.readPersonByUsername(username);
 
         final List<Role> roles = new ArrayList<Role>();
         for (final Integer roleId : roleOIDs) {

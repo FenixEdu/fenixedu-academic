@@ -36,7 +36,7 @@ public class UpdateAllMoneyCostCenterByYear extends Service {
             Employee employeeWho = null;
 
             IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-            Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
+            Person personWho = Person.readPersonByUsername(usernameWho);
             if (personWho != null) {
                 IPersistentEmployee employeeDAO = persistentSupport.getIPersistentEmployee();
                 employeeWho = employeeDAO.readByPerson(personWho

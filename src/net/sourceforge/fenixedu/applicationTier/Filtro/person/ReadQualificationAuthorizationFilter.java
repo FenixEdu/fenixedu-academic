@@ -119,7 +119,7 @@ public class ReadQualificationAuthorizationFilter extends Filtro {
     private boolean isOwnQualification(String username, Integer objectId) {
         try {
             IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-            Person person = persistentPerson.lerPessoaPorUsername(username);
+            Person person = Person.readPersonByUsername(username);
 
             Qualification qualification = (Qualification) persistentObject.readByOID(
                     Qualification.class, objectId);

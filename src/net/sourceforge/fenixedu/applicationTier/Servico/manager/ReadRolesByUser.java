@@ -25,7 +25,7 @@ public class ReadRolesByUser extends Service {
 	public List run(String username) throws FenixServiceException, ExcepcaoPersistencia {
 		List result = null;
 
-		Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+		Person person = Person.readPersonByUsername(username);
 		if (person == null) {
 			throw new FenixServiceException("error.noUsername");
 		}

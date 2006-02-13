@@ -38,7 +38,7 @@ public class ImprovmentEnrollService extends Service {
         }
 
         IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
-        Person pessoa = pessoaPersistente.lerPessoaPorUsername(employeeUserName);
+        Person pessoa = Person.readPersonByUsername(employeeUserName);
 
         IPersistentExecutionPeriod persistentExecutionPeriod = persistentSupport.getIPersistentExecutionPeriod();
         final ExecutionPeriod currentExecutionPeriod = persistentExecutionPeriod

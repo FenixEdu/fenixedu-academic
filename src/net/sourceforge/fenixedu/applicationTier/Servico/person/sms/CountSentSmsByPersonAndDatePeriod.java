@@ -30,7 +30,7 @@ public class CountSentSmsByPersonAndDatePeriod extends Service {
 			ExcepcaoPersistencia {
 		IPersistentSentSms persistentSentSms = persistentSupport.getIPersistentSentSms();
 
-		Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+		Person person = Person.readPersonByUsername(userView.getUtilizador());
 
 		Integer numberOfSms = persistentSentSms.countByPersonAndDatePeriod(person.getIdInternal(),
 				startDate, endDate);

@@ -24,7 +24,7 @@ public class ReviewProjectAccess extends Service {
 
     public void run(String username, String costCenter, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
         IPersistentProjectAccess persistentProjectAccess = persistentSupport.getIPersistentProjectAccess();
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         Role role = Role.getRoleByRoleType(RoleType.PROJECTS_MANAGER);
         if (persistentProjectAccess.countByPersonAndCC(person, false) == 0) {
             Teacher teacher = persistentSupport.getIPersistentTeacher().readTeacherByUsername(person.getUsername());

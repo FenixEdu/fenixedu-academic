@@ -24,7 +24,7 @@ public class ReadSeniorInfoByUsername extends Service {
 
 	public InfoSenior run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Person person = Person.readPersonByUsername(userView.getUtilizador());
 
 		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 		Student student = persistentStudent.readByUsername(userView.getUtilizador());

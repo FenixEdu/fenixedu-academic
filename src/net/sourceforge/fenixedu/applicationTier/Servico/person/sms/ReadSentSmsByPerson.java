@@ -27,7 +27,7 @@ public class ReadSentSmsByPerson extends Service {
 	public List run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		IPersistentSentSms persistentSentSms = persistentSupport.getIPersistentSentSms();
 
-		Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+		Person person = Person.readPersonByUsername(userView.getUtilizador());
 
 		List infoSentSmsList = new ArrayList();
 

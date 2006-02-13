@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ChangePersonalContactInformation extends Service {
 
     public IUserView run(IUserView userView, InfoPerson newInfoPerson) throws ExcepcaoPersistencia {
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
 
         person.editPersonalContactInformation(newInfoPerson);
         

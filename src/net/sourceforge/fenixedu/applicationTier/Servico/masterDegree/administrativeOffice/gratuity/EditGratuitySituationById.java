@@ -32,7 +32,7 @@ public class EditGratuitySituationById extends Service {
         }
 
         // set employee who made register
-        final Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
+        final Person person = Person.readPersonByUsername(
                 infoGratuitySituation.getInfoEmployee().getPerson().getUsername());
         if (person != null) {
             gratuitySituation.setEmployee(person.getEmployee());

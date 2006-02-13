@@ -118,7 +118,7 @@ public class QualificationManagerAuthorizationFilter extends Filtro {
     private boolean isOwnQualification(String username, InfoQualification infoQualification) {
         try {
             IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-            Person person = persistentPerson.lerPessoaPorUsername(username);
+            Person person = Person.readPersonByUsername(username);
 
             boolean isNew = (infoQualification.getIdInternal() == null)
                     || (infoQualification.getIdInternal().equals(new Integer(0)));

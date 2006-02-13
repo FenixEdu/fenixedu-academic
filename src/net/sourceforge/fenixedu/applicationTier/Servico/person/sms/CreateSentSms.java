@@ -27,7 +27,7 @@ public class CreateSentSms extends Service {
         //            IPersistentSentSms persistentSentSms = persistentSupport.getIPersistentSentSms();
         //
         //            Person person =
-        // persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        // Person.readPersonByUsername(userView.getUtilizador());
         //
         //            //count number of sent SMS's by this person
         //            Integer numberOfSms =

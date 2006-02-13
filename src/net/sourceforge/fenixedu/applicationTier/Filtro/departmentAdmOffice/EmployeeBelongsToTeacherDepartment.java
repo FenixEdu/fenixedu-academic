@@ -87,7 +87,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      */
     protected Person getPessoa(IPessoaPersistente pessoaPersistente, IUserView userView) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
         String utilizador = userView.getUtilizador();        
-        Person pessoa = pessoaPersistente.lerPessoaPorUsername(utilizador); 
+        Person pessoa = Person.readPersonByUsername(utilizador); 
         if(pessoa == null)
             throw new NotAuthorizedFilterException("error.noPerson");
         return pessoa;

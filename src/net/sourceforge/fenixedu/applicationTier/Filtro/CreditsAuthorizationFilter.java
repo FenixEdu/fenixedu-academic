@@ -47,7 +47,7 @@ public class CreditsAuthorizationFilter extends Filtro {
             Teacher teacherToEdit = readTeacher(arguments[0]);
 
             IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-            Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
 
             List departmentsWithAccessGranted = requesterPerson.getManageableDepartmentCredits();            
             Department department = teacherToEdit.getCurrentWorkingDepartment();

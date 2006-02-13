@@ -28,7 +28,7 @@ public class EditObjectives extends Service {
         IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
         // Person who change all information        
-        Person person = persistentPerson.lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         if (person == null) {
             throw new NonExistingServiceException("noPerson");
         }

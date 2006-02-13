@@ -21,7 +21,7 @@ public class ReadDomainPersonByUsername extends Service
 
 	public Person run(String username) throws ExcepcaoInexistente, ExcepcaoPersistencia
 	{
-		Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+		Person person = Person.readPersonByUsername(username);
 
 		if (person == null) throw new ExcepcaoInexistente("Unknown Person !!");
 

@@ -40,7 +40,7 @@ public class FinalDegreeWorkOrientatorForCandidacy extends AccessControlFilter {
 
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 
-        final Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        final Person person = Person.readPersonByUsername(userView.getUtilizador());
         final Teacher teacher = person.getTeacher();
         if(teacher != null) {
 	        final List<Proposal> orientatingProposals = teacher.getAssociatedProposalsByOrientator();

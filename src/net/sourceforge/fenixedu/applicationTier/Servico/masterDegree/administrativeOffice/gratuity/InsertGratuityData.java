@@ -184,7 +184,7 @@ public class InsertGratuityData extends Service {
             throws ExcepcaoPersistencia {
 		// employee who made register
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		Person person = persistentPerson.lerPessoaPorUsername(infoGratuityValues.getInfoEmployee()
+		Person person = Person.readPersonByUsername(infoGratuityValues.getInfoEmployee()
 				.getPerson().getUsername());
 		if (person != null) {
 			IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();

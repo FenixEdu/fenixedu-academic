@@ -89,7 +89,7 @@ public class CreateGuideFromTransactions extends Service {
 
         Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(
                 infoGuide.getInfoContributor().getContributorNumber());
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
+        Person person = Person.readPersonByUsername(
                 infoGuide.getInfoPerson().getUsername());
 
         guide.setExecutionDegree(executionDegree);

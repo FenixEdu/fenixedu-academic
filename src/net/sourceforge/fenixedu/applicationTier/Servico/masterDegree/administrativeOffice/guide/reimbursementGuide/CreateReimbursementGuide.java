@@ -102,7 +102,7 @@ public class CreateReimbursementGuide extends Service {
         reimbursementGuide.setGuide(guide);
 
         // read employee
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
         Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person);
 
         // reimbursement Guide Situation

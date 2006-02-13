@@ -27,7 +27,7 @@ public class readGaugingTestsResults extends Service {
 	public InfoGaugingTestResult run(IUserView userView) throws FenixServiceException, ExcepcaoPersistencia {
 		IPersistentGaugingTestResult persistentGaugingTestResult = persistentSupport.getIPersistentGaugingTestResult();
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Person person = Person.readPersonByUsername(userView.getUtilizador());
 
 		IPersistentStudent persistentStudent = persistentSupport.getIPersistentStudent();
 

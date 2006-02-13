@@ -51,7 +51,7 @@ public class ReadStudentExternalInformation extends Service
 	public Collection run(String username) throws ExcepcaoPersistencia, FenixServiceException
 	{
 		Collection result = new ArrayList();
-		Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+		Person person = Person.readPersonByUsername(username);
 		Collection students = person.getStudents();
 		for (Iterator iter = students.iterator(); iter.hasNext();)
 		{

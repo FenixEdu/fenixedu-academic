@@ -36,7 +36,7 @@ public class PublicationAuthorAuthorizationFilter extends DomainObjectAuthorizat
 
             Publication publication = (Publication) persistentObject.readByOID(Publication.class, objectId);
             
-            Person possibleAuthor = persistentPerson.lerPessoaPorUsername(id.getUtilizador());
+            Person possibleAuthor = Person.readPersonByUsername(id.getUtilizador());
 
             //check if the teacher is any of the owners of the publication
             List<Authorship> authorships = new ArrayList(publication.getPublicationAuthorships());

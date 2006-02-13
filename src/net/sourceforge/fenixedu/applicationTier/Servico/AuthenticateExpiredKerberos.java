@@ -14,7 +14,7 @@ public class AuthenticateExpiredKerberos extends Authenticate {
 	
     public IUserView run(final String username, final String password, final String newPassword, final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
     	IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente();
-    	final Person person = pessoaPersistente.lerPessoaPorUsername(username);
+    	final Person person = Person.readPersonByUsername(username);
     	
         if (person == null) {
             throw new ExcepcaoAutenticacao("bad.authentication");

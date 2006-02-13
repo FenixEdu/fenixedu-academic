@@ -114,7 +114,7 @@ public class ProcessSibsPaymentFile extends Service {
                 continue;
             }
 
-            Person responsiblePerson = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
+            Person responsiblePerson = Person.readPersonByUsername(
                     userView.getUtilizador());
 
             PersonAccount personAccount = persistentSupport.getIPersistentPersonAccount().readByPerson(

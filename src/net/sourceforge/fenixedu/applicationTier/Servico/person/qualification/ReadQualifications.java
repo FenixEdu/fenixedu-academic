@@ -22,7 +22,7 @@ public class ReadQualifications extends Service {
 
     public InfoSiteQualifications run(String user) throws ExcepcaoPersistencia {
         final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-        final Person person = persistentPerson.lerPessoaPorUsername(user);
+        final Person person = Person.readPersonByUsername(user);
 
         List<Qualification> qualifications = person.getAssociatedQualifications();
 

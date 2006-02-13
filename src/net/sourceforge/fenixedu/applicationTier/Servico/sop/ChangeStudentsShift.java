@@ -48,7 +48,7 @@ public class ChangeStudentsShift extends Service {
         }
 
             
-        Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
         sendMail.run(emptyList, emptyList, toMails, person.getNome(), person.getEmail(), 
                 "Alteração de turnos",
                 "Devido a alterações nos horários, a sua reserva no turno "

@@ -26,7 +26,7 @@ public class RemoveProjectAccess extends Service {
 
     public void run(String username, String costCenter, String personUsername, Integer projectCode, String userNumber) throws ExcepcaoPersistencia {
         IPersistentProjectAccess persistentProjectAccess = persistentSupport.getIPersistentProjectAccess();
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
+        Person person = Person.readPersonByUsername(personUsername);
 
         RoleType roleType = RoleType.PROJECTS_MANAGER;
         Boolean isCostCenter = false;

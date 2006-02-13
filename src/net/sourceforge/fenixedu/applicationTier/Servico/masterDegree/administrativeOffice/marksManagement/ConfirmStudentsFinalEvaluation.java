@@ -31,7 +31,7 @@ public class ConfirmStudentsFinalEvaluation extends Service {
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 
-		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Person person = Person.readPersonByUsername(userView.getUtilizador());
 		Employee employee = persistentEmployee.readByPerson(person.getIdInternal().intValue());
 
 		CurricularCourse curricularCourse = (CurricularCourse) persistentObject.readByOID(

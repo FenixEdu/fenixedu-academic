@@ -68,7 +68,7 @@ abstract public class ManageWebSiteItem extends Service {
 	protected void fillWebSiteItemForDB(InfoWebSiteItem infoWebSiteItem, String user,
 			IPessoaPersistente persistentPerson, IPersistentWebSiteSection persistentWebSiteSection,
 			WebSiteSection webSiteSection, WebSiteItem webSiteItem) throws FenixServiceException, ExcepcaoPersistencia {
-		Person person = persistentPerson.lerPessoaPorUsername(user);
+		Person person = Person.readPersonByUsername(user);
 		webSiteItem.setEditor(person);
 
 		// treat author of item

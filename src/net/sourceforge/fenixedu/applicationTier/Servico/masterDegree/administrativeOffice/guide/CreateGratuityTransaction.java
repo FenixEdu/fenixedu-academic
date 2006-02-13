@@ -42,7 +42,7 @@ public class CreateGratuityTransaction extends Service {
             personAccount = DomainFactory.makePersonAccount(guide.getPerson());
         }
         
-        Person responsible = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person responsible = Person.readPersonByUsername(userView.getUtilizador());
 
         Double value = new Double(guideEntry.getPrice().doubleValue()
                 * guideEntry.getQuantity().intValue());

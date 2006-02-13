@@ -17,7 +17,7 @@ public class StorePersonalPhoto extends Service {
 
     public void run(byte[] contents, ContentType contentType, String personUsername)
             throws ExcepcaoPersistencia, ExcepcaoInexistente {
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(personUsername);
+        Person person = Person.readPersonByUsername(personUsername);
 
         if (person == null) {
             throw new ExcepcaoInexistente("Unknown Person !!");

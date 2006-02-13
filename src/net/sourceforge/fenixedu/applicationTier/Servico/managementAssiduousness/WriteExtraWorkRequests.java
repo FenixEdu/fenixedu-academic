@@ -24,7 +24,7 @@ public class WriteExtraWorkRequests extends Service {
             String costCenterCode, String costCenterMoneyCode) throws Exception {
 
         final IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-        final Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
+        final Person personWho = Person.readPersonByUsername(usernameWho);
 
         // Read employee logged
         Employee employeeWho = null;

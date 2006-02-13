@@ -40,7 +40,7 @@ public class CreateInsuranceTransaction extends Service {
 
         Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(guide.getPerson().getIdInternal(),
                 DegreeType.MASTER_DEGREE);
-        Person responsible = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person responsible = Person.readPersonByUsername(userView.getUtilizador());
 
         List insuranceTransactionList = insuranceTransactionDAO
                 .readAllNonReimbursedByExecutionYearAndStudent(guide.getExecutionDegree()

@@ -101,7 +101,7 @@ public class EnrolmentImprovmentAuthorization extends AuthorizationByManyRolesFi
         
         if(user != null) {
             IPessoaPersistente pessoaPersistente = persistentSupport.getIPessoaPersistente(); 
-            Person pessoa = pessoaPersistente.lerPessoaPorUsername(user);
+            Person pessoa = Person.readPersonByUsername(user);
             if(pessoa != null) {
                 IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
                 Employee employee = persistentEmployee.readByPerson(pessoa);

@@ -83,7 +83,7 @@ public class EditReimbursementGuide extends Service {
 
 		IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Person person = Person.readPersonByUsername(userView.getUtilizador());
 		Employee employee = persistentEmployee.readByPerson(person);
 
 		newActiveSituation.setEmployee(employee);

@@ -26,7 +26,7 @@ public class InsertNewProjectAccess extends Service {
 
     public void run(String userView, String costCenter, String username, GregorianCalendar beginDate, GregorianCalendar endDate, String userNumber)
             throws ExcepcaoPersistencia {
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         persistentSupport.getIPersistentProjectAccess().deleteByPersonAndDate(person);
@@ -60,7 +60,7 @@ public class InsertNewProjectAccess extends Service {
 
     public void run(String userView, String costCenter, String username, String[] projectCodes, GregorianCalendar beginDate,
             GregorianCalendar endDate, String userNumber) throws ExcepcaoPersistencia {
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         if (person == null)
             throw new IllegalArgumentException();
         persistentSupport.getIPersistentProjectAccess().deleteByPersonAndDate(person);

@@ -51,7 +51,7 @@ public class EditPosGradStudentCurricularPlanStateAndCredits extends Service {
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		IPersistentEnrollment persistentEnrolment = persistentSupport.getIPersistentEnrolment();
 
-		Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+		Person person = Person.readPersonByUsername(userView.getUtilizador());
 		if (person == null) {
 			throw new InvalidArgumentsServiceException();
 		}

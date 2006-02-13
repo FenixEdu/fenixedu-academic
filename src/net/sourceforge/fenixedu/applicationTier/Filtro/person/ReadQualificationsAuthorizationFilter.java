@@ -84,7 +84,7 @@ public class ReadQualificationsAuthorizationFilter extends Filtro {
             IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
             IPersistentGrantOwner persistentGrantOwner = persistentSupport.getIPersistentGrantOwner();
 
-            Person person = persistentPerson.lerPessoaPorUsername(user);
+            Person person = Person.readPersonByUsername(user);
             //Try to read the grant owner from de database
             GrantOwner grantOwner = persistentGrantOwner.readGrantOwnerByPerson(person.getIdInternal());
 

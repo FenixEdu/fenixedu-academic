@@ -40,7 +40,7 @@ public abstract class AbstractTeacherDepartmentAuthorization extends Filtro {
         if (teacherId != null) {
 
             IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-            Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
 
             Teacher teacher = (Teacher) persistentObject.readByOID(Teacher.class, teacherId);
 

@@ -63,7 +63,7 @@ public class CreateMasterDegreeThesis extends Service {
                     "error.exception.masterDegree.dissertationTitleAlreadyChosen");
         }
 
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
         Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
         StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class,
                         studentCurricularPlanID);

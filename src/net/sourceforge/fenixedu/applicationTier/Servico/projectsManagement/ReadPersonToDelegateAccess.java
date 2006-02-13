@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadPersonToDelegateAccess extends Service {
 
     public InfoPerson run(String userView, String costCenter, String username, String userNumber) throws FenixServiceException, ExcepcaoPersistencia {
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         if (person == null) {
             throw new ExcepcaoInexistente();
         } else if (!isTeacherOrEmployee(person)) {

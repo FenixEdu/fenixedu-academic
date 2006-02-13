@@ -39,7 +39,7 @@ public class EditCurriculum extends Service {
             throw new NonExistingServiceException();
         }
 
-        Person person = persistentPerson.lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         if (person == null) {
             throw new NonExistingServiceException();
         }

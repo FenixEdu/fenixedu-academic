@@ -61,7 +61,7 @@ public class ChangeMasterDegreeProof extends Service {
             storedMasterDegreeProofVersion.setCurrentState(new State(State.INACTIVE));
         }
 
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
         Employee employee = persistentSupport.getIPersistentEmployee().readByPerson(person.getIdInternal().intValue());
 
         List<Teacher> teacherJuries = (List<Teacher>) persistentSupport.getIPersistentTeacher().readByNumbers(

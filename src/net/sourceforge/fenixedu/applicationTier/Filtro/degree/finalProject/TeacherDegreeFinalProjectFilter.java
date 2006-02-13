@@ -53,7 +53,7 @@ public class TeacherDegreeFinalProjectFilter extends AuthorizationByRoleFilter {
             }
 
             IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-            Person requesterPerson = personDAO.lerPessoaPorUsername(requester.getUtilizador());
+            Person requesterPerson = Person.readPersonByUsername(requester.getUtilizador());
             if (requesterPerson == null) {
                 throw new NotAuthorizedException("No person with that userView");
             }

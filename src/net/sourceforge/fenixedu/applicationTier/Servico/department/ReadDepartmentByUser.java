@@ -23,7 +23,7 @@ public class ReadDepartmentByUser extends Service {
         InfoDepartment infoDepartment = null;
 
         IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-        Person person = personDAO.lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         List departmentList = person.getManageableDepartmentCredits();
         if (departmentList != null && !departmentList.isEmpty()) {
             infoDepartment = InfoDepartment.newInfoFromDomain((Department) departmentList.get(0));

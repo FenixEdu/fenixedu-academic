@@ -62,7 +62,7 @@ public class ReadStudentCurricularPlansByPersonAndCriteria extends Service {
         }
 
         if (curricularPlanID.isAll() || curricularPlanID.isNewest()) {
-            Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+            Person person = Person.readPersonByUsername(username);
             List students = person.getStudents();
             List studentCPsTemp = null;
 

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 public class ChangePassword extends Service {
 
     public void run(IUserView userView, String oldPassword, String newPassword) throws Exception{
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
+        Person person = Person.readPersonByUsername(
                 userView.getUtilizador());
         try {
         	person.changePassword(oldPassword, newPassword);

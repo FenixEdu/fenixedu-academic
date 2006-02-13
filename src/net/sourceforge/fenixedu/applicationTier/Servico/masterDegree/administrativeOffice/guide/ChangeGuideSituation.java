@@ -104,7 +104,7 @@ public class ChangeGuideSituation extends Service {
                 IPersistentGratuitySituation persistentGratuitySituation = persistentSupport
                         .getIPersistentGratuitySituation();
 
-                Person employeePerson = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(
+                Person employeePerson = Person.readPersonByUsername(
                         userView.getUtilizador());
                 Person studentPerson = guide.getPerson();
                 Student student = persistentSupport.getIPersistentStudent().readByPersonAndDegreeType(

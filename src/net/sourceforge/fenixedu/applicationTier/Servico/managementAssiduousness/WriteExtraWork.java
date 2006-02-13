@@ -23,7 +23,7 @@ public class WriteExtraWork extends Service {
             String compensation) throws Exception {
 
         final IPessoaPersistente personDAO = persistentSupport.getIPessoaPersistente();
-        Person personWho = personDAO.lerPessoaPorUsername(usernameWho);
+        Person personWho = Person.readPersonByUsername(usernameWho);
 
         // Read employee logged
         final IPersistentEmployee employeeDAO = persistentSupport.getIPersistentEmployee();

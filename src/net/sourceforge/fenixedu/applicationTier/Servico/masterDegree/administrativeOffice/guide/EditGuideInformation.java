@@ -311,8 +311,7 @@ public class EditGuideInformation extends Service {
     private Guide createNewGuideVersion(InfoGuide infoGuide) throws 
             ExcepcaoPersistencia {
         // Read the needed information from the DataBase
-        Person person = persistentSupport.getIPessoaPersistente()
-                .lerPessoaPorUsername(infoGuide.getInfoPerson().getUsername());
+        Person person = Person.readPersonByUsername(infoGuide.getInfoPerson().getUsername());
         Contributor contributor = persistentSupport.getIPersistentContributor().readByContributorNumber(
                 infoGuide.getInfoContributor().getContributorNumber());
         ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear().readExecutionYearByName(

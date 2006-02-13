@@ -121,11 +121,9 @@ public class Authenticate extends Service implements Serializable {
     }
 
     public IUserView run(final String username, final String password, final String requestURL)
-            throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
+            throws ExcepcaoAutenticacao, ExcepcaoPersistencia, FenixServiceException {
 
-        final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-
-        final Person person = persistentPerson.lerPessoaPorUsername(username);
+        final Person person = Person.readPersonByUsername(username);;
         if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }

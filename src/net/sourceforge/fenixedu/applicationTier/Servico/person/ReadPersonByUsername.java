@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 public class ReadPersonByUsername extends Service {
 
     public InfoPerson run(String username) throws ExcepcaoInexistente, ExcepcaoPersistencia {
-        Person person = persistentSupport.getIPessoaPersistente().lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
 
         if (person == null)
             throw new ExcepcaoInexistente("Unknown Person !!");

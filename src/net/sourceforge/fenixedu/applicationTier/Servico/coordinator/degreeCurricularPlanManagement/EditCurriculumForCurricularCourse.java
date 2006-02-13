@@ -50,7 +50,7 @@ public class EditCurriculumForCurricularCourse extends Service {
             throw new NonExistingServiceException("noCurricularCourse");
         }
 
-        Person person = persistentPerson.lerPessoaPorUsername(username);
+        Person person = Person.readPersonByUsername(username);
         if (person == null) {
             throw new NonExistingServiceException("noPerson");
         }

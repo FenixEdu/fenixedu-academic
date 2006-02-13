@@ -22,7 +22,7 @@ public class ReadAuthorshipsByUsername extends Service {
 		IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
 		IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
 
-		Person person = persistentPerson.lerPessoaPorUsername(user);
+		Person person = Person.readPersonByUsername(user);
 		Teacher teacher = persistentTeacher.readTeacherByUsername(user);
 
 		InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(teacher);

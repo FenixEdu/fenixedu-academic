@@ -34,7 +34,7 @@ public class AlterStudentEnrolmentEvaluation extends Service {
         IPersistentTeacher persistentTeacher = persistentSupport.getIPersistentTeacher();
         IPersistentEmployee persistentEmployee = persistentSupport.getIPersistentEmployee();
 
-        Person person = persistentPerson.lerPessoaPorUsername(userView.getUtilizador());
+        Person person = Person.readPersonByUsername(userView.getUtilizador());
         if (person == null)
             throw new NonExistingServiceException();
 
