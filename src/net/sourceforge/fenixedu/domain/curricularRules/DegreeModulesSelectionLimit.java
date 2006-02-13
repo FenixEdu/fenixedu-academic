@@ -16,12 +16,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
      */
     protected DegreeModulesSelectionLimit(Integer minimum, Integer maximum) {
         super();
-        if (minimum == null || maximum == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        if (minimum.intValue() > maximum.intValue()) {
-            throw new DomainException("error.minimum.greater.than.maximum");
-        }
+        checkLimits(minimum, maximum);
         setMinimum(minimum);
         setMaximum(maximum);
         setCurricularRuleType(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT);
@@ -43,9 +38,19 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
     }
     
     public void edit(CourseGroup contextCourseGroup, Integer minimumLimit, Integer maximumLimit) {
+        checkLimits(minimumLimit, maximumLimit);
         setContextCourseGroup(contextCourseGroup);
         setMinimum(minimumLimit);
         setMaximum(maximumLimit);
+    }
+    
+    private void checkLimits(Integer minimum, Integer maximum) throws DomainException {
+        if (minimum == null || maximum == null) {
+            throw new DomainException("curricular.rule.invalid.parameters");
+        }
+        if (minimum.intValue() > maximum.intValue()) {
+            throw new DomainException("error.minimum.greater.than.maximum");
+        }
     }
     
     @Override
@@ -54,23 +59,29 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
 
         labelList.add(new GenericPair<Object, Boolean>("label.modulesSelection", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.chooseFrom", true));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.to", true));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getMaximum(), false));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.modules", true));
-
+        if (getMinimum().intValue() == getMaximum().intValue()) {
+            labelList.add(new GenericPair<Object, Boolean>("label.choose", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.module", true));
+        } else {
+            labelList.add(new GenericPair<Object, Boolean>("label.chooseFrom", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.to", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>(getMaximum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.modules", true));
+        }
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));
             labelList.add(new GenericPair<Object, Boolean>(" ", false));
             labelList.add(new GenericPair<Object, Boolean>(getContextCourseGroup().getName(), false));
         }
-
         return labelList;
     }
 

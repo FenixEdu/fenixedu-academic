@@ -16,12 +16,7 @@ public class CreditsLimit extends CreditsLimit_Base {
      */
     protected CreditsLimit(Double minimum, Double maximum) {
         super();
-        if (minimum == null || maximum == null) {
-            throw new DomainException("curricular.rule.invalid.parameters");
-        }
-        if (minimum.doubleValue() > maximum.doubleValue()) {
-            throw new DomainException("error.minimum.greater.than.maximum");
-        }
+        checkCredits(minimum, maximum);
         setMinimum(minimum);
         setMaximum(maximum);
         setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
@@ -43,9 +38,19 @@ public class CreditsLimit extends CreditsLimit_Base {
     }
     
     public void edit(CourseGroup contextCourseGroup, Double minimumCredits, Double maximumCredits) {
+        checkCredits(minimumCredits, maximumCredits);
         setContextCourseGroup(contextCourseGroup);
         setMinimum(minimumCredits);
         setMaximum(maximumCredits);
+    }
+    
+    private void checkCredits(Double minimum, Double maximum) throws DomainException {
+        if (minimum == null || maximum == null) {
+            throw new DomainException("curricular.rule.invalid.parameters");
+        }
+        if (minimum.doubleValue() > maximum.doubleValue()) {
+            throw new DomainException("error.minimum.greater.than.maximum");
+        }
     }
     
     @Override
