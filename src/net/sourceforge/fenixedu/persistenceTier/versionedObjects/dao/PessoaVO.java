@@ -25,19 +25,6 @@ import org.apache.commons.collections.Predicate;
 
 public class PessoaVO extends VersionedObjectsBase implements IPessoaPersistente
 {
-
-	public Person lerPessoaPorUsername(final String username) throws ExcepcaoPersistencia
-	{
-		for (final Person person : (List<Person>) readAll(Person.class))
-		{
-			if (person.getUsername().equalsIgnoreCase(username))
-			{
-				return person;
-			}
-		}
-		return null;
-	}
-
 	public List findPersonByName(String name) throws ExcepcaoPersistencia
 	{
 

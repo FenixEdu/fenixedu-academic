@@ -22,15 +22,6 @@ import org.apache.ojb.broker.query.Criteria;
  */
 public class PessoaOJB extends PersistentObjectOJB implements IPessoaPersistente {
 
-    public Person lerPessoaPorUsername(String username) throws ExcepcaoPersistencia {
-        Person person = null;
-
-        Criteria criteria = new Criteria();
-        criteria.addEqualTo("username", username);
-        person = (Person) queryObject(Person.class, criteria);
-        return person;
-    }
-
     public Integer countAllPersonByName(String name) {
         Criteria criteria = new Criteria();
         criteria.addLike("name", name);

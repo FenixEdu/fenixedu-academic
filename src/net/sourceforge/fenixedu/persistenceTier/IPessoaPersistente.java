@@ -8,8 +8,6 @@ import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 
 public interface IPessoaPersistente extends IPersistentObject {
 
-    public Person lerPessoaPorUsername(String username) throws ExcepcaoPersistencia;
-
     public Integer countAllPersonByName(String name) throws ExcepcaoPersistencia;
 
     public Person lerPessoaPorNumDocIdETipoDocId(String numeroDocumentoIdentificacao,
