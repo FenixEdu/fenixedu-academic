@@ -7,76 +7,13 @@ import java.util.List;
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
-import net.sourceforge.fenixedu.renderers.InputRenderer;
-import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
-import net.sourceforge.fenixedu.renderers.components.HtmlCheckBoxList;
-import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
-import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
-import net.sourceforge.fenixedu.renderers.layouts.Layout;
-import net.sourceforge.fenixedu.renderers.model.MetaObject;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
-import net.sourceforge.fenixedu.renderers.model.MetaObjectKey;
-import net.sourceforge.fenixedu.renderers.model.MetaSlotKey;
-import net.sourceforge.fenixedu.renderers.schemas.Schema;
-import net.sourceforge.fenixedu.renderers.utils.RenderKit;
-import net.sourceforge.fenixedu.renderers.utils.RenderMode;
+import net.sourceforge.fenixedu.renderers.CheckBoxOptionListRenderer;
 
-public class InputCheckBoxListRenderer extends InputRenderer {
-    private String eachClasses;
-
-    private String eachStyle;
-
-    private String eachSchema;
-
-    private String eachLayout;
-
-    private String providerClass;
-    
+public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
     private String choiceType;
     
     private String filterClass;
     
-    public void setEachClasses(String classes) {
-        this.eachClasses = classes;
-    }
-
-    public String getEachClasses() {
-        return this.eachClasses;
-    }
-
-    public void setEachStyle(String style) {
-        this.eachStyle = style;
-    }
-
-    public String getEachStyle() {
-        return this.eachStyle;
-    }
-
-    public String getEachLayout() {
-        return eachLayout;
-    }
-
-    public void setEachLayout(String eachLayout) {
-        this.eachLayout = eachLayout;
-    }
-
-    public String getEachSchema() {
-        return eachSchema;
-    }
-
-    public void setEachSchema(String eachSchema) {
-        this.eachSchema = eachSchema;
-    }
-
-    public String getProviderClass() {
-        return this.providerClass;
-    }
-
-    public void setProviderClass(String providerClass) {
-        this.providerClass = providerClass;
-    }
-
     public String getChoiceType() {
         return this.choiceType;
     }
@@ -94,27 +31,13 @@ public class InputCheckBoxListRenderer extends InputRenderer {
     }
 
     @Override
-    protected Layout getLayout(Object object, Class type) {
-        return new CheckBoxListLayout();
-    }
-
     protected Collection getPossibleObjects() {
-        Object object = getInputContext().getParentContext().getMetaObject().getObject();
-
         if (getProviderClass() != null) {
-            String className = getProviderClass();
-    
-            try {
-                Class providerCass = (Class<DataProvider>) Class.forName(className);
-                DataProvider provider = (DataProvider) providerCass.newInstance();  
-                
-                return (Collection) provider.provide(object);
-            }
-            catch (Exception e) {
-                throw new RuntimeException("exception while executing data provider", e);
-            }
+            return super.getPossibleObjects();
         }
         else {
+            Object object = getInputContext().getParentContext().getMetaObject().getObject();
+            
             String choiceType = getChoiceType();
             String filterClassName = getFilterClass();
             
@@ -153,52 +76,5 @@ public class InputCheckBoxListRenderer extends InputRenderer {
         } catch (Exception e) {
             throw new RuntimeException("could not read all objects of type " + choiceType);
         }
-    }
-
-    class CheckBoxListLayout extends Layout {
-        
-        @Override
-        public HtmlComponent createComponent(Object object, Class type) {
-            Collection collection = (Collection) object;
-            
-            HtmlCheckBoxList listComponent = new HtmlCheckBoxList();
-            
-            Collection possibleObjects = getPossibleObjects();
-            for (Object obj : possibleObjects) {
-                Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
-                String layout = getEachLayout();
-                
-                MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
-                MetaObjectKey key = metaObject.getKey();
-                
-                PresentationContext newContext = getContext().createSubContext(metaObject);
-                newContext.setLayout(layout);
-                newContext.setRenderMode(RenderMode.getMode("output"));
-                
-                RenderKit kit = RenderKit.getInstance();
-                HtmlComponent component = kit.render(newContext, obj);
-                HtmlCheckBox checkBox = listComponent.addOption(component, key.toString());
-                
-                if (collection != null && collection.contains(obj)) {
-                    checkBox.setChecked(true);
-                }
-            }
-
-            for (Object obj : collection) {
-                if (! possibleObjects.contains(obj)) {
-                    Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
-                    
-                    MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
-                    MetaObjectKey key = metaObject.getKey();
-                
-                    listComponent.addHiddenOption(key.toString());
-                }
-            }
-            
-            listComponent.setConverter(new DomainObjectKeyArrayConverter());
-            listComponent.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());
-            return listComponent;
-        }
-
     }
 }

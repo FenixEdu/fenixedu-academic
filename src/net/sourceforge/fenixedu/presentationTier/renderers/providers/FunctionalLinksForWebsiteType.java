@@ -9,7 +9,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.cms.FunctionalityLink;
 import net.sourceforge.fenixedu.domain.cms.website.WebsiteType;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.renderers.DataProvider;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
+import net.sourceforge.fenixedu.renderers.DataProvider;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 public class FunctionalLinksForWebsiteType implements DataProvider {
 
@@ -31,6 +33,10 @@ public class FunctionalLinksForWebsiteType implements DataProvider {
         }
         
         return links;
+    }
+
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
     }
 
 }

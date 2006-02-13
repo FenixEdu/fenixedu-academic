@@ -1,11 +1,15 @@
 package net.sourceforge.fenixedu.renderers.utils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.PageContext;
 
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
@@ -16,7 +20,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts.Globals;
 import org.apache.struts.config.ModuleConfig;
-import org.apache.struts.taglib.TagUtils;
 import org.apache.struts.util.MessageResources;
 import org.apache.struts.util.ModuleUtils;
 
@@ -141,6 +144,59 @@ public class RenderUtils {
         MessageFormat format = new MessageFormat(text);
         
         return format.format(args);
+    }
+    
+    public static String getFormatedProperties(String format, Object object) {
+        // "${a.b} - ${a.c} - ${b,-4.5tY}" 
+        // String.format("%s - %s - %-4.5tY", object.getA().getB(), object.getA().getC(), object.getB())
+        
+        // TODO: use a separator different than ',' because the comma can be used as a flag in the format 
+        
+        List args = new ArrayList();
+        StringBuilder builder = new StringBuilder();
+        
+        if (format != null) {
+            int lastIndex = 0, index;
+            
+            while ((index = format.indexOf("${", lastIndex)) != -1) {
+                int end = format.indexOf("}", index + 2);
+                
+                if (end == -1) {
+                    throw new RuntimeException("'" + format + "':unmatched group at pos " + index);
+                }
+                
+                builder.append(format.substring(lastIndex, index));
+                lastIndex = end + 1;
+
+                if (end - index == 2) {
+                    continue;
+                }
+                
+                String spec = format.substring(index + 2, end);
+                String[] parts = spec.split(",");
+                
+                String property = parts[0];
+                
+                if (parts.length > 1) {
+                    builder.append(parts[1]);
+                }
+                else {
+                    builder.append("%s");
+                }
+                
+                try {
+                    Object value = PropertyUtils.getProperty(object, property);
+                    
+                    args.add(value);
+                } catch (Exception e) {
+                    throw new RuntimeException("could not retrieve property '" + property + "' for object " + object, e);
+                }
+            }
+            
+            builder.append(format.substring(lastIndex));
+        }
+        
+        return String.format(builder.toString(), args.toArray());
     }
     
     public static void setProperties(Object target, Properties properties) {

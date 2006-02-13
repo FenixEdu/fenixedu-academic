@@ -40,6 +40,7 @@
   
     <renderer type="java.lang.Object" layout="template" class="net.sourceforge.fenixedu.renderers.TemplateRenderer"/>
     <renderer type="java.lang.Object" layout="values" class="net.sourceforge.fenixedu.renderers.ValuesRenderer"/>
+    <renderer type="java.lang.Object" layout="format" class="net.sourceforge.fenixedu.renderers.FormatRenderer"/>
     
     <!-- NOTE: to be used as a layout for a slot fo a DomainObject only. It's a link to the whole object details -->
     <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer">
@@ -77,7 +78,6 @@
     <renderer type="java.util.List" class="net.sourceforge.fenixedu.renderers.ListRenderer"/>
     <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowRenderer" />
     
-
     <!-- input -->
   
     <renderer mode="input" type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.renderers.OrderableCollectionRenderer"/>
@@ -86,6 +86,9 @@
     <renderer mode="input" type="java.lang.Object" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
     <renderer mode="input" type="net.sourceforge.fenixedu.domain.DomainObject" layout="tabular" class="net.sourceforge.fenixedu.renderers.StandardInputRenderer"/>
+
+    <!-- Can be used to fill a slot with one of many possible objects  -->
+    <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.renderers.MenuOptionListRenderer"/>
 
     <renderer mode="input" type="java.lang.String" class="net.sourceforge.fenixedu.renderers.StringInputRenderer"/>
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.HtmlEditorRenderer"/>

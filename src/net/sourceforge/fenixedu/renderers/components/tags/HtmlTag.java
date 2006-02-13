@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.servlet.jsp.PageContext;
 
+// TODO: cfgi, implement this properly ... too hackish
+
 public class HtmlTag {
 
     protected static String DEFAULT_INDENT = "  ";
