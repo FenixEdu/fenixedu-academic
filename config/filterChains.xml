@@ -672,14 +672,14 @@
     </filterChain>
 	<filterChain>
         <name>EnrollmentAuthorization</name>
-        <expression>EnrollmentAuthorization &amp;&amp; PastEnrolmentsFilter</expression>
+        <expression>EnrollmentAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
     	<filterChain>
         <name>EnrollmentOrCoordinatorAuthorization</name>
-        <expression>(EnrollmentAuthorization &amp;&amp; PastEnrolmentsFilter) || CoordinatorAuthorization</expression>
+        <expression>EnrollmentAuthorization || CoordinatorAuthorization</expression>
         <description/>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
