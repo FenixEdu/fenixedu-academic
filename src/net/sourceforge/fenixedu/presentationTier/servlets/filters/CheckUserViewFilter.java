@@ -42,7 +42,7 @@ public class CheckUserViewFilter implements Filter {
         final IUserView userView = getUserView(request);
         if (isPrivateURI(uri.substring(APP_CONTEXT_LENGTH)) && !validUserView(userView)) {
         	final HttpSession httpSession = request.getSession(true);
-        	httpSession.setAttribute("ORIGINAL_REQUEST", request);
+        	httpSession.setAttribute("ORIGINAL_REQUEST", uri);
 
         	httpSession.setAttribute("ORIGINAL_URI", uri);
 
