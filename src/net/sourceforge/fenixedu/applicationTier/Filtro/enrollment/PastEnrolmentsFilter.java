@@ -17,9 +17,19 @@ public class PastEnrolmentsFilter extends Filtro {
 	@Override
 	public void execute(ServiceRequest request, ServiceResponse response)
 			throws Exception {
-		IUserView id = (IUserView) request.getRequester();
-		Student student = readStudent(id);
-		if(student == null) {
+        Object[] args = request.getServiceParameters().parametersArray();
+        
+        Student student = null;
+        if (args[1] != null) {
+            Integer studentCurricularPlanID = (Integer) args[1];
+            StudentCurricularPlan studentCurricularPlan = (StudentCurricularPlan) persistentObject.readByOID(StudentCurricularPlan.class, studentCurricularPlanID);
+            student = studentCurricularPlan.getStudent();
+        } else if (args.length > 2 && args[2] != null) {
+            Integer studentNumber = (Integer) args[2];
+            student = persistentSupport.getIPersistentStudent().readByUsername("L" + studentNumber);
+        }
+        
+		if (student == null) {
 			throw new NotAuthorizedFilterException("noAuthorization");
 		}
 		
@@ -27,8 +37,8 @@ public class PastEnrolmentsFilter extends Filtro {
 		ExecutionPeriod previousExecutionPeriod = actualExecutionPeriod.getPreviousExecutionPeriod();
 		ExecutionPeriod beforePreviousExecutionPeriod = previousExecutionPeriod.getPreviousExecutionPeriod();
 		
-		for (StudentCurricularPlan studentCurricularPlan : student.getStudentCurricularPlans()) {
-			for (Enrolment enrolment : studentCurricularPlan.getEnrolments()) {
+		for (StudentCurricularPlan scp : student.getStudentCurricularPlans()) {
+			for (Enrolment enrolment : scp.getEnrolments()) {
 				if(enrolment.getExecutionPeriod().equals(previousExecutionPeriod) || enrolment.getExecutionPeriod().equals(beforePreviousExecutionPeriod)) {
 					return;
 				}
