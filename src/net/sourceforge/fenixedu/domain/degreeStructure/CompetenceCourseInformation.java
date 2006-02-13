@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.degreeStructure;
 import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CompetenceCourseInformation extends CompetenceCourseInformation_Base {
 
@@ -12,8 +13,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 
     public CompetenceCourseInformation(String name, String nameEn, String acronym, Boolean basic, RegimeType regimeType, Date endDate) {        
         this();
-        setName(name);
-        setNameEn(nameEn);
+        setName(StringFormatter.prettyPrint(name));
+        setNameEn(StringFormatter.prettyPrint(nameEn));
         setAcronym(acronym);
         setBasic(basic);
         setRegime(regimeType);
@@ -22,8 +23,8 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
     
     public void edit(String name, String nameEn, String acronym, Boolean basic) {
-        setName(name);
-        setNameEn(nameEn);
+        setName(StringFormatter.prettyPrint(name));
+        setNameEn(StringFormatter.prettyPrint(nameEn));        
         setAcronym(acronym);
         setBasic(basic);
     }

@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class CreateCompetenceCourse extends Service {
 
@@ -31,15 +32,21 @@ public class CreateCompetenceCourse extends Service {
 
     private void checkIfCanCreateCompetenceCourse(final String name, final String nameEn,
             final String acronym) throws ExcepcaoPersistencia, FenixServiceException {
+
+        String normalizedName = StringFormatter.normalize(name);
+        String normalizedNameEn = StringFormatter.normalize(nameEn);
+
         final List<CompetenceCourse> competenceCourses = persistentSupport
                 .getIPersistentCompetenceCourse().readFromNewDegreeStructure();
+
         for (final CompetenceCourse competenceCourse : competenceCourses) {
-            if (competenceCourse.getName().equals(name)) {
+            if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
                 throw new FenixServiceException("error.existingCompetenceCourseWithSameName");
             }
-            if (competenceCourse.getNameEn().equals(nameEn)) {
+            if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
                 throw new FenixServiceException("error.existingCompetenceCourseWithSameNameEn");
-            }
             }
         }
     }
+    
+}

@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCourseGroup extends Service {
@@ -26,6 +27,7 @@ public class CreateCourseGroup extends Service {
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
+
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
         final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
@@ -33,7 +35,12 @@ public class CreateCourseGroup extends Service {
         final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 
-        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null,
-                beginExecutionPeriod, null);
+        try {
+            degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null,
+                    beginExecutionPeriod, null);
+        } catch (FenixDomainException e) {
+            throw new FenixServiceException(e.getMessage());
+        }
     }
+    
 }

@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import net.sourceforge.fenixedu.applicationTier.Service;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class EditCourseGroup extends Service {
@@ -17,6 +18,11 @@ public class EditCourseGroup extends Service {
         if (courseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
-        courseGroup.edit(name, nameEn);
+        
+        try {
+            courseGroup.edit(name, nameEn);
+        } catch (FenixDomainException e) {
+            throw new FenixServiceException(e.getMessage());
+        }
     }
 }

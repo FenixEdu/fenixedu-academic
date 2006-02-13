@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.util.StringFormatter;
 
 public class EditCompetenceCourse extends Service {
         
@@ -67,16 +68,20 @@ public class EditCompetenceCourse extends Service {
     private void checkIfCanEditCompetenceCourse(final CompetenceCourse competenceCourseToEdit, final String name,
             final String nameEn, final String acronym) throws ExcepcaoPersistencia, FenixServiceException {
         
+        String normalizedName = StringFormatter.normalize(name);
+        String normalizedNameEn = StringFormatter.normalize(nameEn);
+        
         final List<CompetenceCourse> competenceCourses = persistentSupport.getIPersistentCompetenceCourse().readFromNewDegreeStructure();
         for (final CompetenceCourse competenceCourse : competenceCourses) {
             if (competenceCourse != competenceCourseToEdit) {
-                if (competenceCourse.getName().equals(name)) {
+                if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
                     throw new FenixServiceException("error.existingCompetenceCourseWithSameName");
                 }
-                if (competenceCourse.getNameEn().equals(nameEn)) {
+                if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
                     throw new FenixServiceException("error.existingCompetenceCourseWithSameNameEn");
                 }
             }
         }
     }
+    
 }

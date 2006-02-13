@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -450,7 +451,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     
     public CourseGroup createCourseGroup(CourseGroup parentCourseGroup, String name, String nameEn,
             CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
-            ExecutionPeriod endExecutionPeriod) {
+            ExecutionPeriod endExecutionPeriod) throws FenixDomainException {
+        parentCourseGroup.checkDuplicateChildNames(name, nameEn);
         final CourseGroup courseGroup = new CourseGroup(name, nameEn);
         new Context(parentCourseGroup, courseGroup, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
         return courseGroup;
@@ -465,7 +467,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse,
                 parentCourseGroup, curricularPeriod, beginExecutionPeriod);
     }
-    
+
     public CurricularCourse createCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
             CurricularStage curricularStage, CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
         return new CurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod, beginExecutionPeriod);
