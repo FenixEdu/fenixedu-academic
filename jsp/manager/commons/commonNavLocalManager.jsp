@@ -143,6 +143,13 @@
 		Gestão de FAQ's
 	</html:link>
 </strong></p>
+<br />
+<strong>Gestão de Objectos</strong>
+<p><strong>&raquo;
+	<html:link module="/manager"page="/domainObjectStringPropertyFormatter.do?method=prepare">
+		Formatação de Propriedades
+	</html:link>
+</strong></p>
 
 <br />
 <strong>Gestão do Sistema</strong>
