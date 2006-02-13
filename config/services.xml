@@ -9212,7 +9212,7 @@
 			<chain name="ManagerAuthorization" />
 		</filterChains>	
     </service>
-    
+	
     <!-- ======================================  -->
     <service>
     	<name>CreateCompetenceCourse</name>
@@ -9721,4 +9721,13 @@
         	<chain name="ScientificCouncilAuthorization"></chain>
         </filterChains>     
     </service>        
+	<service>
+   	 	<name>DomainObjectStringPropertyFormatter</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.DomainObjectStringPropertyFormatter</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="ManagerAuthorization"></chain>
+        </filterChains>     
+    </service>           
 </serviceDefinitions>    
