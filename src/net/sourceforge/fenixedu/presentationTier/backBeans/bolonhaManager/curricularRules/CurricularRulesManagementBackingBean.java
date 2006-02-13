@@ -26,8 +26,6 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
-import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -236,10 +234,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     public String getSelectedSemester() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("selectedSemester") == null) {
-            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE)) {
-                setSelectedSemester(((RestrictionDoneDegreeModule) getCurricularRule()).getCurricularPeriodOrder().toString());
-            } else if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE)) {
-                    setSelectedSemester(((RestrictionEnroledDegreeModule) getCurricularRule()).getCurricularPeriodOrder().toString());
+            if (getCurricularRule() != null && getCurricularRule() instanceof PrecedenceRule) {
+                setSelectedSemester(((PrecedenceRule) getCurricularRule()).getCurricularPeriodOrder().toString());
             } else {
                 setSelectedSemester("0");
             }

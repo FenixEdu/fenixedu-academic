@@ -15,6 +15,11 @@ public class EditCurricularCourse extends Service {
     public void run(CurricularCourse curricularCourse, Double weight, String prerequisites, String prerequisitesEn,
             CompetenceCourse competenceCourse)
             throws ExcepcaoPersistencia, FenixServiceException {        
-        curricularCourse.edit(weight, prerequisites, prerequisitesEn, CurricularStage.DRAFT,competenceCourse);
+        curricularCourse.edit(weight, prerequisites, prerequisitesEn, CurricularStage.DRAFT, competenceCourse);
+    }
+    
+    public void run(CurricularCourse curricularCourse, String name, String nameEn)
+            throws ExcepcaoPersistencia, FenixServiceException {        
+        curricularCourse.edit(name, nameEn, CurricularStage.DRAFT);
     }
 }

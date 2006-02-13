@@ -22,40 +22,57 @@ public class CreateCurricularCourse extends Service {
             Integer competenceCourseID, Integer parentCourseGroupID, Integer year, Integer semester,
             Integer degreeCurricularPlanID) throws ExcepcaoPersistencia, FenixServiceException {
 
-        CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.
-        		readByOID(CompetenceCourse.class, competenceCourseID);
+        initArguments(degreeCurricularPlanID, parentCourseGroupID, year, semester);
+        
+        final CompetenceCourse competenceCourse = (CompetenceCourse) persistentObject.readByOID(
+                CompetenceCourse.class, competenceCourseID);
         if (competenceCourse == null) {
             throw new FenixServiceException("error.noCompetenceCourse");
         }
-        CourseGroup parentCourseGroup = (CourseGroup) persistentObject.readByOID(
-                CourseGroup.class, parentCourseGroupID);
+        degreeCurricularPlan.createCurricularCourse(weight, prerequisites, prerequisitesEn,
+                CurricularStage.DRAFT, competenceCourse, parentCourseGroup, curricularPeriod,
+                beginExecutionPeriod);
+    }
+
+    public void run(Integer degreeCurricularPlanID, Integer parentCourseGroupID, String name, String nameEn,
+            Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
+
+        initArguments(degreeCurricularPlanID, parentCourseGroupID, year, semester);
+        degreeCurricularPlan.createCurricularCourse(parentCourseGroup, name, nameEn,
+                CurricularStage.DRAFT, curricularPeriod, beginExecutionPeriod);
+    }
+    
+    private DegreeCurricularPlan degreeCurricularPlan = null;
+    private CourseGroup parentCourseGroup = null;
+    private CurricularPeriod curricularPeriod = null;
+    private ExecutionPeriod beginExecutionPeriod = null; 
+    
+    private void initArguments(Integer degreeCurricularPlanID, Integer parentCourseGroupID,
+            Integer year, Integer semester) throws ExcepcaoPersistencia, FenixServiceException {
+        
+        degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
+        if (degreeCurricularPlan == null) {
+            throw new FenixServiceException("error.noDegreeCurricularPlan");
+        }
+        
+        parentCourseGroup = (CourseGroup) persistentObject.readByOID(CourseGroup.class, parentCourseGroupID);
         if (parentCourseGroup == null) {
             throw new FenixServiceException("error.noCourseGroup");
         }
 
-        DegreeCurricularPlan degreeCurricularPlan = (DegreeCurricularPlan) persistentObject.
-        		readByOID(DegreeCurricularPlan.class, degreeCurricularPlanID);
-
-        CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan
-                .getDegreeStructure();
-        CurricularPeriod curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
+        final CurricularPeriod degreeCurricularPeriod = (CurricularPeriod) degreeCurricularPlan.getDegreeStructure();
+        curricularPeriod = degreeCurricularPeriod.getCurricularPeriod(
                 new CurricularPeriodInfoDTO(year, CurricularPeriodType.YEAR),
                 new CurricularPeriodInfoDTO(semester, CurricularPeriodType.SEMESTER));
-
         if (curricularPeriod == null) {
             curricularPeriod = degreeCurricularPeriod.addCurricularPeriod(new CurricularPeriodInfoDTO(
                     year, CurricularPeriodType.YEAR), new CurricularPeriodInfoDTO(semester,
                     CurricularPeriodType.SEMESTER));
         }
-
         // TODO: this should be modified to receive ExecutionYear, but for now
         // we just read the '2006/2007'
-        ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
+        final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
                 .readExecutionYearByName("2006/2007");
-        ExecutionPeriod executionPeriod = executionYear
-                .getExecutionPeriodForSemester(Integer.valueOf(1));
-
-        degreeCurricularPlan.createCurricularCourse(weight, prerequisites, prerequisitesEn, CurricularStage.DRAFT,
-                competenceCourse, parentCourseGroup, curricularPeriod, executionPeriod);
+        beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer.valueOf(1));
     }
 }

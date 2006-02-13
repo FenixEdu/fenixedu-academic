@@ -72,9 +72,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         oldStructureFieldsChange(state, inicialDate, endDate, degreeDuration,
                 minimalYearForOptionalCourses, neededCredits, markType, numerusClausus, annotation);
         
-        this
-                .setConcreteClassForStudentCurricularPlans(degree
-                        .getConcreteClassForDegreeCurricularPlans());
+        this.setConcreteClassForStudentCurricularPlans(degree.getConcreteClassForDegreeCurricularPlans());
     }
 
     private void commonFieldsChange(String name, GradeScale gradeScale) {
@@ -466,6 +464,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
         checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
         return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse,
                 parentCourseGroup, curricularPeriod, beginExecutionPeriod);
+    }
+    
+    public CurricularCourse createCurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
+            CurricularStage curricularStage, CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
+        return new CurricularCourse(parentCourseGroup, name, nameEn, curricularStage, curricularPeriod, beginExecutionPeriod);
     }
 
     private void checkIfPresentInDegreeCurricularPlan(final CompetenceCourse competenceCourse, final DegreeCurricularPlan degreeCurricularPlan) {

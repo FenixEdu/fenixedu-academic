@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType;
+import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -264,14 +265,46 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
         this.curricularSemesterID = curricularSemesterID;
     }
     
+    public String getSelectedCurricularCourseType() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("selectedCurricularCourseType") == null) {
+            if (getCurricularCourse() != null) {
+                setSelectedCurricularCourseType(getCurricularCourse().getType().name());
+            } else {
+                setSelectedCurricularCourseType(CurricularCourseType.NORMAL_COURSE.name());                
+            }
+        }
+        return (String) getViewState().getAttribute("selectedCurricularCourseType");
+    }
+    
+    public void setSelectedCurricularCourseType(String selectedCurricularCourseType) {
+        getViewState().setAttribute("selectedCurricularCourseType", selectedCurricularCourseType);
+    }
+    
+    public String getName() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("name") == null && getCurricularCourse() != null) {
+            setName(getCurricularCourse().getName());
+        }
+        return (String) getViewState().getAttribute("name");
+    }
+    
+    public void setName(String name) {
+        getViewState().setAttribute("name", name);
+    }
+    
+    public String getNameEn() throws FenixFilterException, FenixServiceException {
+        if (getViewState().getAttribute("nameEn") == null && getCurricularCourse() != null) {
+            setNameEn(getCurricularCourse().getNameEn());            
+        }
+        return (String) getViewState().getAttribute("nameEn");
+    }
+    
+    public void setNameEn(String nameEn) {
+        getViewState().setAttribute("nameEn", nameEn);
+    }
+    
     public String createCurricularCourse() throws FenixFilterException {        
         try {
-            checkCompetenceCourse();
-            checkCourseGroup();
-            checkCurricularSemesterAndYear();
-            Object args[] = {getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
-                    getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(), getDegreeCurricularPlanID()};
-            ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", args);
+            ServiceUtils.executeService(getUserView(), "CreateCurricularCourse", getArgumentsToCreate());
         } catch (FenixActionException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
             return "";
@@ -280,33 +313,59 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
             return "buildCurricularPlan";
         } catch (FenixServiceException e) {
             this.addErrorMessage(bolonhaBundle.getString(e.getMessage()));
-        return "";
+            return "";
         } catch (DomainException e) {
             this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
             return "";
         } catch (Exception e) {
             this.addErrorMessage(bolonhaBundle.getString("general.error"));
             return "buildCurricularPlan";
-    }
-
+        }
         addInfoMessage(bolonhaBundle.getString("curricularCourseCreated"));
         return "buildCurricularPlan";
     }
-
-    public String editCurricularCourse() throws FenixFilterException {        
-        try {
+    
+    private Object[] getArgumentsToCreate() throws FenixFilterException, FenixServiceException, FenixActionException {
+        checkCourseGroup();
+        checkCurricularSemesterAndYear();
+        final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
+        if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
             checkCompetenceCourse();
-            Object args[] = {getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourse()};
-            ServiceUtils.executeService(getUserView(), "EditCurricularCourseBolonhaManager", args);
+            Object args[] = { getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourseID(),
+                getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(), getDegreeCurricularPlanID() };
+            return args;
+        } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
+            Object args[] = { getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(),
+                    getCurricularYearID(), getCurricularSemesterID() };
+            return args;
+        }
+        return null;
+    }
+
+    public String editCurricularCourse() throws FenixFilterException {
+        try {
+            ServiceUtils.executeService(getUserView(), "EditCurricularCourseBolonhaManager", getArgumentsToEdit());
             setContextID(0); // resetContextID
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         } catch (FenixActionException e) {
             addErrorMessage(bolonhaBundle.getString(e.getMessage()));
         }
-        
         addInfoMessage(bolonhaBundle.getString("curricularCourseEdited"));
         return "";
+    }
+    
+    private Object[] getArgumentsToEdit() throws FenixFilterException, FenixServiceException, FenixActionException {
+        final CurricularCourseType curricularCourseType = CurricularCourseType.valueOf(getSelectedCurricularCourseType());
+        if (curricularCourseType.equals(CurricularCourseType.NORMAL_COURSE)) {
+            checkCompetenceCourse();
+            Object args[] = { getCurricularCourse(), getWeight(), getPrerequisites(), getPrerequisitesEn(), getCompetenceCourse() };
+            return args;
+        } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
+            Object args[] = { getCurricularCourse(), getName(), getNameEn() };
+            return args;
+        }
+        return null;
     }
     
     private void checkCompetenceCourse() throws FenixFilterException, FenixServiceException, FenixActionException  {

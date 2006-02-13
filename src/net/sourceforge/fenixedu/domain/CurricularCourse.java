@@ -57,6 +57,21 @@ public class CurricularCourse extends CurricularCourse_Base {
         new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, null);
     }
     
+    /**
+     * - This constructor is used to create a 'special' curricular course 
+     *   that will represent any curricular course accordding to a rule 
+     */
+    public CurricularCourse(CourseGroup parentCourseGroup, String name, String nameEn,
+            CurricularStage curricularStage, CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
+        
+        this();
+        setName(name);
+        setNameEn(nameEn);
+        setCurricularStage(curricularStage);
+        setType(CurricularCourseType.OPTIONAL_COURSE);
+        new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, null);
+    }
+    
 	public GradeScale getGradeScaleChain() {
     	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeCurricularPlan().getGradeScaleChain();
     }
@@ -91,6 +106,16 @@ public class CurricularCourse extends CurricularCourse_Base {
         setPrerequisitesEn(prerequisitesEn);
         setCurricularStage(curricularStage);
         setCompetenceCourse(competenceCourse);
+    }
+    
+    /**
+     * - This method is used to edit a 'special' curricular course 
+     *   that will represent any curricular course accordding to a rule 
+     */
+    public void edit(String name, String nameEn, CurricularStage curricularStage) {
+        setName(name);
+        setNameEn(nameEn);
+        setCurricularStage(curricularStage);
     }
  
     public Boolean getCanBeDeleted() {
