@@ -501,4 +501,10 @@
         <put name="body" value="/manager/renderers/search-results.jsp" />
     </definition>
 
+    <!-- ========== Domain Objects Management Examples ============ -->
+    <definition name="chooseClassAndSlotToFormat" extends="definition.manager.masterPage" >
+    	<put name="body" value="/manager/domainObjectsManagement/chooseClassAndSlotToFormat.jsp" />
+    </definition>
+
+
 </tiles-definitions>

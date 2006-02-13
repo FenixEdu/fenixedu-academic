@@ -566,6 +566,15 @@
 			<form-property name="person2Username" type="java.lang.String"/>
 			<form-property name="method" type="java.lang.String"/>
 		</form-bean>
+		
+		<!-- ========== DOMAIN OBJECT MANAGEMENT ========== -->	
+		<form-bean name="stringPropertyFormatterForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="domainObjectClass" type="java.lang.String"/>
+			<form-property name="slotName" type="java.lang.String"/>
+			<form-property name="method" type="java.lang.String"/>
+		</form-bean>		
 				
     </form-beans>
     
@@ -1829,6 +1838,15 @@
 			scope="request">
 		<forward name="choosePersons" path="choosePersons"/>
 		<forward name="displayPersons" path="displayPersons"/>
+	</action>
+
+	<!-- Domain Object String Property Formatter -->
+	<action path="/domainObjectStringPropertyFormatter"
+			parameter="method"
+			name="stringPropertyFormatterForm"
+			type="net.sourceforge.fenixedu.presentationTier.Action.manager.domainObjectsManagement.DomainObjectStringPropertyFormatterDispatchAction"
+			scope="request">
+		<forward name="propertyFormatter" path="chooseClassAndSlotToFormat"/>
 	</action>
 
     <!-- ========= Renderers ================ -->
