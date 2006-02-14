@@ -65,7 +65,7 @@ public class UICourseGroup extends UIDegreeModule {
                     writer.endElement("br");
                     
                     writer.startElement("table", this);
-                    writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
+                    writer.writeAttribute("class", "showinfo3 thleft mvert0", null);
                 }
                 encodeChildCourseGroups();
                 
@@ -105,10 +105,6 @@ public class UICourseGroup extends UIDegreeModule {
         encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
         encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
-        writer.startElement("li", this);
-        writer.append("&nbsp;");
-        writer.endElement("li");
-        
         encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
         encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
 
@@ -144,13 +140,13 @@ public class UICourseGroup extends UIDegreeModule {
         if (!this.onlyStructure) {
             if (this.depth == BASE_DEPTH) {
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
+                writer.writeAttribute("class", "showinfo3 thleft mvert0", null);
                 writer.writeAttribute("style", "width: " + width + "em;", null);
             } else if (this.depth > BASE_DEPTH) {
                 writer.startElement("div", this);
                 writer.writeAttribute("class", "indent" + courseGroupIdent, null);
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
+                writer.writeAttribute("class", "showinfo3 thleft mvert0", null);
                 writer.writeAttribute("style", "width: " + String.valueOf(width - (this.depth * 3)) +"em;", null);
             }
         }
@@ -171,7 +167,7 @@ public class UICourseGroup extends UIDegreeModule {
                 writer.startElement("div", this);
                 writer.writeAttribute("class", (this.depth == BASE_DEPTH) ? "indent3" : "indent" + (courseGroupIdent + 3), null);
                 writer.startElement("table", this);
-                writer.writeAttribute("class", "showinfo1 thleft mvert0", null);
+                writer.writeAttribute("class", "showinfo3 thleft mvert0", null);
                 writer.writeAttribute("style", "width: " + (width - (this.depth * 3) - 3)  + "em;", null);
 
                 List<Double> sums = encodeChildCurricularCourses();
@@ -248,7 +244,7 @@ public class UICourseGroup extends UIDegreeModule {
     }
 
     private void encodeCourseGroupOptions() throws IOException {
-        writer.startElement("td", this);
+        writer.startElement("th", this);
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (!this.showRules) {
@@ -261,7 +257,7 @@ public class UICourseGroup extends UIDegreeModule {
             encodeLink("../curricularRules/createCurricularRule.faces?degreeCurricularPlanID=" + this.facesContext.getExternalContext().getRequestParameterMap()
                     .get("degreeCurricularPlanID") + "&degreeModuleID=" + this.degreeModule.getIdInternal(), "setCurricularRule");
         }
-        writer.endElement("td");
+        writer.endElement("th");
     }
     
     private List<Double> encodeChildCurricularCourses() throws IOException {

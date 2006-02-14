@@ -131,10 +131,6 @@ public class UIDegreeCurricularPlan extends UIInput {
         encodeSubtitleElement("EnumerationResources", RegimeType.SEMESTRIAL.toString() + ".ACRONYM", RegimeType.SEMESTRIAL.toString(), null);
         encodeSubtitleElement("EnumerationResources", RegimeType.ANUAL.toString() + ".ACRONYM", RegimeType.ANUAL.toString(), null);
 
-        writer.startElement("li", this);
-        writer.append("&nbsp;");
-        writer.endElement("li");
-        
         encodeSubtitleElement("BolonhaManagerResources", "contactLessonHoursAcronym", "contactLessonHours", null);
         encodeSubtitleElement("BolonhaManagerResources", "autonomousWorkAcronym", "autonomousWork", null);
 
@@ -169,7 +165,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             }
         } else {
             writer.startElement("table", this);
-            writer.writeAttribute("class", "showinfo1 sp thleft", null);
+            writer.writeAttribute("class", "showinfo3 sp thleft", null);
             writer.writeAttribute("style", "width: 70em;", null);
 
             encodeHeader(curricularPeriod);
@@ -203,7 +199,7 @@ public class UIDegreeCurricularPlan extends UIInput {
     }
     
     private void encodeCourseGroupOptions(CurricularPeriod curricularPeriod) throws IOException {
-        writer.startElement("td", this);
+        writer.startElement("th", this);
         writer.writeAttribute("class", "aright", null);
         writer.writeAttribute("colspan", 3, null);
         if (!this.showRules) {
@@ -217,7 +213,7 @@ public class UIDegreeCurricularPlan extends UIInput {
                             "degreeCurricularPlanID") + "&curricularYearID=" + curricularPeriod.getParent().getOrder()
                     + "&curricularSemesterID=" + curricularPeriod.getOrder(), "associate.curricular.course");
         }
-        writer.endElement("td");
+        writer.endElement("th");
     }
     
     private List<Double> encodeCurricularCourses(List<Context> contexts) throws IOException {
@@ -264,7 +260,7 @@ public class UIDegreeCurricularPlan extends UIInput {
 
         writer.startElement("td", this);
         writer.writeAttribute("class", "aright highlight2", null);
-        writer.writeAttribute("style", "width: 7em;", null);
+        writer.writeAttribute("style", "width: 9em;", null);
         writer.append(this.getBundleValue("BolonhaManagerResources", "credits")).append(" ");
         writer.append(String.valueOf(sums.get(3)));
         writer.endElement("td");
