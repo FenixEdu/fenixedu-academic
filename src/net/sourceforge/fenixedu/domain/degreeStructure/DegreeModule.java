@@ -16,6 +16,7 @@ public abstract class DegreeModule extends DegreeModule_Base {
     public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
             ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
         checkContextsFor(parentCourseGroup, curricularPeriod);
+        parentCourseGroup.checkDuplicateChildNames(getName(), getNameEn());
         return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
     

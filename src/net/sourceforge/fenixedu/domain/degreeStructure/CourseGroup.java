@@ -104,41 +104,46 @@ public class CourseGroup extends CourseGroup_Base {
     public void setName(String name) {
         super.setName(name);
     }
-    
-    public void checkDuplicateChildNames(final String name, final String nameEn) throws DomainException  {
+
+    public void checkDuplicateChildNames(final String name, final String nameEn) throws DomainException {
         String normalizedName = StringFormatter.normalize(name);
         String normalizedNameEn = StringFormatter.normalize(nameEn);
-        if(!verifyNames(normalizedName, normalizedNameEn)){
+        if (!verifyNames(normalizedName, normalizedNameEn)) {
             throw new DomainException("error.existingCourseGroupWithSameName");
         }
     }
-    
-    public void checkDuplicateBrotherNames(final String name, final String nameEn) throws DomainException  {
+
+    public void checkDuplicateBrotherNames(final String name, final String nameEn)
+            throws DomainException {
         String normalizedName = StringFormatter.normalize(name);
         String normalizedNameEn = StringFormatter.normalize(nameEn);
         for (Context parentContext : getDegreeModuleContexts()) {
-            DegreeModule parentDegreeModule = parentContext.getDegreeModule();
-            if (parentDegreeModule instanceof CourseGroup) {
-                if(!((CourseGroup) parentDegreeModule).verifyNames(normalizedName, normalizedNameEn)){
-                    throw new DomainException("error.existingCourseGroupWithSameName");
-                }
-            }           
+            CourseGroup parentCourseGroup = parentContext.getCourseGroup();
+            if (!parentCourseGroup.verifyNames(normalizedName, normalizedNameEn, this)) {
+                throw new DomainException("error.existingCourseGroupWithSameName");
+            }
         }
     }
+
+    private boolean verifyNames(String normalizedName, String normalizedNameEn) {
+        return verifyNames(normalizedName, normalizedNameEn, this);
+    }
     
-    private boolean verifyNames(String normalizedName, String normalizedNameEn){
+    private boolean verifyNames(String normalizedName, String normalizedNameEn, DegreeModule excludedModule) {
         for (Context context : getCourseGroupContexts()) {
             DegreeModule degreeModule = context.getDegreeModule();
-            if (degreeModule != this) {                
-                if(degreeModule.getName() != null && StringFormatter.normalize(degreeModule.getName()).equals(normalizedName)){
+            if (degreeModule != excludedModule) {
+                if (degreeModule.getName() != null
+                        && StringFormatter.normalize(degreeModule.getName()).equals(normalizedName)) {
                     return false;
                 }
-                if(degreeModule.getNameEn() != null && StringFormatter.normalize(degreeModule.getNameEn()).equals(normalizedNameEn)){
+                if (degreeModule.getNameEn() != null
+                        && StringFormatter.normalize(degreeModule.getNameEn()).equals(normalizedNameEn)) {
                     return false;
                 }
             }
         }
         return true;
     }
-    
+
 }

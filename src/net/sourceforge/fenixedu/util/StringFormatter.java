@@ -171,7 +171,7 @@ public class StringFormatter {
      * @return  the capitalized string.
      */
     public static String prettyPrint(String uglyDuckling) {
-        uglyDuckling = removeDuplicateSpaces(uglyDuckling);
+        uglyDuckling = removeDuplicateSpaces(uglyDuckling.trim());
         String[] lowerCaseName = uglyDuckling.toLowerCase().split(" ");
         StringBuffer capitalizedName = new StringBuffer();
 
