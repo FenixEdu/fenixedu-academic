@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoShiftWithInfoExecutionCou
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudent;
 import net.sourceforge.fenixedu.dataTransferObject.enrollment.shift.InfoShiftEnrollment;
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -37,7 +38,6 @@ import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionCourse;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionDegree;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentStudent;
-import net.sourceforge.fenixedu.persistenceTier.IPersistentStudentCurricularPlan;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -245,9 +245,6 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
         List executionCourseList = persistentExecutionCourse.readByExecutionPeriodAndExecutionDegree(
                 executionPeriod.getIdInternal(), executionDegree.getDegreeCurricularPlan().getName(),
                 executionDegree.getDegreeCurricularPlan().getDegree().getSigla());
-        if (executionCourseList == null || executionCourseList.size() <= 0) {
-            throw new FenixServiceException("errors.impossible.operation");
-        }
 
         ListIterator listIterator = executionCourseList.listIterator();
         List infoExecutionCourseList = new ArrayList();
@@ -270,6 +267,11 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
             List infoExecutionDegreeList, Integer executionDegreeIdChosen, Student student)
             throws ExcepcaoPersistencia, FenixServiceException {
 
+        final ExecutionDegree executionDegreeChosen = (ExecutionDegree) persistentObject.readByOID(ExecutionDegree.class, executionDegreeIdChosen);
+        if (executionDegreeChosen != null && executionDegreeChosen.getExecutionYear().getState().equals(PeriodState.CURRENT)) {
+            return InfoExecutionDegree.newInfoFromDomain(executionDegreeChosen);
+        }
+
         final StudentCurricularPlan studentCurricularPlan = student.getActiveStudentCurricularPlan();
         if (studentCurricularPlan == null) {
             throw new FenixServiceException("errors.impossible.operation");
@@ -279,6 +281,15 @@ public class PrepareInfoShiftEnrollmentByStudentNumber extends Service {
             final ExecutionYear executionYear = executionDegree.getExecutionYear();
             if (executionYear.getState().equals(PeriodState.CURRENT)) {
                 return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+            }
+        }
+        final Degree degree = degreeCurricularPlan.getDegree();
+        for (final DegreeCurricularPlan otherDegreeCurricularPlan : degree.getDegreeCurricularPlans()) {
+            for (final ExecutionDegree executionDegree : otherDegreeCurricularPlan.getExecutionDegrees()) {
+                final ExecutionYear executionYear = executionDegree.getExecutionYear();
+                if (executionYear.getState().equals(PeriodState.CURRENT)) {
+                    return InfoExecutionDegree.newInfoFromDomain(executionDegree);
+                }
             }
         }
         throw new FenixServiceException("errors.impossible.operation");
