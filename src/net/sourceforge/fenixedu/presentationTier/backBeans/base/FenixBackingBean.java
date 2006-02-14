@@ -154,15 +154,23 @@ public class FenixBackingBean {
     }
     
     protected String getFormatedMessage(final String bundleName, final String key, final String ... args) {
-    	ResourceBundle bundle = getResourceBundle(bundleName);
-    	String message = bundle.getString(key);
-    	if(message != null) {
-    		for(int i = 0; args.length > i; i++) {
-    			String substring = "{" + i + "}";
-    			message = StringUtils.replace(message, substring, args[i]);
-    		}
-    	}
-    	return message;
+    	final ResourceBundle bundle = getResourceBundle(bundleName);
+    	return formatMessage(key, bundle, args);
+    }
+
+    protected String getFormatedMessage(final ResourceBundle bundle, final String key, final String ... args) {
+        return formatMessage(key, bundle, args);
+    }
+    
+    private String formatMessage(final String key, ResourceBundle bundle, final String... args) {
+        String message = bundle.getString(key);
+        if(message != null) {
+            for(int i = 0; args.length > i; i++) {
+                String substring = "{" + i + "}";
+                message = StringUtils.replace(message, substring, args[i]);
+            }
+        }
+        return message;
     }
 
     protected Double getAndHoldDoubleParameter(final String parameterName) {
