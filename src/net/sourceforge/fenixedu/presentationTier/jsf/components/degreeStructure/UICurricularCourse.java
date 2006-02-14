@@ -128,6 +128,8 @@ public class UICurricularCourse extends UIDegreeModule {
             writer.append(((CurricularCourse)this.degreeModule).getEctsCredits().toString());
         } else {
             writer.append("&nbsp;");
+            writer.endElement("td");
+            writer.startElement("td", this);
         }
         writer.endElement("td");
 
