@@ -165,7 +165,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             }
         } else {
             writer.startElement("table", this);
-            writer.writeAttribute("class", "showinfo3 sp thleft", null);
+            writer.writeAttribute("class", "showinfo3", null);
             writer.writeAttribute("style", "width: 70em;", null);
 
             encodeHeader(curricularPeriod);
@@ -185,6 +185,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.writeAttribute("class", "bgcolor2", null);
         
         writer.startElement("th", this);
+        writer.writeAttribute("class", "aleft", null);        
         writer.writeAttribute("colspan", (this.toEdit) ? 3 : 5, null);
         writer.startElement("strong", this);
         writer.append(curricularPeriod.getFullLabel());
