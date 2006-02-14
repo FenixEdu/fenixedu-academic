@@ -60,7 +60,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
                             List<CurricularCourse> curricularCoursesToIgnore = new ArrayList();
                             curricularCoursesToIgnore.add(curricularCourse);
                             int done4year1sem = countDoneOrEnrolledCurricularCoursesExcept(ccgProd4Year1Sem,
-                                    curricularCoursesToIgnore);
+                                    curricularCoursesToIgnore, executionPeriod);
                             if (done4year1sem >= 1) {
                                 count++;
                             }
@@ -70,7 +70,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
                             List<CurricularCourse> curricularCoursesToIgnore = new ArrayList();
                             curricularCoursesToIgnore.add(curricularCourse);
                             int number = countDoneOrEnrolledCurricularCoursesExcept(ccgProd5Year1Sem,
-                                    curricularCoursesToIgnore);
+                                    curricularCoursesToIgnore, executionPeriod);
                             if (number >= 1) {
                                 count++;
                             }
@@ -166,7 +166,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
 
     private int countDoneOrEnrolledCurricularCoursesExcept(
             CurricularCourseGroup optionalCurricularCourseGroup,
-            List<CurricularCourse> curricularCoursesNotToCount) {
+            List<CurricularCourse> curricularCoursesNotToCount, ExecutionPeriod executionPeriod) {
         int count = 0;
         int size2 = optionalCurricularCourseGroup.getCurricularCourses().size();
         for (int j = 0; j < size2; j++) {
@@ -174,7 +174,7 @@ public class StudentCurricularPlanLEM extends StudentCurricularPlanLEM_Base {
                     .get(j);
             if (!curricularCoursesNotToCount.contains(curricularCourse)) {
 
-                if (isCurricularCourseEnrolled(curricularCourse)
+                if (isCurricularCourseEnrolledInExecutionPeriod(curricularCourse, executionPeriod)
                         || isCurricularCourseApproved(curricularCourse)) {
                     count++;
                 }
