@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -20,13 +21,16 @@ public class CourseGroupPredicates {
 
         public boolean evaluate(CourseGroup cg) {
 
-            
             DegreeCurricularPlan parentDegreeCurricularPlan = cg.getParentDegreeCurricularPlan();
             if (parentDegreeCurricularPlan.getCurricularStage().equals(CurricularStage.OLD)) {
                 return true;
             }
 
             Person person = AccessControl.getUserView().getPerson();
+            if(person.hasRole(RoleType.MANAGER)){
+                return true;
+            }
+            
             return parentDegreeCurricularPlan.getCurricularPlanMembersGroup().isMember(person);
         }
 
