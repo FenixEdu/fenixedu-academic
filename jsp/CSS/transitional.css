@@ -130,24 +130,26 @@ background-color: #ffb;
 .bgcolor1 { background-color: #fcfcf0; }
 .bgcolor2 { background-color: #fbfbdd; }
 
-.showinfo1 {
+.showinfo1, .showinfo3 {
 border-collapse: collapse;
 margin: 1em 0;
 }
-.showinfo1 th {
-border-top: 1px dotted #bbb;
-border-bottom: 1px dotted #bbb;
+.showinfo1 th, .showinfo3 th {
 text-align: right; 
 vertical-align: top;
 padding: 0.5em;
 font-weight: normal;
 }
 
-.showinfo1 td {
-border-top: 1px dotted #bbb;
-border-bottom: 1px dotted #bbb;
+.showinfo1 td, .showinfo3 td {
 padding: 0.5em;
 }
+
+.showinfo1 th { border-top: 1px dotted #bbb; border-bottom: 1px dotted #bbb; }
+.showinfo1 td { border-top: 1px dotted #bbb; border-bottom: 1px dotted #bbb; }
+.showinfo3 th { border-bottom: 1px solid #ccc; }
+.showinfo3 td { border-bottom: 1px solid #eee; }
+
 
 .thleft th { text-align: left;}
 /*.sp td { padding: 0.3em 0.5em; }*/
