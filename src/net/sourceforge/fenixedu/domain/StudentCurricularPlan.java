@@ -23,7 +23,10 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
+import net.sourceforge.fenixedu.persistenceTier.IPersistentExecutionPeriod;
+import net.sourceforge.fenixedu.persistenceTier.PersistenceSupportFactory;
 import net.sourceforge.fenixedu.tools.enrollment.AreaType;
+import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -137,7 +140,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     public List getCurricularCoursesToEnroll(ExecutionPeriod executionPeriod)
             throws FenixDomainException {
 
-        calculateStudentAcumulatedEnrollments();
+        calculateStudentAcumulatedEnrollments(executionPeriod);
 
         List setOfCurricularCoursesToEnroll = getCommonBranchAndStudentBranchesCourses(executionPeriod);
 
@@ -339,7 +342,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List getAllStudentEnrolledEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
 
-        calculateStudentAcumulatedEnrollments();
+        calculateStudentAcumulatedEnrollments(executionPeriod);
         return initAcumulatedEnrollments((List) CollectionUtils.select(
                 getStudentEnrollmentsWithEnrolledState(), new Predicate() {
 
@@ -352,7 +355,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     public List getAllStudentEnrollmentsInExecutionPeriod(final ExecutionPeriod executionPeriod) {
 
-        calculateStudentAcumulatedEnrollments();
+        calculateStudentAcumulatedEnrollments(executionPeriod);
         return initAcumulatedEnrollments((List) CollectionUtils.select(getEnrolments(), new Predicate() {
 
             public boolean evaluate(Object arg0) {
@@ -520,9 +523,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     // BEGIN: Only for enrollment purposes (PROTECTED)
     // -------------------------------------------------------------
 
-    protected void calculateStudentAcumulatedEnrollments() {
+    protected void calculateStudentAcumulatedEnrollments(ExecutionPeriod executionPeriod) {
         if (getAcumulatedEnrollmentsMap() == null) {
-            List enrollments = getAllEnrollmentsExceptTheOnesWithEnrolledState();
+            List enrollments = getAllEnrollmentsExceptTheOnesWithEnrolledState(executionPeriod);
 
             List curricularCourses = (List) CollectionUtils.collect(enrollments, new Transformer() {
                 public Object transform(Object obj) {
@@ -689,18 +692,35 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
         });
     }
 
-    protected List getAllEnrollmentsExceptTheOnesWithEnrolledState() {
-
+    protected List getAllEnrollmentsExceptTheOnesWithEnrolledState(final ExecutionPeriod executionPeriod) {
+    	final ExecutionPeriod actualExecutionCourse = getActualExecutionPeriod(executionPeriod);
         return (List) CollectionUtils.select(getAllEnrollments(), new Predicate() {
             public boolean evaluate(Object obj) {
                 Enrolment enrollment = (Enrolment) obj;
-                return !enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED)
-                        && !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED);
+                return !enrollment.getEnrollmentState().equals(EnrollmentState.ANNULED) && !(enrollment.getEnrollmentState().equals(EnrollmentState.ENROLLED) && enrollment.getExecutionPeriod().equals(actualExecutionCourse)); 
             }
         });
     }
 
-    protected Map getAcumulatedEnrollmentsMap() {
+	private ExecutionPeriod getActualExecutionPeriod(ExecutionPeriod executionPeriod) {
+		ExecutionPeriod executionPeriodAux = executionPeriod;
+		while(executionPeriodAux != null) {
+			if(executionPeriodAux.getState().equals(PeriodState.CURRENT)) {
+				return executionPeriodAux;
+			}
+			executionPeriodAux = executionPeriodAux.getNextExecutionPeriod();
+		}
+		executionPeriodAux = executionPeriod;
+		while(executionPeriodAux != null) {
+			if(executionPeriodAux.getState().equals(PeriodState.CURRENT)) {
+				return executionPeriodAux;
+			}
+			executionPeriodAux = executionPeriodAux.getPreviousExecutionPeriod();
+		}
+		return null;
+	}
+
+	protected Map getAcumulatedEnrollmentsMap() {
         return acumulatedEnrollments;
     }
 
