@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.DomainFactory;
@@ -41,12 +42,15 @@ public class CreateCompetenceCourse extends Service {
 
         for (final CompetenceCourse competenceCourse : competenceCourses) {
             if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
-                throw new FenixServiceException("error.existingCompetenceCourseWithSameName");
+                throw new ExistingCompetenceCourseInformationException(
+                        "error.existingCompetenceCourseWithSameName", competenceCourse
+                                .getDepartmentUnit().getName());
             }
             if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
-                throw new FenixServiceException("error.existingCompetenceCourseWithSameNameEn");
+                throw new ExistingCompetenceCourseInformationException(
+                        "error.existingCompetenceCourseWithSameNameEn", competenceCourse
+                                .getDepartmentUnit().getName());
             }
         }
     }
-    
 }

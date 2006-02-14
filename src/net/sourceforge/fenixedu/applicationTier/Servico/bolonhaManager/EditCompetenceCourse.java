@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
@@ -65,23 +66,28 @@ public class EditCompetenceCourse extends Service {
         return (!url.startsWith(httpString)) ? httpString + url : url;  
     }
     
-    private void checkIfCanEditCompetenceCourse(final CompetenceCourse competenceCourseToEdit, final String name,
-            final String nameEn, final String acronym) throws ExcepcaoPersistencia, FenixServiceException {
-        
+    private void checkIfCanEditCompetenceCourse(final CompetenceCourse competenceCourseToEdit,
+            final String name, final String nameEn, final String acronym) throws ExcepcaoPersistencia,
+            FenixServiceException {
+
         String normalizedName = StringFormatter.normalize(name);
         String normalizedNameEn = StringFormatter.normalize(nameEn);
-        
-        final List<CompetenceCourse> competenceCourses = persistentSupport.getIPersistentCompetenceCourse().readFromNewDegreeStructure();
+
+        final List<CompetenceCourse> competenceCourses = persistentSupport
+                .getIPersistentCompetenceCourse().readFromNewDegreeStructure();
         for (final CompetenceCourse competenceCourse : competenceCourses) {
             if (competenceCourse != competenceCourseToEdit) {
                 if (StringFormatter.normalize(competenceCourse.getName()).equals(normalizedName)) {
-                    throw new FenixServiceException("error.existingCompetenceCourseWithSameName");
+                    throw new ExistingCompetenceCourseInformationException(
+                            "error.existingCompetenceCourseWithSameName", competenceCourse
+                                    .getDepartmentUnit().getName());
                 }
                 if (StringFormatter.normalize(competenceCourse.getNameEn()).equals(normalizedNameEn)) {
-                    throw new FenixServiceException("error.existingCompetenceCourseWithSameNameEn");
+                    throw new ExistingCompetenceCourseInformationException(
+                            "error.existingCompetenceCourseWithSameNameEn", competenceCourse
+                                    .getDepartmentUnit().getName());
                 }
             }
         }
     }
-    
 }

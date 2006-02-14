@@ -13,6 +13,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingCompetenceCourseInformationException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.bolonhaManager.CourseLoad;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
@@ -555,9 +556,11 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             return "setCompetenceCourseLoad";
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.creatingCompetenceCourse"));
+        } catch (ExistingCompetenceCourseInformationException e) {
+            addErrorMessage(getFormatedMessage("resources/BolonhaManagerResources", e.getKey(), e.getArgs()));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
-        }
+        } 
         return "";
     }
     
@@ -593,6 +596,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
             return "editCompetenceCourseMainPage";
         } catch (FenixFilterException e) {
             addErrorMessage(bolonhaResources.getString("error.editingCompetenceCourse"));
+        } catch (ExistingCompetenceCourseInformationException e) {
+            addErrorMessage(getFormatedMessage("resources/BolonhaManagerResources", e.getKey(), e.getArgs()));
         } catch (FenixServiceException e) {
             addErrorMessage(bolonhaResources.getString(e.getMessage()));
         } catch (DomainException e) {
