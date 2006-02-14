@@ -255,7 +255,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("td", this);
         writer.writeAttribute("class", "highlight2 smalltxt", null);
         writer.writeAttribute("align", "aright", null);
-        writer.writeAttribute("style", "width: 13em;", null);
+        //writer.writeAttribute("style", "width: 13em;", null);
         
         encodeSumsLoadFooterElement(sums, "contactLessonHoursAcronym", 0);
         encodeSumsLoadFooterElement(sums, "autonomousWorkAcronym", 1);
