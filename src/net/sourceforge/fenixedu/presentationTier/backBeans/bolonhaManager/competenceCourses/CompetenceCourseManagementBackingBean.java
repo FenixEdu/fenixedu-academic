@@ -96,17 +96,17 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     public List<CompetenceCourse> getDepartmentApprovedCompetenceCourses() throws FenixFilterException, FenixServiceException {
         List<CompetenceCourse> result = new ArrayList<CompetenceCourse>();
-        
-        for (Unit scientificAreaUnit : getSelectedDepartmentUnit().getScientificAreaUnits()) {
-            for (Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
-                for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
-                    if (competenceCourse.getCurricularStage().equals(CurricularStage.APPROVED)) {
-                        result.add(competenceCourse);                        
+        if (getSelectedDepartmentUnit() != null) {
+            for (Unit scientificAreaUnit : getSelectedDepartmentUnit().getScientificAreaUnits()) {
+                for (Unit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+                    for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+                        if (competenceCourse.getCurricularStage().equals(CurricularStage.APPROVED)) {
+                            result.add(competenceCourse);                        
+                        }
                     }
                 }
             }
         }
-        
         return result;
     }
     

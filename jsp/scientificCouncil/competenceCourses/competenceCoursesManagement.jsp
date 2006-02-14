@@ -44,58 +44,54 @@
 			<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 		</h:outputLink>
 
-		<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
-			<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
-				<h:column>
-					<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
-					<h:panelGroup rendered="#{empty scientificAreaUnit.competenceCourseGroupUnits}">
-						<h:outputText style="font-style:italic" value="#{scouncilBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/>
-					</h:panelGroup>
-					
-					
-					<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
-						<h:outputText value="<ul class='list3'>" escape="false"/>
-						<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
-								<h:column>
-									<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/>
-									<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
-											styleClass="showinfo1 smallmargin mtop05" style="width: 50em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
-											
-											<h:column>
-												<h:outputText value="#{competenceCourse.name}"/>
-												<h:outputText value=" <em>(#{enumerationBundle[competenceCourse.curricularStage]})</em>" escape="false"/>
-											</h:column>
+		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit"
+				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
+			<h:column>
+				<h:outputText value="<p class='mtop2 mbottom0'><strong>#{scientificAreaUnit.name}</strong></p>" escape="false"/>
+				<h:panelGroup rendered="#{empty scientificAreaUnit.competenceCourseGroupUnits}">
+					<h:outputText style="font-style:italic" value="#{scouncilBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/>
+				</h:panelGroup>
+				
+				<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
+					<h:outputText value="<ul class='list3'>" escape="false"/>
+					<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
+							<h:column>
+								<h:outputText value="<li class='tree_label' style='background-position: 0em 0.5em;'>#{competenceCourseGroupUnit.name}" escape="false"/>
+								<h:dataTable value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse"
+										styleClass="showinfo1 smallmargin mtop05" style="width: 50em;" rowClasses="color2" columnClasses=",aright" rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 										
-											<h:column>
-												<h:outputLink value="showCompetenceCourse.faces">
-													<h:outputText value="#{scouncilBundle['show']}"/>
-													<f:param name="action" value="ccm"/>
+										<h:column>
+											<h:outputText value="#{competenceCourse.name}"/>
+											<h:outputText value=" <em>(#{enumerationBundle[competenceCourse.curricularStage]})</em>" escape="false"/>
+										</h:column>
+									
+										<h:column>
+											<h:outputLink value="showCompetenceCourse.faces">
+												<h:outputText value="#{scouncilBundle['show']}"/>
+												<f:param name="action" value="ccm"/>
+												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+											</h:outputLink>
+											<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}">
+												<h:outputText value=" , "/>
+												<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">
 													<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-												</h:outputLink>
-												<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}">
-													<h:outputText value=" , "/>
-													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">
-														<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-													</fc:commandLink>	
-													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}">
-														<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-													</fc:commandLink>
-												</h:panelGroup>												
-											</h:column>
-											
-									</h:dataTable>
-									<h:outputText value="</li>" escape="false"/>
-								</h:column>
-						</h:dataTable>
-						<h:outputText value="</ul>" escape="false"/>
-					</h:panelGroup>
-				</h:column>
-			</h:dataTable>
-		</h:panelGroup>
-		
-			
+												</fc:commandLink>	
+												<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}">
+													<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+												</fc:commandLink>
+											</h:panelGroup>												
+										</h:column>
+										
+								</h:dataTable>
+								<h:outputText value="</li>" escape="false"/>
+							</h:column>
+					</h:dataTable>
+					<h:outputText value="</ul>" escape="false"/>
+				</h:panelGroup>
+			</h:column>
+		</h:dataTable>
 	</h:form>
 </ft:tilesView>
