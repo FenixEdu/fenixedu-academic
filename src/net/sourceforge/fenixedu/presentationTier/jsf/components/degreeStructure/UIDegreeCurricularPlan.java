@@ -171,7 +171,7 @@ public class UIDegreeCurricularPlan extends UIInput {
             encodeHeader(curricularPeriod);
             if (curricularPeriod.hasAnyContexts()) {
                 List<Double> sums = encodeCurricularCourses(curricularPeriod.getContexts());
-                encodeSumsFooter(sums);
+                //encodeSumsFooter(sums);
             } else {
                 encodeEmptySemesterInfo();
             }
