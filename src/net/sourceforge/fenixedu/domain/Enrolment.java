@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
@@ -116,12 +114,18 @@ public class Enrolment extends Enrolment_Base {
             attends.removeEnrolment();
 
             if (!attends.hasAnyAssociatedMarks() && !attends.hasAnyStudentGroups()) {
+                boolean hasShiftEnrolment = false;
                 for (Shift shift : attends.getDisciplinaExecucao().getAssociatedShifts()) {
-                    shift.removeStudents(student);
+                    if (shift.hasStudents(student)) {
+                        hasShiftEnrolment = true;
+                        break;
+                    }
                 }
 
-            attends.delete();
-        }
+                if (!hasShiftEnrolment) {
+                    attends.delete();
+                }
+            }
         }
 
         Iterator<EnrolmentEvaluation> evalsIter = getEvaluationsIterator();
