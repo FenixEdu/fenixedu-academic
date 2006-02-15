@@ -13,12 +13,10 @@ public abstract class DegreeModule extends DegreeModule_Base {
         for (;!getCurricularRules().isEmpty(); getCurricularRules().get(0).delete());
     }
     
-    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
-            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
-        checkContextsFor(parentCourseGroup, curricularPeriod);
-        parentCourseGroup.checkDuplicateChildNames(getName(), getNameEn());
-        return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
-    }
+    public abstract Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
+            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod);
+    
+    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
     
     public void editContext(Context context, CourseGroup courseGroup, CurricularPeriod curricularPeriod) {
         if (context.getCourseGroup() != courseGroup || context.getCurricularPeriod() != curricularPeriod) {
@@ -35,8 +33,6 @@ public abstract class DegreeModule extends DegreeModule_Base {
             delete();
         }
     }
-    
-    protected abstract void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod);
     
     public boolean isRoot() {
         return (getNewDegreeCurricularPlan() != null);

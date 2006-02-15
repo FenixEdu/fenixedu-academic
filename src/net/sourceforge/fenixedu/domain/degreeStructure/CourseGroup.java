@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.accessControl.Checked;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
@@ -88,6 +89,13 @@ public class CourseGroup extends CourseGroup_Base {
         }
 
         return result;
+    }
+    
+    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
+            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        checkContextsFor(parentCourseGroup, curricularPeriod);
+        parentCourseGroup.checkDuplicateChildNames(getName(), getNameEn());
+        return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
     }
 
     protected void checkContextsFor(final CourseGroup parentCourseGroup,

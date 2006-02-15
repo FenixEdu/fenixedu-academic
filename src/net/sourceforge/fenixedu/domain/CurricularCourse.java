@@ -516,6 +516,12 @@ public class CurricularCourse extends CurricularCourse_Base {
         return results;
     }
     
+    public Context addContext(CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod,
+            ExecutionPeriod beginExecutionPeriod, ExecutionPeriod endExecutionPeriod) {
+        checkContextsFor(parentCourseGroup, curricularPeriod);
+        return new Context(parentCourseGroup, this, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);        
+    }
+    
     protected void checkContextsFor(final CourseGroup parentCourseGroup, final CurricularPeriod curricularPeriod) {
         for (final Context context : this.getDegreeModuleContexts()) {
             if (context.getCourseGroup() == parentCourseGroup && context.getCurricularPeriod() == curricularPeriod) {
