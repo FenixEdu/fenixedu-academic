@@ -93,5 +93,9 @@
 				</h:panelGroup>
 			</h:column>
 		</h:dataTable>
+		<h:panelGroup rendered="#{empty CompetenceCourseManagement.scientificAreaUnits && !empty CompetenceCourseManagement.selectedDepartmentUnitID}">
+			<h:outputText  value="<i>#{scouncilBundle['noScientificAreaUnits']}<i><br/>" escape="false"/>
+		</h:panelGroup>
+		
 	</h:form>
 </ft:tilesView>
