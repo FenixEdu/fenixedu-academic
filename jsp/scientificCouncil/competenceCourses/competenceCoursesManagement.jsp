@@ -33,8 +33,8 @@
 			</fc:dataRepeater>
 			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
-		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><i>#{bolonhaBundle['label.empty.group.members']}</i><br/>" escape="false" />
+		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels && !empty CompetenceCourseManagement.selectedDepartmentUnitID}">
+			<h:outputText value="<br/><i>#{scouncilBundle['label.empty.group.members']}</i><br/>" escape="false" />
 		</h:panelGroup>
 		
 
