@@ -23,7 +23,7 @@
 			<h:outputText value="</ul>" escape="false"/>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{empty CompetenceCourseManagement.groupMembersLabels}">
-			<h:outputText value="<br/><i>#{bolonhaBundle['label.empty.group.members']}</i><br/>" escape="false" />
+			<h:outputText value="<i>#{bolonhaBundle['label.empty.group.members']}</i><br/>" escape="false" />
 		</h:panelGroup>
 
 
@@ -104,12 +104,12 @@
 		</h:panelGroup>		
 	
 		<h:panelGroup rendered="#{!CompetenceCourseManagement.canView}">
-			<h:outputText  value="<br/>#{bolonhaBundle['notMemberInCompetenceCourseManagementGroup']}<br/>" escape="false"/>
+			<h:outputText value="<br/>#{bolonhaBundle['notMemberInCompetenceCourseManagementGroup']}<br/>" escape="false"/>
 		</h:panelGroup>
 	
 	</h:panelGroup>
 	<h:panelGroup rendered="#{empty CompetenceCourseManagement.personDepartment}">
-		<h:outputText  value="#{bolonhaBundle['no.current.department.working.place']}<br/>" escape="false"/>
+		<h:outputText value="<i>#{bolonhaBundle['no.current.department.working.place']}</i><br/>" escape="false"/>
 	</h:panelGroup>
 	
 
