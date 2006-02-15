@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
-import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 
 public class CreateCourseGroup extends Service {
@@ -35,12 +34,7 @@ public class CreateCourseGroup extends Service {
         final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 
-        try {
-            degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null,
-                    beginExecutionPeriod, null);
-        } catch (FenixDomainException e) {
-            throw new FenixServiceException(e.getMessage());
-        }
+        degreeCurricularPlan.createCourseGroup(parentCourseGroup, name, nameEn, null, beginExecutionPeriod, null);
     }
     
 }
