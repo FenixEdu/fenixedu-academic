@@ -37,9 +37,6 @@ public class CreateCandidateSituation extends Service {
         candidateSituation.setValidation(new State(State.ACTIVE));
         candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
 
-        // Update Candidate
-        masterDegreeCandidate.getSituations().add(candidateSituation);
-
     }
 
 }

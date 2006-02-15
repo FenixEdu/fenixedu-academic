@@ -59,8 +59,6 @@ public class EditMasterDegreeCandidate extends Service {
             newCandidateSituation.setSituation(newCandidate.getInfoCandidateSituation().getSituation());
             newCandidateSituation.setValidation(new State(State.ACTIVE));
 
-            masterDegreeCandidate.getSituations().add(newCandidateSituation);
-
             if (person.getEmail() != null) {
                 sendEmailToCandidate(masterDegreeCandidate, newCandidateSituation);
             }
