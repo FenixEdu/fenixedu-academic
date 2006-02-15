@@ -7,7 +7,9 @@ import java.util.List;
 import net.sourceforge.fenixedu.accessControl.AccessControl;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.renderers.CheckBoxOptionListRenderer;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 
 public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
     private String choiceType;
@@ -28,6 +30,16 @@ public class InputCheckBoxListRenderer extends CheckBoxOptionListRenderer {
 
     public void setFilterClass(String filterClass) {
         this.filterClass = filterClass;
+    }
+
+    @Override
+    protected Converter getConverter() {
+        if (getProviderClass() != null) {
+            return super.getConverter();
+        }
+        else {
+            return new DomainObjectKeyArrayConverter();
+        }
     }
 
     @Override

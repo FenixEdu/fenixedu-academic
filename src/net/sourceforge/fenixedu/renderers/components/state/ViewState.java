@@ -180,6 +180,10 @@ public class ViewState implements IViewState {
 
     public void setUser(UserIdentity user) {
         this.user = user;
+        
+        if (getMetaObject() != null) {
+            getMetaObject().setUser(user);
+        }
     }
 
     public String getLayout() {

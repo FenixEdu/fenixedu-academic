@@ -23,7 +23,6 @@ public class EditRequest extends HttpServletRequestWrapper {
             
             this.viewState.setRequest(this);
             this.viewState.setUser(UserIdentityFactory.create(this));
-            this.viewState.getMetaObject().setUser(this.viewState.getUser());
         }
         
         return this.viewState;

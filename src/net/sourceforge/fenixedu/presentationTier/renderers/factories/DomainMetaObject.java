@@ -68,6 +68,14 @@ public class DomainMetaObject implements MetaObject {
 
     public void setUser(UserIdentity user) {
         this.userIdentity = user;
+        
+        List<MetaSlot> allSlots = new ArrayList<MetaSlot>();
+        allSlots.addAll(getSlots());
+        allSlots.addAll(getHiddenSlots());
+        
+        for (MetaSlot slot : allSlots) {
+            slot.setUser(user);
+        }
     }
     
     public UserIdentity getUser() {

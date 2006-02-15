@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.factories;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
 import net.sourceforge.fenixedu.renderers.model.MetaObjectFactory;
 import net.sourceforge.fenixedu.renderers.model.SimpleMetaSlot;
+import net.sourceforge.fenixedu.renderers.model.UserIdentity;
 import net.sourceforge.fenixedu.renderers.utils.RenderKit;
 
 public class CachedMetaSlot extends SimpleMetaSlot {
@@ -14,6 +15,15 @@ public class CachedMetaSlot extends SimpleMetaSlot {
         super(metaObject, name);
         
         this.isCached = false;
+    }
+
+    @Override
+    public void setUser(UserIdentity user) {
+        super.setUser(user);
+        
+        if (this.cachedObject != null) {
+            this.cachedObject.setUser(user);
+        }
     }
 
     @Override
@@ -29,10 +39,17 @@ public class CachedMetaSlot extends SimpleMetaSlot {
     @Override
     public void setObject(Object object) {
         this.cachedObject = MetaObjectFactory.createObject(object, RenderKit.getInstance().findSchema(getSchema()));
+        this.cachedObject.setUser(getUser());
+        
         this.isCached = true;
     }
 
     public Object getCachedObject() {
-        return this.cachedObject.getObject();
+        if (this.isCached) {
+            return this.cachedObject.getObject();
+        }
+        else {
+            return null;
+        }
     }
 }

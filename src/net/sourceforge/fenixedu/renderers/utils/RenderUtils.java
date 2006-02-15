@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.renderers.utils;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu.renderers.components.state.ComponentLifeCycle;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.plugin.RenderersRequestProcessor;
@@ -262,10 +264,29 @@ public class RenderUtils {
     // TODO: check the use of the methods for potential problems with the renderers' common lifecycle
     //
     
+    /**
+     * Obtains the renderer's view state processed and contained in the current request.
+     */
     public static IViewState getViewState() {
         return (IViewState) RenderersRequestProcessor.getCurrentRequest().getAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME);
     }
     
+    /**
+     * Updates the current request to contain a custom view state. This methods is intended to be used
+     * with a view state obtained from it's serialized form and not directly with {@link #getViewState()}.
+     * After calling the method the request can be forwarded to the location the original view state
+     * was intended.
+     */
+    public static void setViewState(IViewState viewState) throws InstantiationException, IllegalAccessException, IOException, ClassNotFoundException {
+        HttpServletRequest currentRequest = RenderersRequestProcessor.getCurrentRequest();
+        
+        ComponentLifeCycle.getInstance().restoreComponent(viewState);
+        ComponentLifeCycle.getInstance().prepareDestination(viewState, currentRequest);
+    }
+
+    /**
+     * Removes the renderer's view state from the current request.
+     */
     public static void invalidateViewState() {
         RenderersRequestProcessor.getCurrentRequest().setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, null);
     }

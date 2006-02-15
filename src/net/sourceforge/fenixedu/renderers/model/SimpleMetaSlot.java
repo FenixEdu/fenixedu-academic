@@ -24,6 +24,8 @@ public class SimpleMetaSlot implements MetaSlot {
     private Properties properties;
     private Properties validatorProperties;
     private Class<Converter> converter;
+    
+    private transient UserIdentity user;
 
     public SimpleMetaSlot(MetaObject metaObject, String name) {
         super();
@@ -102,11 +104,11 @@ public class SimpleMetaSlot implements MetaSlot {
     }
 
     public void setUser(UserIdentity user) {
-        // no user needed
+        this.user = user;
     }
 
     public UserIdentity getUser() {
-        return null;
+        return this.user;
     }
 
     public Object getObject() {

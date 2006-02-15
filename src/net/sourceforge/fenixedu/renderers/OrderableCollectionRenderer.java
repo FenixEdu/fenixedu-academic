@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.renderers.components.HtmlTable;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableCell;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableHeader;
 import net.sourceforge.fenixedu.renderers.components.HtmlTableRow;
+import net.sourceforge.fenixedu.renderers.components.controllers.HtmlActionLinkController;
 import net.sourceforge.fenixedu.renderers.components.controllers.HtmlController;
 import net.sourceforge.fenixedu.renderers.components.state.IViewState;
 import net.sourceforge.fenixedu.renderers.contexts.InputContext;
@@ -201,7 +202,7 @@ public class OrderableCollectionRenderer extends InputRenderer {
         };
     }
     
-    private class SortColumnController extends HtmlController {
+    private class SortColumnController extends HtmlActionLinkController {
 
         private HtmlTable table;
         private MetaObject metaObject;
@@ -250,44 +251,38 @@ public class OrderableCollectionRenderer extends InputRenderer {
         }
 
         @Override
-        public void execute(IViewState viewState) {
-            HtmlActionLink link = (HtmlActionLink) getControlledComponent();
+        public void linkPressed(IViewState viewState, HtmlActionLink link) {
+            Boolean ascending = (Boolean) viewState.getAttribute(ORDER_ATTRIBUTE_NAME);
+            Integer index = (Integer) viewState.getAttribute(COLUMN_ATTRIBUTE_NAME);
             
-            if (link.isActivated()) {
-                viewState.setSkipUpdate(true);
-                
-                Boolean ascending = (Boolean) viewState.getAttribute(ORDER_ATTRIBUTE_NAME);
-                Integer index = (Integer) viewState.getAttribute(COLUMN_ATTRIBUTE_NAME);
-                
-                if (ascending != null && getIndex() == index.intValue()) {
-                    ascending = new Boolean(! ascending.booleanValue());
-                }
-                else {
-                    ascending = new Boolean(true);
-                    index = getIndex();
-                }
-                
-                viewState.setAttribute(ORDER_ATTRIBUTE_NAME, ascending);
-                viewState.setAttribute(COLUMN_ATTRIBUTE_NAME, index);
-                
-                List objects = new ArrayList((Collection) viewState.getMetaObject().getObject());
-                List sortedObjects = new ArrayList(objects);
-                
-                if (ascending) {
-                    Collections.sort(sortedObjects, new BeanComparator(getSlot().getName()));
-                }
-                else {
-                    Collections.sort(sortedObjects, new ReverseComparator(new BeanComparator(getSlot().getName())));
-                }
-                
-                Schema schema = RenderKit.getInstance().findSchema(getMetaObject().getSchema());
-                viewState.setMetaObject(MetaObjectFactory.createObject(sortedObjects, schema));
-                
-                List<HtmlTableRow> rows = getTable().getRows();
-                Collections.sort(rows, new RowComparator(rows, objects, sortedObjects));
-                
-                applySelectedStyle(getTable(), ascending, index);
+            if (ascending != null && getIndex() == index.intValue()) {
+                ascending = new Boolean(! ascending.booleanValue());
             }
+            else {
+                ascending = new Boolean(true);
+                index = getIndex();
+            }
+            
+            viewState.setAttribute(ORDER_ATTRIBUTE_NAME, ascending);
+            viewState.setAttribute(COLUMN_ATTRIBUTE_NAME, index);
+            
+            List objects = new ArrayList((Collection) viewState.getMetaObject().getObject());
+            List sortedObjects = new ArrayList(objects);
+            
+            if (ascending) {
+                Collections.sort(sortedObjects, new BeanComparator(getSlot().getName()));
+            }
+            else {
+                Collections.sort(sortedObjects, new ReverseComparator(new BeanComparator(getSlot().getName())));
+            }
+            
+            Schema schema = RenderKit.getInstance().findSchema(getMetaObject().getSchema());
+            viewState.setMetaObject(MetaObjectFactory.createObject(sortedObjects, schema));
+            
+            List<HtmlTableRow> rows = getTable().getRows();
+            Collections.sort(rows, new RowComparator(rows, objects, sortedObjects));
+            
+            applySelectedStyle(getTable(), ascending, index);
         }
         
         private void applySelectedStyle(HtmlTable table, Boolean ascending, Integer index) {

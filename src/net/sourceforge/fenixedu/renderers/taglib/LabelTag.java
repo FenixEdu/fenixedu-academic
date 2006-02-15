@@ -80,7 +80,7 @@ public class LabelTag extends BodyTagSupport {
             write(resources.getMessage(getKey()));
         }
         else {
-            throw new JspException("c");
+            throw new JspException("must specify a property or a key");
         }
         
         return EVAL_PAGE;

@@ -3,12 +3,8 @@ package net.sourceforge.fenixedu.renderers.components.state;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -128,12 +124,16 @@ public class ComponentLifeCycle {
         return instance.doLifeCycle(request);
     }
     
+    public static ComponentLifeCycle getInstance() {
+        return ComponentLifeCycle.instance;
+    }
+    
     public ActionForward doLifeCycle(HttpServletRequest request) throws Exception {
         
         EditRequest editRequest = new EditRequest(request);
         IViewState viewState = editRequest.getViewState();
 
-        HtmlComponent component = restoreComponent(editRequest);
+        HtmlComponent component = restoreComponent(viewState);
         
         viewState.setSkipUpdate(false);
         viewState.setCurrentDestination((ViewDestination) null);
@@ -153,17 +153,22 @@ public class ComponentLifeCycle {
 
         viewState.setValid(validateComponent(component));
 
+        if (viewState.isValid()) {
+            // updateMetaObject can get convert errors
+            viewState.setValid(updateMetaObject(collector, editRequest));
+        }
+        
         if (viewState.isValid() && !viewState.skipUpdate()) {
             // updateDomain can get convert errors
-            viewState.setValid(updateDomain(collector, editRequest));
+            updateDomain(collector, editRequest);
         }
 
         ViewDestination destination = getDestination(viewState);
-        prepareDestination(component, editRequest);
+        prepareDestination(viewState, editRequest);
 
         return buildForward(destination);
     }
-
+    
     private ViewDestination getDestination(IViewState viewState) {
         ViewDestination destination = viewState.getCurrentDestination();
         
@@ -213,13 +218,12 @@ public class ComponentLifeCycle {
         }
     }
 
-    private void prepareDestination(HtmlComponent component, EditRequest editRequest)
+    public void prepareDestination(IViewState viewState, HttpServletRequest request)
             throws IOException, ClassNotFoundException {
-        editRequest.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, editRequest.getViewState());
+        request.setAttribute(LifeCycleConstants.VIEWSTATE_PARAM_NAME, viewState);
     }
 
-    private HtmlComponent restoreComponent(EditRequest editRequest) throws IOException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        IViewState viewState = editRequest.getViewState();
+    public HtmlComponent restoreComponent(IViewState viewState) throws InstantiationException, IllegalAccessException {
         viewState.setPostBack(true);
         
         String layout = viewState.getLayout();
@@ -263,13 +267,18 @@ public class ComponentLifeCycle {
         }
     }
 
+    private void updateDomain(ComponentCollector collector, EditRequest editRequest) throws IOException, ClassNotFoundException {
+        IViewState viewState = editRequest.getViewState();
+        MetaObject metaObject = viewState.getMetaObject();
+        
+        metaObject.commit();
+    }
+    
     /**
      * @return true if no conversion error occurs
      */
-    private boolean updateDomain(ComponentCollector collector, EditRequest editRequest) throws Exception {
+    private boolean updateMetaObject(ComponentCollector collector, EditRequest editRequest) throws Exception {
         boolean hasConvertError = false;
-
-        Set<MetaObject> objectsToCommit = new HashSet<MetaObject>();
 
         List<HtmlFormComponent> formComponents = collector.getFormComponents();       
         for (HtmlFormComponent formComponent : formComponents) {
@@ -284,20 +293,11 @@ public class ComponentLifeCycle {
             try {
                 Object finalValue = formComponent.getConvertedValue(metaSlot);
                 metaSlot.setObject(finalValue);
-                
-                objectsToCommit.add(metaSlot.getMetaObject());
             } catch (Exception e) {
                 logger.warn("failed to do conversion for slot " + metaSlot.getName() + ": " + e);
 
                 addConvertError(editRequest, formComponent, metaSlot, e);
                 hasConvertError = true;
-            }
-        }
-        
-        if (!hasConvertError) {
-            // FIXME: cfgi, make this transactional for multiple object editing/creation
-            for (MetaObject object : objectsToCommit) {
-                    object.commit();
             }
         }
         

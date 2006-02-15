@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBox;
 import net.sourceforge.fenixedu.renderers.components.HtmlCheckBoxList;
 import net.sourceforge.fenixedu.renderers.components.HtmlComponent;
+import net.sourceforge.fenixedu.renderers.components.converters.Converter;
 import net.sourceforge.fenixedu.renderers.contexts.PresentationContext;
 import net.sourceforge.fenixedu.renderers.layouts.Layout;
 import net.sourceforge.fenixedu.renderers.model.MetaObject;
@@ -88,6 +89,12 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
         return this.provider;
     }
     
+    protected Converter getConverter() {
+        DataProvider provider = getProvider();
+        
+        return provider.getConverter();
+    }
+
     protected Collection getPossibleObjects() {
         Object object = getInputContext().getParentContext().getMetaObject().getObject();
 
@@ -134,20 +141,22 @@ public class CheckBoxOptionListRenderer extends InputRenderer {
                 }
             }
 
-            for (Object obj : collection) {
-                if (! possibleObjects.contains(obj)) {
-                    Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
-                    
-                    MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
-                    MetaObjectKey key = metaObject.getKey();
-                    
-                    listComponent.addHiddenOption(key.toString());
+            if (collection != null) {
+                for (Object obj : collection) {
+                    if (! possibleObjects.contains(obj)) {
+                        Schema schema = RenderKit.getInstance().findSchema(getEachSchema());
+                        
+                        MetaObject metaObject = MetaObjectFactory.createObject(obj, schema);
+                        MetaObjectKey key = metaObject.getKey();
+                        
+                        listComponent.addHiddenOption(key.toString());
+                    }
                 }
             }
-
-            DataProvider provider = getProvider();
-            if (provider.getConverter() != null) {
-                listComponent.setConverter(provider.getConverter());
+            
+            Converter converter = getConverter();
+            if (converter != null) {
+                listComponent.setConverter(converter);
             }
             
             listComponent.setTargetSlot((MetaSlotKey) getInputContext().getMetaObject().getKey());

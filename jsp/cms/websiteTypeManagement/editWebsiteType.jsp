@@ -11,8 +11,10 @@
 
     <bean:define id="oid" name="websiteType" property="idInternal"/>
 
-    <fr:edit action="/websiteTypeManagement.do?method=start"
-             name="websiteType" layout="tabular" schema="websiteType.edit"/>
+    <fr:edit action="<%= "/websiteTypeManagement.do?method=edit&oid=" + oid %>"
+             name="websiteType" layout="tabular" schema="websiteType.edit">
+        <fr:destination name="go" path="<%= "/testAdd.do?method=start&oid=" + oid %>"/>
+    </fr:edit>
     
     <br/>
 

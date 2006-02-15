@@ -8,6 +8,8 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
 
     private List<MetaObject> metaObjects;
     private String schema;
+    
+    private transient UserIdentity user;
 
     public SimpleMetaObjectCollection() {
         super();
@@ -23,7 +25,16 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         this.metaObjects.add(metaObject);
     }
     
+    public UserIdentity getUser() {
+        return this.user;
+    }
+
     public void setUser(UserIdentity user) {
+        this.user = user;
+        
+        for (MetaObject metaObject : getAllMetaObjects()) {
+            metaObject.setUser(user);
+        }
     }
 
     public Object getObject() {
@@ -63,10 +74,6 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
         return this.schema;
     }
 
-    public UserIdentity getUser() {
-        return null;
-    }
-
     public List<MetaSlot> getHiddenSlots() {
         return new ArrayList<MetaSlot>();
     }
@@ -75,5 +82,8 @@ public class SimpleMetaObjectCollection implements MultipleMetaObject {
     }
 
     public void commit() {
+        for (MetaObject metaObject : getAllMetaObjects()) {
+            metaObject.commit();
+        }
     }
 }
