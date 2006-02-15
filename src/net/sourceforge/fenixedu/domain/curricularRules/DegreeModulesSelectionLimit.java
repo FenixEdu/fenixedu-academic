@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Base {
@@ -22,7 +23,7 @@ public class DegreeModulesSelectionLimit extends DegreeModulesSelectionLimit_Bas
         setCurricularRuleType(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT);
     }
 
-    public DegreeModulesSelectionLimit(CourseGroup degreeModuleToApplyRule,
+    public DegreeModulesSelectionLimit(DegreeModule degreeModuleToApplyRule,
             CourseGroup contextCourseGroup, ExecutionPeriod begin, ExecutionPeriod end, Integer minimum,
             Integer maximum) {
 

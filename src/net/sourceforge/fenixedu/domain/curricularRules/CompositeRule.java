@@ -13,6 +13,14 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.LogicOperators;
 
 public class CompositeRule extends CompositeRule_Base {
+    
+    /**
+     * This constructor should be used inside Composite Rule
+     */
+    protected CompositeRule(DegreeModule degreeModuleToApplyRule, LogicOperators compositeRuleType, CurricularRule... curricularRules) {
+        checkCompositeRuleType(compositeRuleType, curricularRules);
+        init(degreeModuleToApplyRule, null, null, null, compositeRuleType, curricularRules);
+    }
 
     public CompositeRule(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
             ExecutionPeriod end, CurricularRuleType ruleType, LogicOperators compositeRuleType,
@@ -24,6 +32,11 @@ public class CompositeRule extends CompositeRule_Base {
             throw new DomainException("curricular.rule.invalid.parameters");
         }
 
+        checkCompositeRuleType(compositeRuleType, curricularRules);
+        init(degreeModuleToApplyRule, begin, end, ruleType, compositeRuleType, curricularRules);
+    }
+
+    private void checkCompositeRuleType(LogicOperators compositeRuleType, CurricularRule... curricularRules) throws DomainException {
         if (compositeRuleType.equals(LogicOperators.NOT) && curricularRules.length > 1) {
             throw new DomainException("incorrect.NOT.composite.rule.use");
         } else if ((compositeRuleType.equals(LogicOperators.AND) || compositeRuleType
@@ -35,7 +48,6 @@ public class CompositeRule extends CompositeRule_Base {
                 && !compositeRuleType.equals(LogicOperators.NOT)) {
             throw new DomainException("unsupported.composite.rule");
         }
-        init(degreeModuleToApplyRule, begin, end, ruleType, compositeRuleType, curricularRules);
     }
 
     private void init(DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin,
@@ -46,7 +58,6 @@ public class CompositeRule extends CompositeRule_Base {
         setBegin(begin);
         setEnd(end);
         setCurricularRuleType(ruleType);
-
         setCompositeRuleType(compositeRuleType);
 
         for (final CurricularRule curricularRule : curricularRules) {
@@ -107,6 +118,9 @@ public class CompositeRule extends CompositeRule_Base {
         } else if (getCompositeRuleType().equals(LogicOperators.OR)) {
             for (final CurricularRule curricularRule : getCurricularRules()) {
                 result |= curricularRule.evaluate(object);
+                if (result) {
+                    return true;
+                }
             }
         } else {
             throw new DomainException("unsupported.composite.rule");

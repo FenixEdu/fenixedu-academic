@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 
 public class CurricularRuleParametersDTO extends DataTranferObject {
     
-    private Integer precedenceDegreeModuleID;
+    private Integer selectedDegreeModuleID;
     private Integer contextCourseGroupID;
     private CurricularPeriodInfoDTO curricularPeriodInfoDTO;    
     private Double minimumCredits;
@@ -17,7 +17,6 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     private Integer maximumLimit;
     
     public CurricularRuleParametersDTO() {
-
     }
     
     public Integer getContextCourseGroupID() {
@@ -44,11 +43,11 @@ public class CurricularRuleParametersDTO extends DataTranferObject {
     public void setMinimumCredits(Double minDouble) {
         this.minimumCredits = minDouble;
     }
-    public Integer getPrecedenceDegreeModuleID() {
-        return precedenceDegreeModuleID;
+    public Integer getSelectedDegreeModuleID() {
+        return selectedDegreeModuleID;
     }
-    public void setPrecedenceDegreeModuleID(Integer precedenceDegreeModule) {
-        this.precedenceDegreeModuleID = precedenceDegreeModule;
+    public void setSelectedDegreeModuleID(Integer precedenceDegreeModule) {
+        this.selectedDegreeModuleID = precedenceDegreeModule;
     }
 
     public Integer getMinimumLimit() {

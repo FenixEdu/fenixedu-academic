@@ -688,6 +688,8 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
             Double minimum;
             Double maximum;
         }
+        class net.sourceforge.fenixedu.domain.curricularRules.EnrolmentToBeApprovedByCoordinator extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
+        }
 
 class net.sourceforge.fenixedu.domain.student.Delegate extends net.sourceforge.fenixedu.domain.DomainObject {
 	Integer keyExecutionYear;

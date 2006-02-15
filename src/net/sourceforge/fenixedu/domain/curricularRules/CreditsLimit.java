@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class CreditsLimit extends CreditsLimit_Base {
@@ -22,7 +23,7 @@ public class CreditsLimit extends CreditsLimit_Base {
         setCurricularRuleType(CurricularRuleType.CREDITS_LIMIT);
     }
 
-    public CreditsLimit(CourseGroup degreeModuleToApplyRule, CourseGroup contextCourseGroup,
+    public CreditsLimit(DegreeModule degreeModuleToApplyRule, CourseGroup contextCourseGroup,
             ExecutionPeriod begin, ExecutionPeriod end, Double minimum, Double maximum) {
 
         this(minimum, maximum);
@@ -59,12 +60,15 @@ public class CreditsLimit extends CreditsLimit_Base {
 
         labelList.add(new GenericPair<Object, Boolean>("label.creditsForApprovation", true));
         labelList.add(new GenericPair<Object, Boolean>(": ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>("label.to", true));
-        labelList.add(new GenericPair<Object, Boolean>(" ", false));
-        labelList.add(new GenericPair<Object, Boolean>(getMaximum(), false));
-
+        if (getMinimum().doubleValue() == getMaximum().doubleValue()) {
+            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+        } else {
+            labelList.add(new GenericPair<Object, Boolean>(getMinimum(), false));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>("label.to", true));
+            labelList.add(new GenericPair<Object, Boolean>(" ", false));
+            labelList.add(new GenericPair<Object, Boolean>(getMaximum(), false));
+        }
         if (getContextCourseGroup() != null) {
             labelList.add(new GenericPair<Object, Boolean>(", ", false));
             labelList.add(new GenericPair<Object, Boolean>("label.inGroup", true));

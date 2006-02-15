@@ -48,7 +48,7 @@
 		
 		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' || CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'}">
 			<h:outputText value="<p><label>#{bolonhaBundle['curricularCourse']}:</label>" escape="false"/>
-			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedPrecendenceDegreeModuleID}">
+			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeModuleID}">
 				<f:selectItems binding="#{CurricularRulesManagement.degreeModuleItems}"/>
 			</fc:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/> 
