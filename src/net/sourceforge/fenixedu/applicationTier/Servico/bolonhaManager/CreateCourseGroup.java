@@ -1,6 +1,3 @@
-/*
- * Created on Dec 9, 2005
- */
 package net.sourceforge.fenixedu.applicationTier.Servico.bolonhaManager;
 
 import net.sourceforge.fenixedu.applicationTier.Service;
@@ -31,6 +28,9 @@ public class CreateCourseGroup extends Service {
         // we just read the '2006/2007'
         final ExecutionYear executionYear = persistentSupport.getIPersistentExecutionYear()
                 .readExecutionYearByName("2006/2007");
+        if (executionYear == null) {
+            throw new FenixServiceException("error.noExecutionYear");
+        }
         final ExecutionPeriod beginExecutionPeriod = executionYear.getExecutionPeriodForSemester(Integer
                 .valueOf(1));
 
