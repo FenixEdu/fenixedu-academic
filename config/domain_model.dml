@@ -2826,6 +2826,15 @@ class net.sourceforge.fenixedu.domain.research.event.EventName extends net.sourc
 class net.sourceforge.fenixedu.domain.research.event.EventType extends net.sourceforge.fenixedu.domain.DomainObject{
 }
 
+
+class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourceforge.fenixedu.domain.DomainObject {
+	Integer contact;
+	Integer autonomousStudy;
+	Integer other;
+	YearMonthDay startDate;
+}
+
+
 /*
  * Relations definitions
  * 
@@ -2850,6 +2859,13 @@ relation AttendsStudent {
 		multiplicity *;
 	}
 	net.sourceforge.fenixedu.domain.Student playsRole aluno;
+}
+
+relation AttendsWeeklyWorkLoad {
+	net.sourceforge.fenixedu.domain.Attends playsRole attends;
+	net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad playsRole weeklyWorkLoads {
+		multiplicity *;
+	}
 }
 
 relation BelongsTo {

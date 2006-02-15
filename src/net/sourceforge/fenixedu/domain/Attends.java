@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
 
 /**
  * 
@@ -85,4 +86,18 @@ public class Attends extends Attends_Base {
         }
         return orderedMarks;
     }
+
+    public WeeklyWorkLoad createWeeklyWorkLoad(final Integer contact, final Integer autonomousStudy, final Integer other) {
+        if (getEnrolment() == null) {
+            throw new DomainException("weekly.work.load.creation.requires.enrolment");
+        }
+        for (final WeeklyWorkLoad weeklyWorkLoad : getWeeklyWorkLoads()) {
+            // TODO... complete this.
+//            if (weeklyWorkLoad) {
+//                
+//            }
+        }
+        return new WeeklyWorkLoad(this, contact, autonomousStudy, other);
+    }
+
 }
