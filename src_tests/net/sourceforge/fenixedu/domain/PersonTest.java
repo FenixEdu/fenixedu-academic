@@ -90,23 +90,17 @@ public class PersonTest extends DomainTestBase {
 
 		documentType = IDDocumentType.AIR_FORCE_IDENTITY_CARD;
 
-		personRole = new Role();
-		personRole.setRoleType(RoleType.PERSON);
+		personRole = new Role(RoleType.PERSON, null, null, null);
         
-		teacherRole = new Role();
-		teacherRole.setRoleType(RoleType.TEACHER);
+		teacherRole = new Role(RoleType.TEACHER, null, null, null);
         
-		coordinatorRole = new Role();
-		coordinatorRole.setRoleType(RoleType.COORDINATOR);
+		coordinatorRole = new Role(RoleType.COORDINATOR, null, null, null);
         
-		grantOwnerRole = new Role();
-		grantOwnerRole.setRoleType(RoleType.GRANT_OWNER);
+		grantOwnerRole = new Role(RoleType.GRANT_OWNER, null, null, null);
         
-		studentRole = new Role();
-		studentRole.setRoleType(RoleType.STUDENT);
+		studentRole = new Role(RoleType.STUDENT, null, null, null);
 
-		employeeRole = new Role();
-		employeeRole.setRoleType(RoleType.EMPLOYEE);
+		employeeRole = new Role(RoleType.EMPLOYEE, null, null, null);
 
         teacher = new Teacher();
         teacher.setTeacherNumber(teacherNumber);

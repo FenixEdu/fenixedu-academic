@@ -20,13 +20,8 @@ public class Role extends Role_Base implements Comparable {
         return null;
     }
 
-    public Role() {
-        super();
-        setRootDomainObject(RootDomainObject.instance);
-    }
-
     public Role(final RoleType roleType, final String portalSubApplication, final String page, final String pageNameProperty) {
-        this();
+        setRootDomainObject(RootDomainObject.instance);
         setRoleType(roleType);
         setPortalSubApplication(portalSubApplication);
         setPage(page);
