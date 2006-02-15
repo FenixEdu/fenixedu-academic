@@ -28,7 +28,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentCurricularCourseGroup;
 import net.sourceforge.fenixedu.persistenceTier.ISuportePersistente;
@@ -462,7 +461,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
             String prerequisitesEn, CurricularStage curricularStage, CompetenceCourse competenceCourse,
             CourseGroup parentCourseGroup, CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod) {
 
-        checkIfPresentInDegreeCurricularPlan(competenceCourse, parentCourseGroup.getParentDegreeCurricularPlan());
+        checkIfPresentInDegreeCurricularPlan(competenceCourse, this);
         checkIfAnualBeginsInFirstPeriod(competenceCourse, curricularPeriod);
         return new CurricularCourse(weight, prerequisites, prerequisitesEn, curricularStage, competenceCourse,
                 parentCourseGroup, curricularPeriod, beginExecutionPeriod);
