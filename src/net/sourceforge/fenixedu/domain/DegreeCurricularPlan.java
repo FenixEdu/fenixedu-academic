@@ -451,7 +451,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     
     public CourseGroup createCourseGroup(CourseGroup parentCourseGroup, String name, String nameEn,
             CurricularPeriod curricularPeriod, ExecutionPeriod beginExecutionPeriod,
-            ExecutionPeriod endExecutionPeriod) throws FenixDomainException {
+            ExecutionPeriod endExecutionPeriod) {
         parentCourseGroup.checkDuplicateChildNames(name, nameEn);
         final CourseGroup courseGroup = new CourseGroup(name, nameEn);
         new Context(parentCourseGroup, courseGroup, curricularPeriod, beginExecutionPeriod, endExecutionPeriod);
