@@ -12,31 +12,43 @@
 	<h:outputText value="<h2>#{scientificBundle['viewCurricularCourse']}</h2>" escape="false"/>
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 	
-	<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-	<h:outputText value="<h4 class='first'>#{scientificBundle['competenceCourse']}:</h4><br/>" escape="false"/>
-	<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	
-	<h:outputText value="<p><label>#{scientificBundle['department']}:</label>" escape="false"/>
-	<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}</p>" escape="false"/>	
-	<h:outputText value="<p><label>#{scientificBundle['competenceCourse']}:</label>" escape="false"/>
-	<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.name}</p>" escape="false"/>	
-	<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
-	<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
-		<h:outputText value="(#{scientificBundle['showPage']} #{scientificBundle['competenceCourse']})"/>
-		<f:param name="competenceCourseID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}"/>
-	</h:outputLink>
-	<h:outputText value="</p></fieldset></div>" escape="false"/>
+	<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
+		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
+		<h:outputText value="<h4 class='first'>#{scientificBundle['competenceCourse']}:</h4><br/>" escape="false"/>
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	
+		<h:outputText value="<p><label>#{scientificBundle['department']}:</label>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.departmentUnit.name}</p>" escape="false"/>	
+		<h:outputText value="<p><label>#{scientificBundle['competenceCourse']}:</label>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.competenceCourse.name}</p>" escape="false"/>	
+		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
+		<h:outputLink value="../competenceCourses/showCompetenceCourse.faces" target="_blank">
+			<h:outputText value="(#{scientificBundle['showPage']} #{scientificBundle['competenceCourse']})"/>
+			<f:param name="competenceCourseID" value="#{CurricularCourseManagement.curricularCourse.competenceCourse.idInternal}"/>
+		</h:outputLink>
+		<h:outputText value="</p></fieldset></div>" escape="false"/>
+	</h:panelGroup>
 
 	<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 	<h:outputText value="<h4 class='first'>#{scientificBundle['curricularCourseInformation']}:</h4><br/>" escape="false"/>
 	<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
-	<h:outputText value="<p><label>#{scientificBundle['weight']}:</label>" escape="false"/>
-	<h:outputText value="#{CurricularCourseManagement.curricularCourse.weigth}</p>" escape="false"/>
-	<h:outputText value="<p><label>#{scientificBundle['prerequisites']}:</label>" escape="false"/>
-	<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisites}</p>" escape="false"/>	
-	<h:outputText value="<p><label>#{scientificBundle['prerequisitesEn']}:</label>" escape="false"/>
-	<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisitesEn}</p>" escape="false"/>
+	<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
+		<h:outputText value="<p><label>#{scientificBundle['weight']}:</label>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.weigth}</p>" escape="false"/>
+		<h:outputText value="<p><label>#{scientificBundle['prerequisites']}:</label>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisites}</p>" escape="false" rendered="#{!empty CurricularCourseManagement.curricularCourse.prerequisites}"/>	
+		<h:outputText value="<i>#{scientificBundle['empty.field']}</i></p>" escape="false" rendered="#{empty CurricularCourseManagement.curricularCourse.prerequisites}"/>
+		<h:outputText value="<p><label>#{scientificBundle['prerequisitesEn']}:</label>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisitesEn}</p>" escape="false" rendered="#{!empty CurricularCourseManagement.curricularCourse.prerequisitesEn}"/>	
+		<h:outputText value="<i>#{scientificBundle['empty.field']}</i></p>" escape="false" rendered="#{empty CurricularCourseManagement.curricularCourse.prerequisitesEn}"/>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'OPTIONAL_COURSE'}">
+		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.name}</p>" escape="false"/>
+		<h:outputText value="<p><label>#{bolonhaBundle['nameEn']} (en):</label>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.nameEn}</p>" escape="false"/>
+	</h:panelGroup>
 	<h:outputText value="</fieldset></div>" escape="false"/>
-	
+
 	<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 	<h:outputText value="<h4 class='first'>#{scientificBundle['contexts']}:</h4><br/>" escape="false"/>	
 	<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">

@@ -35,9 +35,11 @@
 		<h:outputText value="<p><label>#{bolonhaBundle['weight']}:</label>" escape="false"/>
 		<h:outputText value="#{CurricularCourseManagement.curricularCourse.weigth}</p>" escape="false"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['prerequisites']}:</label>" escape="false"/>
-		<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisites}</p>" escape="false"/>	
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisites}</p>" escape="false" rendered="#{!empty CurricularCourseManagement.curricularCourse.prerequisites}"/>	
+		<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i></p>" escape="false" rendered="#{empty CurricularCourseManagement.curricularCourse.prerequisites}"/>
 		<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesEn']}:</label>" escape="false"/>
-		<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisitesEn}</p>" escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.prerequisitesEn}</p>" escape="false" rendered="#{!empty CurricularCourseManagement.curricularCourse.prerequisitesEn}"/>	
+		<h:outputText value="<i>#{bolonhaBundle['empty.field']}</i></p>" escape="false" rendered="#{empty CurricularCourseManagement.curricularCourse.prerequisitesEn}"/>
 	</h:panelGroup>
 	<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'OPTIONAL_COURSE'}">
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
