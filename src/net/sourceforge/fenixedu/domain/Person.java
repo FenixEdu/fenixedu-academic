@@ -42,6 +42,7 @@ public class Person extends Person_Base {
         setUsername(personToCreate.getUsername());
         setPais(country);
         setIsPassInKerberos(Boolean.FALSE);
+        setKeyRootDomainObject(1);
     }
 
     public Person(String name, String identificationDocumentNumber,
@@ -55,6 +56,7 @@ public class Person extends Person_Base {
         setAvailablePhoto(Boolean.FALSE);
         setMaritalStatus(MaritalStatus.SINGLE);
         setIsPassInKerberos(Boolean.FALSE);
+        setKeyRootDomainObject(1);
     }
 
     public Person(String username, String name, Gender gender, String address, String phone,
@@ -75,6 +77,7 @@ public class Person extends Person_Base {
         setAvailablePhoto(Boolean.FALSE);
         setMaritalStatus(MaritalStatus.SINGLE);
         setIsPassInKerberos(Boolean.FALSE);
+        setKeyRootDomainObject(1);
     }
 
     public void edit(InfoPerson personToEdit, Country country) {
@@ -362,6 +365,7 @@ public class Person extends Person_Base {
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
         this.setAvailablePhoto(Boolean.FALSE);
+        this.setKeyRootDomainObject(1);
     }
 
     /*
@@ -412,6 +416,7 @@ public class Person extends Person_Base {
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
         this.setAvailablePhoto(Boolean.FALSE);
+        this.setKeyRootDomainObject(1);
 
     }
 
@@ -458,6 +463,7 @@ public class Person extends Person_Base {
         this.setAvailableEmail(Boolean.FALSE);
         this.setAvailableWebSite(Boolean.FALSE);
         this.setAvailablePhoto(Boolean.FALSE);
+        this.setKeyRootDomainObject(1);
     }
 
     public String toString() {

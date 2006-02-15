@@ -247,11 +247,6 @@
     />     
 
     <reference-descriptor auto-retrieve="false"
-         	name="rootDomainObject" class-ref="net.sourceforge.fenixedu.domain.RootDomainObject"
-			>
-		<foreignkey field-ref="keyRootDomainObject"/>
-	</reference-descriptor>    
-    <reference-descriptor auto-retrieve="false"
     	name="researcher"
         class-ref="net.sourceforge.fenixedu.domain.research.Researcher">
 	    <foreignkey field-ref="keyResearcher"/>

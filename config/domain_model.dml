@@ -5970,7 +5970,7 @@ relation RootDomainObjectRole {
 }
 
 relation RootDomainObjectPerson {
-    net.sourceforge.fenixedu.domain.RootDomainObject playsRole rootDomainObject;
+    net.sourceforge.fenixedu.domain.RootDomainObject playsRole;
     net.sourceforge.fenixedu.domain.Person playsRole persons {
     	multiplicity *;
     }
