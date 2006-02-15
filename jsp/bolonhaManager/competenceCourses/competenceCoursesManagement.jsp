@@ -32,7 +32,7 @@
 			<h:form>
 				<h:messages infoClass="success0" errorClass="error0" layout="table"/>
 				<h:panelGroup rendered="#{empty CompetenceCourseManagement.scientificAreaUnits}">
-					<h:outputText  value="#{bolonhaBundle['noScientificAreaUnits']}<br/>" escape="false"/>
+					<h:outputText  value="<i>#{bolonhaBundle['noScientificAreaUnits']}<i><br/>" escape="false"/>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
 					<fc:dataRepeater value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit">
