@@ -31,17 +31,15 @@ public class EditarTurno extends Service {
 		newShiftIsValid(infoShiftOld, infoShiftNew.getTipo(), infoShiftNew.getInfoDisciplinaExecucao(),
 				infoShiftNew.getLotacao());
 
-		Shift shiftToEdit = (Shift) persistentObject.readByOID(Shift.class,
-				infoShiftOld.getIdInternal());
+		final Shift shiftToEdit = (Shift) persistentObject.readByOID(Shift.class, infoShiftOld.getIdInternal());
 
-		int capacityDiference = infoShiftNew.getLotacao().intValue()
-				- shiftToEdit.getLotacao().intValue();
+		final int capacityDiference = infoShiftNew.getLotacao().intValue() - shiftToEdit.getLotacao().intValue();
 
 		if (shiftToEdit.getAvailabilityFinal().intValue() + capacityDiference < 0) {
 			throw new InvalidFinalAvailabilityException();
 		}
 
-		Shift otherShiftWithSameNewName = persistentSupport.getITurnoPersistente().readByNameAndExecutionCourse(
+		final Shift otherShiftWithSameNewName = persistentSupport.getITurnoPersistente().readByNameAndExecutionCourse(
 				infoShiftNew.getNome(), infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
 
 		if ((otherShiftWithSameNewName != null)
@@ -59,7 +57,9 @@ public class EditarTurno extends Service {
 		final ExecutionCourse executionCourse = (ExecutionCourse) persistentObject
 				.readByOID(ExecutionCourse.class,
 						infoShiftNew.getInfoDisciplinaExecucao().getIdInternal());
-		shiftToEdit.setDisciplinaExecucao(executionCourse);
+        if (shiftToEdit.getDisciplinaExecucao() != executionCourse) {
+            shiftToEdit.setDisciplinaExecucao(executionCourse);
+        }
 
 		// Also change the type of associated lessons and lessons execution
 		// course
