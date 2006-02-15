@@ -114,7 +114,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     public List<String> getGroupMembersLabels() throws FenixFilterException, FenixServiceException {
         List<String> result = null;
 
-        if(getSelectedDepartmentUnit() == null){
+        if (getSelectedDepartmentUnit() == null || getSelectedDepartmentUnit().getDepartment().getCompetenceCourseMembersGroup() == null) {
             return result;
         }
         
