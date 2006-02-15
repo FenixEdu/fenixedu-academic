@@ -66,7 +66,6 @@ public class CreateMasterDegreeCandidate extends Service {
         // Create the Candidate
         MasterDegreeCandidate masterDegreeCandidate = DomainFactory.makeMasterDegreeCandidate();
         masterDegreeCandidate.addSituations(candidateSituation);
-        candidateSituation.setMasterDegreeCandidate(masterDegreeCandidate);
         masterDegreeCandidate.setSpecialization(degreeType);
         masterDegreeCandidate.setExecutionDegree(executionDegree);
 
