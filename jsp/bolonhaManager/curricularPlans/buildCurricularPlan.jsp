@@ -44,9 +44,10 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 
-		<h:outputText value="<br/><hr/>" escape="false"/>
+		<h:outputText value="<br/><p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['return']}"
 			action="curricularPlansManagement"/>
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 
 </ft:tilesView>

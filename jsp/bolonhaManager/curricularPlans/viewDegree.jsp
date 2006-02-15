@@ -13,36 +13,38 @@
 	</h:outputFormat>
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeId' name='degreeId' type='hidden' value='#{ScientificCouncilDegreeManagement.degreeId}'/>"/>
-		
-		<h:outputText value="<b>#{scouncilBundle['degree.data']}:</b><br/><br/>" escape="false"/>
-		
-		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}"
-		
-			value="#{ScientificCouncilDegreeManagement.errorMessage}<br/><br/>" escape="false"/>
-		<h:panelGrid styleClass="infoselected" columns="2" border="0">
-			<h:outputText value="<b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
-			<h:outputText id="name" value="#{ScientificCouncilDegreeManagement.name}"/>
-			
-			<h:outputText value="<b>#{scouncilBundle['name']} (en):</b> " escape="false"/>
-			<h:outputText id="nameEn" value="#{ScientificCouncilDegreeManagement.nameEn}" />
-			
-			<h:outputText value="<b>#{scouncilBundle['acronym']}:</b> " escape="false"/>
-			<h:outputText id="acronym" value="#{ScientificCouncilDegreeManagement.acronym}"/>
-			
-			<h:outputText value="<b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
-			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.bolonhaDegreeType]}"/>
 
-			<h:outputText value="<b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
-			<h:outputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}"/>
+<%--
+		<h:outputText value="<p><b>#{scouncilBundle['degree.data']}:</b><p/><br/>" escape="false"/>
+--%>	
+
+		<h:outputText styleClass="error" rendered="#{!empty ScientificCouncilDegreeManagement.errorMessage}" value="<p>#{ScientificCouncilDegreeManagement.errorMessage}<p/><br/>" escape="false"/>
+
+			<h:outputText value="<p><b>#{scouncilBundle['name']} (pt):</b> " escape="false"/>
+			<h:outputText id="name" value="#{ScientificCouncilDegreeManagement.name}</p>" escape="false"/>
+			
+			<h:outputText value="<p><b>#{scouncilBundle['name']} (en):</b> " escape="false"/>
+			<h:outputText id="nameEn" value="#{ScientificCouncilDegreeManagement.nameEn}</p>" escape="false"/>
+			
+			<h:outputText value="<p><b>#{scouncilBundle['acronym']}:</b> " escape="false"/>
+			<h:outputText id="acronym" value="#{ScientificCouncilDegreeManagement.acronym}</p>" escape="false"/>
+			
+			<h:outputText value="<p><b>#{scouncilBundle['degreeType']}:</b> " escape="false"/>
+			<h:outputText id="bolonhaDegreeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.bolonhaDegreeType]}</p>" escape="false"/>
+
+			<h:outputText value="<p><b>#{scouncilBundle['ectsCredits']}:</b> " escape="false"/>
+			<h:outputText id="ectsCredits" value="#{ScientificCouncilDegreeManagement.ectsCredits}</p>" escape="false"/>
 
 <%-- 
  			<h:outputText value="<b>#{scouncilBundle['gradeTypes']}:</b> " escape="false"/>
 			<h:outputText id="gradeType" value="#{enumerationBundle[ScientificCouncilDegreeManagement.gradeType]}"/>
 --%>
-		</h:panelGrid>
-		<br/><br/><hr/>
+
+		<br/>
+		<h:outputText value="<p> " escape="false"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
+		<h:outputText value="</p> " escape="false"/>
 	</h:form>
 
 </ft:tilesView>

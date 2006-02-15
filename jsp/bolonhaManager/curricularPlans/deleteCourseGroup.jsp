@@ -21,18 +21,21 @@
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'/>"/>
 		<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{CourseGroupManagement.contextID}'/>"/>
-		<br/>
-		<h:panelGroup styleClass="bgcolor1">
-			<h:outputText style="font-weight: bold" value="#{bolonhaBundle['name']}: "/>
-			<h:outputText value="#{CourseGroupManagement.name}<br/>" escape="false"/>
-		</h:panelGroup>
-		<br/><br/>
-		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}"/>
-		<br/>
-		<hr>
+
+
+		<h:outputText value="<p>#{bolonhaBundle['group']}: " escape="false"/>
+		<h:outputText value="<b>#{CourseGroupManagement.name}</b></p><br/>" escape="false"/>
+
+		
+		<h:outputText value="<p>" escape="false"/>
+		<h:outputText styleClass="warning0" value="#{bolonhaBundle['confirmDeleteMessage']}"/>
+		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="<br/><p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			action="#{CourseGroupManagement.deleteCourseGroup}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['no']}"
-			action="editCurricularPlanStructure"/>		
+			action="editCurricularPlanStructure"/>
+		<h:outputText value="</p>" escape="false"/>	
 	</h:form>
 </ft:tilesView>

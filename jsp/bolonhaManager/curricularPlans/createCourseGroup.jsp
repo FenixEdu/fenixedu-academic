@@ -6,7 +6,7 @@
 <ft:tilesView definition="bolonhaManager.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/BolonhaManagerResources" var="bolonhaBundle"/>
 	
-	<h:outputText value="#{CourseGroupManagement.degreeCurricularPlan.name}" style="font-style: italic"/>
+	<h:outputText value="<em>#{CourseGroupManagement.degreeCurricularPlan.name}</em>" escape="false"/>
 	<h:outputFormat value="<h2>#{bolonhaBundle['create.param']} </h2>" escape="false">
 		<f:param value="#{bolonhaBundle['courseGroup']}"/>
 	</h:outputFormat>
@@ -14,23 +14,28 @@
 	<h:form>
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='parentCourseGroupID' name='parentCourseGroupID' type='hidden' value='#{CourseGroupManagement.parentCourseGroupID}'/>"/>
-		<h:panelGrid columnClasses="alignRight infocell, infocell," columns="2" border="0">
-			<h:outputText value="<p><label><span class='required'>*</span> #{bolonhaBundle['name']} (pt):</label>" escape="false"/>
+		
+			<h:outputText value="<p>#{bolonhaBundle['name']} (pt):" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="name" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.name}"/>
+				<h:outputText value=" " escape="false"/>
 				<h:message for="name" styleClass="error0"/>
 			</h:panelGroup>
-			<h:outputText value="<p><label><span class='required'>*</span> #{bolonhaBundle['name']} (en):</label>" escape="false"/>
+			<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="<p>#{bolonhaBundle['name']} (en):" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="nameEn" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.nameEn}"/>
+				<h:outputText value=" " escape="false"/>
 				<h:message for="nameEn" styleClass="error0"/>
-			</h:panelGroup>			
-		</h:panelGrid>
+			</h:panelGroup>
+			<h:outputText value="</p>" escape="false"/>
+
 		<br/>
-		<hr>
+		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['create']}"
 			action="#{CourseGroupManagement.createCourseGroup}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
 			action="editCurricularPlanStructure"/>		
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 </ft:tilesView>

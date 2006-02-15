@@ -21,24 +21,27 @@
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CourseGroupManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='courseGroupID' name='courseGroupID' type='hidden' value='#{CourseGroupManagement.courseGroupID}'/>"/>
 
-		<h:panelGrid columnClasses="alignRight infocell, infocell," columns="2" border="0">
-			<h:outputText value="<p><label><span class='required'>*</span> #{bolonhaBundle['name']} (pt):</label>" escape="false"/>
+
+			<h:outputText value="<p>#{bolonhaBundle['name']} (pt):" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="name" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.name}"/>
 				<h:message for="name" styleClass="error0"/>
 			</h:panelGroup>
-			<h:outputText value="<p><label><span class='required'>*</span> #{bolonhaBundle['name']} (en):</label>" escape="false"/>
+			<h:outputText value="</p>" escape="false"/>
+			<h:outputText value="#{bolonhaBundle['name']} (en):" escape="false"/>
 			<h:panelGroup>
 				<h:inputText id="nameEn" required="true" size="60" maxlength="100" value="#{CourseGroupManagement.nameEn}"/>
 				<h:message for="nameEn" styleClass="error0"/>
 			</h:panelGroup>			
-		</h:panelGrid>
+			<h:outputText value="</p>" escape="false"/>
+			
+			
 		
-		<br/>
-		<hr>
-		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['edit']}"
+		<h:outputText value="<br/><p>" escape="false"/>
+		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['save']}"
 			action="#{CourseGroupManagement.editCourseGroup}"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['cancel']}"
-			action="editCurricularPlanStructure"/>		
+			action="editCurricularPlanStructure"/>	
+		<h:outputText value="</p>" escape="false"/>	
 	</h:form>
 </ft:tilesView>
