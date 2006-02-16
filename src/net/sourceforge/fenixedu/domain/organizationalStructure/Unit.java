@@ -151,7 +151,8 @@ public class Unit extends Unit_Base {
         if (!hasAnySubUnits() && (!hasAnyParentUnits() || this.getParentUnits().size() == 1)
                 && !hasAnyFunctions() && !hasAnyWorkingContracts() && !hasAnyMailingContracts()
                 && !hasAnySalaryContracts() && !hasAnyCompetenceCourses() && !hasAnyExternalPersons()
-                && !hasAnyAssociatedNonAffiliatedTeachers() && !hasAnyEvents()) {
+                && !hasAnyAssociatedNonAffiliatedTeachers()) {
+            //TODO add the !hasParties when the Party is inserted
 
             if (hasAnyParentUnits()) {
                 this.removeParentUnits(this.getParentUnits().get(0));

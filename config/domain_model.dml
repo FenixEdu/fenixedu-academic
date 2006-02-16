@@ -1776,7 +1776,6 @@ class net.sourceforge.fenixedu.domain.Person extends net.sourceforge.fenixedu.do
     IDDocumentType idDocumentType; 
 	Boolean isPassInKerberos;
 	String istUsername;
-	Integer keyResearcher;
 }
 
 class net.sourceforge.fenixedu.domain.PersonAccount extends net.sourceforge.fenixedu.domain.DomainObject {
@@ -2784,10 +2783,6 @@ class net.sourceforge.fenixedu.domain.assiduousness.Balance extends net.sourcefo
         Integer numberNightMeals;
 }
 
-
-class net.sourceforge.fenixedu.domain.research.Researcher extends net.sourceforge.fenixedu.domain.DomainObject{
-	Integer keyPerson;
-}
 
 class net.sourceforge.fenixedu.domain.research.project.Project extends net.sourceforge.fenixedu.domain.DomainObject{
 	Integer keyProjectTitle;
@@ -5861,20 +5856,6 @@ relation DailyBalanceHasJustification {
 	}
 }
 
-relation PersonResearcher {
-    net.sourceforge.fenixedu.domain.research.Researcher playsRole researcher;    
-	net.sourceforge.fenixedu.domain.Person playsRole person;
-}
-
-relation ProjectResearcher {
-	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
-		multiplicity *;
-	}
-    net.sourceforge.fenixedu.domain.research.Researcher playsRole researchers {
-    	multiplicity *;
-    }
-}
-
 relation ProjectUnit {
 	net.sourceforge.fenixedu.domain.research.project.Project playsRole projects {
 		multiplicity *;
@@ -5942,24 +5923,6 @@ relation ProjectEvent {
 		multiplicity *;
 	}
     net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
-    	multiplicity *;
-    }
-}
-
-relation UnitEvent {
-    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.organizationalStructure.Unit playsRole units {
-    	multiplicity *;
-    }
-}
-
-relation ResearcherEvent {
-    net.sourceforge.fenixedu.domain.research.event.Event playsRole events {
-    	multiplicity *;
-    }
-    net.sourceforge.fenixedu.domain.research.Researcher playsRole researchers {
     	multiplicity *;
     }
 }

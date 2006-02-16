@@ -240,17 +240,7 @@
         column="KEY_PERSONAL_PHOTO"
         jdbc-type="INTEGER"
     />  
-    <field-descriptor
-        name="keyResearcher"
-        column="KEY_RESEARCHER"
-        jdbc-type="INTEGER"
-    />     
 
-    <reference-descriptor auto-retrieve="false"
-    	name="researcher"
-        class-ref="net.sourceforge.fenixedu.domain.research.Researcher">
-	    <foreignkey field-ref="keyResearcher"/>
-	</reference-descriptor>
     <reference-descriptor auto-retrieve="false"
     	name="personalPhoto"
         class-ref="net.sourceforge.fenixedu.domain.FileEntry">
