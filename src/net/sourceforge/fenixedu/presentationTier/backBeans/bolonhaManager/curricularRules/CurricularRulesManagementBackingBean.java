@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.faces.component.UISelectItems;
 import javax.faces.event.ValueChangeEvent;
@@ -108,18 +106,21 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                     result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
                 }
                 break;
+                
             case PRECEDENCY_APPROVED_DEGREE_MODULE:
             case PRECEDENCY_ENROLED_DEGREE_MODULE:
             case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
                 if (getDegreeModule() instanceof CurricularCourse) {
                     result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
                 }
+                break;
+                
             default:
                 break;
             }
         }
         Collections.sort(result, new BeanComparator("label"));
-        result.add(0, new SelectItem(NO_SELECTION, enumerationResources.getString("dropDown.Default")));
+        result.add(0, new SelectItem(NO_SELECTION, bolonhaResources.getString("choose")));
         return result;
     }
 
