@@ -34,10 +34,12 @@
 			<logic:iterate id="infoStudentCurricularPlan" name="infoStudentCurricularPlans" length="1">
 				<tr>
 					<td colspan="2" class="listClasses">
-						<bean:define id="email" name="infoStudentCurricularPlan" property="infoStudent.infoPerson.email" type="java.lang.String"/>
-						<a href="mailto:<%= email %>">
-							<bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
-						</a>
+						<logic:present name="infoStudentCurricularPlan" property="infoStudent.infoPerson.email">
+							<bean:define id="email" name="infoStudentCurricularPlan" property="infoStudent.infoPerson.email" type="java.lang.String"/>
+							<a href="mailto:<%= email %>">
+								<bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nome"/>
+							</a>
+						</logic:present>
 					</td>
 				</tr>
 			</logic:iterate>
