@@ -1,12 +1,16 @@
 package net.sourceforge.fenixedu.presentationTier.backBeans.scientificCouncil.curricularPlans;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.faces.model.SelectItem;
+
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.comparators.ComparatorChain;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -45,7 +49,12 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
             }
         }
         
-        return result;
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(new BeanComparator("bolonhaDegreeType"), false);
+        chainComparator.addComparator(new BeanComparator("nome"), false);
+        Collections.sort(result, chainComparator);
+
+        return result; 
     }
     
     public List<Degree> getFilteredBolonhaDegrees() throws FenixFilterException, FenixServiceException {
@@ -63,7 +72,13 @@ public class ScientificCouncilDegreeManagementBackingBean extends FenixBackingBe
             }
         }
         
-        return new ArrayList<Degree>(result);
+        List orderedResult = new ArrayList<Degree>(result);
+        ComparatorChain chainComparator = new ComparatorChain();
+        chainComparator.addComparator(new BeanComparator("bolonhaDegreeType"), false);
+        chainComparator.addComparator(new BeanComparator("nome"), false);
+        Collections.sort(orderedResult, chainComparator);
+
+        return orderedResult; 
     } 
     
     public Boolean getCanBuild() {
