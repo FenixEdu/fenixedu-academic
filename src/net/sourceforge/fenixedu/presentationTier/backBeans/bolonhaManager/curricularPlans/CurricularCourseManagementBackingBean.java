@@ -335,6 +335,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
                 getCourseGroupID(), getCurricularYearID(), getCurricularSemesterID(), getDegreeCurricularPlanID() };
             return args;
         } else if (curricularCourseType.equals(CurricularCourseType.OPTIONAL_COURSE)) {
+            checkCurricularCourseNameAndNameEn();
             Object args[] = { getDegreeCurricularPlanID(), getCourseGroupID(), getName(), getNameEn(),
                     getCurricularYearID(), getCurricularSemesterID() };
             return args;
@@ -383,6 +384,15 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     private void checkCurricularCourse() throws FenixFilterException, FenixServiceException, FenixActionException {
         if (getCurricularCourseID() == null || getCurricularCourseID().equals(this.NO_SELECTION)) {
             throw new FenixActionException("error.mustChooseACurricularCourse");
+        }
+    }
+    
+    private void checkCurricularCourseNameAndNameEn() throws FenixFilterException, FenixServiceException, FenixActionException {
+        if (getName() == null || getName().equals("")) {
+            throw new FenixActionException("error.mustDefineNameOrNameEn");
+        }
+        if (getNameEn() == null || getNameEn().equals("")) {
+            throw new FenixActionException("error.mustDefineNameOrNameEn");
         }
     }
 
