@@ -104,7 +104,7 @@
 		</h:panelGroup>		
 	
 		<h:panelGroup rendered="#{!CompetenceCourseManagement.canView}">
-			<h:outputText value="<br/>#{bolonhaBundle['notMemberInCompetenceCourseManagementGroup']}<br/>" escape="false"/>
+			<h:outputText value="<br/><em>#{bolonhaBundle['notMemberInCompetenceCourseManagementGroup']}</em><br/>" escape="false"/>
 		</h:panelGroup>
 	
 	</h:panelGroup>
