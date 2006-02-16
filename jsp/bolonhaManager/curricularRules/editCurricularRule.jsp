@@ -64,7 +64,6 @@
 		
 		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES'}">
 			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
-			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 			<h:inputText id="minimumCreditsForPrecedencyBetweenDegreeModules" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
