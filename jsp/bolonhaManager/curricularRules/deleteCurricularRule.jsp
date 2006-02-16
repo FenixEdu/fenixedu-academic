@@ -20,16 +20,17 @@
 		<h:outputText escape="false" value="<input id='curricularRuleID' name='curricularRuleID' type='hidden' value='#{CurricularRulesManagement.curricularRuleID}'/>"/>
 		
 		<h:outputText value="<div class='simpleblock4'> " escape="false"/>
-		<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularRule']}:</h4>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
-		
+		<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularRule']}: </h4>" escape="false"/>
 		<h:outputText value="<p>#{CurricularRulesManagement.ruleLabel}</p>" escape="false"/>
-		<h:outputText value="</fieldset></div>" escape="false"/>	
+		<h:outputText value="</div>" escape="false"/>	
 		
+		<h:outputText value="<p>" escape="false"/>
 		<h:outputText value="#{bolonhaBundle['confirmDeleteMessage']}" escape="false" styleClass="error0"/>
+		<h:outputText value="</p>" escape="false"/>
 		
-		<h:outputText value="<br/><br/>" escape="false"/>
+		<h:outputText value="<p>" escape="false"/>
 		<h:commandButton value="#{bolonhaBundle['yes']}" styleClass="inputbutton" action="#{CurricularRulesManagement.deleteCurricularRule}"/>
 		<h:commandButton immediate="true" value="#{bolonhaBundle['no']}" styleClass="inputbutton" action="setCurricularRules"/>
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
 </ft:tilesView>

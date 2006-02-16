@@ -11,13 +11,14 @@
 	<h:outputText value=" (#{enumerationBundle[CurricularCourseManagement.degreeCurricularPlan.curricularStage.name]})</em>" escape="false"/>
 	<h:outputText value="<h2>#{bolonhaBundle['editCurricularCourse']}</h2>" escape="false"/>		
 	<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
+	
 	<h:form>
 		<fc:viewState binding="#{CurricularCourseManagement.viewState}" />
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>
 		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-		<h:outputText value="<h4 class='first'>#{bolonhaBundle['competenceCourse']}:</h4><br/>" escape="false"/>
+		<h:outputText value="<h4 class='first'>#{bolonhaBundle['competenceCourse']}</h4>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 		
 		<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
@@ -27,7 +28,7 @@
 				<f:selectItems value="#{CurricularCourseManagement.departmentUnits}"/>
 			</fc:selectOneMenu>
 			<h:outputText value="</p>" escape="false"/>			
-			<h:outputText value="<p><label>#{bolonhaBundle['competenceCourse']}:</label>" escape="false"/>
+			<h:outputText value="<p><label>#{bolonhaBundle['Course']}:</label>" escape="false"/>
 			<fc:selectOneMenu value="#{CurricularCourseManagement.competenceCourseID}" onchange="this.form.submit();">
 				<f:selectItems value="#{CurricularCourseManagement.competenceCourses}"/>
 			</fc:selectOneMenu>
@@ -39,7 +40,7 @@
 					<f:param name="competenceCourseID" value="#{CurricularCourseManagement.competenceCourseID}"/>
 				</h:outputLink>
 				<h:outputText value=" (#{bolonhaBundle['newPage']})" escape="false"/>
-				<h:outputText value="</p>" escape="false"/>
+				<h:outputText value="</p><br/>" escape="false"/>
 			</h:panelGroup>
 		</h:panelGroup>
 		
@@ -52,34 +53,74 @@
 			<h:outputText value="<p><label><span class='required'>*</span>#{bolonhaBundle['nameEn']} (en):</label>" escape="false"/>
 			<h:inputText id="nameEn" size="40" maxlength="40" required="true" value="#{CurricularCourseManagement.nameEn}"/>
 			<h:message for="nameEn" styleClass="error0"/>
-			<h:outputText value="</p>" escape="false"/>	
+			<h:outputText value="</p><br/>" escape="false"/>	
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{CurricularCourseManagement.selectedCurricularCourseType == 'NORMAL_COURSE'}">
-			<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularCourseInformation']}:</h4><br/>" escape="false"/>
+			<h:outputText value="<h4 class='first'>#{bolonhaBundle['curricularCourseInformation']}</h4>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['weight']}:</label>" escape="false"/>
 			<h:inputText id="weight" maxlength="5" size="5" value="#{CurricularCourseManagement.weight}" />
 			<h:message for="weight" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
+
+			<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesPt']}:</label>" escape="false"/>
+			<h:inputTextarea id="prerequisites" cols="55" rows="5" value="#{CurricularCourseManagement.prerequisites}"/>
+			<h:outputText value="</p>" escape="false"/>
 			
-			<h:outputText value="<p><label>#{bolonhaBundle['prerequisites']}:</label>" escape="false"/>
-			<h:inputTextarea id="prerequisites" cols="80" rows="5" value="#{CurricularCourseManagement.prerequisites}"/>
-			<h:outputText value="</p></fieldset>" escape="false"/>
-			
-			<h:outputText value="<h4 class='first'>#{bolonhaBundle['english']}:</h4><br/>"  escape="false"/>
-			<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
 			<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesEn']}:</label>" escape="false"/>
-			<h:inputTextarea id="prerequisitesEn" cols="80" rows="5" value="#{CurricularCourseManagement.prerequisitesEn}"/>
+			<h:inputTextarea id="prerequisitesEn" cols="55" rows="5" value="#{CurricularCourseManagement.prerequisitesEn}"/>
 			<h:outputText value="</p>" escape="false"/>	
 		</h:panelGroup>
-		<h:outputText value="<p class='mtop2'><label class='lempty'>.</label>" escape="false"/>
+		<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['update']}" action="#{CurricularCourseManagement.editCurricularCourse}"/>
 		<h:outputText value="</p></fieldset></div>" escape="false"/>
+
+
+
 		
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
 		<h:outputText value="<h4 class='first'>#{bolonhaBundle['contexts']}:</h4>" escape="false"/>		
-		<br/>
+		
+		<p>
+		<h:outputLink value="editCurricularCourse.faces">
+			<h:outputText value="#{bolonhaBundle['newContext']}" />
+			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
+			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
+		</h:outputLink>
+		</p><br/>
+		
+
+		<h:panelGroup rendered="#{empty CurricularCourseManagement.contextID}">
+				<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+				
+				<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
+					<f:selectItems value="#{CurricularCourseManagement.courseGroups}" />
+				</fc:selectOneMenu>
+				<h:outputText value="</p>" escape="false"/>
+			
+				<h:outputText value="<p><label>#{bolonhaBundle['curricularYear']}:</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
+					<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
+				</fc:selectOneMenu>
+				<h:outputText value="</p>" escape="false"/>
+			
+				<h:outputText value="<p><label>#{bolonhaBundle['semester']}:</label>" escape="false"/>
+				<fc:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
+					<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
+				</fc:selectOneMenu>
+				<h:outputText value="</p>" escape="false"/>
+				
+				<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
+				<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['add']}"
+						action="" actionListener="#{CurricularCourseManagement.addContext}"/>
+				<h:outputText value="</p></fieldset>" escape="false"/>
+				<h:outputText value="<br/>" escape="false"/>
+		</h:panelGroup>
+
+
+
 		<h:dataTable value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
 			<h:column>
 				<h:panelGroup rendered="#{context.idInternal != CurricularCourseManagement.contextID}">
@@ -91,7 +132,7 @@
 					<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
 					<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
 					
-					<h:outputText value="<p class='mtop2'><label class='lempty'>.</label>" escape="false"/>
+					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputLink value="editCurricularCourse.faces">
 						<h:outputText value="#{bolonhaBundle['edit']}" />
 						<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
@@ -128,7 +169,7 @@
 					</fc:selectOneMenu>
 					<h:outputText value="</p>" escape="false"/>
 					
-					<h:outputText value="<p class='mtop2'><label class='lempty'>.</label>" escape="false"/>
+					<h:outputText value="<p class='mtop05'><label class='lempty'>.</label>" escape="false"/>
 					<h:outputText escape="false" value="<input id='contextID' name='contextID' type='hidden' value='#{context.idInternal}'/>"/>
 					<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['update']}"
 							action="#{CurricularCourseManagement.editContext}"/>
@@ -137,39 +178,12 @@
 				<h:outputText value="<br/>" escape="false"/>
 			</h:column>
 		</h:dataTable>
-		<br/>
-		<h:outputLink value="editCurricularCourse.faces">
-			<h:outputText value="#{bolonhaBundle['newContext']}" />
-			<f:param name="degreeCurricularPlanID" value="#{CurricularCourseManagement.degreeCurricularPlanID}" />
-			<f:param name="curricularCourseID" value="#{CurricularCourseManagement.curricularCourseID}" />
-		</h:outputLink>
-		<br/>
-		<h:panelGroup rendered="#{empty CurricularCourseManagement.contextID}">
-				<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
-				
-				<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
-				<fc:selectOneMenu value="#{CurricularCourseManagement.courseGroupID}">
-					<f:selectItems value="#{CurricularCourseManagement.courseGroups}" />
-				</fc:selectOneMenu>
-				<h:outputText value="</p>" escape="false"/>
-			
-				<h:outputText value="<p><label>#{bolonhaBundle['curricularYear']}:</label>" escape="false"/>
-				<fc:selectOneMenu value="#{CurricularCourseManagement.curricularYearID}">
-					<f:selectItems value="#{CurricularCourseManagement.curricularYears}" />
-				</fc:selectOneMenu>
-				<h:outputText value="</p>" escape="false"/>
-			
-				<h:outputText value="<p><label>#{bolonhaBundle['semester']}:</label>" escape="false"/>
-				<fc:selectOneMenu value="#{CurricularCourseManagement.curricularSemesterID}">
-					<f:selectItems value="#{CurricularCourseManagement.curricularSemesters}" />
-				</fc:selectOneMenu>
-				<h:outputText value="</p>" escape="false"/>
-				
-				<h:outputText value="<p class='mtop2'><label class='lempty'>.</label>" escape="false"/>
-				<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['associate']}"
-						action="" actionListener="#{CurricularCourseManagement.addContext}"/>
-				<h:outputText value="</p></fieldset>" escape="false"/>
-		</h:panelGroup>
+		
+
+		
+
+		
+		
 		<h:outputText value="</div>" escape="false"/>
 		<h:commandButton immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"
 			action="buildCurricularPlan"/>

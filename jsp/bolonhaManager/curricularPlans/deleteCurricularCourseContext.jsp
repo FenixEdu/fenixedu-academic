@@ -17,24 +17,23 @@
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>
 		<h:outputText escape="false" value="<input id='curricularCourseID' name='curricularCourseID' type='hidden' value='#{CurricularCourseManagement.curricularCourseID}'/>"/>
 		<h:outputText escape="false" value="<input id='contextIDToDelete' name='contextIDToDelete' type='hidden' value='#{CurricularCourseManagement.contextID}'/>"/>
-		
-		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['curricularCourseInformation']}: <br/>"  escape="false"/>		
-		<h:outputText value="#{bolonhaBundle['name']}: "/>
-		<h:outputText value="#{CurricularCourseManagement.curricularCourse.name}"/>		
-		<br/><br/>
-		<h:outputText style="font-weight: bold" value="#{bolonhaBundle['context']}: <br/>" escape="false"/>
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+
+		<h:outputText value="<p><strong>#{bolonhaBundle['name']}:</strong> " escape="false"/>
+		<h:outputText value="#{CurricularCourseManagement.curricularCourse.name}</p>" escape="false"/>		
+
 		<fc:dataRepeater value="#{CurricularCourseManagement.curricularCourse.degreeModuleContexts}" var="context">
 			<h:panelGroup rendered="#{context.idInternal == CurricularCourseManagement.contextID}">								
-				<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>
-				<h:outputText value="#{context.courseGroup.name}</p>" escape="false"/>
-				
-				<h:outputText value="<p><label>#{bolonhaBundle['curricularPeriod']}:</label>" escape="false"/>
+				<h:outputText value="<p><strong>#{bolonhaBundle['courseGroup']}:</strong> " escape="false"/>
+				<h:outputText value="#{context.courseGroup.name}</p>" escape="false"/>			
+				<h:outputText value="<p><strong>#{bolonhaBundle['curricularPeriod']}:</strong> " escape="false"/>
 				<h:outputText value="#{context.curricularPeriod.fullLabel}</p>" escape="false"/>
 			</h:panelGroup>
 		</fc:dataRepeater>
-		<h:outputText value="</fieldset><br/>" escape="false"/>
-		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}<br/><hr>" escape="false"/>		
+		
+		<h:outputText value="<br/><p>" escape="false"/>
+		<h:outputText styleClass="error0" value="#{bolonhaBundle['confirmDeleteMessage']}" escape="false"/>		
+		<h:outputText value="</p><br/>" escape="false"/>
+		
 		<h:commandButton styleClass="inputbutton" value="#{bolonhaBundle['yes']}"
 			action="#{CurricularCourseManagement.deleteCurricularCourseContextReturnPath}"
 			actionListener="#{CurricularCourseManagement.deleteContext}" />

@@ -122,7 +122,7 @@ public class UIDegreeModule extends UIInput {
             writer.startElement("td", this);
             writer.writeAttribute("class", "p_mvert015", null);
             writer.writeAttribute("align", "right", null);
-            writer.writeAttribute("style", "width: 7em; padding-top:0; padding-bottom: 1em;", null);
+            writer.writeAttribute("style", "width: 9em; padding-top:0; padding-bottom: 1em;", null);
             writer.writeAttribute("rowspan", curricularRulesToEncode.size(), null);
             if (this.toEdit) {
                 for (CurricularRule curricularRule : curricularRulesToEncode) {

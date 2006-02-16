@@ -14,7 +14,7 @@
 		<h:outputText escape="false" value="<input id='degreeCurricularPlanID' name='degreeCurricularPlanID' type='hidden' value='#{CurricularCourseManagement.degreeCurricularPlanID}'/>"/>		
 
 		<h:outputText value="<div class='simpleblock4'>" escape="false"/>
-		<h:outputText value="<h4 class='first'>#{bolonhaBundle['chooseCurricularCourseAndContext']}:</h4><br/>" escape="false"/>
+		<h:outputText value="<h4 class='first'>#{bolonhaBundle['chooseCurricularCourseAndContext']}:</h4>" escape="false"/>
 		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	
 
 		<h:outputText value="<p><label>#{bolonhaBundle['courseGroup']}:</label>" escape="false"/>

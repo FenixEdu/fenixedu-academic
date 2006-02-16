@@ -187,9 +187,7 @@ public class UIDegreeCurricularPlan extends UIInput {
         writer.startElement("th", this);
         writer.writeAttribute("class", "aleft", null);        
         writer.writeAttribute("colspan", (this.toEdit) ? 3 : 5, null);
-        writer.startElement("strong", this);
         writer.append(curricularPeriod.getFullLabel());
-        writer.endElement("strong");
         writer.endElement("th");
 
         if (this.toEdit) {
