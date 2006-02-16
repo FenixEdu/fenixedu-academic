@@ -119,7 +119,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
         for (final StudentCurricularPlan studentCurricularPlan : getStudent()
                 .getStudentCurricularPlans()) {
-            if (studentCurricularPlan.getCurrentState() == StudentCurricularPlanState.PAST) {
+            if (studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.PAST) || studentCurricularPlan.getCurrentState().equals(StudentCurricularPlanState.INCOMPLETE)) {
                 addNonInvisibleEnrolments(allEnrollments, studentCurricularPlan.getEnrolments());
             }
         }
