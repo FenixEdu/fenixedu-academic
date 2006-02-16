@@ -54,8 +54,10 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
      * @throws NotAuthorizedFilterException
      */
     protected Department getEmployeeDepartment(IPersistentDepartment persistentDepartment, IPersistentEmployee persistentEmployee, IPessoaPersistente pessoaPersistente, IUserView userView) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
-        Person pessoa = getPessoa(pessoaPersistente, userView);
-        Employee employee = persistentEmployee.readByPerson(pessoa);
+        Person pessoa = userView.getPerson();
+        if(pessoa == null)
+            throw new NotAuthorizedFilterException("error.noPerson");
+        Employee employee = pessoa.getEmployee();
         if(employee == null)
             throw new NotAuthorizedFilterException("Não existe funcionario");
         Department employeeDepartment = getDepartment(persistentDepartment, employee);
@@ -75,22 +77,6 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro{
         Teacher teacher = getTeacher(persistentTeacher, argumentos);
         Department teacherDepartment = getDepartment(persistentDepartment, teacher);
         return teacherDepartment;
-    }
-
-    /**
-     * @param pessoaPersistente
-     * @param userView
-     * @return
-     * @throws ExcepcaoPersistencia
-     * @throws FenixServiceException
-     * @throws NotAuthorizedFilterException
-     */
-    protected Person getPessoa(IPessoaPersistente pessoaPersistente, IUserView userView) throws ExcepcaoPersistencia, NotAuthorizedFilterException {
-        String utilizador = userView.getUtilizador();        
-        Person pessoa = Person.readPersonByUsername(utilizador); 
-        if(pessoa == null)
-            throw new NotAuthorizedFilterException("error.noPerson");
-        return pessoa;
     }
 
     /**
