@@ -46,7 +46,7 @@
 		</fc:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
 		
-		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' || CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE'}">
+		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_APPROVED_DEGREE_MODULE' || CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_ENROLED_DEGREE_MODULE' || CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES'}">
 			<h:outputText value="<p><label>#{bolonhaBundle['curricularCourse']}:</label>" escape="false"/>
 			<fc:selectOneMenu value="#{CurricularRulesManagement.selectedDegreeModuleID}">
 				<f:selectItems binding="#{CurricularRulesManagement.degreeModuleItems}"/>
@@ -55,26 +55,29 @@
 		</h:panelGroup>				
 
 		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'DEGREE_MODULES_SELECTION_LIMIT'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
-			
+			<h:outputText value="<p><label>#{bolonhaBundle['options']}:</label>" escape="false"/>
 			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 			<h:inputText id="minimumLimit" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumLimit}"/>
 			<h:outputText value=" " escape="false"/>
 			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
 			<h:inputText id="maximumLimit" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumLimit}"/>
-			
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 		
 		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'CREDITS_LIMIT'}">
-			<h:outputText value="<p><label>#{bolonhaBundle['options']}:</label>" escape="false"/>
-			
+			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
 			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 			<h:inputText id="minimumCredits" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
 			<h:outputText value=" " escape="false"/>
 			<h:outputText value="#{bolonhaBundle['maximum']}: " escape="false"/>
 			<h:inputText id="maximumCredits" maxlength="8" size="4" value="#{CurricularRulesManagement.maximumCredits}"/>
-	
+			<h:outputText value="</p>" escape="false"/>
+		</h:panelGroup>
+		
+		<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'PRECEDENCY_BETWEEN_DEGREE_MODULES'}">
+			<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
+			<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
+			<h:inputText id="minimumCreditsForPrecedencyBetweenDegreeModules" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
 			<h:outputText value="</p>" escape="false"/>
 		</h:panelGroup>
 		

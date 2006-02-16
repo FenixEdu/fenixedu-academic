@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.persistenceTier.IPersistentObject;
 
-public class CurricularRuleManager {
+public class CurricularRulesManager {
 
     public static CurricularRule createCurricularRule(DegreeModule degreeModuleToApplyRule,
             ExecutionPeriod begin, ExecutionPeriod end, CurricularRuleType curricularRuleType,
@@ -39,10 +39,28 @@ public class CurricularRuleManager {
             return createEnrolmentToBeApprovedByCoordinator(degreeModuleToApplyRule, begin, end,
                     parametersDTO, persistentObject);
 
+        case PRECEDENCY_BETWEEN_DEGREE_MODULES:
+            return createRestrictionBetweenDegreeModules(degreeModuleToApplyRule, begin, end,
+                    parametersDTO, persistentObject);
+
         default:
             break;
         }
         return null;
+    }
+
+    private static CurricularRule createRestrictionBetweenDegreeModules(
+            DegreeModule degreeModuleToApplyRule, ExecutionPeriod begin, ExecutionPeriod end,
+            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            throws ExcepcaoPersistencia {
+
+        final DegreeModule precedenceDegreeModule = (DegreeModule) persistentObject.readByOID(
+                DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
+        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
+                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+
+        return new RestrictionBetweenDegreeModules(degreeModuleToApplyRule, precedenceDegreeModule,
+                parametersDTO.getMinimumCredits(), contextCourseGroup, begin, end);
     }
 
     private static CurricularRule createEnrolmentToBeApprovedByCoordinator(
@@ -136,9 +154,26 @@ public class CurricularRuleManager {
             editEnrolmentToBeApprovedByCoordinator(curricularRule, parametersDTO, persistentObject);
             break;
 
+        case PRECEDENCY_BETWEEN_DEGREE_MODULES:
+            editResctrictionBetweenDegreeModules(curricularRule, parametersDTO, persistentObject);
+            break;
+
         default:
             break;
         }
+    }
+
+    private static void editResctrictionBetweenDegreeModules(CurricularRule curricularRule,
+            CurricularRuleParametersDTO parametersDTO, IPersistentObject persistentObject)
+            throws ExcepcaoPersistencia {
+        final RestrictionBetweenDegreeModules restrictionBetweenDegreeModules = (RestrictionBetweenDegreeModules) curricularRule;
+
+        final DegreeModule precedenceDegreeModule = (DegreeModule) persistentObject.readByOID(
+                DegreeModule.class, parametersDTO.getSelectedDegreeModuleID());
+        final CourseGroup contextCourseGroup = (CourseGroup) persistentObject.readByOID(
+                CourseGroup.class, parametersDTO.getContextCourseGroupID());
+
+        restrictionBetweenDegreeModules.edit(precedenceDegreeModule, parametersDTO.getMinimumCredits(), contextCourseGroup);
     }
 
     private static void editEnrolmentToBeApprovedByCoordinator(CurricularRule curricularRule,

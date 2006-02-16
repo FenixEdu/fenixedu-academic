@@ -22,10 +22,9 @@ public abstract class PrecedenceRule extends PrecedenceRule_Base {
     }
     
     private boolean hasNoCurricularPeriodOrder() {
-        return (this.getCurricularPeriodType() != null
-                && this.getCurricularPeriodOrder() != null
-                && this.getCurricularPeriodType().equals(CurricularPeriodType.SEMESTER) 
-                && this.getCurricularPeriodOrder().equals(0));
+        return (this.getCurricularPeriodType() == null || this.getCurricularPeriodOrder() == null 
+                || (this.getCurricularPeriodType().equals(CurricularPeriodType.SEMESTER) 
+                        && this.getCurricularPeriodOrder().equals(0)));
     }
 
 }

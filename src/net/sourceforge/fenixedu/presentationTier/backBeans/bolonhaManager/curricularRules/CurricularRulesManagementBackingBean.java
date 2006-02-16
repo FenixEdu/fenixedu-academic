@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType;
 import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit;
 import net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule;
+import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -91,23 +92,30 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
         getViewState().setAttribute("selectedCurricularRuleType", ruleType);
     }
 
-    // TODO: check this method
     private List<SelectItem> getRuleTypes() throws FenixFilterException, FenixServiceException {
         final List<SelectItem> result = new ArrayList<SelectItem>();
         for (final CurricularRuleType curricularRuleType : CurricularRuleType.values()) {
-            if (getDegreeModule() instanceof CourseGroup) {
-                if (curricularRuleType == CurricularRuleType.CREDITS_LIMIT 
-                        || curricularRuleType == CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT) {
+            switch (curricularRuleType) {
+            case CREDITS_LIMIT:
+                if (getDegreeModule() instanceof CurricularCourse 
+                        && ((CurricularCourse) getDegreeModule()).getType().equals(CurricularCourseType.OPTIONAL_COURSE)) {
+                    result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
+                    break;
+                }
+            case DEGREE_MODULES_SELECTION_LIMIT:
+            case PRECEDENCY_BETWEEN_DEGREE_MODULES:
+                if (getDegreeModule() instanceof CourseGroup) {
                     result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
                 }
-            } else if (getDegreeModule() instanceof CurricularCourse) {
-                final CurricularCourse curricularCourse = (CurricularCourse) getDegreeModule();
-                if (curricularCourse.getType().equals(CurricularCourseType.OPTIONAL_COURSE)
-                        || curricularRuleType == CurricularRuleType.PRECEDENCY_APPROVED_DEGREE_MODULE 
-                        || curricularRuleType == CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE
-                        || curricularRuleType == CurricularRuleType.ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR) {
+                break;
+            case PRECEDENCY_APPROVED_DEGREE_MODULE:
+            case PRECEDENCY_ENROLED_DEGREE_MODULE:
+            case ENROLMENT_TO_BE_APPROVED_BY_COORDINATOR:
+                if (getDegreeModule() instanceof CurricularCourse) {
                     result.add(new SelectItem(curricularRuleType.getName(), enumerationResources.getString(curricularRuleType.getName())));
                 }
+            default:
+                break;
             }
         }
         Collections.sort(result, new BeanComparator("label"));
@@ -116,7 +124,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
 
     public List<String> getRulesLabels() throws FenixFilterException, FenixServiceException {
-        List<String> resultLabels = new ArrayList<String>();
+        final List<String> resultLabels = new ArrayList<String>();
         for (CurricularRule curricularRule : getDegreeModule().getCurricularRules()) {
             resultLabels.add(CurricularRuleLabelFormatter.getLabel(curricularRule));
         }
@@ -173,7 +181,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     public Integer getMinimumLimit() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("minimumLimit") == null) {
-            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
+            if (getCurricularRule() != null && getCurricularRule() instanceof DegreeModulesSelectionLimit) {
                 setMinimumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMinimum());               
             } else {
                 setMinimumLimit(Integer.valueOf(0));
@@ -188,7 +196,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     public Integer getMaximumLimit() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("maximumLimit") == null) {
-            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT)) {
+            if (getCurricularRule() != null && getCurricularRule() instanceof DegreeModulesSelectionLimit) {
                 setMaximumLimit(((DegreeModulesSelectionLimit) getCurricularRule()).getMaximum());               
             } else {
                 setMaximumLimit(Integer.valueOf(0));
@@ -203,8 +211,10 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
    
     public Double getMinimumCredits() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("minimumCredits") == null) {
-            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.CREDITS_LIMIT)) {
+            if (getCurricularRule() != null && getCurricularRule() instanceof CreditsLimit) {
                 setMinimumCredits(((CreditsLimit) getCurricularRule()).getMinimum());               
+            } else if (getCurricularRule() != null && getCurricularRule() instanceof RestrictionBetweenDegreeModules) {
+                setMinimumCredits(((RestrictionBetweenDegreeModules) getCurricularRule()).getMinimum());
             } else {
                 setMinimumCredits(Double.valueOf(0));
             }
@@ -218,7 +228,7 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     
     public Double getMaximumCredits() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("maximumCredits") == null) {
-            if (getCurricularRule() != null && getCurricularRule().getCurricularRuleType().equals(CurricularRuleType.CREDITS_LIMIT)) {
+            if (getCurricularRule() != null && getCurricularRule() instanceof CreditsLimit) {
                 setMaximumCredits(((CreditsLimit) getCurricularRule()).getMaximum());               
             } else {
                 setMaximumCredits(Double.valueOf(0));
@@ -234,7 +244,9 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     public String getSelectedSemester() throws FenixFilterException, FenixServiceException {
         if (getViewState().getAttribute("selectedSemester") == null) {
             if (getCurricularRule() != null && getCurricularRule() instanceof PrecedenceRule) {
-                setSelectedSemester(((PrecedenceRule) getCurricularRule()).getCurricularPeriodOrder().toString());
+                final PrecedenceRule precedenceRule = (PrecedenceRule) getCurricularRule();
+                setSelectedSemester(precedenceRule.getCurricularPeriodOrder() != null ? precedenceRule
+                        .getCurricularPeriodOrder().toString() : "0");
             } else {
                 setSelectedSemester("0");
             }
@@ -251,7 +263,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
     }
     
     public CurricularRule getCurricularRule() throws FenixFilterException, FenixServiceException {
-        return (curricularRule == null) ? (curricularRule = (CurricularRule) readDomainObject(CurricularRule.class, getCurricularRuleID())) : curricularRule;
+        return (curricularRule == null) ? (curricularRule = (CurricularRule) readDomainObject(
+                CurricularRule.class, getCurricularRuleID())) : curricularRule;
     }
     
     public UISelectItems getDegreeModuleItems() throws FenixFilterException, FenixServiceException {
@@ -307,7 +320,8 @@ public class CurricularRulesManagementBackingBean extends FenixBackingBean {
                     || selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_ENROLED_DEGREE_MODULE.name())) {
                 getCurricularCourses(result);
             } else if (selectedCurricularRuleType.equals(CurricularRuleType.CREDITS_LIMIT.name())
-                    || selectedCurricularRuleType.equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT.name())) {
+                    || selectedCurricularRuleType.equals(CurricularRuleType.DEGREE_MODULES_SELECTION_LIMIT.name())
+                    || selectedCurricularRuleType.equals(CurricularRuleType.PRECEDENCY_BETWEEN_DEGREE_MODULES.name())) {
                 getCourseGroups(result);
             }
         }

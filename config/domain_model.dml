@@ -680,6 +680,9 @@ class net.sourceforge.fenixedu.domain.curricularRules.CurricularRule extends net
 	        }     
 	        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule extends net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule {
 	        }
+	        class net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules extends net.sourceforge.fenixedu.domain.curricularRules.PrecedenceRule {
+	            Double minimum;
+	        }
         class net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLimit extends net.sourceforge.fenixedu.domain.curricularRules.Rule {    
             Integer minimum;
             Integer maximum;
