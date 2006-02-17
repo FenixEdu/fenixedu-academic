@@ -73,6 +73,8 @@
         <action path="/autenticacao" forward="/autenticacao.jsp" />
         <action path="/naoExistente" forward="/error.jsp" />
         <action path="/nonExistingObject" forward="/nonExistingError.jsp"/>
+        <action path="/publicNotAuthorized" forward="/exception/publicNotAuthorized.jsp"/>
+        
 
 	    <action path="/changeLocaleTo"
 	    		name="changeLocaleForm"

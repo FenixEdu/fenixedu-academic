@@ -487,6 +487,10 @@
 	    <location>/exception/notAuthorizedForward.jsp</location>
 	</error-page>
 	<error-page>
+	    <exception-type>net.sourceforge.fenixedu.presentationTier.servlets.NotAuthorizedException</exception-type>
+	    <location>/publicNotAuthorized.do</location>
+	</error-page>
+	<error-page>
 	    <exception-type>java.lang.Exception</exception-type>
 	    <location>/showErrorPage.do</location>
 	</error-page>

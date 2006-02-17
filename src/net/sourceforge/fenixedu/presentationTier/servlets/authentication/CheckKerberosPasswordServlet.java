@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidPasswo
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpiredServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException;
+import net.sourceforge.fenixedu.presentationTier.servlets.NotAuthorizedException;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 
 import org.apache.commons.lang.StringUtils;
@@ -90,7 +91,7 @@ public class CheckKerberosPasswordServlet extends HttpServlet {
     private void checkAuthorizationForRequestHost(HttpServletRequest request) throws ServletException {
         if (!this.authorizedHosts.contains(request.getRemoteAddr())
                 && !this.authorizedHosts.contains(request.getRemoteHost())) {
-            throw new net.sourceforge.fenixedu.accessControl.IllegalDataAccessException();
+            throw new NotAuthorizedException();
         }
     }
 }
