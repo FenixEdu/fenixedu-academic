@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.exceptions.misc.InvalidIntervalLimitsExce
 import net.sourceforge.fenixedu.domain.assiduousness.util.AttributeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Attributes;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DomainConstants;
-import net.sourceforge.fenixedu.domain.assiduousness.util.RegimeType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.ScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimeInterval;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
@@ -119,13 +118,13 @@ public class WorkSchedule extends WorkSchedule_Base {
         return getWorkWeek().worksAt(weekDay);
     }
    
- 
-    /* Adds a List of Regimes to the employee Schedule */
-    public void addRegimesToWorkSchedule(List<AssiduousnessRegime> regimes) {
-        for (AssiduousnessRegime regime: regimes) {
-            addRegimes(regime);
-        }
-    }
+/* TODO: PASSAR PARA FUNCIONARIO */ 
+//    /* Adds a List of Regimes to the employee Schedule */
+//    public void addRegimesToWorkSchedule(List<AssiduousnessRegime> regimes) {
+//        for (AssiduousnessRegime regime: regimes) {
+//            addRegimes(regime);
+//        }
+//    }
     
 //    public boolean hasRegime(RegimeType regimeType) {
 //        Iterator<Regime> itRegime = this.getRegimesIterator();

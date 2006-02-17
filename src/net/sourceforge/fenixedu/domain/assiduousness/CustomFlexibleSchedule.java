@@ -40,11 +40,11 @@ public class CustomFlexibleSchedule extends CustomFlexibleSchedule_Base {
 	public static CustomFlexibleSchedule makeCustomFlexibleSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriods, List<AssiduousnessRegime> regimes, Meal mealPeriod, Duration consecutiveWork, 
             TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
         CustomFlexibleSchedule newCustomFlexibleSchedule = new CustomFlexibleSchedule();
-        newCustomFlexibleSchedule.setEmployee(employee);
+//        newCustomFlexibleSchedule.setEmployee(employee);
         newCustomFlexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newCustomFlexibleSchedule.setFixedPeriod(fixedPeriods);
         newCustomFlexibleSchedule.setMeal(mealPeriod);
-        newCustomFlexibleSchedule.addRegimesToWorkSchedule(regimes);
+//        newCustomFlexibleSchedule.addRegimesToWorkSchedule(regimes);
         newCustomFlexibleSchedule.setWorkDay(workDay);
         newCustomFlexibleSchedule.setValidFromTo(validFromTo);
         newCustomFlexibleSchedule.setExceptionSchedule(exception);
@@ -60,7 +60,7 @@ public class CustomFlexibleSchedule extends CustomFlexibleSchedule_Base {
         customFlexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
         customFlexibleSchedule.setFixedPeriod(fixedPeriods);
         customFlexibleSchedule.setMeal(mealPeriod);
-        customFlexibleSchedule.addRegimesToWorkSchedule(regimes);
+//        customFlexibleSchedule.addRegimesToWorkSchedule(regimes);
         customFlexibleSchedule.setWorkDay(workDay);
         customFlexibleSchedule.setExceptionSchedule(false);
         customFlexibleSchedule.setWorkWeek(workWeek);

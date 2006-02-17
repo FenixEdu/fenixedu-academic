@@ -63,7 +63,7 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
         flexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
         flexibleSchedule.setFixedPeriod(fixedPeriods);
         flexibleSchedule.setMeal(mealPeriod);
-        flexibleSchedule.addRegimesToWorkSchedule(regimes);
+//        flexibleSchedule.addRegimesToWorkSchedule(regimes);
         flexibleSchedule.setWorkDay(workDay);
         flexibleSchedule.setWorkWeek(workWeek);
         flexibleSchedule.setAcronym(acronym);
@@ -76,11 +76,11 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
             TimeInterval workDay,
             Interval validFromTo, WorkWeek workWeek, boolean exception, String acronym) {
         FlexibleSchedule flexibleSchedule = new FlexibleSchedule();
-        flexibleSchedule.setEmployee(employee);
+//        flexibleSchedule.setEmployee(employee);
         flexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
         flexibleSchedule.setFixedPeriod(fixedPeriods);
         flexibleSchedule.setMeal(mealPeriod);
-        flexibleSchedule.addRegimesToWorkSchedule(regimes);
+//        flexibleSchedule.addRegimesToWorkSchedule(regimes);
         flexibleSchedule.setWorkDay(workDay);
         flexibleSchedule.setExceptionSchedule(exception);
         flexibleSchedule.setValidFromTo(validFromTo);
@@ -96,7 +96,7 @@ public class FlexibleSchedule extends FlexibleSchedule_Base {
         flexibleSchedule.setNormalWorkPeriod(normalWorkPeriod);
         flexibleSchedule.setFixedPeriod(fixedPeriods);
         flexibleSchedule.setMeal(mealPeriod);
-        flexibleSchedule.addRegimesToWorkSchedule(regimes);
+//        flexibleSchedule.addRegimesToWorkSchedule(regimes);
         flexibleSchedule.setWorkDay(workDay);
         flexibleSchedule.setExceptionSchedule(exception);
         flexibleSchedule.setValidFromTo(validFromTo);

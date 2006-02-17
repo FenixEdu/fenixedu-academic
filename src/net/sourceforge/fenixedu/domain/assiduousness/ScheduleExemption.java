@@ -35,10 +35,10 @@ public class ScheduleExemption extends ScheduleExemption_Base {
 	public static ScheduleExemption fillScheduleExemption(Employee employee,  NormalWorkPeriod normalWorkPeriod, List<AssiduousnessRegime> regimes, Meal mealPeriod, TimeInterval workDay, Interval validFromTo, 
             WorkWeek workWeek, boolean exception) {
         ScheduleExemption newScheduleExemption = new ScheduleExemption();
-        newScheduleExemption.setEmployee(employee);
+//        newScheduleExemption.setEmployee(employee);
         newScheduleExemption.setNormalWorkPeriod(normalWorkPeriod);
         newScheduleExemption.setMeal(mealPeriod);
-        newScheduleExemption.addRegimesToWorkSchedule(regimes);
+//        newScheduleExemption.addRegimesToWorkSchedule(regimes);
         newScheduleExemption.setWorkDay(workDay);
         newScheduleExemption.setValidFromTo(validFromTo);
         newScheduleExemption.setExceptionSchedule(exception);

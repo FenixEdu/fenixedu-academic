@@ -32,11 +32,11 @@ public class HalfTimeSchedule extends HalfTimeSchedule_Base {
 	public static HalfTimeSchedule fillHalfTimeSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPlatforms, List<AssiduousnessRegime> regimes, 
 			Meal mealPeriod, Duration consecutiveWork, TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
         HalfTimeSchedule newHalfTimeSchedule = new HalfTimeSchedule();
-        newHalfTimeSchedule.setEmployee(employee);
+//        newHalfTimeSchedule.setEmployee(employee);
         newHalfTimeSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newHalfTimeSchedule.setFixedPeriod(fixedPlatforms);
         newHalfTimeSchedule.setMeal(mealPeriod);
-        newHalfTimeSchedule.addRegimesToWorkSchedule(regimes);
+//        newHalfTimeSchedule.addRegimesToWorkSchedule(regimes);
         newHalfTimeSchedule.setWorkDay(workDay);
         newHalfTimeSchedule.setValidFromTo(validFromTo);
         newHalfTimeSchedule.setExceptionSchedule(exception);

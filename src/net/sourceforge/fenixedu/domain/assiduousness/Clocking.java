@@ -18,8 +18,8 @@ public class Clocking extends Clocking_Base {
    
     public Clocking(Employee employee, Card card, ClockUnit clockUnit, ClockingState clockingState, DateTime date) {
         setDate(date);
-        setEmployee(employee);
-        setCard(card);
+//        setEmployee(employee);
+//        setCard(card);
         setClockUnit(clockUnit);
         setState(clockingState);
     }

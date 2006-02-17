@@ -38,10 +38,10 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
 	public static ContinuousSchedule makeContinuousSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, FixedPeriod fixedPeriod, List<AssiduousnessRegime> regimes, 
 			TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) { 
 		ContinuousSchedule newContinuousSchedule = new ContinuousSchedule();
-        newContinuousSchedule.setEmployee(employee);
+ //       newContinuousSchedule.setEmployee(employee);
         newContinuousSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newContinuousSchedule.setFixedPeriod(fixedPeriod);
-        newContinuousSchedule.addRegimesToWorkSchedule(regimes);
+ //       newContinuousSchedule.addRegimesToWorkSchedule(regimes);
         newContinuousSchedule.setWorkDay(workDay);
         newContinuousSchedule.setValidFromTo(validFromTo);
         newContinuousSchedule.setExceptionSchedule(exception);
@@ -56,7 +56,7 @@ public class ContinuousSchedule extends ContinuousSchedule_Base {
         ContinuousSchedule continuousSchedule = new ContinuousSchedule();
         continuousSchedule.setNormalWorkPeriod(normalWorkPeriod);
         continuousSchedule.setFixedPeriod(fixedPeriod);
-        continuousSchedule.addRegimesToWorkSchedule(regimes);
+//        continuousSchedule.addRegimesToWorkSchedule(regimes);
         continuousSchedule.setWorkDay(workDay);
         continuousSchedule.setExceptionSchedule(false);
         continuousSchedule.setWorkWeek(workWeek);

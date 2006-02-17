@@ -40,10 +40,10 @@ public class TwoHoursExemptionSchedule extends TwoHoursExemptionSchedule_Base {
 	public static TwoHoursExemptionSchedule makeTwoHoursExemptionSchedule(Employee employee,  NormalWorkPeriod normalWorkPeriod, List<AssiduousnessRegime> regimes, Meal mealPeriod, Duration consecutiveWork, TimeInterval workDay, 
             Interval validFromTo, WorkWeek workWeek , boolean exception, boolean template, String acronym) {
         TwoHoursExemptionSchedule newTwoHoursExemptionSchedule = new TwoHoursExemptionSchedule();
-        newTwoHoursExemptionSchedule.setEmployee(employee);
+//        newTwoHoursExemptionSchedule.setEmployee(employee);
         newTwoHoursExemptionSchedule.setNormalWorkPeriod(normalWorkPeriod);
         newTwoHoursExemptionSchedule.setMeal(mealPeriod);
-        newTwoHoursExemptionSchedule.addRegimesToWorkSchedule(regimes);
+//        newTwoHoursExemptionSchedule.addRegimesToWorkSchedule(regimes);
         newTwoHoursExemptionSchedule.setWorkDay(workDay);
         newTwoHoursExemptionSchedule.setValidFromTo(validFromTo);
         newTwoHoursExemptionSchedule.setExceptionSchedule(exception);
@@ -57,7 +57,7 @@ public class TwoHoursExemptionSchedule extends TwoHoursExemptionSchedule_Base {
             TimeInterval workDay, WorkWeek workWeek , String acronym) {
         TwoHoursExemptionSchedule twoHoursExemptionSchedule = new TwoHoursExemptionSchedule();
         twoHoursExemptionSchedule.setNormalWorkPeriod(normalWorkPeriod);
-        twoHoursExemptionSchedule.addRegimesToWorkSchedule(regimes);
+//        twoHoursExemptionSchedule.addRegimesToWorkSchedule(regimes);
         twoHoursExemptionSchedule.setWorkDay(workDay);
         twoHoursExemptionSchedule.setMeal(mealPeriod);
         twoHoursExemptionSchedule.setExceptionSchedule(false);

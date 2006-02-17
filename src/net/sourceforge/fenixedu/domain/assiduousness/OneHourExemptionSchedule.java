@@ -42,11 +42,11 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
 	public static OneHourExemptionSchedule makeOneHourExemptionSchedule(Employee employee,  NormalWorkPeriod regularSchedule, FixedPeriod fixedPlatforms, List<AssiduousnessRegime> regimes, Meal mealPeriod, Duration consecutiveWork, 
             TimeInterval workDay, Interval validFromTo, WorkWeek workWeek, boolean exception, boolean template, String acronym) {
         OneHourExemptionSchedule newOneHourExemptionSchedule = new OneHourExemptionSchedule();
-        newOneHourExemptionSchedule.setEmployee(employee);
+//        newOneHourExemptionSchedule.setEmployee(employee);
         newOneHourExemptionSchedule.setNormalWorkPeriod(regularSchedule);
         newOneHourExemptionSchedule.setFixedPeriod(fixedPlatforms);
         newOneHourExemptionSchedule.setMeal(mealPeriod);
-        newOneHourExemptionSchedule.addRegimesToWorkSchedule(regimes);
+//        newOneHourExemptionSchedule.addRegimesToWorkSchedule(regimes);
         newOneHourExemptionSchedule.setWorkDay(workDay);
         newOneHourExemptionSchedule.setValidFromTo(validFromTo);
         newOneHourExemptionSchedule.setExceptionSchedule(exception);
@@ -61,7 +61,7 @@ public class OneHourExemptionSchedule extends OneHourExemptionSchedule_Base {
         OneHourExemptionSchedule oneHourExemptionSchedule = new OneHourExemptionSchedule();
         oneHourExemptionSchedule.setNormalWorkPeriod(normalWorkPeriod);
         oneHourExemptionSchedule.setFixedPeriod(fixedPlatforms);
-        oneHourExemptionSchedule.addRegimesToWorkSchedule(regimes);
+//        oneHourExemptionSchedule.addRegimesToWorkSchedule(regimes);
         oneHourExemptionSchedule.setWorkDay(workDay);
         oneHourExemptionSchedule.setMeal(mealPeriod);
         oneHourExemptionSchedule.setExceptionSchedule(false);
