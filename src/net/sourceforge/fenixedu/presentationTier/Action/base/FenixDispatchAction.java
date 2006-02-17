@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSessionActionException;
+import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionUtils;
 
 import org.apache.struts.action.ActionError;
@@ -29,6 +30,11 @@ public abstract class FenixDispatchAction extends DispatchAction {
 
     protected IUserView getUserView(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
         return SessionUtils.getUserView(request);
+    }
+
+    protected Object executeService(final HttpServletRequest request, final String serviceName, final Object[] serviceArgs)
+            throws FenixFilterException, FenixServiceException {
+        return ServiceUtils.executeService(getUserView(request), serviceName, serviceArgs);
     }
 
     protected Person getLoggedPerson(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
