@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.sop.utils.SessionConstants" %>
 <!-- NOTA: Não foram incluidas tags do beans tipo <bean:message key="title.listClasses"/> -->
+<div style="font-size: 1.20em;">
 
 <p><strong>&raquo; 
   	<html:link page="<%= "/manageClasses.do?method=listClasses&amp;page=0&amp;"
@@ -36,3 +37,5 @@
 		Gest&atilde;o de Turnos
   	</html:link>
 </strong></p>
+
+</div>div>

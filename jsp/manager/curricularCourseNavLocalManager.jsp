@@ -4,6 +4,8 @@
 	<img alt=""  src="<%= request.getContextPath() %>/images/logo-fenix.gif" width="100" height="100"/>
 </center>
 
+<div style="font-size: 1.20em;">
+
 <p><strong>&raquo; 
 		<html:link module="/manager" page="/readDegrees.do">
 			<bean:message bundle="MANAGER_RESOURCES" key="label.manager.readDegrees" />
@@ -74,3 +76,5 @@
 		Gest&atilde;o da Avisos
 	</html:link>
 </strong></p>
+
+</div>

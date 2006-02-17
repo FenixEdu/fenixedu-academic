@@ -1,6 +1,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
+<div style="font-size: 1.20em;">
+
 <strong>Gestão de CMS</strong>
 <p><strong>&raquo; 
 	<html:link module="/cms" action="/personalGroupsManagement.do?method=prepare" titleKey="person.userGroupsManagement.label.title">
@@ -27,3 +29,5 @@
         <bean:message bundle="CMS_RESOURCES" key="cms.functionalityLinkManagement.label" />
     </html:link>    
 </strong></p>
+
+</div>
