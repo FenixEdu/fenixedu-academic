@@ -282,4 +282,11 @@
         <property name="columns" value="100"/>
     </slot>
   </schema>
+
+  <schema name="weekly.work.load.bean" type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadBean">
+    <slot name="contact"/>
+    <slot name="autonomousStudy"/>
+    <slot name="other"/>
+  </schema>
+
 </schemas>

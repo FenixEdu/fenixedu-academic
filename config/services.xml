@@ -9736,5 +9736,14 @@
 		<description />
 		<isTransactional>true</isTransactional>
 		<filterChains />
-	</service>           
+	</service>
+	<service>
+   	 	<name>CreateWeeklyWorkLoad</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.CreateWeeklyWorkLoad</implementationClass>
+        <description></description>
+        <isTransactional>true</isTransactional>  
+        <filterChains>
+        	<chain name="StudentAuthorization"></chain>
+        </filterChains>     
+    </service>           
 </serviceDefinitions>    

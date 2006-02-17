@@ -242,6 +242,14 @@
 			<form-property name="districtID" type="java.lang.Integer" />			
 			<form-property name="studentID" type="java.lang.Integer" />
 		</form-bean>
+
+		<form-bean name="weeklyWorkLoadForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">	
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionPeriodID" type="java.lang.String" />
+			<form-property name="contact" type="java.lang.Integer"/>
+			<form-property name="autonomousStudy" type="java.lang.Integer"/>
+			<form-property name="other" type="java.lang.Integer"/>
+		</form-bean>
 		
      </form-beans>
     
@@ -761,6 +769,16 @@
   			>
   			<forward name="showDislocatedStudentInquiry" path="show-dislocated-student-inquiry"/>
   			<forward name="proceedToPersonalDataInquiry" path="/studentPersonalDataAuthorization.do?method=preparePersonalDataInquiry"/>
+  		</action>
+
+  		<action path="/weeklyWorkLoad"
+  			type="net.sourceforge.fenixedu.presentationTier.Action.student.WeeklyWorkLoadDA"
+  			name="weeklyWorkLoadForm"
+  			scope="request"
+  			input="/weeklyWorkLoad.do?method=prepare"
+  			parameter="method"
+  			>
+  			<forward name="showWeeklyWorkLoad" path="show-weekly-work-load"/>
   		</action>
   		
 	</action-mappings>     

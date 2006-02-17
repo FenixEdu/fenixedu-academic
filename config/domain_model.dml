@@ -2851,7 +2851,8 @@ class net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad extends net.sourcef
 	Integer contact;
 	Integer autonomousStudy;
 	Integer other;
-	YearMonthDay startDate;
+	Integer weekOffset;
+	Integer keyAttends;
 }
 
 

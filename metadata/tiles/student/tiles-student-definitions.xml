@@ -17,13 +17,11 @@
 	  <put name="body" value="/commons/blank.jsp" />
 	  <put name="footer" value="/copyright.jsp" />
 	</definition>
-	
 	<definition name="definition.myExamRooms" page="/student/myExamRooms.jsp" controllerClass="net.sourceforge.fenixedu.presentationTier.tiles.controller.MyExamRooms">
 	</definition>
 	<definition name="definition.cant.enroll" extends="definition.student.masterPage">
 		<put name="body" value="/degreeAdministrativeOffice/commons/cantEnroll.jsp"/>
 	</definition>
-
 	<definition name="definition.viewSeminaries" extends="definition.student.masterPage">
 		<put name="body" value="/student/viewSeminaries_bd.jsp"/>
 	</definition>
@@ -45,9 +43,7 @@
 	<definition name="definition.showCandidacyDetails" extends="definition.student.masterPage">
 		<put name="body" value="/student/showCandidacyDetails_bd.jsp"/>
 	</definition>
-
 	<definition name="definition.gaugingTestResults" extends="definition.student.masterPage">
 		<put name="body" value="/student/gaugingTests/physics/viewGaugingTestResults.jsp"/>
 	</definition>
-
 </tiles-definitions>

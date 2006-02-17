@@ -487,6 +487,13 @@
 		<inverse-foreignkey field-ref="keyAttend"/>
 	</collection-descriptor>
 
+	<collection-descriptor proxy="true" auto-retrieve="false" collection-class="org.apache.ojb.broker.util.collections.ManageableVector"
+			name="weeklyWorkLoads"
+			element-class-ref="net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad"
+			>
+		<inverse-foreignkey field-ref="keyAttends"/>
+	</collection-descriptor>
+
    </class-descriptor>   
 
 <!-- ******************************************************************************************************************************* -->

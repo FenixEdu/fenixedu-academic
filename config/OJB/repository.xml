@@ -80,6 +80,7 @@
 <!ENTITY research SYSTEM "repository_research.xml">
 <!ENTITY space SYSTEM "repository_space.xml">
 <!ENTITY curricularRules SYSTEM "repository_curricular_rules.xml">
+<!ENTITY weeklyWorkLoad SYSTEM "repository_weeklyWorkLoad.xml">
 ]>
 <descriptor-repository version="1.0" isolation-level="repeatable-read">
 
@@ -164,5 +165,6 @@
     &research;
     &space;
     &curricularRules;
+    &weeklyWorkLoad;
 	
 </descriptor-repository>

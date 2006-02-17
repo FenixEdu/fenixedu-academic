@@ -182,5 +182,9 @@
 		<definition name="show-dislocated-student-inquiry" extends="definition.student.masterPage">
 		<put name="body" value="/student/enrollment/dislocatedStudentInquiry.jsp" />		
 	</definition>
+
+	<definition name="show-weekly-work-load" extends="definition.student.masterPage">
+		<put name="body" value="/student/weeklyWorkLoad.jsp" />
+	</definition>
 	
 </tiles-definitions>
