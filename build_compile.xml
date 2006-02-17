@@ -17,6 +17,7 @@
 	<property name="build.home" location="build"/>
 	<property name="build.home.webinf" value="${build.home}/WEB-INF"/>
 	<property name="build.home.webinf.classes" value="${build.home.webinf}/classes"/>
+	<property name="build.home.webinf.conf" value="${build.home.webinf}/conf"/>
 	<property name="build.home.webinf.libs" value="${build.home.webinf}/lib"/>
 	<property name="build.home.jsp_gen_code" value="${build.home}/Jsp-Code"/>
 	<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes"/>
@@ -326,8 +327,18 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 		    			   property="roleback.filename"/>
 				<replacefilter token="@default.persistenceSupport@"
 		    			   property="default.persistenceSupport"/>
+				<replacefilter token="@cas.enabled@"
+			  				   property="cas.enabled"/>
+				<replacefilter token="@cas.loginUrl@"
+			  				   property="cas.loginUrl"/>
+				<replacefilter token="@cas.validateUrl@"
+			  				   property="cas.validateUrl"/>
+				<replacefilter token="@cas.logoutUrl@"
+			  				   property="cas.logoutUrl"/>
+				<replacefilter token="@cas.serviceUrl@"
+			  				   property="cas.serviceUrl"/>
 				<replacefilter token="@password.generator@"
-		    			   property="password.generator"/>				
+		    			   property="password.generator"/>	
 			</replace>
 
 			<replace dir="${build.home.webinf.classes}"
@@ -391,6 +402,9 @@ script.isAlive.check.slide=${script.isAlive.check.slide}
 				<replacefilter 
 				    token="@manager.filter.pattern@"
 				    property="manager.filter.pattern"/>
+				<replacefilter 
+				    token="@checkPasswordKerberos.authorizedHosts@"
+				    property="checkPasswordKerberos.authorizedHosts"/>
 			</replace>
 
 			<replace dir="${build.home.webinf}/conf" propertyFile="build.properties">

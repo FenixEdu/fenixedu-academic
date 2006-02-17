@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.applicationTier.Servico;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,11 +32,17 @@ import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import edu.yale.its.tp.cas.client.CASAuthenticationException;
+import edu.yale.its.tp.cas.client.CASReceipt;
+import edu.yale.its.tp.cas.client.ProxyTicketValidator;
+
 /**
  * @author Luis Cruz
  * 
  */
 public class Authenticate extends Service implements Serializable {
+
+    private static final String URL_ENCODING = "UTF-8";
 
     protected static final Logger logger = Logger.getLogger(Authenticate.class);
 
@@ -94,9 +102,9 @@ public class Authenticate extends Service implements Serializable {
             return roles.contains(infoRole);
         }
 
-		public Person getPerson() {
+        public Person getPerson() {
 			return personRef.getObject();
-		}
+        }
 
         public String getUtilizador() {
             return getPerson().getUsername();
@@ -110,10 +118,9 @@ public class Authenticate extends Service implements Serializable {
             return getPerson().getNome();
         }
 
-		public boolean isPublicRequester()
-		{
-			return false;
-		}
+        public boolean isPublicRequester() {
+            return false;
+        }
     }
 
     public static final boolean isValidUserView(IUserView userView) {
@@ -127,14 +134,59 @@ public class Authenticate extends Service implements Serializable {
         if (person == null || !PasswordEncryptor.areEquals(person.getPassword(), password)) {
             throw new ExcepcaoAutenticacao("bad.authentication");
         }
-        
+
         return getUserView(person, requestURL);
     }
    
     
     protected IUserView getUserView(final Person person, final String requestURL) {
-    	final Set allowedRoles = getAllowedRolesByHostname(requestURL);
+        final Set allowedRoles = getAllowedRolesByHostname(requestURL);
         return new UserView(person, allowedRoles);
+    }
+
+    public IUserView run(final String casTicket, final String requestURL) throws ExcepcaoAutenticacao,
+            ExcepcaoPersistencia {
+        final CASReceipt receipt = getCASReceipt(casTicket);
+
+        if (receipt == null) {
+            throw new ExcepcaoAutenticacao("bad.authentication");
+        }
+
+        final String username = receipt.getUserName();
+        final Person person = Person.readPersonByUsername(username);
+
+        if (person == null) {
+            throw new ExcepcaoAutenticacao("bad.authentication");
+        }
+
+        final Set allowedRoles = getAllowedRolesByHostname(requestURL);
+
+        return new UserView(person, allowedRoles);
+
+    }
+
+    private CASReceipt getCASReceipt(final String casTicket) throws ExcepcaoAutenticacao {
+        CASReceipt receipt = null;
+
+        try {
+            final String casValidateUrl = PropertiesManager.getProperty("cas.validateUrl");
+            final String casServiceUrl = URLEncoder.encode(PropertiesManager.getProperty("cas.serviceUrl"), URL_ENCODING);
+
+            ProxyTicketValidator pv = new ProxyTicketValidator();
+            pv.setCasValidateUrl(casValidateUrl);
+            pv.setServiceTicket(casTicket);
+            pv.setService(casServiceUrl);
+            pv.setRenew(false);
+
+            receipt = CASReceipt.getReceipt(pv);
+
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (CASAuthenticationException e) {
+            throw new ExcepcaoAutenticacao("bad.authentication", e);
+        }
+
+        return receipt;
     }
 
     protected Collection<InfoRole> getInfoRoles(final String username, final Collection personRoles,

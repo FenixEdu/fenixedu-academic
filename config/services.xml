@@ -9729,5 +9729,12 @@
         <filterChains>
         	<chain name="ManagerAuthorization"></chain>
         </filterChains>     
-    </service>           
+    </service>
+    <service>
+		<name>KerberosExternalAuthentication</name>
+		<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.AuthenticateKerberos</implementationClass>
+		<description />
+		<isTransactional>true</isTransactional>
+		<filterChains />
+	</service>           
 </serviceDefinitions>    

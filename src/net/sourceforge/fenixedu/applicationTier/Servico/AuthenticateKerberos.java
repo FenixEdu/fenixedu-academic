@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.PasswordExpir
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
-import net.sourceforge.fenixedu.persistenceTier.IPessoaPersistente;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 
@@ -15,8 +14,7 @@ public class AuthenticateKerberos extends Authenticate {
 
 	
 	public IUserView run(final String username, final String password, final String requestURL) throws ExcepcaoPersistencia, ExcepcaoAutenticacao, FenixServiceException {
-		final IPessoaPersistente persistentPerson = persistentSupport.getIPessoaPersistente();
-		
+	
 		final Person person = Person.readPersonByUsername(username);
         if (person == null) {
             throw new ExcepcaoAutenticacao("bad.authentication");

@@ -148,6 +148,12 @@
 			<param-value>/@app.context@/</param-value>
 		</init-param>
 	</filter>
+	<filter>
+		<filter-name>CASFilter</filter-name>
+		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.authentication.cas.CASFilter</filter-class>
+    </filter>
+    	
+	<!-- Filter Mapping -->
 	<filter-mapping>
 		<filter-name>MultipartFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
@@ -212,6 +218,19 @@
 		<filter-name>CheckUserViewFilter</filter-name>
 		<url-pattern>*.faces</url-pattern>
 	</filter-mapping>
+   	<filter-mapping>
+	    <filter-name>CASFilter</filter-name>
+	    <url-pattern>/loginCAS.do</url-pattern>
+    </filter-mapping>
+   	<filter-mapping>
+	    <filter-name>CASFilter</filter-name>
+	    <url-pattern>/loginPage.jsp</url-pattern>
+    </filter-mapping>
+
+   	<filter-mapping>
+	    <filter-name>CASFilter</filter-name>
+	    <url-pattern>/login.do</url-pattern>
+    </filter-mapping>
     <!-- Listeners -->
 	<listener>
 		<listener-class>
@@ -362,11 +381,12 @@
         <init-param>
             <param-name>config/bolonhaManager</param-name>
             <param-value>/WEB-INF/conf/struts-bolonhaManager.xml</param-value>
-        </init-param>
+        </init-param>        
+        
         <init-param>
             <param-name>config/CMSManager</param-name>
             <param-value>/WEB-INF/conf/struts-cms.xml</param-value>
-        </init-param>
+        </init-param>           
         <init-param>
             <param-name>config/SpaceManager</param-name>
             <param-value>/WEB-INF/conf/struts-spaceManager.xml</param-value>
@@ -414,6 +434,21 @@
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.ajax.AutoCompleteServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>CheckKerberosPasswordServlet</servlet-name>
+        <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.authentication.CheckKerberosPasswordServlet</servlet-class>
+        <init-param>
+        	<param-name>authorizedHosts</param-name>
+        	<param-value>@checkPasswordKerberos.authorizedHosts@</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    
+    <!-- Servlet Mapping -->
+   	<servlet-mapping>
+		<servlet-name>CheckKerberosPasswordServlet</servlet-name>
+		<url-pattern>/authentication/CheckKerberosPasswordServlet</url-pattern>
+	</servlet-mapping>
    	<servlet-mapping>
 		<servlet-name>AutoCompleteServlet</servlet-name>
 		<url-pattern>/ajax/AutoCompleteServlet</url-pattern>
@@ -500,5 +535,20 @@
 		<taglib-uri>/WEB-INF/fenix-renders.tld</taglib-uri>
 		<taglib-location>/WEB-INF/fenix-renders.tld</taglib-location>
 	</taglib>
+	
+	<security-constraint>
+		<web-resource-collection>
+	          <web-resource-name>KerberosPasswordCheck</web-resource-name>
+	          <description />
+	          <url-pattern>/authentication/CheckKerberosPasswordServlet</url-pattern>
+	          <http-method>POST</http-method>
+	          <http-method>GET</http-method>
+	     </web-resource-collection>
+	     <user-data-constraint>
+	          <description>SSL</description>
+	          <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+	     </user-data-constraint>
+	</security-constraint>
+
 </web-app>
 

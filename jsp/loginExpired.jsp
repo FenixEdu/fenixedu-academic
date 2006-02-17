@@ -56,6 +56,7 @@
 			<html:form action="/loginExpired" focus="username" >
 				<html:hidden property="method" value="changePass"/>
 				<html:hidden property="page" value="1"/>
+				<html:hidden property="fromCAS"/>
 				<table align="center" border="0" class="lp_table1">
 					<tr>
 						<td class="lp_leftcol"><bean:message key="label.username" bundle="GLOBAL_RESOURCES"/>:</td>

@@ -379,3 +379,18 @@ allowed-roles.build.file.constructor.header=<?xml version="1.0" encoding="ISO-88
 			\t\t<target name="generate-properties-file"> \n\n
 allowed-roles.build.file.constructor.tail=\n\n\t\t</target>\n\t</project>
 allowed-roles.newline.instruction=${line.seperator}
+
+#----------------------------------------------
+# CAS configuration
+#----------------------------------------------
+cas.enabled=false
+cas.loginUrl=https://localhost:8443/cas/login
+cas.validateUrl=https://localhost:8443/cas/serviceValidate
+cas.logoutUrl=https://localhost:8443/cas/logout
+cas.serviceUrl=https://localhost:8443/ciapl/loginCAS.do
+
+
+#----------------------------------------------------------------
+# Kerberos Password Check Configuration (external systems access)
+#----------------------------------------------------------------
+checkPasswordKerberos.authorizedHosts=127.0.0.1
