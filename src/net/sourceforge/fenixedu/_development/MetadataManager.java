@@ -15,7 +15,7 @@ public class MetadataManager {
     private MetadataManager(final String domainModelPath) {
         super();
         try {
-            domainModel = DmlCompiler.getDomainModel(new String[] { domainModelPath }, true);
+            domainModel = DmlCompiler.getDomainModel(new String[] { domainModelPath });
         } catch (ANTLRException e) {
             throw new Error(e);
         }

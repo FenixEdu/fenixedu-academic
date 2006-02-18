@@ -164,7 +164,7 @@ public class DomainObjectInterfaceEliminator {
 
 	private static DomainModel retreiveDomainModel(final String[] args) {
 		try {
-			return DmlCompiler.getDomainModel(processArgs(args), true);
+			return DmlCompiler.getDomainModel(processArgs(args));
 		} catch (ANTLRException e) {
 			throw new Error(e);
 		}

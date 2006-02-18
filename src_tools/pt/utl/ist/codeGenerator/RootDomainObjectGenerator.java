@@ -41,7 +41,7 @@ public class RootDomainObjectGenerator {
             } else {
                 try {
                     String[] dmlFilesArray = { dmlFile };
-                    domainModel = DmlCompiler.getDomainModel(dmlFilesArray, true);
+                    domainModel = DmlCompiler.getDomainModel(dmlFilesArray);
                 } catch (antlr.ANTLRException ae) {
                     System.err.println("Error parsing the DML files, leaving the domain empty");
                 }
