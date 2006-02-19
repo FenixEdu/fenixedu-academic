@@ -17,9 +17,84 @@
 	</html:select>
 </html:form>
 
-<bean:size id="s" name="attends"/>
-<bean:write name="s"/>
+<br/>
 
+<table class="style1">
+	<tr>
+		<td colspan="4" class="listClasses-header">
+			<bean:message key="title.execution.course"/>
+		</td>
+		<td>
+		</td>
+	</tr>
+	<tr>
+		<td class="listClasses-header">
+			<bean:message key="title.weekly.work.load.week"/>
+		</td>
+		<td class="listClasses-header">
+			<bean:message key="title.weekly.work.load.contact"/>
+		</td>
+		<td class="listClasses-header">
+			<bean:message key="title.weekly.work.load.autonomousStudy"/>
+		</td>
+		<td class="listClasses-header">
+			<bean:message key="title.weekly.work.load.other"/>
+		</td>
+	</tr>
+<logic:iterate id="attend" name="attends">
+	<tr>
+		<td colspan="4" class="courses">
+			<bean:write name="attend" property="disciplinaExecucao.nome"/>
+		</td>
+		<td>
+		</td>
+	</tr>
+	<logic:iterate id="weeklyWorkLoad" name="attend" property="weeklyWorkLoads">
+		<tr>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoad" property="weekOffset"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoad" property="contact"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoad" property="autonomousStudy"/>
+			</td>
+			<td class="listClasses">
+				<bean:write name="weeklyWorkLoad" property="other"/>
+			</td>
+			<td>
+			</td>
+		</tr>		
+	</logic:iterate>
+	<tr>
+		<html:form action="/weeklyWorkLoad.do">
+			<html:hidden property="method" value="createFromForm"/>
+			<html:hidden property="page" value="1"/>
+			<bean:define id="attendsID" type="java.lang.Integer" name="attend" property="idInternal"/>
+			<html:hidden property="attendsID" value="<%= attendsID.toString() %>"/>
+
+			<td class="listClasses">
+			</td>
+			<td class="listClasses">
+				<html:text size="3" property="contact"/>
+			</td>
+			<td class="listClasses">
+				<html:text size="3" property="autonomousStudy"/>
+			</td>
+			<td class="listClasses">
+				<html:text size="3" property="other"/>
+			</td>
+			<td>
+				<html:submit value="Submit"/>
+			</td>
+		</html:form>
+	</tr>
+</logic:iterate>
+</table>
+
+<br/>
+<br/>
 <br/>
 
 <logic:iterate id="attend" name="attends">
@@ -44,3 +119,4 @@
 	<br/>
 	<br/>
 </logic:iterate>
+

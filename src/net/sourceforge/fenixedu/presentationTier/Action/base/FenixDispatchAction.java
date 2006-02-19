@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.validator.DynaValidatorForm;
 
@@ -92,5 +93,10 @@ public abstract class FenixDispatchAction extends DispatchAction {
         }
         return false;
     }
+
+    protected Integer getInteger(final DynaActionForm dynaActionForm, final String string) {
+    	final String value = dynaActionForm.getString(string);
+    	return value == null || value.length() == 0 ? null : Integer.valueOf(value);
+	}
 
 }

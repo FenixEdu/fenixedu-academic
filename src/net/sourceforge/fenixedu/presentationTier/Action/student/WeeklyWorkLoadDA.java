@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionPeriod;
 import net.sourceforge.fenixedu.domain.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.renderers.SearchBean;
 import net.sourceforge.fenixedu.renderers.components.state.LifeCycleConstants;
 import net.sourceforge.fenixedu.renderers.components.state.ViewState;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -68,10 +67,30 @@ public class WeeklyWorkLoadDA extends FenixDispatchAction {
         final Integer autonomousStudy = weeklyWorkLoadBean.getAutonomousStudy();
         final Integer other = weeklyWorkLoadBean.getOther();
 
-        final Object[] args = { attendsID, contact, autonomousStudy, other };
-        executeService(request, "CreateWeeklyWorkLoad", args);
+        create(request, attendsID, contact, autonomousStudy, other);
 
         return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward createFromForm(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response) throws FenixFilterException,
+            FenixServiceException {
+    	final DynaActionForm dynaActionForm = (DynaActionForm) form;
+
+        final Integer attendsID = getInteger(dynaActionForm, "attendsID");
+        final Integer contact = getInteger(dynaActionForm, "contact");
+        final Integer autonomousStudy = getInteger(dynaActionForm, "autonomousStudy");
+        final Integer other = getInteger(dynaActionForm, "other");
+
+        create(request, attendsID, contact, autonomousStudy, other);
+
+        return prepare(mapping, form, request, response);
+    }
+
+	public void create(final HttpServletRequest request, final Integer attendsID, final Integer contact, final Integer autonomousStudy, final Integer other)
+    		throws FenixFilterException, FenixServiceException {
+        final Object[] args = { attendsID, contact, autonomousStudy, other };
+        executeService(request, "CreateWeeklyWorkLoad", args);
     }
 
     private WeeklyWorkLoadBean getWeeklyWorkLoadBean(final HttpServletRequest request) {
