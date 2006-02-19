@@ -7,8 +7,6 @@
 		<create creator="new" javascript="PersonBridge">
 			<param name="class" value="net.sourceforge.fenixedu.presentationTier.ajax.person.PersonBridge" />
 		</create>
-	</allow>		
-	<allow>
 		<create creator="new" javascript="TeacherBridge">
 			<param name="class" value="net.sourceforge.fenixedu.presentationTier.ajax.teacher.TeacherBridge" />
 		</create>
